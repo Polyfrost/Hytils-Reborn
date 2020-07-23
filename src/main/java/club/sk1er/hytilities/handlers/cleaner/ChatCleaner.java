@@ -17,16 +17,24 @@ public class ChatCleaner {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if (!HytilitiesConfig.hytilitiesChatCleaner || !MinecraftUtils.isHypixel()) {
+        if (!MinecraftUtils.isHypixel()) {
             return;
         }
 
         String message = event.message.getUnformattedText();
 
-        for (String messages : joinMessageTypes) {
-            if (message.contains(messages)) {
+        if (HytilitiesConfig.hytilitiesLobbyStatuses) {
+            for (String messages : joinMessageTypes) {
+                if (message.contains(messages)) {
+                    event.setCanceled(true);
+                    break;
+                }
+            }
+        }
+
+        if (HytilitiesConfig.hytilitiesLineBreaker) {
+            if (message.contains("-------") || message.contains("=======")) {
                 event.setCanceled(true);
-                break;
             }
         }
     }

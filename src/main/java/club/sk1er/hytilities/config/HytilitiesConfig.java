@@ -16,11 +16,18 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hytilitiesAdblock;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Chat Cleaner",
-        description = "Remove useless messages from chat.",
+        type = PropertyType.SWITCH, name = "Remove Line Separators",
+        description = "Remove separators from chat.\n§eExample: §7§m---------",
         category = "General", subcategory = "Chat"
     )
-    public static boolean hytilitiesChatCleaner;
+    public static boolean hytilitiesLineBreaker;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Lobby Statuses",
+        description = "Remove lobby join messages from chat.\n§eExample: §b[MVP§c+§b] asbyth §6has joined the lobby!",
+        category = "General", subcategory = "Chat"
+    )
+    public static boolean hytilitiesLobbyStatuses;
 
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
