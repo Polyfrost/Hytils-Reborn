@@ -7,6 +7,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ChatCleaner {
 
@@ -14,6 +16,9 @@ public class ChatCleaner {
         "joined the lobby", // normal
         "spooked in the lobby" // halloween
     );
+
+    private final Pattern mysteryBoxFind = Pattern.compile(".+ found a Mystery Box!");
+    private final Pattern gameAnnouncement = Pattern.compile("➤ A .+ game is available to join! CLICK HERE to join!");
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -27,13 +32,35 @@ public class ChatCleaner {
             for (String messages : joinMessageTypes) {
                 if (message.contains(messages)) {
                     event.setCanceled(true);
-                    break;
+                    return;
                 }
             }
         }
 
         if (HytilitiesConfig.hytilitiesLineBreaker) {
             if (message.contains("-------") || message.contains("=======")) {
+                event.setCanceled(true);
+                return;
+            }
+        }
+
+        if (HytilitiesConfig.hytilitiesMysteryBoxAnnouncer) {
+            if (message.startsWith("[Mystery Box]")) {
+                event.setCanceled(true);
+            } else {
+                Matcher matcher = mysteryBoxFind.matcher(message);
+
+                if (matcher.find()) {
+                    event.setCanceled(true);
+                    return;
+                }
+            }
+        }
+
+        if (HytilitiesConfig.hytilitiesGameAnnouncements) {
+            Matcher matcher = gameAnnouncement.matcher(message);
+
+            if (matcher.find()) {
                 event.setCanceled(true);
             }
         }

@@ -30,6 +30,20 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hytilitiesLobbyStatuses;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Remove Mystery Box Announcements",
+        description = "Remove mystery box messages from chat.\n§eExample: §b[Mystery Box] asbyth §ffound a §6Legendary Hype Train Gadget§f!",
+        category = "General", subcategory = "Chat"
+    )
+    public static boolean hytilitiesMysteryBoxAnnouncer;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Game Announcements",
+        description = "Remove game announcements from chat.\n§eExample: §b➤ A §e§lMega Skywars §bgame is available to join! §6§lCLICK HERE §bto join!",
+        category = "General", subcategory = "Chat"
+    )
+    public static boolean hytilitiesGameAnnouncements;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Lobby NPC's",
         description = "Hide NPC's in the lobby.",
         category = "General", subcategory = "Entities"
