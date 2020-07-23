@@ -1,5 +1,6 @@
 package club.sk1er.hytilities.util;
 
+import club.sk1er.mods.core.util.MinecraftUtils;
 import club.sk1er.mods.core.util.Multithreading;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -23,6 +24,11 @@ public class LobbyChecker {
     private static boolean lobbyStatus;
 
     public static void runLobbyCheckerTimer() {
+        if (!MinecraftUtils.isHypixel()) {
+            lobbyStatus = false;
+            return;
+        }
+
         Multithreading.schedule(LobbyChecker::checkForItem, 3, TimeUnit.SECONDS);
     }
 
