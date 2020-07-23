@@ -15,6 +15,13 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean hytilitiesAdblock;
 
+    @Property(
+        type = PropertyType.SWITCH, name = "Chat Cleaner",
+        description = "Remove useless messages from chat.",
+        category = "General", subcategory = "Chat"
+    )
+    public static boolean hytilitiesChatCleaner;
+
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
         initialize();
