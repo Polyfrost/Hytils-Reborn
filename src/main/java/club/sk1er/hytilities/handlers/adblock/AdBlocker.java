@@ -4,9 +4,6 @@ import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraft.client.gui.GuiScreenBook;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -35,23 +32,9 @@ public class AdBlocker {
         }
 
         if (event.gui instanceof GuiScreenBook) {
-            NBTTagList bookPages = ((GuiScreenBook) event.gui).bookPages;
-            int currPage = ((GuiScreenBook) event.gui).currPage;
-
-            if (currPage < bookPages.tagCount()) {
-                try {
-                    String unformattedText = EnumChatFormatting.getTextWithoutFormattingCodes(
-                        IChatComponent.Serializer.jsonToComponent(bookPages.getStringTagAt(currPage)).getUnformattedText().replace('\n', ' ')
-                    );
-
-                    if (unformattedText.contains("SALE")) {
-                        event.setCanceled(true);
-                    }
-
-                } catch (Exception e) {
-                    Hytilities.INSTANCE.sendMessage("&cFailed to close advertisement book.");
-                    e.printStackTrace();
-                }
+            if (((GuiScreenBook) event.gui).pageGetCurrent().contains("SALE")) {
+                Hytilities.INSTANCE.sendMessage("cancelled");
+                event.setCanceled(true);
             }
         }
     }
