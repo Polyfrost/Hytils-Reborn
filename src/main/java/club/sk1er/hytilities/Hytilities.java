@@ -6,6 +6,7 @@ import club.sk1er.hytilities.handlers.adblock.AdBlocker;
 import club.sk1er.hytilities.handlers.adblock.ExternalAdBlocker;
 import club.sk1er.hytilities.handlers.cleaner.ChatCleaner;
 import club.sk1er.hytilities.handlers.npc.NPCHider;
+import club.sk1er.hytilities.handlers.server.ServerChecker;
 import club.sk1er.modcore.ModCoreInstaller;
 import club.sk1er.mods.core.universal.ChatColor;
 import club.sk1er.mods.core.util.MinecraftUtils;
@@ -42,6 +43,8 @@ public class Hytilities {
     }
 
     private void registerHandlers() {
+        MinecraftForge.EVENT_BUS.register(new ServerChecker());
+
         MinecraftForge.EVENT_BUS.register(new AdBlocker());
         MinecraftForge.EVENT_BUS.register(new ExternalAdBlocker());
 

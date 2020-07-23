@@ -24,7 +24,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Lobby Statuses",
-        description = "Remove lobby join messages from chat.\n§eExample: §b[MVP§c+§b] asbyth §6has joined the lobby!",
+        description = "Remove lobby join messages from chat.\n§eExample: §b[MVP§c+§b] asbyth §6joined the lobby!",
         category = "General", subcategory = "Chat"
     )
     public static boolean hytilitiesLobbyStatuses;
