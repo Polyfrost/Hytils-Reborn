@@ -29,6 +29,13 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean hytilitiesLobbyStatuses;
 
+    @Property(
+        type = PropertyType.SWITCH, name = "Hide Lobby NPC's",
+        description = "Hide NPC's in the lobby.",
+        category = "General", subcategory = "Entities"
+    )
+    public static boolean hytilitiesNpcHider;
+
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
         initialize();
