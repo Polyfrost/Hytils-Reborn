@@ -33,17 +33,4 @@ public class AdBlocker {
             }
         }
     }
-
-    @SubscribeEvent
-    public void onBookOpen(GuiOpenEvent event) {
-        if (!HytilitiesConfig.hytilitiesAdblock || !MinecraftUtils.isHypixel()) {
-            return;
-        }
-
-        if (event.gui instanceof GuiScreenBook) {
-            if (((GuiScreenBook) event.gui).pageGetCurrent().contains("SALE")) {
-                event.setCanceled(true);
-            }
-        }
-    }
 }

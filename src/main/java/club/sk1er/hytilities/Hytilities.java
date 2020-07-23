@@ -3,6 +3,7 @@ package club.sk1er.hytilities;
 import club.sk1er.hytilities.command.HytilitiesCommand;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.adblock.AdBlocker;
+import club.sk1er.hytilities.handlers.adblock.ExternalAdBlocker;
 import club.sk1er.hytilities.handlers.cleaner.ChatCleaner;
 import club.sk1er.modcore.ModCoreInstaller;
 import club.sk1er.mods.core.universal.ChatColor;
@@ -41,6 +42,8 @@ public class Hytilities {
 
     private void registerHandlers() {
         MinecraftForge.EVENT_BUS.register(new AdBlocker());
+        MinecraftForge.EVENT_BUS.register(new ExternalAdBlocker());
+
         MinecraftForge.EVENT_BUS.register(new ChatCleaner());
     }
 
