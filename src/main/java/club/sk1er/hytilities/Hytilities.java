@@ -4,6 +4,7 @@ import club.sk1er.hytilities.command.HytilitiesCommand;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.adblock.AdBlocker;
 import club.sk1er.hytilities.handlers.adblock.ExternalAdBlocker;
+import club.sk1er.hytilities.handlers.bossbar.LobbyBossbar;
 import club.sk1er.hytilities.handlers.cleaner.ChatCleaner;
 import club.sk1er.hytilities.handlers.npc.NPCHider;
 import club.sk1er.hytilities.handlers.server.ServerChecker;
@@ -43,18 +44,21 @@ public class Hytilities {
     }
 
     private void registerHandlers() {
+        // general stuff
         MinecraftForge.EVENT_BUS.register(new ServerChecker());
 
+        // chat
         MinecraftForge.EVENT_BUS.register(new AdBlocker());
         MinecraftForge.EVENT_BUS.register(new ExternalAdBlocker());
-
         MinecraftForge.EVENT_BUS.register(new ChatCleaner());
 
+        // lobby
         MinecraftForge.EVENT_BUS.register(new NPCHider());
+        MinecraftForge.EVENT_BUS.register(new LobbyBossbar());
     }
 
     public void sendMessage(String message) {
-        MinecraftUtils.sendMessage(ChatColor.GOLD + "[Hytilities]", ChatColor.translateAlternateColorCodes('&', message));
+        MinecraftUtils.sendMessage(ChatColor.GOLD + "[Hytilities] ", ChatColor.translateAlternateColorCodes('&', message));
     }
 
     public HytilitiesConfig getConfig() {

@@ -37,6 +37,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hytilitiesMysteryBoxAnnouncer;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Remove Soul Box Announcements",
+        description = "Remove soul box announcements from chat.\n§eExample: §basbyth §7has found a §6Bulldozer Perk I (Insane) §7in the §bSoul Well§7!",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean hytilitiesSoulBoxAnnouncer;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Remove Game Announcements",
         description = "Remove game announcements from chat.\n§eExample: §b➤ A §e§lMega Skywars §bgame is available to join! §6§lCLICK HERE §bto join!",
         category = "Chat", subcategory = "Toggles"
@@ -56,6 +63,13 @@ public class HytilitiesConfig extends Vigilant {
         category = "Lobby", subcategory = "Entities"
     )
     public static boolean hytilitiesNpcHider;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Hide Lobby Bossbars",
+        description = "Hide the bossbar in the lobby.",
+        category = "Lobby", subcategory = "GUI"
+    )
+    public static boolean hytilitiesLobbyBossbar;
 
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
