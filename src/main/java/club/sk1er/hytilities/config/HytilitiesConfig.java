@@ -58,6 +58,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hytilitiesHypeLimitReminder;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Game Status Restyle",
+        description = "Replace common game status messages with a new style.",
+        category = "Chat", subcategory = "Restyler"
+    )
+    public static boolean hytilitiesGameStatusRestyle;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Lobby NPCs",
         description = "Hide NPCs in the lobby.",
         category = "Lobby", subcategory = "Entities"

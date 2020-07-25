@@ -8,6 +8,7 @@ import club.sk1er.hytilities.handlers.bossbar.LobbyBossbar;
 import club.sk1er.hytilities.handlers.cleaner.ChatCleaner;
 import club.sk1er.hytilities.handlers.limbo.LimboLimiter;
 import club.sk1er.hytilities.handlers.npc.NPCHider;
+import club.sk1er.hytilities.handlers.restyler.ChatRestyler;
 import club.sk1er.hytilities.handlers.server.ServerChecker;
 import club.sk1er.modcore.ModCoreInstaller;
 import club.sk1er.mods.core.universal.ChatColor;
@@ -52,6 +53,7 @@ public class Hytilities {
         MinecraftForge.EVENT_BUS.register(new AdBlocker());
         MinecraftForge.EVENT_BUS.register(new ExternalAdBlocker());
         MinecraftForge.EVENT_BUS.register(new ChatCleaner());
+        MinecraftForge.EVENT_BUS.register(new ChatRestyler());
 
         // lobby
         MinecraftForge.EVENT_BUS.register(new NPCHider());
