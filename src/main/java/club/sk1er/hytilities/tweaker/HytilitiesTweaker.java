@@ -20,10 +20,10 @@ public class HytilitiesTweaker implements IFMLLoadingPlugin {
 
         // If true the classes are loaded
         if (ModCoreInstaller.isIsRunningModCore()) {
-            return new String[]{"club.sk1er.mods.core.forge.ClassTransformer"};
+            return new String[]{"club.sk1er.mods.core.forge.ClassTransformer", ClassTransformer.class.getName()};
         }
 
-        return new String[0];
+        return new String[]{ClassTransformer.class.getName()};
     }
 
     @Override

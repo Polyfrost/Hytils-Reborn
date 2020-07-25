@@ -65,6 +65,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hytilitiesNpcHider;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Limbo Limiter",
+        description = "Limit your framerate to 15, reducing the load of the game on the computer while in Limbo.",
+        category = "Lobby", subcategory = "General"
+    )
+    public static boolean hytilitiesLimboLimiter;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Lobby Bossbars",
         description = "Hide the bossbar in the lobby.",
         category = "Lobby", subcategory = "GUI"
