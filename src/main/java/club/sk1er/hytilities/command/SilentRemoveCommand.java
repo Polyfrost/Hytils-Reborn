@@ -23,14 +23,16 @@ public class SilentRemoveCommand extends CommandBase {
         } else if (args[0].equalsIgnoreCase("clear")) {
             SilentRemoval.getSilentUsers().clear();
         } else {
-            if (SilentRemoval.getSilentUsers().contains(args[0])) {
-                SilentRemoval.getSilentUsers().remove(args[0]);
-                Hytilities.INSTANCE.sendMessage("&aRemoved &e" + args[0] + " &afrom the removal queue.");
+            String player = args[0];
+
+            if (SilentRemoval.getSilentUsers().contains(player)) {
+                SilentRemoval.getSilentUsers().remove(player);
+                Hytilities.INSTANCE.sendMessage("&aRemoved &e" + player + " &afrom the removal queue.");
                 return;
             }
 
-            SilentRemoval.getSilentUsers().add(args[0]);
-            Hytilities.INSTANCE.sendMessage("&aAdded &e" + args[0] + " &ato the removal queue.");
+            SilentRemoval.getSilentUsers().add(player);
+            Hytilities.INSTANCE.sendMessage("&aAdded &e" + player + " &ato the removal queue.");
         }
     }
 
