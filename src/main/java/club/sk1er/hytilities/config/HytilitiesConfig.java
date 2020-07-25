@@ -58,11 +58,18 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hytilitiesHypeLimitReminder;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide Lobby NPC's",
-        description = "Hide NPC's in the lobby.",
+        type = PropertyType.SWITCH, name = "Hide Lobby NPCs",
+        description = "Hide NPCs in the lobby.",
         category = "Lobby", subcategory = "Entities"
     )
     public static boolean hytilitiesNpcHider;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Hide NPCs in tab",
+        description = "Remove NPCs from ever showing up in tab.",
+        category = "General", subcategory = "Entities"
+    )
+    public static boolean hytilitiesHideNpcsInTab;
 
     @Property(
         type = PropertyType.SWITCH, name = "Limbo Limiter",

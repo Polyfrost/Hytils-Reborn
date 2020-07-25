@@ -1,5 +1,6 @@
 package club.sk1er.hytilities.tweaker;
 
+import club.sk1er.hytilities.tweaker.asm.GuiPlayerTabOverlayTransformer;
 import club.sk1er.hytilities.tweaker.asm.MinecraftTransformer;
 import club.sk1er.hytilities.tweaker.transformer.HytilitiesTransformer;
 import com.google.common.collect.ArrayListMultimap;
@@ -21,6 +22,7 @@ public class ClassTransformer implements IClassTransformer {
 
     public ClassTransformer() {
         registerTransformer(new MinecraftTransformer());
+        registerTransformer(new GuiPlayerTabOverlayTransformer());
     }
 
     private void registerTransformer(HytilitiesTransformer transformer) {
@@ -64,6 +66,20 @@ public class ClassTransformer implements IClassTransformer {
             }
 
             File bytecodeOutput = new File(bytecodeDirectory, transformedClassName);
+
+            try {
+                if (!bytecodeDirectory.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
+                    bytecodeDirectory.mkdirs();
+                }
+
+                if (!bytecodeOutput.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
+                    bytecodeOutput.createNewFile();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             try (FileOutputStream os = new FileOutputStream(bytecodeOutput)) {
                 os.write(classWriter.toByteArray());
