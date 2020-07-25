@@ -15,12 +15,12 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean hytilitiesAdblock;
 
-    @Property(
+    /*@Property(
         type = PropertyType.SWITCH, name = "Remove Line Separators",
         description = "Remove separators from chat.\n§eExample: §9§m--------------",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean hytilitiesLineBreaker;
+    public static boolean hytilitiesLineBreaker;*/
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Lobby Statuses",

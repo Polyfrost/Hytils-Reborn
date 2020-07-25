@@ -1,5 +1,6 @@
 package club.sk1er.hytilities.handlers.chat.cleaner;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraft.client.Minecraft;
@@ -22,7 +23,7 @@ public class ChatCleaner {
 
     private final Pattern mysteryBoxFind = Pattern.compile("(?<player>\\w{1,16}) found a .+ Mystery Box!");
     private final Pattern soulBoxFind = Pattern.compile(".+ has found .+ in the Soul Well!");
-    private final Pattern gameAnnouncement = Pattern.compile("➤ A .+ game is available to join! CLICK HERE to join!");
+    private final Pattern gameAnnouncement = Pattern.compile("➤ A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!");
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -42,7 +43,7 @@ public class ChatCleaner {
         }
 
         // todo: figure out why chat events don't copy-over
-        if (HytilitiesConfig.hytilitiesLineBreaker) {
+        /*if (HytilitiesConfig.hytilitiesLineBreaker) {
             if (message.contains("-----------") && message.contains("\n")) {
                 event.message = new ChatComponentText(reformatMessage(event.message.getFormattedText()));
                 return;
@@ -50,7 +51,7 @@ public class ChatCleaner {
                 event.setCanceled(true);
                 return;
             }
-        }
+        }*/
 
         if (HytilitiesConfig.hytilitiesMysteryBoxAnnouncer) {
             Matcher matcher = mysteryBoxFind.matcher(message);
