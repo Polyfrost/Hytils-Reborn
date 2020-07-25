@@ -24,21 +24,21 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Lobby Statuses",
-        description = "Remove lobby join messages from chat.\n§eExample: §b[MVP§c+§b] asbyth §6joined the lobby!",
+        description = "Remove lobby join messages from chat.\n§eExample: §b[MVP§c+§b] Steve §6joined the lobby!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean hytilitiesLobbyStatuses;
 
     @Property(
         type = PropertyType.SWITCH, name = "Show Own Mystery Box Rewards",
-        description = "Remove others mystery box messages from chat.\n§eExample: §b[Mystery Box] asbyth §ffound a §6Legendary Hype Train Gadget§f!",
+        description = "Remove others mystery box messages from chat.\n§eExample: §b[Mystery Box] Steve §ffound a §6Legendary Hype Train Gadget§f!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean hytilitiesMysteryBoxAnnouncer;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Soul Box Announcements",
-        description = "Remove soul box announcements from chat.\n§eExample: §basbyth §7has found a §6Bulldozer Perk I (Insane) §7in the §bSoul Well§7!",
+        description = "Remove soul box announcements from chat.\n§eExample: §bSteve §7has found a §6Bulldozer Perk I (Insane) §7in the §bSoul Well§7!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean hytilitiesSoulBoxAnnouncer;
@@ -56,6 +56,13 @@ public class HytilitiesConfig extends Vigilant {
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean hytilitiesHypeLimitReminder;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "White Chat",
+        description = "Make nons appear as normal chat messages.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean hytilitiesWhiteChat;
 
     @Property(
         type = PropertyType.SWITCH, name = "Game Status Restyle",

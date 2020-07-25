@@ -1,4 +1,4 @@
-package club.sk1er.hytilities.handlers.cleaner;
+package club.sk1er.hytilities.handlers.chat.cleaner;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.mods.core.util.MinecraftUtils;

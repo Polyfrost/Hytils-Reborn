@@ -1,6 +1,5 @@
-package club.sk1er.hytilities.handlers.restyler;
+package club.sk1er.hytilities.handlers.chat.restyler;
 
-import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.mods.core.universal.ChatColor;
 import club.sk1er.mods.core.util.MinecraftUtils;

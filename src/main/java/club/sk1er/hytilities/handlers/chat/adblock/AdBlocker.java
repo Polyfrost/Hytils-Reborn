@@ -1,4 +1,4 @@
-package club.sk1er.hytilities.handlers.adblock;
+package club.sk1er.hytilities.handlers.chat.adblock;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.mods.core.util.MinecraftUtils;
