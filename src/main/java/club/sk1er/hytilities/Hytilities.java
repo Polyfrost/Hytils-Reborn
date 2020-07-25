@@ -1,6 +1,7 @@
 package club.sk1er.hytilities;
 
 import club.sk1er.hytilities.command.HytilitiesCommand;
+import club.sk1er.hytilities.command.SilentRemoveCommand;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.adblock.AdBlocker;
 import club.sk1er.hytilities.handlers.adblock.ExternalAdBlocker;
@@ -10,6 +11,7 @@ import club.sk1er.hytilities.handlers.limbo.LimboLimiter;
 import club.sk1er.hytilities.handlers.npc.NPCHider;
 import club.sk1er.hytilities.handlers.restyler.ChatRestyler;
 import club.sk1er.hytilities.handlers.server.ServerChecker;
+import club.sk1er.hytilities.handlers.silent.SilentRemoval;
 import club.sk1er.modcore.ModCoreInstaller;
 import club.sk1er.mods.core.universal.ChatColor;
 import club.sk1er.mods.core.util.MinecraftUtils;
@@ -41,6 +43,7 @@ public class Hytilities {
         config.preload();
 
         ClientCommandHandler.instance.registerCommand(new HytilitiesCommand());
+        ClientCommandHandler.instance.registerCommand(new SilentRemoveCommand());
 
         registerHandlers();
     }
@@ -54,6 +57,7 @@ public class Hytilities {
         MinecraftForge.EVENT_BUS.register(new ExternalAdBlocker());
         MinecraftForge.EVENT_BUS.register(new ChatCleaner());
         MinecraftForge.EVENT_BUS.register(new ChatRestyler());
+        MinecraftForge.EVENT_BUS.register(new SilentRemoval());
 
         // lobby
         MinecraftForge.EVENT_BUS.register(new NPCHider());
