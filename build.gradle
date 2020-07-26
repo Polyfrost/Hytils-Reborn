@@ -59,3 +59,11 @@ processResources {
         exclude "mcmod.info"
     }
 }
+
+jar {
+    manifest {
+        attributes "FMLCorePlugin": "club.sk1er.hytilities.tweaker.HytilitiesTweaker",
+                "ModSide": "CLIENT",
+                "FMLCorePluginContainsFMLMod": "Yes, yes it does"
+    }
+}
