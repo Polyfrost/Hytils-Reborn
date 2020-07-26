@@ -58,6 +58,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hytilitiesHypeLimitReminder;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Remove BedWars Advertisements",
+        description = "Remove player messages asking to join BedWars parties.\n§eExample: §7[1✫] §b[MVP§c+§b] Steve§f: guys pls join bedwars party 2/4 :)",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean hytilitiesBedwarsAdvertisements;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Remove Chat Emojis",
         description = "Remove MVP++ chat emojis.\n§eExample: §c§lOOF ",
         category = "Chat", subcategory = "Toggles"

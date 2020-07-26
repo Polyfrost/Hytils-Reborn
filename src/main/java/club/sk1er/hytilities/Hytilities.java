@@ -8,6 +8,7 @@ import club.sk1er.hytilities.handlers.chat.adblock.ExternalAdBlocker;
 import club.sk1er.hytilities.handlers.bossbar.LobbyBossbar;
 import club.sk1er.hytilities.handlers.chat.cleaner.ChatCleaner;
 import club.sk1er.hytilities.handlers.chat.whitechat.WhiteChat;
+import club.sk1er.hytilities.handlers.game.GameChecker;
 import club.sk1er.hytilities.handlers.limbo.LimboLimiter;
 import club.sk1er.hytilities.handlers.npc.NPCHider;
 import club.sk1er.hytilities.handlers.chat.restyler.ChatRestyler;
@@ -65,6 +66,7 @@ public class Hytilities {
         MinecraftForge.EVENT_BUS.register(new NPCHider());
         MinecraftForge.EVENT_BUS.register(new LobbyBossbar());
         MinecraftForge.EVENT_BUS.register(new LimboLimiter());
+        MinecraftForge.EVENT_BUS.register(new GameChecker());
     }
 
     public void sendMessage(String message) {

@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class ChatRestyler {
 
     private final Pattern gameJoinStyle = Pattern.compile("§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has joined (?<amount>.+)!");
@@ -28,19 +29,23 @@ public class ChatRestyler {
 
         if (HytilitiesConfig.hytilitiesGameStatusRestyle) {
             Matcher joinMatcher = gameJoinStyle.matcher(message);
-            Matcher leaveMatcher = gameLeaveStyle.matcher(message);
-            Matcher startCounterMatcher = gameStartCounterStyle.matcher(unformattedMessage);
 
             if (joinMatcher.find()) {
                 event.message = colorMessage("&b&l+ &" + joinMatcher.group("color") + joinMatcher.group("player") + " &a" +
                     joinMatcher.group("amount").replaceAll("§[\\da-fk-or]", ""));
-            } else if (leaveMatcher.find()) {
-                event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + leaveMatcher.group("player"));
-            } else if (startCounterMatcher.find()) {
-                event.message = colorMessage("&e&l* &aGame starts in &b&l" + startCounterMatcher.group("time")
-                    // for some bizarre reason, seconds is captured in the time group (though we explicitly tell
-                    // it to only capture numbers (\d)), so get around that by just replacing seconds with nothing
-                    .replaceAll(" seconds", "") + " &aseconds.");
+            } else {
+                Matcher leaveMatcher = gameLeaveStyle.matcher(message);
+                if (leaveMatcher.find()) {
+                    event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + leaveMatcher.group("player"));
+                } else {
+                    Matcher startCounterMatcher = gameStartCounterStyle.matcher(unformattedMessage);
+                    if (startCounterMatcher.find()) {
+                        event.message = colorMessage("&e&l* &aGame starts in &b&l" + startCounterMatcher.group("time")
+                            // for some bizarre reason, seconds is captured in the time group (though we explicitly tell
+                            // it to only capture numbers (\d)), so get around that by just replacing seconds with nothing
+                            .replaceAll(" seconds", "") + " &aseconds.");
+                    }
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 package club.sk1er.hytilities.handlers.chat.cleaner;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
+import club.sk1er.hytilities.handlers.game.GameChecker;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
@@ -13,6 +14,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * this may be able to be separated into separate modules
+ * sort of like an api, perhaps?
+ * <p>
+ * the way it would work is you register a class during some type of
+ * initialization event, and said class would extend/implement something
+ * maybe called "ChatModule", which would also allow for the use of
+ * cleaning up the other chat modules, and from there you'd be allowed to do whatever
+ * <p>
+ * maybe an api for regex creation would be nice aswell, anything to help ease/speed up the process.
+ */
 public class ChatCleaner {
 
     private final List<String> joinMessageTypes = Arrays.asList(
@@ -23,6 +35,8 @@ public class ChatCleaner {
     private final Pattern mysteryBoxFind = Pattern.compile("(?<player>\\w{1,16}) found a .+ Mystery Box!");
     private final Pattern soulBoxFind = Pattern.compile(".+ has found .+ in the Soul Well!");
     private final Pattern gameAnnouncement = Pattern.compile("➤ A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!");
+    private final Pattern bedwarsPartyAdvertisement = Pattern.compile("(?<number>[1-3]/[2-4])");
+
     // yall like regex?
     private final Pattern mvpEmotes = Pattern.compile("§r§(?:c❤|6✮|a✔|c✖|b☕|e➜|e¯\\\\_\\(ツ\\)_/¯|c\\(╯°□°）╯§r§f︵§r§7 ┻━┻|d\\( ﾟ◡ﾟ\\)/|a1§r§e2§r§c3|b☉§r§e_§r§b☉|e✎§r§6\\.\\.\\.|a√§r§e§l\\(§r§aπ§r§a§l\\+x§r§e§l\\)§r§a§l=§r§c§lL|e@§r§a'§r§e-§r§a'|6\\(§r§a0§r§6\\.§r§ao§r§c\\?§r§6\\)|b༼つ◕_◕༽つ|e\\(§r§b'§r§e-§r§b'§r§e\\)⊃§r§c━§r§d☆ﾟ\\.\\*･｡ﾟ|e⚔|a✌|c§lOOF|e§l<\\('O'\\)>)§r");
 
@@ -81,9 +95,7 @@ public class ChatCleaner {
         }
 
         if (HytilitiesConfig.hytilitiesGameAnnouncements) {
-            Matcher matcher = gameAnnouncement.matcher(message);
-
-            if (matcher.find()) {
+            if (gameAnnouncement.matcher(message).find()) {
                 event.setCanceled(true);
                 return;
             }
@@ -95,9 +107,14 @@ public class ChatCleaner {
         }
 
         if (HytilitiesConfig.hytilitiesSoulBoxAnnouncer) {
-            Matcher matcher = soulBoxFind.matcher(message);
+            if (soulBoxFind.matcher(message).find()) {
+                event.setCanceled(true);
+                return;
+            }
+        }
 
-            if (matcher.find()) {
+        if (HytilitiesConfig.hytilitiesBedwarsAdvertisements && GameChecker.isBedwars()) {
+            if (bedwarsPartyAdvertisement.matcher(message).find()) {
                 event.setCanceled(true);
             }
         }

@@ -5,18 +5,13 @@ import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class AdBlocker {
 
-    private final List<String> commonAdvertisements = Arrays.asList(
-        "/ah", // skyblock auctions
-        "/party", "p join", // party advertisements
-        "/guild", "g join", // guild advertisements
-        "/visit", "visit" // housing advertisements
-    );
+    // match "[/]<visit|ah|party|p join|guild|g join> playername"
+    // the "/" is optional as some people simply just say "ah playername"
+    private final Pattern commonAdvertisements = Pattern.compile("/?(?:visit|ah|party|p join|guild|g join) \\w{1,16}", Pattern.CASE_INSENSITIVE);
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -24,12 +19,8 @@ public class AdBlocker {
             return;
         }
 
-        String message = event.message.getUnformattedText();
-        for (String advertisement : commonAdvertisements) {
-            if (message.toLowerCase(Locale.ENGLISH).contains(advertisement)) {
-                event.setCanceled(true);
-                break;
-            }
+        if (commonAdvertisements.matcher(event.message.getUnformattedText()).find()) {
+            event.setCanceled(true);
         }
     }
 }
