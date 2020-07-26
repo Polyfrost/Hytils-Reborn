@@ -1,6 +1,5 @@
 package club.sk1er.hytilities.handlers.chat.cleaner;
 
-import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraft.client.Minecraft;
@@ -24,6 +23,8 @@ public class ChatCleaner {
     private final Pattern mysteryBoxFind = Pattern.compile("(?<player>\\w{1,16}) found a .+ Mystery Box!");
     private final Pattern soulBoxFind = Pattern.compile(".+ has found .+ in the Soul Well!");
     private final Pattern gameAnnouncement = Pattern.compile("➤ A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!");
+    // yall like regex?
+    private final Pattern mvpEmotes = Pattern.compile("§r§(?:c❤|6✮|a✔|c✖|b☕|e➜|e¯\\\\_\\(ツ\\)_/¯|c\\(╯°□°）╯§r§f︵§r§7 ┻━┻|d\\( ﾟ◡ﾟ\\)/|a1§r§e2§r§c3|b☉§r§e_§r§b☉|e✎§r§6\\.\\.\\.|a√§r§e§l\\(§r§aπ§r§a§l\\+x§r§e§l\\)§r§a§l=§r§c§lL|e@§r§a'§r§e-§r§a'|6\\(§r§a0§r§6\\.§r§ao§r§c\\?§r§6\\)|b༼つ◕_◕༽つ|e\\(§r§b'§r§e-§r§b'§r§e\\)⊃§r§c━§r§d☆ﾟ\\.\\*･｡ﾟ|e⚔|a✌|c§lOOF|e§l<\\('O'\\)>)§r");
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -39,6 +40,15 @@ public class ChatCleaner {
                     event.setCanceled(true);
                     return;
                 }
+            }
+        }
+
+        if (HytilitiesConfig.hytilitiesMvpEmotes) {
+            Matcher matcher = mvpEmotes.matcher(event.message.getFormattedText());
+
+            if (matcher.find()) {
+                event.message = new ChatComponentText(event.message.getFormattedText().replaceAll(mvpEmotes.pattern(), ""));
+                return;
             }
         }
 

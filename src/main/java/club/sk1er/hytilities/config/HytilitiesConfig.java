@@ -58,6 +58,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hytilitiesHypeLimitReminder;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Remove Chat Emojis",
+        description = "Remove MVP++ chat emojis.\n§eExample: §c§lOOF ",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean hytilitiesMvpEmotes;
+
+    @Property(
         type = PropertyType.SWITCH, name = "White Chat",
         description = "Make nons appear as normal chat messages.",
         category = "Chat", subcategory = "Toggles"
