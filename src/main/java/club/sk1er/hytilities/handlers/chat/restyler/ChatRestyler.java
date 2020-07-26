@@ -13,7 +13,7 @@ public class ChatRestyler implements ChatModule {
 
     private final Pattern gameJoinStyle = Pattern.compile("§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has joined (?<amount>.+)!");
     private final Pattern gameLeaveStyle = Pattern.compile("§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has quit!");
-    private final Pattern gameStartCounterStyle = Pattern.compile("The game starts in (?<time>\\d{1,3}) seconds!");
+    private final Pattern gameStartCounterStyle = Pattern.compile("The game starts in (?<time>\\d{1,3}) seconds?!");
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
@@ -37,10 +37,13 @@ public class ChatRestyler implements ChatModule {
                 } else {
                     Matcher startCounterMatcher = gameStartCounterStyle.matcher(unformattedMessage);
                     if (startCounterMatcher.find()) {
-                        event.message = colorMessage("&e&l* &aGame starts in &b&l" + startCounterMatcher.group("time")
+                        String time = startCounterMatcher.group("time");
+                        boolean secondMessage = time.contains("seconds");
+
+                        event.message = colorMessage("&e&l* &aGame starts in &b&l" + time
                             // for some bizarre reason, seconds is captured in the time group (though we explicitly tell
                             // it to only capture numbers (\d)), so get around that by just replacing seconds with nothing
-                            .replaceAll(" seconds", "") + " &aseconds.");
+                            .replaceAll(" seconds", "") + (secondMessage ? " &aseconds." : " &asecond."));
                     }
                 }
             }
