@@ -1,4 +1,4 @@
-package club.sk1er.hytilities.handlers.npc;
+package club.sk1er.hytilities.handlers.lobby.npc;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.util.LobbyChecker;

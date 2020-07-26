@@ -36,6 +36,7 @@ public class ChatCleaner {
     private final Pattern soulBoxFind = Pattern.compile(".+ has found .+ in the Soul Well!");
     private final Pattern gameAnnouncement = Pattern.compile("➤ A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!");
     private final Pattern bedwarsPartyAdvertisement = Pattern.compile("(?<number>[1-3]/[2-4])");
+    private final Pattern connectionStatus = Pattern.compile("(?:Friend|Guild) > (?<player>\\w{1,16}) (?:joined|left)\\.");
 
     // yall like regex?
     private final Pattern mvpEmotes = Pattern.compile("§r§(?:c❤|6✮|a✔|c✖|b☕|e➜|e¯\\\\_\\(ツ\\)_/¯|c\\(╯°□°）╯§r§f︵§r§7 ┻━┻|d\\( ﾟ◡ﾟ\\)/|a1§r§e2§r§c3|b☉§r§e_§r§b☉|e✎§r§6\\.\\.\\.|a√§r§e§l\\(§r§aπ§r§a§l\\+x§r§e§l\\)§r§a§l=§r§c§lL|e@§r§a'§r§e-§r§a'|6\\(§r§a0§r§6\\.§r§ao§r§c\\?§r§6\\)|b༼つ◕_◕༽つ|e\\(§r§b'§r§e-§r§b'§r§e\\)⊃§r§c━§r§d☆ﾟ\\.\\*･｡ﾟ|e⚔|a✌|c§lOOF|e§l<\\('O'\\)>)§r");
@@ -116,7 +117,12 @@ public class ChatCleaner {
         if (HytilitiesConfig.hytilitiesBedwarsAdvertisements && GameChecker.isBedwars()) {
             if (bedwarsPartyAdvertisement.matcher(message).find()) {
                 event.setCanceled(true);
+                return;
             }
+        }
+
+        if (HytilitiesConfig.hytilitiesConnectionStatus && connectionStatus.matcher(message).matches()) {
+            event.setCanceled(true);
         }
     }
 

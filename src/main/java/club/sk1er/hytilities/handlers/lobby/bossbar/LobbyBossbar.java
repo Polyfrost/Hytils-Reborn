@@ -1,4 +1,4 @@
-package club.sk1er.hytilities.handlers.bossbar;
+package club.sk1er.hytilities.handlers.lobby.bossbar;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.util.LobbyChecker;

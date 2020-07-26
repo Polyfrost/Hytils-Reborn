@@ -1,4 +1,4 @@
-package club.sk1er.hytilities.handlers.limbo;
+package club.sk1er.hytilities.handlers.lobby.limbo;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;

@@ -65,6 +65,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hytilitiesBedwarsAdvertisements;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Remove Friend/Guild Statuses",
+        description = "Remove join/quit messages from friend/guild members.\n§eExample: §aFriend > §bSteve §ejoined.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean hytilitiesConnectionStatus;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Remove Chat Emojis",
         description = "Remove MVP++ chat emojis.\n§eExample: §c§lOOF ",
         category = "Chat", subcategory = "Toggles"

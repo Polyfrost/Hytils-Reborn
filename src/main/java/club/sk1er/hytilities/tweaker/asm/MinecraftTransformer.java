@@ -26,7 +26,7 @@ public class MinecraftTransformer implements HytilitiesTransformer {
     // if (LimboLimiter.shouldLimitFramerate()) return 15;
     private InsnList performLimboLimiter() {
         InsnList list = new InsnList();
-        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "club/sk1er/hytilities/handlers/limbo/LimboLimiter", "shouldLimitFramerate", "()Z", false));
+        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "club/sk1er/hytilities/handlers/lobby/limbo/LimboLimiter", "shouldLimitFramerate", "()Z", false));
         LabelNode ifeq = new LabelNode();
         list.add(new JumpInsnNode(Opcodes.IFEQ, ifeq));
         list.add(new IntInsnNode(Opcodes.BIPUSH, 15));
