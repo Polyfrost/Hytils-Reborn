@@ -1,4 +1,4 @@
-package club.sk1er.hytilities.handlers.chat.adblock;
+package club.sk1er.hytilities.handlers.lobby.adblock;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.mods.core.util.MinecraftUtils;
@@ -8,7 +8,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ExternalAdBlocker {
-
 
     @SubscribeEvent
     public void onBookOpen(GuiOpenEvent event) {

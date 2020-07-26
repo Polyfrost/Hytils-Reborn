@@ -3,15 +3,12 @@ package club.sk1er.hytilities;
 import club.sk1er.hytilities.command.HytilitiesCommand;
 import club.sk1er.hytilities.command.SilentRemoveCommand;
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.handlers.chat.adblock.AdBlocker;
-import club.sk1er.hytilities.handlers.chat.adblock.ExternalAdBlocker;
-import club.sk1er.hytilities.handlers.lobby.bossbar.LobbyBossbar;
-import club.sk1er.hytilities.handlers.chat.cleaner.ChatCleaner;
-import club.sk1er.hytilities.handlers.chat.whitechat.WhiteChat;
+import club.sk1er.hytilities.handlers.chat.ChatHandler;
 import club.sk1er.hytilities.handlers.game.GameChecker;
+import club.sk1er.hytilities.handlers.lobby.adblock.ExternalAdBlocker;
+import club.sk1er.hytilities.handlers.lobby.bossbar.LobbyBossbar;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
 import club.sk1er.hytilities.handlers.lobby.npc.NPCHider;
-import club.sk1er.hytilities.handlers.chat.restyler.ChatRestyler;
 import club.sk1er.hytilities.handlers.server.ServerChecker;
 import club.sk1er.hytilities.handlers.silent.SilentRemoval;
 import club.sk1er.modcore.ModCoreInstaller;
@@ -55,14 +52,11 @@ public class Hytilities {
         MinecraftForge.EVENT_BUS.register(new ServerChecker());
 
         // chat
-        MinecraftForge.EVENT_BUS.register(new AdBlocker());
-        MinecraftForge.EVENT_BUS.register(new ExternalAdBlocker());
-        MinecraftForge.EVENT_BUS.register(new ChatCleaner());
-        MinecraftForge.EVENT_BUS.register(new ChatRestyler());
         MinecraftForge.EVENT_BUS.register(new SilentRemoval());
-        MinecraftForge.EVENT_BUS.register(new WhiteChat());
+        MinecraftForge.EVENT_BUS.register(new ChatHandler());
 
         // lobby
+        MinecraftForge.EVENT_BUS.register(new ExternalAdBlocker());
         MinecraftForge.EVENT_BUS.register(new NPCHider());
         MinecraftForge.EVENT_BUS.register(new LobbyBossbar());
         MinecraftForge.EVENT_BUS.register(new LimboLimiter());
