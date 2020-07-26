@@ -38,7 +38,7 @@ public class ChatRestyler implements ChatModule {
                     Matcher startCounterMatcher = gameStartCounterStyle.matcher(unformattedMessage);
                     if (startCounterMatcher.find()) {
                         String time = startCounterMatcher.group("time");
-                        boolean secondMessage = time.contains("seconds");
+                        boolean secondMessage = unformattedMessage.contains("seconds");
 
                         event.message = colorMessage("&e&l* &aGame starts in &b&l" + time
                             // for some bizarre reason, seconds is captured in the time group (though we explicitly tell
