@@ -2,8 +2,11 @@ package club.sk1er.hytilities.handlers.chat;
 
 import club.sk1er.hytilities.handlers.chat.adblock.AdBlocker;
 import club.sk1er.hytilities.handlers.chat.cleaner.ChatCleaner;
+import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
+import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.chat.restyler.ChatRestyler;
 import club.sk1er.hytilities.handlers.chat.whitechat.WhiteChat;
+import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -19,6 +22,8 @@ public class ChatHandler {
         this.registerModule(new ChatCleaner());
         this.registerModule(new ChatRestyler());
         this.registerModule(new WhiteChat());
+        this.registerModule(new LevelupEvent());
+        this.registerModule(new AchievementEvent());
     }
 
     private void registerModule(ChatModule chatModule) {
@@ -27,6 +32,10 @@ public class ChatHandler {
 
     @SubscribeEvent
     public void handleChat(ClientChatReceivedEvent event) {
+        if (!MinecraftUtils.isHypixel()) {
+            return;
+        }
+
         for (ChatModule module : this.moduleList) {
             module.onChatEvent(event);
         }

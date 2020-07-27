@@ -17,10 +17,6 @@ public class ChatRestyler implements ChatModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (!MinecraftUtils.isHypixel()) {
-            return;
-        }
-
         String message = event.message.getFormattedText().trim();
         String unformattedMessage = event.message.getUnformattedText().trim();
 

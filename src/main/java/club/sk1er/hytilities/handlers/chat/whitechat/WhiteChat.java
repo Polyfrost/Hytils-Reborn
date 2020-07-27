@@ -15,7 +15,7 @@ public class WhiteChat implements ChatModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (!MinecraftUtils.isHypixel() || !HytilitiesConfig.hytilitiesWhiteChat) {
+        if (!HytilitiesConfig.hytilitiesWhiteChat) {
             return;
         }
 

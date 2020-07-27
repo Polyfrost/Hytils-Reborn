@@ -15,7 +15,7 @@ public class AdBlocker implements ChatModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (!HytilitiesConfig.hytilitiesAdblock || !MinecraftUtils.isHypixel()) {
+        if (!HytilitiesConfig.hytilitiesAdblock) {
             return;
         }
 

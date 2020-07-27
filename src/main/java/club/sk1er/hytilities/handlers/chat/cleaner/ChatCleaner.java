@@ -35,7 +35,7 @@ public class ChatCleaner implements ChatModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (!MinecraftUtils.isHypixel() || event.isCanceled()) {
+        if (event.isCanceled()) {
             return;
         }
 

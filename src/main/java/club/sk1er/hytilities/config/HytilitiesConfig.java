@@ -120,6 +120,20 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean hytilitiesLobbyBossbar;
 
+    @Property(
+        type = PropertyType.SWITCH, name = "Broadcast Achievements",
+        description = "Announce when you've gotten an achievement in Guild chat.",
+        category = "General", subcategory = "Guilds"
+    )
+    public static boolean hytilitiesBroadcastAchievements;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Broadcast Levelup",
+        description = "Announce when you've leveled up in Guild chat.",
+        category = "General", subcategory = "Guilds"
+    )
+    public static boolean hytilitiesBroadcastLevelup;
+
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
         initialize();
