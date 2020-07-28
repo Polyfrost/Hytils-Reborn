@@ -2,6 +2,7 @@ package club.sk1er.hytilities.handlers.lobby.adblock;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.mods.core.util.MinecraftUtils;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -15,16 +16,15 @@ public class ExternalAdBlocker {
             return;
         }
 
-        if (event.gui instanceof GuiScreenBook) {
-            if (((GuiScreenBook) event.gui).pageGetCurrent().contains("SALE")) {
-                event.setCanceled(true);
+        GuiScreen gui = event.gui;
+        if (gui instanceof GuiScreenBook && ((GuiScreenBook) gui).pageGetCurrent().contains("SALE")) {
+            event.setCanceled(true);
 
-                // Hypixel will only display this every 24h.
-                // safe to assume nobody is keeping their game opened for 24h+
-                // so unregister the class as we no longer need to keep checking for what
-                // the gui is that was just opened.
-                MinecraftForge.EVENT_BUS.unregister(this);
-            }
+            // Hypixel will only display this every 24h.
+            // safe to assume nobody is keeping their game opened for 24h+
+            // so unregister the class as we no longer need to keep checking for what
+            // the gui is that was just opened.
+            MinecraftForge.EVENT_BUS.unregister(this);
         }
     }
 }
