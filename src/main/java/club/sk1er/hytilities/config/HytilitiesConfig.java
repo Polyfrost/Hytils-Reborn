@@ -134,6 +134,13 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean hytilitiesBroadcastLevelup;
 
+    @Property(
+        type = PropertyType.SWITCH, name = "AutoStart",
+        description = "Join Hypixel immediately once the game is done starting.",
+        category = "General", subcategory = "General"
+    )
+    public static boolean hytilitiesAutoStart;
+
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
         initialize();

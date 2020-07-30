@@ -5,6 +5,7 @@ import club.sk1er.hytilities.command.SilentRemoveCommand;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatHandler;
 import club.sk1er.hytilities.handlers.game.GameChecker;
+import club.sk1er.hytilities.handlers.general.AutoStart;
 import club.sk1er.hytilities.handlers.lobby.adblock.ExternalAdBlocker;
 import club.sk1er.hytilities.handlers.lobby.bossbar.LobbyBossbar;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
@@ -19,6 +20,7 @@ import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 
 @Mod(
     modid = Hytilities.MOD_ID,
@@ -35,6 +37,7 @@ public class Hytilities {
     public static Hytilities INSTANCE;
 
     private final HytilitiesConfig config = new HytilitiesConfig();
+    private boolean loadedCall;
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
@@ -47,8 +50,14 @@ public class Hytilities {
         registerHandlers();
     }
 
+    @Mod.EventHandler
+    public void finishedStarting(FMLLoadCompleteEvent event) {
+        this.loadedCall = true;
+    }
+
     private void registerHandlers() {
         // general stuff
+        MinecraftForge.EVENT_BUS.register(new AutoStart());
         MinecraftForge.EVENT_BUS.register(new ServerChecker());
 
         // chat
@@ -69,5 +78,13 @@ public class Hytilities {
 
     public HytilitiesConfig getConfig() {
         return config;
+    }
+
+    public boolean isLoadedCall() {
+        return loadedCall;
+    }
+
+    public void setLoadedCall(boolean loadedCall) {
+        this.loadedCall = loadedCall;
     }
 }
