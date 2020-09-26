@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class SilentRemoval {
 
-    private static final List<String> silentUsers = new ArrayList<>();
+    private final List<String> silentUsers = new ArrayList<>();
     private final Pattern leaveMessage = Pattern.compile("(?:Friend|Guild) > (?<player>\\w{1,16}) left\\.");
 
     @SubscribeEvent(priority = EventPriority.LOW)
@@ -30,7 +30,7 @@ public class SilentRemoval {
         }
     }
 
-    public static List<String> getSilentUsers() {
+    public List<String> getSilentUsers() {
         return silentUsers;
     }
 }

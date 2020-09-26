@@ -31,12 +31,14 @@ public class Hytilities {
 
     public static final String MOD_ID = "hytilities";
     public static final String MOD_NAME = "Hytilities";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "0.1";
 
     @Mod.Instance(MOD_ID)
     public static Hytilities INSTANCE;
 
     private final HytilitiesConfig config = new HytilitiesConfig();
+    private SilentRemoval silentRemoval;
+
     private boolean loadedCall;
 
     @Mod.EventHandler
@@ -61,7 +63,7 @@ public class Hytilities {
         MinecraftForge.EVENT_BUS.register(new ServerChecker());
 
         // chat
-        MinecraftForge.EVENT_BUS.register(new SilentRemoval());
+        MinecraftForge.EVENT_BUS.register(silentRemoval = new SilentRemoval());
         MinecraftForge.EVENT_BUS.register(new ChatHandler());
 
         // lobby
@@ -78,6 +80,10 @@ public class Hytilities {
 
     public HytilitiesConfig getConfig() {
         return config;
+    }
+
+    public SilentRemoval getSilentRemoval() {
+        return silentRemoval;
     }
 
     public boolean isLoadedCall() {

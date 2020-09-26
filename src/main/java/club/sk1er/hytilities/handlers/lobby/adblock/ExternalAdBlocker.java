@@ -12,9 +12,9 @@ public class ExternalAdBlocker {
 
     @SubscribeEvent
     public void onBookOpen(GuiOpenEvent event) {
-        if (!HytilitiesConfig.hytilitiesAdblock || !MinecraftUtils.isHypixel()) {
+        /*if (!HytilitiesConfig.hytilitiesAdblock || !MinecraftUtils.isHypixel()) {
             return;
-        }
+        }*/
 
         GuiScreen gui = event.gui;
         if (gui instanceof GuiScreenBook && ((GuiScreenBook) gui).pageGetCurrent().contains("SALE")) {

@@ -11,14 +11,15 @@ public class AdBlocker implements ChatModule {
 
     // match "[/]<visit|ah|party|p join|guild|g join> playername"
     // the "/" is optional as some people simply just say "ah playername"
+    // todo: this seems to remove any mention of the word "party", needs to be fixed
     private final Pattern commonAdvertisements = Pattern.compile("/?(?:visit|ah|party|p join|guild|g join) \\w{1,16}", Pattern.CASE_INSENSITIVE);
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (!HytilitiesConfig.hytilitiesAdblock) {
+        /*if (!HytilitiesConfig.hytilitiesAdblock) {
             return;
         }
-
+*/
         if (commonAdvertisements.matcher(event.message.getUnformattedText()).find()) {
             event.setCanceled(true);
         }
