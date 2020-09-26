@@ -58,12 +58,15 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude "mcmod.info"
     }
+
+    rename '(.+_at.cfg)', 'META-INF/$1'
 }
 
 jar {
     manifest {
         attributes "FMLCorePlugin": "club.sk1er.hytilities.tweaker.HytilitiesTweaker",
                 "ModSide": "CLIENT",
+                'FMLAT': 'hytilities_at.cfg',
                 "FMLCorePluginContainsFMLMod": "Yes, yes it does"
     }
 }
