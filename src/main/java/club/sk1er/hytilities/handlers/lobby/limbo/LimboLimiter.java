@@ -1,6 +1,7 @@
 package club.sk1er.hytilities.handlers.lobby.limbo;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
+import club.sk1er.hytilities.handlers.chat.restyler.ChatRestyler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -33,9 +34,10 @@ public class LimboLimiter {
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Unload event) {
         limboStatus = false;
+        ChatRestyler.reset(); // putting this here so we don't have to make a new event class just to do this
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     public static boolean shouldLimitFramerate() {
         return (!Display.isActive() || limboStatus) && HytilitiesConfig.hytilitiesLimboLimiter && time * 20 >= 5;
     }

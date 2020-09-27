@@ -93,6 +93,27 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hytilitiesGameStatusRestyle;
 
     @Property(
+            type = PropertyType.SWITCH, name = "Player Count Before Player Name",
+            description = "Put player count before player name in game join/leave messages.",
+            category = "Chat", subcategory = "Restyler"
+    )
+    public static boolean hytilitiesPlayerCountBeforePlayerName;
+
+    @Property(
+            type = PropertyType.SWITCH, name = "Show Player Count on Player Leave",
+            description = "Include the player count when players leave.",
+            category = "Chat", subcategory = "Restyler"
+    )
+    public static boolean hytilitiesPlayerCountOnPlayerLeave;
+
+    @Property(
+            type = PropertyType.SWITCH, name = "Zero-Pad Player Counts",
+            description = "Places zeros at the beginning of player counts to align with the max player count.",
+            category = "Chat", subcategory = "Restyler"
+    )
+    public static boolean hytilitiesPadPlayerCount;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Lobby NPCs",
         description = "Hide NPCs in the lobby.",
         category = "Lobby", subcategory = "Entities"
