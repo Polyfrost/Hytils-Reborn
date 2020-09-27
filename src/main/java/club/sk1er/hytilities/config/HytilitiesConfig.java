@@ -8,12 +8,12 @@ import java.io.File;
 
 public class HytilitiesConfig extends Vigilant {
 
-    /*@Property(
+    @Property(
         type = PropertyType.SWITCH, name = "Ad Blocker",
         description = "Remove spam messages, typically advertising something.",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean hytilitiesAdblock;*/
+    public static boolean hytilitiesAdblock;
 
     /*@Property(
         type = PropertyType.SWITCH, name = "Remove Line Separators",

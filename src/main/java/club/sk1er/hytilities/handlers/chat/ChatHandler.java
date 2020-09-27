@@ -19,7 +19,7 @@ public class ChatHandler {
     private final List<ChatModule> moduleList = new ArrayList<>();
 
     public ChatHandler() {
-        //this.registerModule(new AdBlocker());
+        this.registerModule(new AdBlocker());
         this.registerModule(new ChatCleaner());
         this.registerModule(new ChatRestyler());
         this.registerModule(new WhiteChat());
