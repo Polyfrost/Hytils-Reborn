@@ -7,9 +7,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Handles checking for the current location of the player using many different techniques.
+ *
+ */
+
 public class GameChecker {
 
-    private static boolean bedwars;
+    private static GameType gameType = GameType.UNKNOWN;
 
     @SubscribeEvent
     public void worldLoad(WorldEvent.Load event) {
@@ -24,23 +29,22 @@ public class GameChecker {
             }
 
             if (!scoreboardTitle.isEmpty()) {
-                // eventually make this into a fully-fledged game checker, converted to
-                // switch (scoreboardTitle) {
-                //  case "BED WARS":
-                //      bedwars = true;
-                //      break;
-                //
-                //  case "SKYWARS":
-                //      skywars = true;
-                //      break;
-                //
-                // etc..
-                bedwars = scoreboardTitle.equals("BED WARS");
+                switch(scoreboardTitle) {
+                    case "BED WARS":
+                        gameType = GameType.BED_WARS;
+                        break;
+                    case "SKYWARS":
+                        gameType = GameType.SKY_WARS;
+                        break;
+                    default:
+                        gameType = GameType.UNKNOWN;
+                        break;
+                }
             }
         }, 3, TimeUnit.SECONDS);
     }
 
-    public static boolean isBedwars() {
-        return bedwars;
+    public static GameType getGameType() {
+        return gameType;
     }
 }

@@ -3,7 +3,7 @@ package club.sk1er.hytilities.handlers.chat.cleaner;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatModule;
 import club.sk1er.hytilities.handlers.game.GameChecker;
-import club.sk1er.mods.core.util.MinecraftUtils;
+import club.sk1er.hytilities.handlers.game.GameType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
@@ -106,7 +106,7 @@ public class ChatCleaner implements ChatModule {
             }
         }
 
-        if (HytilitiesConfig.hytilitiesBedwarsAdvertisements && GameChecker.isBedwars()) {
+        if (HytilitiesConfig.hytilitiesBedwarsAdvertisements && GameChecker.getGameType() == GameType.BED_WARS) {
             if (bedwarsPartyAdvertisement.matcher(message).find()) {
                 event.setCanceled(true);
                 return;
