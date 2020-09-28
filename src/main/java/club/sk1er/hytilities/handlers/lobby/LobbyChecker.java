@@ -16,15 +16,11 @@ public class LobbyChecker {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void retrieveLocraw(ClientChatReceivedEvent event) {
-        if (!MinecraftUtils.isHypixel()) {
+        if (!MinecraftUtils.isHypixel() || Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation() == null) {
             this.lobbyStatus = false;
             return;
         }
 
-        // todo: information can be null when invoked for the first time
-        // find a way around this, maybe schedule it for a few seconds?
-        // everything i've tried hasn't worked, so this will do for now, just wont
-        // work the first time around.
         final LocrawInformation info = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
         this.lobbyStatus = this.lobbyPattern.matcher(info.getServerId()).matches();
     }
