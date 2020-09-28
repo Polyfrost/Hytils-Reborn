@@ -4,6 +4,7 @@ import club.sk1er.hytilities.command.HytilitiesCommand;
 import club.sk1er.hytilities.command.SilentRemoveCommand;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatHandler;
+import club.sk1er.hytilities.handlers.chat.autoqueue.AutoQueue;
 import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.general.AutoStart;
@@ -41,6 +42,7 @@ public class Hytilities {
     private SilentRemoval silentRemoval;
     private LobbyChecker lobbyChecker;
     private LocrawUtil locrawUtil;
+    private AutoQueue autoQueue = new AutoQueue();
 
     private boolean loadedCall;
 
@@ -104,5 +106,9 @@ public class Hytilities {
 
     public void setLoadedCall(boolean loadedCall) {
         this.loadedCall = loadedCall;
+    }
+
+    public AutoQueue getAutoQueue() {
+        return autoQueue;
     }
 }
