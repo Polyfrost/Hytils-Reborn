@@ -25,8 +25,6 @@ public class LimboLimiter {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-//        System.out.println(Hytilities.INSTANCE.getHardcoreStatus().shouldChangeStyle());
-
         if (limboStatus) {
             ++time;
         } else {

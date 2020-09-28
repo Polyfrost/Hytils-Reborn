@@ -2,8 +2,10 @@ package club.sk1er.hytilities.handlers.chat.restyler;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatModule;
+import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.regex.Matcher;
@@ -111,9 +113,11 @@ public class ChatRestyler implements ChatModule {
         }
     }
 
-    // Normally this wouldn't be static but it has to be called from a static method so it has to be static.
-    // As long as we don't make multiple ChatRestyler objects it should be fine.
-    // (Called by hytilities.handlers.lobby.limbo.LimboLimiter#onWorldChange())
+    /**
+     * Normally this wouldn't be static but it has to be called from a static method so it has to be static.
+     * As long as we don't make multiple ChatRestyler objects it should be fine.
+     * (Called by {@link LimboLimiter#onWorldChange(WorldEvent.Unload)})
+     */
     public static void reset() {
         playerCount = maxPlayerCount = -1;
     }
