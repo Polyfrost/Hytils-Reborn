@@ -13,14 +13,23 @@ public class LocrawInformation {
     private String mapName;
 
     @SerializedName("gametype")
+    private String rawGameType;
     private GameType gameType;
 
     public String getServerId() {
         return serverId;
     }
 
+    public String getRawGameType() {
+        return rawGameType;
+    }
+
     public String getGameMode() {
         return gameMode;
+    }
+
+    public void setGameType(GameType gameType) {
+        this.gameType = gameType;
     }
 
     public GameType getGameType() {

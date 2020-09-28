@@ -6,7 +6,6 @@ import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatHandler;
 import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
-import club.sk1er.hytilities.handlers.game.GameChecker;
 import club.sk1er.hytilities.handlers.general.AutoStart;
 import club.sk1er.hytilities.handlers.lobby.LobbyChecker;
 import club.sk1er.hytilities.handlers.lobby.bossbar.LobbyBossbar;
@@ -41,7 +40,6 @@ public class Hytilities {
     private final HytilitiesConfig config = new HytilitiesConfig();
     private SilentRemoval silentRemoval;
     private LobbyChecker lobbyChecker;
-    private GameChecker gameChecker;
     private LocrawUtil locrawUtil;
 
     private boolean loadedCall;
@@ -75,7 +73,6 @@ public class Hytilities {
 
         // lobby
         MinecraftForge.EVENT_BUS.register(lobbyChecker = new LobbyChecker());
-        MinecraftForge.EVENT_BUS.register(gameChecker = new GameChecker());
         MinecraftForge.EVENT_BUS.register(new NPCHider());
         MinecraftForge.EVENT_BUS.register(new LobbyBossbar());
         MinecraftForge.EVENT_BUS.register(new LimboLimiter());
@@ -99,10 +96,6 @@ public class Hytilities {
 
     public LobbyChecker getLobbyChecker() {
         return lobbyChecker;
-    }
-
-    public GameChecker getGameChecker() {
-        return gameChecker;
     }
 
     public boolean isLoadedCall() {

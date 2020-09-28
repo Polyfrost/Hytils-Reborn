@@ -6,6 +6,7 @@ import club.sk1er.mods.core.util.MinecraftUtils;
 import com.google.common.collect.Collections2;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -19,8 +20,8 @@ public class NPCHider {
             return;
         }
 
-        // hypixel marks npc uuids as version 2
-        if (event.entity.getUniqueID().version() == 2) {
+        // hypixel marks npc uuids as version 2, also hide the Quest Master
+        if (event.entity.getUniqueID().version() == 2 || (event.entity instanceof EntityVillager)) {
             event.setCanceled(true);
         }
     }

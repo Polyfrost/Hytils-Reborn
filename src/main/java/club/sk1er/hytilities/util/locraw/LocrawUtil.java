@@ -1,6 +1,7 @@
 package club.sk1er.hytilities.util.locraw;
 
 import club.sk1er.hytilities.handlers.chat.ChatModule;
+import club.sk1er.hytilities.handlers.game.GameType;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import club.sk1er.mods.core.util.Multithreading;
 import com.google.gson.Gson;
@@ -61,6 +62,10 @@ public class LocrawUtil implements ChatModule {
                     // Parse the json, and make sure that it's not null.
                     locrawInformation = gson.fromJson(msg, LocrawInformation.class);
                     if (locrawInformation != null) {
+                        // Gson does not want to parse the GameType, as some stuff is different so this
+                        // is just a way around that to make it properly work :)
+                        locrawInformation.setGameType(GameType.getFromLocraw(locrawInformation.getRawGameType()));
+
                         // Stop listening for locraw and cancel the message.
                         event.setCanceled(true);
                         listening = false;
