@@ -45,7 +45,6 @@ public class Hytilities {
     private SilentRemoval silentRemoval;
     private LobbyChecker lobbyChecker;
     private LocrawUtil locrawUtil;
-    private AutoQueue autoQueue = new AutoQueue();
 
     private boolean loadedCall;
 
@@ -67,8 +66,9 @@ public class Hytilities {
 
     private void registerHandlers() {
         // general stuff
-        MinecraftForge.EVENT_BUS.register(new AutoStart());
         MinecraftForge.EVENT_BUS.register(locrawUtil = new LocrawUtil());
+        MinecraftForge.EVENT_BUS.register(new AutoQueue());
+        MinecraftForge.EVENT_BUS.register(new AutoStart());
 
         // chat
         MinecraftForge.EVENT_BUS.register(silentRemoval = new SilentRemoval());
@@ -104,6 +104,7 @@ public class Hytilities {
         return lobbyChecker;
     }
 
+    @SuppressWarnings("unused")
     public HardcoreStatus getHardcoreStatus() {
         return hardcoreStatus;
     }
@@ -114,9 +115,5 @@ public class Hytilities {
 
     public void setLoadedCall(boolean loadedCall) {
         this.loadedCall = loadedCall;
-    }
-
-    public AutoQueue getAutoQueue() {
-        return autoQueue;
     }
 }

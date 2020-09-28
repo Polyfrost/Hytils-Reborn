@@ -170,21 +170,19 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean chatSwapper;
 
     @Property(
-            type = PropertyType.SWITCH, name = "Auto Queue",
-            description = "Automatically queues for another game once you die",
-            category = "General", subcategory = "Queue"
+        type = PropertyType.SWITCH, name = "Auto Queue",
+        description = "Automatically queues for another game once you die",
+        category = "General", subcategory = "Queue"
     )
     public static boolean autoQueue;
 
     @Property(
-            type = PropertyType.SLIDER, name = "Auto Queue Delay",
-            description = "Delays the execution of Auto Queue. (The measurement is in seconds)",
-            category = "General", subcategory = "Queue",
-            max = 100
+        type = PropertyType.SLIDER, name = "Auto Queue Delay",
+        description = "Delays the execution of Auto Queue. (The measurement is in seconds)",
+        category = "General", subcategory = "Queue",
+        max = 100
     )
     public static int autoQueueDelay;
-
-
 
     @Property(
         type = PropertyType.SWITCH, name = "Armour Hider",

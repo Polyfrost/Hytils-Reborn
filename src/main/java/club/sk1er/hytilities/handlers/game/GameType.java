@@ -23,7 +23,7 @@ public enum GameType {
     SMASH_HEROES("SUPER_SMASH"),
     WARLORDS("BATTLEGROUND");
 
-    private String serverName;
+    private final String serverName;
 
     GameType(String serverName) {
         this.serverName = serverName;

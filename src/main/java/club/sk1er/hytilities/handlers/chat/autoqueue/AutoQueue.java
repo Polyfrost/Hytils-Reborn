@@ -17,14 +17,18 @@ public class AutoQueue implements ChatModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        String message = ChatColor.stripColor(event.message.getUnformattedText());
+        if (!HytilitiesConfig.autoQueue) {
+            return;
+        }
 
-        if (message.startsWith("You died! Want to play again?") && HytilitiesConfig.autoQueue) {
+        String message = ChatColor.stripColor(event.message.getUnformattedText());
+        if (message.startsWith("You died! Want to play again?")) {
             List<IChatComponent> componentList = event.message.getSiblings();
             for (IChatComponent component : componentList) {
                 String compMsg = ChatColor.stripColor(component.getUnformattedText());
                 if (compMsg.equals(" Click here! ")) {
                     command = component.getChatStyle().getChatClickEvent().getValue();
+                    break;
                 }
             }
         }
@@ -47,10 +51,11 @@ public class AutoQueue implements ChatModule {
     private void switchGame() {
         Multithreading.runAsync(() -> {
             try {
-                Thread.sleep(HytilitiesConfig.autoQueueDelay * 1000);
+                Thread.sleep(HytilitiesConfig.autoQueueDelay * 1000L);
             } catch (InterruptedException exception) {
                 exception.printStackTrace();
             }
+
             Minecraft.getMinecraft().thePlayer.sendChatMessage(command);
             command = null;
         });
