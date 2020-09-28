@@ -169,6 +169,13 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean chatSwapper;
 
+    @Property(
+            type = PropertyType.SWITCH, name = "Armour Hider",
+            description = "Hide armour in games where armour is always the same.",
+            category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideArmour;
+
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
         initialize();
