@@ -24,7 +24,7 @@ public class AutoStart {
 
     @SubscribeEvent
     public void tick(TickEvent.ClientTickEvent event) {
-        if (this.gui instanceof GuiMainMenu && Hytilities.INSTANCE.isLoadedCall() && HytilitiesConfig.hytilitiesAutoStart) {
+        if (this.gui instanceof GuiMainMenu && Hytilities.INSTANCE.isLoadedCall() && HytilitiesConfig.autoStart) {
             // we need to delay for a second as gl context needs to be created first,
             // otherwise everything is blocky & untextured for a few seconds
             // when joining a world.

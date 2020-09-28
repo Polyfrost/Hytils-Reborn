@@ -4,13 +4,14 @@ import club.sk1er.hytilities.command.HytilitiesCommand;
 import club.sk1er.hytilities.command.SilentRemoveCommand;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatHandler;
+import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
+import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.game.GameChecker;
 import club.sk1er.hytilities.handlers.general.AutoStart;
-import club.sk1er.hytilities.handlers.lobby.adblock.ExternalAdBlocker;
+import club.sk1er.hytilities.handlers.lobby.LobbyChecker;
 import club.sk1er.hytilities.handlers.lobby.bossbar.LobbyBossbar;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
 import club.sk1er.hytilities.handlers.lobby.npc.NPCHider;
-import club.sk1er.hytilities.handlers.server.ServerChecker;
 import club.sk1er.hytilities.handlers.silent.SilentRemoval;
 import club.sk1er.hytilities.util.locraw.LocrawUtil;
 import club.sk1er.modcore.ModCoreInstaller;
@@ -39,6 +40,8 @@ public class Hytilities {
 
     private final HytilitiesConfig config = new HytilitiesConfig();
     private SilentRemoval silentRemoval;
+    private LobbyChecker lobbyChecker;
+    private GameChecker gameChecker;
     private LocrawUtil locrawUtil;
 
     private boolean loadedCall;
@@ -62,19 +65,20 @@ public class Hytilities {
     private void registerHandlers() {
         // general stuff
         MinecraftForge.EVENT_BUS.register(new AutoStart());
-        MinecraftForge.EVENT_BUS.register(new ServerChecker());
         MinecraftForge.EVENT_BUS.register(locrawUtil = new LocrawUtil());
 
         // chat
         MinecraftForge.EVENT_BUS.register(silentRemoval = new SilentRemoval());
         MinecraftForge.EVENT_BUS.register(new ChatHandler());
+        MinecraftForge.EVENT_BUS.register(new AchievementEvent());
+        MinecraftForge.EVENT_BUS.register(new LevelupEvent());
 
         // lobby
-        MinecraftForge.EVENT_BUS.register(new ExternalAdBlocker());
+        MinecraftForge.EVENT_BUS.register(lobbyChecker = new LobbyChecker());
+        MinecraftForge.EVENT_BUS.register(gameChecker = new GameChecker());
         MinecraftForge.EVENT_BUS.register(new NPCHider());
         MinecraftForge.EVENT_BUS.register(new LobbyBossbar());
         MinecraftForge.EVENT_BUS.register(new LimboLimiter());
-        MinecraftForge.EVENT_BUS.register(new GameChecker());
     }
 
     public void sendMessage(String message) {
@@ -91,6 +95,14 @@ public class Hytilities {
 
     public SilentRemoval getSilentRemoval() {
         return silentRemoval;
+    }
+
+    public LobbyChecker getLobbyChecker() {
+        return lobbyChecker;
+    }
+
+    public GameChecker getGameChecker() {
+        return gameChecker;
     }
 
     public boolean isLoadedCall() {

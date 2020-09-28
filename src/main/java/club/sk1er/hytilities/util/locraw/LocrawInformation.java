@@ -6,13 +6,28 @@ import com.google.gson.annotations.SerializedName;
 public class LocrawInformation {
 
     @SerializedName("server")
-    public String serverId;
+    private String serverId;
     @SerializedName("mode")
-    public String gameMode;
+    private String gameMode;
     @SerializedName("map")
-    public String mapName;
+    private String mapName;
 
     @SerializedName("gametype")
-    public GameType gameType;
+    private GameType gameType;
 
+    public String getServerId() {
+        return serverId;
+    }
+
+    public String getGameMode() {
+        return gameMode;
+    }
+
+    public GameType getGameType() {
+        return gameType;
+    }
+
+    public String getMapName() {
+        return mapName;
+    }
 }

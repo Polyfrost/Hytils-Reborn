@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class GameChecker {
 
-    private static GameType gameType = GameType.UNKNOWN;
+    private GameType gameType = GameType.UNKNOWN;
 
     @SubscribeEvent
     public void worldLoad(WorldEvent.Load event) {
@@ -85,7 +85,7 @@ public class GameChecker {
         }, 3, TimeUnit.SECONDS);
     }
 
-    public static GameType getGameType() {
+    public GameType getGameType() {
         return gameType;
     }
 }

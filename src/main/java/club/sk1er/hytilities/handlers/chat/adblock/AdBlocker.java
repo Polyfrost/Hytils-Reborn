@@ -24,7 +24,7 @@ public class AdBlocker implements ChatModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (!HytilitiesConfig.hytilitiesAdblock) {
+        if (!HytilitiesConfig.playerAdBlock) {
             return;
         }
 

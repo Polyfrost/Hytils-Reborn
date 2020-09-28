@@ -2,7 +2,7 @@
     {
         "modid": "hytilities",
         "name": "Hytilities",
-        "description": "All-In-One Hypixel utility mod.",
+        "description": "Hypixel-focused Quality of Life mod. ",
         "version": "${version}",
         "mcversion": "${mcversion}",
         "url": "https://sk1er.club/mods/hytilities",

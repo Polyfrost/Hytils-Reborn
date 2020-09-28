@@ -39,6 +39,6 @@ public class LimboLimiter {
 
     @SuppressWarnings({"unused", "RedundantSuppression"})
     public static boolean shouldLimitFramerate() {
-        return (!Display.isActive() || limboStatus) && HytilitiesConfig.hytilitiesLimboLimiter && time * 20 >= 5;
+        return (!Display.isActive() || limboStatus) && HytilitiesConfig.limboLimiter && time * 20 >= 5;
     }
 }

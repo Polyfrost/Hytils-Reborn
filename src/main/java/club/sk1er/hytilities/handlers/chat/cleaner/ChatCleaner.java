@@ -1,5 +1,6 @@
 package club.sk1er.hytilities.handlers.chat.cleaner;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatModule;
 import club.sk1er.hytilities.handlers.game.GameChecker;
@@ -41,7 +42,7 @@ public class ChatCleaner implements ChatModule {
 
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
 
-        if (HytilitiesConfig.hytilitiesLobbyStatuses) {
+        if (HytilitiesConfig.lobbyStatus) {
             for (String messages : joinMessageTypes) {
                 if (message.contains(messages)) {
                     event.setCanceled(true);
@@ -50,7 +51,7 @@ public class ChatCleaner implements ChatModule {
             }
         }
 
-        if (HytilitiesConfig.hytilitiesMvpEmotes) {
+        if (HytilitiesConfig.mvpEmotes) {
             Matcher matcher = mvpEmotes.matcher(event.message.getFormattedText());
 
             if (matcher.find()) {
@@ -70,7 +71,7 @@ public class ChatCleaner implements ChatModule {
             }
         }*/
 
-        if (HytilitiesConfig.hytilitiesMysteryBoxAnnouncer) {
+        if (HytilitiesConfig.mysteryBoxAnnouncer) {
             Matcher matcher = mysteryBoxFind.matcher(message);
 
             if (matcher.find()) {
@@ -87,33 +88,33 @@ public class ChatCleaner implements ChatModule {
             }
         }
 
-        if (HytilitiesConfig.hytilitiesGameAnnouncements) {
-            if (gameAnnouncement.matcher(message).find()) {
+        if (HytilitiesConfig.gameAnnouncements) {
+            if (gameAnnouncement.matcher(message).matches()) {
                 event.setCanceled(true);
                 return;
             }
         }
 
-        if (HytilitiesConfig.hytilitiesHypeLimitReminder && message.startsWith("  ➤ You have reached your Hype limit!")) {
+        if (HytilitiesConfig.hypeLimitReminder && message.startsWith("  ➤ You have reached your Hype limit!")) {
             event.setCanceled(true);
             return;
         }
 
-        if (HytilitiesConfig.hytilitiesSoulBoxAnnouncer) {
-            if (soulBoxFind.matcher(message).find()) {
+        if (HytilitiesConfig.soulBoxAnnouncer) {
+            if (soulBoxFind.matcher(message).matches()) {
                 event.setCanceled(true);
                 return;
             }
         }
 
-        if (HytilitiesConfig.hytilitiesBedwarsAdvertisements && GameChecker.getGameType() == GameType.BED_WARS) {
+        if (HytilitiesConfig.bedwarsAdvertisements && Hytilities.INSTANCE.getGameChecker().getGameType() == GameType.BED_WARS) {
             if (bedwarsPartyAdvertisement.matcher(message).find()) {
                 event.setCanceled(true);
                 return;
             }
         }
 
-        if (HytilitiesConfig.hytilitiesConnectionStatus && connectionStatus.matcher(message).matches()) {
+        if (HytilitiesConfig.connectionStatus && connectionStatus.matcher(message).matches()) {
             event.setCanceled(true);
         }
     }

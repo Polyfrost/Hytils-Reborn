@@ -15,7 +15,7 @@ public class WhiteChat implements ChatModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (!HytilitiesConfig.hytilitiesWhiteChat) {
+        if (!HytilitiesConfig.whiteChat) {
             return;
         }
 

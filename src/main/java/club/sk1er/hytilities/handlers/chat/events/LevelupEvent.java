@@ -33,7 +33,7 @@ public class LevelupEvent implements ChatModule {
 
     @SubscribeEvent
     public void levelUpEvent(HypixelLevelupEvent event) {
-        if (HytilitiesConfig.hytilitiesBroadcastLevelup) {
+        if (HytilitiesConfig.broadcastLevelup) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/gchat Levelup! I am now Hypixel Level: " + event.getLevel() + "!");
         }
     }

@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LocrawUtil implements ChatModule {
 
-    public LocrawInformation locrawInformation;
+    private LocrawInformation locrawInformation;
 
     private final Gson gson = new Gson();
     private boolean listening;
@@ -68,5 +68,9 @@ public class LocrawUtil implements ChatModule {
                 }
             } catch (Exception ignored) {}
         }
+    }
+
+    public LocrawInformation getLocrawInformation() {
+        return locrawInformation;
     }
 }

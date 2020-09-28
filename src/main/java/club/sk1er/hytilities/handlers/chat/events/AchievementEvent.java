@@ -38,7 +38,7 @@ public class AchievementEvent implements ChatModule {
 
     @SubscribeEvent
     public void onAchievementGet(HypixelAchievementEvent event) {
-        if (HytilitiesConfig.hytilitiesBroadcastAchievements) {
+        if (HytilitiesConfig.broadcastAchievements) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/gchat Achievement unlocked! I unlocked the " + event.getAchievement() + " achievement!");
         }
     }

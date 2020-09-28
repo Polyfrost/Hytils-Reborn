@@ -38,7 +38,7 @@ public class ChatRestyler implements ChatModule {
 
         // Currently unformattedMessage doesn't need to be changed but I'm leaving these in, commented, in case it's
         // changed in the future and they need to be padded.
-        if (HytilitiesConfig.hytilitiesPadPlayerCount) {
+        if (HytilitiesConfig.padPlayerCount) {
             Matcher mf = formattedPaddingPattern.matcher(message);
 //            Matcher mu = unformattedPaddingPattern.matcher(unformattedMessage);
             if (mf.find(0)) {//&& mu.find(0)) {
@@ -50,9 +50,9 @@ public class ChatRestyler implements ChatModule {
             }
         }
 
-        if (HytilitiesConfig.hytilitiesGameStatusRestyle) { // todo: all the code following this might have room for optimization, should be looked into
+        if (HytilitiesConfig.gameStatusRestyle) { // todo: all the code following this might have room for optimization, should be looked into
             if (joinMatcher.find(0)) {
-                if (HytilitiesConfig.hytilitiesPlayerCountBeforePlayerName) {
+                if (HytilitiesConfig.playerCountBeforePlayerName) {
                     event.message = colorMessage("&a&l+ &e" + joinMatcher.group("amount")
                             + " &" + joinMatcher.group("color") + joinMatcher.group("player"));
                 } else {
@@ -62,8 +62,8 @@ public class ChatRestyler implements ChatModule {
             } else {
                 Matcher leaveMatcher = gameLeaveStyle.matcher(message);
                 if (leaveMatcher.find(0)) {
-                    if (HytilitiesConfig.hytilitiesPlayerCountOnPlayerLeave) {
-                        if (HytilitiesConfig.hytilitiesPlayerCountBeforePlayerName) {
+                    if (HytilitiesConfig.playerCountOnPlayerLeave) {
+                        if (HytilitiesConfig.playerCountBeforePlayerName) {
                             event.message = colorMessage("&c&l- &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount +
                                     "&e) &" + leaveMatcher.group("color") + leaveMatcher.group("player"));
                         } else {
@@ -91,11 +91,11 @@ public class ChatRestyler implements ChatModule {
                 }
             }
         } else {
-            if (HytilitiesConfig.hytilitiesPlayerCountOnPlayerLeave) {
+            if (HytilitiesConfig.playerCountOnPlayerLeave) {
                 Matcher leaveMater = gameLeaveStyle.matcher(message);
 
                 if (leaveMater.find(0)) {
-                    if (HytilitiesConfig.hytilitiesPlayerCountBeforePlayerName) {
+                    if (HytilitiesConfig.playerCountBeforePlayerName) {
                         event.message = colorMessage("&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e) " + message);
                     } else {
                         event.message = colorMessage(message.substring(0, message.length() - 3) + " (&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)!");
@@ -103,7 +103,7 @@ public class ChatRestyler implements ChatModule {
                     return;
                 }
             }
-            if (HytilitiesConfig.hytilitiesPlayerCountBeforePlayerName) {
+            if (HytilitiesConfig.playerCountBeforePlayerName) {
                 if (joinMatcher.find(0)) {
                     event.message = colorMessage("&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e) " + message.split(" t\\(")[0] + "!");
                 }
@@ -119,7 +119,7 @@ public class ChatRestyler implements ChatModule {
     }
 
     private static String pad(String n) {
-        if (HytilitiesConfig.hytilitiesPadPlayerCount) {
+        if (HytilitiesConfig.padPlayerCount) {
             return StringUtils.repeat('0', String.valueOf(maxPlayerCount).length() - n.length()) + n;
         } else {
             return n;

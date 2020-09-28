@@ -14,7 +14,7 @@ public class AutoChatSwapper implements ChatModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (!HytilitiesConfig.hytilitiesChatSwapper) {
+        if (!HytilitiesConfig.chatSwapper) {
             return;
         }
 

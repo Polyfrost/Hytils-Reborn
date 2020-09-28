@@ -1,7 +1,7 @@
 package club.sk1er.hytilities.handlers.lobby.npc;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.util.LobbyChecker;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import com.google.common.collect.Collections2;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -15,7 +15,7 @@ public class NPCHider {
 
     @SubscribeEvent
     public void onEntityRender(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (!HytilitiesConfig.hytilitiesNpcHider || !MinecraftUtils.isHypixel() || !LobbyChecker.playerIsInLobby()) {
+        if (!HytilitiesConfig.npcHider || !MinecraftUtils.isHypixel() || !Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) {
             return;
         }
 
@@ -27,7 +27,7 @@ public class NPCHider {
 
     @SuppressWarnings("unused")
     public static Collection<NetworkPlayerInfo> hideTabNpcs(Collection<NetworkPlayerInfo> playerInfoCollection) {
-        if (!MinecraftUtils.isHypixel() || !HytilitiesConfig.hytilitiesHideNpcsInTab) {
+        if (!MinecraftUtils.isHypixel() || !HytilitiesConfig.hideNpcsInTab) {
             return playerInfoCollection;
         } else {
             return Collections2.filter(playerInfoCollection, player -> player != null && player.getGameProfile().getId().version() != 2);
