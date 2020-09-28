@@ -7,6 +7,7 @@ import club.sk1er.hytilities.handlers.chat.ChatHandler;
 import club.sk1er.hytilities.handlers.chat.autoqueue.AutoQueue;
 import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
+import club.sk1er.hytilities.handlers.game.hardcore.HardcoreStatus;
 import club.sk1er.hytilities.handlers.general.AutoStart;
 import club.sk1er.hytilities.handlers.lobby.LobbyChecker;
 import club.sk1er.hytilities.handlers.lobby.bossbar.LobbyBossbar;
@@ -39,6 +40,8 @@ public class Hytilities {
     public static Hytilities INSTANCE;
 
     private final HytilitiesConfig config = new HytilitiesConfig();
+
+    private HardcoreStatus hardcoreStatus;
     private SilentRemoval silentRemoval;
     private LobbyChecker lobbyChecker;
     private LocrawUtil locrawUtil;
@@ -69,6 +72,7 @@ public class Hytilities {
 
         // chat
         MinecraftForge.EVENT_BUS.register(silentRemoval = new SilentRemoval());
+        MinecraftForge.EVENT_BUS.register(hardcoreStatus = new HardcoreStatus());
         MinecraftForge.EVENT_BUS.register(new ChatHandler());
         MinecraftForge.EVENT_BUS.register(new AchievementEvent());
         MinecraftForge.EVENT_BUS.register(new LevelupEvent());
@@ -98,6 +102,10 @@ public class Hytilities {
 
     public LobbyChecker getLobbyChecker() {
         return lobbyChecker;
+    }
+
+    public HardcoreStatus getHardcoreStatus() {
+        return hardcoreStatus;
     }
 
     public boolean isLoadedCall() {

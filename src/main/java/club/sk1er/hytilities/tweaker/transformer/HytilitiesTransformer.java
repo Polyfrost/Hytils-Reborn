@@ -57,7 +57,8 @@ public interface HytilitiesTransformer {
      * @param methodInsnNode the transformed method insn node
      * @return a mapped insn method
      */
-    default String mapMethodNameFromNode(MethodInsnNode methodInsnNode) {
+    default String mapMethodNameFromNode(AbstractInsnNode node) {
+        MethodInsnNode methodInsnNode = (MethodInsnNode) node;
         return FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(methodInsnNode.owner, methodInsnNode.name, methodInsnNode.desc);
     }
 
@@ -67,7 +68,8 @@ public interface HytilitiesTransformer {
      * @param fieldInsnNode the transformed field insn node
      * @return a mapped insn field
      */
-    default String mapFieldNameFromNode(FieldInsnNode fieldInsnNode) {
+    default String mapFieldNameFromNode(AbstractInsnNode node) {
+        FieldInsnNode fieldInsnNode = (FieldInsnNode) node;
         return FMLDeobfuscatingRemapper.INSTANCE.mapFieldName(fieldInsnNode.owner, fieldInsnNode.name, fieldInsnNode.desc);
     }
 

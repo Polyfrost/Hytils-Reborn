@@ -1,5 +1,6 @@
 package club.sk1er.hytilities.handlers.lobby.limbo;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.restyler.ChatRestyler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -24,6 +25,8 @@ public class LimboLimiter {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
+//        System.out.println(Hytilities.INSTANCE.getHardcoreStatus().shouldChangeStyle());
+
         if (limboStatus) {
             ++time;
         } else {

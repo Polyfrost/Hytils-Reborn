@@ -27,7 +27,7 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
                     AbstractInsnNode next = iterator.next();
 
                     if (next instanceof MethodInsnNode && next.getOpcode() == Opcodes.INVOKEVIRTUAL) {
-                        String methodInsnName = mapMethodNameFromNode((MethodInsnNode) next);
+                        String methodInsnName = mapMethodNameFromNode(next);
 
                         // sort the player map and filter any entity with a uuid version of 2
                         if (methodInsnName.equals("getPlayerInfoMap") || methodInsnName.equals("func_175106_d")) {

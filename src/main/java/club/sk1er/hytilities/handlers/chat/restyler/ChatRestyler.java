@@ -68,7 +68,7 @@ public class ChatRestyler implements ChatModule {
                                     "&e) &" + leaveMatcher.group("color") + leaveMatcher.group("player"));
                         } else {
                             event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") +
-                                    leaveMatcher.group("player") + " (&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)");
+                                    leaveMatcher.group("player") + " &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)");
                         }
                     } else {
                         event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + leaveMatcher.group("player"));
@@ -98,7 +98,7 @@ public class ChatRestyler implements ChatModule {
                     if (HytilitiesConfig.playerCountBeforePlayerName) {
                         event.message = colorMessage("&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e) " + message);
                     } else {
-                        event.message = colorMessage(message.substring(0, message.length() - 3) + " (&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)!");
+                        event.message = colorMessage(message.substring(0, message.length() - 3) + " &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)!");
                     }
                     return;
                 }

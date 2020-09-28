@@ -93,23 +93,23 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean gameStatusRestyle;
 
     @Property(
-            type = PropertyType.SWITCH, name = "Player Count Before Player Name",
-            description = "Put player count before player name in game join/leave messages.",
-            category = "Chat", subcategory = "Restyler"
+        type = PropertyType.SWITCH, name = "Player Count Before Player Name",
+        description = "Put player count before player name in game join/leave messages.",
+        category = "Chat", subcategory = "Restyler"
     )
     public static boolean playerCountBeforePlayerName;
 
     @Property(
-            type = PropertyType.SWITCH, name = "Show Player Count on Player Leave",
-            description = "Include the player count when players leave.",
-            category = "Chat", subcategory = "Restyler"
+        type = PropertyType.SWITCH, name = "Show Player Count on Player Leave",
+        description = "Include the player count when players leave.",
+        category = "Chat", subcategory = "Restyler"
     )
     public static boolean playerCountOnPlayerLeave;
 
     @Property(
-            type = PropertyType.SWITCH, name = "Zero-Pad Player Counts",
-            description = "Places zeros at the beginning of player counts to align with the max player count.",
-            category = "Chat", subcategory = "Restyler"
+        type = PropertyType.SWITCH, name = "Zero-Pad Player Counts",
+        description = "Places zeros at the beginning of player counts to align with the max player count.",
+        category = "Chat", subcategory = "Restyler"
     )
     public static boolean padPlayerCount;
 
@@ -187,28 +187,18 @@ public class HytilitiesConfig extends Vigilant {
 
 
     @Property(
-            type = PropertyType.SWITCH, name = "Armour Hider",
-            description = "Hide armour in games where armour is always the same.",
-            category = "Game", subcategory = "Visual"
+        type = PropertyType.SWITCH, name = "Armour Hider",
+        description = "Hide armour in games where armour is always the same.",
+        category = "Game", subcategory = "Visual"
     )
     public static boolean hideArmour;
 
     @Property(
-            type = PropertyType.SWITCH, name = "Auto Queue",
-            description = "Automatically queues for another game once you die",
-            category = "General", subcategory = "Queue"
+        type = PropertyType.SWITCH, name = "Hardcore Hearts",
+        description = "When your bed is broken/wither is killed in BedWars/The Walls, set the heart style to Hardcore.",
+        category = "Game", subcategory = "Visual"
     )
-    public static boolean autoQueue;
-
-    @Property(
-            type = PropertyType.SLIDER, name = "Auto Queue Delay",
-            description = "Delays the execution of Auto Queue. (The measurement is in seconds)",
-            category = "General", subcategory = "Queue",
-            max = 100
-    )
-    public static int autoQueueDelay;
-
-
+    public static boolean hardcoreHearts;
 
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));

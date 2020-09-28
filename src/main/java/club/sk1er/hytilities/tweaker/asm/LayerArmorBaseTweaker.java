@@ -31,8 +31,8 @@ public class LayerArmorBaseTweaker implements HytilitiesTransformer {
                 while (iterator.hasNext()) {
                     AbstractInsnNode next = iterator.next();
 
-                    if (next instanceof MethodInsnNode) {
-                        String methodName2 = mapMethodNameFromNode((MethodInsnNode) next);
+                    if (next instanceof MethodInsnNode && next.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+                        String methodName2 = mapMethodNameFromNode(next);
                         if (methodName2.equals("getCurrentArmor") || methodName2.equals("func_177176_a")) {
                             method.instructions.insert(next.getNext(), checkRender());
                             break;

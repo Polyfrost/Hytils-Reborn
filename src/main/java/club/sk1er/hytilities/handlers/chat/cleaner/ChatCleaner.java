@@ -4,6 +4,7 @@ import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatModule;
 import club.sk1er.hytilities.handlers.game.GameType;
+import club.sk1er.hytilities.util.locraw.LocrawInformation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
@@ -106,10 +107,13 @@ public class ChatCleaner implements ChatModule {
             }
         }
 
-        if (HytilitiesConfig.bedwarsAdvertisements && Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation().getGameType() == GameType.BED_WARS) {
-            if (bedwarsPartyAdvertisement.matcher(message).find()) {
-                event.setCanceled(true);
-                return;
+        LocrawInformation locrawInformation = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
+        if (locrawInformation != null) {
+            if (HytilitiesConfig.bedwarsAdvertisements && locrawInformation.getGameType() == GameType.BED_WARS) {
+                if (bedwarsPartyAdvertisement.matcher(message).find()) {
+                    event.setCanceled(true);
+                    return;
+                }
             }
         }
 
