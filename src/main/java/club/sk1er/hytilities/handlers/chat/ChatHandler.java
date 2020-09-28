@@ -1,5 +1,6 @@
 package club.sk1er.hytilities.handlers.chat;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.handlers.chat.adblock.AdBlocker;
 import club.sk1er.hytilities.handlers.chat.cleaner.ChatCleaner;
 import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
@@ -24,6 +25,7 @@ public class ChatHandler {
         this.registerModule(new ChatRestyler());
         this.registerModule(new WhiteChat());
         this.registerModule(new LevelupEvent());
+        this.registerModule(Hytilities.INSTANCE.getLocrawUtil());
         this.registerModule(new AchievementEvent());
         this.registerModule(new AutoChatSwapper());
     }

@@ -12,6 +12,7 @@ import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
 import club.sk1er.hytilities.handlers.lobby.npc.NPCHider;
 import club.sk1er.hytilities.handlers.server.ServerChecker;
 import club.sk1er.hytilities.handlers.silent.SilentRemoval;
+import club.sk1er.hytilities.util.locraw.LocrawUtil;
 import club.sk1er.modcore.ModCoreInstaller;
 import club.sk1er.mods.core.universal.ChatColor;
 import club.sk1er.mods.core.util.MinecraftUtils;
@@ -38,6 +39,7 @@ public class Hytilities {
 
     private final HytilitiesConfig config = new HytilitiesConfig();
     private SilentRemoval silentRemoval;
+    private LocrawUtil locrawUtil;
 
     private boolean loadedCall;
 
@@ -61,6 +63,7 @@ public class Hytilities {
         // general stuff
         MinecraftForge.EVENT_BUS.register(new AutoStart());
         MinecraftForge.EVENT_BUS.register(new ServerChecker());
+        MinecraftForge.EVENT_BUS.register(locrawUtil = new LocrawUtil());
 
         // chat
         MinecraftForge.EVENT_BUS.register(silentRemoval = new SilentRemoval());
@@ -80,6 +83,10 @@ public class Hytilities {
 
     public HytilitiesConfig getConfig() {
         return config;
+    }
+
+    public LocrawUtil getLocrawUtil() {
+        return locrawUtil;
     }
 
     public SilentRemoval getSilentRemoval() {
