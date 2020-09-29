@@ -2,14 +2,12 @@ package club.sk1er.hytilities.handlers.chat;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.handlers.chat.adblock.AdBlocker;
-import club.sk1er.hytilities.handlers.chat.autoqueue.AutoQueue;
 import club.sk1er.hytilities.handlers.chat.cleaner.ChatCleaner;
 import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.chat.restyler.ChatRestyler;
 import club.sk1er.hytilities.handlers.chat.swapper.AutoChatSwapper;
 import club.sk1er.hytilities.handlers.chat.whitechat.WhiteChat;
-import club.sk1er.hytilities.util.locraw.LocrawUtil;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,7 +27,9 @@ public class ChatHandler {
         this.registerModule(new LevelupEvent());
         this.registerModule(new AchievementEvent());
         this.registerModule(new AutoChatSwapper());
-        this.registerModule(new AutoQueue());
+
+        // reinitializing these seems to break them
+        this.registerModule(Hytilities.INSTANCE.getAutoQueue());
         this.registerModule(Hytilities.INSTANCE.getLocrawUtil());
     }
 

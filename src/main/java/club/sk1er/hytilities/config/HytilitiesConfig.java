@@ -157,7 +157,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "AutoStart",
-        description = "Join Hypixel immediately once the game is done starting.",
+        description = "Join Hypixel immediately once the client has loaded to the main menu.",
         category = "General", subcategory = "General"
     )
     public static boolean autoStart;

@@ -7,13 +7,15 @@ import club.sk1er.mods.core.util.Multithreading;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AutoQueue implements ChatModule {
     private String command = null;
+    private boolean sentCommand;
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
@@ -23,12 +25,10 @@ public class AutoQueue implements ChatModule {
 
         String message = ChatColor.stripColor(event.message.getUnformattedText());
         if (message.startsWith("You died! Want to play again?")) {
-            List<IChatComponent> componentList = event.message.getSiblings();
-            for (IChatComponent component : componentList) {
-                String compMsg = ChatColor.stripColor(component.getUnformattedText());
-                if (compMsg.equals(" Click here! ")) {
-                    command = component.getChatStyle().getChatClickEvent().getValue();
-                    break;
+            for (IChatComponent component : event.message.getSiblings()) {
+                String compMsg = ChatColor.stripColor(component.getUnformattedText().trim());
+                if (compMsg.equals("Click here!")) {
+                    this.command = component.getChatStyle().getChatClickEvent().getValue();
                 }
             }
         }
@@ -36,28 +36,34 @@ public class AutoQueue implements ChatModule {
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        if (command != null) {
-            switchGame();
+        if (this.command != null) {
+            this.switchGame();
         }
     }
 
     @SubscribeEvent
     public void onMouseEvent(InputEvent.MouseInputEvent event) {
-        if (command != null) {
-            switchGame();
+        if (this.command != null) {
+            this.switchGame();
+        }
+    }
+
+    @SubscribeEvent
+    public void onWorldLoad(WorldEvent.Load event) {
+        // stop the command from being spammed, to prevent chat from filling with "please do not spam commands"
+        if (event.world.provider.getDimensionId() == 0 && this.sentCommand) {
+            this.sentCommand = false;
         }
     }
 
     private void switchGame() {
-        Multithreading.runAsync(() -> {
-            try {
-                Thread.sleep(HytilitiesConfig.autoQueueDelay * 1000L);
-            } catch (InterruptedException exception) {
-                exception.printStackTrace();
+        Multithreading.schedule(() -> {
+            if (!this.sentCommand) {
+                Minecraft.getMinecraft().thePlayer.sendChatMessage(this.command);
+                this.sentCommand = true;
+                this.command = null;
             }
 
-            Minecraft.getMinecraft().thePlayer.sendChatMessage(command);
-            command = null;
-        });
+        }, HytilitiesConfig.autoQueueDelay, TimeUnit.SECONDS);
     }
 }

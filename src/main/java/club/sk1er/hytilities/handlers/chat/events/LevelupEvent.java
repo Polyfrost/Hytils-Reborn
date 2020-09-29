@@ -15,14 +15,14 @@ import java.util.regex.Pattern;
 
 public class LevelupEvent implements ChatModule {
 
-    private final Pattern levelUpPattern = Pattern.compile(" +You are now Hypixel Level (?<level>\\d+)!");
+    private final Pattern levelUpPattern = Pattern.compile("You are now Hypixel Level (?<level>\\d+)!");
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
         String unformattedText = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
 
-        Matcher matcher = levelUpPattern.matcher(unformattedText);
-        if (matcher.matches()) {
+        Matcher matcher = levelUpPattern.matcher(unformattedText.trim());
+        if (matcher.find()) {
             String level = matcher.group("level");
 
             if (StringUtils.isNumeric(level)) {
