@@ -37,11 +37,11 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean mysteryBoxAnnouncer;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove Soul Box Announcements",
-        description = "Remove soul box announcements from chat.\n§eExample: §bSteve §7has found a §6Bulldozer Perk I (Insane) §7in the §bSoul Well§7!",
+        type = PropertyType.SWITCH, name = "Remove Soul Well Announcements",
+        description = "Remove soul well announcements from chat.\n§eExample: §bSteve §7has found a §6Bulldozer Perk I (Insane) §7in the §bSoul Well§7!",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean soulBoxAnnouncer;
+    public static boolean soulWellAnnouncer;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Game Announcements",
@@ -197,6 +197,13 @@ public class HytilitiesConfig extends Vigilant {
         category = "Game", subcategory = "Visual"
     )
     public static boolean hardcoreHearts;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove All Chat Message",
+        description = "Hide the \"§aYou are now in the §6ALL§a channel§r\" message when auto-switching.",
+        category = "Chat", subcategory = "Parties"
+    )
+    public static boolean hytilitiesHideAllChatMessage;
 
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));

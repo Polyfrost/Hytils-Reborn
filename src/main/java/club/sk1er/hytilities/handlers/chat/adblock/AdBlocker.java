@@ -28,7 +28,7 @@ public class AdBlocker implements ChatModule {
             return;
         }
 
-        if (commonAdvertisements.matcher(event.message.getUnformattedText()).find()) {
+        if (commonAdvertisements.matcher(event.message.getUnformattedText()).find(0)) {
             event.setCanceled(true);
         }
     }

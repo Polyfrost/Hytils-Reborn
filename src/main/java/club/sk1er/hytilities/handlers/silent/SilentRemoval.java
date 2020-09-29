@@ -19,7 +19,7 @@ public class SilentRemoval {
     public void onChat(ClientChatReceivedEvent event) {
         Matcher matcher = leaveMessage.matcher(event.message.getUnformattedText());
 
-        if (matcher.find()) {
+        if (matcher.matches()) {
             // not a friend anymore :(
             for (String friend : silentUsers) {
                 if (matcher.group("player").equalsIgnoreCase(friend)) {
