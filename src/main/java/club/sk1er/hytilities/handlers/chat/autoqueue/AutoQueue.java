@@ -34,6 +34,11 @@ public class AutoQueue implements ChatModule {
         }
     }
 
+    @Override
+    public boolean condition() {
+        return HytilitiesConfig.autoQueue;
+    }
+
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (this.command != null) {

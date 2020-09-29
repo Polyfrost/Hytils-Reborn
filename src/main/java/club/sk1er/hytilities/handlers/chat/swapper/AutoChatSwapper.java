@@ -23,15 +23,16 @@ public class AutoChatSwapper implements ChatModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (!HytilitiesConfig.chatSwapper) {
-            return;
-        }
-
         final Matcher statusMatcher = this.partyStatusRegex.matcher(event.message.getUnformattedText());
         if (statusMatcher.matches()) {
             MinecraftForge.EVENT_BUS.register(new ChatChannelMessagePreventer());
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/chat a");
         }
+    }
+
+    @Override
+    public boolean condition() {
+        return HytilitiesConfig.chatSwapper;
     }
 
     public static class ChatChannelMessagePreventer {

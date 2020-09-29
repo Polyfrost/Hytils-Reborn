@@ -46,7 +46,9 @@ public class ChatHandler {
         }
 
         for (ChatModule module : this.moduleList) {
-            module.onChatEvent(event);
+            if (module.condition()) {
+                module.onChatEvent(event);
+            }
         }
     }
 }

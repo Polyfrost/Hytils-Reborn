@@ -75,6 +75,11 @@ public class LocrawUtil implements ChatModule {
         }
     }
 
+    @Override
+    public boolean condition() {
+        return true;
+    }
+
     public LocrawInformation getLocrawInformation() {
         return locrawInformation;
     }

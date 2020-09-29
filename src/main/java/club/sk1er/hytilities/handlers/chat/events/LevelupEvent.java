@@ -31,6 +31,11 @@ public class LevelupEvent implements ChatModule {
         }
     }
 
+    @Override
+    public boolean condition() {
+        return true;
+    }
+
     @SubscribeEvent
     public void levelUpEvent(HypixelLevelupEvent event) {
         if (HytilitiesConfig.broadcastLevelup) {

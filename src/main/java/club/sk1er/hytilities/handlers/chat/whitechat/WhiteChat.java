@@ -15,14 +15,15 @@ public class WhiteChat implements ChatModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (!HytilitiesConfig.whiteChat) {
-            return;
-        }
-
         Matcher matcher = nonMessage.matcher(event.message.getFormattedText());
 
         if (matcher.find(0)) {
             event.message = new ChatComponentText(matcher.group("prefix") + ": " + matcher.group("message"));
         }
+    }
+
+    @Override
+    public boolean condition() {
+        return HytilitiesConfig.whiteChat;
     }
 }

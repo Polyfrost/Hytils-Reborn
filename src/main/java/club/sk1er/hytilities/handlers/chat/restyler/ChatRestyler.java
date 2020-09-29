@@ -113,6 +113,11 @@ public class ChatRestyler implements ChatModule {
         }
     }
 
+    @Override
+    public boolean condition() {
+        return true;
+    }
+
     /**
      * Normally this wouldn't be static but it has to be called from a static method so it has to be static.
      * As long as we don't make multiple ChatRestyler objects it should be fine.

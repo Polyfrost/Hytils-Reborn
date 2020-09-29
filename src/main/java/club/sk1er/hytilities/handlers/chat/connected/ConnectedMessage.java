@@ -11,12 +11,13 @@ public class ConnectedMessage implements ChatModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (!HytilitiesConfig.serverConnectedMessages) {
-            return;
-        }
-
         if (serverConnectMessage.matcher(event.message.getUnformattedText()).matches()) {
             event.setCanceled(true);
         }
+    }
+
+    @Override
+    public boolean condition() {
+        return HytilitiesConfig.serverConnectedMessages;
     }
 }

@@ -124,6 +124,11 @@ public class ChatCleaner implements ChatModule {
         }
     }
 
+    @Override
+    public boolean condition() {
+        return true;
+    }
+
     // taken from ToggleChat
     private String reformatMessage(String formattedText) {
         if (formattedText.contains("\u25AC\u25AC")) { // the character is "▬" - used in some seperators

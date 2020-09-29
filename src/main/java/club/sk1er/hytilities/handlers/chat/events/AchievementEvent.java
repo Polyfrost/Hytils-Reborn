@@ -36,6 +36,11 @@ public class AchievementEvent implements ChatModule {
         }
     }
 
+    @Override
+    public boolean condition() {
+        return true;
+    }
+
     @SubscribeEvent
     public void onAchievementGet(HypixelAchievementEvent event) {
         if (HytilitiesConfig.broadcastAchievements) {

@@ -8,6 +8,8 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 public interface ChatModule {
     void onChatEvent(ClientChatReceivedEvent event);
 
+    boolean condition();
+
     default IChatComponent colorMessage(String message) {
         return new ChatComponentText(ChatColor.translateAlternateColorCodes('&', message));
     }

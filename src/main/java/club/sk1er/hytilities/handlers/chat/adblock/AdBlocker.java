@@ -24,12 +24,13 @@ public class AdBlocker implements ChatModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (!HytilitiesConfig.playerAdBlock) {
-            return;
-        }
-
         if (commonAdvertisements.matcher(event.message.getUnformattedText()).find(0)) {
             event.setCanceled(true);
         }
+    }
+
+    @Override
+    public boolean condition() {
+        return HytilitiesConfig.playerAdBlock;
     }
 }
