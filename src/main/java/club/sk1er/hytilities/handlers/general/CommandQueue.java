@@ -31,7 +31,7 @@ public class CommandQueue {
      * Sets the delay between messages. Used when the user is a YT Rank / Staff in order to remove unnecessary delays
      * @param delay delay in ticks
      */
-    public void setDelay(long delay) {
+    public void setDelay(long delay) { //TODO call this when necessary
         this.delay = delay;
     }
 
