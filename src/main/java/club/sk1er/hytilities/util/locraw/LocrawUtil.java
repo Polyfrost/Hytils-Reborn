@@ -1,5 +1,6 @@
 package club.sk1er.hytilities.util.locraw;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.handlers.chat.ChatModule;
 import club.sk1er.hytilities.handlers.game.GameType;
 import club.sk1er.mods.core.util.MinecraftUtils;
@@ -12,9 +13,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LocrawUtil implements ChatModule {
 
-    private LocrawInformation locrawInformation;
-
     private final Gson gson = new Gson();
+    private LocrawInformation locrawInformation;
     private boolean listening;
     private long lastWorldLoad = System.currentTimeMillis();
 
@@ -34,7 +34,8 @@ public class LocrawUtil implements ChatModule {
                     tries++;
                     Thread.sleep(100L);
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
 
             // Can't do anything if after all that the player is null, return.
             if (Minecraft.getMinecraft().thePlayer == null) return;
@@ -45,7 +46,7 @@ public class LocrawUtil implements ChatModule {
                 Thread.sleep(1000);
 
                 listening = true;
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/locraw");
+                Hytilities.INSTANCE.getCommandQueue().queue("/locraw");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -71,7 +72,8 @@ public class LocrawUtil implements ChatModule {
                         listening = false;
                     }
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
     }
 

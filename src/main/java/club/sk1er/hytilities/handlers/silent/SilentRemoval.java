@@ -1,5 +1,6 @@
 package club.sk1er.hytilities.handlers.silent;
 
+import club.sk1er.hytilities.Hytilities;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -23,7 +24,7 @@ public class SilentRemoval {
             // not a friend anymore :(
             for (String friend : silentUsers) {
                 if (matcher.group("player").equalsIgnoreCase(friend)) {
-                    Minecraft.getMinecraft().thePlayer.sendChatMessage("/f remove " + friend);
+                    Hytilities.INSTANCE.getCommandQueue().queue("/f remove " + friend);
                     silentUsers.remove(friend);
                 }
             }

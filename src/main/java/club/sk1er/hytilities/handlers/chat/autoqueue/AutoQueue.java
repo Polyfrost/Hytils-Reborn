@@ -1,10 +1,10 @@
 package club.sk1er.hytilities.handlers.chat.autoqueue;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatModule;
 import club.sk1er.mods.core.universal.ChatColor;
 import club.sk1er.mods.core.util.Multithreading;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -64,7 +64,7 @@ public class AutoQueue implements ChatModule {
     private void switchGame() {
         Multithreading.schedule(() -> {
             if (!this.sentCommand) {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage(this.command);
+                Hytilities.INSTANCE.getCommandQueue().queue(this.command);
                 this.sentCommand = true;
                 this.command = null;
             }

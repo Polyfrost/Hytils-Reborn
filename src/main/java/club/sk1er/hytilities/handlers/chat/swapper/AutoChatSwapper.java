@@ -1,5 +1,6 @@
 package club.sk1er.hytilities.handlers.chat.swapper;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatModule;
 import club.sk1er.mods.core.util.Multithreading;
@@ -26,7 +27,7 @@ public class AutoChatSwapper implements ChatModule {
         final Matcher statusMatcher = this.partyStatusRegex.matcher(event.message.getUnformattedText());
         if (statusMatcher.matches()) {
             MinecraftForge.EVENT_BUS.register(new ChatChannelMessagePreventer());
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/chat a");
+            Hytilities.INSTANCE.getCommandQueue().queue("/chat a");
         }
     }
 

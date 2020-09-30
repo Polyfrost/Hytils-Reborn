@@ -1,5 +1,6 @@
 package club.sk1er.hytilities.handlers.chat.events;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.events.HypixelAchievementEvent;
 import club.sk1er.hytilities.handlers.chat.ChatModule;
@@ -44,7 +45,7 @@ public class AchievementEvent implements ChatModule {
     @SubscribeEvent
     public void onAchievementGet(HypixelAchievementEvent event) {
         if (HytilitiesConfig.broadcastAchievements) {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/gchat Achievement unlocked! I unlocked the " + event.getAchievement() + " achievement!");
+            Hytilities.INSTANCE.getCommandQueue().queue("/gchat Achievement unlocked! I unlocked the " + event.getAchievement() + " achievement!");
         }
     }
 }

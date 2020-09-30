@@ -1,9 +1,9 @@
 package club.sk1er.hytilities.handlers.chat.events;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.events.HypixelLevelupEvent;
 import club.sk1er.hytilities.handlers.chat.ChatModule;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -39,7 +39,7 @@ public class LevelupEvent implements ChatModule {
     @SubscribeEvent
     public void levelUpEvent(HypixelLevelupEvent event) {
         if (HytilitiesConfig.broadcastLevelup) {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/gchat Levelup! I am now Hypixel Level: " + event.getLevel() + "!");
+            Hytilities.INSTANCE.getCommandQueue().queue("/gchat Levelup! I am now Hypixel Level: " + event.getLevel() + "!");
         }
     }
 }
