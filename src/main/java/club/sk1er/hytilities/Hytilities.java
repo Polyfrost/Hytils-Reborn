@@ -9,6 +9,7 @@ import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.game.hardcore.HardcoreStatus;
 import club.sk1er.hytilities.handlers.general.AutoStart;
+import club.sk1er.hytilities.handlers.general.CommandQueue;
 import club.sk1er.hytilities.handlers.lobby.LobbyChecker;
 import club.sk1er.hytilities.handlers.lobby.bossbar.LobbyBossbar;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
@@ -46,7 +47,7 @@ public class Hytilities {
     private LobbyChecker lobbyChecker;
     private LocrawUtil locrawUtil;
     private AutoQueue autoQueue;
-
+    private CommandQueue commandQueue;
     private boolean loadedCall;
 
     @Mod.EventHandler
@@ -65,10 +66,12 @@ public class Hytilities {
         this.loadedCall = true;
     }
 
+
     private void registerHandlers() {
         // general stuff
         MinecraftForge.EVENT_BUS.register(locrawUtil = new LocrawUtil());
         MinecraftForge.EVENT_BUS.register(autoQueue = new AutoQueue());
+        MinecraftForge.EVENT_BUS.register(commandQueue = new CommandQueue());
         MinecraftForge.EVENT_BUS.register(new AutoStart());
 
         // chat
@@ -120,5 +123,9 @@ public class Hytilities {
 
     public void setLoadedCall(boolean loadedCall) {
         this.loadedCall = loadedCall;
+    }
+
+    public CommandQueue getCommandQueue() {
+        return commandQueue;
     }
 }
