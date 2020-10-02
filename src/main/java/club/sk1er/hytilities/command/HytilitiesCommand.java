@@ -5,10 +5,18 @@ import club.sk1er.mods.core.ModCore;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 
+import java.util.Collections;
+import java.util.List;
+
 public class HytilitiesCommand extends CommandBase {
     @Override
     public String getCommandName() {
         return "hytilities";
+    }
+
+    @Override
+    public List<String> getCommandAliases() {
+        return Collections.singletonList("hytils");
     }
 
     @Override

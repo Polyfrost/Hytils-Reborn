@@ -14,15 +14,35 @@ import java.util.regex.Pattern;
 
 public class ChatRestyler implements ChatModule {
 
-    private final Pattern gameJoinStyle = Pattern.compile("^§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has joined (?<amount>.+)!§r$");
-    private final Pattern gameLeaveStyle = Pattern.compile("^§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has quit!§r$");
-    private final Pattern gameStartCounterStyle = Pattern.compile("^The game starts in (?<time>\\d{1,3}) seconds?!§r$");
-
-    private final Pattern formattedPaddingPattern = Pattern.compile("\\(§r§b(\\d{1,2})§r§e/§r§b(\\d{1,3})§r§e\\)");
-//    private final Pattern unformattedPaddingPattern = Pattern.compile("\\((\\d{1,2})/(\\d{1,3})\\)");
-
     private static int playerCount = -1;
     private static int maxPlayerCount = -1;
+    private final Pattern gameJoinStyle = Pattern.compile("^§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has joined (?<amount>.+)!§r$");
+    private final Pattern gameLeaveStyle = Pattern.compile("^§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has quit!§r$");
+    //    private final Pattern unformattedPaddingPattern = Pattern.compile("\\((\\d{1,2})/(\\d{1,3})\\)");
+    private final Pattern gameStartCounterStyle = Pattern.compile("^The game starts in (?<time>\\d{1,3}) seconds?!§r$");
+    private final Pattern formattedPaddingPattern = Pattern.compile("\\(§r§b(\\d{1,2})§r§e/§r§b(\\d{1,3})§r§e\\)");
+    // (?:\u00a7r)? is optional capture group as not all the messages contain §r at the start (e.g leave join messages)
+    private final Pattern partyPattern = Pattern.compile("^((?:\\u00a7r)?\\u00a7\\w)(Party )(\\u00a7\\w>)");
+    private final Pattern guildPattern =  Pattern.compile("^((?:\\u00a7r)?\\u00a7\\w)(Guild >)");
+    private final Pattern friendPattern =  Pattern.compile("^((?:\\u00a7r)?\\u00a7\\w)(Friend >)");
+
+
+    /**
+     * Normally this wouldn't be static but it has to be called from a static method so it has to be static.
+     * As long as we don't make multiple ChatRestyler objects it should be fine.
+     * (Called by {@link LimboLimiter#onWorldChange(WorldEvent.Unload)})
+     */
+    public static void reset() {
+        playerCount = maxPlayerCount = -1;
+    }
+
+    private static String pad(String n) {
+        if (HytilitiesConfig.padPlayerCount) {
+            return StringUtils.repeat('0', String.valueOf(maxPlayerCount).length() - n.length()) + n;
+        } else {
+            return n;
+        }
+    }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
@@ -37,6 +57,22 @@ public class ChatRestyler implements ChatModule {
             String[] amounts = amount.substring(1, amount.length() - 1).split("/");
             playerCount = Integer.parseInt(amounts[0]);
             maxPlayerCount = Integer.parseInt(amounts[1]);
+        }
+
+        if (HytilitiesConfig.shortChannelNames) {
+            Matcher partyMatcher = partyPattern.matcher(message);
+            Matcher guildMatcher = guildPattern.matcher(message);
+            Matcher friendMatcher = friendPattern.matcher(message);
+            if (partyMatcher.find()) {
+                event.message = colorMessage(message.replaceAll(partyPattern.pattern(),
+                        partyMatcher.group(1) + "P " + partyMatcher.group(3)));
+            }else if(guildMatcher.find()){
+                event.message = colorMessage(message.replaceAll(guildPattern.pattern(),
+                        guildMatcher.group(1) + "G >"));
+            }else if(friendMatcher.find()){
+                event.message = colorMessage(message.replaceAll(friendPattern.pattern(),
+                        friendMatcher.group(1) + "F >"));
+            }
         }
 
         // Currently unformattedMessage doesn't need to be changed but I'm leaving these in, commented, in case it's
@@ -60,7 +96,7 @@ public class ChatRestyler implements ChatModule {
                             + " &" + joinMatcher.group("color") + joinMatcher.group("player"));
                 } else {
                     event.message = colorMessage("&a&l+ &" + joinMatcher.group("color") + joinMatcher.group("player") + " &e" +
-                        joinMatcher.group("amount"));
+                            joinMatcher.group("amount"));
                 }
             } else {
                 Matcher leaveMatcher = gameLeaveStyle.matcher(message);
@@ -83,9 +119,9 @@ public class ChatRestyler implements ChatModule {
                         boolean secondMessage = unformattedMessage.contains("seconds");
 
                         event.message = colorMessage("&e&l* &aGame starts in &b&l" + time
-                            // for some bizarre reason, seconds is captured in the time group (though we explicitly tell
-                            // it to only capture numbers (\d)), so get around that by just replacing seconds with nothing
-                            .replaceAll(" seconds", "") + (secondMessage ? " &aseconds." : " &asecond."));
+                                // for some bizarre reason, seconds is captured in the time group (though we explicitly tell
+                                // it to only capture numbers (\d)), so get around that by just replacing seconds with nothing
+                                .replaceAll(" seconds", "") + (secondMessage ? " &aseconds." : " &asecond."));
                     } else {
                         if ("We don't have enough players! Start cancelled.".equals(unformattedMessage)) {
                             event.message = colorMessage("&e&l* &cStart cancelled.");
@@ -116,23 +152,6 @@ public class ChatRestyler implements ChatModule {
     @Override
     public boolean condition() {
         return true;
-    }
-
-    /**
-     * Normally this wouldn't be static but it has to be called from a static method so it has to be static.
-     * As long as we don't make multiple ChatRestyler objects it should be fine.
-     * (Called by {@link LimboLimiter#onWorldChange(WorldEvent.Unload)})
-     */
-    public static void reset() {
-        playerCount = maxPlayerCount = -1;
-    }
-
-    private static String pad(String n) {
-        if (HytilitiesConfig.padPlayerCount) {
-            return StringUtils.repeat('0', String.valueOf(maxPlayerCount).length() - n.length()) + n;
-        } else {
-            return n;
-        }
     }
 
 }

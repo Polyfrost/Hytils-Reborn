@@ -66,7 +66,7 @@ public class LayerArmorBaseTweaker implements HytilitiesTransformer {
         if (Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation() == null) return true;
         LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
 
-        if (locraw.getGameType() == GameType.BED_WARS) {
+        if (locraw.getGameType() == GameType.BED_WARS || (locraw.getGameType() == GameType.ARCADE_GAMES && locraw.getGameMode().contains("PVP_CTW"))) {
             if (item == Items.leather_helmet || item == Items.leather_chestplate ||
                     item == Items.leather_leggings || item == Items.leather_boots) return false;
         }

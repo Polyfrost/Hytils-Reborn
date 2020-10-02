@@ -121,6 +121,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean padPlayerCount;
 
     @Property(
+            type = PropertyType.SWITCH, name = "Short Channel Names",
+            description = "Shortens channel names. \n§eExample:  Guild -> G, Party -> P, Friend -> F",
+            category = "Chat", subcategory = "Restyler"
+    )
+    public static boolean shortChannelNames;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Lobby NPCs",
         description = "Hide NPCs in the lobby.",
         category = "Lobby", subcategory = "Entities"
