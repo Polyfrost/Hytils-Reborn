@@ -121,9 +121,9 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean padPlayerCount;
 
     @Property(
-            type = PropertyType.SWITCH, name = "Short Channel Names",
-            description = "Shortens channel names. \n§eExample:  Guild -> G, Party -> P, Friend -> F",
-            category = "Chat", subcategory = "Restyler"
+        type = PropertyType.SWITCH, name = "Short Channel Names",
+        description = "Shortens channel names. \n§eExample:  Guild -> G, Party -> P, Friend -> F",
+        category = "Chat", subcategory = "Restyler"
     )
     public static boolean shortChannelNames;
 

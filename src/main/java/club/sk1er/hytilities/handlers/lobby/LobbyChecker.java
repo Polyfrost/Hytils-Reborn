@@ -1,7 +1,6 @@
 package club.sk1er.hytilities.handlers.lobby;
 
 import club.sk1er.hytilities.Hytilities;
-import club.sk1er.hytilities.util.locraw.LocrawInformation;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -21,8 +20,7 @@ public class LobbyChecker {
             return;
         }
 
-        final LocrawInformation info = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
-        this.lobbyStatus = this.lobbyPattern.matcher(info.getServerId()).matches();
+        this.lobbyStatus = this.lobbyPattern.matcher(Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation().getServerId()).matches();
     }
 
     public boolean playerIsInLobby() {

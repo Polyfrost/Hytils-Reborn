@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-
 /**
  * @author Sk1er
  */
@@ -40,32 +39,42 @@ public class CommandQueue {
         if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null) {
             return;
         }
-        if (tick < delay)
-            tick++;
-        if (tick % delay == 0) {
-            EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
-            final QueueObject poll = commands.poll();
-            if (poll == null) return;
 
-            tick = 0;
-            thePlayer.sendChatMessage(poll.string);
-            poll.runnable.run();
+        if (tick < delay) {
+            tick++;
         }
 
-    }
+        if (tick % delay == 0) {
+            final QueueObject poll = commands.poll();
+            if (poll == null) {
+                return;
+            }
 
+            tick = 0;
+            Minecraft.getMinecraft().thePlayer.sendChatMessage(poll.getMessage());
+            poll.getRunnable().run();
+        }
+    }
 
     public void queue(String message) {
         queue(message, EMPTY);
     }
 
     static class QueueObject {
-        String string;
-        Runnable runnable;
+        final String message;
+        final Runnable runnable;
 
-        public QueueObject(String string, Runnable runnable) {
-            this.string = string;
+        public QueueObject(String message, Runnable runnable) {
+            this.message = message;
             this.runnable = runnable;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public Runnable getRunnable() {
+            return runnable;
         }
     }
 }

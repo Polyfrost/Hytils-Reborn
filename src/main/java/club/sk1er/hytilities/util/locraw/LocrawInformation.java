@@ -7,8 +7,10 @@ public class LocrawInformation {
 
     @SerializedName("server")
     private String serverId;
+
     @SerializedName("mode")
     private String gameMode = "lobby";
+
     @SerializedName("map")
     private String mapName;
 

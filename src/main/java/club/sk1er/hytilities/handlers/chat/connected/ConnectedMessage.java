@@ -7,7 +7,7 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import java.util.regex.Pattern;
 
 public class ConnectedMessage implements ChatModule {
-    private static final Pattern serverConnectMessage = Pattern.compile("You are currently connected to server \\S+|Sending to server \\S+\\.{3}");
+    private final Pattern serverConnectMessage = Pattern.compile("You are currently connected to server \\S+|Sending to server \\S+\\.{3}");
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {

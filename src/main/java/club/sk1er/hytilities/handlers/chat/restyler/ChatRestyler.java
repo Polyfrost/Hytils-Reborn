@@ -23,9 +23,8 @@ public class ChatRestyler implements ChatModule {
     private final Pattern formattedPaddingPattern = Pattern.compile("\\(§r§b(\\d{1,2})§r§e/§r§b(\\d{1,3})§r§e\\)");
     // (?:\u00a7r)? is optional capture group as not all the messages contain §r at the start (e.g leave join messages)
     private final Pattern partyPattern = Pattern.compile("^((?:\\u00a7r)?\\u00a7\\w)(Party )(\\u00a7\\w>)");
-    private final Pattern guildPattern =  Pattern.compile("^((?:\\u00a7r)?\\u00a7\\w)(Guild >)");
-    private final Pattern friendPattern =  Pattern.compile("^((?:\\u00a7r)?\\u00a7\\w)(Friend >)");
-
+    private final Pattern guildPattern = Pattern.compile("^((?:\\u00a7r)?\\u00a7\\w)(Guild >)");
+    private final Pattern friendPattern = Pattern.compile("^((?:\\u00a7r)?\\u00a7\\w)(Friend >)");
 
     /**
      * Normally this wouldn't be static but it has to be called from a static method so it has to be static.
@@ -64,14 +63,11 @@ public class ChatRestyler implements ChatModule {
             Matcher guildMatcher = guildPattern.matcher(message);
             Matcher friendMatcher = friendPattern.matcher(message);
             if (partyMatcher.find()) {
-                event.message = colorMessage(message.replaceAll(partyPattern.pattern(),
-                        partyMatcher.group(1) + "P " + partyMatcher.group(3)));
-            }else if(guildMatcher.find()){
-                event.message = colorMessage(message.replaceAll(guildPattern.pattern(),
-                        guildMatcher.group(1) + "G >"));
-            }else if(friendMatcher.find()){
-                event.message = colorMessage(message.replaceAll(friendPattern.pattern(),
-                        friendMatcher.group(1) + "F >"));
+                event.message = colorMessage(message.replaceAll(partyPattern.pattern(), partyMatcher.group(1) + "P " + partyMatcher.group(3)));
+            } else if (guildMatcher.find()) {
+                event.message = colorMessage(message.replaceAll(guildPattern.pattern(), guildMatcher.group(1) + "G >"));
+            } else if (friendMatcher.find()) {
+                event.message = colorMessage(message.replaceAll(friendPattern.pattern(), friendMatcher.group(1) + "F >"));
             }
         }
 
@@ -93,10 +89,10 @@ public class ChatRestyler implements ChatModule {
             if (joinMatcher.matches()) {
                 if (HytilitiesConfig.playerCountBeforePlayerName) {
                     event.message = colorMessage("&a&l+ &e" + joinMatcher.group("amount")
-                            + " &" + joinMatcher.group("color") + joinMatcher.group("player"));
+                        + " &" + joinMatcher.group("color") + joinMatcher.group("player"));
                 } else {
                     event.message = colorMessage("&a&l+ &" + joinMatcher.group("color") + joinMatcher.group("player") + " &e" +
-                            joinMatcher.group("amount"));
+                        joinMatcher.group("amount"));
                 }
             } else {
                 Matcher leaveMatcher = gameLeaveStyle.matcher(message);
@@ -104,10 +100,10 @@ public class ChatRestyler implements ChatModule {
                     if (HytilitiesConfig.playerCountOnPlayerLeave) {
                         if (HytilitiesConfig.playerCountBeforePlayerName) {
                             event.message = colorMessage("&c&l- &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount +
-                                    "&e) &" + leaveMatcher.group("color") + leaveMatcher.group("player"));
+                                "&e) &" + leaveMatcher.group("color") + leaveMatcher.group("player"));
                         } else {
                             event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") +
-                                    leaveMatcher.group("player") + " &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)");
+                                leaveMatcher.group("player") + " &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)");
                         }
                     } else {
                         event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + leaveMatcher.group("player"));
@@ -119,9 +115,9 @@ public class ChatRestyler implements ChatModule {
                         boolean secondMessage = unformattedMessage.contains("seconds");
 
                         event.message = colorMessage("&e&l* &aGame starts in &b&l" + time
-                                // for some bizarre reason, seconds is captured in the time group (though we explicitly tell
-                                // it to only capture numbers (\d)), so get around that by just replacing seconds with nothing
-                                .replaceAll(" seconds", "") + (secondMessage ? " &aseconds." : " &asecond."));
+                            // for some bizarre reason, seconds is captured in the time group (though we explicitly tell
+                            // it to only capture numbers (\d)), so get around that by just replacing seconds with nothing
+                            .replaceAll(" seconds", "") + (secondMessage ? " &aseconds." : " &asecond."));
                     } else {
                         if ("We don't have enough players! Start cancelled.".equals(unformattedMessage)) {
                             event.message = colorMessage("&e&l* &cStart cancelled.");
