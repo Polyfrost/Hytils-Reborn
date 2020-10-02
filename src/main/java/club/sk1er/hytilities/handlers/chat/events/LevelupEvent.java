@@ -32,7 +32,7 @@ public class LevelupEvent implements ChatModule {
     }
 
     @Override
-    public boolean condition() {
+    public boolean isEnabled() {
         return true;
     }
 

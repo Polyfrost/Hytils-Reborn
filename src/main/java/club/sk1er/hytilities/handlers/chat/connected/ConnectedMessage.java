@@ -17,7 +17,7 @@ public class ConnectedMessage implements ChatModule {
     }
 
     @Override
-    public boolean condition() {
+    public boolean isEnabled() {
         return HytilitiesConfig.serverConnectedMessages;
     }
 }

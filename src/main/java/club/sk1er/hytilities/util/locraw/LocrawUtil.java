@@ -60,7 +60,7 @@ public class LocrawUtil implements ChatModule {
     }
 
     @Override
-    public boolean condition() {
+    public boolean isEnabled() {
         return true;
     }
 

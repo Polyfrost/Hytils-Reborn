@@ -23,7 +23,7 @@ public class WhiteChat implements ChatModule {
     }
 
     @Override
-    public boolean condition() {
+    public boolean isEnabled() {
         return HytilitiesConfig.whiteChat;
     }
 }
