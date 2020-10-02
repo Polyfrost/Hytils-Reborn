@@ -210,7 +210,15 @@ public class HytilitiesConfig extends Vigilant {
         description = "Hide the \"§aYou are now in the §6ALL§a channel§r\" message when auto-switching.",
         category = "Chat", subcategory = "Parties"
     )
-    public static boolean hytilitiesHideAllChatMessage;
+    public static boolean hideAllChatMessage;
+
+    @Property(
+        type = PropertyType.SELECTOR, name = "Chat Swapper Channel",
+        description = "The channel to return to after being kicked from a party",
+        category = "Chat", subcategory = "Parties",
+        options = {"ALL", "GUILD", "OFFICER"}
+    )
+    public static int chatSwapperReturnChannel;
 
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
