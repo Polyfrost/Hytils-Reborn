@@ -171,10 +171,18 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Chat Swapper",
-        description = "Automatically change back to ALL chat when kicked from a party.",
+        description = "Automatically change back to a selected channel when leaving a party.",
         category = "Chat", subcategory = "Parties"
     )
     public static boolean chatSwapper;
+
+    @Property(
+        type = PropertyType.SELECTOR, name = "Chat Swapper Channel",
+        description = "The channel to return to when leaving a party.\n§eRequires Chat Swapper.",
+        category = "Chat", subcategory = "Parties",
+        options = {"ALL", "GUILD", "OFFICER"}
+    )
+    public static int chatSwapperReturnChannel;
 
     @Property(
         type = PropertyType.SWITCH, name = "Auto Queue",
@@ -211,14 +219,6 @@ public class HytilitiesConfig extends Vigilant {
         category = "Chat", subcategory = "Parties"
     )
     public static boolean hideAllChatMessage;
-
-    @Property(
-        type = PropertyType.SELECTOR, name = "Chat Swapper Channel",
-        description = "The channel to return to after being kicked from a party",
-        category = "Chat", subcategory = "Parties",
-        options = {"ALL", "GUILD", "OFFICER"}
-    )
-    public static int chatSwapperReturnChannel;
 
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
