@@ -16,26 +16,44 @@ public class LocrawInformation {
     private String rawGameType;
     private GameType gameType;
 
+    /**
+     * @return The serverID of the server you are currently on, ex: mini121
+     */
     public String getServerId() {
         return serverId;
     }
 
+    /**
+     * @return The GameType of the server as a String.
+     */
     public String getRawGameType() {
         return rawGameType;
     }
 
+    /**
+     * @return The GameMode of the server, ex: solo_insane
+     */
     public String getGameMode() {
         return gameMode;
     }
 
+    /**
+     * @param gameType The GameType to set it to.
+     */
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
     }
 
+    /**
+     * @return The GameType of the server as an Enum.
+     */
     public GameType getGameType() {
         return gameType;
     }
 
+    /**
+     * @return The map of the server, ex: Shire.
+     */
     public String getMapName() {
         return mapName;
     }

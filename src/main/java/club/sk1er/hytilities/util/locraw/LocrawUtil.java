@@ -16,7 +16,6 @@ public class LocrawUtil implements ChatModule {
     private final Gson gson = new Gson();
     private LocrawInformation locrawInformation;
     private boolean listening;
-    private long lastWorldLoad = System.currentTimeMillis();
     private int tick;
 
     @SubscribeEvent
