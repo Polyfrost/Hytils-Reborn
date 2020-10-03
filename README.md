@@ -8,7 +8,7 @@ you would want while on Hypixel, such as a player-advertisement blocker, an NPC 
 ### How do I use Hytilities?
 Hytilities is installed just like any other Forge mod.
 
-If you do not know how to install a Forge mod, then we recommended looking up "How to install a Forge mod for Minecraft 1.8.9".
+If you do not know how to install a Forge mod, then we recommended looking up "How to install a Forge mod for Minecraft 1.8.9?".
 
 ## Developers
 ### How can I contribute to Hytilities?
