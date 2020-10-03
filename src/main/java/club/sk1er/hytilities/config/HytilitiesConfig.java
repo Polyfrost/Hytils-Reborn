@@ -80,7 +80,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Server Connected Messages",
-        description = "Remove server Connected messages.\n§eExample: §bYou are currently connected to server §6mini104H",
+        description = "Remove server connection messages.\n§eExample: §bYou are currently connected to server §6mini104Hb.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean serverConnectedMessages;

@@ -45,7 +45,7 @@ Then click the `forgegradle` directory dropdown.
 
 ![ForgeGradle directory](.github/forgegradle.png)
 
-Then proceed to double-click the `setupDecompWorkspace` tasks. This may take a few minutes.
+Then proceed to double-click the `setupDecompWorkspace` task. This may take a few minutes.
 
 ![setupDecompWorkspace task](.github/setupDecompWorkspace.png)
 

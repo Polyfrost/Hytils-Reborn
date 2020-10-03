@@ -20,12 +20,13 @@ public class LocrawUtil implements ChatModule {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !MinecraftUtils.isHypixel() || tick >= 20) {
+        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !MinecraftUtils.isHypixel() || this.tick >= 20) {
             return;
         }
-        tick++;
-        if (tick == 20) {
-            listening = true;
+
+        this.tick++;
+        if (this.tick == 20) {
+            this.listening = true;
             Hytilities.INSTANCE.getCommandQueue().queue("/locraw");
         }
     }
@@ -43,15 +44,15 @@ public class LocrawUtil implements ChatModule {
                 String msg = event.message.getUnformattedTextForChat();
                 if (msg.startsWith("{")) {
                     // Parse the json, and make sure that it's not null.
-                    locrawInformation = gson.fromJson(msg, LocrawInformation.class);
+                    this.locrawInformation = gson.fromJson(msg, LocrawInformation.class);
                     if (locrawInformation != null) {
                         // Gson does not want to parse the GameType, as some stuff is different so this
                         // is just a way around that to make it properly work :)
-                        locrawInformation.setGameType(GameType.getFromLocraw(locrawInformation.getRawGameType()));
+                        this.locrawInformation.setGameType(GameType.getFromLocraw(locrawInformation.getRawGameType()));
 
                         // Stop listening for locraw and cancel the message.
                         event.setCanceled(true);
-                        listening = false;
+                        this.listening = false;
                     }
                 }
             } catch (Exception ignored) {
@@ -65,6 +66,6 @@ public class LocrawUtil implements ChatModule {
     }
 
     public LocrawInformation getLocrawInformation() {
-        return locrawInformation;
+        return this.locrawInformation;
     }
 }
