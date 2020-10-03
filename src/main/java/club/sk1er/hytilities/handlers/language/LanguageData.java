@@ -32,6 +32,7 @@ public class LanguageData {
 
     private String achievementPattern = "a>> {3}Achievement Unlocked: (?<achievement>.+) {3}<<a";
     private String levelUpPattern = "You are now Hypixel Level (?<level>\\d+)!";
+    private String guildPlayerJoinPattern = "^(?:\\[.*] )?(?<player>\\S{1,16}) joined the guild!$";
 
     private String chatRestylerGameJoinStyle = "^§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has joined (?<amount>.+)!§r$";
     private String chatRestylerGameLeaveStyle = "^§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has quit!§r$";
@@ -70,6 +71,7 @@ public class LanguageData {
 
     public Pattern achievementRegex;
     public Pattern levelUpRegex;
+    public Pattern guildPlayerJoinRegex;
 
     public Pattern chatRestylerGameJoinStyleRegex;
     public Pattern chatRestylerGameLeaveStyleRegex;
@@ -103,6 +105,7 @@ public class LanguageData {
 
         achievementRegex = Pattern.compile(achievementPattern);
         levelUpRegex = Pattern.compile(levelUpPattern);
+        guildPlayerJoinRegex = Pattern.compile(guildPlayerJoinPattern);
 
         chatRestylerGameJoinStyleRegex = Pattern.compile(chatRestylerGameJoinStyle);
         chatRestylerGameLeaveStyleRegex = Pattern.compile(chatRestylerGameLeaveStyle);

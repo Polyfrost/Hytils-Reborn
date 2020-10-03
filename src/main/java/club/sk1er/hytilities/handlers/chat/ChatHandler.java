@@ -6,6 +6,7 @@ import club.sk1er.hytilities.handlers.chat.cleaner.ChatCleaner;
 import club.sk1er.hytilities.handlers.chat.connected.ConnectedMessage;
 import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
+import club.sk1er.hytilities.handlers.chat.guild.GuildWelcomer;
 import club.sk1er.hytilities.handlers.chat.restyler.ChatRestyler;
 import club.sk1er.hytilities.handlers.chat.swapper.AutoChatSwapper;
 import club.sk1er.hytilities.handlers.chat.watchdog.ThankWatchdog;
@@ -31,6 +32,7 @@ public class ChatHandler {
         this.registerModule(new AutoChatSwapper());
         this.registerModule(new ConnectedMessage());
         this.registerModule(new ThankWatchdog());
+        this.registerModule(new GuildWelcomer());
 
         // reinitializing these seems to break them
         this.registerModule(Hytilities.INSTANCE.getAutoQueue());

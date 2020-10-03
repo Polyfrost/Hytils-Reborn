@@ -241,6 +241,13 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean thankWatchdog;
 
+    @Property(
+        type = PropertyType.SWITCH, name = "Guild Welcome Message",
+        description = "Sends a friendly welcome message when a player joins your guild",
+        category = "Chat", subcategory = "Guild"
+    )
+    public static boolean guildWelcomer;
+
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
         initialize();

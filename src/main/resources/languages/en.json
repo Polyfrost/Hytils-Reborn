@@ -13,6 +13,7 @@
   "connectedServerConnectMessage": "You are currently connected to server \\S+|Sending to server \\S+\\.{3}",
   "achievementPattern": "a>> {3}Achievement Unlocked: (?<achievement>.+) {3}<<a",
   "levelUpPattern": "You are now Hypixel Level (?<level>\\d+)!",
+  "guildPlayerJoinPattern": "^(?:\\[.*] )?(?<player>\\S{1,16}) joined the guild!$",
   "chatRestylerGameJoinStyle": "^§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has joined (?<amount>.+)!§r$",
   "chatRestylerGameLeaveStyle": "^§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has quit!§r$",
   "chatRestylerGameStartCounterStyle": "^The game starts in (?<time>\\d{1,3}) seconds?!§r$",
