@@ -8,6 +8,7 @@ import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.chat.restyler.ChatRestyler;
 import club.sk1er.hytilities.handlers.chat.swapper.AutoChatSwapper;
+import club.sk1er.hytilities.handlers.chat.watchdog.ThankWatchdog;
 import club.sk1er.hytilities.handlers.chat.whitechat.WhiteChat;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -29,6 +30,7 @@ public class ChatHandler {
         this.registerModule(new AchievementEvent());
         this.registerModule(new AutoChatSwapper());
         this.registerModule(new ConnectedMessage());
+        this.registerModule(new ThankWatchdog());
 
         // reinitializing these seems to break them
         this.registerModule(Hytilities.INSTANCE.getAutoQueue());
