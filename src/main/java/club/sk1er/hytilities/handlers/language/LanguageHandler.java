@@ -26,6 +26,7 @@ public class LanguageHandler {
     private final LanguageData fallback = readData("en");
     private final Map<String, String> languageMappings = new HashMap<String, String>() {{
         put("ENGLISH", "en");
+        put("FRENCH", "fr");
     }};
 
     private LanguageData current = fallback;
