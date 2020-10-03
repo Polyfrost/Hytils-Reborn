@@ -10,6 +10,7 @@ import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.game.hardcore.HardcoreStatus;
 import club.sk1er.hytilities.handlers.general.AutoStart;
 import club.sk1er.hytilities.handlers.general.CommandQueue;
+import club.sk1er.hytilities.handlers.language.LanguageHandler;
 import club.sk1er.hytilities.handlers.lobby.LobbyChecker;
 import club.sk1er.hytilities.handlers.lobby.bossbar.LobbyBossbar;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
@@ -50,6 +51,7 @@ public class Hytilities {
     private LocrawUtil locrawUtil;
     private AutoQueue autoQueue;
     private CommandQueue commandQueue;
+    private LanguageHandler languageHandler;
 
     private boolean loadedCall;
 
@@ -89,6 +91,9 @@ public class Hytilities {
         MinecraftForge.EVENT_BUS.register(new NPCHider());
         MinecraftForge.EVENT_BUS.register(new LobbyBossbar());
         MinecraftForge.EVENT_BUS.register(new LimboLimiter());
+
+        // language
+        MinecraftForge.EVENT_BUS.register(languageHandler = new LanguageHandler());
     }
 
     public void sendMessage(String message) {
@@ -133,5 +138,9 @@ public class Hytilities {
 
     public CommandQueue getCommandQueue() {
         return commandQueue;
+    }
+
+    public LanguageHandler getLanguageHandler() {
+        return languageHandler;
     }
 }

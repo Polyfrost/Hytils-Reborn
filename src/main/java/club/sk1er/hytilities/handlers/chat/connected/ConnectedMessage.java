@@ -4,14 +4,10 @@ import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 
-import java.util.regex.Pattern;
-
 public class ConnectedMessage implements ChatModule {
-    private final Pattern serverConnectMessage = Pattern.compile("You are currently connected to server \\S+|Sending to server \\S+\\.{3}");
-
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        if (serverConnectMessage.matcher(event.message.getUnformattedText()).matches()) {
+        if (getLanguage().connectedServerConnectMessageRegex.matcher(event.message.getUnformattedText()).matches()) {
             event.setCanceled(true);
         }
     }

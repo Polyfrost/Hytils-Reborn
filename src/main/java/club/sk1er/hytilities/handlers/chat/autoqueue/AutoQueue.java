@@ -3,6 +3,7 @@ package club.sk1er.hytilities.handlers.chat.autoqueue;
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatModule;
+import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.mods.core.universal.ChatColor;
 import club.sk1er.mods.core.util.Multithreading;
 import net.minecraft.util.IChatComponent;
@@ -23,11 +24,12 @@ public class AutoQueue implements ChatModule {
             return;
         }
 
+        final LanguageData language = getLanguage();
         String message = ChatColor.stripColor(event.message.getUnformattedText());
-        if (message.startsWith("You died! Want to play again?")) {
+        if (message.startsWith(language.autoQueuePrefix)) {
             for (IChatComponent component : event.message.getSiblings()) {
                 String compMsg = ChatColor.stripColor(component.getUnformattedText().trim());
-                if (compMsg.equals("Click here!")) {
+                if (compMsg.equals(language.autoQueueClick)) {
                     this.command = component.getChatStyle().getChatClickEvent().getValue();
                 }
             }
