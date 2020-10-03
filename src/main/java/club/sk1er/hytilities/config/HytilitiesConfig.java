@@ -93,6 +93,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean whiteChat;
 
     @Property(
+        type = PropertyType.SWITCH, name = "White Private Messages",
+        description = "Make private messages appear as the normal chat message color.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean whitePrivateMessages;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Game Status Restyle",
         description = "Replace common game status messages with a new style.",
         category = "Chat", subcategory = "Restyler"

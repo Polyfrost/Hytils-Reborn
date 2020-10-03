@@ -46,6 +46,7 @@ public class LanguageData {
     public String autoChatSwapperAlreadyInChannel = "You're already in this channel!";
 
     private String whiteChatNonMessage = "(?<prefix>.+)§7: (?<message>.*)";
+    private String privateMessageWhiteChat = "^(?<type>.+|To|From) (?<prefix>.+)§7: (?<message>.*)$";
 
     public String limboLimiterSpawned = "You were spawned in Limbo.";
     public String limboLimiterAfk = "You are AFK. Move around to return from AFK.";
@@ -82,6 +83,7 @@ public class LanguageData {
     public Pattern autoChatSwapperChannelSwapRegex;
 
     public Pattern whiteChatNonMessageRegex;
+    public Pattern privateMessageWhiteChatRegex;
     public Pattern silentRemovalLeaveMessageRegex;
 
     /**
@@ -114,6 +116,7 @@ public class LanguageData {
         autoChatSwapperChannelSwapRegex = Pattern.compile(autoChatSwapperChannelSwap);
 
         whiteChatNonMessageRegex = Pattern.compile(whiteChatNonMessage);
+        privateMessageWhiteChatRegex = Pattern.compile(privateMessageWhiteChat);
         silentRemovalLeaveMessageRegex = Pattern.compile(silentRemovalLeaveMessage);
     }
 
