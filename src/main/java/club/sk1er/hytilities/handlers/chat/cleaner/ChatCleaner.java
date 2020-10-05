@@ -63,17 +63,6 @@ public class ChatCleaner implements ChatModule {
             }
         }
 
-        // todo: figure out why chat events don't copy-over
-        /*if (HytilitiesConfig.hytilitiesLineBreaker) {
-            if (message.contains("-----------") && message.contains("\n")) {
-                event.message = new ChatComponentText(reformatMessage(event.message.getFormattedText()));
-                return;
-            } else if (message.contains("-----------")){
-                event.setCanceled(true);
-                return;
-            }
-        }*/
-
         if (HytilitiesConfig.lineBreakerTrim) {
             if (message.contains("-----------")) {
                 int lineWidth = Minecraft.getMinecraft().fontRendererObj.getStringWidth(message);
@@ -140,21 +129,5 @@ public class ChatCleaner implements ChatModule {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    // taken from ToggleChat
-    private String reformatMessage(String formattedText) {
-        if (formattedText.contains("\u25AC\u25AC")) { // the character is "▬" - used in some seperators
-            formattedText = formattedText
-                .replace("\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC", "")
-                .replace("\u25AC\u25AC", "");
-            return formattedText;
-        } else if (formattedText.contains("---")) {
-            formattedText = formattedText
-                .replace("----------------------------------------------------\n", "");
-            return formattedText.replace("--\n", "").replace("\n--", "").replace("-", "");
-        }
-
-        return formattedText;
     }
 }

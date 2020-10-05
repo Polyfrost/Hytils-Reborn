@@ -63,13 +63,13 @@ public class Hytilities {
 
     private final HytilitiesConfig config = new HytilitiesConfig();
 
+    private LanguageHandler languageHandler;
     private HardcoreStatus hardcoreStatus;
     private SilentRemoval silentRemoval;
+    private CommandQueue commandQueue;
     private LobbyChecker lobbyChecker;
     private LocrawUtil locrawUtil;
     private AutoQueue autoQueue;
-    private CommandQueue commandQueue;
-    private LanguageHandler languageHandler;
 
     private boolean loadedCall;
 

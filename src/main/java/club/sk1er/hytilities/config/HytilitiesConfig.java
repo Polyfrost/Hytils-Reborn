@@ -24,6 +24,7 @@ import club.sk1er.vigilance.data.PropertyType;
 
 import java.io.File;
 
+@SuppressWarnings("unused")
 public class HytilitiesConfig extends Vigilant {
 
     @Property(
@@ -32,13 +33,6 @@ public class HytilitiesConfig extends Vigilant {
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean playerAdBlock;
-
-    /*@Property(
-        type = PropertyType.SWITCH, name = "Remove Line Separators",
-        description = "Remove separators from chat.\n§eExample: §9§m--------------",
-        category = "Chat", subcategory = "Toggles"
-    )
-    public static boolean hytilitiesLineBreaker;*/
 
     @Property(
         type = PropertyType.SWITCH, name = "Trim Line Separators",
@@ -167,14 +161,14 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean npcHider;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide NPCs in tab",
+        type = PropertyType.SWITCH, name = "Hide NPCs In Tab",
         description = "Remove NPCs from ever showing up in tab.",
         category = "General", subcategory = "Entities"
     )
     public static boolean hideNpcsInTab;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide Guild tags in tab",
+        type = PropertyType.SWITCH, name = "Hide Guild Tags In Tab",
         description = "Prevent Guild tags from showing up in tab.",
         category = "General", subcategory = "Guilds"
     )
