@@ -68,11 +68,11 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
                     if (next instanceof MethodInsnNode && next.getOpcode() == Opcodes.INVOKESTATIC) {
                         String methodInsnName = mapMethodNameFromNode(next);
 
-                        // trim the player name to remove guild tags
+                        // trim the player name to remove player ranks and guild tags
                         if (methodInsnName.equals("formatPlayerName") || methodInsnName.equals("func_96667_a")) {
                             method.instructions.insert(next, new MethodInsnNode(Opcodes.INVOKESTATIC,
-                                "club/sk1er/hytilities/handlers/lobby/tab/GuildTagHider",
-                                "hideTabGuildTags",
+                                "club/sk1er/hytilities/handlers/lobby/tab/TabNameChanger",
+                                "modifyName",
                                 "(Ljava/lang/String;)Ljava/lang/String;",
                                 false));
                             break;

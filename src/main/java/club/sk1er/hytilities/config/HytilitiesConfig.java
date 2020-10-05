@@ -175,6 +175,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hideGuildTagsInTab;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Hide Player Ranks In Tab",
+        description = "Prevent player ranks from showing up in tab.",
+        category = "General", subcategory = "General"
+    )
+    public static boolean hidePlayerRanksInTab;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Limbo Limiter",
         description = "Limit your framerate to 15, reducing the load of the game on the computer while in Limbo.",
         category = "Lobby", subcategory = "General"

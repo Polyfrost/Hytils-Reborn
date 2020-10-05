@@ -27,14 +27,27 @@ import org.objectweb.asm.tree.ClassNode;
  * Used in {@link GuiPlayerTabOverlayTransformer#transform(ClassNode, String)}
  */
 @SuppressWarnings("unused")
-public class GuildTagHider {
+public class TabNameChanger {
 
-    public static String hideTabGuildTags(String name) {
-        if (MinecraftUtils.isHypixel() && HytilitiesConfig.hideGuildTagsInTab && name.endsWith("]")) {
-            // e.g. §b[MVP+] Steve §6[GUILD]
-            return name.substring(0, name.lastIndexOf("[") - 3);
-        } else {
-            return name;
+    public static String modifyName(String name) {
+
+        if (MinecraftUtils.isHypixel()) {
+            if (HytilitiesConfig.hidePlayerRanksInTab && name.startsWith("[", 2)) {
+                // keep the name color if player rank is removed
+                // §b[MVP§c+§b] Steve
+                String color = "\u00a7" + name.charAt(1);
+
+                // add the rank color, and trim off the player rank
+                name = color + name.substring(name.indexOf("]") + 2);
+            }
+
+            if (HytilitiesConfig.hideGuildTagsInTab && name.endsWith("]")) {
+                // trim off the guild tag
+                // e.g. Steve §6[GUILD]
+                name = name.substring(0, name.lastIndexOf("[") - 3);
+            }
         }
+
+        return name;
     }
 }
