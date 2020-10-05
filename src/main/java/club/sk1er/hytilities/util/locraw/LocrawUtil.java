@@ -19,7 +19,7 @@
 package club.sk1er.hytilities.util.locraw;
 
 import club.sk1er.hytilities.Hytilities;
-import club.sk1er.hytilities.handlers.chat.ChatModule;
+import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import club.sk1er.hytilities.handlers.game.GameType;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import com.google.gson.Gson;
@@ -29,7 +29,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-public class LocrawUtil implements ChatModule {
+public class LocrawUtil implements ChatReceiveModule {
 
     private final Gson gson = new Gson();
     private LocrawInformation locrawInformation;
@@ -79,7 +79,7 @@ public class LocrawUtil implements ChatModule {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isReceiveModuleEnabled() {
         return true;
     }
 

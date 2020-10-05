@@ -20,7 +20,7 @@ package club.sk1er.hytilities.handlers.chat.autoqueue;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.handlers.chat.ChatModule;
+import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.mods.core.universal.ChatColor;
 import club.sk1er.mods.core.util.Multithreading;
@@ -32,7 +32,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 
 import java.util.concurrent.TimeUnit;
 
-public class AutoQueue implements ChatModule {
+public class AutoQueue implements ChatReceiveModule {
     private String command = null;
     private boolean sentCommand;
 
@@ -55,7 +55,7 @@ public class AutoQueue implements ChatModule {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isReceiveModuleEnabled() {
         return HytilitiesConfig.autoQueue;
     }
 

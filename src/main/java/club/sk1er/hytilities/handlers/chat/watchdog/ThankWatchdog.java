@@ -19,11 +19,11 @@
 package club.sk1er.hytilities.handlers.chat.watchdog;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.handlers.chat.ChatModule;
+import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 
-public class ThankWatchdog implements ChatModule {
+public class ThankWatchdog implements ChatReceiveModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
@@ -33,7 +33,7 @@ public class ThankWatchdog implements ChatModule {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isReceiveModuleEnabled() {
         return HytilitiesConfig.thankWatchdog;
     }
 }

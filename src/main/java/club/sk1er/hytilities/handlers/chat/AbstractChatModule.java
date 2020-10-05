@@ -23,13 +23,11 @@ import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.mods.core.universal.ChatColor;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
 
-public interface ChatModule {
-    void onChatEvent(ClientChatReceivedEvent event);
-
-    boolean isEnabled();
-
+/**
+ * Used to have no conflicts for classes implementing both {@link ChatSendModule} and {@link ChatReceiveModule}
+ */
+public interface AbstractChatModule {
     default IChatComponent colorMessage(String message) {
         return new ChatComponentText(ChatColor.translateAlternateColorCodes('&', message));
     }

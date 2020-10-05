@@ -20,7 +20,7 @@ package club.sk1er.hytilities.handlers.chat.swapper;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.handlers.chat.ChatModule;
+import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import club.sk1er.mods.core.util.Multithreading;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,7 +30,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
-public class AutoChatSwapper implements ChatModule {
+public class AutoChatSwapper implements ChatReceiveModule {
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
@@ -53,7 +53,7 @@ public class AutoChatSwapper implements ChatModule {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isReceiveModuleEnabled() {
         return HytilitiesConfig.chatSwapper;
     }
 

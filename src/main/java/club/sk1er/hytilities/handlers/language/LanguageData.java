@@ -72,6 +72,12 @@ public class LanguageData {
 
     private String silentRemovalLeaveMessage = "(?:Friend|Guild) > (?<player>\\w{1,16}) left\\.";
 
+    public String noSpectatorCommands = "You are not allowed to use commands as a spectator!";
+
+    public String cannotShoutBeforeSkywars = "You can't shout until the game has started!";
+    public String cannotShoutBeforeGame = "You can't use /shout before the game has started.";
+    public String cannotShoutAfterGame = "You can't use /shout after the game has finished.";
+
     /**
      * Cached values which use the messages read from the config file.
      * Particularly Regexes.

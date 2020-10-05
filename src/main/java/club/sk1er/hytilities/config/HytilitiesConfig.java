@@ -274,6 +274,13 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean guildWelcomer;
 
+    @Property(
+        type = PropertyType.SWITCH, name = "Prevent /shout when under cooldown",
+        description = "If you shout a message during a cooldown, you can resend it after the cooldown has went with this!",
+        category = "Chat", subcategory = "Shout"
+    )
+    public static boolean preventShoutingOnCooldown;
+
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
         initialize();

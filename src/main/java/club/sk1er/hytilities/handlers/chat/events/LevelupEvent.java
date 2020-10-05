@@ -21,7 +21,7 @@ package club.sk1er.hytilities.handlers.chat.events;
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.events.HypixelLevelupEvent;
-import club.sk1er.hytilities.handlers.chat.ChatModule;
+import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,7 +31,7 @@ import org.apache.commons.lang.StringUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LevelupEvent implements ChatModule {
+public class LevelupEvent implements ChatReceiveModule {
 
     private final Pattern levelUpPattern = Pattern.compile("You are now Hypixel Level (?<level>\\d+)!");
 
@@ -50,7 +50,7 @@ public class LevelupEvent implements ChatModule {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isReceiveModuleEnabled() {
         return true;
     }
 

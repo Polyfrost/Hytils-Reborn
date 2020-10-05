@@ -19,12 +19,12 @@
 package club.sk1er.hytilities.handlers.chat.adblock;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.handlers.chat.ChatModule;
+import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 
 import java.util.regex.Pattern;
 
-public class AdBlocker implements ChatModule {
+public class AdBlocker implements ChatReceiveModule {
 
     // private final Pattern commonAdvertisements = Pattern.compile("/?(?:visit|ah|party|p join|guild|g join) \\w{1,16}", Pattern.CASE_INSENSITIVE);
     // https://regexr.com/5ct51 old regex would capture any sentence with party and "ah"
@@ -48,7 +48,7 @@ public class AdBlocker implements ChatModule {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isReceiveModuleEnabled() {
         return HytilitiesConfig.playerAdBlock;
     }
 }

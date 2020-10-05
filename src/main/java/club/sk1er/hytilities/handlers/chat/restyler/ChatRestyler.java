@@ -19,7 +19,7 @@
 package club.sk1er.hytilities.handlers.chat.restyler;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.handlers.chat.ChatModule;
+import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
 import net.minecraft.util.ChatComponentText;
@@ -30,7 +30,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.regex.Matcher;
 
 
-public class ChatRestyler implements ChatModule {
+public class ChatRestyler implements ChatReceiveModule {
 
     private static int playerCount = -1;
     private static int maxPlayerCount = -1;
@@ -159,7 +159,7 @@ public class ChatRestyler implements ChatModule {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isReceiveModuleEnabled() {
         return true;
     }
 

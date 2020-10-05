@@ -70,6 +70,7 @@ public class Hytilities {
     private LobbyChecker lobbyChecker;
     private LocrawUtil locrawUtil;
     private AutoQueue autoQueue;
+    private ChatHandler chatHandler;
 
     private boolean loadedCall;
 
@@ -100,7 +101,7 @@ public class Hytilities {
         // chat
         MinecraftForge.EVENT_BUS.register(silentRemoval = new SilentRemoval());
         MinecraftForge.EVENT_BUS.register(hardcoreStatus = new HardcoreStatus());
-        MinecraftForge.EVENT_BUS.register(new ChatHandler());
+        MinecraftForge.EVENT_BUS.register(chatHandler = new ChatHandler());
         MinecraftForge.EVENT_BUS.register(new AchievementEvent());
         MinecraftForge.EVENT_BUS.register(new LevelupEvent());
 
@@ -160,5 +161,9 @@ public class Hytilities {
 
     public LanguageHandler getLanguageHandler() {
         return languageHandler;
+    }
+
+    public ChatHandler getChatHandler() {
+        return chatHandler;
     }
 }

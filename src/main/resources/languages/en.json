@@ -27,5 +27,9 @@
   "whiteChatNonMessage": "(?<prefix>.+)§7: (?<message>.*)",
   "limboLimiterSpawned": "You were spawned in Limbo.",
   "limboLimiterAfk": "You are AFK. Move around to return from AFK.",
-  "silentRemovalLeaveMessage": "(?:Friend|Guild) > (?<player>\\w{1,16}) left\\."
+  "silentRemovalLeaveMessage": "(?:Friend|Guild) > (?<player>\\w{1,16}) left\\.",
+  "noSpectatorCommands": "You are not allowed to use commands as a spectator!",
+  "cannotShoutBeforeSkywars": "You can't shout until the game has started!",
+  "cannotShoutBeforeBedwars": "You can't use /shout before the game has started.",
+  "cannotShoutInSoloBedwars": "You can't use /shout in this mode."
 }

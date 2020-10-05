@@ -21,7 +21,7 @@ package club.sk1er.hytilities.handlers.chat.events;
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.events.HypixelAchievementEvent;
-import club.sk1er.hytilities.handlers.chat.ChatModule;
+import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public class AchievementEvent implements ChatModule {
+public class AchievementEvent implements ChatReceiveModule {
 
     private final List<String> achievementsGotten = new ArrayList<>();
 
@@ -53,7 +53,7 @@ public class AchievementEvent implements ChatModule {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isReceiveModuleEnabled() {
         return true;
     }
 

@@ -26,6 +26,7 @@ import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.chat.guild.GuildWelcomer;
 import club.sk1er.hytilities.handlers.chat.restyler.ChatRestyler;
+import club.sk1er.hytilities.handlers.chat.shoutblocker.ShoutBlocker;
 import club.sk1er.hytilities.handlers.chat.swapper.AutoChatSwapper;
 import club.sk1er.hytilities.handlers.chat.watchdog.ThankWatchdog;
 import club.sk1er.hytilities.handlers.chat.whitechat.WhiteChat;
@@ -37,28 +38,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatHandler {
-
-    private final List<ChatModule> moduleList = new ArrayList<>();
+    private final List<ChatReceiveModule> receiveModules = new ArrayList<>();
+    private final List<ChatSendModule> sendModules = new ArrayList<>();
 
     public ChatHandler() {
-        this.registerModule(new AdBlocker());
-        this.registerModule(new ChatCleaner());
-        this.registerModule(new ChatRestyler());
-        this.registerModule(new WhiteChat());
-        this.registerModule(new LevelupEvent());
-        this.registerModule(new AchievementEvent());
-        this.registerModule(new AutoChatSwapper());
-        this.registerModule(new ConnectedMessage());
-        this.registerModule(new ThankWatchdog());
-        this.registerModule(new GuildWelcomer());
+        this.registerReceiveModule(new AdBlocker());
+        this.registerReceiveModule(new ChatCleaner());
+        this.registerReceiveModule(new ChatRestyler());
+        this.registerReceiveModule(new WhiteChat());
+        this.registerReceiveModule(new LevelupEvent());
+        this.registerReceiveModule(new AchievementEvent());
+        this.registerReceiveModule(new AutoChatSwapper());
+        this.registerReceiveModule(new ConnectedMessage());
+        this.registerReceiveModule(new ThankWatchdog());
+        this.registerReceiveModule(new GuildWelcomer());
+        this.registerSendAndReceiveModule(new ShoutBlocker());
 
         // reinitializing these seems to break them
-        this.registerModule(Hytilities.INSTANCE.getAutoQueue());
-        this.registerModule(Hytilities.INSTANCE.getLocrawUtil());
+        this.registerReceiveModule(Hytilities.INSTANCE.getAutoQueue());
+        this.registerReceiveModule(Hytilities.INSTANCE.getLocrawUtil());
     }
 
-    private void registerModule(ChatModule chatModule) {
-        this.moduleList.add(chatModule);
+    private void registerReceiveModule(ChatReceiveModule chatModule) {
+        this.receiveModules.add(chatModule);
+    }
+
+    private void registerSendModule(ChatSendModule chatModule) {
+        this.sendModules.add(chatModule);
+    }
+
+    private <T extends ChatSendModule & ChatReceiveModule> void registerSendAndReceiveModule(T chatModule) {
+        this.registerReceiveModule(chatModule);
+        this.registerSendModule(chatModule);
     }
 
     @SubscribeEvent
@@ -67,10 +78,21 @@ public class ChatHandler {
             return;
         }
 
-        for (ChatModule module : this.moduleList) {
-            if (module.isEnabled()) {
+        for (ChatReceiveModule module : this.receiveModules) {
+            if (module.isReceiveModuleEnabled()) {
                 module.onChatEvent(event);
             }
         }
+    }
+
+    public boolean shouldSendMessage(String message) {
+        if (!MinecraftUtils.isHypixel()) {
+            return true;
+        }
+
+        for (ChatSendModule module : this.sendModules) {
+            if (module.isSendModuleEnabled() && !module.shouldSendMessage(message)) return false;
+        }
+        return true;
     }
 }
