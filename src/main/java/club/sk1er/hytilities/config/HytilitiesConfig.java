@@ -23,6 +23,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hytilitiesLineBreaker;*/
 
     @Property(
+        type = PropertyType.SWITCH, name = "Trim Line Separators",
+        description = "Prevent separators from overflowing onto the next chat line.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean lineBreakerTrim;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Remove Lobby Statuses",
         description = "Remove lobby join messages from chat.\n§eExample: §b[MVP§c+§b] Steve §6joined the lobby!",
         category = "Chat", subcategory = "Toggles"
@@ -147,6 +154,13 @@ public class HytilitiesConfig extends Vigilant {
         category = "General", subcategory = "Entities"
     )
     public static boolean hideNpcsInTab;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Hide Guild tags in tab",
+        description = "Prevent Guild tags from showing up in tab.",
+        category = "General", subcategory = "Guilds"
+    )
+    public static boolean hideGuildTagsInTab;
 
     @Property(
         type = PropertyType.SWITCH, name = "Limbo Limiter",

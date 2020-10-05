@@ -4,6 +4,7 @@ import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatModule;
 import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -63,6 +64,18 @@ public class ChatRestyler implements ChatModule {
             } else if (friendMatcher.find()) {
                 event.message = colorMessage(message.replaceAll(language.chatRestylerFriendPatternRegex.pattern(),
                         friendMatcher.group(1) + "F >"));
+            }
+        }
+
+        if (HytilitiesConfig.lineBreakerTrim) {
+            if (message.contains("-----------")) {
+                int lineWidth = Minecraft.getMinecraft().fontRendererObj.getStringWidth(message);
+                int chatWidth = Minecraft.getMinecraft().ingameGUI.getChatGUI().getChatWidth();
+                if (lineWidth > chatWidth) {
+                    message = Minecraft.getMinecraft().fontRendererObj.trimStringToWidth(message, chatWidth);
+                    event.message = new ChatComponentText(message);
+                    return;
+                }
             }
         }
 
