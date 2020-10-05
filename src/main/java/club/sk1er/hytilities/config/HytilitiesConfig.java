@@ -1,3 +1,21 @@
+/*
+ * Hytilities - Hypixel focused Quality of Life mod.
+ * Copyright (C) 2020  Sk1er LLC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package club.sk1er.hytilities.config;
 
 import club.sk1er.vigilance.Vigilant;
@@ -80,14 +98,14 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Chat Emojis",
-        description = "Remove MVP++ chat emojis.\n§eExample: §c§lOOF ",
+        description = "Remove MVP++ chat emojis.\n§eExample: §c§lOOF",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean mvpEmotes;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Server Connected Messages",
-        description = "Remove server connection messages.\n§eExample: §bYou are currently connected to server §6mini104Hb.",
+        description = "Remove server connection messages.\n§eExample: §bYou are currently connected to server §6mini104H§b.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean serverConnectedMessages;
@@ -236,7 +254,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Hardcore Hearts",
-        description = "When your bed is broken/wither is killed in BedWars/The Walls, set the heart style to Hardcore.",
+        description = "When your bed is broken/wither is killed in Bedwars/The Walls, set the heart style to Hardcore.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hardcoreHearts;
@@ -257,7 +275,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Guild Welcome Message",
-        description = "Sends a friendly welcome message when a player joins your guild",
+        description = "Sends a friendly welcome message when a player joins your guild.",
         category = "Chat", subcategory = "Guild"
     )
     public static boolean guildWelcomer;

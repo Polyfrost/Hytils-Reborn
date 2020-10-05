@@ -1,8 +1,29 @@
+/*
+ * Hytilities - Hypixel focused Quality of Life mod.
+ * Copyright (C) 2020  Sk1er LLC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package club.sk1er.hytilities.tweaker.asm;
 
 import club.sk1er.hytilities.tweaker.transformer.HytilitiesTransformer;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.tree.*;
+import org.objectweb.asm.tree.AbstractInsnNode;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
 
 import java.util.ListIterator;
 
@@ -38,8 +59,6 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
                         }
                     }
                 }
-
-                break;
             } else if (methodName.equals("getPlayerName") || methodName.equals("func_175243_a")) {
                 ListIterator<AbstractInsnNode> iterator = method.instructions.iterator();
 
@@ -52,10 +71,10 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
                         // trim the player name to remove guild tags
                         if (methodInsnName.equals("formatPlayerName") || methodInsnName.equals("func_96667_a")) {
                             method.instructions.insert(next, new MethodInsnNode(Opcodes.INVOKESTATIC,
-                                    "club/sk1er/hytilities/handlers/lobby/tab/GuildTagHider",
-                                    "hideTabGuildTags",
-                                    "(Ljava/lang/String;)Ljava/lang/String;",
-                                    false));
+                                "club/sk1er/hytilities/handlers/lobby/tab/GuildTagHider",
+                                "hideTabGuildTags",
+                                "(Ljava/lang/String;)Ljava/lang/String;",
+                                false));
                             break;
                         }
                     }

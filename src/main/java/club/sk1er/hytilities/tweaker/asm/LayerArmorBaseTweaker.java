@@ -1,3 +1,21 @@
+/*
+ * Hytilities - Hypixel focused Quality of Life mod.
+ * Copyright (C) 2020  Sk1er LLC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package club.sk1er.hytilities.tweaker.asm;
 
 import club.sk1er.hytilities.Hytilities;
@@ -8,8 +26,16 @@ import club.sk1er.hytilities.util.locraw.LocrawInformation;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import org.objectweb.asm.*;
-import org.objectweb.asm.tree.*;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.tree.AbstractInsnNode;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnList;
+import org.objectweb.asm.tree.InsnNode;
+import org.objectweb.asm.tree.JumpInsnNode;
+import org.objectweb.asm.tree.LabelNode;
+import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.VarInsnNode;
 
 import java.util.ListIterator;
 
@@ -58,6 +84,7 @@ public class LayerArmorBaseTweaker implements HytilitiesTransformer {
         return list;
     }
 
+    @SuppressWarnings("unused")
     public static boolean shouldRenderArmour(ItemStack itemStack) {
         if (!HytilitiesConfig.hideArmour || itemStack == null) return true;
 
@@ -68,12 +95,12 @@ public class LayerArmorBaseTweaker implements HytilitiesTransformer {
 
         if (locraw.getGameType() == GameType.BED_WARS || (locraw.getGameType() == GameType.ARCADE_GAMES && locraw.getGameMode().contains("PVP_CTW"))) {
             if (item == Items.leather_helmet || item == Items.leather_chestplate ||
-                    item == Items.leather_leggings || item == Items.leather_boots) return false;
+                item == Items.leather_leggings || item == Items.leather_boots) return false;
         }
 
         if (locraw.getGameType() == GameType.DUELS && locraw.getGameMode().contains("BRIDGE")) {
             return item != Items.leather_chestplate &&
-                    item != Items.leather_leggings && item != Items.leather_boots;
+                item != Items.leather_leggings && item != Items.leather_boots;
         }
 
         return true;

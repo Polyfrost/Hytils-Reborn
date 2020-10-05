@@ -1,3 +1,21 @@
+/*
+ * Hytilities - Hypixel focused Quality of Life mod.
+ * Copyright (C) 2020  Sk1er LLC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package club.sk1er.hytilities.handlers.chat.watchdog;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
@@ -6,15 +24,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 
 public class ThankWatchdog implements ChatModule {
-    private final String WATCHDOG_ANNOUNCEMENT_TRIGGER = "[WATCHDOG ANNOUNCEMENT]";
-    private final String THANK_WATCHDOG_MESSAGE = "/achat Thanks Watchdog!";
 
     @Override
     public void onChatEvent(ClientChatReceivedEvent event) {
-        String text = event.message.getUnformattedText();
-
-        if (text.equals(WATCHDOG_ANNOUNCEMENT_TRIGGER)) {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage(THANK_WATCHDOG_MESSAGE);
+        if (event.message.getUnformattedText().equals("[WATCHDOG ANNOUNCEMENT]")) {
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/achat Thanks Watchdog!");
         }
     }
 
