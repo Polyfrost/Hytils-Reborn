@@ -78,6 +78,8 @@ public class LanguageData {
     public String cannotShoutBeforeGame = "You can't use /shout before the game has started.";
     public String cannotShoutAfterGame = "You can't use /shout after the game has finished.";
 
+    private String hypixelLevelUp = "You are now Hypixel Level (?<level>\\d+)!";
+
     /**
      * Cached values which use the messages read from the config file.
      * Particularly Regexes.
@@ -112,6 +114,8 @@ public class LanguageData {
     public Pattern privateMessageWhiteChatRegex;
     public Pattern silentRemovalLeaveMessageRegex;
 
+    public Pattern hypixelLevelUpRegex;
+
     /**
      * Compiles all the required patterns and caches them for later use.
      */
@@ -145,6 +149,8 @@ public class LanguageData {
         whiteChatNonMessageRegex = Pattern.compile(whiteChatNonMessage);
         privateMessageWhiteChatRegex = Pattern.compile(privateMessageWhiteChat);
         silentRemovalLeaveMessageRegex = Pattern.compile(silentRemovalLeaveMessage);
+
+        hypixelLevelUpRegex = Pattern.compile(hypixelLevelUp);
     }
 
 }

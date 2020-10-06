@@ -31,5 +31,6 @@
   "noSpectatorCommands": "You are not allowed to use commands as a spectator!",
   "cannotShoutBeforeSkywars": "You can't shout until the game has started!",
   "cannotShoutBeforeBedwars": "You can't use /shout before the game has started.",
-  "cannotShoutInSoloBedwars": "You can't use /shout in this mode."
+  "cannotShoutInSoloBedwars": "You can't use /shout in this mode.",
+  "hypixelLevelUp": "You are now Hypixel Level (?<level>\\\\d+)!"
 }
