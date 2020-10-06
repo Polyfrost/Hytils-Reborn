@@ -40,7 +40,7 @@ public class ClassTransformer implements IClassTransformer {
     public ClassTransformer() {
         registerTransformer(new MinecraftTransformer());
         registerTransformer(new GuiPlayerTabOverlayTransformer());
-        registerTransformer(new LayerArmorBaseTweaker());
+        registerTransformer(new LayerArmorBaseTransformer());
         registerTransformer(new GuiIngameForgeTransformer());
         registerTransformer(new GuiScreenTransformer());
     }

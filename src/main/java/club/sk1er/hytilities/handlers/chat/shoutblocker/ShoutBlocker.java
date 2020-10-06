@@ -7,7 +7,6 @@ import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import club.sk1er.hytilities.handlers.game.GameType;
 import club.sk1er.hytilities.util.locraw.LocrawInformation;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 
 import java.text.DecimalFormat;
@@ -28,7 +27,7 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
                 return true;
             } else {
                 long secondsLeft = (shoutCooldown - System.currentTimeMillis()) / 1000L;
-                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("Hytilities blocked you from shouting. The chat cooldown is "+decimalFormat.format(secondsLeft)+" more second"+(secondsLeft == 1 ? "." : "s.")));
+                Minecraft.getMinecraft().thePlayer.addChatMessage(colorMessage("&eShout command is on cooldown. Please wait " + decimalFormat.format(secondsLeft) + " more second" + (secondsLeft == 1 ? "." : "s.")));
                 return false;
             }
         }
@@ -37,10 +36,20 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
 
     private long getCooldownLengthInSeconds() {
         LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (locraw != null && locraw.getGameType() != null && !"LOBBY".equals(locraw.getGameMode())) {
-            if (locraw.getGameType() == GameType.BED_WARS && !locraw.getGameMode().equals("BEDWARS_EIGHT_ONE")) return 60L;
-            else if (locraw.getGameType() == GameType.SKY_WARS) return 3L;
-            else if (locraw.getGameType() == GameType.ARCADE_GAMES && locraw.getGameMode().equals("PVP_CTW")) return 10L;
+        if (locraw != null && !"LOBBY".equals(locraw.getGameMode())) {
+            switch (locraw.getGameType()) {
+                case BED_WARS:
+                    if (!locraw.getGameMode().equals("BEDWARS_EIGHT_ONE")) return 60L;
+                    break;
+                case SKY_WARS:
+                    return 3L;
+                case ARCADE_GAMES:
+                    if (locraw.getGameMode().equals("PVP_CTW")) return 10L;
+                    break;
+                case UHC_CHAMPIONS:
+                    if (locraw.getGameMode().equals("TEAMS")) return 90L;
+                    break;
+            }
         }
         return 0L;
     }

@@ -20,11 +20,10 @@ package club.sk1er.hytilities.tweaker.asm;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.handlers.game.GameType;
 import club.sk1er.hytilities.tweaker.transformer.HytilitiesTransformer;
 import club.sk1er.hytilities.util.locraw.LocrawInformation;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -39,7 +38,7 @@ import org.objectweb.asm.tree.VarInsnNode;
 
 import java.util.ListIterator;
 
-public class LayerArmorBaseTweaker implements HytilitiesTransformer {
+public class LayerArmorBaseTransformer implements HytilitiesTransformer {
 
     @Override
     public String[] getClassName() {
@@ -74,7 +73,7 @@ public class LayerArmorBaseTweaker implements HytilitiesTransformer {
         InsnList list = new InsnList();
 
         list.add(new VarInsnNode(Opcodes.ALOAD, 10));
-        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "club/sk1er/hytilities/tweaker/asm/LayerArmorBaseTweaker", "shouldRenderArmour", "(Lnet/minecraft/item/ItemStack;)Z", false));
+        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "club/sk1er/hytilities/tweaker/asm/LayerArmorBaseTransformer", "shouldRenderArmour", "(Lnet/minecraft/item/ItemStack;)Z", false));
 
         final LabelNode ifeq = new LabelNode();
         list.add(new JumpInsnNode(Opcodes.IFNE, ifeq));
@@ -90,17 +89,21 @@ public class LayerArmorBaseTweaker implements HytilitiesTransformer {
 
         Item item = itemStack.getItem();
 
-        if (Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation() == null) return true;
-        LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
+        // armor piece is made of leather
+        if (item instanceof ItemArmor && ((ItemArmor) item).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
+            LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
 
-        if (locraw.getGameType() == GameType.BED_WARS || (locraw.getGameType() == GameType.ARCADE_GAMES && locraw.getGameMode().contains("PVP_CTW"))) {
-            if (item == Items.leather_helmet || item == Items.leather_chestplate ||
-                item == Items.leather_leggings || item == Items.leather_boots) return false;
-        }
-
-        if (locraw.getGameType() == GameType.DUELS && locraw.getGameMode().contains("BRIDGE")) {
-            return item != Items.leather_chestplate &&
-                item != Items.leather_leggings && item != Items.leather_boots;
+            if (locraw != null) {
+                switch (locraw.getGameType()) {
+                    case BED_WARS:
+                        return false;
+                    case ARCADE_GAMES:
+                        // capture the wool
+                        return !locraw.getGameMode().contains("PVP_CTW");
+                    case DUELS:
+                        return !locraw.getGameMode().contains("BRIDGE");
+                }
+            }
         }
 
         return true;

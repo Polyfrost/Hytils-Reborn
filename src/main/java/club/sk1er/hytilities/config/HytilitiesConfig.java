@@ -49,7 +49,7 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean lobbyStatus;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Show Own Mystery Box Rewards",
+        type = PropertyType.SWITCH, name = "Show Personal Mystery Box Rewards",
         description = "Remove others mystery box messages from chat.\n§eExample: §b[Mystery Box] Steve §ffound a §6Legendary Hype Train Gadget§f!",
         category = "Chat", subcategory = "Toggles"
     )
@@ -127,28 +127,28 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Player Count Before Player Name",
-        description = "Put player count before player name in game join/leave messages.",
+        description = "Put the player count before the player name in game join/leave messages.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean playerCountBeforePlayerName;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Show Player Count on Player Leave",
+        type = PropertyType.SWITCH, name = "Show Player Count On Player Leave",
         description = "Include the player count when players leave.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean playerCountOnPlayerLeave;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Zero-Pad Player Counts",
-        description = "Places zeros at the beginning of player counts to align with the max player count.",
+        type = PropertyType.SWITCH, name = "Zero-Pad Player Count",
+        description = "Place zeros at the beginning of the player count to align with the max player count.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean padPlayerCount;
 
     @Property(
         type = PropertyType.SWITCH, name = "Short Channel Names",
-        description = "Shortens channel names. \n§eExample:  Guild -> G, Party -> P, Friend -> F",
+        description = "Abbreviate channel names. \n§eExample:  Guild -> G, Party -> P, Friend -> F",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean shortChannelNames;
@@ -162,7 +162,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide NPCs In Tab",
-        description = "Remove NPCs from ever showing up in tab.",
+        description = "Prevent NPCs from showing up in tab.",
         category = "General", subcategory = "Entities"
     )
     public static boolean hideNpcsInTab;
@@ -183,7 +183,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Limbo Limiter",
-        description = "Limit your framerate to 15, reducing the load of the game on the computer while in Limbo.",
+        description = "While in Limbo, limit your framerate to 15 to reduce the load of the game on your computer.",
         category = "Lobby", subcategory = "General"
     )
     public static boolean limboLimiter;
@@ -197,20 +197,20 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Broadcast Achievements",
-        description = "Announce when you've gotten an achievement in Guild chat.",
+        description = "Announce in Guild chat when you get an achievement.",
         category = "General", subcategory = "Guilds"
     )
     public static boolean broadcastAchievements;
 
     @Property(
         type = PropertyType.SWITCH, name = "Broadcast Levelup",
-        description = "Announce when you've leveled up in Guild chat.",
+        description = "Announce in Guild chat when you level up.",
         category = "General", subcategory = "Guilds"
     )
     public static boolean broadcastLevelup;
 
     @Property(
-        type = PropertyType.SWITCH, name = "AutoStart",
+        type = PropertyType.SWITCH, name = "Auto Start",
         description = "Join Hypixel immediately once the client has loaded to the main menu.",
         category = "General", subcategory = "General"
     )
@@ -247,7 +247,7 @@ public class HytilitiesConfig extends Vigilant {
     public static int autoQueueDelay;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Armour Hider",
+        type = PropertyType.SWITCH, name = "Hide Armour",
         description = "Hide armour in games where armour is always the same.",
         category = "Game", subcategory = "Visual"
     )
@@ -269,21 +269,21 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Thank Watchdog",
-        description = "Thanks Watchdog when someone is banned or a Watchdog announcement is sent.",
+        description = "Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.",
         category = "Chat", subcategory = "Watchdog"
     )
     public static boolean thankWatchdog;
 
     @Property(
         type = PropertyType.SWITCH, name = "Guild Welcome Message",
-        description = "Sends a friendly welcome message when a player joins your guild.",
+        description = "Send a friendly welcome message when a player joins your guild.",
         category = "Chat", subcategory = "Guild"
     )
     public static boolean guildWelcomer;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Prevent /shout when under cooldown",
-        description = "If you shout a message during a cooldown, you can resend it after the cooldown has went with this!",
+        type = PropertyType.SWITCH, name = "Shout Cooldown",
+        description = "Show the amount of time remaining until /shout can be reused.",
         category = "Chat", subcategory = "Shout"
     )
     public static boolean preventShoutingOnCooldown;

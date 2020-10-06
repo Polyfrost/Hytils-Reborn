@@ -64,7 +64,8 @@ public class ChatCleaner implements ChatReceiveModule {
         }
 
         if (HytilitiesConfig.lineBreakerTrim) {
-            if (message.contains("-----------")) {
+            if (message.contains("-----------") || message.contains("▬▬▬▬▬▬▬▬▬▬▬")) {
+                message = event.message.getFormattedText();
                 int lineWidth = Minecraft.getMinecraft().fontRendererObj.getStringWidth(message);
                 int chatWidth = Minecraft.getMinecraft().ingameGUI.getChatGUI().getChatWidth();
                 if (lineWidth > chatWidth) {
