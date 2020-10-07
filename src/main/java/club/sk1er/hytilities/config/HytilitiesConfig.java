@@ -106,49 +106,49 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "White Chat",
-        description = "Make nons appear as normal chat messages.",
+        description = "Make nons chat messages appear as the normal chat message color.\n§eExample: §7Steve: hey! §e-> §fSteve: hey!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean whiteChat;
 
     @Property(
         type = PropertyType.SWITCH, name = "White Private Messages",
-        description = "Make private messages appear as the normal chat message color.",
+        description = "Make private messages appear as the normal chat message color.\n§eExample: §dFrom §b[MVP§c+§b] Steve: §7hey! §e-> §dFrom §b[MVP§c+§b] Steve: §fhey!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean whitePrivateMessages;
 
     @Property(
         type = PropertyType.SWITCH, name = "Game Status Restyle",
-        description = "Replace common game status messages with a new style.",
+        description = "Replace common game status messages with a new style.\n§eExamples:\n§a§l+ §bSteve §e(§b1§e/§b12§e)\n§c§l- §bSteve §e(§b1§e/§b12§e)\n§e§l* §aGame starts in §b§l5 §aseconds.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean gameStatusRestyle;
 
     @Property(
         type = PropertyType.SWITCH, name = "Player Count Before Player Name",
-        description = "Put the player count before the player name in game join/leave messages.",
+        description = "Put the player count before the player name in game join/leave messages.\n§eExample: §e(§b1§e/§b12§e) §bSteve §ehas joined!",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean playerCountBeforePlayerName;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Show Player Count On Player Leave",
-        description = "Include the player count when players leave.",
+        type = PropertyType.SWITCH, name = "Player Count On Player Leave",
+        description = "Include the player count when players leave.\n§eExample: §bSteve §ehas quit (§b1§e/§b12§e)!",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean playerCountOnPlayerLeave;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Zero-Pad Player Count",
-        description = "Place zeros at the beginning of the player count to align with the max player count.",
+        type = PropertyType.SWITCH, name = "Player Count Padding",
+        description = "Place zeros at the beginning of the player count to align with the max player count.\n§eExample: §bSteve §ehas joined §e(§b001§e/§b111§e)!",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean padPlayerCount;
 
     @Property(
         type = PropertyType.SWITCH, name = "Short Channel Names",
-        description = "Abbreviate channel names. \n§eExample:  Guild -> G, Party -> P, Friend -> F",
+        description = "Abbreviate channel names.\n§eExample: §2Guild §e-> §2G§e, §9Party §e-> §9P§e, §dFriend §e-> §dF",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean shortChannelNames;
@@ -269,21 +269,21 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Thank Watchdog",
-        description = "Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.",
+        description = "Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.\n§eExample: §fThanks Watchdog!",
         category = "Chat", subcategory = "Watchdog"
     )
     public static boolean thankWatchdog;
 
     @Property(
         type = PropertyType.SWITCH, name = "Guild Welcome Message",
-        description = "Send a friendly welcome message when a player joins your guild.",
+        description = "Send a friendly welcome message when a player joins your guild.\n§eExample: §fWelcome to the guild Steve!",
         category = "Chat", subcategory = "Guild"
     )
     public static boolean guildWelcomer;
 
     @Property(
         type = PropertyType.SWITCH, name = "Shout Cooldown",
-        description = "Show the amount of time remaining until /shout can be reused.",
+        description = "Show the amount of time remaining until /shout can be reused.\n§eExample: §eShout command is on cooldown. Please wait 30 more seconds.",
         category = "Chat", subcategory = "Shout"
     )
     public static boolean preventShoutingOnCooldown;
