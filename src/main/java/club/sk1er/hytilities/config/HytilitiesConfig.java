@@ -119,6 +119,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean whitePrivateMessages;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Cleaner Game Start Counter",
+        description = "Compacts game start announcements.\n§eExample: The game starts in 20 seconds!",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean cleanerGameStartAnnouncements;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Game Status Restyle",
         description = "Replace common game status messages with a new style.\n§eExamples:\n§a§l+ §bSteve §e(§b1§e/§b12§e)\n§c§l- §bSteve §e(§b1§e/§b12§e)\n§e§l* §aGame starts in §b§l5 §aseconds.",
         category = "Chat", subcategory = "Restyler"

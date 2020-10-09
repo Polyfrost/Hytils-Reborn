@@ -123,14 +123,10 @@ public class ChatRestyler implements ChatReceiveModule {
                     }
                 } else {
                     Matcher startCounterMatcher = language.chatRestylerGameStartCounterStyleRegex.matcher(unformattedMessage);
-                    if (startCounterMatcher.matches()) {
-                        String time = startCounterMatcher.group("time");
-                        boolean secondMessage = unformattedMessage.contains("seconds");
 
-                        event.message = colorMessage("&e&l* &aGame starts in &b&l" + time
-                            // for some bizarre reason, seconds is captured in the time group (though we explicitly tell
-                            // it to only capture numbers (\d)), so get around that by just replacing seconds with nothing
-                            .replaceAll(" seconds", "") + (secondMessage ? " &aseconds." : " &asecond."));
+                    if (startCounterMatcher.matches()) {
+                        // if the format (below) is changed, remember to update the regex for it (chatRestylerGameStartCounterOutputStyle)
+                        event.message = colorMessage("&e&l* &a"+(startCounterMatcher.group("title"))+" &b&l" + startCounterMatcher.group("time") + " &a" + startCounterMatcher.group("unit"));
                     } else {
                         if ("We don't have enough players! Start cancelled.".equals(unformattedMessage)) {
                             event.message = colorMessage("&e&l* &cStart cancelled.");

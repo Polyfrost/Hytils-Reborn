@@ -21,6 +21,7 @@ package club.sk1er.hytilities.handlers.chat;
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.handlers.chat.adblock.AdBlocker;
 import club.sk1er.hytilities.handlers.chat.cleaner.ChatCleaner;
+import club.sk1er.hytilities.handlers.chat.compactor.GameStartCompactor;
 import club.sk1er.hytilities.handlers.chat.connected.ConnectedMessage;
 import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
@@ -52,6 +53,7 @@ public class ChatHandler {
         this.registerReceiveModule(new ConnectedMessage());
         this.registerReceiveModule(new ThankWatchdog());
         this.registerReceiveModule(new GuildWelcomer());
+        this.registerReceiveModule(new GameStartCompactor());
         this.registerSendAndReceiveModule(new ShoutBlocker());
 
         // reinitializing these seems to break them

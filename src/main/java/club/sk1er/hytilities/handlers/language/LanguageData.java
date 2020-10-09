@@ -54,7 +54,8 @@ public class LanguageData {
 
     private String chatRestylerGameJoinStyle = "^§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has joined (?<amount>.+)!§r$";
     private String chatRestylerGameLeaveStyle = "^§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has quit!§r$";
-    private String chatRestylerGameStartCounterStyle = "^The game starts in (?<time>\\d{1,3}) seconds?!§r$";
+    private String chatRestylerGameStartCounterStyle = "^(?<title>(The game starts in|Cages open in:)) (?<time>\\d{1,3}) (?<unit>(seconds?!))$"; // todo please translate "Cages open in:" to french (also translate to chatRestylerGameStartCounterOutputStyle)
+    private String chatRestylerGameStartCounterOutputStyle = "^\u00a7e\u00a7l\\* \u00a7a(The game starts in|Cages open in:) \u00a7b\u00a7l\\d{1,3} \u00a7aseconds?!\u00a7r$";
     private String chatRestylerFormattedPaddingPattern = "\\(§r§b(\\d{1,2})§r§e/§r§b(\\d{1,3})§r§e\\)";
     private String chatRestylerPartyPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Party )(\\u00a7\\w>)";
     private String chatRestylerGuildPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Guild >)";
@@ -102,6 +103,7 @@ public class LanguageData {
     public Pattern chatRestylerGameJoinStyleRegex;
     public Pattern chatRestylerGameLeaveStyleRegex;
     public Pattern chatRestylerGameStartCounterStyleRegex;
+    public Pattern chatRestylerGameStartCounterOutputStyleRegex;
     public Pattern chatRestylerFormattedPaddingPatternRegex;
     public Pattern chatRestylerPartyPatternRegex;
     public Pattern chatRestylerGuildPatternRegex;
@@ -138,6 +140,7 @@ public class LanguageData {
         chatRestylerGameJoinStyleRegex = Pattern.compile(chatRestylerGameJoinStyle);
         chatRestylerGameLeaveStyleRegex = Pattern.compile(chatRestylerGameLeaveStyle);
         chatRestylerGameStartCounterStyleRegex = Pattern.compile(chatRestylerGameStartCounterStyle);
+        chatRestylerGameStartCounterOutputStyleRegex = Pattern.compile(chatRestylerGameStartCounterOutputStyle);
         chatRestylerFormattedPaddingPatternRegex = Pattern.compile(chatRestylerFormattedPaddingPattern);
         chatRestylerPartyPatternRegex = Pattern.compile(chatRestylerPartyPattern);
         chatRestylerGuildPatternRegex = Pattern.compile(chatRestylerGuildPattern);
