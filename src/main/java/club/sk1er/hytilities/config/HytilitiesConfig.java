@@ -189,6 +189,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hidePlayerRanksInTab;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Hide Ping In Tab",
+        description = "Prevent ping from showing up in tab while playing games, since the value is misleading. Ping will remain visible in lobbies.",
+        category = "General", subcategory = "General"
+    )
+    public static boolean hidePingInTab;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Limbo Limiter",
         description = "While in Limbo, limit your framerate to 15 to reduce the load of the game on your computer.",
         category = "Lobby", subcategory = "General"

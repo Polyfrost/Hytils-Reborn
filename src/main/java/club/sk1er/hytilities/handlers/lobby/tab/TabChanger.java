@@ -18,6 +18,7 @@
 
 package club.sk1er.hytilities.handlers.lobby.tab;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.tweaker.asm.GuiPlayerTabOverlayTransformer;
 import club.sk1er.mods.core.util.MinecraftUtils;
@@ -27,7 +28,7 @@ import org.objectweb.asm.tree.ClassNode;
  * Used in {@link GuiPlayerTabOverlayTransformer#transform(ClassNode, String)}
  */
 @SuppressWarnings("unused")
-public class TabNameChanger {
+public class TabChanger {
 
     public static String modifyName(String name) {
 
@@ -49,5 +50,9 @@ public class TabNameChanger {
         }
 
         return name;
+    }
+
+    public static boolean hidePing() {
+        return MinecraftUtils.isHypixel() && HytilitiesConfig.hidePingInTab && !Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby();
     }
 }
