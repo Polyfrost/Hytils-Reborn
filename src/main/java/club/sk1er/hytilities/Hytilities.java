@@ -32,6 +32,7 @@ import club.sk1er.hytilities.handlers.language.LanguageHandler;
 import club.sk1er.hytilities.handlers.lobby.LobbyChecker;
 import club.sk1er.hytilities.handlers.lobby.bossbar.LobbyBossbar;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
+import club.sk1er.hytilities.handlers.lobby.mysterybox.MysteryBoxStar;
 import club.sk1er.hytilities.handlers.lobby.npc.NPCHider;
 import club.sk1er.hytilities.handlers.silent.SilentRemoval;
 import club.sk1er.hytilities.tweaker.asm.GuiIngameForgeTransformer;
@@ -110,6 +111,7 @@ public class Hytilities {
         MinecraftForge.EVENT_BUS.register(new NPCHider());
         MinecraftForge.EVENT_BUS.register(new LobbyBossbar());
         MinecraftForge.EVENT_BUS.register(new LimboLimiter());
+        MinecraftForge.EVENT_BUS.register(new MysteryBoxStar());
 
         // language
         MinecraftForge.EVENT_BUS.register(languageHandler = new LanguageHandler());
