@@ -22,9 +22,9 @@ import club.sk1er.hytilities.command.HytilitiesCommand;
 import club.sk1er.hytilities.command.SilentRemoveCommand;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatHandler;
-import club.sk1er.hytilities.handlers.chat.autoqueue.AutoQueue;
-import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
-import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
+import club.sk1er.hytilities.handlers.chat.modules.triggers.AutoQueue;
+import club.sk1er.hytilities.handlers.chat.modules.events.AchievementEvent;
+import club.sk1er.hytilities.handlers.chat.modules.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.game.hardcore.HardcoreStatus;
 import club.sk1er.hytilities.handlers.general.AutoStart;
 import club.sk1er.hytilities.handlers.general.CommandQueue;
@@ -35,6 +35,7 @@ import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
 import club.sk1er.hytilities.handlers.lobby.mysterybox.MysteryBoxStar;
 import club.sk1er.hytilities.handlers.lobby.npc.NPCHider;
 import club.sk1er.hytilities.handlers.silent.SilentRemoval;
+import club.sk1er.hytilities.tweaker.asm.EntityPlayerSPTransformer;
 import club.sk1er.hytilities.tweaker.asm.GuiIngameForgeTransformer;
 import club.sk1er.hytilities.util.locraw.LocrawUtil;
 import club.sk1er.modcore.ModCoreInstaller;
@@ -69,9 +70,9 @@ public class Hytilities {
     private SilentRemoval silentRemoval;
     private CommandQueue commandQueue;
     private LobbyChecker lobbyChecker;
+    private ChatHandler chatHandler;
     private LocrawUtil locrawUtil;
     private AutoQueue autoQueue;
-    private ChatHandler chatHandler;
 
     private boolean loadedCall;
 
@@ -165,6 +166,10 @@ public class Hytilities {
         return languageHandler;
     }
 
+    /**
+     * Used in {@link EntityPlayerSPTransformer}
+     */
+    @SuppressWarnings("unused")
     public ChatHandler getChatHandler() {
         return chatHandler;
     }

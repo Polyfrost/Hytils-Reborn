@@ -16,30 +16,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.handlers.chat.guild;
+package club.sk1er.hytilities.handlers.chat.modules.triggers;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.regex.Matcher;
-
-public class GuildWelcomer implements ChatReceiveModule {
+public class ThankWatchdog implements ChatReceiveModule {
 
     @Override
-    public void onChatEvent(ClientChatReceivedEvent event) {
-        String text = event.message.getUnformattedText();
+    public int getPriority() {
+        return 3;
+    }
 
-        Matcher matcher = getLanguage().guildPlayerJoinRegex.matcher(text);
-        if (matcher.matches()) {
-            String player = matcher.group("player");
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/gc Welcome to the guild " + player + "!");
+    @Override
+    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+        if (event.message.getUnformattedText().equals("[WATCHDOG ANNOUNCEMENT]")) {
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/achat Thanks Watchdog!");
         }
     }
 
     @Override
-    public boolean isReceiveModuleEnabled() {
-        return HytilitiesConfig.guildWelcomer;
+    public boolean isEnabled() {
+        return HytilitiesConfig.thankWatchdog;
     }
+
 }

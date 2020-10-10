@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.handlers.chat.compactor;
+package club.sk1er.hytilities.handlers.chat.modules.modifiers;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
@@ -24,23 +24,29 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.regex.Matcher;
 
 public class GameStartCompactor implements ChatReceiveModule {
+
+    @Override
+    public int getPriority() {
+        return 7;
+    }
+
     private boolean prevConfigValue = HytilitiesConfig.cleanerGameStartAnnouncements; // Used to determine if the property has changed. TODO: Once ModCore 2 is out, have a listener for this.
     private IChatComponent lastMessage = null;
 
     @Override
-    public void onChatEvent(ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         Matcher gameStartMatcher = getLanguage().chatRestylerGameStartCounterStyleRegex.matcher(event.message.getUnformattedText());
         Matcher chatRestylerMatcher = getLanguage().chatRestylerGameStartCounterOutputStyleRegex.matcher(event.message.getFormattedText());
-        if (!event.isCanceled() && (gameStartMatcher.matches() || (HytilitiesConfig.gameStatusRestyle && chatRestylerMatcher.matches()))) {
+        if (gameStartMatcher.matches() || (HytilitiesConfig.gameStatusRestyle && chatRestylerMatcher.matches())) {
             if (lastMessage != null) {
                 GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
                 List<IChatComponent> oldTimerLines = GuiUtilRenderComponents.splitText(lastMessage, MathHelper.floor_float((float) chat.getChatWidth() / chat.getChatScale()), Minecraft.getMinecraft().fontRendererObj, false, false);
@@ -60,11 +66,12 @@ public class GameStartCompactor implements ChatReceiveModule {
     }
 
     @Override
-    public boolean isReceiveModuleEnabled() {
+    public boolean isEnabled() {
         if (!prevConfigValue && HytilitiesConfig.cleanerGameStartAnnouncements) { // don't affect messages sent when the config value was false (or was true and was set to false later)
             prevConfigValue = true;
             lastMessage = null;
         }
         return HytilitiesConfig.cleanerGameStartAnnouncements;
     }
+
 }

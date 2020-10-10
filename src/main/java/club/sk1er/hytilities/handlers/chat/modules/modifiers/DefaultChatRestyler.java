@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.handlers.chat.restyler;
+package club.sk1er.hytilities.handlers.chat.modules.modifiers;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
@@ -26,18 +26,24 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 
 
-public class ChatRestyler implements ChatReceiveModule {
+public class DefaultChatRestyler implements ChatReceiveModule {
+
+    @Override
+    public int getPriority() {
+        return 3;
+    }
 
     private static int playerCount = -1;
     private static int maxPlayerCount = -1;
 
     /**
      * Normally this wouldn't be static but it has to be called from a static method so it has to be static.
-     * As long as we don't make multiple ChatRestyler objects it should be fine.
+     * As long as we don't make multiple DefaultChatRestyler objects it should be fine.
      * (Called by {@link LimboLimiter#onWorldChange(WorldEvent.Unload)})
      */
     public static void reset() {
@@ -54,7 +60,7 @@ public class ChatRestyler implements ChatReceiveModule {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
-    public void onChatEvent(ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = event.message.getFormattedText().trim();
         String unformattedMessage = event.message.getUnformattedText().trim();
 
@@ -152,11 +158,6 @@ public class ChatRestyler implements ChatReceiveModule {
                 }
             }
         }
-    }
-
-    @Override
-    public boolean isReceiveModuleEnabled() {
-        return true;
     }
 
 }

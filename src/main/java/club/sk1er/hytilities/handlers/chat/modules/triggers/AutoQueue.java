@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.handlers.chat.autoqueue;
+package club.sk1er.hytilities.handlers.chat.modules.triggers;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
@@ -29,15 +29,23 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
 public class AutoQueue implements ChatReceiveModule {
+
+    /** We want this to activate early so that it catches the queue message. */
+    @Override
+    public int getPriority() {
+        return -11;
+    }
+
     private String command = null;
     private boolean sentCommand;
 
     @Override
-    public void onChatEvent(ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         if (!HytilitiesConfig.autoQueue) {
             return;
         }
@@ -55,7 +63,7 @@ public class AutoQueue implements ChatReceiveModule {
     }
 
     @Override
-    public boolean isReceiveModuleEnabled() {
+    public boolean isEnabled() {
         return HytilitiesConfig.autoQueue;
     }
 
@@ -91,4 +99,5 @@ public class AutoQueue implements ChatReceiveModule {
 
         }, HytilitiesConfig.autoQueueDelay, TimeUnit.SECONDS);
     }
+
 }

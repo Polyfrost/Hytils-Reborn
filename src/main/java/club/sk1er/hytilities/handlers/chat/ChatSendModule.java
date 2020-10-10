@@ -1,16 +1,26 @@
 package club.sk1er.hytilities.handlers.chat;
 
-/**
- * Notifies the implementer when a chat message is sent by the client.
- * Must be registered in {@link ChatHandler}'s constructor with registerSendModule
- */
-public interface ChatSendModule extends AbstractChatModule {
-    /**
-     * Called when user sends a chat message.
-     * @param message message that the user sent
-     * @return if the message should be sent
-     */
-    boolean shouldSendMessage(String message);
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-    boolean isSendModuleEnabled();
+/**
+ * Since Forge lacks a {@link ClientChatReceivedEvent} for <em>sending</em> messages, this interface
+ * is used to implement such an event. Register your class in {@link ChatHandler#ChatHandler()} and
+ * it will be executed whenever the user sends a chat message.
+ *
+ * @see ChatModule
+ * @see ChatHandler
+ */
+public interface ChatSendModule extends ChatModule {
+
+    /**
+     * Place your code here. Called when the user sends a chat message.
+     *
+     * @param message message that the user sent
+     * @return the optionally modified message, or {@code null} if the message is to be cancelled
+     */
+    @Nullable
+    String onMessageSend(@NotNull String message);
+
 }

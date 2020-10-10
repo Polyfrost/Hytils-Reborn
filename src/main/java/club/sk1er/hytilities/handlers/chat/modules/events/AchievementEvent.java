@@ -16,44 +16,56 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.handlers.chat.events;
+package club.sk1er.hytilities.handlers.chat.modules.events;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.events.HypixelLevelupEvent;
+import club.sk1er.hytilities.events.HypixelAchievementEvent;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 
-public class LevelupEvent implements ChatReceiveModule {
+public class AchievementEvent implements ChatReceiveModule {
+
     @Override
-    public void onChatEvent(ClientChatReceivedEvent event) {
+    public int getPriority() {
+        return -3;
+    }
+
+    private final List<String> achievementsGotten = new ArrayList<>();
+
+    @Override
+    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String unformattedText = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
 
-        Matcher matcher = getLanguage().hypixelLevelUpRegex.matcher(unformattedText.trim());
-        if (matcher.find()) {
-            String level = matcher.group("level");
+        Matcher matcher = getLanguage().achievementRegex.matcher(unformattedText);
+        if (matcher.matches()) {
+            String achievement = matcher.group("achievement");
 
-            if (StringUtils.isNumeric(level)) {
-                MinecraftForge.EVENT_BUS.post(new HypixelLevelupEvent(Integer.parseInt(level)));
+            if (!achievementsGotten.contains(achievement)) {
+                MinecraftForge.EVENT_BUS.post(new HypixelAchievementEvent(achievement));
+
+                // check to stop spamming of guild chat if achievement is broken and you get it many times
+                achievementsGotten.add(achievement);
             }
         }
     }
 
     @Override
-    public boolean isReceiveModuleEnabled() {
-        return true;
+    public boolean isEnabled() {
+        return HytilitiesConfig.broadcastAchievements;
     }
 
     @SubscribeEvent
-    public void levelUpEvent(HypixelLevelupEvent event) {
-        if (HytilitiesConfig.broadcastLevelup) {
-            Hytilities.INSTANCE.getCommandQueue().queue("/gchat Levelup! I am now Hypixel Level: " + event.getLevel() + "!");
-        }
+    public void onAchievementGet(HypixelAchievementEvent event) {
+        Hytilities.INSTANCE.getCommandQueue().queue("/gchat Achievement unlocked! I unlocked the " + event.getAchievement() + " achievement!");
     }
+
 }

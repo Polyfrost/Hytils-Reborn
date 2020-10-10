@@ -42,7 +42,7 @@ public class ClassTransformer implements IClassTransformer {
         registerTransformer(new GuiPlayerTabOverlayTransformer());
         registerTransformer(new LayerArmorBaseTransformer());
         registerTransformer(new GuiIngameForgeTransformer());
-        registerTransformer(new GuiScreenTransformer());
+        registerTransformer(new EntityPlayerSPTransformer());
     }
 
     private void registerTransformer(HytilitiesTransformer transformer) {

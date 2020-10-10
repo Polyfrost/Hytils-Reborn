@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.handlers.chat.cleaner;
+package club.sk1er.hytilities.handlers.chat.modules.blockers;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
@@ -28,6 +28,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 
@@ -37,11 +38,12 @@ import java.util.regex.Matcher;
 public class ChatCleaner implements ChatReceiveModule {
 
     @Override
-    public void onChatEvent(ClientChatReceivedEvent event) {
-        if (event.isCanceled()) {
-            return;
-        }
+    public int getPriority() {
+        return -1;
+    }
 
+    @Override
+    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final LanguageData language = getLanguage();
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
 
@@ -127,8 +129,4 @@ public class ChatCleaner implements ChatReceiveModule {
         }
     }
 
-    @Override
-    public boolean isReceiveModuleEnabled() {
-        return true;
-    }
 }

@@ -16,15 +16,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.handlers.chat.adblock;
+package club.sk1er.hytilities.handlers.chat.modules.blockers;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
 public class AdBlocker implements ChatReceiveModule {
+
+    @Override
+    public int getPriority() {
+        return -3;
+    }
 
     // private final Pattern commonAdvertisements = Pattern.compile("/?(?:visit|ah|party|p join|guild|g join) \\w{1,16}", Pattern.CASE_INSENSITIVE);
     // https://regexr.com/5ct51 old regex would capture any sentence with party and "ah"
@@ -41,14 +47,15 @@ public class AdBlocker implements ChatReceiveModule {
             Pattern.CASE_INSENSITIVE);
 
     @Override
-    public void onChatEvent(ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         if (commonAdvertisements.matcher(event.message.getUnformattedText()).find(0)) {
             event.setCanceled(true);
         }
     }
 
     @Override
-    public boolean isReceiveModuleEnabled() {
+    public boolean isEnabled() {
         return HytilitiesConfig.playerAdBlock;
     }
+
 }

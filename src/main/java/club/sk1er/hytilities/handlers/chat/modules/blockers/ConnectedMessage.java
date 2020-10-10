@@ -16,22 +16,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.handlers.chat.connected;
+package club.sk1er.hytilities.handlers.chat.modules.blockers;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class ConnectedMessage implements ChatReceiveModule {
+
     @Override
-    public void onChatEvent(ClientChatReceivedEvent event) {
+    public int getPriority() {
+        return -5;
+    }
+
+    @Override
+    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         if (getLanguage().connectedServerConnectMessageRegex.matcher(event.message.getUnformattedText()).matches()) {
             event.setCanceled(true);
         }
     }
 
     @Override
-    public boolean isReceiveModuleEnabled() {
+    public boolean isEnabled() {
         return HytilitiesConfig.serverConnectedMessages;
     }
+
 }

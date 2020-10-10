@@ -16,19 +16,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.handlers.chat.whitechat;
+package club.sk1er.hytilities.handlers.chat.modules.modifiers;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 
 public class WhiteChat implements ChatReceiveModule {
 
     @Override
-    public void onChatEvent(ClientChatReceivedEvent event) {
+    public int getPriority() {
+        return 5;
+    }
+
+    @Override
+    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         if (HytilitiesConfig.whitePrivateMessages) {
             Matcher matcher = getLanguage().privateMessageWhiteChatRegex.matcher(event.message.getFormattedText());
 
@@ -49,8 +55,4 @@ public class WhiteChat implements ChatReceiveModule {
         }
     }
 
-    @Override
-    public boolean isReceiveModuleEnabled() {
-        return true;
-    }
 }

@@ -19,59 +19,58 @@
 package club.sk1er.hytilities.handlers.chat;
 
 import club.sk1er.hytilities.Hytilities;
-import club.sk1er.hytilities.handlers.chat.adblock.AdBlocker;
-import club.sk1er.hytilities.handlers.chat.cleaner.ChatCleaner;
-import club.sk1er.hytilities.handlers.chat.compactor.GameStartCompactor;
-import club.sk1er.hytilities.handlers.chat.connected.ConnectedMessage;
-import club.sk1er.hytilities.handlers.chat.events.AchievementEvent;
-import club.sk1er.hytilities.handlers.chat.events.LevelupEvent;
-import club.sk1er.hytilities.handlers.chat.guild.GuildWelcomer;
-import club.sk1er.hytilities.handlers.chat.restyler.ChatRestyler;
-import club.sk1er.hytilities.handlers.chat.shoutblocker.ShoutBlocker;
-import club.sk1er.hytilities.handlers.chat.swapper.AutoChatSwapper;
-import club.sk1er.hytilities.handlers.chat.watchdog.ThankWatchdog;
-import club.sk1er.hytilities.handlers.chat.whitechat.WhiteChat;
+import club.sk1er.hytilities.handlers.chat.modules.blockers.*;
+import club.sk1er.hytilities.handlers.chat.modules.events.*;
+import club.sk1er.hytilities.handlers.chat.modules.modifiers.*;
+import club.sk1er.hytilities.handlers.chat.modules.triggers.*;
+import club.sk1er.hytilities.tweaker.asm.EntityPlayerSPTransformer;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ChatHandler {
+
     private final List<ChatReceiveModule> receiveModules = new ArrayList<>();
     private final List<ChatSendModule> sendModules = new ArrayList<>();
 
     public ChatHandler() {
-        this.registerReceiveModule(new AdBlocker());
-        this.registerReceiveModule(new ChatCleaner());
-        this.registerReceiveModule(new ChatRestyler());
-        this.registerReceiveModule(new WhiteChat());
-        this.registerReceiveModule(new LevelupEvent());
-        this.registerReceiveModule(new AchievementEvent());
-        this.registerReceiveModule(new AutoChatSwapper());
-        this.registerReceiveModule(new ConnectedMessage());
-        this.registerReceiveModule(new ThankWatchdog());
-        this.registerReceiveModule(new GuildWelcomer());
-        this.registerReceiveModule(new GameStartCompactor());
-        this.registerSendAndReceiveModule(new ShoutBlocker());
+        // Please sort by length increasing, in case of a tie use case-ignored alphabetical order
+        // The actual sorting is done later I just want this to look nice
 
-        // reinitializing these seems to break them
-        this.registerReceiveModule(Hytilities.INSTANCE.getAutoQueue());
-        this.registerReceiveModule(Hytilities.INSTANCE.getLocrawUtil());
+        this.registerModule(new AdBlocker());
+        this.registerModule(new WhiteChat());
+        this.registerModule(new ChatCleaner());
+        this.registerModule(new LevelupEvent());
+        this.registerModule(new GuildWelcomer());
+        this.registerModule(new DefaultChatRestyler());
+        this.registerModule(new ThankWatchdog());
+        this.registerModule(new AutoChatSwapper());
+        this.registerModule(new AchievementEvent());
+        this.registerModule(new ConnectedMessage());
+
+        this.registerDualModule(new ShoutBlocker());
+
+
+        this.sendModules.sort(Comparator.comparingInt(ChatModule::getPriority));
     }
 
-    private void registerReceiveModule(ChatReceiveModule chatModule) {
+    private void registerModule(ChatReceiveModule chatModule) {
         this.receiveModules.add(chatModule);
     }
 
-    private void registerSendModule(ChatSendModule chatModule) {
+    private void registerModule(ChatSendModule chatModule) {
         this.sendModules.add(chatModule);
     }
 
-    private <T extends ChatSendModule & ChatReceiveModule> void registerSendAndReceiveModule(T chatModule) {
-        this.registerReceiveModule(chatModule);
-        this.registerSendModule(chatModule);
+    private <T extends ChatReceiveModule & ChatSendModule> void registerDualModule(T chatModule) {
+        this.registerModule((ChatReceiveModule) chatModule);
+        this.registerModule((ChatSendModule) chatModule);
     }
 
     @SubscribeEvent
@@ -80,21 +79,46 @@ public class ChatHandler {
             return;
         }
 
+        // These don't cast to ChatReceiveModule for god knows why, so we can't include them in receiveModules.
+        // Therefore, we manually trigger them here. Pain.
+        Hytilities.INSTANCE.getLocrawUtil().onMessageReceived(event);
+        Hytilities.INSTANCE.getAutoQueue().onMessageReceived(event);
+
+
         for (ChatReceiveModule module : this.receiveModules) {
-            if (module.isReceiveModuleEnabled()) {
-                module.onChatEvent(event);
+            if (module.isEnabled()) {
+                module.onMessageReceived(event);
+                if (event.isCanceled()) {
+                    return;
+                }
             }
         }
     }
 
-    public boolean shouldSendMessage(String message) {
+    /**
+     * Allow modifying sent messages, or cancelling them altogether.
+     *
+     * Is not unused - is used in ASM ({@link EntityPlayerSPTransformer}).
+     *
+     * @param message a message that the user has sent
+     * @return the modified message, or {@code null} if the message should be cancelled
+     */
+    @SuppressWarnings({"unused", "RedundantSuppression"})
+    @Nullable
+    public String handleSentMessage(@NotNull String message) {
         if (!MinecraftUtils.isHypixel()) {
-            return true;
+            return message;
         }
 
         for (ChatSendModule module : this.sendModules) {
-            if (module.isSendModuleEnabled() && !module.shouldSendMessage(message)) return false;
+            if (module.isEnabled()) {
+                message = module.onMessageSend(message);
+                if (message == null) {
+                    return null;
+                }
+            }
         }
-        return true;
+        return message;
     }
+
 }
