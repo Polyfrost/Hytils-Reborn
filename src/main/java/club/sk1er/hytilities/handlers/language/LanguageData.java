@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  *
  * @author Koding
  */
-@SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
+@SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal", "DuplicatedCode"})
 public class LanguageData {
 
     /**

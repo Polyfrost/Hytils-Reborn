@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
  * This interface handles shared methods between {@link ChatReceiveModule} and {@link ChatSendModule}.
  * It has things like priority and enabled checks, as well as default utility methods for classes
  * to use.
- *
+ * <p>
  * It is not intended to be directly implemented, (hence the package-private) but rather for classes
  * to implement one of it's subinterfaces, for example {@link ChatReceiveModule} and {@link ChatSendModule}.
  *
@@ -41,16 +41,17 @@ import org.jetbrains.annotations.Nullable;
 interface ChatModule {
 
     // TODO: A lot of the priority numbers were chosen mostly at random, with only some thought put into them. Someone should go through them and really make sure that each one has a good priority.
+
     /**
      * This determines the order in which the {@link ChatModule}s are executed. The lower, the earlier.
      * It is highly recommended you override this method.
-     *
+     * <p>
      * If your {@link ChatModule} removes messages then it is recommended to have a negative number.
      * The more expensive your code is, the higher your number should be (in general) so that if the
      * event is cancelled then the expensive code isn't run for nothing. However, lower numbers may
      * have increased responsiveness in the case of a large amount of activated modules. You must find
      * a good balance.
-     *
+     * <p>
      * Note that {@link club.sk1er.hytilities.util.locraw.LocrawUtil} and
      * {@link club.sk1er.hytilities.handlers.chat.modules.triggers.AutoQueue} are always executed before
      * any other {@link ChatModule}, regardless of priority.
@@ -64,7 +65,7 @@ interface ChatModule {
     /**
      * This function allows you to determine if your ChatModule will be executed.
      * Overriding it is <em>heavily</em> encouraged.
-     *
+     * <p>
      * For example, one might return a {@link HytilitiesConfig} value.
      *
      * @return a {@code boolean} that determines whether or not the code should be executed
@@ -83,13 +84,17 @@ interface ChatModule {
         return new ChatComponentText(ChatColor.translateAlternateColorCodes('&', message));
     }
 
-    /** Get the user's Hypixel language setting. */
+    /**
+     * Get the user's Hypixel language setting.
+     */
     @NotNull
     default LanguageData getLanguage() {
         return Hytilities.INSTANCE.getLanguageHandler().getCurrent();
     }
 
-    /** Get the player's server location. */
+    /**
+     * Get the player's server location.
+     */
     @Nullable
     default LocrawInformation getLowcraw() {
         return Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();

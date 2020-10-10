@@ -31,7 +31,6 @@ import org.objectweb.asm.tree.ClassNode;
 public class TabChanger {
 
     public static String modifyName(String name) {
-
         if (MinecraftUtils.isHypixel()) {
             if (HytilitiesConfig.hidePlayerRanksInTab && name.startsWith("[", 2)) {
                 // keep the name color if player rank is removed

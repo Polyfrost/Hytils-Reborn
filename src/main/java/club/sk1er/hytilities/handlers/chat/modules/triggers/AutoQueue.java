@@ -35,7 +35,9 @@ import java.util.concurrent.TimeUnit;
 
 public class AutoQueue implements ChatReceiveModule {
 
-    /** We want this to activate early so that it catches the queue message. */
+    /**
+     * We want this to activate early so that it catches the queue message.
+     */
     @Override
     public int getPriority() {
         return -11;
@@ -99,5 +101,4 @@ public class AutoQueue implements ChatReceiveModule {
 
         }, HytilitiesConfig.autoQueueDelay, TimeUnit.SECONDS);
     }
-
 }

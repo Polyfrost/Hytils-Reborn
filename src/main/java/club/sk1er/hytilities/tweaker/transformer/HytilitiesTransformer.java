@@ -77,7 +77,7 @@ public interface HytilitiesTransformer {
     /**
      * Map the method name from notch names
      *
-     * @param methodInsnNode the transformed method insn node
+     * @param node the transformed method insn node
      * @return a mapped insn method
      */
     default String mapMethodNameFromNode(AbstractInsnNode node) {
@@ -88,7 +88,7 @@ public interface HytilitiesTransformer {
     /**
      * Map the field name from notch names
      *
-     * @param fieldInsnNode the transformed field insn node
+     * @param node the transformed field insn node
      * @return a mapped insn field
      */
     default String mapFieldNameFromNode(AbstractInsnNode node) {

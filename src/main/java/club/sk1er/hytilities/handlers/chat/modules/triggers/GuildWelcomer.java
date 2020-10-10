@@ -48,5 +48,4 @@ public class GuildWelcomer implements ChatReceiveModule {
     public boolean isEnabled() {
         return HytilitiesConfig.guildWelcomer;
     }
-
 }

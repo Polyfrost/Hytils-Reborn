@@ -40,13 +40,14 @@ import java.util.regex.Pattern;
 
 public class MysteryBoxStar {
 
-    private Pattern mysteryBoxStarPattern = Pattern.compile("^\\u00a75\\u00a7o\\u00a77\\u00a77Quality: \\u00a7e(?<stars>\\u2730{1,5}).*");
+    private final Pattern mysteryBoxStarPattern = Pattern.compile("^\\u00a75\\u00a7o\\u00a77\\u00a77Quality: \\u00a7e(?<stars>\\u2730{1,5}).*");
 
     @SubscribeEvent
     public void onDrawScreenPre(GuiScreenEvent.DrawScreenEvent.Pre event) {
         if (!HytilitiesConfig.mysteryBoxStar || !MinecraftUtils.isHypixel() || !Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) {
             return;
         }
+
         if (event.gui instanceof GuiChest) {
             GuiChest guiChest = (GuiChest) event.gui;
             Container inventorySlots = guiChest.inventorySlots;
@@ -79,15 +80,18 @@ public class MysteryBoxStar {
         if (item.getItem() == Item.getItemFromBlock(Blocks.stained_glass_pane)) {
             return;
         }
+
         // avoid rendering star on bags of experience
         if (item.getItem() == Items.dye) {
             return;
         }
+
         List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, false);
         // avoid accessing negative index
         if (tooltip.size() < 4) {
             return;
         }
+
         String line = tooltip.get(tooltip.size() - 4);
         Matcher matcher = mysteryBoxStarPattern.matcher(line);
         if (matcher.matches()) {

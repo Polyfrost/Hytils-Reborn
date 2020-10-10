@@ -83,12 +83,11 @@ public class AutoChatSwapper implements ChatReceiveModule {
                 || (HytilitiesConfig.hideAllChatMessage &&
                 Hytilities.INSTANCE.getLanguageHandler().getCurrent().autoChatSwapperChannelSwapRegex.matcher(event.message.getUnformattedText()).matches())
             ) {
-                unregisterTimer.cancel(false);
-                hasDetected = true;
+                this.unregisterTimer.cancel(false);
+                this.hasDetected = true;
                 event.setCanceled(true);
                 MinecraftForge.EVENT_BUS.unregister(this);
             }
         }
     }
-
 }

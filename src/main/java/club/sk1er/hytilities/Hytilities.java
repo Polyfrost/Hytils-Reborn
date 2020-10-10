@@ -65,21 +65,21 @@ public class Hytilities {
 
     private final HytilitiesConfig config = new HytilitiesConfig();
 
-    private LanguageHandler languageHandler;
-    private HardcoreStatus hardcoreStatus;
-    private SilentRemoval silentRemoval;
-    private CommandQueue commandQueue;
-    private LobbyChecker lobbyChecker;
-    private ChatHandler chatHandler;
-    private LocrawUtil locrawUtil;
-    private AutoQueue autoQueue;
+    private final LanguageHandler languageHandler = new LanguageHandler();
+    private final HardcoreStatus hardcoreStatus = new HardcoreStatus();
+    private final SilentRemoval silentRemoval = new SilentRemoval();
+    private final CommandQueue commandQueue = new CommandQueue();
+    private final LobbyChecker lobbyChecker = new LobbyChecker();
+    private final ChatHandler chatHandler = new ChatHandler();
+    private final LocrawUtil locrawUtil = new LocrawUtil();
+    private final AutoQueue autoQueue = new AutoQueue();
 
     private boolean loadedCall;
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         ModCoreInstaller.initializeModCore(Minecraft.getMinecraft().mcDataDir);
-        config.preload();
+        this.config.preload();
 
         ClientCommandHandler.instance.registerCommand(new HytilitiesCommand());
         ClientCommandHandler.instance.registerCommand(new SilentRemoveCommand());
@@ -95,27 +95,25 @@ public class Hytilities {
 
     private void registerHandlers() {
         // general stuff
-        MinecraftForge.EVENT_BUS.register(locrawUtil = new LocrawUtil());
-        MinecraftForge.EVENT_BUS.register(autoQueue = new AutoQueue());
-        MinecraftForge.EVENT_BUS.register(commandQueue = new CommandQueue());
+        MinecraftForge.EVENT_BUS.register(autoQueue);
+        MinecraftForge.EVENT_BUS.register(locrawUtil);
+        MinecraftForge.EVENT_BUS.register(commandQueue);
+        MinecraftForge.EVENT_BUS.register(languageHandler);
         MinecraftForge.EVENT_BUS.register(new AutoStart());
 
         // chat
-        MinecraftForge.EVENT_BUS.register(silentRemoval = new SilentRemoval());
-        MinecraftForge.EVENT_BUS.register(hardcoreStatus = new HardcoreStatus());
-        MinecraftForge.EVENT_BUS.register(chatHandler = new ChatHandler());
+        MinecraftForge.EVENT_BUS.register(chatHandler);
+        MinecraftForge.EVENT_BUS.register(silentRemoval);
+        MinecraftForge.EVENT_BUS.register(hardcoreStatus);
         MinecraftForge.EVENT_BUS.register(new AchievementEvent());
         MinecraftForge.EVENT_BUS.register(new LevelupEvent());
 
         // lobby
-        MinecraftForge.EVENT_BUS.register(lobbyChecker = new LobbyChecker());
+        MinecraftForge.EVENT_BUS.register(lobbyChecker);
         MinecraftForge.EVENT_BUS.register(new NPCHider());
         MinecraftForge.EVENT_BUS.register(new LobbyBossbar());
         MinecraftForge.EVENT_BUS.register(new LimboLimiter());
         MinecraftForge.EVENT_BUS.register(new MysteryBoxStar());
-
-        // language
-        MinecraftForge.EVENT_BUS.register(languageHandler = new LanguageHandler());
     }
 
     public void sendMessage(String message) {

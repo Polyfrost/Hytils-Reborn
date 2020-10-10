@@ -6,8 +6,9 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Since Forge lacks a {@link ClientChatReceivedEvent} for <em>sending</em> messages, this interface
- * is used to implement such an event. Register your class in {@link ChatHandler#ChatHandler()} and
- * it will be executed whenever the user sends a chat message.
+ * is used to implement such an event.
+ * <p>
+ * Register your class in {@link ChatHandler#ChatHandler()} and it will be executed whenever the user sends a chat message.
  *
  * @see ChatModule
  * @see ChatHandler

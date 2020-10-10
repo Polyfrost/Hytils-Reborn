@@ -39,7 +39,8 @@ public class GameStartCompactor implements ChatReceiveModule {
         return 7;
     }
 
-    private boolean prevConfigValue = HytilitiesConfig.cleanerGameStartAnnouncements; // Used to determine if the property has changed. TODO: Once ModCore 2 is out, have a listener for this.
+    // Used to determine if the property has changed. TODO: Once ModCore 2 is out, have a listener for this.
+    private boolean prevConfigValue = HytilitiesConfig.cleanerGameStartAnnouncements;
     private IChatComponent lastMessage = null;
 
     @Override
@@ -61,16 +62,19 @@ public class GameStartCompactor implements ChatReceiveModule {
                     }
                 }
             }
+
             lastMessage = event.message.createCopy();
         }
     }
 
     @Override
     public boolean isEnabled() {
-        if (!prevConfigValue && HytilitiesConfig.cleanerGameStartAnnouncements) { // don't affect messages sent when the config value was false (or was true and was set to false later)
+        // don't affect messages sent when the config value was false (or was true and was set to false later)
+        if (!prevConfigValue && HytilitiesConfig.cleanerGameStartAnnouncements) {
             prevConfigValue = true;
             lastMessage = null;
         }
+
         return HytilitiesConfig.cleanerGameStartAnnouncements;
     }
 

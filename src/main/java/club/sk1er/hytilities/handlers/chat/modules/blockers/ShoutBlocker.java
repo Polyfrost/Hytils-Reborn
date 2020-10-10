@@ -2,8 +2,8 @@ package club.sk1er.hytilities.handlers.chat.modules.blockers;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.handlers.chat.ChatSendModule;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
+import club.sk1er.hytilities.handlers.chat.ChatSendModule;
 import club.sk1er.hytilities.handlers.game.GameType;
 import club.sk1er.hytilities.util.locraw.LocrawInformation;
 import net.minecraft.client.Minecraft;
@@ -66,9 +66,9 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
         LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
         if (locraw != null && (
             (locraw.getGameType() == GameType.SKY_WARS && event.message.getFormattedText().equals(getLanguage().cannotShoutBeforeSkywars)) || // fun fact: there is no message when you shout after a skywars game
-            event.message.getFormattedText().equals(getLanguage().cannotShoutAfterGame) ||
-            event.message.getFormattedText().equals(getLanguage().cannotShoutBeforeGame) ||
-            event.message.getFormattedText().equals(getLanguage().noSpectatorCommands)
+                event.message.getFormattedText().equals(getLanguage().cannotShoutAfterGame) ||
+                event.message.getFormattedText().equals(getLanguage().cannotShoutBeforeGame) ||
+                event.message.getFormattedText().equals(getLanguage().noSpectatorCommands)
         )) {
             shoutCooldown = 0L;
         }

@@ -30,7 +30,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 
-
 public class DefaultChatRestyler implements ChatReceiveModule {
 
     @Override
@@ -132,7 +131,7 @@ public class DefaultChatRestyler implements ChatReceiveModule {
 
                     if (startCounterMatcher.matches()) {
                         // if the format (below) is changed, remember to update the regex for it (chatRestylerGameStartCounterOutputStyle)
-                        event.message = colorMessage("&e&l* &a"+(startCounterMatcher.group("title"))+" &b&l" + startCounterMatcher.group("time") + " &a" + startCounterMatcher.group("unit"));
+                        event.message = colorMessage("&e&l* &a" + (startCounterMatcher.group("title")) + " &b&l" + startCounterMatcher.group("time") + " &a" + startCounterMatcher.group("unit"));
                     } else {
                         if ("We don't have enough players! Start cancelled.".equals(unformattedMessage)) {
                             event.message = colorMessage("&e&l* &cStart cancelled.");
@@ -159,5 +158,4 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             }
         }
     }
-
 }

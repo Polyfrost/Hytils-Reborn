@@ -41,5 +41,4 @@ public class ConnectedMessage implements ChatReceiveModule {
     public boolean isEnabled() {
         return HytilitiesConfig.serverConnectedMessages;
     }
-
 }

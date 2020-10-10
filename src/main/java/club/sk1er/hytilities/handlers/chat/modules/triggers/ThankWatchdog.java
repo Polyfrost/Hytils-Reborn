@@ -42,5 +42,4 @@ public class ThankWatchdog implements ChatReceiveModule {
     public boolean isEnabled() {
         return HytilitiesConfig.thankWatchdog;
     }
-
 }

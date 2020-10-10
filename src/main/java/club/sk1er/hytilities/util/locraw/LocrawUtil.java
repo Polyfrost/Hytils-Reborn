@@ -73,7 +73,8 @@ public class LocrawUtil implements ChatReceiveModule {
                     this.listening = false;
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     @Override

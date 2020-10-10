@@ -34,11 +34,6 @@ import java.util.regex.Matcher;
 public class LevelupEvent implements ChatReceiveModule {
 
     @Override
-    public int getPriority() {
-        return -3;
-    }
-
-    @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String unformattedText = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
 
@@ -57,9 +52,13 @@ public class LevelupEvent implements ChatReceiveModule {
         return HytilitiesConfig.broadcastLevelup;
     }
 
+    @Override
+    public int getPriority() {
+        return -3;
+    }
+
     @SubscribeEvent
     public void levelUpEvent(HypixelLevelupEvent event) {
         Hytilities.INSTANCE.getCommandQueue().queue("/gchat Levelup! I am now Hypixel Level: " + event.getLevel() + "!");
     }
-
 }

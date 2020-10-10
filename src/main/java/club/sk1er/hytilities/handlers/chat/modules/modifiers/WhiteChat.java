@@ -51,8 +51,6 @@ public class WhiteChat implements ChatReceiveModule {
             if (matcher.find(0)) {
                 event.message = new ChatComponentText(matcher.group("prefix") + ": " + matcher.group("message"));
             }
-
         }
     }
-
 }

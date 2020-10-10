@@ -34,11 +34,6 @@ import java.util.regex.Matcher;
 
 public class AchievementEvent implements ChatReceiveModule {
 
-    @Override
-    public int getPriority() {
-        return -3;
-    }
-
     private final List<String> achievementsGotten = new ArrayList<>();
 
     @Override
@@ -61,6 +56,11 @@ public class AchievementEvent implements ChatReceiveModule {
     @Override
     public boolean isEnabled() {
         return HytilitiesConfig.broadcastAchievements;
+    }
+
+    @Override
+    public int getPriority() {
+        return -3;
     }
 
     @SubscribeEvent

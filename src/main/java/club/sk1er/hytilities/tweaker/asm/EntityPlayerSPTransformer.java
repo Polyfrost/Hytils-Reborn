@@ -2,9 +2,15 @@ package club.sk1er.hytilities.tweaker.asm;
 
 import club.sk1er.hytilities.tweaker.transformer.HytilitiesTransformer;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.tree.*;
-
-import java.util.ListIterator;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.InsnList;
+import org.objectweb.asm.tree.InsnNode;
+import org.objectweb.asm.tree.JumpInsnNode;
+import org.objectweb.asm.tree.LabelNode;
+import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.VarInsnNode;
 
 public class EntityPlayerSPTransformer implements HytilitiesTransformer {
     @Override
@@ -18,6 +24,7 @@ public class EntityPlayerSPTransformer implements HytilitiesTransformer {
             String methodName = mapMethodName(classNode, method);
             if (methodName.equals("sendChatMessage") || methodName.equals("func_71165_d")) {
                 method.instructions.insert(handleSentMessage());
+                break;
             }
         }
     }

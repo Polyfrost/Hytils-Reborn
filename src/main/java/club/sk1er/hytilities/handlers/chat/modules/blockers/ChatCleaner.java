@@ -128,5 +128,4 @@ public class ChatCleaner implements ChatReceiveModule {
             event.setCanceled(true);
         }
     }
-
 }

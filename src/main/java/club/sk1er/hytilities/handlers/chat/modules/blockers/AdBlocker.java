@@ -37,14 +37,19 @@ public class AdBlocker implements ChatReceiveModule {
 
     /**
      * [/](party join or join party) or (p join) or (guild join or join guild) or (g join)
+     * <p>
      * Blocks twitch.tv youtube.com/youtu.be
+     * <p>
      * ah + visit are common words "ah yes" would flag best to keep /ah and /visit for now?
+     * <p>
      * /visit|ah playername is blocked and visit /playername
+     * <p>
      * https://regexr.com/5ct10 current tests
-     * // TODO add more phrases to regex
+     * <p>
+     * TODO: add more phrases to regex
      */
     private final Pattern commonAdvertisements = Pattern.compile("(?:/?)(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16}))",
-            Pattern.CASE_INSENSITIVE);
+        Pattern.CASE_INSENSITIVE);
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
