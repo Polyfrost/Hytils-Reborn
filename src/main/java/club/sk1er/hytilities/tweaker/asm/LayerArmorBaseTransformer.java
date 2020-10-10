@@ -18,13 +18,7 @@
 
 package club.sk1er.hytilities.tweaker.asm;
 
-import club.sk1er.hytilities.Hytilities;
-import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.tweaker.transformer.HytilitiesTransformer;
-import club.sk1er.hytilities.util.locraw.LocrawInformation;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -56,10 +50,10 @@ public class LayerArmorBaseTransformer implements HytilitiesTransformer {
                 while (iterator.hasNext()) {
                     AbstractInsnNode next = iterator.next();
 
-                    if (next instanceof MethodInsnNode && next.getOpcode() == Opcodes.INVOKEVIRTUAL) {
-                        String methodName2 = mapMethodNameFromNode(next);
-                        if (methodName2.equals("getCurrentArmor") || methodName2.equals("func_177176_a")) {
-                            method.instructions.insert(next.getNext(), checkRender());
+                    if (next instanceof MethodInsnNode && next.getOpcode() == Opcodes.INVOKESPECIAL) {
+                        String methodInsnName = mapMethodNameFromNode(next);
+                        if (methodInsnName.equals("isSlotForLeggings") || methodInsnName.equals("func_177180_b")) {
+                            method.instructions.insertBefore(next.getPrevious().getPrevious(), checkRender());
                             break;
                         }
                     }
@@ -71,42 +65,16 @@ public class LayerArmorBaseTransformer implements HytilitiesTransformer {
 
     private InsnList checkRender() {
         InsnList list = new InsnList();
-
         list.add(new VarInsnNode(Opcodes.ALOAD, 10));
-        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "club/sk1er/hytilities/tweaker/asm/LayerArmorBaseTransformer", "shouldRenderArmour", "(Lnet/minecraft/item/ItemStack;)Z", false));
-
+        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
+            "club/sk1er/hytilities/tweaker/asm/hooks/LayerArmorBaseHook",
+            "shouldRenderArmour",
+            "(Lnet/minecraft/item/ItemStack;)Z",
+            false));
         final LabelNode ifeq = new LabelNode();
         list.add(new JumpInsnNode(Opcodes.IFNE, ifeq));
         list.add(new InsnNode(Opcodes.RETURN));
         list.add(ifeq);
-
         return list;
     }
-
-    @SuppressWarnings("unused")
-    public static boolean shouldRenderArmour(ItemStack itemStack) {
-        if (!HytilitiesConfig.hideArmour || itemStack == null) return true;
-
-        Item item = itemStack.getItem();
-
-        // armor piece is made of leather
-        if (item instanceof ItemArmor && ((ItemArmor) item).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
-            LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
-
-            if (locraw != null) {
-                switch (locraw.getGameType()) {
-                    case BED_WARS:
-                        return false;
-                    case ARCADE_GAMES:
-                        // capture the wool
-                        return !locraw.getGameMode().contains("PVP_CTW");
-                    case DUELS:
-                        return !locraw.getGameMode().contains("BRIDGE");
-                }
-            }
-        }
-
-        return true;
-    }
-
 }

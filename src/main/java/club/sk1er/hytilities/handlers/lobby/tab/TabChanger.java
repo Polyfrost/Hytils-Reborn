@@ -29,7 +29,6 @@ import org.objectweb.asm.tree.ClassNode;
  */
 @SuppressWarnings("unused")
 public class TabChanger {
-
     public static String modifyName(String name) {
         if (MinecraftUtils.isHypixel()) {
             if (HytilitiesConfig.hidePlayerRanksInTab && name.startsWith("[", 2)) {

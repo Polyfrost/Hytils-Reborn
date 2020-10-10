@@ -71,30 +71,7 @@ public class GuiIngameForgeTransformer implements HytilitiesTransformer {
         InsnList list = new InsnList();
         list.add(new VarInsnNode(Opcodes.ALOAD, 0));
         list.add(new FieldInsnNode(Opcodes.GETFIELD, "net/minecraftforge/client/GuiIngameForge", "field_175201_x", "Ljava/lang/String;"));
-        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "net/minecraft/util/EnumChatFormatting", "func_110646_a", "(Ljava/lang/String;)Ljava/lang/String;", false));
-        list.add(new VarInsnNode(Opcodes.ASTORE, 69));
-        list.add(new VarInsnNode(Opcodes.ALOAD, 69));
-        list.add(new LdcInsnNode("Your Mini Wither died!"));
-        list.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/String", "equals", "(Ljava/lang/Object;)Z", false));
-        LabelNode ifne = new LabelNode();
-        list.add(new JumpInsnNode(Opcodes.IFNE, ifne));
-        list.add(new VarInsnNode(Opcodes.ALOAD, 69));
-        list.add(new LdcInsnNode("Your Wither died!"));
-        list.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/String", "equals", "(Ljava/lang/Object;)Z", false));
-        list.add(new JumpInsnNode(Opcodes.IFNE, ifne));
-        list.add(new VarInsnNode(Opcodes.ALOAD, 69));
-        list.add(new LdcInsnNode("BED DESTROYED!"));
-        list.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/String", "equals", "(Ljava/lang/Object;)Z", false));
-        LabelNode ifeq = new LabelNode();
-        list.add(new JumpInsnNode(Opcodes.IFEQ, ifeq));
-        list.add(ifne);
-        list.add(new FieldInsnNode(Opcodes.GETSTATIC, "club/sk1er/hytilities/config/HytilitiesConfig", "hardcoreHearts", "Z"));
-        list.add(new JumpInsnNode(Opcodes.IFEQ, ifeq));
-        list.add(new FieldInsnNode(Opcodes.GETSTATIC, "club/sk1er/hytilities/Hytilities", "INSTANCE", "Lclub/sk1er/hytilities/Hytilities;"));
-        list.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "club/sk1er/hytilities/Hytilities", "getHardcoreStatus", "()Lclub/sk1er/hytilities/handlers/game/hardcore/HardcoreStatus;", false));
-        list.add(new InsnNode(Opcodes.ICONST_1));
-        list.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "club/sk1er/hytilities/handlers/game/hardcore/HardcoreStatus", "setDanger", "(Z)V", false));
-        list.add(ifeq);
+        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, getHooksPackage() + "GuiIngameForgeHook", "checkDangerStatus", "(Ljava/lang/String;)V", false));
         return list;
     }
 

@@ -114,4 +114,12 @@ public interface HytilitiesTransformer {
             methodNode.tryCatchBlocks.clear();
         }
     }
+
+    default String getHytilitiesConfig() {
+        return "club/sk1er/hytilities/config/HytilitiesConfig";
+    }
+
+    default String getHooksPackage() {
+        return "club/sk1er/hytilities/tweaker/asm/hooks/";
+    }
 }

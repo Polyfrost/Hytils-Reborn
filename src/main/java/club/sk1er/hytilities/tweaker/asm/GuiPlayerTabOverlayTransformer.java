@@ -65,6 +65,7 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
                         }
                     }
                     break;
+
                 case "getPlayerName":
                 case "func_175243_a":
                     while (iterator.hasNext()) {
@@ -85,6 +86,7 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
                         }
                     }
                     break;
+
                 case "drawPing":
                 case "func_175245_a":
                     method.instructions.insert(hidePing());

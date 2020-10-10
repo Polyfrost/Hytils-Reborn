@@ -256,7 +256,7 @@ public class HytilitiesConfig extends Vigilant {
         type = PropertyType.SLIDER, name = "Auto Queue Delay",
         description = "Delays the execution of Auto Queue. (The measurement is in seconds)",
         category = "General", subcategory = "Queue",
-        max = 100
+        max = 10
     )
     public static int autoQueueDelay;
 

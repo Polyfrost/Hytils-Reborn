@@ -32,9 +32,6 @@ public class AdBlocker implements ChatReceiveModule {
         return -3;
     }
 
-    // private final Pattern commonAdvertisements = Pattern.compile("/?(?:visit|ah|party|p join|guild|g join) \\w{1,16}", Pattern.CASE_INSENSITIVE);
-    // https://regexr.com/5ct51 old regex would capture any sentence with party and "ah"
-
     /**
      * [/](party join or join party) or (p join) or (guild join or join guild) or (g join)
      * <p>
