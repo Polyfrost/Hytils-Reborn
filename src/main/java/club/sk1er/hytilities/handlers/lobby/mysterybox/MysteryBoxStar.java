@@ -24,9 +24,12 @@ import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -36,7 +39,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MysteryBoxStar {
-    String mysteryBoxStarPattern = "§5§o§7§7Quality: §e(?<stars>✰+).+";
+
+    private Pattern mysteryBoxStarPattern = Pattern.compile("^\\u00a75\\u00a7o\\u00a77\\u00a77Quality: \\u00a7e(?<stars>\\u2730{1,5}).*");
 
     @SubscribeEvent
     public void onDrawScreenPre(GuiScreenEvent.DrawScreenEvent.Pre event) {
@@ -64,23 +68,36 @@ public class MysteryBoxStar {
                         int slotY = (int) ((guiTop + inventorySlot.yDisplayPosition) / scaleFactor) + 1;
                         drawStars(inventorySlot.getStack(), slotX, slotY);
                     }
-
                 }
                 GlStateManager.popMatrix();
             }
-
         }
     }
 
     public void drawStars(ItemStack item, int x, int y) {
+        // avoid rendering star when no mystery boxes are present
+        if (item.getItem() == Item.getItemFromBlock(Blocks.stained_glass_pane)) {
+            return;
+        }
+        // avoid rendering star on bags of experience
+        if (item.getItem() == Items.dye) {
+            return;
+        }
         List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+        // avoid accessing negative index
+        if (tooltip.size() < 4) {
+            return;
+        }
         String line = tooltip.get(tooltip.size() - 4);
-        Matcher matcher = Pattern.compile(mysteryBoxStarPattern).matcher(line);
+        Matcher matcher = mysteryBoxStarPattern.matcher(line);
         if (matcher.matches()) {
             int stars = matcher.group("stars").length();
-            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(stars + "✰", x, y, -14080);
+            // yellow stars for regular boxes
+            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(stars + "\u2730", x, y, -14080);
         } else {
-            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("✰", x, y, -34304);
+            // not a regular box, so assume it is a special box. e.g. holiday boxes
+            // orange stars for special boxes
+            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("\u2730", x, y, -34304);
         }
     }
 }
