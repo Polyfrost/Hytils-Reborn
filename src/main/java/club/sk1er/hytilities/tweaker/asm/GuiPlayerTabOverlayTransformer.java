@@ -20,14 +20,7 @@ package club.sk1er.hytilities.tweaker.asm;
 
 import club.sk1er.hytilities.tweaker.transformer.HytilitiesTransformer;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.InsnList;
-import org.objectweb.asm.tree.InsnNode;
-import org.objectweb.asm.tree.JumpInsnNode;
-import org.objectweb.asm.tree.LabelNode;
-import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.*;
 
 import java.util.ListIterator;
 
@@ -50,7 +43,7 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
                     while (iterator.hasNext()) {
                         AbstractInsnNode next = iterator.next();
 
-                        if (next instanceof MethodInsnNode && next.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+                        if (next.getOpcode() == Opcodes.INVOKEVIRTUAL) {
                             String methodInsnName = mapMethodNameFromNode(next);
 
                             // sort the player map and filter any entity with a uuid version of 2
@@ -60,8 +53,9 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
                                     "hideTabNpcs",
                                     "(Ljava/util/Collection;)Ljava/util/Collection;",
                                     false));
-                                break;
                             }
+                        } else if (next.getOpcode() == Opcodes.ILOAD && ((VarInsnNode) next).var == 11 && next.getNext().getOpcode() == Opcodes.IFEQ && !(next.getPrevious() instanceof VarInsnNode && ((VarInsnNode)next.getPrevious()).var == 10)) {
+                            method.instructions.insert(next.getNext(), shouldRenderPlayerHead(((JumpInsnNode) next.getNext()).label));
                         }
                     }
                     break;
@@ -71,7 +65,7 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
                     while (iterator.hasNext()) {
                         AbstractInsnNode next = iterator.next();
 
-                        if (next instanceof MethodInsnNode && next.getOpcode() == Opcodes.INVOKESTATIC) {
+                        if (next.getOpcode() == Opcodes.INVOKESTATIC) {
                             String methodInsnName = mapMethodNameFromNode(next);
 
                             // trim the player name to remove player ranks and guild tags
@@ -95,10 +89,19 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
         }
     }
 
+    private InsnList shouldRenderPlayerHead(LabelNode label) {
+        InsnList list = new InsnList();
+        list.add(new VarInsnNode(Opcodes.ALOAD, 24)); // networkplayerinfo1
+        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "club/sk1er/hytilities/handlers/lobby/tab/TabChanger", "shouldRenderPlayerHead", "(Lnet/minecraft/client/network/NetworkPlayerInfo;)Z", false));
+        list.add(new JumpInsnNode(Opcodes.IFEQ, label));
+        return list;
+    }
+
     private InsnList hidePing() {
         InsnList list = new InsnList();
         LabelNode label = new LabelNode();
-        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "club/sk1er/hytilities/handlers/lobby/tab/TabChanger", "hidePing", "()Z", false));
+        list.add(new VarInsnNode(Opcodes.ALOAD, 4));
+        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "club/sk1er/hytilities/handlers/lobby/tab/TabChanger", "hidePing", "(Lnet/minecraft/client/network/NetworkPlayerInfo;)Z", false));
         list.add(new JumpInsnNode(Opcodes.IFEQ, label));
         list.add(new InsnNode(Opcodes.RETURN));
         list.add(label);

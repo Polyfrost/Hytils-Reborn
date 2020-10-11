@@ -189,6 +189,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hidePlayerRanksInTab;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Cleaner Tab in Skyblock",
+        description = "Doesn't render player heads or ping for tab entries that aren't players in Skyblock.",
+        category = "General", subcategory = "General"
+    )
+    public static boolean cleanerSkyblockTabInfo;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Ping In Tab",
         description = "Prevent ping from showing up in tab while playing games, since the value is misleading. Ping will remain visible in lobbies.",
         category = "General", subcategory = "General"
