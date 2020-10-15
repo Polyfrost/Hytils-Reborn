@@ -316,6 +316,13 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean mysteryBoxStar;
 
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Curse of Spam Messages",
+        description = "Hides the constant spam of kali's curse of spam.\n§eExample: §eKALI HAS STRIKEN YOU WITH THE CURSE OF SPAM",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean curseOfSpam;
+
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
         initialize();

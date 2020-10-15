@@ -127,5 +127,11 @@ public class ChatCleaner implements ChatReceiveModule {
         if (HytilitiesConfig.connectionStatus && language.chatCleanerConnectionStatusRegex.matcher(message).matches()) {
             event.setCanceled(true);
         }
+
+        if (HytilitiesConfig.curseOfSpam) {
+            if (message.equals("KALI HAS STRIKEN YOU WITH THE CURSE OF SPAM")) {
+                event.setCanceled(true);
+            }
+        }
     }
 }
