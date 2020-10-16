@@ -24,15 +24,15 @@ import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 
 public class MysteryBoxStar {
 
-    private final Pattern mysteryBoxStarPattern = Pattern.compile("^\\u00a75\\u00a7o\\u00a77\\u00a77Quality: \\u00a7e(?<stars>\\u2730{1,5}).*");
+    private final Pattern mysteryBoxStarPattern = Pattern.compile("\\u00a75\\u00a7o\\u00a77\\u00a77Quality: \\u00a7e(?<stars>\\u2730+).*");
 
     @SubscribeEvent
     public void onDrawScreenPre(GuiScreenEvent.DrawScreenEvent.Pre event) {
@@ -91,7 +91,6 @@ public class MysteryBoxStar {
         if (tooltip.size() < 4) {
             return;
         }
-
         String line = tooltip.get(tooltip.size() - 4);
         Matcher matcher = mysteryBoxStarPattern.matcher(line);
         if (matcher.matches()) {
@@ -99,6 +98,14 @@ public class MysteryBoxStar {
             // yellow stars for regular boxes
             Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(stars + "\u2730", x, y, -14080);
         } else {
+            // for boxes with vip/mvp+ access
+            String line1 = tooltip.get(tooltip.size() - 5);
+            Matcher matcher1 = mysteryBoxStarPattern.matcher(line1);
+            if (matcher1.matches()) {
+                int stars = matcher1.group("stars").length();
+                Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(stars + "\u2730", x, y, -14080);
+                return;
+            }
             // not a regular box, so assume it is a special box. e.g. holiday boxes
             // orange stars for special boxes
             Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("\u2730", x, y, -34304);
