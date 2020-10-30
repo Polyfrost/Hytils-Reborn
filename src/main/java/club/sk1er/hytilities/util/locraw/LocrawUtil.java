@@ -36,6 +36,7 @@ public class LocrawUtil implements ChatReceiveModule {
     private LocrawInformation locrawInformation;
     private boolean listening;
     private int tick;
+    private boolean playerSentCommand = false;
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
@@ -55,6 +56,13 @@ public class LocrawUtil implements ChatReceiveModule {
         tick = 0;
     }
 
+    public String onMessageSend(@NotNull String message) {
+        if (message.startsWith("/locraw") && !this.listening) {
+            this.playerSentCommand = true;
+        }
+        return message;
+    }
+
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         try {
@@ -69,7 +77,10 @@ public class LocrawUtil implements ChatReceiveModule {
                     this.locrawInformation.setGameType(GameType.getFromLocraw(locrawInformation.getRawGameType()));
 
                     // Stop listening for locraw and cancel the message.
-                    event.setCanceled(true);
+                    if (!this.playerSentCommand) {
+                        event.setCanceled(true);
+                    }
+                    this.playerSentCommand = false;
                     this.listening = false;
                 }
             }
