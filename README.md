@@ -1,4 +1,8 @@
+<div align="center">
+
 # Hytilities
+
+</div>
 
 ## Users
 ### What is Hytilities?
@@ -65,4 +69,21 @@ Click the `Edit Configurations...` button.
 
 ![Edit Configurations](.github/edit_configurations.png)
 
-TODO: Complete this, context menu has completely changed in 2020.3 EAP, need to reinstall 2020.2.
+Click on `Minecraft Client`.
+
+![Minecraft Client](.github/minecraft_client2.png)
+
+Ensure that classpath is set to `Hytilities.main`. If it is not, select the drop down and set it.
+
+![Classpath](.github/classpath.png)
+
+Apply and save your changes.
+
+![Apply](.github/apply.png)
+![Save Changes](.github/save_changes.png)
+
+You should now be able to run Hytilities in the dev workspace. 
+
+![Run](.github/run.png)
+
+
