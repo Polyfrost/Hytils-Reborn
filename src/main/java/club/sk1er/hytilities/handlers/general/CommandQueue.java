@@ -52,7 +52,7 @@ public class CommandQueue {
 
         if (tick % delay == 0) {
             final QueueObject poll = commands.poll();
-            if (poll == null || poll.message.isEmpty()) {
+            if (poll == null || poll.message == null) {
                 return;
             }
 
