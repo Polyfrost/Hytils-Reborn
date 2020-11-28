@@ -18,6 +18,7 @@
 
 package club.sk1er.hytilities;
 
+import club.sk1er.hytilities.command.HousingVisitCommand;
 import club.sk1er.hytilities.command.HytilitiesCommand;
 import club.sk1er.hytilities.command.SilentRemoveCommand;
 import club.sk1er.hytilities.config.HytilitiesConfig;
@@ -82,7 +83,9 @@ public class Hytilities {
         this.config.preload();
 
         ClientCommandHandler.instance.registerCommand(new HytilitiesCommand());
+        ClientCommandHandler.instance.registerCommand(new HousingVisitCommand());
         ClientCommandHandler.instance.registerCommand(new SilentRemoveCommand());
+
 
         registerHandlers();
     }
