@@ -113,6 +113,7 @@ public class ChatHandler {
         if (!MinecraftUtils.isHypixel()) {
             return message;
         }
+
         Hytilities.INSTANCE.getLocrawUtil().onMessageSend(message);
 
         for (ChatSendModule module : this.sendModules) {

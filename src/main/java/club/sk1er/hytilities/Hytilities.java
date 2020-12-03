@@ -48,6 +48,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import org.objectweb.asm.tree.ClassNode;
 
 @Mod(
@@ -82,10 +83,10 @@ public class Hytilities {
         ModCoreInstaller.initializeModCore(Minecraft.getMinecraft().mcDataDir);
         this.config.preload();
 
-        ClientCommandHandler.instance.registerCommand(new HytilitiesCommand());
-        ClientCommandHandler.instance.registerCommand(new HousingVisitCommand());
-        ClientCommandHandler.instance.registerCommand(new SilentRemoveCommand());
-
+        final ClientCommandHandler commandRegister = ClientCommandHandler.instance;
+        commandRegister.registerCommand(new HytilitiesCommand());
+        commandRegister.registerCommand(new HousingVisitCommand());
+        commandRegister.registerCommand(new SilentRemoveCommand());
 
         registerHandlers();
     }
@@ -95,28 +96,29 @@ public class Hytilities {
         this.loadedCall = true;
     }
 
-
     private void registerHandlers() {
+        final EventBus eventBus = MinecraftForge.EVENT_BUS;
+
         // general stuff
-        MinecraftForge.EVENT_BUS.register(autoQueue);
-        MinecraftForge.EVENT_BUS.register(locrawUtil);
-        MinecraftForge.EVENT_BUS.register(commandQueue);
-        MinecraftForge.EVENT_BUS.register(languageHandler);
-        MinecraftForge.EVENT_BUS.register(new AutoStart());
+        eventBus.register(autoQueue);
+        eventBus.register(locrawUtil);
+        eventBus.register(commandQueue);
+        eventBus.register(languageHandler);
+        eventBus.register(new AutoStart());
 
         // chat
-        MinecraftForge.EVENT_BUS.register(chatHandler);
-        MinecraftForge.EVENT_BUS.register(silentRemoval);
-        MinecraftForge.EVENT_BUS.register(hardcoreStatus);
-        MinecraftForge.EVENT_BUS.register(new AchievementEvent());
-        MinecraftForge.EVENT_BUS.register(new LevelupEvent());
+        eventBus.register(chatHandler);
+        eventBus.register(silentRemoval);
+        eventBus.register(hardcoreStatus);
+        eventBus.register(new AchievementEvent());
+        eventBus.register(new LevelupEvent());
 
         // lobby
-        MinecraftForge.EVENT_BUS.register(lobbyChecker);
-        MinecraftForge.EVENT_BUS.register(new NPCHider());
-        MinecraftForge.EVENT_BUS.register(new LobbyBossbar());
-        MinecraftForge.EVENT_BUS.register(new LimboLimiter());
-        MinecraftForge.EVENT_BUS.register(new MysteryBoxStar());
+        eventBus.register(lobbyChecker);
+        eventBus.register(new NPCHider());
+        eventBus.register(new LobbyBossbar());
+        eventBus.register(new LimboLimiter());
+        eventBus.register(new MysteryBoxStar());
     }
 
     public void sendMessage(String message) {

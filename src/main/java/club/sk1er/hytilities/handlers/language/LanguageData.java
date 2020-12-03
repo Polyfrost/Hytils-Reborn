@@ -37,7 +37,7 @@ public class LanguageData {
     public String autoQueueClick = "Click here!";
 
     private String chatCleanerJoinNormal = "joined the lobby";
-    private String chatCleanerJoinHalloween = "spooked in the lobby";
+    private String chatCleanerJoinHalloween = "spooked into the lobby";
     private String chatCleanerMysteryBoxFind = "^(?<player>\\w{1,16}) found a \u2730{5} Mystery Box!$";
     private String chatCleanerSoulWellFind = "^.+ has found .+ in the Soul Well!$";
     private String chatCleanerGameAnnouncement = "^\u27A4 A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!$";

@@ -60,8 +60,8 @@ public class DefaultChatRestyler implements ChatReceiveModule {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String message = event.message.getFormattedText().trim();
-        String unformattedMessage = event.message.getUnformattedText().trim();
+        final String message = event.message.getFormattedText().trim();
+        final String unformattedMessage = event.message.getUnformattedText().trim();
 
         final LanguageData language = getLanguage();
         Matcher joinMatcher = language.chatRestylerGameJoinStyleRegex.matcher(message);

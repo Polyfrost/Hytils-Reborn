@@ -23,17 +23,17 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 
 public class SilentRemoval {
 
-    private final List<String> silentUsers = new ArrayList<>();
+    private final Set<String> silentUsers = new HashSet<>();
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onChat(ClientChatReceivedEvent event) {
-        Matcher matcher = Hytilities.INSTANCE.getLanguageHandler().getCurrent().silentRemovalLeaveMessageRegex.matcher(event.message.getUnformattedText());
+        final Matcher matcher = Hytilities.INSTANCE.getLanguageHandler().getCurrent().silentRemovalLeaveMessageRegex.matcher(event.message.getUnformattedText());
 
         if (matcher.matches()) {
             // not a friend anymore :(
@@ -46,7 +46,7 @@ public class SilentRemoval {
         }
     }
 
-    public List<String> getSilentUsers() {
+    public Set<String> getSilentUsers() {
         return silentUsers;
     }
 }

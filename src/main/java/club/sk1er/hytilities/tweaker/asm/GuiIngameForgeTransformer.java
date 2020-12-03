@@ -44,13 +44,11 @@ public class GuiIngameForgeTransformer implements HytilitiesTransformer {
     public void transform(ClassNode classNode, String name) {
         for (MethodNode method : classNode.methods) {
             if (method.name.equals("renderHealth")) {
-                ListIterator<AbstractInsnNode> iterator = method.instructions.iterator();
-
+                final ListIterator<AbstractInsnNode> iterator = method.instructions.iterator();
                 while (iterator.hasNext()) {
-                    AbstractInsnNode next = iterator.next();
+                    final AbstractInsnNode next = iterator.next();
                     if (next instanceof MethodInsnNode && next.getOpcode() == Opcodes.INVOKEVIRTUAL) {
-                        String methodName = mapMethodNameFromNode(next);
-
+                        final String methodName = mapMethodNameFromNode(next);
                         if (methodName.equals("isHardcoreModeEnabled") || methodName.equals("func_76093_s")) {
                             for (int i = 0; i < 7; i++) {
                                 method.instructions.remove(next.getNext());

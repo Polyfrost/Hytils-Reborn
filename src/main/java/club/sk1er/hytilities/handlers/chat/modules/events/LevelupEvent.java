@@ -35,12 +35,10 @@ public class LevelupEvent implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String unformattedText = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-
-        Matcher matcher = getLanguage().hypixelLevelUpRegex.matcher(unformattedText.trim());
+        final String unformattedText = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        final Matcher matcher = getLanguage().hypixelLevelUpRegex.matcher(unformattedText.trim());
         if (matcher.find()) {
-            String level = matcher.group("level");
-
+            final String level = matcher.group("level");
             if (StringUtils.isNumeric(level)) {
                 MinecraftForge.EVENT_BUS.post(new HypixelLevelupEvent(Integer.parseInt(level)));
             }

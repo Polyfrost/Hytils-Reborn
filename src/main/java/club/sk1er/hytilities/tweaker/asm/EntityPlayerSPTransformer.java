@@ -39,7 +39,7 @@ public class EntityPlayerSPTransformer implements HytilitiesTransformer {
     @Override
     public void transform(ClassNode classNode, String name) {
         for (MethodNode method : classNode.methods) {
-            String methodName = mapMethodName(classNode, method);
+            final String methodName = mapMethodName(classNode, method);
             if (methodName.equals("sendChatMessage") || methodName.equals("func_71165_d")) {
                 method.instructions.insert(handleSentMessage());
                 break;

@@ -2,7 +2,7 @@
   "autoQueuePrefix": "Vous êtes mort! Voulez-vous jouer à nouveau?",
   "autoQueueClick": "Cliquez ici!",
   "chatCleanerJoinNormal": "a rejoint le lobby",
-  "chatCleanerJoinHalloween": "spooked in the lobby",
+  "chatCleanerJoinHalloween": "spooked into the lobby",
   "chatCleanerMysteryBoxFind": "^(?<player>\\w{1,16}) a trouvé une ✰{5} Mystery Box!$",
   "chatCleanerSoulWellFind": "^.+ a trouvé .+ dans le Soul Well!$",
   "chatCleanerGameAnnouncement": "^? ➤ Une partie de .+  30 secondes!  ➤ A .+ game is (?:débute dans|starting in .+ seconds)! CLIQUEZ ICI pour rejoindre!$",

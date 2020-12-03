@@ -22,6 +22,7 @@ import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Items;
@@ -49,24 +50,24 @@ public class MysteryBoxStar {
         }
 
         if (event.gui instanceof GuiChest) {
-            GuiChest guiChest = (GuiChest) event.gui;
-            Container inventorySlots = guiChest.inventorySlots;
-            IInventory inventory = inventorySlots.getSlot(0).inventory;
+            final GuiChest guiChest = (GuiChest) event.gui;
+            final Container inventorySlots = guiChest.inventorySlots;
+            final IInventory inventory = inventorySlots.getSlot(0).inventory;
             if (inventory.getName().equals("Mystery Vault")) {
-                int guiLeft = (guiChest.width - 176) / 2;
-                int inventoryRows = inventory.getSizeInventory() / 9;
-                int ySize = 222 - 108 + inventoryRows * 18;
-                int guiTop = (guiChest.height - ySize) / 2;
-                float scaleFactor = 0.9f;
+                final int guiLeft = (guiChest.width - 176) / 2;
+                final int inventoryRows = inventory.getSizeInventory() / 9;
+                final int ySize = 222 - 108 + inventoryRows * 18;
+                final int guiTop = (guiChest.height - ySize) / 2;
+                final float scaleFactor = 0.9f;
                 GlStateManager.pushMatrix();
                 GlStateManager.translate(0, 0, 260);
                 GlStateManager.scale(scaleFactor, scaleFactor, 0);
                 for (Slot inventorySlot : inventorySlots.inventorySlots) {
-                    int slotRow = inventorySlot.slotNumber / 9;
-                    int maxRow = inventoryRows - 1;
+                    final int slotRow = inventorySlot.slotNumber / 9;
+                    final int maxRow = inventoryRows - 1;
                     if (slotRow < maxRow && inventorySlot.getHasStack()) {
-                        int slotX = (int) ((guiLeft + inventorySlot.xDisplayPosition) / scaleFactor) + 2;
-                        int slotY = (int) ((guiTop + inventorySlot.yDisplayPosition) / scaleFactor) + 1;
+                        final int slotX = (int) ((guiLeft + inventorySlot.xDisplayPosition) / scaleFactor) + 2;
+                        final int slotY = (int) ((guiTop + inventorySlot.yDisplayPosition) / scaleFactor) + 1;
                         drawStars(inventorySlot.getStack(), slotX, slotY);
                     }
                 }
@@ -86,29 +87,30 @@ public class MysteryBoxStar {
             return;
         }
 
-        List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+        final List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, false);
         // avoid accessing negative index
         if (tooltip.size() < 4) {
             return;
         }
-        String line = tooltip.get(tooltip.size() - 4);
-        Matcher matcher = mysteryBoxStarPattern.matcher(line);
-        if (matcher.matches()) {
-            int stars = matcher.group("stars").length();
+
+        final String normalBox = tooltip.get(tooltip.size() - 4);
+        final Matcher normalBoxMatcher = mysteryBoxStarPattern.matcher(normalBox);
+        final FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+        if (normalBoxMatcher.matches()) {
             // yellow stars for regular boxes
-            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(stars + "\u2730", x, y, -14080);
+            fontRenderer.drawStringWithShadow(normalBoxMatcher.group("stars").length() + "\u2730", x, y, -14080);
         } else {
             // for boxes with vip/mvp+ access
-            String line1 = tooltip.get(tooltip.size() - 5);
-            Matcher matcher1 = mysteryBoxStarPattern.matcher(line1);
-            if (matcher1.matches()) {
-                int stars = matcher1.group("stars").length();
-                Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(stars + "\u2730", x, y, -14080);
+            String rankedBoxLine = tooltip.get(tooltip.size() - 5);
+            Matcher rankedBoxMatcher = mysteryBoxStarPattern.matcher(rankedBoxLine);
+            if (rankedBoxMatcher.matches()) {
+                fontRenderer.drawStringWithShadow(rankedBoxMatcher.group("stars").length() + "\u2730", x, y, -14080);
                 return;
             }
+
             // not a regular box, so assume it is a special box. e.g. holiday boxes
             // orange stars for special boxes
-            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("\u2730", x, y, -34304);
+            fontRenderer.drawStringWithShadow("\u2730", x, y, -34304);
         }
     }
 }

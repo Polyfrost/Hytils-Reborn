@@ -29,21 +29,21 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 
 public class AchievementEvent implements ChatReceiveModule {
 
-    private final List<String> achievementsGotten = new ArrayList<>();
+    private final Set<String> achievementsGotten = new HashSet<>();
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String unformattedText = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-
-        Matcher matcher = getLanguage().achievementRegex.matcher(unformattedText);
+        final String unformattedText = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        final Matcher matcher = getLanguage().achievementRegex.matcher(unformattedText);
         if (matcher.matches()) {
-            String achievement = matcher.group("achievement");
-
+            final String achievement = matcher.group("achievement");
             if (!achievementsGotten.contains(achievement)) {
                 MinecraftForge.EVENT_BUS.post(new HypixelAchievementEvent(achievement));
 

@@ -59,18 +59,18 @@ public class ClassTransformer implements IClassTransformer {
     public byte[] transform(String name, String transformedName, byte[] bytes) {
         if (bytes == null) return null;
 
-        Collection<HytilitiesTransformer> transformers = transformerMap.get(transformedName);
+        final Collection<HytilitiesTransformer> transformers = transformerMap.get(transformedName);
         if (transformers.isEmpty()) return bytes;
 
-        ClassReader classReader = new ClassReader(bytes);
-        ClassNode classNode = new ClassNode();
+        final ClassReader classReader = new ClassReader(bytes);
+        final ClassNode classNode = new ClassNode();
         classReader.accept(classNode, ClassReader.EXPAND_FRAMES);
 
         for (HytilitiesTransformer transformer : transformers) {
             transformer.transform(classNode, transformedName);
         }
 
-        ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+        final ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
 
         try {
             classNode.accept(classWriter);
@@ -79,7 +79,7 @@ public class ClassTransformer implements IClassTransformer {
         }
 
         if (outputBytecode) {
-            File bytecodeDirectory = new File("bytecode");
+            final File bytecodeDirectory = new File("bytecode");
             String transformedClassName;
 
             // anonymous classes
@@ -89,7 +89,7 @@ public class ClassTransformer implements IClassTransformer {
                 transformedClassName = transformedName + ".class";
             }
 
-            File bytecodeOutput = new File(bytecodeDirectory, transformedClassName);
+            final File bytecodeOutput = new File(bytecodeDirectory, transformedClassName);
 
             try {
                 if (!bytecodeDirectory.exists()) {

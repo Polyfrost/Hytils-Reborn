@@ -36,8 +36,7 @@ public class WhiteChat implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         if (HytilitiesConfig.whitePrivateMessages) {
-            Matcher matcher = getLanguage().privateMessageWhiteChatRegex.matcher(event.message.getFormattedText());
-
+            final Matcher matcher = getLanguage().privateMessageWhiteChatRegex.matcher(event.message.getFormattedText());
             if (matcher.find(0)) {
                 event.message = new ChatComponentText(matcher.group("type") + " " + matcher.group("prefix") + ": " + matcher.group("message").replace("§7", "§f"));
             }
@@ -46,8 +45,7 @@ public class WhiteChat implements ChatReceiveModule {
         }
 
         if (HytilitiesConfig.whiteChat) {
-            Matcher matcher = getLanguage().whiteChatNonMessageRegex.matcher(event.message.getFormattedText());
-
+            final Matcher matcher = getLanguage().whiteChatNonMessageRegex.matcher(event.message.getFormattedText());
             if (matcher.find(0)) {
                 event.message = new ChatComponentText(matcher.group("prefix") + ": " + matcher.group("message"));
             }

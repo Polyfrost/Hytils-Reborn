@@ -45,6 +45,7 @@ public class ChatCleaner implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final LanguageData language = getLanguage();
+        final LocrawInformation locrawInformation = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
 
         if (HytilitiesConfig.lobbyStatus) {
@@ -114,7 +115,6 @@ public class ChatCleaner implements ChatReceiveModule {
             }
         }
 
-        LocrawInformation locrawInformation = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
         if (locrawInformation != null) {
             if (HytilitiesConfig.bedwarsAdvertisements && locrawInformation.getGameType() == GameType.BED_WARS) {
                 if (language.chatCleanerBedwarsPartyAdvertisementRegex.matcher(message).find()) {

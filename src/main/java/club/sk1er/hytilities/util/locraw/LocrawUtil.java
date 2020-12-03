@@ -67,7 +67,7 @@ public class LocrawUtil implements ChatReceiveModule {
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         try {
             // Had some false positives while testing, so this is here just to be safe.
-            String msg = event.message.getUnformattedTextForChat();
+            final String msg = event.message.getUnformattedTextForChat();
             if (msg.startsWith("{")) {
                 // Parse the json, and make sure that it's not null.
                 this.locrawInformation = gson.fromJson(msg, LocrawInformation.class);

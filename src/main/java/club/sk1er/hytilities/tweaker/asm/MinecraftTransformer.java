@@ -39,8 +39,7 @@ public class MinecraftTransformer implements HytilitiesTransformer {
     @Override
     public void transform(ClassNode classNode, String name) {
         for (MethodNode method : classNode.methods) {
-            String methodName = mapMethodName(classNode, method);
-
+            final String methodName = mapMethodName(classNode, method);
             if (methodName.equals("getLimitFramerate") || methodName.equals("func_90020_K")) {
                 method.instructions.insertBefore(method.instructions.getFirst(), performLimboLimiter());
                 break;

@@ -38,10 +38,11 @@ import java.util.regex.Pattern;
  */
 public class HousingVisitCommand extends CommandBase {
 
-    /** Used for performing a rudimentary check to prevent visiting invalid houses. */
-    private static final Pattern usernameRegex = Pattern.compile("\\w{1,16}");
-
-    private static String playername = "";
+    /**
+     * Used for performing a rudimentary check to prevent visiting invalid houses.
+     */
+    private final Pattern usernameRegex = Pattern.compile("\\w{1,16}");
+    private String playerName = null;
 
     @Override
     public String getCommandName() {
@@ -62,7 +63,7 @@ public class HousingVisitCommand extends CommandBase {
     public void processCommand(final ICommandSender sender, final String[] strings) {
         if (strings.length == 1) {
             if (usernameRegex.matcher(strings[0]).matches()) {
-                playername = strings[0];
+                playerName = strings[0];
                 // if we are in the housing lobby, just immediately run the /visit command
                 if ("HOUSING".equals(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld
                     .getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()))) {
@@ -72,7 +73,7 @@ public class HousingVisitCommand extends CommandBase {
                     MinecraftForge.EVENT_BUS.register(this);
                 }
             } else {
-                Hytilities.INSTANCE.sendMessage("&cInvalid playername!");
+                Hytilities.INSTANCE.sendMessage("&cInvalid username!");
             }
         } else {
             Hytilities.INSTANCE.sendMessage("&cIncorrect arguments. Command usage is: " + getCommandUsage(sender));
@@ -90,10 +91,11 @@ public class HousingVisitCommand extends CommandBase {
         visit(300);
     }
 
-    private static void visit(final long time) {
-        Multithreading.schedule(
-            () -> Hytilities.INSTANCE.getCommandQueue().queue("/visit " + playername),
-        time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
+    private void visit(final long time) {
+        if (playerName != null) {
+            Multithreading.schedule(
+                () -> Hytilities.INSTANCE.getCommandQueue().queue("/visit " + playerName),
+                time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
+        }
     }
-
 }

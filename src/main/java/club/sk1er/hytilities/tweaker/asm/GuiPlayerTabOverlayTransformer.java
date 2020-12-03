@@ -34,17 +34,16 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
     @Override
     public void transform(ClassNode classNode, String name) {
         for (MethodNode method : classNode.methods) {
-            String methodName = mapMethodName(classNode, method);
-            ListIterator<AbstractInsnNode> iterator = method.instructions.iterator();
-
+            final String methodName = mapMethodName(classNode, method);
+            final ListIterator<AbstractInsnNode> iterator = method.instructions.iterator();
             switch (methodName) {
                 case "renderPlayerlist":
                 case "func_175249_a":
                     while (iterator.hasNext()) {
-                        AbstractInsnNode next = iterator.next();
+                        final AbstractInsnNode next = iterator.next();
 
                         if (next.getOpcode() == Opcodes.INVOKEVIRTUAL) {
-                            String methodInsnName = mapMethodNameFromNode(next);
+                            final String methodInsnName = mapMethodNameFromNode(next);
 
                             // sort the player map and filter any entity with a uuid version of 2
                             if (methodInsnName.equals("getPlayerInfoMap") || methodInsnName.equals("func_175106_d")) {
@@ -63,10 +62,10 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
                 case "getPlayerName":
                 case "func_175243_a":
                     while (iterator.hasNext()) {
-                        AbstractInsnNode next = iterator.next();
+                        final AbstractInsnNode next = iterator.next();
 
                         if (next.getOpcode() == Opcodes.INVOKESTATIC) {
-                            String methodInsnName = mapMethodNameFromNode(next);
+                            final String methodInsnName = mapMethodNameFromNode(next);
 
                             // trim the player name to remove player ranks and guild tags
                             if (methodInsnName.equals("formatPlayerName") || methodInsnName.equals("func_96667_a")) {

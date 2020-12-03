@@ -45,14 +45,14 @@ public class GameStartCompactor implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher gameStartMatcher = getLanguage().chatRestylerGameStartCounterStyleRegex.matcher(event.message.getUnformattedText());
-        Matcher chatRestylerMatcher = getLanguage().chatRestylerGameStartCounterOutputStyleRegex.matcher(event.message.getFormattedText());
+        final Matcher gameStartMatcher = getLanguage().chatRestylerGameStartCounterStyleRegex.matcher(event.message.getUnformattedText());
+        final Matcher chatRestylerMatcher = getLanguage().chatRestylerGameStartCounterOutputStyleRegex.matcher(event.message.getFormattedText());
         if (gameStartMatcher.matches() || (HytilitiesConfig.gameStatusRestyle && chatRestylerMatcher.matches())) {
             if (lastMessage != null) {
-                GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
-                List<IChatComponent> oldTimerLines = GuiUtilRenderComponents.splitText(lastMessage, MathHelper.floor_float((float) chat.getChatWidth() / chat.getChatScale()), Minecraft.getMinecraft().fontRendererObj, false, false);
+                final GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
+                final List<IChatComponent> oldTimerLines = GuiUtilRenderComponents.splitText(lastMessage, MathHelper.floor_float((float) chat.getChatWidth() / chat.getChatScale()), Minecraft.getMinecraft().fontRendererObj, false, false);
                 for (int i = chat.drawnChatLines.size() - 1; i >= 0; i--) { // tries to find the last message in drawn chat lines, if found, it removes them
-                    ChatLine drawnLine = chat.drawnChatLines.get(i);
+                    final ChatLine drawnLine = chat.drawnChatLines.get(i);
                     for (IChatComponent oldTimerLine : oldTimerLines) {
                         if (drawnLine.getChatComponent().getFormattedText().equals(oldTimerLine.getFormattedText())) {
                             chat.drawnChatLines.remove(i);

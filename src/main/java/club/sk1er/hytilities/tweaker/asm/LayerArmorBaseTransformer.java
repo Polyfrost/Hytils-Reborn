@@ -42,16 +42,16 @@ public class LayerArmorBaseTransformer implements HytilitiesTransformer {
     @Override
     public void transform(ClassNode classNode, String name) {
         for (MethodNode method : classNode.methods) {
-            String methodName = mapMethodName(classNode, method);
+            final String methodName = mapMethodName(classNode, method);
 
             if (methodName.equals("renderLayer") || methodName.equals("func_177182_a")) {
-                ListIterator<AbstractInsnNode> iterator = method.instructions.iterator();
+                final ListIterator<AbstractInsnNode> iterator = method.instructions.iterator();
 
                 while (iterator.hasNext()) {
-                    AbstractInsnNode next = iterator.next();
+                    final AbstractInsnNode next = iterator.next();
 
                     if (next instanceof MethodInsnNode && next.getOpcode() == Opcodes.INVOKESPECIAL) {
-                        String methodInsnName = mapMethodNameFromNode(next);
+                        final String methodInsnName = mapMethodNameFromNode(next);
                         if (methodInsnName.equals("isSlotForLeggings") || methodInsnName.equals("func_177180_b")) {
                             method.instructions.insertBefore(next.getPrevious().getPrevious(), checkRender());
                             break;

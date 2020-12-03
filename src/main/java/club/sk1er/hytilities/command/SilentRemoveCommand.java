@@ -24,6 +24,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 
 import java.util.List;
+import java.util.Set;
 
 public class SilentRemoveCommand extends CommandBase {
     @Override
@@ -40,24 +41,26 @@ public class SilentRemoveCommand extends CommandBase {
     public void processCommand(ICommandSender sender, String[] args) {
         if (args.length != 1) {
             Hytilities.INSTANCE.sendMessage("&cInvalid usage: " + getCommandUsage(sender));
-        } else if (args[0].equalsIgnoreCase("clear")) {
-            if (Hytilities.INSTANCE.getSilentRemoval().getSilentUsers().isEmpty()) {
-                Hytilities.INSTANCE.sendMessage("&cSilent Removal list is already empty.");
-                return;
-            }
-
-            Hytilities.INSTANCE.getSilentRemoval().getSilentUsers().clear();
         } else {
-            String player = args[0];
+            final Set<String> silentUsers = Hytilities.INSTANCE.getSilentRemoval().getSilentUsers();
+            if (args[0].equalsIgnoreCase("clear")) {
+                if (silentUsers.isEmpty()) {
+                    Hytilities.INSTANCE.sendMessage("&cSilent Removal list is already empty.");
+                    return;
+                }
 
-            if (Hytilities.INSTANCE.getSilentRemoval().getSilentUsers().contains(player)) {
-                Hytilities.INSTANCE.getSilentRemoval().getSilentUsers().remove(player);
-                Hytilities.INSTANCE.sendMessage("&aRemoved &e" + player + " &afrom the removal queue.");
-                return;
+                silentUsers.clear();
+            } else {
+                final String player = args[0];
+                if (silentUsers.contains(player)) {
+                    silentUsers.remove(player);
+                    Hytilities.INSTANCE.sendMessage("&aRemoved &e" + player + " &afrom the removal queue.");
+                    return;
+                }
+
+                silentUsers.add(player);
+                Hytilities.INSTANCE.sendMessage("&aAdded &e" + player + " &ato the removal queue.");
             }
-
-            Hytilities.INSTANCE.getSilentRemoval().getSilentUsers().add(player);
-            Hytilities.INSTANCE.sendMessage("&aAdded &e" + player + " &ato the removal queue.");
         }
     }
 

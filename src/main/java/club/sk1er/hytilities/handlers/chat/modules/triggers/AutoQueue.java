@@ -53,10 +53,10 @@ public class AutoQueue implements ChatReceiveModule {
         }
 
         final LanguageData language = getLanguage();
-        String message = ChatColor.stripColor(event.message.getUnformattedText());
+        final String message = ChatColor.stripColor(event.message.getUnformattedText());
         if (message.startsWith(language.autoQueuePrefix)) {
             for (IChatComponent component : event.message.getSiblings()) {
-                String compMsg = ChatColor.stripColor(component.getUnformattedText().trim());
+                final String compMsg = ChatColor.stripColor(component.getUnformattedText().trim());
                 if (compMsg.equals(language.autoQueueClick)) {
                     this.command = component.getChatStyle().getChatClickEvent().getValue();
                 }

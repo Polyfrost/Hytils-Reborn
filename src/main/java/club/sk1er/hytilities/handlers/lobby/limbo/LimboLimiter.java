@@ -21,6 +21,7 @@ package club.sk1er.hytilities.handlers.lobby.limbo;
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.DefaultChatRestyler;
+import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.hytilities.tweaker.asm.MinecraftTransformer;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -38,8 +39,8 @@ public class LimboLimiter {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         final String message = event.message.getUnformattedText();
-
-        if (message.equals(Hytilities.INSTANCE.getLanguageHandler().getCurrent().limboLimiterSpawned) || message.equals(Hytilities.INSTANCE.getLanguageHandler().getCurrent().limboLimiterAfk)) {
+        final LanguageData language = Hytilities.INSTANCE.getLanguageHandler().getCurrent();
+        if (message.equals(language.limboLimiterSpawned) || message.equals(language.limboLimiterAfk)) {
             limboStatus = true;
         }
     }

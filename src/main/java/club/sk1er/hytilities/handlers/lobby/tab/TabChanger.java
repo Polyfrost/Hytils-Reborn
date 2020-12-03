@@ -39,7 +39,7 @@ public class TabChanger {
             if (HytilitiesConfig.hidePlayerRanksInTab && name.startsWith("[", 2)) {
                 // keep the name color if player rank is removed
                 // §b[MVP§c+§b] Steve
-                String color = "\u00a7" + name.charAt(1);
+                final String color = "\u00a7" + name.charAt(1);
 
                 // add the rank color, and trim off the player rank
                 name = color + name.substring(name.indexOf("]") + 2);
@@ -63,11 +63,12 @@ public class TabChanger {
         return MinecraftUtils.isHypixel() && ((HytilitiesConfig.hidePingInTab && !Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) || isSkyblockTabInformationEntry(networkPlayerInfo));
     }
 
-    private static final Pattern validMinecraftUsername = Pattern.compile("[A-Za-z0-9_]{1,16}");
+    private static final Pattern validMinecraftUsername = Pattern.compile("\\w{1,16}");
     private static final Pattern skyblockTabInformationEntryGameProfileNameRegex = Pattern.compile("![A-D]-[a-v]");
+
     private static boolean isSkyblockTabInformationEntry(NetworkPlayerInfo networkPlayerInfo) {
         if (!HytilitiesConfig.cleanerSkyblockTabInfo) return false;
-        LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
+        final LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
         return
             locraw != null &&
             locraw.getGameType().equals(GameType.SKYBLOCK) &&

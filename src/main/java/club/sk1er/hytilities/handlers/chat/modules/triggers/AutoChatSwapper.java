@@ -21,6 +21,7 @@ package club.sk1er.hytilities.handlers.chat.modules.triggers;
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
+import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.mods.core.util.Multithreading;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -79,10 +80,10 @@ public class AutoChatSwapper implements ChatReceiveModule {
 
         @SubscribeEvent
         public void checkForAlreadyInThisChannelThing(ClientChatReceivedEvent event) {
-            if (Hytilities.INSTANCE.getLanguageHandler().getCurrent().autoChatSwapperAlreadyInChannel.equals(event.message.getUnformattedText())
-                || (HytilitiesConfig.hideAllChatMessage &&
-                Hytilities.INSTANCE.getLanguageHandler().getCurrent().autoChatSwapperChannelSwapRegex.matcher(event.message.getUnformattedText()).matches())
-            ) {
+            final LanguageData language = Hytilities.INSTANCE.getLanguageHandler().getCurrent();
+            final String message = event.message.getUnformattedText();
+            if (language.autoChatSwapperAlreadyInChannel.equals(message)
+                || (HytilitiesConfig.hideAllChatMessage && language.autoChatSwapperChannelSwapRegex.matcher(message).matches())) {
                 this.unregisterTimer.cancel(false);
                 this.hasDetected = true;
                 event.setCanceled(true);
