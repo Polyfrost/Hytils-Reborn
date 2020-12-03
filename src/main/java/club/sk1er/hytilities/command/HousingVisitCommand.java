@@ -38,62 +38,62 @@ import java.util.regex.Pattern;
  */
 public class HousingVisitCommand extends CommandBase {
 
-	/** Used for performing a rudimentary check to prevent visiting invalid houses. */
-	private static final Pattern usernameRegex = Pattern.compile("\\w{1,16}");
+    /** Used for performing a rudimentary check to prevent visiting invalid houses. */
+    private static final Pattern usernameRegex = Pattern.compile("\\w{1,16}");
 
-	private static String playername = "";
+    private static String playername = "";
 
-	@Override
-	public String getCommandName() {
-		return "housingvisit";
-	}
+    @Override
+    public String getCommandName() {
+        return "housingvisit";
+    }
 
-	@Override
-	public List<String> getCommandAliases() {
-		return Collections.singletonList("hvisit");
-	}
+    @Override
+    public List<String> getCommandAliases() {
+        return Collections.singletonList("hvisit");
+    }
 
-	@Override
-	public String getCommandUsage(final ICommandSender sender) {
-		return "/" + getCommandName() + " <playername>";
-	}
+    @Override
+    public String getCommandUsage(final ICommandSender sender) {
+        return "/" + getCommandName() + " <playername>";
+    }
 
-	@Override
-	public void processCommand(final ICommandSender sender, final String[] strings) {
-		if (strings.length == 1) {
-			if (usernameRegex.matcher(strings[0]).matches()) {
-				playername = strings[0];
-				// if we are in the housing lobby, just immediately run the /visit command
-				if ("HOUSING".equals(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld
-					.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()))) {
-					visit(0);
-				} else {
-					Hytilities.INSTANCE.getCommandQueue().queue("/l housing");
-					MinecraftForge.EVENT_BUS.register(this);
-				}
-			} else {
-				Hytilities.INSTANCE.sendMessage("&cInvalid playername!");
-			}
-		} else {
-			Hytilities.INSTANCE.sendMessage("&cIncorrect arguments. Command usage is: " + getCommandUsage(sender));
-		}
-	}
+    @Override
+    public void processCommand(final ICommandSender sender, final String[] strings) {
+        if (strings.length == 1) {
+            if (usernameRegex.matcher(strings[0]).matches()) {
+                playername = strings[0];
+                // if we are in the housing lobby, just immediately run the /visit command
+                if ("HOUSING".equals(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld
+                    .getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()))) {
+                    visit(0);
+                } else {
+                    Hytilities.INSTANCE.getCommandQueue().queue("/l housing");
+                    MinecraftForge.EVENT_BUS.register(this);
+                }
+            } else {
+                Hytilities.INSTANCE.sendMessage("&cInvalid playername!");
+            }
+        } else {
+            Hytilities.INSTANCE.sendMessage("&cIncorrect arguments. Command usage is: " + getCommandUsage(sender));
+        }
+    }
 
-	@Override
-	public int getRequiredPermissionLevel() {
-		return -1;
-	}
+    @Override
+    public int getRequiredPermissionLevel() {
+        return -1;
+    }
 
-	@SubscribeEvent
-	public void onHousingLobbyJoin(final WorldEvent.Load event) {
-		MinecraftForge.EVENT_BUS.unregister(this);
-		visit(300);
-	}
+    @SubscribeEvent
+    public void onHousingLobbyJoin(final WorldEvent.Load event) {
+        MinecraftForge.EVENT_BUS.unregister(this);
+        visit(300);
+    }
 
-	private static void visit(final long time) {
-		Multithreading.schedule(
-			() -> Hytilities.INSTANCE.getCommandQueue().queue("/visit " + playername),
-		time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
-	}
+    private static void visit(final long time) {
+        Multithreading.schedule(
+            () -> Hytilities.INSTANCE.getCommandQueue().queue("/visit " + playername),
+        time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
+    }
 
 }

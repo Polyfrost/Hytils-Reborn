@@ -22,6 +22,7 @@ import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.DefaultChatRestyler;
 import club.sk1er.hytilities.tweaker.asm.MinecraftTransformer;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -58,11 +59,11 @@ public class LimboLimiter {
         DefaultChatRestyler.reset(); // putting this here so we don't have to make a new event class just to do this
     }
 
-    /**
-     * Used in {@link MinecraftTransformer#transform(ClassNode, String)}
-     */
+    /** Used in {@link MinecraftTransformer#transform(ClassNode, String)} */
     @SuppressWarnings("unused")
     public static boolean shouldLimitFramerate() {
-        return (!Display.isActive() || limboStatus) && HytilitiesConfig.limboLimiter && time * 20 >= 5;
+        return (!Display.isActive() || limboStatus) && HytilitiesConfig.limboLimiter && time * 20 >= 5
+            && Minecraft.getMinecraft().gameSettings.limitFramerate > 15;
+        // if the FPS limit is > 15, don't activate, as you would be increasing the fps limit
     }
 }
