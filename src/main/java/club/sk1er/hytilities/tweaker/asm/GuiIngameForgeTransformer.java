@@ -67,6 +67,7 @@ public class GuiIngameForgeTransformer implements HytilitiesTransformer {
         }
     }
 
+    // GuiIngameForgeHook.checkDangerStatus(this.displayedTitle);
     private InsnList checkTitle() {
         InsnList list = new InsnList();
         list.add(new VarInsnNode(Opcodes.ALOAD, 0));
@@ -75,6 +76,7 @@ public class GuiIngameForgeTransformer implements HytilitiesTransformer {
         return list;
     }
 
+    // && !Hytilities.INSTANCE.getHardcoreStatus().shouldChangeStyle()
     private InsnList forceHardcore() {
         InsnList list = new InsnList();
         LabelNode ifne = new LabelNode();

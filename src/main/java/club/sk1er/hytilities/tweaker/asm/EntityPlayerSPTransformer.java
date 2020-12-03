@@ -47,6 +47,7 @@ public class EntityPlayerSPTransformer implements HytilitiesTransformer {
         }
     }
 
+    // if ((message = Hytilities.INSTANCE.getChatHandler().handleSentMessage(message)) != null)
     private InsnList handleSentMessage() {
         InsnList list = new InsnList();
         list.add(new FieldInsnNode(Opcodes.GETSTATIC, "club/sk1er/hytilities/Hytilities", "INSTANCE", "Lclub/sk1er/hytilities/Hytilities;"));

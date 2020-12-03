@@ -89,14 +89,16 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
         }
     }
 
+    // && TabChanger.shouldRenderPlayerHead(networkplayerinfo1)
     private InsnList shouldRenderPlayerHead(LabelNode label) {
         InsnList list = new InsnList();
-        list.add(new VarInsnNode(Opcodes.ALOAD, 24)); // networkplayerinfo1
+        list.add(new VarInsnNode(Opcodes.ALOAD, 24));
         list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "club/sk1er/hytilities/handlers/lobby/tab/TabChanger", "shouldRenderPlayerHead", "(Lnet/minecraft/client/network/NetworkPlayerInfo;)Z", false));
         list.add(new JumpInsnNode(Opcodes.IFEQ, label));
         return list;
     }
 
+    // if (!TabChanger.hidePing(networkPlayerInfoIn))
     private InsnList hidePing() {
         InsnList list = new InsnList();
         LabelNode label = new LabelNode();

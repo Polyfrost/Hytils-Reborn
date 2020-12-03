@@ -63,6 +63,7 @@ public class LayerArmorBaseTransformer implements HytilitiesTransformer {
         }
     }
 
+    // if (!LayerArmorBaseHook.shouldRenderArmour(itemstack)) return;
     private InsnList checkRender() {
         InsnList list = new InsnList();
         list.add(new VarInsnNode(Opcodes.ALOAD, 10));

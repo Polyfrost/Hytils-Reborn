@@ -27,7 +27,7 @@ public class GuiIngameForgeHook {
     public static void checkDangerStatus(String title) {
         final String unformattedTitle = EnumChatFormatting.getTextWithoutFormattingCodes(title);
 
-        if ((unformattedTitle.equals("Your Mini Wither died!") ||
+        if (unformattedTitle != null && (unformattedTitle.equals("Your Mini Wither died!") ||
             unformattedTitle.equals("Your Wither died!") ||
             unformattedTitle.equals("BED DESTROYED!")) &&
             HytilitiesConfig.hardcoreHearts) {
