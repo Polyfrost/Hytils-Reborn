@@ -49,6 +49,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean lobbyStatus;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Limbo /play helper",
+        description = "When a /play command is run in Limbo, this runs /l first and then the command.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean limboPlayCommandHelper;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Show Personal Mystery Box Rewards",
         description = "Remove others mystery box messages from chat.\n§eExample: §b[Mystery Box] Steve §ffound a §6Legendary Hype Train Gadget§f!",
         category = "Chat", subcategory = "Toggles"

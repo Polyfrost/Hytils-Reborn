@@ -41,8 +41,9 @@ public class HousingVisitCommand extends CommandBase {
     /**
      * Used for performing a rudimentary check to prevent visiting invalid houses.
      */
-    private final Pattern usernameRegex = Pattern.compile("\\w{1,16}");
-    private String playerName = null;
+    protected final Pattern usernameRegex = Pattern.compile("\\w{1,16}");
+
+    protected String playerName = "";
 
     @Override
     public String getCommandName() {
@@ -91,11 +92,11 @@ public class HousingVisitCommand extends CommandBase {
         visit(300);
     }
 
-    private void visit(final long time) {
-        if (playerName != null) {
-            Multithreading.schedule(
-                () -> Hytilities.INSTANCE.getCommandQueue().queue("/visit " + playerName),
-                time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
-        }
-    }
+   void visit(final long time) {
+       if (playerName != null) {
+           Multithreading.schedule(
+               () -> Hytilities.INSTANCE.getCommandQueue().queue("/visit " + playerName),
+               time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
+       }
+   }
 }

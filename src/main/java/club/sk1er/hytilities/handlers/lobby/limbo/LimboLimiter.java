@@ -41,6 +41,7 @@ public class LimboLimiter {
     public void onChat(ClientChatReceivedEvent event) {
         final String message = event.message.getUnformattedText();
         final LanguageData language = Hytilities.INSTANCE.getLanguageHandler().getCurrent();
+
         if (message.equals(language.limboLimiterSpawned) || message.equals(language.limboLimiterAfk)) {
             limboStatus = true;
         }
@@ -75,4 +76,9 @@ public class LimboLimiter {
             && Minecraft.getMinecraft().gameSettings.limitFramerate > 15;
         // if the FPS limit is > 15, don't activate, as you would be increasing the fps limit
     }
+
+    public static boolean inLimbo() {
+        return limboStatus;
+    }
+
 }
