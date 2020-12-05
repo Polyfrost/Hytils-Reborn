@@ -20,6 +20,7 @@ package club.sk1er.hytilities;
 
 import club.sk1er.hytilities.command.HousingVisitCommand;
 import club.sk1er.hytilities.command.HytilitiesCommand;
+import club.sk1er.hytilities.command.PlayCommand;
 import club.sk1er.hytilities.command.SilentRemoveCommand;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatHandler;
@@ -87,6 +88,7 @@ public class Hytilities {
         commandRegister.registerCommand(new HytilitiesCommand());
         commandRegister.registerCommand(new HousingVisitCommand());
         commandRegister.registerCommand(new SilentRemoveCommand());
+        commandRegister.registerCommand(new PlayCommand());
 
         registerHandlers();
     }

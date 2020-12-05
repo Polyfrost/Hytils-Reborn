@@ -25,15 +25,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.item.Item;
-import net.minecraft.init.Blocks;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -53,7 +53,7 @@ public class MysteryBoxStar {
             final GuiChest guiChest = (GuiChest) event.gui;
             final Container inventorySlots = guiChest.inventorySlots;
             final IInventory inventory = inventorySlots.getSlot(0).inventory;
-            if (inventory.getName().equals("Mystery Vault")) {
+            if (inventory.getName().contains("Mystery Vault")) {
                 final int guiLeft = (guiChest.width - 176) / 2;
                 final int inventoryRows = inventory.getSizeInventory() / 9;
                 final int ySize = 222 - 108 + inventoryRows * 18;
@@ -77,13 +77,8 @@ public class MysteryBoxStar {
     }
 
     public void drawStars(ItemStack item, int x, int y) {
-        // avoid rendering star when no mystery boxes are present
-        if (item.getItem() == Item.getItemFromBlock(Blocks.stained_glass_pane)) {
-            return;
-        }
-
-        // avoid rendering star on bags of experience
-        if (item.getItem() == Items.dye) {
+        // avoid rendering star when no mystery boxes are present or on bags of experience
+        if (item.getItem() == Item.getItemFromBlock(Blocks.stained_glass_pane) || item.getItem() == Items.dye) {
             return;
         }
 
@@ -96,8 +91,8 @@ public class MysteryBoxStar {
         final String normalBox = tooltip.get(tooltip.size() - 4);
         final Matcher normalBoxMatcher = mysteryBoxStarPattern.matcher(normalBox);
         final FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+        // yellow stars for regular boxes
         if (normalBoxMatcher.matches()) {
-            // yellow stars for regular boxes
             fontRenderer.drawStringWithShadow(normalBoxMatcher.group("stars").length() + "\u2730", x, y, -14080);
         } else {
             // for boxes with vip/mvp+ access

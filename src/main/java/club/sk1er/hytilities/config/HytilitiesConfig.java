@@ -330,6 +330,13 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean curseOfSpam;
 
+    @Property(
+        type = PropertyType.SWITCH, name = "AutoComplete /play commands",
+        description = "Allows tab completion of /play commands",
+        category = "Chat", subcategory = "AutoComplete"
+    )
+    public static boolean autocompletePlayCommands;
+
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
         initialize();
