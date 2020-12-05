@@ -42,14 +42,17 @@ public enum GameType {
     WARLORDS("BATTLEGROUND");
 
     private final String serverName;
+    private static final GameType[] typeArray = values();
 
     GameType(String serverName) {
         this.serverName = serverName;
     }
 
     public static GameType getFromLocraw(String gameType) {
-        for (GameType value : values()) {
-            if (value.serverName.equals(gameType)) return value;
+        for (GameType value : typeArray) {
+            if (value.serverName.equals(gameType)) {
+                return value;
+            }
         }
 
         return UNKNOWN;
