@@ -22,6 +22,7 @@ import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.handlers.chat.modules.blockers.AdBlocker;
 import club.sk1er.hytilities.handlers.chat.modules.blockers.ChatCleaner;
 import club.sk1er.hytilities.handlers.chat.modules.blockers.ConnectedMessage;
+import club.sk1er.hytilities.handlers.chat.modules.blockers.GuildMOTD;
 import club.sk1er.hytilities.handlers.chat.modules.blockers.ShoutBlocker;
 import club.sk1er.hytilities.handlers.chat.modules.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.modules.events.LevelupEvent;
@@ -49,6 +50,7 @@ public class ChatHandler {
 
     public ChatHandler() {
         this.registerModule(new AdBlocker());
+        this.registerModule(new GuildMOTD());
         this.registerModule(new WhiteChat());
         this.registerModule(new ChatCleaner());
         this.registerModule(new LevelupEvent());
