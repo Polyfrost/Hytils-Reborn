@@ -22,8 +22,10 @@ package club.sk1er.hytilities.command;
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.modcore.ModCoreInstaller;
+import club.sk1er.mods.core.ModCore;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import club.sk1er.mods.core.util.Multithreading;
+import club.sk1er.mods.core.util.WebUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -34,20 +36,21 @@ import net.minecraft.util.BlockPos;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class PlayCommand extends CommandBase {
-    private HashMap<String, String> games = new HashMap<>();
+    private Map<String, String> games = new HashMap<>();
 
     public PlayCommand() {
-        getNames();
+        this.getNames();
     }
 
     private void getNames() {
         Multithreading.runAsync(() -> {
             try {
-                String url = "https://gist.githubusercontent.com/PyICoder/f1348916ff1375e87c6821c5402e35e2/raw";
-                String content = ModCoreInstaller.fetchString(url);
+                String url = "https://gist.githubusercontent.com/asbyth/16ab6fcbca18f3f4a14d61d04e7ebeb5/raw";
+                String content = WebUtil.fetchString(url);
                 Type stringStringMap = new TypeToken<HashMap<String, String>>() {
                 }.getType();
                 games = new Gson().fromJson(content, stringStringMap);
@@ -69,19 +72,22 @@ public class PlayCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender iCommandSender, String[] args) {
-        boolean isEnabled = HytilitiesConfig.autocompletePlayCommands;
+        boolean autocompletePlayCommands = HytilitiesConfig.autocompletePlayCommands;
         if (!MinecraftUtils.isHypixel()) {
             Hytilities.INSTANCE.getCommandQueue().queue("/play " + String.join(" ", args));
             return;
         }
+
         if (args.length != 1) {
-            if (isEnabled) {
+            if (autocompletePlayCommands) {
                 Hytilities.INSTANCE.sendMessage("&cSpecify a game");
             }
+
             return;
         }
+
         String command = args[0];
-        if (isEnabled) {
+        if (autocompletePlayCommands) {
             String value = games.get(args[0].toLowerCase());
             if (value != null) {
                 command = value;
@@ -92,6 +98,7 @@ public class PlayCommand extends CommandBase {
                 return;
             }
         }
+
         Hytilities.INSTANCE.getCommandQueue().queue("/play " + command);
     }
 
@@ -102,10 +109,10 @@ public class PlayCommand extends CommandBase {
 
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
-        return (HytilitiesConfig.autocompletePlayCommands && MinecraftUtils.isHypixel()) ? getListOfStringsMatchingLastWord(args, getListofGames()) : null;
+        return (HytilitiesConfig.autocompletePlayCommands && MinecraftUtils.isHypixel()) ? getListOfStringsMatchingLastWord(args, getListOfGames()) : null;
     }
 
-    private String[] getListofGames() {
+    private String[] getListOfGames() {
         return Stream.concat(games.keySet().stream(), games.values().stream()).distinct().toArray(String[]::new);
     }
 }
