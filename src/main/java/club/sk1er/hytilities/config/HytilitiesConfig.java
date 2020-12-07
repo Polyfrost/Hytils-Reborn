@@ -296,6 +296,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hardcoreHearts;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Pit Lag Reducer",
+        description = "Hide entities at spawn while you are in the PVP area.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean pitLagReducer;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Remove All Chat Message",
         description = "Hide the \"§aYou are now in the §6ALL§a channel§r\" message when auto-switching.",
         category = "Chat", subcategory = "Parties"
