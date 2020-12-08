@@ -303,6 +303,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean pitLagReducer;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Mute Housing Music",
+        description = "Prevent the Housing songs from being heard.",
+        category = "Game", subcategory = "Sound"
+    )
+    public static boolean muteHousingMusic;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Remove All Chat Message",
         description = "Hide the \"§aYou are now in the §6ALL§a channel§r\" message when auto-switching.",
         category = "Chat", subcategory = "Parties"
