@@ -27,7 +27,6 @@ import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
 import org.objectweb.asm.tree.LabelNode;
-import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
@@ -60,17 +59,19 @@ public class GuiIngameForgeTransformer implements HytilitiesTransformer {
                     }
                 }
             } else if (method.name.equals("renderTitle")) {
-                method.instructions.insertBefore(method.instructions.getFirst(), checkTitle());
+                method.instructions.insertBefore(method.instructions.getFirst(), titleEvent());
             }
         }
     }
 
-    // GuiIngameForgeHook.checkDangerStatus(this.displayedTitle);
-    private InsnList checkTitle() {
+    // GuiIngameForgeHook.postTitleEvent(this.displayedTitle, this.displaySubTitle);
+    private InsnList titleEvent() {
         InsnList list = new InsnList();
         list.add(new VarInsnNode(Opcodes.ALOAD, 0));
         list.add(new FieldInsnNode(Opcodes.GETFIELD, "net/minecraftforge/client/GuiIngameForge", "field_175201_x", "Ljava/lang/String;"));
-        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, getHooksPackage() + "GuiIngameForgeHook", "checkDangerStatus", "(Ljava/lang/String;)V", false));
+        list.add(new VarInsnNode(Opcodes.ALOAD, 0));
+        list.add(new FieldInsnNode(Opcodes.GETFIELD, "net/minecraftforge/client/GuiIngameForge", "field_175200_y", "Ljava/lang/String;"));
+        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, getHooksPackage() + "GuiIngameForgeHook", "postTitleEvent", "(Ljava/lang/String;Ljava/lang/String;)V", false));
         return list;
     }
 

@@ -16,23 +16,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.tweaker.asm.hooks;
+package club.sk1er.hytilities.handlers.lobby.limbo;
 
 import club.sk1er.hytilities.events.TitleEvent;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@SuppressWarnings("unused")
-public class GuiIngameForgeHook {
+public class LimboTitleFix {
 
-    // Allow the title text to be hooked into.
-    public static void postTitleEvent(String title, String subtitle) {
-        TitleEvent event = new TitleEvent(title, subtitle);
-        MinecraftForge.EVENT_BUS.post(event);
-
-        // Set the title and subtitle to empty strings.
-        if (event.isCanceled()) {
-            Minecraft.getMinecraft().ingameGUI.displayTitle(null, null, -1, -1, -1);
+    // Prevent the Limbo AFK text from being stuck on the player's screen indefinitely.
+    @SubscribeEvent
+    public void onTitle(TitleEvent event) {
+        // The player has the AFK title text shown.
+        if (event.getTitle().equals("§cYou are AFK§r") && event.getSubtitle().equals("§eMove around to return to the lobby.§r")) {
+            // The player moved.
+            if (Minecraft.getMinecraft().thePlayer.moveStrafing > 0) {
+                // Forcefully remove the title text.
+                event.setCanceled(true);
+            }
         }
     }
 }

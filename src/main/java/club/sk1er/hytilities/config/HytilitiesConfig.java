@@ -303,6 +303,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean pitLagReducer;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Game Countdown Timer",
+        description = "Hide the displayed title text when a game is about to begin.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideGameCountdown;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Mute Housing Music",
         description = "Prevent the Housing songs from being heard.",
         category = "Game", subcategory = "Sound"

@@ -16,23 +16,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.tweaker.asm.hooks;
+package club.sk1er.hytilities.events;
 
-import club.sk1er.hytilities.events.TitleEvent;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
-@SuppressWarnings("unused")
-public class GuiIngameForgeHook {
+/**
+ * TitleEvent is fired when a title is being rendered.
+ * If this event is canceled, the title does not appear.
+ */
+@Cancelable
+public class TitleEvent extends Event {
 
-    // Allow the title text to be hooked into.
-    public static void postTitleEvent(String title, String subtitle) {
-        TitleEvent event = new TitleEvent(title, subtitle);
-        MinecraftForge.EVENT_BUS.post(event);
+    private final String title;
+    private final String subtitle;
 
-        // Set the title and subtitle to empty strings.
-        if (event.isCanceled()) {
-            Minecraft.getMinecraft().ingameGUI.displayTitle(null, null, -1, -1, -1);
-        }
+    public TitleEvent(String title, String subtitle) {
+        this.title = title;
+        this.subtitle = subtitle;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
     }
 }

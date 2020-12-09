@@ -28,6 +28,7 @@ import club.sk1er.hytilities.handlers.chat.ChatHandler;
 import club.sk1er.hytilities.handlers.chat.modules.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.modules.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.chat.modules.triggers.AutoQueue;
+import club.sk1er.hytilities.handlers.game.GameCountdown;
 import club.sk1er.hytilities.handlers.game.hardcore.HardcoreStatus;
 import club.sk1er.hytilities.handlers.game.housing.HousingMusic;
 import club.sk1er.hytilities.handlers.game.pit.PitLagReducer;
@@ -37,6 +38,7 @@ import club.sk1er.hytilities.handlers.language.LanguageHandler;
 import club.sk1er.hytilities.handlers.lobby.LobbyChecker;
 import club.sk1er.hytilities.handlers.lobby.bossbar.LobbyBossbar;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
+import club.sk1er.hytilities.handlers.lobby.limbo.LimboTitleFix;
 import club.sk1er.hytilities.handlers.lobby.mysterybox.MysteryBoxStar;
 import club.sk1er.hytilities.handlers.lobby.npc.NPCHider;
 import club.sk1er.hytilities.handlers.silent.SilentRemoval;
@@ -126,11 +128,13 @@ public class Hytilities {
         eventBus.register(new NPCHider());
         eventBus.register(new LobbyBossbar());
         eventBus.register(new LimboLimiter());
+        eventBus.register(new LimboTitleFix());
         eventBus.register(new MysteryBoxStar());
 
         // specific games
         eventBus.register(new PitLagReducer());
         eventBus.register(new HousingMusic());
+        eventBus.register(new GameCountdown());
     }
 
     public void sendMessage(String message) {

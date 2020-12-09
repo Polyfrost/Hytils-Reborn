@@ -24,7 +24,6 @@ import club.sk1er.hytilities.handlers.chat.modules.modifiers.DefaultChatRestyler
 import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.hytilities.tweaker.asm.MinecraftTransformer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiIngame;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -60,13 +59,6 @@ public class LimboLimiter {
     public void onWorldChange(WorldEvent.Unload event) {
         limboStatus = false;
         DefaultChatRestyler.reset(); // putting this here so we don't have to make a new event class just to do this
-
-        // While in Limbo, if the player uses a /play command or is party warped,
-        // the AFK title text still remains, regardless of whether the player is moving.
-        GuiIngame guiIngame = Minecraft.getMinecraft().ingameGUI;
-        if (guiIngame.displayedTitle.equals("\u00a7cYou are AFK\u00a7r") && guiIngame.displayedSubTitle.equals("\u00a7eMove around to return to the lobby.\u00a7r")) {
-            guiIngame.displayTitle(null, null, -1, -1, -1);
-        }
     }
 
     /** Used in {@link MinecraftTransformer#transform(ClassNode, String)} */
