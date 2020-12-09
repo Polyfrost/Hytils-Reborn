@@ -20,9 +20,7 @@ package club.sk1er.hytilities.handlers.lobby.tab;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.handlers.game.GameType;
 import club.sk1er.hytilities.tweaker.asm.GuiPlayerTabOverlayTransformer;
-import club.sk1er.hytilities.util.locraw.LocrawInformation;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import org.objectweb.asm.tree.ClassNode;
@@ -68,10 +66,8 @@ public class TabChanger {
 
     private static boolean isSkyblockTabInformationEntry(NetworkPlayerInfo networkPlayerInfo) {
         if (!HytilitiesConfig.cleanerSkyblockTabInfo) return false;
-        final LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
         return
-            locraw != null &&
-            locraw.getGameType().equals(GameType.SKYBLOCK) &&
+            Hytilities.INSTANCE.getSkyblockChecker().isSkyblockScoreboard() &&
             skyblockTabInformationEntryGameProfileNameRegex.matcher(networkPlayerInfo.getGameProfile().getName()).matches() &&
             !validMinecraftUsername.matcher(networkPlayerInfo.getDisplayName().getUnformattedText()).matches();
     }

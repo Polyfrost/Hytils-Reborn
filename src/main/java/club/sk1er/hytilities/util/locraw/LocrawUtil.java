@@ -80,6 +80,7 @@ public class LocrawUtil implements ChatReceiveModule {
                     if (!this.playerSentCommand) {
                         event.setCanceled(true);
                     }
+
                     this.playerSentCommand = false;
                     this.listening = false;
                 }

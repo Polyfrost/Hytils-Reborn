@@ -55,7 +55,7 @@ public class PlayCommand extends CommandBase {
                 }.getType();
                 games = new Gson().fromJson(content, stringStringMap);
             } catch (JsonSyntaxException e) {
-                e.printStackTrace();
+                Hytilities.INSTANCE.getLogger().error("Failed to fetch /play game list.", e);
             }
         });
     }

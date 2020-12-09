@@ -45,6 +45,7 @@ import club.sk1er.hytilities.handlers.silent.SilentRemoval;
 import club.sk1er.hytilities.tweaker.asm.EntityPlayerSPTransformer;
 import club.sk1er.hytilities.tweaker.asm.GuiIngameForgeTransformer;
 import club.sk1er.hytilities.util.locraw.LocrawUtil;
+import club.sk1er.hytilities.util.skyblock.SkyblockChecker;
 import club.sk1er.modcore.ModCoreInstaller;
 import club.sk1er.mods.core.universal.ChatColor;
 import club.sk1er.mods.core.util.MinecraftUtils;
@@ -55,6 +56,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.tree.ClassNode;
 
 @Mod(
@@ -72,8 +75,10 @@ public class Hytilities {
     public static Hytilities INSTANCE;
 
     private final HytilitiesConfig config = new HytilitiesConfig();
+    private final Logger logger = LogManager.getLogger("Hytilities");
 
     private final LanguageHandler languageHandler = new LanguageHandler();
+    private final SkyblockChecker skyblockChecker = new SkyblockChecker();
     private final HardcoreStatus hardcoreStatus = new HardcoreStatus();
     private final SilentRemoval silentRemoval = new SilentRemoval();
     private final CommandQueue commandQueue = new CommandQueue();
@@ -104,9 +109,7 @@ public class Hytilities {
         this.loadedCall = true;
     }
 
-
     private void registerHandlers() {
-
         final EventBus eventBus = MinecraftForge.EVENT_BUS;
 
         // general stuff
@@ -191,5 +194,13 @@ public class Hytilities {
     @SuppressWarnings("unused")
     public ChatHandler getChatHandler() {
         return chatHandler;
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public SkyblockChecker getSkyblockChecker() {
+        return skyblockChecker;
     }
 }
