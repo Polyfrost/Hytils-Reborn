@@ -1,3 +1,4 @@
+<!--suppress HtmlDeprecatedAttribute -->
 <div align="center">
 
 # Hytilities
@@ -16,8 +17,9 @@ If you do not know how to install a Forge mod, then we recommended looking up "H
 
 ## Developers
 ### How can I contribute to Hytilities?
-You can contribute to Hytilities by following the instructions below.
+You can contribute to Hytilities by following the instructions below. Basic knowledge of git is required.
 
+#### Setup - IntelliJ
 Press the green "Code" button.
 
 ![GitHub Code button](.github/code_button.png)
@@ -77,13 +79,44 @@ Ensure that classpath is set to `Hytilities.main`. If it is not, select the drop
 
 ![Classpath](.github/classpath.png)
 
+If you want to be able to play Multiplayer, you'll need to log in. To do this, append to the `Program Arguments` field `--username <email> --password <password>` where `<email>` is your email (or your account name if you have an unmigrated account) and `<password>` is your password. 
+
+![Login](.github/account.png)
+
 Apply and save your changes.
 
 ![Apply](.github/apply.png)
 ![Save Changes](.github/save_changes.png)
 
-You should now be able to run Hytilities in the dev workspace. 
+You should now be able to run Hytilities in the dev workspace.
 
 ![Run](.github/run.png)
 
+If you want to compile, then you must simply run `Tasks > build > build`.
 
+![Compile](.github/build.png)
+
+#### Setup - Terminal
+
+*Note that while you can launch the game from the Terminal, you cannot login, so playing on Hypixel in the development environment is impossible.*
+
+As with many GitHub projects, Hytilities is rather simple to set up in the Terminal. 
+
+Click the green code button.
+
+![GitHub Code button](.github/code_button.png)
+
+Depending on how your Git is set up/you want to clone, you will click on either HTTPS, SSH, or GitHub CLI,
+then press the clipboard button beside the link.
+
+![GitHub HTTPS Clone](.github/https_clone.png) ![GitHub SSH Clone](.github/ssh_clone.png) ![GitHub CLI Clone](.github/cli_clone.png)
+
+Go to your terminal, and type `git clone `, paste in the URL you copied, and hit enter.
+
+![Git Clone](.github/clone.png)
+
+Enter the Hytilities directory. From here, what you do depends on your OS. This guide will use Linux, however the process is only slightly different on Windows. Instead of doing `./gradlew ...`, you do `gradlew ...`. If you are a Windows user, when copy and pasting commands from here, omit the `./`.
+
+Type `./gradlew setupDecompWorkspace`. This may take several minutes. It should say `BUILD SUCCESSFUL` once finished.
+
+Now, you can edit the files as you would any other project, such as with a Terminal editor like vim. To compile, run `./gradlew build`. They will be in the `build/libs` folder. To launch the game, run `./gradlew runClient`.

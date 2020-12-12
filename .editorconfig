@@ -4,6 +4,7 @@ root = true
 charset = utf-8
 insert_final_newline = true
 indent_size = 4
+indent_style = space
 ij_java_use_single_class_imports = true
 
 [*.json]
