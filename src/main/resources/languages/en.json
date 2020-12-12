@@ -3,6 +3,7 @@
   "autoQueueClick": "Click here!",
   "chatCleanerJoinNormal": "joined the lobby",
   "chatCleanerJoinHalloween": "spooked into the lobby",
+  "chatCleanerJoinChristmas": "sled into the lobby",
   "chatCleanerMysteryBoxFind": "^(?<player>\\w{1,16}) found a \u2730{5} Mystery Box!$",
   "chatCleanerSoulWellFind": "^.+ has found .+ in the Soul Well!$",
   "chatCleanerGameAnnouncement": "^\u27A4 A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!$",

@@ -18,8 +18,9 @@
 
 package club.sk1er.hytilities.handlers.language;
 
-import java.util.Arrays;
-import java.util.List;
+import com.google.common.collect.Sets;
+
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -38,6 +39,7 @@ public class LanguageData {
 
     private String chatCleanerJoinNormal = "joined the lobby";
     private String chatCleanerJoinHalloween = "spooked into the lobby";
+    private String chatCleanerJoinChristmas = "sled into the lobby";
     private String chatCleanerMysteryBoxFind = "^(?<player>\\w{1,16}) found a \u2730{5} Mystery Box!$";
     private String chatCleanerSoulWellFind = "^.+ has found .+ in the Soul Well!$";
     private String chatCleanerGameAnnouncement = "^\u27A4 A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!$";
@@ -85,7 +87,7 @@ public class LanguageData {
      * Cached values which use the messages read from the config file.
      * Particularly Regexes.
      */
-    public List<String> chatCleanerJoinMessageTypes;
+    public Set<String> chatCleanerJoinMessageTypes;
 
     public Pattern chatCleanerMysteryBoxFindRegex;
     public Pattern chatCleanerSoulWellFindRegex;
@@ -122,7 +124,7 @@ public class LanguageData {
      * Compiles all the required patterns and caches them for later use.
      */
     public void initialize() {
-        chatCleanerJoinMessageTypes = Arrays.asList(chatCleanerJoinNormal, chatCleanerJoinHalloween);
+        chatCleanerJoinMessageTypes = Sets.newHashSet(chatCleanerJoinNormal, chatCleanerJoinHalloween, chatCleanerJoinChristmas);
 
         chatCleanerMysteryBoxFindRegex = Pattern.compile(chatCleanerMysteryBoxFind);
         chatCleanerSoulWellFindRegex = Pattern.compile(chatCleanerSoulWellFind);

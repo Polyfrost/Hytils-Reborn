@@ -23,6 +23,9 @@ import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class AdBlocker implements ChatReceiveModule {
@@ -45,13 +48,31 @@ public class AdBlocker implements ChatReceiveModule {
      * <p>
      * TODO: add more phrases to regex
      */
-    private final Pattern commonAdvertisements = Pattern.compile("(?:/?)(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16}))",
+    private final Pattern commonAdvertisements = Pattern.compile("(?:/?)(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16})|(/gift))",
         Pattern.CASE_INSENSITIVE);
+
+    // common phrases used in messages where people beg for a rank gift
+    private final List<String> ranks = Arrays.asList("mvp", "vip");
+    private final List<String> begging = Arrays.asList("give", "please", "pls", "plz", "gift");
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        if (commonAdvertisements.matcher(event.message.getUnformattedText()).find(0)) {
+        final String message = event.message.getUnformattedText().toLowerCase(Locale.ENGLISH);
+        if (commonAdvertisements.matcher(message).find(0)) {
             event.setCanceled(true);
+            return;
+        }
+
+        for (String begs : begging) {
+            if (message.contains(begs)) {
+                for (String rank : ranks) {
+                    if (message.contains(rank)) {
+                        event.setCanceled(true);
+                        break;
+                    }
+                }
+                break;
+            }
         }
     }
 
@@ -59,5 +80,4 @@ public class AdBlocker implements ChatReceiveModule {
     public boolean isEnabled() {
         return HytilitiesConfig.playerAdBlock;
     }
-
 }

@@ -33,6 +33,7 @@ public class GameCountdown {
         if (!MinecraftUtils.isHypixel() || !HytilitiesConfig.hideGameCountdown) {
             return;
         }
+
         switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle())) {
             case "10 seconds":
             case "5":
@@ -41,6 +42,7 @@ public class GameCountdown {
             case "2":
             case "1":
                 event.setCanceled(true);
+                break;
         }
     }
 }
