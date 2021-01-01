@@ -19,11 +19,7 @@
 package club.sk1er.hytilities.handlers.chat;
 
 import club.sk1er.hytilities.Hytilities;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.AdBlocker;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.ChatCleaner;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.ConnectedMessage;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.GuildMOTD;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.ShoutBlocker;
+import club.sk1er.hytilities.handlers.chat.modules.blockers.*;
 import club.sk1er.hytilities.handlers.chat.modules.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.modules.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.DefaultChatRestyler;
@@ -63,6 +59,7 @@ public class ChatHandler {
         this.registerModule(new GameStartCompactor());
         this.registerModule(new DefaultChatRestyler());
         this.registerModule(new LimboPlayCommandHelper());
+        this.registerModule(new QuestBlocker());
 
         this.registerDualModule(new ShoutBlocker());
 

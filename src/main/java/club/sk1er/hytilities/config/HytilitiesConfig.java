@@ -119,6 +119,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean serverConnectedMessages;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Remove Automatically Activated Quest Messages",
+        description = "Remove automatically activated quest messages\n§eExample: §aAutomatically activated: §6Daily Quest: Skywars Solo Win.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean questsMessages;
+
+    @Property(
         type = PropertyType.SWITCH, name = "White Chat",
         description = "Make nons chat messages appear as the normal chat message color.\n§eExample: §7Steve: hey! §e-> §fSteve: hey!",
         category = "Chat", subcategory = "Toggles"
