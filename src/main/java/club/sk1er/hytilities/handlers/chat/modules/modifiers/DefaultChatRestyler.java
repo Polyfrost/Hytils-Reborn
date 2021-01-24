@@ -23,11 +23,14 @@ import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class DefaultChatRestyler implements ChatReceiveModule {
@@ -62,6 +65,7 @@ public class DefaultChatRestyler implements ChatReceiveModule {
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final String message = event.message.getFormattedText().trim();
         final String unformattedMessage = event.message.getUnformattedText().trim();
+        final List<IChatComponent> siblings = event.message.getSiblings();
 
         final LanguageData language = getLanguage();
         Matcher joinMatcher = language.chatRestylerGameJoinStyleRegex.matcher(message);
@@ -154,6 +158,21 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             if (HytilitiesConfig.playerCountBeforePlayerName) {
                 if (joinMatcher.matches()) {
                     event.message = colorMessage("&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e) " + message.split(" \\(")[0] + "!");
+                }
+            }
+        }
+
+        // fix siblings being removed from messages when editing them
+        if (!siblings.isEmpty()) {
+            for (IChatComponent sibling : siblings) {
+                final ChatStyle chatStyle = sibling.getChatStyle();
+
+                if (chatStyle.getChatHoverEvent() != null) {
+                    event.message.getChatStyle().setChatHoverEvent(chatStyle.getChatHoverEvent());
+                }
+
+                if (chatStyle.getChatClickEvent() != null) {
+                    event.message.getChatStyle().setChatClickEvent(chatStyle.getChatClickEvent());
                 }
             }
         }
