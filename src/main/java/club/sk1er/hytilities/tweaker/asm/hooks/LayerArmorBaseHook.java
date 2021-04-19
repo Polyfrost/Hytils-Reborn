@@ -21,6 +21,7 @@ package club.sk1er.hytilities.tweaker.asm.hooks;
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.util.locraw.LocrawInformation;
+import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -28,7 +29,7 @@ import net.minecraft.item.ItemStack;
 @SuppressWarnings("unused")
 public class LayerArmorBaseHook {
     public static boolean shouldRenderArmour(ItemStack itemStack) {
-        if (!HytilitiesConfig.hideArmour || itemStack == null) return true;
+        if (!HytilitiesConfig.hideArmour || itemStack == null || !MinecraftUtils.isHypixel()) return true;
 
         final Item item = itemStack.getItem();
 
