@@ -64,11 +64,11 @@ public class LanguageData {
     private String chatRestylerFriendPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Friend >)";
 
     private String autoChatSwapperPartyStatus = "^(?:You have been kicked from the party by (?:\\[.+] )?\\w{1,16}|(?:\\[.+] )?\\w{1,16} has disbanded the party!|You left the party.)$";
-    private String autoChatSwapperChannelSwap = "^(?:You are now in the (?<channel>ALL|GUILD|OFFICER) channel)";
+    private String autoChatSwapperChannelSwap = "^You are now in the (?<channel>ALL|GUILD|OFFICER) channel$";
     public String autoChatSwapperAlreadyInChannel = "You're already in this channel!";
 
     private String whiteChatNonMessage = "(?<prefix>.+)§7: (?<message>.*)";
-    private String privateMessageWhiteChat = "^(?<type>.+|To|From) (?<prefix>.+)§7: (?<message>.*)$";
+    private String privateMessageWhiteChat = "^(?<type>§dTo|§dFrom) (?<prefix>.+): §r(?<message>§7.*)(?:§r)?$";
 
     public String limboLimiterSpawned = "You were spawned in Limbo.";
     public String limboLimiterAfk = "You are AFK. Move around to return from AFK.";
@@ -157,5 +157,4 @@ public class LanguageData {
 
         hypixelLevelUpRegex = Pattern.compile(hypixelLevelUp);
     }
-
 }
