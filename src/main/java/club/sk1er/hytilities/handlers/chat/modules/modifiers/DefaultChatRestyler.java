@@ -18,6 +18,7 @@
 
 package club.sk1er.hytilities.handlers.chat.modules.modifiers;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import club.sk1er.hytilities.handlers.language.LanguageData;
@@ -162,19 +163,6 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             }
         }
 
-        // fix siblings being removed from messages when editing them
-        if (!siblings.isEmpty()) {
-            for (IChatComponent sibling : siblings) {
-                final ChatStyle chatStyle = sibling.getChatStyle();
-
-                if (chatStyle.getChatHoverEvent() != null) {
-                    event.message.getChatStyle().setChatHoverEvent(chatStyle.getChatHoverEvent());
-                }
-
-                if (chatStyle.getChatClickEvent() != null) {
-                    event.message.getChatStyle().setChatClickEvent(chatStyle.getChatClickEvent());
-                }
-            }
-        }
+        Hytilities.INSTANCE.getChatHandler().fixStyling(event.message, siblings);
     }
 }

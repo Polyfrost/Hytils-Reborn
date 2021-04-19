@@ -19,7 +19,12 @@
 package club.sk1er.hytilities.handlers.chat;
 
 import club.sk1er.hytilities.Hytilities;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.*;
+import club.sk1er.hytilities.handlers.chat.modules.blockers.AdBlocker;
+import club.sk1er.hytilities.handlers.chat.modules.blockers.ChatCleaner;
+import club.sk1er.hytilities.handlers.chat.modules.blockers.ConnectedMessage;
+import club.sk1er.hytilities.handlers.chat.modules.blockers.GuildMOTD;
+import club.sk1er.hytilities.handlers.chat.modules.blockers.QuestBlocker;
+import club.sk1er.hytilities.handlers.chat.modules.blockers.ShoutBlocker;
 import club.sk1er.hytilities.handlers.chat.modules.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.modules.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.DefaultChatRestyler;
@@ -31,6 +36,8 @@ import club.sk1er.hytilities.handlers.chat.modules.triggers.GuildWelcomer;
 import club.sk1er.hytilities.handlers.chat.modules.triggers.ThankWatchdog;
 import club.sk1er.hytilities.tweaker.asm.EntityPlayerSPTransformer;
 import club.sk1er.mods.core.util.MinecraftUtils;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
@@ -127,5 +134,28 @@ public class ChatHandler {
         }
 
         return message;
+    }
+
+    /**
+     * Fixes styling when modifying a message's events.
+     * TODO: Improve documentation.
+     *
+     * @param component The message being modified & restored
+     * @param siblings  The message's chat component siblings
+     */
+    public void fixStyling(IChatComponent component, List<IChatComponent> siblings) {
+        if (!siblings.isEmpty()) {
+            for (IChatComponent sibling : siblings) {
+                final ChatStyle chatStyle = sibling.getChatStyle();
+
+                if (chatStyle.getChatHoverEvent() != null) {
+                    component.getChatStyle().setChatHoverEvent(chatStyle.getChatHoverEvent());
+                }
+
+                if (chatStyle.getChatClickEvent() != null) {
+                    component.getChatStyle().setChatClickEvent(chatStyle.getChatClickEvent());
+                }
+            }
+        }
     }
 }
