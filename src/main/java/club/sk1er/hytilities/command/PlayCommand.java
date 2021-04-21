@@ -21,8 +21,6 @@ package club.sk1er.hytilities.command;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.modcore.ModCoreInstaller;
-import club.sk1er.mods.core.ModCore;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import club.sk1er.mods.core.util.Multithreading;
 import club.sk1er.mods.core.util.WebUtil;
@@ -41,6 +39,7 @@ import java.util.stream.Stream;
 
 public class PlayCommand extends CommandBase {
     private Map<String, String> games = new HashMap<>();
+    private String[] gameCache = null;
 
     public PlayCommand() {
         this.getNames();
@@ -113,6 +112,7 @@ public class PlayCommand extends CommandBase {
     }
 
     private String[] getListOfGames() {
-        return Stream.concat(games.keySet().stream(), games.values().stream()).distinct().toArray(String[]::new);
+        if (this.gameCache != null) return this.gameCache;
+        return this.gameCache = Stream.concat(games.keySet().stream(), games.values().stream()).distinct().toArray(String[]::new);
     }
 }
