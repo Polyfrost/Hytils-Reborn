@@ -54,8 +54,8 @@ public class LanguageData {
     private String levelUpPattern = "You are now Hypixel Level (?<level>\\d+)!";
     private String guildPlayerJoinPattern = "^(?:\\[.*] )?(?<player>\\S{1,16}) joined the guild!$";
 
-    private String chatRestylerGameJoinStyle = "^§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has joined (?<amount>.+)!§r$";
-    private String chatRestylerGameLeaveStyle = "^§r§(?<color>[\\da-f])(?<player>\\w{1,16})§r§e has quit!§r$";
+    private String chatRestylerGameJoinStyle = "^§r§(?<color>[\\da-f])(?:§k)?(?<player>\\w{1,16})§r§e has joined (?<amount>.+)!§r$";
+    private String chatRestylerGameLeaveStyle = "^§r§(?<color>[\\da-f])(?:§k)?(?<player>\\w{1,16})§r§e has quit!§r$";
     private String chatRestylerGameStartCounterStyle = "^(?<title>(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in)) (?<time>\\d{1,3}) (?<unit>(seconds?!))$"; // todo please translate "Cages open in:" to french (also translate to chatRestylerGameStartCounterOutputStyle)
     private String chatRestylerGameStartCounterOutputStyle = "^\u00a7e\u00a7l\\* \u00a7a(The game starts in|Cages open in:) \u00a7b\u00a7l\\d{1,3} \u00a7aseconds?!\u00a7r$";
     private String chatRestylerFormattedPaddingPattern = "\\(§r§b(\\d{1,2})§r§e/§r§b(\\d{1,3})§r§e\\)";

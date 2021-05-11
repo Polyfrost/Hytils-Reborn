@@ -27,7 +27,7 @@ public class LocrawInformation {
     private String serverId;
 
     @SerializedName("mode")
-    private String gameMode = "lobby";
+    private final String gameMode = "lobby";
 
     @SerializedName("map")
     private String mapName;

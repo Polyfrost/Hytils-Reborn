@@ -24,7 +24,6 @@ import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -35,11 +34,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 public class DefaultChatRestyler implements ChatReceiveModule {
-
-    @Override
-    public int getPriority() {
-        return 3;
-    }
 
     private static int playerCount = -1;
     private static int maxPlayerCount = -1;
@@ -59,6 +53,11 @@ public class DefaultChatRestyler implements ChatReceiveModule {
         } else {
             return n;
         }
+    }
+
+    @Override
+    public int getPriority() {
+        return 3;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -112,9 +111,9 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             if (joinMatcher.matches()) {
                 if (HytilitiesConfig.playerCountBeforePlayerName) {
                     event.message = colorMessage("&a&l+ &e" + joinMatcher.group("amount")
-                        + " &" + joinMatcher.group("color") + joinMatcher.group("player"));
+                        + " &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : null) + joinMatcher.group("player"));
                 } else {
-                    event.message = colorMessage("&a&l+ &" + joinMatcher.group("color") + joinMatcher.group("player") + " &e" +
+                    event.message = colorMessage("&a&l+ &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : null) + joinMatcher.group("player") + " &r&e" +
                         joinMatcher.group("amount"));
                 }
             } else {
@@ -123,13 +122,13 @@ public class DefaultChatRestyler implements ChatReceiveModule {
                     if (HytilitiesConfig.playerCountOnPlayerLeave) {
                         if (HytilitiesConfig.playerCountBeforePlayerName) {
                             event.message = colorMessage("&c&l- &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount +
-                                "&e) &" + leaveMatcher.group("color") + leaveMatcher.group("player"));
+                                "&e) &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : null) + leaveMatcher.group("player"));
                         } else {
-                            event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") +
-                                leaveMatcher.group("player") + " &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)");
+                            event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : null) +
+                                leaveMatcher.group("player") + " &r&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)");
                         }
                     } else {
-                        event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + leaveMatcher.group("player"));
+                        event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : null) + leaveMatcher.group("player"));
                     }
                 } else {
                     Matcher startCounterMatcher = language.chatRestylerGameStartCounterStyleRegex.matcher(unformattedMessage);
