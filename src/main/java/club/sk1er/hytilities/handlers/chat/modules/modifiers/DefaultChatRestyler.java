@@ -111,9 +111,9 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             if (joinMatcher.matches()) {
                 if (HytilitiesConfig.playerCountBeforePlayerName) {
                     event.message = colorMessage("&a&l+ &e" + joinMatcher.group("amount")
-                        + " &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : null) + joinMatcher.group("player"));
+                        + " &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : "") + joinMatcher.group("player"));
                 } else {
-                    event.message = colorMessage("&a&l+ &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : null) + joinMatcher.group("player") + " &r&e" +
+                    event.message = colorMessage("&a&l+ &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : "") + joinMatcher.group("player") + " &r&e" +
                         joinMatcher.group("amount"));
                 }
             } else {
@@ -122,13 +122,13 @@ public class DefaultChatRestyler implements ChatReceiveModule {
                     if (HytilitiesConfig.playerCountOnPlayerLeave) {
                         if (HytilitiesConfig.playerCountBeforePlayerName) {
                             event.message = colorMessage("&c&l- &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount +
-                                "&e) &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : null) + leaveMatcher.group("player"));
+                                "&e) &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") + leaveMatcher.group("player"));
                         } else {
-                            event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : null) +
+                            event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") +
                                 leaveMatcher.group("player") + " &r&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)");
                         }
                     } else {
-                        event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : null) + leaveMatcher.group("player"));
+                        event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") + leaveMatcher.group("player"));
                     }
                 } else {
                     Matcher startCounterMatcher = language.chatRestylerGameStartCounterStyleRegex.matcher(unformattedMessage);

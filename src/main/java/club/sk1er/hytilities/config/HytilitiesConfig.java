@@ -372,6 +372,13 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean autocompletePlayCommands;
 
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Gifts Message",
+        description = "Removes the gifts messages.\n§eExample: §eThey have gifted 1 so far!",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean giftBlocker;
+
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
         initialize();
