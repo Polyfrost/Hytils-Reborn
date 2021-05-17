@@ -137,8 +137,8 @@ public class ChatHandler {
     }
 
     /**
-     * Fixes styling when modifying a message's events.
-     * TODO: Improve documentation.
+     * Fixes styling when overwriting a message.
+     * Store the component siblings before applying any changes to the original component.
      *
      * @param component The message being modified & restored
      * @param siblings  The message's chat component siblings

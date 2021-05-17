@@ -18,6 +18,7 @@
 
 package club.sk1er.hytilities.handlers.chat.modules.blockers;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -48,7 +49,7 @@ public class AdBlocker implements ChatReceiveModule {
      * <p>
      * TODO: add more phrases to regex
      */
-    private final Pattern commonAdvertisements = Pattern.compile("(?:/?)(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16})|(/gift))",
+    private final Pattern commonAdvertisements = Pattern.compile("/?(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16})|(/gift))",
         Pattern.CASE_INSENSITIVE);
 
     // common phrases used in messages where people beg for a rank gift
@@ -57,6 +58,7 @@ public class AdBlocker implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+        if (!Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) return;
         final String message = event.message.getUnformattedText().toLowerCase(Locale.ENGLISH);
         if (commonAdvertisements.matcher(message).find(0)) {
             event.setCanceled(true);

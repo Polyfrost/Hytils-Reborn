@@ -19,6 +19,7 @@
 package club.sk1er.hytilities.handlers.lobby;
 
 import club.sk1er.hytilities.Hytilities;
+import club.sk1er.hytilities.util.locraw.LocrawInformation;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.event.world.WorldEvent;
@@ -29,18 +30,19 @@ import java.util.regex.Pattern;
 
 public class LobbyChecker {
     private final Pattern lobbyPattern = Pattern.compile("(.+)?lobby(.+)");
-    private int tick;
     private boolean lobbyStatus;
+    private int tick;
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !MinecraftUtils.isHypixel() || this.tick >= 52 || Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation() == null) {
+        final LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
+        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !MinecraftUtils.isHypixel() || this.tick >= 52 || locraw == null) {
             return;
         }
-        if (++this.tick == 50) {
-            this.lobbyStatus = this.lobbyPattern.matcher(Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation().getServerId()).matches();
-        }
 
+        if (++this.tick == 50) {
+            this.lobbyStatus = this.lobbyPattern.matcher(locraw.getServerId()).matches();
+        }
     }
 
     @SubscribeEvent
