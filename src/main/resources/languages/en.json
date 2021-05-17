@@ -24,6 +24,7 @@
   "chatRestylerPartyPattern": "^((?:\\u00a7r)?\\u00a7\\w)(Party )(\\u00a7\\w>)",
   "chatRestylerGuildPattern": "^((?:\\u00a7r)?\\u00a7\\w)(Guild >)",
   "chatRestylerFriendPattern": "^((?:\\u00a7r)?\\u00a7\\w)(Friend >)",
+  "chatRestylerOfficerPattern": "^((?:\\u00a7r)?\\u00a7\\w)(Officer >)",
   "autoChatSwapperPartyStatus": "^(?:You have been kicked from the party by (?:\\[.+] )?\\w{1,16}|(?:\\[.+] )?\\w{1,16} has disbanded the party!|You left the party.)$",
   "autoChatSwapperChannelSwap": "^You are now in the (?<channel>ALL|GUILD|OFFICER) channel$",
   "autoChatSwapperAlreadyInChannel": "You're already in this channel!",
