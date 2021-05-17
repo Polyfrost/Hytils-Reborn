@@ -19,21 +19,32 @@
 package club.sk1er.hytilities.command;
 
 import club.sk1er.hytilities.Hytilities;
+import club.sk1er.mods.core.util.Multithreading;
 import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
-import org.jetbrains.annotations.Nullable;
+import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
-public class SkyblockVisitCommand extends HousingVisitCommand {
+public class SkyblockVisitCommand extends CommandBase {
+
+    /**
+     * Used for performing a rudimentary check to prevent visiting invalid houses.
+     */
+    protected final Pattern usernameRegex = Pattern.compile("\\w{1,16}");
+
+    protected String playerName = "";
 
     // thank you DJ; https://github.com/BiscuitDevelopment/SkyblockAddons/blob/development/src/main/java/codes/biscuit/skyblockaddons/utils/Utils.java#L100
     private static final Set<String> SKYBLOCK_IN_ALL_LANGUAGES = Sets.newHashSet(
-        "SKYBLOCK","\u7A7A\u5C9B\u751F\u5B58", "\u7A7A\u5CF6\u751F\u5B58");
+        "SKYBLOCK", "\u7A7A\u5C9B\u751F\u5B58", "\u7A7A\u5CF6\u751F\u5B58");
 
     @Override
     public String getCommandName() {
@@ -41,18 +52,21 @@ public class SkyblockVisitCommand extends HousingVisitCommand {
     }
 
     @Override
+    public String getCommandUsage(final ICommandSender sender) {
+        return "/" + getCommandName() + " <playername>";
+    }
+
+    @Override
     public void processCommand(final ICommandSender sender, final String[] strings) {
         if (strings.length == 1) {
             if (usernameRegex.matcher(strings[0]).matches()) {
                 playerName = strings[0];
-                // if we are in skyblock, just immediately run the /visit command
-                @Nullable final ScoreObjective title = Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1);
-                if (title != null && SKYBLOCK_IN_ALL_LANGUAGES.contains(EnumChatFormatting
-                    .getTextWithoutFormattingCodes(title.getDisplayName()).split(" ")[0])) {
+                if (SKYBLOCK_IN_ALL_LANGUAGES.contains(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld
+                    .getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName().split(" ")[0]))) {
                     visit(0);
                     return;
                 }
-                Hytilities.INSTANCE.getCommandQueue().queue("/play sb"); // handled by LimboPlayCommandHelper
+                Hytilities.INSTANCE.getCommandQueue().queue("/play skyblock");
                 MinecraftForge.EVENT_BUS.register(this);
             } else {
                 Hytilities.INSTANCE.sendMessage("&cInvalid playername!");
@@ -62,4 +76,22 @@ public class SkyblockVisitCommand extends HousingVisitCommand {
         }
     }
 
+    @Override
+    public int getRequiredPermissionLevel() {
+        return -1;
+    }
+
+    @SubscribeEvent
+    public void onSkyblockLobbyJoin(final WorldEvent.Load event) {
+        MinecraftForge.EVENT_BUS.unregister(this);
+        visit(300);
+    }
+
+    void visit(final long time) {
+        if (playerName != null) {
+            Multithreading.schedule(
+                () -> Hytilities.INSTANCE.getCommandQueue().queue("/visit " + playerName),
+                time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
+        }
+    }
 }
