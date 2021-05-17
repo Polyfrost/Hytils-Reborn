@@ -366,7 +366,7 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean curseOfSpam;
 
     @Property(
-        type = PropertyType.SWITCH, name = "AutoComplete /play commands",
+        type = PropertyType.SWITCH, name = "Auto-Complete Play Commands",
         description = "Allows tab completion of /play commands",
         category = "Chat", subcategory = "AutoComplete"
     )

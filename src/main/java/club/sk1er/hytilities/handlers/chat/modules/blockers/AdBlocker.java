@@ -58,13 +58,13 @@ public class AdBlocker implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        if (!Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) return;
         final String message = event.message.getUnformattedText().toLowerCase(Locale.ENGLISH);
         if (commonAdvertisements.matcher(message).find(0)) {
             event.setCanceled(true);
             return;
         }
 
+        if (!Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) return;
         for (String begs : begging) {
             if (message.contains(begs)) {
                 for (String rank : ranks) {
