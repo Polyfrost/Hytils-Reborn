@@ -21,6 +21,7 @@ package club.sk1er.hytilities.command;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
+import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
 import club.sk1er.mods.core.util.MinecraftUtils;
 import club.sk1er.mods.core.util.Multithreading;
 import club.sk1er.mods.core.util.WebUtil;
@@ -98,6 +99,9 @@ public class PlayCommand extends CommandBase {
             }
         }
 
+        if (HytilitiesConfig.limboPlayCommandHelper && LimboLimiter.inLimbo()){
+            Hytilities.INSTANCE.getCommandQueue().queue("/l");
+        }
         Hytilities.INSTANCE.getCommandQueue().queue("/play " + command);
     }
 

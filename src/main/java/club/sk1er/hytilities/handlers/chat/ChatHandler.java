@@ -30,7 +30,6 @@ import club.sk1er.hytilities.handlers.chat.modules.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.modules.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.DefaultChatRestyler;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.GameStartCompactor;
-import club.sk1er.hytilities.handlers.chat.modules.modifiers.LimboPlayCommandHelper;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.WhiteChat;
 import club.sk1er.hytilities.handlers.chat.modules.triggers.AutoChatSwapper;
 import club.sk1er.hytilities.handlers.chat.modules.triggers.GuildWelcomer;
@@ -66,7 +65,6 @@ public class ChatHandler {
         this.registerModule(new ConnectedMessage());
         this.registerModule(new GameStartCompactor());
         this.registerModule(new DefaultChatRestyler());
-        this.registerModule(new LimboPlayCommandHelper());
         this.registerModule(new QuestBlocker());
         this.registerModule(new GiftBlocker());
 

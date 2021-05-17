@@ -31,7 +31,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class LocrawUtil implements ChatReceiveModule {
-
     private final Gson gson = new Gson();
     private LocrawInformation locrawInformation;
     private boolean listening;
@@ -40,7 +39,7 @@ public class LocrawUtil implements ChatReceiveModule {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !MinecraftUtils.isHypixel() || this.tick >= 20) {
+        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !MinecraftUtils.isHypixel() || this.tick >= 22) {
             return;
         }
 
@@ -58,7 +57,7 @@ public class LocrawUtil implements ChatReceiveModule {
 
     @SuppressWarnings("UnusedReturnValue")
     public String onMessageSend(@NotNull String message) {
-        if (message.startsWith("/locraw") && !this.listening) {
+        if (message.startsWith("/locraw") && !this.listening && this.tick >= 22) {
             this.playerSentCommand = true;
         }
         return message;
