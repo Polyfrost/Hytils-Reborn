@@ -32,7 +32,8 @@ public class ConnectedMessage implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        if (getLanguage().connectedServerConnectMessageRegex.matcher(event.message.getUnformattedText()).matches()) {
+        final String strippedMessage = getStrippedMessage(event.message);
+        if (getLanguage().connectedServerConnectMessageRegex.matcher(strippedMessage).matches()) {
             event.setCanceled(true);
         }
     }

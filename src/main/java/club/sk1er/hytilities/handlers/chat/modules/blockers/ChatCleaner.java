@@ -66,7 +66,8 @@ public class ChatCleaner implements ChatReceiveModule {
             }
         }
 
-        if (HytilitiesConfig.lineBreakerTrim) {
+        // todo: not that accurate, needs to be redone
+        /*if (HytilitiesConfig.lineBreakerTrim) {
             if ((message.contains("-----------") || message.contains("▬▬▬▬▬▬▬▬▬▬▬")) && !message.contains("\n")) {
                 message = event.message.getFormattedText();
                 int lineWidth = Minecraft.getMinecraft().fontRendererObj.getStringWidth(message);
@@ -77,7 +78,7 @@ public class ChatCleaner implements ChatReceiveModule {
                     return;
                 }
             }
-        }
+        }*/
 
         if (HytilitiesConfig.mysteryBoxAnnouncer) {
             Matcher matcher = language.chatCleanerMysteryBoxFindRegex.matcher(message);

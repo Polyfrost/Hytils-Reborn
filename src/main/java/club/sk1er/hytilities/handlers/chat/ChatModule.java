@@ -24,6 +24,7 @@ import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.hytilities.util.locraw.LocrawInformation;
 import club.sk1er.mods.core.universal.ChatColor;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -98,6 +99,18 @@ interface ChatModule {
     @Nullable
     default LocrawInformation getLowcraw() {
         return Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
+    }
+
+    /**
+     * Calling {@link IChatComponent#getUnformattedText()} will only remove § symbols, but not the ones that are
+     * translated through Bukkit's ChatColor.translateAlternateColorCodes(String) method,
+     * so {@link EnumChatFormatting#getTextWithoutFormattingCodes(String)} must be used to fully strip any color code
+     * after they're translated.
+     *
+     * @return a completely stripped string
+     */
+    default String getStrippedMessage(IChatComponent component) {
+        return EnumChatFormatting.getTextWithoutFormattingCodes(component.getUnformattedText());
     }
 
 }

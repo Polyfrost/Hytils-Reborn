@@ -20,9 +20,11 @@ package club.sk1er.hytilities.util.skyblock;
 
 import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
 
+import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,21 +32,14 @@ import java.util.regex.Pattern;
 public class SkyblockChecker {
 
     private final Minecraft mc = Minecraft.getMinecraft();
-    private final Pattern serverBrandPattern = Pattern.compile("(.+) <- (?:.+)");
     private final Set<String> skyblockInAllLanguages = Sets.newHashSet("SKYBLOCK", "\u7A7A\u5C9B\u751F\u5B58", "\u7A7A\u5CF6\u751F\u5B58");
 
     // stolen from sba then stolen from neu
     public boolean isSkyblockScoreboard() {
-        if (mc.theWorld != null && mc.thePlayer != null) {
-            if (!mc.isSingleplayer() && mc.thePlayer.getClientBrand() != null) {
-                final Matcher matcher = serverBrandPattern.matcher(mc.thePlayer.getClientBrand());
-
-                if (matcher.find()) {
-                    // Group 1 is the server brand.
-                    if (!matcher.group(1).equals("BungeeCord (Hypixel)")) {
-                        return false;
-                    }
-                } else {
+        final EntityPlayerSP player = mc.thePlayer;
+        if (mc.theWorld != null && player != null) {
+            if (!mc.isSingleplayer() && player.getClientBrand() != null) {
+                if (!player.getClientBrand().contains("Hypixel")) {
                     return false;
                 }
             } else {

@@ -29,7 +29,7 @@ import net.minecraft.item.ItemStack;
 @SuppressWarnings("unused")
 public class LayerArmorBaseHook {
     public static boolean shouldRenderArmour(ItemStack itemStack) {
-        if (!HytilitiesConfig.hideArmour || itemStack == null || !MinecraftUtils.isHypixel()) return true;
+        if (!HytilitiesConfig.hideArmor || itemStack == null || !MinecraftUtils.isHypixel()) return true;
 
         final Item item = itemStack.getItem();
 

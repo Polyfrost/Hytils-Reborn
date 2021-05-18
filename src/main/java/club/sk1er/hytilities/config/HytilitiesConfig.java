@@ -34,22 +34,22 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean playerAdBlock;
 
-    @Property(
+    /*@Property(
         type = PropertyType.SWITCH, name = "Trim Line Separators",
         description = "Prevent separators from overflowing onto the next chat line.",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean lineBreakerTrim;
+    public static boolean lineBreakerTrim;*/
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Lobby Statuses",
-        description = "Remove lobby join messages from chat.\n§eExample: §b[MVP§c+§b] Steve §6joined the lobby!",
+        description = "Remove lobby join messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean lobbyStatus;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Limbo /play helper",
+        type = PropertyType.SWITCH, name = "Limbo Play Helper",
         description = "When a /play command is run in Limbo, this runs /l first and then the command.",
         category = "Chat", subcategory = "Toggles"
     )
@@ -57,42 +57,42 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Show Personal Mystery Box Rewards",
-        description = "Remove others mystery box messages from chat.\n§eExample: §b[Mystery Box] Steve §ffound a §6Legendary Hype Train Gadget§f!",
+        description = "Remove others mystery box messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean mysteryBoxAnnouncer;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Soul Well Announcements",
-        description = "Remove soul well announcements from chat.\n§eExample: §bSteve §7has found a §6Bulldozer Perk I (Insane) §7in the §bSoul Well§7!",
+        description = "Remove soul well announcements from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean soulWellAnnouncer;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Game Announcements",
-        description = "Remove game announcements from chat.\n§eExample: §b➤ A §e§lMega Skywars §bgame is available to join! §6§lCLICK HERE §bto join!",
+        description = "Remove game announcements from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean gameAnnouncements;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Hype Limit Reminder",
-        description = "Remove Hype limit reminders from chat.\n§eExample: §f➤ §6You have reached your Hype limit...",
+        description = "Remove Hype limit reminders from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean hypeLimitReminder;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove BedWars Advertisements",
-        description = "Remove player messages asking to join BedWars parties.\n§eExample: §7[1✫] §b[MVP§c+§b] Steve§f: guys pls join bedwars party 2/4 :)",
+        description = "Remove player messages asking to join BedWars parties.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean bedwarsAdvertisements;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Friend/Guild Statuses",
-        description = "Remove join/quit messages from friend/guild members.\n§eExample: §aFriend > §bSteve §ejoined.",
+        description = "Remove join/quit messages from friend/guild members.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean connectionStatus;
@@ -106,77 +106,77 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Chat Emojis",
-        description = "Remove MVP++ chat emojis.\n§eExample: §c§lOOF",
+        description = "Remove MVP++ chat emojis.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean mvpEmotes;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Server Connected Messages",
-        description = "Remove server connection messages.\n§eExample: §bYou are currently connected to server §6mini104H§b.",
+        description = "Remove messages informing you of the lobby name you've just joined, or what lobby you're being sent to.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean serverConnectedMessages;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove Automatically Activated Quest Messages",
-        description = "Remove automatically activated quest messages\n§eExample: §aAutomatically activated: §6Daily Quest: Skywars Solo Win.",
+        type = PropertyType.SWITCH, name = "Remove Auto Activated Quest Messages",
+        description = "Remove automatically activated quest messages",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean questsMessages;
 
     @Property(
         type = PropertyType.SWITCH, name = "White Chat",
-        description = "Make nons chat messages appear as the normal chat message color.\n§eExample: §7Steve: hey! §e-> §fSteve: hey!",
+        description = "Make nons chat messages appear as the normal chat message color.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean whiteChat;
 
     @Property(
         type = PropertyType.SWITCH, name = "White Private Messages",
-        description = "Make private messages appear as the normal chat message color.\n§eExample: §dFrom §b[MVP§c+§b] Steve: §7hey! §e-> §dFrom §b[MVP§c+§b] Steve: §fhey!",
+        description = "Make private messages appear as the normal chat message color.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean whitePrivateMessages;
 
     @Property(
         type = PropertyType.SWITCH, name = "Cleaner Game Start Counter",
-        description = "Compacts game start announcements.\n§eExample: The game starts in 20 seconds!",
+        description = "Compacts game start announcements.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean cleanerGameStartAnnouncements;
 
     @Property(
         type = PropertyType.SWITCH, name = "Game Status Restyle",
-        description = "Replace common game status messages with a new style.\n§eExamples:\n§a§l+ §bSteve §e(§b1§e/§b12§e)\n§c§l- §bSteve §e(§b1§e/§b12§e)\n§e§l* §aGame starts in §b§l5 §aseconds.",
+        description = "Replace common game status messages with a new style.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean gameStatusRestyle;
 
     @Property(
         type = PropertyType.SWITCH, name = "Player Count Before Player Name",
-        description = "Put the player count before the player name in game join/leave messages.\n§eExample: §e(§b1§e/§b12§e) §bSteve §ehas joined!",
+        description = "Put the player count before the player name in game join/leave messages.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean playerCountBeforePlayerName;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Player Count On Player Leave",
-        description = "Include the player count when players leave.\n§eExample: §bSteve §ehas quit (§b1§e/§b12§e)!",
+        type = PropertyType.SWITCH, name = "Player Count on Player Leave",
+        description = "Include the player count when players leave.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean playerCountOnPlayerLeave;
 
     @Property(
         type = PropertyType.SWITCH, name = "Player Count Padding",
-        description = "Place zeros at the beginning of the player count to align with the max player count.\n§eExample: §bSteve §ehas joined §e(§b001§e/§b111§e)!",
+        description = "Place zeros at the beginning of the player count to align with the max player count.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean padPlayerCount;
 
     @Property(
         type = PropertyType.SWITCH, name = "Short Channel Names",
-        description = "Abbreviate channel names.\n§eExample: §2Guild §e-> §2G§e, §9Party §e-> §9P§e, §dFriend §e-> §dF§e, &3Officer §e-> §3O",
+        description = "Abbreviate chat channel names.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean shortChannelNames;
@@ -189,21 +189,21 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean npcHider;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide NPCs In Tab",
+        type = PropertyType.SWITCH, name = "Hide NPCs in Tab",
         description = "Prevent NPCs from showing up in tab.",
         category = "General", subcategory = "Entities"
     )
     public static boolean hideNpcsInTab;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide Guild Tags In Tab",
+        type = PropertyType.SWITCH, name = "Hide Guild Tags in Tab",
         description = "Prevent Guild tags from showing up in tab.",
         category = "General", subcategory = "Guilds"
     )
     public static boolean hideGuildTagsInTab;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide Player Ranks In Tab",
+        type = PropertyType.SWITCH, name = "Hide Player Ranks in Tab",
         description = "Prevent player ranks from showing up in tab.",
         category = "General", subcategory = "General"
     )
@@ -217,7 +217,7 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean cleanerSkyblockTabInfo;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide Ping In Tab",
+        type = PropertyType.SWITCH, name = "Hide Ping in Tab",
         description = "Prevent ping from showing up in tab while playing games, since the value is misleading. Ping will remain visible in lobbies.",
         category = "General", subcategory = "General"
     )
@@ -282,18 +282,18 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SLIDER, name = "Auto Queue Delay",
-        description = "Delays the execution of Auto Queue. (The measurement is in seconds)",
+        description = "Delays the execution of Auto Queue.\n§eMeasured in seconds.",
         category = "General", subcategory = "Queue",
         max = 10
     )
     public static int autoQueueDelay;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide Armour",
-        description = "Hide armour in games where armour is always the same.",
+        type = PropertyType.SWITCH, name = "Hide Armor",
+        description = "Hide armor in games where armour is always the same.",
         category = "Game", subcategory = "Visual"
     )
-    public static boolean hideArmour;
+    public static boolean hideArmor;
 
     @Property(
         type = PropertyType.SWITCH, name = "Hardcore Hearts",
@@ -332,21 +332,21 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Thank Watchdog",
-        description = "Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.\n§eExample: §fThanks Watchdog!",
+        description = "Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.",
         category = "Chat", subcategory = "Watchdog"
     )
     public static boolean thankWatchdog;
 
     @Property(
         type = PropertyType.SWITCH, name = "Guild Welcome Message",
-        description = "Send a friendly welcome message when a player joins your guild.\n§eExample: §fWelcome to the guild Steve!",
+        description = "Send a friendly welcome message when a player joins your guild.",
         category = "Chat", subcategory = "Guild"
     )
-    public static boolean guildWelcomer;
+    public static boolean guildWelcomeMessage;
 
     @Property(
         type = PropertyType.SWITCH, name = "Shout Cooldown",
-        description = "Show the amount of time remaining until /shout can be reused.\n§eExample: §eShout command is on cooldown. Please wait 30 more seconds.",
+        description = "Show the amount of time remaining until /shout can be reused.",
         category = "Chat", subcategory = "Shout"
     )
     public static boolean preventShoutingOnCooldown;
@@ -360,7 +360,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Curse of Spam Messages",
-        description = "Hides the constant spam of kali's curse of spam.\n§eExample: §eKALI HAS STRIKEN YOU WITH THE CURSE OF SPAM",
+        description = "Hides the constant spam of Kali's curse of spam.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean curseOfSpam;
@@ -374,7 +374,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Gifts Message",
-        description = "Removes the gifts messages.\n§eExample: §eThey have gifted 1 so far!",
+        description = "Remove \"They have gifted x so far!\" messages.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean giftBlocker;
