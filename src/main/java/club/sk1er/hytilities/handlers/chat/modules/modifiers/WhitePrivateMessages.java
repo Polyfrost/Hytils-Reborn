@@ -1,6 +1,6 @@
 /*
  * Hytilities - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020  Sk1er LLC
+ * Copyright (C) 2021  Sk1er LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public class WhiteChat implements ChatReceiveModule {
+public class WhitePrivateMessages implements ChatReceiveModule {
 
     @Override
     public int getPriority() {
@@ -42,10 +42,13 @@ public class WhiteChat implements ChatReceiveModule {
         final List<IChatComponent> siblings = event.message.getSiblings();
         boolean modified = false;
 
-        if (HytilitiesConfig.whiteChat) {
-            final Matcher matcher = getLanguage().whiteChatNonMessageRegex.matcher(message);
+        if (HytilitiesConfig.whitePrivateMessages) {
+            final Matcher matcher = getLanguage().privateMessageWhiteChatRegex.matcher(message);
             if (matcher.find(0)) {
-                event.message = new ChatComponentText(matcher.group("prefix") + ": " + matcher.group("message"));
+                event.message = new ChatComponentText(
+                    matcher.group("type") + " " + matcher.group("prefix") + ": " +
+                        matcher.group("message").replace("§7", "§f")
+                );
                 modified = true;
             }
         }

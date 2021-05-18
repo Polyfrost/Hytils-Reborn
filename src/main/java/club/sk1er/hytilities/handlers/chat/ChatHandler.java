@@ -22,21 +22,21 @@ import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.handlers.chat.modules.blockers.AdBlocker;
 import club.sk1er.hytilities.handlers.chat.modules.blockers.ChatCleaner;
 import club.sk1er.hytilities.handlers.chat.modules.blockers.ConnectedMessage;
+import club.sk1er.hytilities.handlers.chat.modules.blockers.GiftBlocker;
 import club.sk1er.hytilities.handlers.chat.modules.blockers.GuildMOTD;
 import club.sk1er.hytilities.handlers.chat.modules.blockers.QuestBlocker;
 import club.sk1er.hytilities.handlers.chat.modules.blockers.ShoutBlocker;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.GiftBlocker;
 import club.sk1er.hytilities.handlers.chat.modules.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.modules.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.DefaultChatRestyler;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.GameStartCompactor;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.WhiteChat;
+import club.sk1er.hytilities.handlers.chat.modules.modifiers.WhitePrivateMessages;
 import club.sk1er.hytilities.handlers.chat.modules.triggers.AutoChatSwapper;
 import club.sk1er.hytilities.handlers.chat.modules.triggers.GuildWelcomer;
 import club.sk1er.hytilities.handlers.chat.modules.triggers.ThankWatchdog;
 import club.sk1er.hytilities.tweaker.asm.EntityPlayerSPTransformer;
 import club.sk1er.mods.core.util.MinecraftUtils;
-import net.minecraft.util.ChatStyle;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -56,6 +56,7 @@ public class ChatHandler {
         this.registerModule(new AdBlocker());
         this.registerModule(new GuildMOTD());
         this.registerModule(new WhiteChat());
+        this.registerModule(new WhitePrivateMessages());
         this.registerModule(new ChatCleaner());
         this.registerModule(new LevelupEvent());
         this.registerModule(new GuildWelcomer());
@@ -144,7 +145,9 @@ public class ChatHandler {
      * @param siblings  The message's chat component siblings
      */
     public void fixStyling(IChatComponent component, List<IChatComponent> siblings) {
-        if (!siblings.isEmpty()) {
+        // todo: this grabs the last sibling and applies it to the whole text, instead of reapplying to the specific
+        //  sibling, need to rethink this through, for now do nothing
+        /*if (!siblings.isEmpty()) {
             for (IChatComponent sibling : siblings) {
                 final ChatStyle chatStyle = sibling.getChatStyle();
 
@@ -156,6 +159,6 @@ public class ChatHandler {
                     component.getChatStyle().setChatClickEvent(chatStyle.getChatClickEvent());
                 }
             }
-        }
+        }*/
     }
 }

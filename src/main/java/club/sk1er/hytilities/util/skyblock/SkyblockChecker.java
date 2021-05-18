@@ -24,10 +24,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
 
-import java.util.Locale;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SkyblockChecker {
 
@@ -51,9 +48,7 @@ public class SkyblockChecker {
             if (sidebarObjective != null) {
                 final String objectiveName = sidebarObjective.getDisplayName().replaceAll("(?i)\\u00A7.", "");
                 for (String skyblock : skyblockInAllLanguages) {
-                    if (objectiveName.startsWith(skyblock)) {
-                        return true;
-                    }
+                    return objectiveName.startsWith(skyblock);
                 }
             }
         }
