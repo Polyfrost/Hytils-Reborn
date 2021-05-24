@@ -20,7 +20,7 @@ package club.sk1er.hytilities.handlers.lobby.mysterybox;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.mods.core.util.MinecraftUtils;
+import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiChest;
@@ -45,7 +45,7 @@ public class MysteryBoxStar {
 
     @SubscribeEvent
     public void onDrawScreenPre(GuiScreenEvent.DrawScreenEvent.Pre event) {
-        if (!HytilitiesConfig.mysteryBoxStar || !MinecraftUtils.isHypixel() || !Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+        if (!HytilitiesConfig.mysteryBoxStar || !EssentialAPI.getMinecraftUtil().isHypixel() || !Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) {
             return;
         }
 

@@ -19,8 +19,8 @@
 package club.sk1er.hytilities.command;
 
 import club.sk1er.hytilities.Hytilities;
-import club.sk1er.mods.core.util.Multithreading;
 import com.google.common.collect.Sets;
+import gg.essential.api.utils.Multithreading;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;

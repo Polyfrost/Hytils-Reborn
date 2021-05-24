@@ -42,14 +42,12 @@ import club.sk1er.hytilities.handlers.lobby.limbo.LimboTitleFix;
 import club.sk1er.hytilities.handlers.lobby.mysterybox.MysteryBoxStar;
 import club.sk1er.hytilities.handlers.lobby.npc.NPCHider;
 import club.sk1er.hytilities.handlers.silent.SilentRemoval;
-import club.sk1er.hytilities.tweaker.asm.EntityPlayerSPTransformer;
-import club.sk1er.hytilities.tweaker.asm.GuiIngameForgeTransformer;
+import club.sk1er.hytilities.asm.EntityPlayerSPTransformer;
+import club.sk1er.hytilities.asm.GuiIngameForgeTransformer;
 import club.sk1er.hytilities.util.locraw.LocrawUtil;
 import club.sk1er.hytilities.util.skyblock.SkyblockChecker;
-import club.sk1er.modcore.ModCoreInstaller;
-import club.sk1er.mods.core.universal.ChatColor;
-import club.sk1er.mods.core.util.MinecraftUtils;
-import net.minecraft.client.Minecraft;
+import gg.essential.api.EssentialAPI;
+import gg.essential.universal.ChatColor;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -69,7 +67,7 @@ public class Hytilities {
 
     public static final String MOD_ID = "hytilities";
     public static final String MOD_NAME = "Hytilities";
-    public static final String VERSION = "0.1";
+    public static final String VERSION = "0.1.0";
 
     @Mod.Instance(MOD_ID)
     public static Hytilities INSTANCE;
@@ -91,7 +89,6 @@ public class Hytilities {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        ModCoreInstaller.initializeModCore(Minecraft.getMinecraft().mcDataDir);
         this.config.preload();
 
         final ClientCommandHandler commandRegister = ClientCommandHandler.instance;
@@ -141,7 +138,7 @@ public class Hytilities {
     }
 
     public void sendMessage(String message) {
-        MinecraftUtils.sendMessage(ChatColor.GOLD + "[Hytilities] ", ChatColor.translateAlternateColorCodes('&', message));
+        EssentialAPI.getMinecraftUtil().sendMessage(ChatColor.GOLD + "[Hytilities] ", ChatColor.Companion.translateAlternateColorCodes('&', message));
     }
 
     public HytilitiesConfig getConfig() {

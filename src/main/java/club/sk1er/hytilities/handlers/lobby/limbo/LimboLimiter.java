@@ -22,7 +22,7 @@ import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.DefaultChatRestyler;
 import club.sk1er.hytilities.handlers.language.LanguageData;
-import club.sk1er.hytilities.tweaker.asm.MinecraftTransformer;
+import club.sk1er.hytilities.asm.MinecraftTransformer;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;

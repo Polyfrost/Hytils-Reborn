@@ -18,11 +18,11 @@
 
 package club.sk1er.hytilities.handlers.language;
 
-import club.sk1er.mods.core.util.JsonHolder;
-import club.sk1er.mods.core.util.Multithreading;
-import club.sk1er.mods.core.util.WebUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import gg.essential.api.utils.JsonHolder;
+import gg.essential.api.utils.Multithreading;
+import gg.essential.api.utils.WebUtil;
 import net.minecraft.client.Minecraft;
 
 import java.io.IOException;

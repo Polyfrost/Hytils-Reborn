@@ -20,8 +20,8 @@ package club.sk1er.hytilities.handlers.lobby.tab;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.tweaker.asm.GuiPlayerTabOverlayTransformer;
-import club.sk1er.mods.core.util.MinecraftUtils;
+import club.sk1er.hytilities.asm.GuiPlayerTabOverlayTransformer;
+import gg.essential.api.EssentialAPI;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import org.objectweb.asm.tree.ClassNode;
 
@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 @SuppressWarnings("unused")
 public class TabChanger {
     public static String modifyName(String name) {
-        if (MinecraftUtils.isHypixel()) {
+        if (EssentialAPI.getMinecraftUtil().isHypixel()) {
             if (HytilitiesConfig.hidePlayerRanksInTab && name.startsWith("[", 2)) {
                 // keep the name color if player rank is removed
                 // §b[MVP§c+§b] Steve
@@ -54,11 +54,11 @@ public class TabChanger {
     }
 
     public static boolean shouldRenderPlayerHead(NetworkPlayerInfo networkPlayerInfo) {
-        return !MinecraftUtils.isHypixel() || !isSkyblockTabInformationEntry(networkPlayerInfo);
+        return !EssentialAPI.getMinecraftUtil().isHypixel() || !isSkyblockTabInformationEntry(networkPlayerInfo);
     }
 
     public static boolean hidePing(NetworkPlayerInfo networkPlayerInfo) {
-        return MinecraftUtils.isHypixel() && ((HytilitiesConfig.hidePingInTab && !Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) || isSkyblockTabInformationEntry(networkPlayerInfo));
+        return EssentialAPI.getMinecraftUtil().isHypixel() && ((HytilitiesConfig.hidePingInTab && !Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) || isSkyblockTabInformationEntry(networkPlayerInfo));
     }
 
     private static final Pattern validMinecraftUsername = Pattern.compile("\\w{1,16}");

@@ -20,7 +20,7 @@ package club.sk1er.hytilities.handlers.game;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.events.TitleEvent;
-import club.sk1er.mods.core.util.MinecraftUtils;
+import gg.essential.api.EssentialAPI;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -30,7 +30,7 @@ public class GameCountdown {
     // Hides the countdown timer title text that is displayed before a game is about to start.
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onTitle(TitleEvent event) {
-        if (!MinecraftUtils.isHypixel() || !HytilitiesConfig.hideGameCountdown) {
+        if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilitiesConfig.hideGameCountdown) {
             return;
         }
 

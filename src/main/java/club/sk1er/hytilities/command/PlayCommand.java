@@ -22,12 +22,12 @@ package club.sk1er.hytilities.command;
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
-import club.sk1er.mods.core.util.MinecraftUtils;
-import club.sk1er.mods.core.util.Multithreading;
-import club.sk1er.mods.core.util.WebUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import gg.essential.api.EssentialAPI;
+import gg.essential.api.utils.Multithreading;
+import gg.essential.api.utils.WebUtil;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
@@ -73,7 +73,7 @@ public class PlayCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender iCommandSender, String[] args) {
         boolean autocompletePlayCommands = HytilitiesConfig.autocompletePlayCommands;
-        if (!MinecraftUtils.isHypixel()) {
+        if (!EssentialAPI.getMinecraftUtil().isHypixel()) {
             Hytilities.INSTANCE.getCommandQueue().queue("/play " + String.join(" ", args));
             return;
         }
@@ -112,7 +112,7 @@ public class PlayCommand extends CommandBase {
 
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
-        return (HytilitiesConfig.autocompletePlayCommands && MinecraftUtils.isHypixel()) ? getListOfStringsMatchingLastWord(args, getListOfGames()) : null;
+        return (HytilitiesConfig.autocompletePlayCommands && EssentialAPI.getMinecraftUtil().isHypixel()) ? getListOfStringsMatchingLastWord(args, getListOfGames()) : null;
     }
 
     private String[] getListOfGames() {

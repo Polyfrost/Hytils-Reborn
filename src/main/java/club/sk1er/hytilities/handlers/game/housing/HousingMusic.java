@@ -22,7 +22,7 @@ import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.game.GameType;
 import club.sk1er.hytilities.util.locraw.LocrawInformation;
-import club.sk1er.mods.core.util.MinecraftUtils;
+import gg.essential.api.EssentialAPI;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -30,7 +30,7 @@ public class HousingMusic {
 
     @SubscribeEvent
     public void onPlaySound(PlaySoundEvent event) {
-        if (MinecraftUtils.isHypixel() && HytilitiesConfig.muteHousingMusic) {
+        if (EssentialAPI.getMinecraftUtil().isHypixel() && HytilitiesConfig.muteHousingMusic) {
             LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
             if (locraw != null && locraw.getGameType() == GameType.HOUSING && event.name.startsWith("note.")) {
                 event.result = null;

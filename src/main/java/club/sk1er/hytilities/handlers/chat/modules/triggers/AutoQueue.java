@@ -22,8 +22,7 @@ import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import club.sk1er.hytilities.handlers.language.LanguageData;
-import club.sk1er.mods.core.universal.ChatColor;
-import club.sk1er.mods.core.util.Multithreading;
+import gg.essential.api.utils.Multithreading;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -53,10 +52,10 @@ public class AutoQueue implements ChatReceiveModule {
         }
 
         final LanguageData language = getLanguage();
-        final String message = ChatColor.stripColor(event.message.getUnformattedText());
+        final String message = getStrippedMessage(event.message);
         if (message.startsWith(language.autoQueuePrefix)) {
             for (IChatComponent component : event.message.getSiblings()) {
-                final String compMsg = ChatColor.stripColor(component.getUnformattedText().trim());
+                final String compMsg = getStrippedMessage(event.message).trim();
                 if (compMsg.equals(language.autoQueueClick)) {
                     this.command = component.getChatStyle().getChatClickEvent().getValue();
                 }

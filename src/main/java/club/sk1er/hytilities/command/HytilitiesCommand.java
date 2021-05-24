@@ -19,12 +19,13 @@
 package club.sk1er.hytilities.command;
 
 import club.sk1er.hytilities.Hytilities;
-import club.sk1er.mods.core.ModCore;
+import gg.essential.api.utils.GuiUtil;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class HytilitiesCommand extends CommandBase {
     @Override
@@ -45,7 +46,7 @@ public class HytilitiesCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
         if (args.length == 0) {
-            ModCore.getInstance().getGuiHandler().open(Hytilities.INSTANCE.getConfig().gui());
+            GuiUtil.open(Objects.requireNonNull(Hytilities.INSTANCE.getConfig().gui()));
         } else {
             Hytilities.INSTANCE.sendMessage("&cIncorrect arguments. Command usage is: " + getCommandUsage(sender));
         }

@@ -22,7 +22,7 @@ import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.hytilities.util.locraw.LocrawInformation;
-import club.sk1er.mods.core.universal.ChatColor;
+import gg.essential.universal.ChatColor;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
@@ -82,7 +82,7 @@ interface ChatModule {
      */
     @NotNull
     default IChatComponent colorMessage(@NotNull String message) {
-        return new ChatComponentText(ChatColor.translateAlternateColorCodes('&', message));
+        return new ChatComponentText(ChatColor.Companion.translateAlternateColorCodes('&', message));
     }
 
     /**

@@ -35,8 +35,8 @@ import club.sk1er.hytilities.handlers.chat.modules.modifiers.WhitePrivateMessage
 import club.sk1er.hytilities.handlers.chat.modules.triggers.AutoChatSwapper;
 import club.sk1er.hytilities.handlers.chat.modules.triggers.GuildWelcomer;
 import club.sk1er.hytilities.handlers.chat.modules.triggers.ThankWatchdog;
-import club.sk1er.hytilities.tweaker.asm.EntityPlayerSPTransformer;
-import club.sk1er.mods.core.util.MinecraftUtils;
+import club.sk1er.hytilities.asm.EntityPlayerSPTransformer;
+import gg.essential.api.EssentialAPI;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -89,7 +89,7 @@ public class ChatHandler {
 
     @SubscribeEvent
     public void handleChat(ClientChatReceivedEvent event) {
-        if (!MinecraftUtils.isHypixel()) {
+        if (!EssentialAPI.getMinecraftUtil().isHypixel()) {
             return;
         }
 
@@ -119,7 +119,7 @@ public class ChatHandler {
     @SuppressWarnings({"unused", "RedundantSuppression"})
     @Nullable
     public String handleSentMessage(@NotNull String message) {
-        if (!MinecraftUtils.isHypixel()) {
+        if (!EssentialAPI.getMinecraftUtil().isHypixel()) {
             return message;
         }
 

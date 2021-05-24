@@ -20,7 +20,7 @@ package club.sk1er.hytilities.handlers.game.hardcore;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.events.TitleEvent;
-import club.sk1er.hytilities.tweaker.asm.GuiIngameForgeTransformer;
+import club.sk1er.hytilities.asm.GuiIngameForgeTransformer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

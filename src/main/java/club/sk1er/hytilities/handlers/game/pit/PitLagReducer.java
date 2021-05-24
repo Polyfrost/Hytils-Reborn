@@ -22,7 +22,7 @@ import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.game.GameType;
 import club.sk1er.hytilities.util.locraw.LocrawInformation;
-import club.sk1er.mods.core.util.MinecraftUtils;
+import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -43,7 +43,7 @@ public class PitLagReducer {
 
     @SubscribeEvent
     public void onRenderLiving(RenderLivingEvent.Pre<EntityLiving> event) {
-        if (!MinecraftUtils.isHypixel()) {
+        if (!EssentialAPI.getMinecraftUtil().isHypixel()) {
             return;
         }
 

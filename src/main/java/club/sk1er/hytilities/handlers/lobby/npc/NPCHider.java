@@ -20,9 +20,9 @@ package club.sk1er.hytilities.handlers.lobby.npc;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
-import club.sk1er.hytilities.tweaker.asm.GuiPlayerTabOverlayTransformer;
-import club.sk1er.mods.core.util.MinecraftUtils;
+import club.sk1er.hytilities.asm.GuiPlayerTabOverlayTransformer;
 import com.google.common.collect.Collections2;
+import gg.essential.api.EssentialAPI;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityVillager;
@@ -36,7 +36,7 @@ public class NPCHider {
 
     @SubscribeEvent
     public void onEntityRender(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (!HytilitiesConfig.npcHider || !MinecraftUtils.isHypixel() || !Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+        if (!HytilitiesConfig.npcHider || !EssentialAPI.getMinecraftUtil().isHypixel() || !Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) {
             return;
         }
 
@@ -51,7 +51,7 @@ public class NPCHider {
      */
     @SuppressWarnings("unused")
     public static Collection<NetworkPlayerInfo> hideTabNpcs(Collection<NetworkPlayerInfo> playerInfoCollection) {
-        if (!MinecraftUtils.isHypixel() || !HytilitiesConfig.hideNpcsInTab) {
+        if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilitiesConfig.hideNpcsInTab) {
             return playerInfoCollection;
         } else {
             return Collections2.filter(playerInfoCollection, player -> player != null && player.getGameProfile().getId().version() != 2);

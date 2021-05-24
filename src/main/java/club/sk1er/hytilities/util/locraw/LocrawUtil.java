@@ -21,8 +21,8 @@ package club.sk1er.hytilities.util.locraw;
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import club.sk1er.hytilities.handlers.game.GameType;
-import club.sk1er.mods.core.util.MinecraftUtils;
 import com.google.gson.Gson;
+import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -39,7 +39,7 @@ public class LocrawUtil implements ChatReceiveModule {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !MinecraftUtils.isHypixel() || this.tick >= 22) {
+        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !EssentialAPI.getMinecraftUtil().isHypixel() || this.tick >= 22) {
             return;
         }
 

@@ -20,7 +20,7 @@ package club.sk1er.hytilities.handlers.lobby;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.util.locraw.LocrawInformation;
-import club.sk1er.mods.core.util.MinecraftUtils;
+import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -36,7 +36,7 @@ public class LobbyChecker {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         final LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !MinecraftUtils.isHypixel() || this.tick >= 52 || locraw == null) {
+        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !EssentialAPI.getMinecraftUtil().isHypixel() || this.tick >= 52 || locraw == null) {
             return;
         }
 
