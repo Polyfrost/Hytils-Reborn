@@ -75,7 +75,7 @@ Click on `Minecraft Client`.
 
 ![Minecraft Client](.github/minecraft_client2.png)
 
-Ensure that classpath is set to `Hytilities.main`. If it is not, select the drop down and set it.
+Ensure that the classpath is set to `Hytilities.main`. If it is not, select the drop down and set it.
 
 ![Classpath](.github/classpath.png)
 
