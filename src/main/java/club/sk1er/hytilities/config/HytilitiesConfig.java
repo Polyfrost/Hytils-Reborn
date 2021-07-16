@@ -34,12 +34,12 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean playerAdBlock;
 
-    /*@Property(
+    @Property(
         type = PropertyType.SWITCH, name = "Trim Line Separators",
         description = "Prevent separators from overflowing onto the next chat line.",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean lineBreakerTrim;*/
+    public static boolean lineBreakerTrim;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Lobby Statuses",

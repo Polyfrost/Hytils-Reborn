@@ -31,11 +31,20 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * todo: split up this class into separate modules
  */
 public class ChatCleaner implements ChatReceiveModule {
+    /**
+     * Hypixel uses two different linebreakers for some reason.
+     * Top one for info in gamemodes and the bottom one for f.ex. the help menu for /party
+     * §r§a§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬§r
+     * §9§m---------------------§r
+     * This regex also grabs the bold color code so that it can resize it properly.
+     */
+    private final Pattern lineBreakerPattern = Pattern.compile("\\b(§l)?\\b([-▬])+");
 
     @Override
     public int getPriority() {
@@ -66,19 +75,19 @@ public class ChatCleaner implements ChatReceiveModule {
             }
         }
 
-        // todo: not that accurate, needs to be redone
-        /*if (HytilitiesConfig.lineBreakerTrim) {
-            if ((message.contains("-----------") || message.contains("▬▬▬▬▬▬▬▬▬▬▬")) && !message.contains("\n")) {
-                message = event.message.getFormattedText();
-                int lineWidth = Minecraft.getMinecraft().fontRendererObj.getStringWidth(message);
+        if (HytilitiesConfig.lineBreakerTrim) {
+            message = event.message.getFormattedText();
+            Matcher regex = lineBreakerPattern.matcher(message);
+            if (regex.find()) {
+                String linebreak = regex.group();
                 int chatWidth = Minecraft.getMinecraft().ingameGUI.getChatGUI().getChatWidth();
-                if (lineWidth > chatWidth) {
-                    message = Minecraft.getMinecraft().fontRendererObj.trimStringToWidth(message, chatWidth);
-                    event.message = new ChatComponentText(message);
-                    return;
-                }
+                String newLineBreaker = Minecraft.getMinecraft().fontRendererObj.trimStringToWidth(linebreak, chatWidth);
+                message = regex.replaceAll(newLineBreaker);
+                event.message = new ChatComponentText(message);
+                return;
             }
-        }*/
+
+        }
 
         if (HytilitiesConfig.mysteryBoxAnnouncer) {
             Matcher matcher = language.chatCleanerMysteryBoxFindRegex.matcher(message);
