@@ -25,6 +25,8 @@ import gg.essential.api.EssentialAPI;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import org.objectweb.asm.tree.ClassNode;
 
+import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
@@ -32,8 +34,32 @@ import java.util.regex.Pattern;
  */
 @SuppressWarnings("unused")
 public class TabChanger {
-    public static String modifyName(String name) {
+    /**
+     * Adds a star to the display name of a player in Tab.
+     * If the star is added before or after the name is determined by the config value of highlightFriendsInTab
+     * For example, the input "§b[MVP§c+§b] Steve §6[GUILD]" will return "§9✯ §r§b[MVP§c+§b] Steve §6[GUILD]" if
+     * highlightFriendsInTab is set to "Left of Name"
+     *
+     * @param displayName The name of the player as appears in tab menu
+     * @return The displayName that was given as input but with a star added
+     */
+    private static String addStarToName(String displayName) {
+        switch (HytilitiesConfig.highlightFriendsInTab) {
+            case 1:
+                return "§9✯ §r" + displayName;
+            case 2:
+                return displayName + "§r §9✯";
+            default:
+                Hytilities.INSTANCE.getLogger()
+                    .warn("Method TabChanger#addStarToName called when showFriendNamesInTab was not enabled");
+                return "§9✯ §r" + displayName;
+        }
+    }
+
+    public static String modifyName(String name, NetworkPlayerInfo networkPlayerInfo) {
         if (EssentialAPI.getMinecraftUtil().isHypixel()) {
+            final UUID uuid = networkPlayerInfo.getGameProfile().getId();
+
             if (HytilitiesConfig.hidePlayerRanksInTab && name.startsWith("[", 2)) {
                 // keep the name color if player rank is removed
                 // §b[MVP§c+§b] Steve
@@ -47,6 +73,14 @@ public class TabChanger {
                 // trim off the guild tag
                 // e.g. Steve §6[GUILD]
                 name = name.substring(0, name.lastIndexOf("[") - 3);
+            }
+
+            if (HytilitiesConfig.highlightFriendsInTab != 0) {
+                Set<UUID> friendList = Hytilities.INSTANCE.getFriendCache().getFriendUUIDs();
+                // friendList will be null if the friend list has not been cached
+                if (friendList != null && friendList.contains(uuid)) {
+                    name = addStarToName(name);
+                }
             }
         }
 

@@ -44,6 +44,7 @@ import club.sk1er.hytilities.handlers.lobby.npc.NPCHider;
 import club.sk1er.hytilities.handlers.silent.SilentRemoval;
 import club.sk1er.hytilities.asm.EntityPlayerSPTransformer;
 import club.sk1er.hytilities.asm.GuiIngameForgeTransformer;
+import club.sk1er.hytilities.util.friends.FriendCache;
 import club.sk1er.hytilities.util.locraw.LocrawUtil;
 import club.sk1er.hytilities.util.skyblock.SkyblockChecker;
 import gg.essential.api.EssentialAPI;
@@ -77,6 +78,7 @@ public class Hytilities {
 
     private final LanguageHandler languageHandler = new LanguageHandler();
     private final SkyblockChecker skyblockChecker = new SkyblockChecker();
+    private final FriendCache friendCache = new FriendCache();
     private final HardcoreStatus hardcoreStatus = new HardcoreStatus();
     private final SilentRemoval silentRemoval = new SilentRemoval();
     private final CommandQueue commandQueue = new CommandQueue();
@@ -199,5 +201,9 @@ public class Hytilities {
 
     public SkyblockChecker getSkyblockChecker() {
         return skyblockChecker;
+    }
+
+    public FriendCache getFriendCache() {
+        return friendCache;
     }
 }
