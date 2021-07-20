@@ -83,16 +83,16 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             Matcher friendMatcher = language.chatRestylerFriendPatternRegex.matcher(message);
             Matcher officerMatcher = language.chatRestylerOfficerPatternRegex.matcher(message);
             if (partyMatcher.find()) {
-                event.message = colorMessage(message.replaceAll(language.chatRestylerPartyPatternRegex.pattern(),
+                event.message = new ChatComponentText(message.replaceAll(language.chatRestylerPartyPatternRegex.pattern(),
                     partyMatcher.group(1) + "P " + partyMatcher.group(3)));
             } else if (guildMatcher.find()) {
-                event.message = colorMessage(message.replaceAll(language.chatRestylerGuildPatternRegex.pattern(),
+                event.message = new ChatComponentText(message.replaceAll(language.chatRestylerGuildPatternRegex.pattern(),
                     guildMatcher.group(1) + "G >"));
             } else if (friendMatcher.find()) {
-                event.message = colorMessage(message.replaceAll(language.chatRestylerFriendPatternRegex.pattern(),
+                event.message = new ChatComponentText(message.replaceAll(language.chatRestylerFriendPatternRegex.pattern(),
                     friendMatcher.group(1) + "F >"));
             } else if (officerMatcher.find()) {
-                event.message = colorMessage(message.replaceAll(language.chatRestylerOfficerPatternRegex.pattern(),
+                event.message = new ChatComponentText(message.replaceAll(language.chatRestylerOfficerPatternRegex.pattern(),
                     officerMatcher.group(1) + "O >"));
             }
         }
