@@ -16,7 +16,7 @@
   "achievementPattern": "a>> {3}Achievement Unlocked: (?<achievement>.+) {3}<<a",
   "levelUpPattern": "You are now Hypixel Level (?<level>\\d+)!",
   "guildPlayerJoinPattern": "^(?:\\[.*] )?(?<player>\\S{1,16}) joined the guild!$",
-  "chatRestylerGameJoinStyle": "^\u00a7r\u00a7(?<color>[\\da-f])(?:\u00a7k)?(?<player>\\w{1,16})\u00a7r\u00a7e has joined (?<amount>.+)!§r$",
+  "chatRestylerGameJoinStyle": "^\u00a7r\u00a7(?<color>[\\da-f])(?:\u00a7k)?(?<player>\\w{1,16})\u00a7r\u00a7e has joined (?<amount>.+)!\u00a7r$",
   "chatRestylerGameLeaveStyle": "^\u00a7r\u00a7(?<color>[\\da-f])(?:\u00a7k)?(?<player>\\w{1,16})\u00a7r\u00a7e has quit!\u00a7r$",
   "chatRestylerGameStartCounterStyle": "^(?<title>(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in)) (?<time>\\d{1,3}) (?<unit>(seconds?!))$",
   "chatRestylerGameStartCounterOutputStyle": "^\u00a7e\u00a7l\\* \u00a7a(The game starts in|Cages open in:) \u00a7b\u00a7l\\d{1,3} \u00a7aseconds?!\u00a7r$",
