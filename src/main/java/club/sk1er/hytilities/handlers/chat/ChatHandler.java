@@ -19,17 +19,12 @@
 package club.sk1er.hytilities.handlers.chat;
 
 import club.sk1er.hytilities.Hytilities;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.AdBlocker;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.ChatCleaner;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.ConnectedMessage;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.GiftBlocker;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.GuildMOTD;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.QuestBlocker;
-import club.sk1er.hytilities.handlers.chat.modules.blockers.ShoutBlocker;
+import club.sk1er.hytilities.handlers.chat.modules.blockers.*;
 import club.sk1er.hytilities.handlers.chat.modules.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.modules.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.DefaultChatRestyler;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.GameStartCompactor;
+import club.sk1er.hytilities.handlers.chat.modules.modifiers.TrimLineBreakers;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.WhiteChat;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.WhitePrivateMessages;
 import club.sk1er.hytilities.handlers.chat.modules.triggers.AutoChatSwapper;
@@ -57,7 +52,6 @@ public class ChatHandler {
         this.registerModule(new GuildMOTD());
         this.registerModule(new WhiteChat());
         this.registerModule(new WhitePrivateMessages());
-        this.registerModule(new ChatCleaner());
         this.registerModule(new LevelupEvent());
         this.registerModule(new GuildWelcomer());
         this.registerModule(new ThankWatchdog());
@@ -66,6 +60,16 @@ public class ChatHandler {
         this.registerModule(new ConnectedMessage());
         this.registerModule(new GameStartCompactor());
         this.registerModule(new DefaultChatRestyler());
+        this.registerModule(new LobbyStatusRemover());
+        this.registerModule(new MvpEmotesRemover());
+        this.registerModule(new MysteryBoxRemover());
+        this.registerModule(new GameAnnouncementsRemover());
+        this.registerModule(new HypeLimitReminderRemover());
+        this.registerModule(new SoulWellAnnouncerRemover());
+        this.registerModule(new BedwarsAdvertisementsRemover());
+        this.registerModule(new ConnectionStatusRemover());
+        this.registerModule(new CurseOfSpamRemover());
+        this.registerModule(new TrimLineBreakers());
         this.registerModule(new QuestBlocker());
         this.registerModule(new GiftBlocker());
 

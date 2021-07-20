@@ -278,7 +278,7 @@ dependencies {
     }
 
     embed "gg.essential:loader-launchwrapper:1.0.2"
-    implementation "gg.essential:Essential:1149-${mcVersion}-SNAPSHOT"
+    implementation "gg.essential:Essential:1229-${mcVersion}-SNAPSHOT"
 
     // FG already adds this even though it is not available at runtime, so we need to manually list it to bundle it
     if (VANILLA) {

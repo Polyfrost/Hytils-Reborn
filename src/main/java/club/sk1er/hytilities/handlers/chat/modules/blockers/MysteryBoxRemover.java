@@ -20,29 +20,38 @@ package club.sk1er.hytilities.handlers.chat.modules.blockers;
 
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
-import club.sk1er.hytilities.handlers.language.LanguageData;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 
-public class GiftBlocker implements ChatReceiveModule {
-    @Override
-    public int getPriority() {
-        return -3;
-    }
-
+public class MysteryBoxRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatGiftBlockerRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        Matcher matcher = getLanguage().chatCleanerMysteryBoxFindRegex.matcher(message);
+
         if (matcher.matches()) {
+            String player = matcher.group("player");
+            boolean playerBox = !player.contains(Minecraft.getMinecraft().thePlayer.getName());
+
+            if (!playerBox || !player.startsWith("You")) {
+                event.setCanceled(true);
+            }
+        } else if (message.startsWith("[Mystery Box]")) {
             event.setCanceled(true);
         }
     }
 
     @Override
     public boolean isEnabled() {
-        return HytilitiesConfig.giftBlocker;
+        return HytilitiesConfig.mysteryBoxAnnouncer;
+    }
+
+    @Override
+    public int getPriority() {
+        return -1;
     }
 }

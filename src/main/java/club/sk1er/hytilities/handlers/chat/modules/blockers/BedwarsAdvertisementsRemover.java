@@ -18,31 +18,34 @@
 
 package club.sk1er.hytilities.handlers.chat.modules.blockers;
 
+import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
-import club.sk1er.hytilities.handlers.language.LanguageData;
+import club.sk1er.hytilities.handlers.game.GameType;
+import club.sk1er.hytilities.util.locraw.LocrawInformation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.regex.Matcher;
-
-public class GiftBlocker implements ChatReceiveModule {
-    @Override
-    public int getPriority() {
-        return -3;
-    }
-
+public class BedwarsAdvertisementsRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatGiftBlockerRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
-        if (matcher.matches()) {
+        LocrawInformation locrawInformation = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+
+        if (locrawInformation != null && locrawInformation.getGameType() == GameType.BED_WARS
+            && getLanguage().chatCleanerBedwarsPartyAdvertisementRegex.matcher(message).find()) {
             event.setCanceled(true);
         }
     }
 
     @Override
     public boolean isEnabled() {
-        return HytilitiesConfig.giftBlocker;
+        return HytilitiesConfig.bedwarsAdvertisements;
+    }
+
+    @Override
+    public int getPriority() {
+        return -1;
     }
 }

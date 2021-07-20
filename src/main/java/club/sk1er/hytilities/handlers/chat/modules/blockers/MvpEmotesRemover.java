@@ -21,28 +21,31 @@ package club.sk1er.hytilities.handlers.chat.modules.blockers;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import club.sk1er.hytilities.handlers.language.LanguageData;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 
-public class GiftBlocker implements ChatReceiveModule {
-    @Override
-    public int getPriority() {
-        return -3;
-    }
-
+public class MvpEmotesRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatGiftBlockerRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
-        if (matcher.matches()) {
-            event.setCanceled(true);
+        final LanguageData language = getLanguage();
+        Matcher matcher = language.chatCleanerMvpEmotesRegex.matcher(event.message.getFormattedText());
+        if (matcher.find(0)) {
+            event.message = new ChatComponentText(event.message.getFormattedText().replaceAll(
+                language.chatCleanerMvpEmotesRegex.pattern(), "")
+            );
         }
     }
 
     @Override
     public boolean isEnabled() {
-        return HytilitiesConfig.giftBlocker;
+        return HytilitiesConfig.mvpEmotes;
+    }
+
+    @Override
+    public int getPriority() {
+        return -1;
     }
 }
