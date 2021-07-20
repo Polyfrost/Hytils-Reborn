@@ -18,15 +18,13 @@
 
 package club.sk1er.hytilities.handlers.chat.modules.modifiers;
 
-import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.regex.Matcher;
 
 public class WhiteChat implements ChatReceiveModule {
@@ -39,18 +37,18 @@ public class WhiteChat implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final String message = event.message.getFormattedText();
-        final List<IChatComponent> siblings = event.message.getSiblings();
-        boolean modified = false;
 
         if (HytilitiesConfig.whiteChat) {
             final Matcher matcher = getLanguage().whiteChatNonMessageRegex.matcher(message);
             if (matcher.find(0)) {
-                event.message = new ChatComponentText(matcher.group("prefix") + ": " + matcher.group("message"));
-                modified = true;
+                boolean foundStart = false;
+                for (IChatComponent sibling : event.message.getSiblings()) {
+                    if (sibling.getFormattedText().startsWith("§7: ")) foundStart = true;
+                    if (foundStart && sibling.getChatStyle().getColor() == EnumChatFormatting.GRAY) {
+                        sibling.getChatStyle().setColor(EnumChatFormatting.WHITE);
+                    }
+                }
             }
         }
-
-        if (!modified) return;
-        Hytilities.INSTANCE.getChatHandler().fixStyling(event.message, siblings);
     }
 }
