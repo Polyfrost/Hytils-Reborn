@@ -24,6 +24,7 @@ import club.sk1er.hytilities.handlers.chat.ChatReceiveModule;
 import club.sk1er.hytilities.handlers.language.LanguageData;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -83,17 +84,17 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             Matcher friendMatcher = language.chatRestylerFriendPatternRegex.matcher(message);
             Matcher officerMatcher = language.chatRestylerOfficerPatternRegex.matcher(message);
             if (partyMatcher.find()) {
-                event.message = new ChatComponentText(message.replaceAll(language.chatRestylerPartyPatternRegex.pattern(),
-                    partyMatcher.group(1) + "P " + partyMatcher.group(3)));
+                event.message = shortenChannelName(event.message, language.chatRestylerPartyPatternRegex.pattern(),
+                    partyMatcher.group(1) + "P " + partyMatcher.group(3), false);
             } else if (guildMatcher.find()) {
-                event.message = new ChatComponentText(message.replaceAll(language.chatRestylerGuildPatternRegex.pattern(),
-                    guildMatcher.group(1) + "G >"));
+                event.message = shortenChannelName(event.message, language.chatRestylerGuildPatternRegex.pattern(),
+                    guildMatcher.group(1) + "G >", true);
             } else if (friendMatcher.find()) {
-                event.message = new ChatComponentText(message.replaceAll(language.chatRestylerFriendPatternRegex.pattern(),
-                    friendMatcher.group(1) + "F >"));
+                event.message = shortenChannelName(event.message, language.chatRestylerFriendPatternRegex.pattern(),
+                    friendMatcher.group(1) + "F >", true);
             } else if (officerMatcher.find()) {
-                event.message = new ChatComponentText(message.replaceAll(language.chatRestylerOfficerPatternRegex.pattern(),
-                    officerMatcher.group(1) + "O >"));
+                event.message = shortenChannelName(event.message, language.chatRestylerOfficerPatternRegex.pattern(),
+                    officerMatcher.group(1) + "O >", false);
             }
         }
 
@@ -167,5 +168,26 @@ public class DefaultChatRestyler implements ChatReceiveModule {
         }
 
         Hytilities.INSTANCE.getChatHandler().fixStyling(event.message, siblings);
+    }
+
+    /**
+     * Handles the replacement of channel names
+     * Loops through all siblings to find a replacement
+     *
+     * @param message The message being modified
+     * @param pattern The regular expression to check the message and it's components against
+     * @param replacement The text that replaces what is matched by the regular expression
+     * @param checkParentComponent Whether or not to check the parent chat component
+     */
+    private ChatComponentText shortenChannelName(IChatComponent message, String pattern, String replacement, boolean checkParentComponent) {
+        String originalText = message.getUnformattedTextForChat();
+        if (checkParentComponent && !originalText.contains("\u00a7")) {
+            originalText = (message.getChatStyle().getFormattingCode() + originalText + EnumChatFormatting.RESET).replaceAll(pattern, replacement);
+        }
+        ChatComponentText copy = (ChatComponentText) new ChatComponentText(originalText).setChatStyle(message.getChatStyle());
+        for (IChatComponent sibling : message.getSiblings()) {
+            copy.appendSibling(new ChatComponentText(sibling.getUnformattedTextForChat().replaceAll(pattern, replacement)).setChatStyle(sibling.getChatStyle()));
+        }
+        return copy;
     }
 }
