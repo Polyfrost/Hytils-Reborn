@@ -196,5 +196,5 @@ Enter the Hytilities directory. From here, what you do depends on your OS. This 
 
 Type `./gradlew setupDecompWorkspace`. This may take several minutes. It should say `BUILD SUCCESSFUL` once finished.
 
-Now, you can edit the files as you would any other project, such as with a Terminal editor like vim. To compile, run `./gradlew build`. They will be in the `build/libs` folder. To launch the game, run `./gradlew runClient`.
+Now, you can edit the files as you would any other project, such as with a Terminal editor like vim. To compile, run `./gradlew build`. They will be in the `versions/1.8.9/build/libs` folder. To launch the game, run `./gradlew runClient`.
 </details>
