@@ -81,7 +81,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Mute Housing Music** - Prevent the Housing songs from being heard. 
 - **Hide Armour** - Hide armour in games where armour is always the same.
 - **Hardcore Hearts** - When your bed is broken/wither is killed in Bedwars/The Walls, set the heart style to Hardcore.
-- **Pit Lag Reducer** - Hide entities at spaun while you are in the PVP area.
+- **Pit Lag Reducer** - Hide entities at spawn while you are in the PVP area.
 - **Game Countdown Timer** - Hide the displayed title text when a game is about to begin.
 </details>
 
