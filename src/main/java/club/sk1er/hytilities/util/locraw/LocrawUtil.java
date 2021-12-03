@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -80,6 +81,7 @@ public class LocrawUtil implements ChatReceiveModule {
                     if (!this.playerSentCommand) {
                         event.setCanceled(true);
                     }
+                    MinecraftForge.EVENT_BUS.post(new LocrawEvent(locrawInformation));
 
                     this.playerSentCommand = false;
                     this.listening = false;
@@ -96,5 +98,14 @@ public class LocrawUtil implements ChatReceiveModule {
 
     public LocrawInformation getLocrawInformation() {
         return this.locrawInformation;
+    }
+
+    public boolean isLobby() {
+        if (EssentialAPI.getMinecraftUtil().isHypixel()) {
+            if (locrawInformation != null) {
+                return locrawInformation.getGameMode() == null || locrawInformation.getGameMode().trim().isEmpty() || locrawInformation.getGameType() == null;
+            }
+        }
+        return false;
     }
 }

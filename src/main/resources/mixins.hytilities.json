@@ -1,0 +1,16 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.7",
+  "package": "club.sk1er.hytilities.mixin",
+  "plugin": "club.sk1er.hytilities.forge.HytilitiesMixinPlugin",
+  "refmap": "mixins.hytilities.refmap.json",
+  "mixins": [
+    "BlockModelRendererMixin_OptiFine",
+    "BlockModelRendererMixin",
+    "RenderItemMixin",
+    "VertexLighterFlatMixin",
+    "GuiIngameAccessor",
+    "WorldMixin"
+  ],
+  "verbose": true
+}

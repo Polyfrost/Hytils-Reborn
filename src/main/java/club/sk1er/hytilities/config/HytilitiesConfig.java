@@ -21,6 +21,7 @@ package club.sk1er.hytilities.config;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
+import net.minecraft.client.Minecraft;
 
 import java.io.File;
 
@@ -284,14 +285,14 @@ public class HytilitiesConfig extends Vigilant {
     @Property(
         type = PropertyType.SWITCH, name = "Auto Queue",
         description = "Automatically queues for another game once you die.\n§eThis will require you to interact with the game in a way to prevent abuse.",
-        category = "General", subcategory = "Queue"
+        category = "Automatic"
     )
     public static boolean autoQueue;
 
     @Property(
         type = PropertyType.SLIDER, name = "Auto Queue Delay",
         description = "Delays the execution of Auto Queue.\n§eMeasured in seconds.",
-        category = "General", subcategory = "Queue",
+        category = "Automatic",
         max = 10
     )
     public static int autoQueueDelay;
@@ -387,8 +388,151 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean giftBlocker;
 
+    @Property(
+        type = PropertyType.TEXT,
+        name = "API Key",
+        description = "The API Key, for some features that require accessing to the Hypixel API such as the Auto GEXP and winstreak features.",
+        category = "API"
+    )
+    public static String apiKey = "";
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Automatically Get API Key",
+        description = "Automatically get the API Key from /api new.",
+        category = "Automatic"
+    )
+    public static boolean autoGetAPI = true;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Automatically Check GEXP",
+        description = "Automatically check your GEXP after you win a Hypixel game. \\u00a7cRequires an API Key.",
+        category = "Automatic"
+    )
+    public static boolean autoGetGEXP = false;
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "GEXP Mode",
+        description = "Choose which GEXP to get.",
+        category = "Automatic",
+        options = {"Daily", "Weekly"}
+    )
+    public static int gexpMode = 0;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Automatically Check Winstreak",
+        description = "Automatically check your winstreak after you win a Hypixel game. \\u00a7cRequires an API Key.",
+        category = "Automatic"
+    )
+    public static boolean autoGetWinstreak = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Height Overlay",
+        description = "Make blocks that are in the Hypixel height limit a different colour.\nReloads chunks automatically when toggled on and off.",
+        category = "Game",
+        subcategory = "Visual"
+    )
+    public static boolean heightOverlay = false;
+
+    @Property(
+        type = PropertyType.DECIMAL_SLIDER,
+        name = "Overlay Tint Multiplier",
+        description = "Adjust the tint multiplier.",
+        category = "Game",
+        subcategory = "Visual",
+        maxF = 1.0F
+    )
+    public static float overlayAmount = 0.7F;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Notify When Blocks Run Out",
+        description = "Pings you via a sound when your blocks are running out.",
+        category = "Game",
+        subcategory = "Sound"
+    )
+    public static boolean blockNotify = false;
+
+    @Property(
+        type = PropertyType.NUMBER,
+        name = "Block Number",
+        description = "Modify the number of blocks you (don't?) have for the Notify When Blocks Run Out feature to work.",
+        category = "Game",
+        subcategory = "Sound"
+    )
+    public static int blockNumber = 10;
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Sound",
+        description = "Choose what sound to play.",
+        category = "Game",
+        subcategory = "Sound",
+        options = {"Hypixel Ding", "Golem Hit", "Blaze Hit", "Anvil Land", "Horse Death", "Ghast Scream", "Guardian Floop", "Cat Meow", "Dog Bark"}
+    )
+    public static int blockNotifySound = 0;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Spam Sound",
+        description = "Spam the sound (this will make it VERY loud)",
+        category = "Game",
+        subcategory = "Sound"
+    )
+    public static boolean spamBlockNotify = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Hide Duels Cosmetics",
+        description = "Hide Duels Cosmetics in Hypixel.",
+        category = "Game",
+        subcategory = "Visual"
+    )
+    public static boolean hideDuelsCosmetics = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Auto GL",
+        category = "Chat",
+        description = "Send a message 5 seconds before a Hypixel game starts."
+    )
+    public static boolean autoGL = false;
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Auto GL Phrase",
+        category = "Chat",
+        description = "Choose what message is said.",
+        options = {"glhf", "Good Luck", "GL", "Have a good game!", "gl", "Good luck!"}
+    )
+    public static int glPhrase = 0;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Anti-GL",
+        category = "Chat",
+        description = "Remove all GL messages in chat."
+    )
+    public static boolean antiGL = false;
+
     public HytilitiesConfig() {
         super(new File("./config/hytilities.toml"));
         initialize();
+        registerListener("heightOverlay", (funny) -> {
+            if (funny != null) {
+                heightOverlay = (boolean) funny;
+                Minecraft.getMinecraft().renderGlobal.loadRenderers();
+            }
+        });
+        registerListener("overlayAmount", (funny) -> {
+            if (funny != null) {
+                overlayAmount = (float) funny;
+                Minecraft.getMinecraft().renderGlobal.loadRenderers();
+            }
+        });
     }
 }

@@ -45,7 +45,7 @@ public class LayerArmorBaseHook {
                         // capture the wool
                         return !locraw.getGameMode().contains("PVP_CTW");
                     case DUELS:
-                        return !locraw.getGameMode().contains("BRIDGE");
+                        return !locraw.getGameMode().contains("BRIDGE") || !locraw.getGameMode().contains("CTF");
                 }
             }
         }

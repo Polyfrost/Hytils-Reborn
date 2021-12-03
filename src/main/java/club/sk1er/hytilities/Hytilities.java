@@ -24,6 +24,9 @@ import club.sk1er.hytilities.command.PlayCommand;
 import club.sk1er.hytilities.command.SilentRemoveCommand;
 import club.sk1er.hytilities.command.SkyblockVisitCommand;
 import club.sk1er.hytilities.config.HytilitiesConfig;
+import club.sk1er.hytilities.handlers.cache.CosmeticsHandler;
+import club.sk1er.hytilities.handlers.cache.HeightHandler;
+import club.sk1er.hytilities.handlers.cache.PatternHandler;
 import club.sk1er.hytilities.handlers.chat.ChatHandler;
 import club.sk1er.hytilities.handlers.chat.modules.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.modules.events.LevelupEvent;
@@ -99,6 +102,9 @@ public class Hytilities {
         commandRegister.registerCommand(new HousingVisitCommand());
         commandRegister.registerCommand(new SilentRemoveCommand());
         commandRegister.registerCommand(new SkyblockVisitCommand());
+        CosmeticsHandler.INSTANCE.initialize();
+        PatternHandler.INSTANCE.initialize();
+        HeightHandler.INSTANCE.initialize();
 
         registerHandlers();
     }
@@ -137,6 +143,9 @@ public class Hytilities {
         eventBus.register(new PitLagReducer());
         eventBus.register(new HousingMusic());
         eventBus.register(new GameCountdown());
+
+        // height overlay
+        eventBus.register(HeightHandler.INSTANCE);
     }
 
     public void sendMessage(String message) {
