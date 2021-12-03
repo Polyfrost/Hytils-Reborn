@@ -462,7 +462,9 @@ public class HytilitiesConfig extends Vigilant {
         name = "Block Number",
         description = "Modify the number of blocks you (don't?) have for the Notify When Blocks Run Out feature to work.",
         category = "Game",
-        subcategory = "Sound"
+        subcategory = "Sound",
+        min = 1,
+        max = 20
     )
     public static int blockNumber = 10;
 
