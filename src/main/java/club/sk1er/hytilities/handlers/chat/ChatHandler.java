@@ -27,13 +27,12 @@ import club.sk1er.hytilities.handlers.chat.modules.modifiers.GameStartCompactor;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.TrimLineBreakers;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.WhiteChat;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.WhitePrivateMessages;
-import club.sk1er.hytilities.handlers.chat.modules.triggers.AutoChatSwapper;
-import club.sk1er.hytilities.handlers.chat.modules.triggers.GuildWelcomer;
-import club.sk1er.hytilities.handlers.chat.modules.triggers.ThankWatchdog;
+import club.sk1er.hytilities.handlers.chat.modules.triggers.*;
 import club.sk1er.hytilities.asm.EntityPlayerSPTransformer;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -46,6 +45,7 @@ public class ChatHandler {
 
     private final List<ChatReceiveModule> receiveModules = new ArrayList<>();
     private final List<ChatSendModule> sendModules = new ArrayList<>();
+    private final List<ChatReceiveResetModule> resetModules = new ArrayList<>();
 
     public ChatHandler() {
         this.registerModule(new AdBlocker());
@@ -67,15 +67,24 @@ public class ChatHandler {
         this.registerModule(new HypeLimitReminderRemover());
         this.registerModule(new SoulWellAnnouncerRemover());
         this.registerModule(new BedwarsAdvertisementsRemover());
+        this.registerModule(new AutoAPI());
+        this.registerModule(new AntiGL());
+        this.registerModule(new AutoGL());
         this.registerModule(new ConnectionStatusRemover());
         this.registerModule(new CurseOfSpamRemover());
         this.registerModule(new TrimLineBreakers());
         this.registerModule(new QuestBlocker());
         this.registerModule(new GiftBlocker());
+        this.registerModule(new AutoVictory());
 
         this.registerDualModule(new ShoutBlocker());
 
         this.sendModules.sort(Comparator.comparingInt(ChatModule::getPriority));
+    }
+
+    private void registerModule(ChatReceiveResetModule chatModule) {
+        receiveModules.add(chatModule);
+        resetModules.add(chatModule);
     }
 
     private void registerModule(ChatReceiveModule chatModule) {
@@ -89,6 +98,13 @@ public class ChatHandler {
     private <T extends ChatReceiveModule & ChatSendModule> void registerDualModule(T chatModule) {
         this.registerModule((ChatReceiveModule) chatModule);
         this.registerModule((ChatSendModule) chatModule);
+    }
+
+    @SubscribeEvent
+    public void handleWorldLeave(WorldEvent.Unload e) {
+        for (ChatReceiveResetModule module : this.resetModules) {
+            module.reset();
+        }
     }
 
     @SubscribeEvent

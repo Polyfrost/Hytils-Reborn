@@ -23,7 +23,7 @@ plugins {
     id "org.spongepowered.mixin" version "d5f9873"
 }
 
-version = "1.0"
+version = "1.0.0-beta10"
 group = modGroup
 archivesBaseName = modBaseName
 
@@ -96,6 +96,7 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude "mcmod.info"
     }
+    rename '(.+_at.cfg)', 'META-INF/$1'
 }
 
 tasks.reobfJar.dependsOn tasks.shadowJar

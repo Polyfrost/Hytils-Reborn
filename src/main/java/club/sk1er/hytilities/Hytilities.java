@@ -37,6 +37,7 @@ import club.sk1er.hytilities.handlers.game.housing.HousingMusic;
 import club.sk1er.hytilities.handlers.game.pit.PitLagReducer;
 import club.sk1er.hytilities.handlers.general.AutoStart;
 import club.sk1er.hytilities.handlers.general.CommandQueue;
+import club.sk1er.hytilities.handlers.general.SoundHandler;
 import club.sk1er.hytilities.handlers.language.LanguageHandler;
 import club.sk1er.hytilities.handlers.lobby.LobbyChecker;
 import club.sk1er.hytilities.handlers.lobby.bossbar.LobbyBossbar;
@@ -71,7 +72,7 @@ public class Hytilities {
 
     public static final String MOD_ID = "hytilities";
     public static final String MOD_NAME = "Hytilities";
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "1.0.0-beta10";
 
     @Mod.Instance(MOD_ID)
     public static Hytilities INSTANCE;
@@ -123,6 +124,7 @@ public class Hytilities {
         eventBus.register(commandQueue);
         eventBus.register(languageHandler);
         eventBus.register(new AutoStart());
+        eventBus.register(new SoundHandler());
 
         // chat
         eventBus.register(chatHandler);

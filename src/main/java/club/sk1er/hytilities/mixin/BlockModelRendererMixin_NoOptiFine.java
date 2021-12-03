@@ -35,7 +35,7 @@ import java.util.BitSet;
 import java.util.List;
 
 @Mixin(BlockModelRenderer.class)
-public class BlockModelRendererMixin {
+public class BlockModelRendererMixin_NoOptiFine {
     @ModifyArgs(method = "renderModelAmbientOcclusionQuads", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/WorldRenderer;putColorMultiplier(FFFI)V"))
     private void modifyArgs(Args args, IBlockAccess blockAccessIn, Block blockIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, List<BakedQuad> listQuadsIn, float[] quadBounds, BitSet boundsFlags, BlockModelRenderer.AmbientOcclusionFace aoFaceIn) {
         BlockModelRendererHook.handleHeightOverlay(args, blockAccessIn, blockIn, blockPosIn);

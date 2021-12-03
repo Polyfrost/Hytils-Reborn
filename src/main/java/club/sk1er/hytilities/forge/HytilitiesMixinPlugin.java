@@ -51,6 +51,8 @@ public class HytilitiesMixinPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (mixinClassName.endsWith("_OptiFine")) {
             return isOptiFine;
+        } else if (mixinClassName.endsWith("_NoOptiFine")) {
+            return !isOptiFine;
         }
         return true;
     }
