@@ -23,6 +23,7 @@ import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
 import net.minecraft.client.Minecraft;
 
+import java.awt.*;
 import java.io.File;
 
 @SuppressWarnings("unused")
@@ -296,6 +297,20 @@ public class HytilitiesConfig extends Vigilant {
         max = 10
     )
     public static int autoQueueDelay;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Highlight Opened Chests",
+        description = "Highlight chests that have been opened.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean highlightChests;
+
+    @Property(
+        type = PropertyType.COLOR, name = "Highlight Color",
+        description = "Highlight chests that have been opened.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static Color highlightChestsColor = Color.RED;
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Armor",

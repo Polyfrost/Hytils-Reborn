@@ -45,6 +45,7 @@ import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
 import club.sk1er.hytilities.handlers.lobby.limbo.LimboTitleFix;
 import club.sk1er.hytilities.handlers.lobby.mysterybox.MysteryBoxStar;
 import club.sk1er.hytilities.handlers.lobby.npc.NPCHider;
+import club.sk1er.hytilities.handlers.render.ChestHighlighter;
 import club.sk1er.hytilities.handlers.silent.SilentRemoval;
 import club.sk1er.hytilities.asm.EntityPlayerSPTransformer;
 import club.sk1er.hytilities.asm.GuiIngameForgeTransformer;
@@ -126,6 +127,7 @@ public class Hytilities {
         eventBus.register(languageHandler);
         eventBus.register(new AutoStart());
         eventBus.register(new SoundHandler());
+        eventBus.register(new ChestHighlighter());
 
         // chat
         eventBus.register(chatHandler);
