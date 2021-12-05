@@ -33,24 +33,12 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 public class BlockModelRendererHook {
 
     public static void handleHeightOverlay(Args args, IBlockAccess worldIn, IBlockState stateIn, BlockPos blockPosIn) {
-        if (HytilitiesConfig.heightOverlay && stateIn.getBlock() instanceof BlockColored) {
-            int height = HeightHandler.INSTANCE.height;
-            if (height == -1) {
-                return;
-            }
-            MapColor mapColor = stateIn.getBlock().getMapColor(worldIn.getBlockState(blockPosIn));
-            if (blockPosIn.getY() == (height - 1) && mapColor != null && (!(stateIn.getBlock().getMaterial() == Material.rock) || check(mapColor.colorIndex))) {
-                int color = ColorUtils.getCachedDarkColor(mapColor);
-                args.set(0, (float) ColorUtils.getRed(color) / 255);
-                args.set(1, (float) ColorUtils.getGreen(color) / 255);
-                args.set(2, (float) ColorUtils.getBlue(color) / 255);
-            }
-        }
+        handleHeightOverlay(args, worldIn, stateIn.getBlock(), blockPosIn);
     }
 
     public static void handleHeightOverlay(Args args, IBlockAccess worldIn, Block stateIn, BlockPos blockPosIn) {
         if (HytilitiesConfig.heightOverlay && stateIn instanceof BlockColored) {
-            int height = HeightHandler.INSTANCE.height;
+            int height = HeightHandler.INSTANCE.getHeight();
             if (height == -1) {
                 return;
             }

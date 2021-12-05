@@ -166,7 +166,10 @@ public class HytilitiesCommand extends CommandBase {
                     return;
                 }
                 case "forcecalculate": {
-                    HeightHandler.INSTANCE.initialize();
+                    Hytilities.INSTANCE.sendMessage(Integer.toString(HeightHandler.INSTANCE.getHeight()));
+                    Hytilities.INSTANCE.sendMessage(HypixelAPIUtils.isBedwars + "");
+                    Hytilities.INSTANCE.sendMessage(Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation().toString());
+                    Hytilities.INSTANCE.sendMessage((Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation() != null) + "" + Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby());
                     return;
                 }
                 default: {

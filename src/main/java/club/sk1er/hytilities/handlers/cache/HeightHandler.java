@@ -1,114 +1,71 @@
 package club.sk1er.hytilities.handlers.cache;
 
 import club.sk1er.hytilities.Hytilities;
-import club.sk1er.hytilities.handlers.game.GameType;
+import club.sk1er.hytilities.util.HypixelAPIUtils;
 import club.sk1er.hytilities.util.JsonUtils;
-import club.sk1er.hytilities.util.locraw.LocrawEvent;
 import club.sk1er.hytilities.util.locraw.LocrawInformation;
-import com.google.gson.JsonElement;
-import gg.essential.api.utils.Multithreading;
+import gg.essential.api.utils.WebUtil;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.io.File;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HeightHandler extends CacheHandler<String, Integer> {
     public static HeightHandler INSTANCE = new HeightHandler();
-    private final File limitFile = new File("./config/hytilitieslimits.json");
-    public int height = -1;
-    private Future<?> downloadTask = null;
 
-    public void getHeight() {
-        final LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (locraw == null || Hytilities.INSTANCE.getLocrawUtil().isLobby()) {
-            height = -1;
-            return;
-        }
-        if (locraw.getGameType() == GameType.DUELS) {
-            if (locraw.getGameMode().toLowerCase(Locale.ENGLISH).contains("bridge") || locraw.getGameMode().toLowerCase(Locale.ENGLISH).contains("ctf")) {
-                height = 100;
-            } else {
-                height = -1;
-            }
-            return;
-        }
-        if (downloadTask == null || !downloadTask.isDone() || !limitFile.exists() || jsonObject == null) {
-            return;
-        }
+    private boolean printException = true;
+
+    private int currentHeight = -2;
+
+    public int getHeight() {
+        if (currentHeight != -2) return currentHeight;
+        if (Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation() == null || jsonObject == null || Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby())
+            return -1;
         try {
-            if (Objects.requireNonNull(locraw).getGameType() == GameType.BED_WARS) {
-                if (locraw.getMapName() != null && !(locraw.getMapName().trim().isEmpty())) {
+            LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
+            if (HypixelAPIUtils.isBedwars) {
+                if (locraw.getMapName() != null && !locraw.getMapName().trim().isEmpty()) {
                     String map = locraw.getMapName().toLowerCase(Locale.ENGLISH).replace(" ", "_");
-                    Integer cached = cache.getIfPresent(map);
-                    if (cached == null) {
-                        cache.put(map, (jsonObject.getAsJsonObject("bedwars").get(map).getAsInt()));
-                        Integer funny = cache.getIfPresent(map);
-                        if (funny == null) {
-                            height = -1;
+                    if (jsonObject.getAsJsonObject("bedwars").has(map)) {
+                        Integer cached = cache.getIfPresent(map);
+                        if (cached == null) {
+                            cache.put(map, (jsonObject.getAsJsonObject("bedwars").get(map).getAsInt()));
+                            currentHeight = Objects.requireNonNull(cache.getIfPresent(map));
+                            return currentHeight;
                         } else {
-                            height = funny;
+                            currentHeight = cached;
+                            return cached;
                         }
-                    } else {
-                        height = cached;
                     }
-                } else {
-                    height = -1;
                 }
-            } else {
-                height = -1;
+            } else if (HypixelAPIUtils.isBridge) {
+                currentHeight = 100;
+                return currentHeight;
             }
+            currentHeight = -1;
+            return -1;
         } catch (Exception e) {
-            e.printStackTrace();
-            height = -1;
+            if (printException) {
+                e.printStackTrace();
+                printException = false;
+            }
+            return -1;
         }
     }
 
 
     public void initialize() {
-        downloadLimits();
-    }
-
-    private boolean downloadLimits() {
         try {
-            if (downloadTask == null) {
-                AtomicBoolean yes = new AtomicBoolean(false);
-                downloadTask = Multithreading.INSTANCE.submit(() -> {
-                    if (JsonUtils.download("https://api.pinkulu.com/HeightLimitMod/Limits", limitFile)) {
-                        JsonElement temp = JsonUtils.read("hytilitieslimits.json", limitFile.getParentFile());
-                        if (temp != null) {
-                            jsonObject = temp.getAsJsonObject();
-                            yes.set(true);
-                        }
-                    } else {
-                        if (limitFile.exists()) {
-                            JsonElement temp = JsonUtils.read("hytilitieslimits.json", limitFile.getParentFile());
-                            if (temp != null) {
-                                jsonObject = temp.getAsJsonObject();
-                                System.out.println("Using pre-downloaded file.");
-                                yes.set(true);
-                            }
-                        }
-                    }
-                });
-                if (yes.get()) return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            jsonObject = JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.pinkulu.com/HeightLimitMod/Limits")).getAsJsonObject();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return false;
     }
 
     @SubscribeEvent
-    public void onLocraw(LocrawEvent event) {
-        if (downloadLimits()) {
-            return;
-        }
-        getHeight();
+    public void onWorldLoad(WorldEvent.Load e) {
+        currentHeight = -2;
+        printException = true;
     }
 }

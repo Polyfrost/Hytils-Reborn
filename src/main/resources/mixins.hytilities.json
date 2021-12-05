@@ -8,6 +8,7 @@
     "BlockModelRendererMixin_OptiFine",
     "BlockModelRendererMixin_NoOptiFine",
     "RenderItemMixin",
+    "NetHandlerPlayClientMixin",
     "VertexLighterFlatMixin",
     "GuiIngameAccessor",
     "WorldMixin"

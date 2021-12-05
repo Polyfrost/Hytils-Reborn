@@ -23,7 +23,7 @@ public class VertexLighterFlatMixin {
 
     @ModifyArgs(method = "processQuad", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/client/model/pipeline/VertexLighterFlat;updateColor([F[FFFFFI)V"))
     private void modifyArgs(Args args) {
-        int height = HeightHandler.INSTANCE.height;
+        int height = HeightHandler.INSTANCE.getHeight();
         if (height == -1) return;
         if (HytilitiesConfig.heightOverlay && blockInfo.getBlockPos().getY() == (height - 1) && blockInfo.getBlock() instanceof BlockColored) {
             MapColor mapColor = blockInfo.getBlock().getMapColor(blockInfo.getWorld().getBlockState(blockInfo.getBlockPos()));

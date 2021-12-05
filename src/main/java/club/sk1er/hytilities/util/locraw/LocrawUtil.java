@@ -53,6 +53,7 @@ public class LocrawUtil implements ChatReceiveModule {
 
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event) {
+        locrawInformation = null;
         tick = 0;
     }
 
@@ -87,7 +88,8 @@ public class LocrawUtil implements ChatReceiveModule {
                     this.listening = false;
                 }
             }
-        } catch (Exception ignored) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -98,14 +100,5 @@ public class LocrawUtil implements ChatReceiveModule {
 
     public LocrawInformation getLocrawInformation() {
         return this.locrawInformation;
-    }
-
-    public boolean isLobby() {
-        if (EssentialAPI.getMinecraftUtil().isHypixel()) {
-            if (locrawInformation != null) {
-                return locrawInformation.getGameMode() == null || locrawInformation.getGameMode().trim().isEmpty() || locrawInformation.getGameType() == null;
-            }
-        }
-        return false;
     }
 }

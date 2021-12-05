@@ -48,6 +48,7 @@ import club.sk1er.hytilities.handlers.lobby.npc.NPCHider;
 import club.sk1er.hytilities.handlers.silent.SilentRemoval;
 import club.sk1er.hytilities.asm.EntityPlayerSPTransformer;
 import club.sk1er.hytilities.asm.GuiIngameForgeTransformer;
+import club.sk1er.hytilities.util.HypixelAPIUtils;
 import club.sk1er.hytilities.util.friends.FriendCache;
 import club.sk1er.hytilities.util.locraw.LocrawUtil;
 import club.sk1er.hytilities.util.skyblock.SkyblockChecker;
@@ -72,7 +73,7 @@ public class Hytilities {
 
     public static final String MOD_ID = "hytilities";
     public static final String MOD_NAME = "Hytilities";
-    public static final String VERSION = "1.0.0-beta10";
+    public static final String VERSION = "1.0.0-beta11";
 
     @Mod.Instance(MOD_ID)
     public static Hytilities INSTANCE;
@@ -148,6 +149,7 @@ public class Hytilities {
 
         // height overlay
         eventBus.register(HeightHandler.INSTANCE);
+        eventBus.register(new HypixelAPIUtils());
     }
 
     public void sendMessage(String message) {

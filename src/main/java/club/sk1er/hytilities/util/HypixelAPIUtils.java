@@ -28,39 +28,51 @@ import com.google.gson.JsonObject;
 import gg.essential.api.EssentialAPI;
 import gg.essential.api.utils.JsonHolder;
 import gg.essential.api.utils.WebUtil;
-import kotlin.text.StringsKt;
 import net.minecraft.client.Minecraft;
+import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StringUtils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 public class HypixelAPIUtils {
+    public static boolean isBedwars = false;
+    public static boolean isBridge = false;
     public static String gexp;
     public static String winstreak;
     public static LocrawInformation locraw;
-
-    /**
-     * @return Whether the player is in a Hypixel lobby.
-     */
-    public static boolean isLobby() {
-        if (EssentialAPI.getMinecraftUtil().isHypixel()) {
-            if (locraw != null) {
-                return locraw.getGameMode() == null || StringsKt.isBlank(locraw.getGameMode()) || locraw.getGameType() == null;
-            }
-        }
-        return false;
-    }
+    private int ticks = 0;
 
     private static String getCurrentESTTime() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
         return simpleDateFormat.format(new Date(System.currentTimeMillis()));
+    }
+
+    public static void checkGameModes() {
+        if (EssentialAPI.getMinecraftUtil().isHypixel()) {
+            ScoreObjective scoreboardObj = Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1);
+            if (scoreboardObj != null) {
+                String scObjName = ScoreboardUtil.cleanSB(scoreboardObj.getDisplayName());
+                if (scObjName.contains("BED WARS")) {
+                    isBedwars = true;
+                    isBridge = false;
+                    return;
+                } else if (scObjName.contains("DUELS")) {
+                    for (String s : ScoreboardUtil.getSidebarLines()) {
+                        if (s.toLowerCase(Locale.ENGLISH).contains("bridge ")) {
+                            isBridge = true;
+                            isBedwars = false;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        isBedwars = false;
+        isBridge = false;
     }
 
     /**
@@ -299,22 +311,23 @@ public class HypixelAPIUtils {
         return uuidResponse.optString("id");
     }
 
-    private static String cleanSB(String scoreboard) {
-        char[] nvString = StringUtils.stripControlCodes(scoreboard).toCharArray();
-        StringBuilder cleaned = new StringBuilder();
-
-        for (char c : nvString) {
-            if ((int) c > 20 && (int) c < 127) {
-                cleaned.append(c);
-            }
-        }
-
-        return cleaned.toString();
-    }
-
     public static boolean isValidKey(String key) {
         JsonObject gotten = JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/key?key=" + key)).getAsJsonObject();
         return gotten.has("success") && gotten.get("success").getAsBoolean();
+    }
+
+    @SubscribeEvent
+    public void onTick(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            if (ticks % 20 == 0) {
+                if (Minecraft.getMinecraft().thePlayer != null) {
+                    checkGameModes();
+                }
+                ticks = 0;
+            }
+
+            ticks++;
+        }
     }
 
     @SubscribeEvent
