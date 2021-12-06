@@ -362,6 +362,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean thankWatchdog;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Auto Chat Report Confirm",
+        description = "Automatically confirms chat reports.",
+        category = "Chat", subcategory = "Chat Report"
+    )
+    public static boolean autoChatReportConfirm;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Guild Welcome Message",
         description = "Send a friendly welcome message when a player joins your guild.",
         category = "Chat", subcategory = "Guild"
