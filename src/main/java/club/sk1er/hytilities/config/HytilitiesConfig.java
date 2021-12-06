@@ -122,7 +122,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Auto Activated Quest Messages",
-        description = "Remove automatically activated quest messages",
+        description = "Remove automatically activated quest messages.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean questsMessages;
@@ -314,7 +314,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Armor",
-        description = "Hide armor in games where armour is always the same.",
+        description = "Hide armor in games where armor is always the same.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideArmor;
@@ -398,7 +398,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Auto-Complete Play Commands",
-        description = "Allows tab completion of /play commands",
+        description = "Allows tab completion of /play commands.",
         category = "Chat", subcategory = "AutoComplete"
     )
     public static boolean autocompletePlayCommands;
