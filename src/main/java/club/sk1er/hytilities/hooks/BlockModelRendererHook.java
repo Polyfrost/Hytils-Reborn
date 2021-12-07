@@ -21,29 +21,23 @@ package club.sk1er.hytilities.hooks;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.cache.HeightHandler;
 import club.sk1er.hytilities.util.ColorUtils;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 public class BlockModelRendererHook {
 
-    public static void handleHeightOverlay(Args args, IBlockAccess worldIn, IBlockState stateIn, BlockPos blockPosIn) {
-        handleHeightOverlay(args, worldIn, stateIn.getBlock(), blockPosIn);
-    }
-
-    public static void handleHeightOverlay(Args args, IBlockAccess worldIn, Block stateIn, BlockPos blockPosIn) {
-        if (HytilitiesConfig.heightOverlay && stateIn instanceof BlockColored) {
+    public static void handleHeightOverlay(Args args, IBlockState stateIn, BlockPos blockPosIn) {
+        if (HytilitiesConfig.heightOverlay && stateIn.getBlock() instanceof BlockColored) {
             int height = HeightHandler.INSTANCE.getHeight();
             if (height == -1) {
                 return;
             }
-            MapColor mapColor = stateIn.getMapColor(worldIn.getBlockState(blockPosIn));
-            if (blockPosIn.getY() == (height - 1) && mapColor != null && (!(stateIn.getMaterial() == Material.rock) || check(mapColor.colorIndex))) {
+            MapColor mapColor = stateIn.getBlock().getMapColor(stateIn);
+            if (blockPosIn.getY() == (height - 1) && mapColor != null && (!(stateIn.getBlock().getMaterial() == Material.rock) || check(mapColor.colorIndex))) {
                 int color = ColorUtils.getCachedDarkColor(mapColor);
                 args.set(0, (float) ColorUtils.getRed(color) / 255);
                 args.set(1, (float) ColorUtils.getGreen(color) / 255);

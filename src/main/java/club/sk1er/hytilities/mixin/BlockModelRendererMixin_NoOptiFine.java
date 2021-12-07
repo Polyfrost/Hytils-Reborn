@@ -38,11 +38,19 @@ import java.util.List;
 public class BlockModelRendererMixin_NoOptiFine {
     @ModifyArgs(method = "renderModelAmbientOcclusionQuads", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/WorldRenderer;putColorMultiplier(FFFI)V"))
     private void modifyArgs(Args args, IBlockAccess blockAccessIn, Block blockIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, List<BakedQuad> listQuadsIn, float[] quadBounds, BitSet boundsFlags, BlockModelRenderer.AmbientOcclusionFace aoFaceIn) {
-        BlockModelRendererHook.handleHeightOverlay(args, blockAccessIn, blockIn, blockPosIn);
+        try {
+            BlockModelRendererHook.handleHeightOverlay(args, blockAccessIn.getBlockState(blockPosIn), blockPosIn);
+        } catch (Exception ignored) {
+
+        }
     }
 
     @ModifyArgs(method = "renderModelStandardQuads", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/WorldRenderer;putColorMultiplier(FFFI)V"))
     private void modifyArg2s(Args args, IBlockAccess blockAccessIn, Block blockIn, BlockPos blockPosIn, EnumFacing faceIn, int brightnessIn, boolean ownBrightness, WorldRenderer worldRendererIn, List<BakedQuad> listQuadsIn, BitSet boundsFlags) {
-        BlockModelRendererHook.handleHeightOverlay(args, blockAccessIn, blockIn, blockPosIn);
+        try {
+            BlockModelRendererHook.handleHeightOverlay(args, blockAccessIn.getBlockState(blockPosIn), blockPosIn);
+        } catch (Exception ignored) {
+
+        }
     }
 }

@@ -20,6 +20,7 @@ package club.sk1er.hytilities.util;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
+import club.sk1er.hytilities.handlers.cache.HeightHandler;
 import club.sk1er.hytilities.util.locraw.LocrawEvent;
 import club.sk1er.hytilities.util.locraw.LocrawInformation;
 import com.google.gson.JsonArray;
@@ -322,6 +323,7 @@ public class HypixelAPIUtils {
             if (ticks % 20 == 0) {
                 if (Minecraft.getMinecraft().thePlayer != null) {
                     checkGameModes();
+                    HeightHandler.INSTANCE.getHeight();
                 }
                 ticks = 0;
             }
