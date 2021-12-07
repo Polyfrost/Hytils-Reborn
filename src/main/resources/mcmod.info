@@ -5,9 +5,10 @@
     "description": "Hypixel-focused Quality of Life mod.",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/Sk1erLLC/hytilities",
-    "updateUrl": "https://sk1er.club/mods/hytilities",
+    "url": "https://github.com/W-OVERFLOW/Hytilities-Reborn",
+    "updateUrl": "https://github.com/W-OVERFLOW/Hytilities-Reborn\"",
     "authorList": [
+      "Wyvest",
       "Sk1erLLC"
     ],
     "credits": "",
