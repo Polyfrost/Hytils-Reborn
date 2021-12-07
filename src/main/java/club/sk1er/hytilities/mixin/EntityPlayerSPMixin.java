@@ -1,6 +1,6 @@
 /*
  * Hytilities - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020  Sk1er LLC
+ * Copyright (C) 2021  Sk1er LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,23 +16,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.asm.hooks;
+package club.sk1er.hytilities.mixin;
 
-import club.sk1er.hytilities.events.TitleEvent;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
+import club.sk1er.hytilities.Hytilities;
+import net.minecraft.client.entity.EntityPlayerSP;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@SuppressWarnings("unused")
-public class GuiIngameForgeHook {
-
-    // Allow the title text to be hooked into.
-    public static void postTitleEvent(String title, String subtitle) {
-        TitleEvent event = new TitleEvent(title, subtitle);
-        MinecraftForge.EVENT_BUS.post(event);
-
-        // Set the title and subtitle to empty strings.
-        if (event.isCanceled()) {
-            Minecraft.getMinecraft().ingameGUI.displayTitle(null, null, -1, -1, -1);
-        }
+@Mixin(EntityPlayerSP.class)
+public class EntityPlayerSPMixin {
+    @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
+    private void handleSentMessages(String message, CallbackInfo ci) {
+        if (Hytilities.INSTANCE.getChatHandler().handleSentMessage(message) == null) ci.cancel();
     }
 }

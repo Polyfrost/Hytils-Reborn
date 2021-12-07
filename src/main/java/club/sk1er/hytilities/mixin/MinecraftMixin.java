@@ -18,6 +18,8 @@
 
 package club.sk1er.hytilities.mixin;
 
+import club.sk1er.hytilities.config.HytilitiesConfig;
+import club.sk1er.hytilities.handlers.lobby.limbo.LimboLimiter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
@@ -30,7 +32,9 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
@@ -42,6 +46,11 @@ public class MinecraftMixin {
 
     @Shadow
     public EntityPlayerSP thePlayer;
+
+    @Inject(method = "getLimitFramerate", at = @At("HEAD"))
+    private void limitFramerate(CallbackInfoReturnable<Integer> cir) {
+        if (LimboLimiter.shouldLimitFramerate()) cir.setReturnValue(HytilitiesConfig.limboFPS);
+    }
 
     @Redirect(method = "clickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerControllerMP;clickBlock(Lnet/minecraft/util/BlockPos;Lnet/minecraft/util/EnumFacing;)Z"))
     private boolean captureClickBlock(PlayerControllerMP instance, BlockPos itemstack, EnumFacing block1) {

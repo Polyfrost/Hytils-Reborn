@@ -75,11 +75,6 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
                         }
                     }
                     break;
-
-                case "drawPing":
-                case "func_175245_a":
-                    method.instructions.insert(hidePing());
-                    break;
             }
         }
     }
@@ -101,18 +96,6 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
         list.add(new VarInsnNode(Opcodes.ALOAD, 24));
         list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "club/sk1er/hytilities/handlers/lobby/tab/TabChanger", "shouldRenderPlayerHead", "(Lnet/minecraft/client/network/NetworkPlayerInfo;)Z", false));
         list.add(new JumpInsnNode(Opcodes.IFEQ, label));
-        return list;
-    }
-
-    // if (!TabChanger.hidePing(networkPlayerInfoIn))
-    private InsnList hidePing() {
-        InsnList list = new InsnList();
-        LabelNode label = new LabelNode();
-        list.add(new VarInsnNode(Opcodes.ALOAD, 4));
-        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "club/sk1er/hytilities/handlers/lobby/tab/TabChanger", "hidePing", "(Lnet/minecraft/client/network/NetworkPlayerInfo;)Z", false));
-        list.add(new JumpInsnNode(Opcodes.IFEQ, label));
-        list.add(new InsnNode(Opcodes.RETURN));
-        list.add(label);
         return list;
     }
 }

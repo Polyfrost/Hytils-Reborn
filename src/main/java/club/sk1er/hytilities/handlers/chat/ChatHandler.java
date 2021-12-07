@@ -27,7 +27,6 @@ import club.sk1er.hytilities.handlers.chat.modules.modifiers.GameStartCompactor;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.WhiteChat;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.WhitePrivateMessages;
 import club.sk1er.hytilities.handlers.chat.modules.triggers.*;
-import club.sk1er.hytilities.asm.EntityPlayerSPTransformer;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -130,7 +129,6 @@ public class ChatHandler {
     /**
      * Allow modifying sent messages, or cancelling them altogether.
      * <p>
-     * Used in {@link EntityPlayerSPTransformer}.
      *
      * @param message a message that the user has sent
      * @return the modified message, or {@code null} if the message should be cancelled

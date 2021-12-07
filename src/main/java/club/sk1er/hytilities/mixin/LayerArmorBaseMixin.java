@@ -1,6 +1,6 @@
 /*
  * Hytilities - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020  Sk1er LLC
+ * Copyright (C) 2021  Sk1er LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.sk1er.hytilities.asm.hooks;
+package club.sk1er.hytilities.mixin;
 
 import club.sk1er.hytilities.Hytilities;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.util.locraw.LocrawInformation;
 import gg.essential.api.EssentialAPI;
+import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@SuppressWarnings("unused")
-public class LayerArmorBaseHook {
-    public static boolean shouldRenderArmour(ItemStack itemStack) {
+@Mixin(LayerArmorBase.class)
+public abstract class LayerArmorBaseMixin {
+    @Shadow
+    public abstract ItemStack getCurrentArmor(EntityLivingBase entitylivingbaseIn, int armorSlot);
+
+    @Inject(method = "renderLayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/layers/LayerArmorBase;isSlotForLeggings(I)Z"), cancellable = true)
+    private void cancelArmor(EntityLivingBase entitylivingbaseIn, float p_177182_2_, float p_177182_3_, float partialTicks, float p_177182_5_, float p_177182_6_, float p_177182_7_, float scale, int armorSlot, CallbackInfo ci) {
+        if (!shouldRenderArmour(getCurrentArmor(entitylivingbaseIn, armorSlot))) {
+            ci.cancel();
+        }
+    }
+
+    private static boolean shouldRenderArmour(ItemStack itemStack) {
         if (!HytilitiesConfig.hideArmor || itemStack == null || !EssentialAPI.getMinecraftUtil().isHypixel()) return true;
 
         final Item item = itemStack.getItem();

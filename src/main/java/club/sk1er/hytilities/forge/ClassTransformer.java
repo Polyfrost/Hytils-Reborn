@@ -18,12 +18,7 @@
 
 package club.sk1er.hytilities.forge;
 
-import club.sk1er.hytilities.asm.EntityPlayerSPTransformer;
-import club.sk1er.hytilities.asm.GuiIngameForgeTransformer;
 import club.sk1er.hytilities.asm.GuiPlayerTabOverlayTransformer;
-import club.sk1er.hytilities.asm.LayerArmorBaseTransformer;
-import club.sk1er.hytilities.asm.MinecraftTransformer;
-import club.sk1er.hytilities.asm.GuiChatTransformer;
 import club.sk1er.hytilities.forge.transformer.HytilitiesTransformer;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -43,12 +38,7 @@ public class ClassTransformer implements IClassTransformer {
     private final boolean outputBytecode = Boolean.parseBoolean(System.getProperty("debugBytecode", "false"));
 
     public ClassTransformer() {
-        registerTransformer(new MinecraftTransformer());
         registerTransformer(new GuiPlayerTabOverlayTransformer());
-        registerTransformer(new LayerArmorBaseTransformer());
-        registerTransformer(new GuiIngameForgeTransformer());
-        registerTransformer(new EntityPlayerSPTransformer());
-        registerTransformer(new GuiChatTransformer());
     }
 
     private void registerTransformer(HytilitiesTransformer transformer) {

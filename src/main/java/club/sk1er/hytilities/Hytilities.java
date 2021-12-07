@@ -18,11 +18,7 @@
 
 package club.sk1er.hytilities;
 
-import club.sk1er.hytilities.command.HousingVisitCommand;
-import club.sk1er.hytilities.command.HytilitiesCommand;
-import club.sk1er.hytilities.command.PlayCommand;
-import club.sk1er.hytilities.command.SilentRemoveCommand;
-import club.sk1er.hytilities.command.SkyblockVisitCommand;
+import club.sk1er.hytilities.command.*;
 import club.sk1er.hytilities.config.HytilitiesConfig;
 import club.sk1er.hytilities.handlers.cache.CosmeticsHandler;
 import club.sk1er.hytilities.handlers.cache.HeightHandler;
@@ -47,8 +43,6 @@ import club.sk1er.hytilities.handlers.lobby.mysterybox.MysteryBoxStar;
 import club.sk1er.hytilities.handlers.lobby.npc.NPCHider;
 import club.sk1er.hytilities.handlers.render.ChestHighlighter;
 import club.sk1er.hytilities.handlers.silent.SilentRemoval;
-import club.sk1er.hytilities.asm.EntityPlayerSPTransformer;
-import club.sk1er.hytilities.asm.GuiIngameForgeTransformer;
 import club.sk1er.hytilities.util.HypixelAPIUtils;
 import club.sk1er.hytilities.util.friends.FriendCache;
 import club.sk1er.hytilities.util.locraw.LocrawUtil;
@@ -63,7 +57,6 @@ import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.objectweb.asm.tree.ClassNode;
 
 @Mod(
     modid = Hytilities.MOD_ID,
@@ -74,7 +67,7 @@ public class Hytilities {
 
     public static final String MOD_ID = "hytilities";
     public static final String MOD_NAME = "Hytilities";
-    public static final String VERSION = "1.0.0-beta11";
+    public static final String VERSION = "1.0.0-beta12";
 
     @Mod.Instance(MOD_ID)
     public static Hytilities INSTANCE;
@@ -174,10 +167,6 @@ public class Hytilities {
         return lobbyChecker;
     }
 
-    /**
-     * Used in {@link GuiIngameForgeTransformer#transform(ClassNode, String)}
-     */
-    @SuppressWarnings("unused")
     public HardcoreStatus getHardcoreStatus() {
         return hardcoreStatus;
     }
@@ -201,10 +190,6 @@ public class Hytilities {
     public LanguageHandler getLanguageHandler() {
         return languageHandler;
     }
-
-    /**
-     * Used in {@link EntityPlayerSPTransformer}
-     */
     @SuppressWarnings("unused")
     public ChatHandler getChatHandler() {
         return chatHandler;

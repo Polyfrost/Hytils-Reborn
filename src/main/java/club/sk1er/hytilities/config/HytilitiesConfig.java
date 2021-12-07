@@ -41,7 +41,7 @@ public class HytilitiesConfig extends Vigilant {
         description = "Prevent separators from overflowing onto the next chat line.",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean lineBreakerTrim;
+    public static boolean lineBreakerTrim = true;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Lobby Statuses",
@@ -235,10 +235,17 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Limbo Limiter",
-        description = "While in Limbo, limit your framerate to 15 to reduce the load of the game on your computer.",
+        description = "While in Limbo, limit your framerate to reduce the load of the game on your computer.",
         category = "Lobby", subcategory = "General"
     )
     public static boolean limboLimiter;
+
+    @Property(
+        type = PropertyType.SLIDER, name = "Limbo Limiter FPS",
+        description = "While in Limbo, limit your framerate to reduce the load of the game on your computer.",
+        category = "Lobby", subcategory = "General"
+    )
+    public static int limboFPS = 15;
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Lobby Bossbars",
