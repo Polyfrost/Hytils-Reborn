@@ -1,6 +1,5 @@
 # Hytilities
 
-</div>
 <details open>
   <summary>User Guide</summary>
 
@@ -17,7 +16,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
  <summary>Chat</summary>
 
 ## Chat
-- **Autocomplete /play Commands** - Allows tab completion of /play commands
+- **Autocomplete /play Commands** - Allows tab completion of /play commands.
 - **Guild Welcome Message** - Send a friendly welcome message when a player joins your guild.
 - **Chat Swapper** - Automatically change back to a selected channel when leaving a party.
 - **Chat Swapper Channel** - The channel to return to when leaving a party. Requires Chat Swapper.
@@ -42,7 +41,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Remove Guild Motd** - Remove the guild Message Of The Day.
 - **Remove Chat Emojis** - Remove MVP++ chat emo.jis.
 - **Remove Server Connected Messages** - Remove server connection messages. 
-- **Remove Automatically Activated Quest Messages** - Remove automatically activated quest messages
+- **Remove Automatically Activated Quest Messages** - Remove automatically activated quest messages.
 - **White Chat** - Make nons chat messages appear as the normal chat message color.
 - **White Private Messages** - Make private messages appear as the normal chat message color.
 - **Cleaner Game Start Counter** - Compacts game start announcements.
@@ -79,15 +78,12 @@ If you do not know how to install a Forge mod, then we recommend following [this
 
 # Game
 - **Mute Housing Music** - Prevent the Housing songs from being heard. 
-- **Hide Armour** - Hide armour in games where armour is always the same.
+- **Hide Armour** - Hide armour in games where armor is always the same.
 - **Hardcore Hearts** - When your bed is broken/wither is killed in Bedwars/The Walls, set the heart style to Hardcore.
 - **Pit Lag Reducer** - Hide entities at spawn while you are in the PVP area.
 - **Game Countdown Timer** - Hide the displayed title text when a game is about to begin.
 </details>
-
-  #
   
-</details>
 </details>
 <details>
   <summary>How to contribute</summary>

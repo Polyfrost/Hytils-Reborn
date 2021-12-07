@@ -55,6 +55,7 @@ public class ChatHandler {
         this.registerModule(new LevelupEvent());
         this.registerModule(new GuildWelcomer());
         this.registerModule(new ThankWatchdog());
+        this.registerModule(new AutoChatReportConfirm());
         this.registerModule(new AutoChatSwapper());
         this.registerModule(new AchievementEvent());
         this.registerModule(new ConnectedMessage());
