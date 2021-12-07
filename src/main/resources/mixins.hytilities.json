@@ -9,6 +9,7 @@
     "BlockModelRendererMixin_NoOptiFine",
     "RenderItemMixin",
     "NetHandlerPlayClientMixin",
+    "GuiUtilRenderComponentsMixin",
     "MinecraftMixin",
     "VertexLighterFlatMixin",
     "GuiIngameAccessor",

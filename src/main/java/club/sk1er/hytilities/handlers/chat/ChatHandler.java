@@ -24,7 +24,6 @@ import club.sk1er.hytilities.handlers.chat.modules.events.AchievementEvent;
 import club.sk1er.hytilities.handlers.chat.modules.events.LevelupEvent;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.DefaultChatRestyler;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.GameStartCompactor;
-import club.sk1er.hytilities.handlers.chat.modules.modifiers.TrimLineBreakers;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.WhiteChat;
 import club.sk1er.hytilities.handlers.chat.modules.modifiers.WhitePrivateMessages;
 import club.sk1er.hytilities.handlers.chat.modules.triggers.*;
@@ -73,7 +72,6 @@ public class ChatHandler {
         this.registerModule(new AutoGL());
         this.registerModule(new ConnectionStatusRemover());
         this.registerModule(new CurseOfSpamRemover());
-        this.registerModule(new TrimLineBreakers());
         this.registerModule(new QuestBlocker());
         this.registerModule(new GiftBlocker());
         this.registerModule(new AutoVictory());
