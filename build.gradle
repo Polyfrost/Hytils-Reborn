@@ -39,7 +39,7 @@ minecraft {
     mappings = "stable_22"
     makeObfSourceJar = false
 
-    clientJvmArgs += '-Dfml.coreMods.load=club.sk1er.hytilities.forge.FMLLoadingPlugin'
+    clientJvmArgs += '-Dfml.coreMods.load=net.wyvest.hytilities.forge.FMLLoadingPlugin'
     clientRunArgs += "--tweakClass gg.essential.loader.stage0.EssentialSetupTweaker"
     clientRunArgs += "--mixin mixins.hytilities.json"
 }
@@ -70,7 +70,7 @@ jar {
     manifest.attributes(
             "ModSide": "CLIENT",
             "FMLCorePluginContainsFMLMod": "Yes, yes it does",
-            "FMLCorePlugin": "club.sk1er.hytilities.forge.FMLLoadingPlugin",
+            "FMLCorePlugin": "net.wyvest.hytilities.forge.FMLLoadingPlugin",
             "TweakClass": "gg.essential.loader.stage0.EssentialSetupTweaker",
             "TweakOrder": "0",
             "FMLAT": "hytilities_at.cfg",

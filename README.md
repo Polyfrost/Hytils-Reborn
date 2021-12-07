@@ -4,8 +4,8 @@
   <summary>User Guide</summary>
 
 ### What is Hytilities?
-Hytilities is a [Hypixel](https://hypixel.net) focused Forge 1.8.9 mod, adding tons of Quality of Life features that
-you would want while on Hypixel, such as an Advertisement-Blocker, AutoQueue, Game Status Restyle, AutoComplete for /play and plenty others to discover on your own! 
+Hytilities is a [Hypixel](https://hypixel.net) focused Forge 1.8.9 mod based on [Sk1er LLC's Hytilities](https://github.com/Sk1erLLC/Hytilities), adding tons of Quality of Life features that
+you would want while on Hypixel, such as an Advertisement-Blocker, AutoQueue, AutoGL, Height Overlay, Game Status Restyle, AutoComplete for /play and plenty others to discover on your own! 
 
 ### How do I use Hytilities?
 Hytilities is installed just like any other Forge mod.
@@ -47,7 +47,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Cleaner Game Start Counter** - Compacts game start announcements.
 - **Remove Curse Of Spam Messages** - Hides the constant spam of kali's curse of spam.
 - **Remove Gifts Message** - Removes the gifts messages.
-- **Thank watchdog** - Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.
+- **Thank Watchdog** - Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.
 </details>
 <details>
   <summary>Lobby</summary>

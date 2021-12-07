@@ -551,7 +551,7 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean antiGL = false;
 
     public HytilitiesConfig() {
-        super(new File("./config/hytilities.toml"));
+        super(new File("./config/hytilitiesreborn.toml"));
         initialize();
         registerListener("heightOverlay", (funny) -> {
             if (funny != null) {
