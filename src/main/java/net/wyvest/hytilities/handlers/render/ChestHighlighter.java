@@ -46,6 +46,7 @@ public class ChestHighlighter {
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
+        if (!HytilitiesConfig.highlightChests) return;
         if (isNotSupported()) return;
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
             TileEntity tile = event.world.getTileEntity(event.pos);
@@ -65,6 +66,7 @@ public class ChestHighlighter {
 
     @SubscribeEvent
     public void onWorldRendered(RenderWorldLastEvent event) {
+        if (!HytilitiesConfig.highlightChests) return;
         if (isNotSupported()) return;
         if (highlightedChestPositions.isEmpty())
             return;

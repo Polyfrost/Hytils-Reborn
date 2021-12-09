@@ -99,7 +99,7 @@ interface ChatModule {
      * Get the player's server location.
      */
     @Nullable
-    default LocrawInformation getLowcraw() {
+    default LocrawInformation getLocraw() {
         return Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
     }
 

@@ -92,9 +92,9 @@ public class Hytilities {
     public void init(FMLInitializationEvent event) {
         this.config.preload();
 
+        new HytilitiesCommand().register();
         final ClientCommandHandler commandRegister = ClientCommandHandler.instance;
         commandRegister.registerCommand(new PlayCommand());
-        commandRegister.registerCommand(new HytilitiesCommand());
         commandRegister.registerCommand(new HousingVisitCommand());
         commandRegister.registerCommand(new SilentRemoveCommand());
         commandRegister.registerCommand(new SkyblockVisitCommand());

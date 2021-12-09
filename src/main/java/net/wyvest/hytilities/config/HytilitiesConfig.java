@@ -26,7 +26,6 @@ import net.minecraft.client.Minecraft;
 import java.awt.*;
 import java.io.File;
 
-@SuppressWarnings("unused")
 public class HytilitiesConfig extends Vigilant {
 
     @Property(

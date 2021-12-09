@@ -18,168 +18,155 @@
 
 package net.wyvest.hytilities.command;
 
+import gg.essential.api.EssentialAPI;
+import gg.essential.api.commands.Command;
+import gg.essential.api.commands.DefaultHandler;
+import gg.essential.api.commands.DisplayName;
+import gg.essential.api.commands.SubCommand;
+import gg.essential.api.utils.Multithreading;
+import net.minecraft.util.EnumChatFormatting;
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.config.HytilitiesConfig;
-import net.wyvest.hytilities.handlers.cache.HeightHandler;
 import net.wyvest.hytilities.util.HypixelAPIUtils;
-import gg.essential.api.EssentialAPI;
-import gg.essential.api.utils.Multithreading;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.util.EnumChatFormatting;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
-public class HytilitiesCommand extends CommandBase {
+public class HytilitiesCommand extends Command {
+
+    private final Set<Alias> hashSet = new HashSet<>();
+
     @Override
-    public String getCommandName() {
-        return "hytilities";
+    public Set<Alias> getCommandAliases() {
+        return hashSet;
     }
 
-    @Override
-    public List<String> getCommandAliases() {
-        return Collections.singletonList("hytils");
+    public HytilitiesCommand() {
+        super("hytilities", true);
+        hashSet.add(new Alias("hytils"));
+        hashSet.add(new Alias("hytilsreborn"));
+        hashSet.add(new Alias("hytilitiesreborn"));
     }
 
-    @Override
-    public String getCommandUsage(ICommandSender sender) {
-        return "/" + Hytilities.MOD_NAME;
+    @DefaultHandler
+    public void handleDefault() {
+        EssentialAPI.getGuiUtil().openScreen(Hytilities.INSTANCE.getConfig().gui());
     }
 
-    @Override
-    public void processCommand(ICommandSender sender, String[] args) {
-        if (args.length == 0) {
-            EssentialAPI.getGuiUtil().openScreen(Hytilities.INSTANCE.getConfig().gui());
-        } else {
-            switch (args[0].toLowerCase(Locale.ENGLISH)) {
-                case "gexp": {
-                    Multithreading.runAsync(() -> {
-                        if (HytilitiesConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilitiesConfig.apiKey)) {
-                            Hytilities.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
-                            return;
-                        }
-                        switch (args.length) {
-                            case 3: {
-                                switch (args[2]) {
-                                    case "daily": {
-                                        if (HypixelAPIUtils.getGEXP(args[1])) {
-                                            EssentialAPI.getNotifications()
-                                                .push(Hytilities.MOD_NAME, args[1] + " currently has " + HypixelAPIUtils.gexp + " daily guild EXP.");
-                                        } else {
-                                            EssentialAPI.getNotifications()
-                                                .push(Hytilities.MOD_NAME, "There was a problem trying to get " + args[1] + "'s daily GEXP.");
-                                        }
-                                        return;
-                                    }
-                                    case "weekly": {
-                                        if (HypixelAPIUtils.getWeeklyGEXP(args[1])) {
-                                            EssentialAPI.getNotifications()
-                                                .push(Hytilities.MOD_NAME, args[1] + " currently has " + HypixelAPIUtils.gexp + " weekly guild EXP.");
-                                        } else {
-                                            EssentialAPI.getNotifications()
-                                                .push(Hytilities.MOD_NAME, "There was a problem trying to get " + args[1] + "'s weekly GEXP.");
-                                        }
-                                        return;
-                                    }
-                                    default: {
-                                        Hytilities.INSTANCE.sendMessage("Invalid command usage.");
-                                        return;
-                                    }
-                                }
-                            }
-                            case 2: {
-                                if (HypixelAPIUtils.getGEXP(args[1])) {
-                                    EssentialAPI.getNotifications()
-                                        .push(Hytilities.MOD_NAME, args[1] + " currently has " + HypixelAPIUtils.gexp + " guild EXP.");
-                                } else {
-                                    EssentialAPI.getNotifications()
-                                        .push(Hytilities.MOD_NAME, "There was a problem trying to get " + args[1] + "'s GEXP.");
-                                }
-                                return;
-                            }
-                            default: {
-                                if (HypixelAPIUtils.getGEXP()) {
-                                    EssentialAPI.getNotifications()
-                                        .push(Hytilities.MOD_NAME, "You currently have " + HypixelAPIUtils.gexp + " guild EXP.");
-                                } else {
-                                    EssentialAPI.getNotifications()
-                                        .push(Hytilities.MOD_NAME, "There was a problem trying to get your GEXP.");
-                                }
-                            }
-                        }
-                    });
-                    return;
-                }
-                case "winstreak": {
-                    Multithreading.runAsync(() -> {
-                        if (HytilitiesConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilitiesConfig.apiKey)) {
-                            Hytilities.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
-                            return;
-                        }
-                        switch (args.length) {
-                            case 3: {
-                                if (HypixelAPIUtils.getWinstreak(args[1], args[2])) {
-                                    EssentialAPI.getNotifications()
-                                        .push(Hytilities.MOD_NAME, args[1] + " currently has a " + HypixelAPIUtils.winstreak + " winstreak in " + args[2] + ".");
-                                } else {
-                                    EssentialAPI.getNotifications()
-                                        .push(Hytilities.MOD_NAME, "There was a problem trying to get " + args[1] + "'s winstreak in " + args[2] + ".");
-                                }
-                                return;
-                            }
-                            case 2: {
-                                if (HypixelAPIUtils.getWinstreak(args[1])) {
-                                    EssentialAPI.getNotifications()
-                                        .push(Hytilities.MOD_NAME, args[1] + " currently has a " + HypixelAPIUtils.winstreak + " winstreak.");
-                                } else {
-                                    EssentialAPI.getNotifications()
-                                        .push(Hytilities.MOD_NAME, "There was a problem trying to get " + args[1] + "'s winstreak.");
-                                }
-                                return;
-                            }
-                            default: {
-                                if (HypixelAPIUtils.getWinstreak()) {
-                                    EssentialAPI.getNotifications()
-                                        .push(Hytilities.MOD_NAME, "You currently have a " + HypixelAPIUtils.winstreak + " winstreak.");
-                                } else {
-                                    EssentialAPI.getNotifications()
-                                        .push(Hytilities.MOD_NAME, "There was a problem trying to get your winstreak.");
-                                }
-                            }
-                        }
-                    });
-                    return;
-                }
-                case "setkey": {
-                    Multithreading.runAsync(() -> {
-                        if (args.length >= 3 && HypixelAPIUtils.isValidKey(args[2])) {
-                            HytilitiesConfig.apiKey = args[2];
-                            Hytilities.INSTANCE.getConfig().markDirty();
-                            Hytilities.INSTANCE.getConfig().writeData();
-                            Hytilities.INSTANCE.sendMessage(EnumChatFormatting.GREEN + "Saved API key successfully!");
+    @SubCommand("gexp")
+    public void getGEXP(@DisplayName("username") Optional<String> username, @DisplayName("type") Optional<String> type) {
+        Multithreading.runAsync(() -> {
+            if (HytilitiesConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilitiesConfig.apiKey)) {
+                Hytilities.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
+                return;
+            }
+            if (username.isPresent()) {
+                if (!type.isPresent()) {
+                    if (HypixelAPIUtils.getGEXP(username.get())) {
+                        EssentialAPI.getNotifications()
+                            .push(Hytilities.MOD_NAME, username.get() + " currently has " + HypixelAPIUtils.gexp + " guild EXP.");
+                    } else {
+                        EssentialAPI.getNotifications()
+                            .push(Hytilities.MOD_NAME, "There was a problem trying to get " + username.get() + "'s GEXP.");
+                    }
+                } else {
+                    if (type.get().equals("daily")) {
+                        if (HypixelAPIUtils.getGEXP(username.get())) {
+                            EssentialAPI.getNotifications()
+                                .push(
+                                    Hytilities.MOD_NAME,
+                                    username.get() + " currently has " + HypixelAPIUtils.gexp + " daily guild EXP."
+                                );
                         } else {
-                            Hytilities.INSTANCE.sendMessage(EnumChatFormatting.RED + "Invalid API key! Please try again.");
+                            EssentialAPI.getNotifications()
+                                .push(Hytilities.MOD_NAME, "There was a problem trying to get $username's daily GEXP.");
                         }
-                    });
-                    return;
+                    } else if (type.get().equals("weekly")) {
+                        if (HypixelAPIUtils.getWeeklyGEXP(username.get())) {
+                            EssentialAPI.getNotifications()
+                                .push(
+                                    Hytilities.MOD_NAME,
+                                    username.get() + " currently has " + HypixelAPIUtils.gexp + " weekly guild EXP."
+                                );
+                        } else {
+                            EssentialAPI.getNotifications()
+                                .push(Hytilities.MOD_NAME, "There was a problem trying to get " + username.get() + "'s weekly GEXP.");
+                        }
+                    } else {
+                        EssentialAPI.getNotifications()
+                            .push(Hytilities.MOD_NAME, "The type argument was not valid.");
+                    }
                 }
-                case "forcecalculate": {
-                    Hytilities.INSTANCE.sendMessage(Integer.toString(HeightHandler.INSTANCE.getHeight()));
-                    Hytilities.INSTANCE.sendMessage(Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation().toString());
-                    Hytilities.INSTANCE.sendMessage((Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation() != null) + "" + Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby());
-                    return;
-                }
-                default: {
-                    Hytilities.INSTANCE.sendMessage("Invalid command usage.");
+            } else {
+                if (HypixelAPIUtils.getGEXP()) {
+                    EssentialAPI.getNotifications()
+                        .push(Hytilities.MOD_NAME, "You currently have " + HypixelAPIUtils.gexp + " guild EXP.");
+                } else {
+                    EssentialAPI.getNotifications()
+                        .push(Hytilities.MOD_NAME, "There was a problem trying to get your GEXP.");
                 }
             }
-        }
+        });
     }
 
-    @Override
-    public int getRequiredPermissionLevel() {
-        return -1;
+    @SubCommand("winstreak")
+    public void getWinstreak(@DisplayName("username") Optional<String> username, @DisplayName("gamemode") Optional<String> gamemode) {
+        Multithreading.runAsync(() -> {
+            if (HytilitiesConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilitiesConfig.apiKey)) {
+                Hytilities.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
+                return;
+            }
+            if (username.isPresent()) {
+                if (gamemode.isPresent()) {
+                    if (HypixelAPIUtils.getWinstreak(username.get(), gamemode.get())) {
+                        EssentialAPI.getNotifications()
+                            .push(
+                                Hytilities.MOD_NAME,
+                                username.get() + " currently has a " + HypixelAPIUtils.winstreak + " winstreak in " + gamemode.get() + "."
+                            );
+                    } else {
+                        EssentialAPI.getNotifications()
+                            .push(
+                                Hytilities.MOD_NAME,
+                                "There was a problem trying to get " + username.get() + "'s winstreak in $gamemode."
+                            );
+                    }
+                } else {
+                    if (HypixelAPIUtils.getWinstreak(username.get())) {
+                        EssentialAPI.getNotifications()
+                            .push(
+                                Hytilities.MOD_NAME,
+                                username.get() + " currently has a " + HypixelAPIUtils.winstreak + " winstreak."
+                            );
+                    } else {
+                        EssentialAPI.getNotifications()
+                            .push(Hytilities.MOD_NAME, "There was a problem trying to get " + username.get() + "'s winstreak.");
+                    }
+                }
+            } else {
+                if (HypixelAPIUtils.getWinstreak()) {
+                    EssentialAPI.getNotifications()
+                        .push(Hytilities.MOD_NAME, "You currently have a " + HypixelAPIUtils.winstreak + " winstreak.");
+                } else {
+                    EssentialAPI.getNotifications()
+                        .push(Hytilities.MOD_NAME, "There was a problem trying to get your winstreak.");
+                }
+            }
+        });
+    }
+
+    @SubCommand("setkey")
+    public void setKey(@DisplayName("API Key") String apiKey) {
+        Multithreading.runAsync(() -> {
+            if (HypixelAPIUtils.isValidKey(apiKey)) {
+                HytilitiesConfig.apiKey = apiKey;
+                Hytilities.INSTANCE.getConfig().markDirty();
+                Hytilities.INSTANCE.getConfig().writeData();
+                Hytilities.INSTANCE.sendMessage(EnumChatFormatting.GREEN + "Saved API key successfully!");
+            } else {
+                Hytilities.INSTANCE.sendMessage(EnumChatFormatting.RED + "Invalid API key! Please try again.");
+            }
+        });
     }
 }

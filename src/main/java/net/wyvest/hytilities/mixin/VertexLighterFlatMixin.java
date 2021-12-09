@@ -18,14 +18,14 @@
 
 package net.wyvest.hytilities.mixin;
 
-import net.wyvest.hytilities.config.HytilitiesConfig;
-import net.wyvest.hytilities.handlers.cache.HeightHandler;
-import net.wyvest.hytilities.util.ColorUtils;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.client.model.pipeline.BlockInfo;
 import net.minecraftforge.client.model.pipeline.VertexLighterFlat;
+import net.wyvest.hytilities.config.HytilitiesConfig;
+import net.wyvest.hytilities.handlers.cache.HeightHandler;
+import net.wyvest.hytilities.util.ColorUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
