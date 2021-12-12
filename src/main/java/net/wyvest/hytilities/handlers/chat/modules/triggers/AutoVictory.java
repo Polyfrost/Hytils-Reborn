@@ -18,18 +18,18 @@
 
 package net.wyvest.hytilities.handlers.chat.modules.triggers;
 
-import net.wyvest.hytilities.Hytilities;
-import net.wyvest.hytilities.config.HytilitiesConfig;
-import net.wyvest.hytilities.handlers.cache.PatternHandler;
-import net.wyvest.hytilities.handlers.chat.ChatReceiveResetModule;
-import net.wyvest.hytilities.mixin.GuiIngameAccessor;
-import net.wyvest.hytilities.util.HypixelAPIUtils;
-import net.wyvest.hytilities.util.locraw.LocrawInformation;
 import gg.essential.api.EssentialAPI;
 import gg.essential.api.utils.Multithreading;
 import gg.essential.universal.wrappers.message.UTextComponent;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.wyvest.hytilities.Hytilities;
+import net.wyvest.hytilities.config.HytilitiesConfig;
+import net.wyvest.hytilities.events.TitleEvent;
+import net.wyvest.hytilities.handlers.cache.PatternHandler;
+import net.wyvest.hytilities.handlers.chat.ChatReceiveResetModule;
+import net.wyvest.hytilities.util.HypixelAPIUtils;
+import net.wyvest.hytilities.util.locraw.LocrawInformation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
@@ -95,47 +95,51 @@ public class AutoVictory implements ChatReceiveResetModule {
                             return;
                         }
                     }
-                    String title = ((GuiIngameAccessor) Minecraft.getMinecraft().ingameGUI).getDisplayedTitle().toLowerCase(Locale.ENGLISH);
-                    if (title.equals("victory!") || title.equals("game over") || title.equals("game over!") || title.endsWith(" wins") || title.endsWith(" wins!")) {
-                        victoryDetected = true;
-                        if (HytilitiesConfig.autoGetGEXP) {
-                            if (HytilitiesConfig.gexpMode == 0) {
-                                if (HypixelAPIUtils.getGEXP()) {
-                                    EssentialAPI.getNotifications()
-                                        .push(
-                                            Hytilities.MOD_NAME,
-                                            "You currently have " + HypixelAPIUtils.gexp + " daily guild EXP."
-                                        );
-                                } else {
-                                    EssentialAPI.getNotifications()
-                                        .push(Hytilities.MOD_NAME, "There was a problem trying to get your GEXP.");
-                                }
-                            } else {
-                                if (HypixelAPIUtils.getWeeklyGEXP()) {
-                                    EssentialAPI.getNotifications()
-                                        .push(
-                                            Hytilities.MOD_NAME,
-                                            "You currently have " + HypixelAPIUtils.gexp + " weekly guild EXP."
-                                        );
-                                } else {
-                                    EssentialAPI.getNotifications()
-                                        .push(Hytilities.MOD_NAME, "There was a problem trying to get your GEXP.");
-                                }
-                            }
-                        }
-                        if (isSupportedMode(Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation()) && HytilitiesConfig.autoGetWinstreak) {
-                            if (HypixelAPIUtils.getWinstreak()) {
-                                EssentialAPI.getNotifications().push(
-                                    Hytilities.MOD_NAME,
-                                    "You currently have a " + HypixelAPIUtils.winstreak + " winstreak."
-                                );
-                            } else {
-                                EssentialAPI.getNotifications()
-                                    .push(Hytilities.MOD_NAME, "There was a problem trying to get your winstreak.");
-                            }
-                        }
-                    }
                 });
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onTitle(TitleEvent event) {
+        final String title = event.getTitle().toLowerCase(Locale.ENGLISH);
+        if (title.equals("victory!") || title.equals("game over") || title.equals("game over!") || title.endsWith(" wins") || title.endsWith(" wins!")) {
+            victoryDetected = true;
+            if (HytilitiesConfig.autoGetGEXP) {
+                if (HytilitiesConfig.gexpMode == 0) {
+                    if (HypixelAPIUtils.getGEXP()) {
+                        EssentialAPI.getNotifications()
+                            .push(
+                                Hytilities.MOD_NAME,
+                                "You currently have " + HypixelAPIUtils.gexp + " daily guild EXP."
+                            );
+                    } else {
+                        EssentialAPI.getNotifications()
+                            .push(Hytilities.MOD_NAME, "There was a problem trying to get your GEXP.");
+                    }
+                } else {
+                    if (HypixelAPIUtils.getWeeklyGEXP()) {
+                        EssentialAPI.getNotifications()
+                            .push(
+                                Hytilities.MOD_NAME,
+                                "You currently have " + HypixelAPIUtils.gexp + " weekly guild EXP."
+                            );
+                    } else {
+                        EssentialAPI.getNotifications()
+                            .push(Hytilities.MOD_NAME, "There was a problem trying to get your GEXP.");
+                    }
+                }
+            }
+            if (isSupportedMode(Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation()) && HytilitiesConfig.autoGetWinstreak) {
+                if (HypixelAPIUtils.getWinstreak()) {
+                    EssentialAPI.getNotifications().push(
+                        Hytilities.MOD_NAME,
+                        "You currently have a " + HypixelAPIUtils.winstreak + " winstreak."
+                    );
+                } else {
+                    EssentialAPI.getNotifications()
+                        .push(Hytilities.MOD_NAME, "There was a problem trying to get your winstreak.");
+                }
             }
         }
     }

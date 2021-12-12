@@ -27,6 +27,7 @@ import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.wyvest.hytilities.mixin.GuiNewChatAccessor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -51,11 +52,12 @@ public class GameStartCompactor implements ChatReceiveModule {
             if (lastMessage != null) {
                 final GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
                 final List<IChatComponent> oldTimerLines = GuiUtilRenderComponents.splitText(lastMessage, MathHelper.floor_float((float) chat.getChatWidth() / chat.getChatScale()), Minecraft.getMinecraft().fontRendererObj, false, false);
-                for (int i = chat.drawnChatLines.size() - 1; i >= 0; i--) { // tries to find the last message in drawn chat lines, if found, it removes them
-                    final ChatLine drawnLine = chat.drawnChatLines.get(i);
+                final GuiNewChatAccessor accessor = ((GuiNewChatAccessor) chat);
+                for (int i = accessor.getDrawnChatLines().size() - 1; i >= 0; i--) { // tries to find the last message in drawn chat lines, if found, it removes them
+                    final ChatLine drawnLine = accessor.getDrawnChatLines().get(i);
                     for (IChatComponent oldTimerLine : oldTimerLines) {
                         if (drawnLine.getChatComponent().getFormattedText().equals(oldTimerLine.getFormattedText())) {
-                            chat.drawnChatLines.remove(i);
+                            accessor.getDrawnChatLines().remove(i);
                             oldTimerLines.remove(oldTimerLine);
                             break;
                         }

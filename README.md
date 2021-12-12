@@ -1,10 +1,10 @@
-# Hytilities
+# Hytilities Reborn
 
 <details open>
   <summary>User Guide</summary>
 
-### What is Hytilities?
-Hytilities is a [Hypixel](https://hypixel.net) focused Forge 1.8.9 mod based on [Sk1er LLC's Hytilities](https://github.com/Sk1erLLC/Hytilities), adding tons of Quality of Life features that
+### What is Hytilities Reborn?
+Hytilities Reborn is a [Hypixel](https://hypixel.net) focused Forge 1.8.9 mod based on [Sk1er LLC's Hytilities](https://github.com/Sk1erLLC/Hytilities), adding tons of Quality of Life features that
 you would want while on Hypixel, such as an Advertisement-Blocker, AutoQueue, AutoGL, Height Overlay, Game Status Restyle, AutoComplete for /play and plenty others to discover on your own! 
 
 ### How do I use Hytilities?

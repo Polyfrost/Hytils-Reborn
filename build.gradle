@@ -69,7 +69,7 @@ dependencies {
 jar {
     manifest.attributes(
             "ModSide": "CLIENT",
-            "FMLCorePluginContainsFMLMod": "Yes, yes it does",
+            "FMLCorePluginContainsFMLMod": "No",
             "FMLCorePlugin": "net.wyvest.hytilities.forge.FMLLoadingPlugin",
             "TweakClass": "gg.essential.loader.stage0.EssentialSetupTweaker",
             "TweakOrder": "0",
