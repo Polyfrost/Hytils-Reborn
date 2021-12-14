@@ -33,7 +33,7 @@ import java.util.List;
 public class GuiUtilRenderComponentsMixin {
 
     @Dynamic
-    @Redirect(method = "splitText", at = @At(value = "INVOKE", target = "Ljava/util/List;add(ILjava/lang/Object;)V"))
+    @Redirect(method = "splitText", at = @At(value = "INVOKE", target = "Ljava/util/List;add(ILjava/lang/Object;)V", remap = false))
     private static void redirectSplit(List<Object> instance, int i, Object e) {
         if (HytilitiesConfig.lineBreakerTrim) {
             String s = EnumChatFormatting.getTextWithoutFormattingCodes(((ChatComponentText) e).getUnformattedTextForChat());
