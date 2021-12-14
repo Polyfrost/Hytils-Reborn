@@ -48,6 +48,8 @@ public class LanguageData {
     private String chatCleanerMvpEmotes = "\u00a7r\u00a7(?:c\u2764|6\u272e|a\u2714|c\u2716|b\u2615|e\u279c|e\u00af\\\\_\\(\u30c4\\)_/\u00af|c\\(\u256F\u00B0\u25A1\u00B0\uFF09\u256F\u00a7r\u00a7f\uFE35\u00a7r\u00a77 \u253B\u2501\u253B|d\\( \uFF9F\u25E1\uFF9F\\)/|a1\u00a7r\u00a7e2\u00a7r\u00a7c3|b\u2609\u00a7r\u00a7e_\u00a7r\u00a7b\u2609|e\u270E\u00a7r\u00a76\\.\\.\\.|a\u221A\u00a7r\u00a7e\u00a7l\\(\u00a7r\u00a7a\u03C0\u00a7r\u00a7a\u00a7l\\+x\u00a7r\u00a7e\u00a7l\\)\u00a7r\u00a7a\u00a7l=\u00a7r\u00a7c\u00a7lL|e@\u00a7r\u00a7a'\u00a7r\u00a7e-\u00a7r\u00a7a'|6\\(\u00a7r\u00a7a0\u00a7r\u00a76\\.\u00a7r\u00a7ao\u00a7r\u00a7c\\?\u00a7r\u00a76\\)|b\u0F3C\u3064\u25D5_\u25D5\u0F3D\u3064|e\\(\u00a7r\u00a7b'\u00a7r\u00a7e-\u00a7r\u00a7b'\u00a7r\u00a7e\\)\u2283\u00a7r\u00a7c\u2501\u00a7r\u00a7d\u2606\uFF9F\\.\\*\uFF65\uFF61\uFF9F|e\u2694|a\u270C|c\u00a7lOOF|e\u00a7l<\\('O'\\)>)\u00a7r";
     public String chatCleanerHypeLimit = "  \u27A4 You have reached your Hype limit!";
     private String chatGiftBlocker = "They have gifted \\d+ ranks so far!";
+    private String chatCleanerGrinchPresents = "(?:You found a gift! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} gifts!)";
+    private String chatCleanerBoosterRemover = "^\\W\\d{1,} coins! .\\w{1,16}.s Network Booster.";
 
     private String connectedServerConnectMessage = "^(You are currently connected to server \\S+)|(Sending you to \\S+.{3}!)$";
 
@@ -99,6 +101,8 @@ public class LanguageData {
     public Pattern chatCleanerConnectionStatusRegex;
     public Pattern chatCleanerMvpEmotesRegex;
     public Pattern chatGiftBlockerRegex;
+    public Pattern chatCleanerGrinchPresentsRegex;
+    public Pattern chatCleanerBoosterRemoverRegex;
 
     public Pattern connectedServerConnectMessageRegex;
 
@@ -138,6 +142,8 @@ public class LanguageData {
         chatCleanerConnectionStatusRegex = Pattern.compile(chatCleanerConnectionStatus);
         chatCleanerMvpEmotesRegex = Pattern.compile(chatCleanerMvpEmotes);
         chatGiftBlockerRegex = Pattern.compile(chatGiftBlocker);
+        chatCleanerGrinchPresentsRegex = Pattern.compile(chatCleanerGrinchPresents);
+        chatCleanerBoosterRemoverRegex = Pattern.compile(chatCleanerBoosterRemover);
 
         connectedServerConnectMessageRegex = Pattern.compile(connectedServerConnectMessage);
 

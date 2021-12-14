@@ -24,24 +24,22 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.regex.Matcher;
-
-public class GiftBlocker implements ChatReceiveModule {
+public class SkyblockWelcomeRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatGiftBlockerRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
-        if (matcher.matches()) {
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        if (message.equals("Welcome to Hypixel SkyBlock!")) {
             event.setCanceled(true);
         }
     }
 
     @Override
     public boolean isEnabled() {
-        return HytilitiesConfig.giftBlocker;
+        return HytilitiesConfig.skyblockWelcome;
     }
 
     @Override
     public int getPriority() {
-        return -3;
+        return -1;
     }
 }
