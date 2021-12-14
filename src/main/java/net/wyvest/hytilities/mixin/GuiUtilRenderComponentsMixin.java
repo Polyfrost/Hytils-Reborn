@@ -37,7 +37,7 @@ public class GuiUtilRenderComponentsMixin {
     private static void redirectSplit(List<Object> instance, int i, Object e) {
         if (HytilitiesConfig.lineBreakerTrim) {
             String s = EnumChatFormatting.getTextWithoutFormattingCodes(((ChatComponentText) e).getUnformattedTextForChat());
-            if ((s.startsWith("-") && s.endsWith("-")) || s.startsWith("▬") && s.endsWith("▬")) {
+            if ((s.startsWith("-") && s.endsWith("-")) || s.startsWith("▬") && s.endsWith("▬") || (s.startsWith("≡") && s.endsWith("≡"))) {
                 return;
             }
         }

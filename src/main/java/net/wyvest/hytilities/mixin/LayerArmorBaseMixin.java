@@ -20,6 +20,7 @@ package net.wyvest.hytilities.mixin;
 
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.config.HytilitiesConfig;
+import net.wyvest.hytilities.handlers.game.GameType;
 import net.wyvest.hytilities.util.locraw.LocrawInformation;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
@@ -47,14 +48,10 @@ public abstract class LayerArmorBaseMixin {
 
     private static boolean shouldRenderArmour(ItemStack itemStack) {
         if (!HytilitiesConfig.hideArmor || itemStack == null || !EssentialAPI.getMinecraftUtil().isHypixel()) return true;
-
+        final LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
         final Item item = itemStack.getItem();
-
-        // armor piece is made of leather
-        if (item instanceof ItemArmor && ((ItemArmor) item).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
-            final LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
-
-            if (locraw != null) {
+        if (locraw != null) {
+            if (item instanceof ItemArmor && ((ItemArmor) item).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
                 switch (locraw.getGameType()) {
                     case BED_WARS:
                         return false;
@@ -62,7 +59,11 @@ public abstract class LayerArmorBaseMixin {
                         // capture the wool
                         return !locraw.getGameMode().contains("PVP_CTW");
                     case DUELS:
-                        return !locraw.getGameMode().contains("BRIDGE") || !locraw.getGameMode().contains("CTF");
+                        return !locraw.getGameMode().contains("BRIDGE") || !locraw.getGameMode().contains("CTF") || !locraw.getGameMode().contains("CLASSIC");
+                }
+            } else {
+                if (locraw.getGameType() == GameType.DUELS) {
+                    return !locraw.getGameMode().contains("CLASSIC");
                 }
             }
         }
