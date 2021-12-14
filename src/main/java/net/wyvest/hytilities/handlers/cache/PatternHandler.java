@@ -33,7 +33,7 @@ public class PatternHandler extends CacheHandler<String, Pattern> {
 
     public void initialize() {
         Multithreading.runAsync(() -> {
-            jsonObject = JsonUtils.PARSER.parse(WebUtil.fetchString("https://raw.githubusercontent.com/Qalcyo/DataStorage/main/corgal/regex.json")).getAsJsonObject();
+            jsonObject = JsonUtils.PARSER.parse(WebUtil.fetchString("https://raw.githubusercontent.com/W-OVERFLOW/DataStorage/main/regex.json")).getAsJsonObject();
             for (JsonElement element : jsonObject.getAsJsonArray("game_end")) {
                 gameEnd.add(Pattern.compile(element.getAsString()));
             }
