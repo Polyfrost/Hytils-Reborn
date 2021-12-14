@@ -2,9 +2,18 @@ name: build
 
 on:
   push:
-    branches:
-      - "**"
+    branches: '*'
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
+      - '.gitignore'
   pull_request:
+    branches: '*'
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
+      - '.gitignore'
+  workflow_dispatch:
 
 concurrency:
   # Maximum of one running workflow per pull request source branch
