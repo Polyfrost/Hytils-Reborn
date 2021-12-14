@@ -42,6 +42,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final Matcher statusMatcher = getLanguage().autoChatSwapperPartyStatusRegex.matcher(event.message.getUnformattedText());
+        final Matcher statusMatcher2 = getLanguage().autoChatSwapperPartyStatusRegex2.matcher(event.message.getUnformattedText());
         if (statusMatcher.matches()) {
             MinecraftForge.EVENT_BUS.register(new ChatChannelMessagePreventer());
             switch (HytilitiesConfig.chatSwapperReturnChannel) {
@@ -56,6 +57,9 @@ public class AutoChatSwapper implements ChatReceiveModule {
                     Hytilities.INSTANCE.getCommandQueue().queue("/chat o");
                     break;
             }
+        } else if (statusMatcher2.matches() && HytilitiesConfig.partySwapper) {
+            MinecraftForge.EVENT_BUS.register(new ChatChannelMessagePreventer());
+            Hytilities.INSTANCE.getCommandQueue().queue("/chat p");
         }
     }
 
