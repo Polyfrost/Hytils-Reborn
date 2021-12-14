@@ -16,9 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.wyvest.hytilities.util.locraw;
+package net.wyvest.hytilities.events;
 
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.wyvest.hytilities.util.locraw.LocrawInformation;
 
 public class LocrawEvent extends Event {
     public LocrawInformation locraw;

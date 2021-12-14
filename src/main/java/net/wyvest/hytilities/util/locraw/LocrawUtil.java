@@ -19,6 +19,7 @@
 package net.wyvest.hytilities.util.locraw;
 
 import net.wyvest.hytilities.Hytilities;
+import net.wyvest.hytilities.events.LocrawEvent;
 import net.wyvest.hytilities.handlers.chat.ChatReceiveModule;
 import net.wyvest.hytilities.handlers.game.GameType;
 import com.google.gson.Gson;

@@ -21,7 +21,7 @@ package net.wyvest.hytilities.util;
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.cache.HeightHandler;
-import net.wyvest.hytilities.util.locraw.LocrawEvent;
+import net.wyvest.hytilities.events.LocrawEvent;
 import net.wyvest.hytilities.util.locraw.LocrawInformation;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
