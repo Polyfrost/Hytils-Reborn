@@ -68,8 +68,9 @@ public class LanguageData {
     private String chatRestylerOfficerPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Officer >)";
 
 
-    private String autoChatSwapperPartyStatus = "^(?:You have been kicked from the party by (?:\\[.+] )?\\w{1,16}|(?:\\[.+] )?\\w{1,16} has disbanded the party!|You left the party.)$";
-    private String autoChatSwapperChannelSwap = "^You are now in the (?<channel>ALL|GUILD|OFFICER) channel$";
+    private String autoChatSwapperPartyStatus = "^(?:You have been kicked from the party by (?:\\[.+] )?\\w{1,16}|(?:\\[.+] )?\\w{1,16} has disbanded the party!|You left the party(?:\\[.+] )?\\w{0,16}|(?:\\[.+] )?\\w{1,100}The party was disbanded(?:\\[.+] )?\\w{1,100}.)$";
+    private String autoChatSwapperPartyStatus2 = "^(?:You have joined (?:\\[.+] )?\\w{1,100}|Party Members(?:\\[.+] )?\\w{1,100}|(?:\\[.+] )?\\w{1,100} joined the (?:\\[.+] )?\\w{1,100}.)$";
+    private String autoChatSwapperChannelSwap = "^You are now in the (?<channel>ALL|GUILD|OFFICER|PARTY) channel$";
     public String autoChatSwapperAlreadyInChannel = "You're already in this channel!";
 
     private String whiteChatNonMessage = "(?<prefix>.+)§7: (?<message>.*)";
@@ -121,6 +122,7 @@ public class LanguageData {
     public Pattern chatRestylerOfficerPatternRegex;
 
     public Pattern autoChatSwapperPartyStatusRegex;
+    public Pattern autoChatSwapperPartyStatusRegex2;
     public Pattern autoChatSwapperChannelSwapRegex;
 
     public Pattern whiteChatNonMessageRegex;
@@ -162,6 +164,7 @@ public class LanguageData {
         chatRestylerOfficerPatternRegex = Pattern.compile(chatRestylerOfficerPattern);
 
         autoChatSwapperPartyStatusRegex = Pattern.compile(autoChatSwapperPartyStatus);
+        autoChatSwapperPartyStatusRegex2 = Pattern.compile(autoChatSwapperPartyStatus2);
         autoChatSwapperChannelSwapRegex = Pattern.compile(autoChatSwapperChannelSwap);
 
         whiteChatNonMessageRegex = Pattern.compile(whiteChatNonMessage);
