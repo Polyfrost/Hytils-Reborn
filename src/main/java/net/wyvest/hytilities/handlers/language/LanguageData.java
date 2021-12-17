@@ -31,6 +31,8 @@ import java.util.regex.Pattern;
 @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal", "DuplicatedCode"})
 public class LanguageData {
 
+    private boolean hasInitialized = false;
+
     /**
      * GSON deserialization fields which are loaded in when the file is parsed.
      */
@@ -135,42 +137,46 @@ public class LanguageData {
      * Compiles all the required patterns and caches them for later use.
      */
     public void initialize() {
-        chatCleanerJoinMessageTypes = Sets.newHashSet(chatCleanerJoinNormal, chatCleanerJoinHalloween, chatCleanerJoinChristmas);
+        if (!hasInitialized) {
+            hasInitialized = true;
+            chatCleanerJoinMessageTypes = Sets.newHashSet(chatCleanerJoinNormal, chatCleanerJoinHalloween, chatCleanerJoinChristmas);
 
-        chatCleanerMysteryBoxFindRegex = Pattern.compile(chatCleanerMysteryBoxFind);
-        chatCleanerSoulWellFindRegex = Pattern.compile(chatCleanerSoulWellFind);
-        chatCleanerGameAnnouncementRegex = Pattern.compile(chatCleanerGameAnnouncement);
-        chatCleanerBedwarsPartyAdvertisementRegex = Pattern.compile(chatCleanerBedwarsPartyAdvertisement);
-        chatCleanerConnectionStatusRegex = Pattern.compile(chatCleanerConnectionStatus);
-        chatCleanerMvpEmotesRegex = Pattern.compile(chatCleanerMvpEmotes);
-        chatGiftBlockerRegex = Pattern.compile(chatGiftBlocker);
-        chatCleanerGrinchPresentsRegex = Pattern.compile(chatCleanerGrinchPresents);
-        chatCleanerBoosterRemoverRegex = Pattern.compile(chatCleanerBoosterRemover);
+            chatCleanerMysteryBoxFindRegex = Pattern.compile(chatCleanerMysteryBoxFind);
+            chatCleanerSoulWellFindRegex = Pattern.compile(chatCleanerSoulWellFind);
+            chatCleanerGameAnnouncementRegex = Pattern.compile(chatCleanerGameAnnouncement);
+            chatCleanerBedwarsPartyAdvertisementRegex = Pattern.compile(chatCleanerBedwarsPartyAdvertisement);
+            chatCleanerConnectionStatusRegex = Pattern.compile(chatCleanerConnectionStatus);
+            chatCleanerMvpEmotesRegex = Pattern.compile(chatCleanerMvpEmotes);
+            chatGiftBlockerRegex = Pattern.compile(chatGiftBlocker);
+            chatCleanerGrinchPresentsRegex = Pattern.compile(chatCleanerGrinchPresents);
+            chatCleanerBoosterRemoverRegex = Pattern.compile(chatCleanerBoosterRemover);
 
-        connectedServerConnectMessageRegex = Pattern.compile(connectedServerConnectMessage);
+            connectedServerConnectMessageRegex = Pattern.compile(connectedServerConnectMessage);
 
-        achievementRegex = Pattern.compile(achievementPattern);
-        levelUpRegex = Pattern.compile(levelUpPattern);
-        guildPlayerJoinRegex = Pattern.compile(guildPlayerJoinPattern);
+            achievementRegex = Pattern.compile(achievementPattern);
+            levelUpRegex = Pattern.compile(levelUpPattern);
+            guildPlayerJoinRegex = Pattern.compile(guildPlayerJoinPattern);
 
-        chatRestylerGameJoinStyleRegex = Pattern.compile(chatRestylerGameJoinStyle);
-        chatRestylerGameLeaveStyleRegex = Pattern.compile(chatRestylerGameLeaveStyle);
-        chatRestylerGameStartCounterStyleRegex = Pattern.compile(chatRestylerGameStartCounterStyle);
-        chatRestylerGameStartCounterOutputStyleRegex = Pattern.compile(chatRestylerGameStartCounterOutputStyle);
-        chatRestylerFormattedPaddingPatternRegex = Pattern.compile(chatRestylerFormattedPaddingPattern);
-        chatRestylerPartyPatternRegex = Pattern.compile(chatRestylerPartyPattern);
-        chatRestylerGuildPatternRegex = Pattern.compile(chatRestylerGuildPattern);
-        chatRestylerFriendPatternRegex = Pattern.compile(chatRestylerFriendPattern);
-        chatRestylerOfficerPatternRegex = Pattern.compile(chatRestylerOfficerPattern);
+            chatRestylerGameJoinStyleRegex = Pattern.compile(chatRestylerGameJoinStyle);
+            chatRestylerGameLeaveStyleRegex = Pattern.compile(chatRestylerGameLeaveStyle);
+            chatRestylerGameStartCounterStyleRegex = Pattern.compile(chatRestylerGameStartCounterStyle);
+            chatRestylerGameStartCounterOutputStyleRegex = Pattern.compile(chatRestylerGameStartCounterOutputStyle);
+            chatRestylerFormattedPaddingPatternRegex = Pattern.compile(chatRestylerFormattedPaddingPattern);
+            chatRestylerPartyPatternRegex = Pattern.compile(chatRestylerPartyPattern);
+            chatRestylerGuildPatternRegex = Pattern.compile(chatRestylerGuildPattern);
+            chatRestylerFriendPatternRegex = Pattern.compile(chatRestylerFriendPattern);
+            chatRestylerOfficerPatternRegex = Pattern.compile(chatRestylerOfficerPattern);
 
-        autoChatSwapperPartyStatusRegex = Pattern.compile(autoChatSwapperPartyStatus);
-        autoChatSwapperPartyStatusRegex2 = Pattern.compile(autoChatSwapperPartyStatus2);
-        autoChatSwapperChannelSwapRegex = Pattern.compile(autoChatSwapperChannelSwap);
+            autoChatSwapperPartyStatusRegex = Pattern.compile(autoChatSwapperPartyStatus);
+            autoChatSwapperPartyStatusRegex2 = Pattern.compile(autoChatSwapperPartyStatus2);
+            autoChatSwapperChannelSwapRegex = Pattern.compile(autoChatSwapperChannelSwap);
 
-        whiteChatNonMessageRegex = Pattern.compile(whiteChatNonMessage);
-        privateMessageWhiteChatRegex = Pattern.compile(privateMessageWhiteChat);
-        silentRemovalLeaveMessageRegex = Pattern.compile(silentRemovalLeaveMessage);
+            whiteChatNonMessageRegex = Pattern.compile(whiteChatNonMessage);
+            privateMessageWhiteChatRegex = Pattern.compile(privateMessageWhiteChat);
+            silentRemovalLeaveMessageRegex = Pattern.compile(silentRemovalLeaveMessage);
 
-        hypixelLevelUpRegex = Pattern.compile(hypixelLevelUp);
+            hypixelLevelUpRegex = Pattern.compile(hypixelLevelUp);
+        }
+
     }
 }

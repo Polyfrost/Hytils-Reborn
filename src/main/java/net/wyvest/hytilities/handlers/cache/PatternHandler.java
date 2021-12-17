@@ -37,9 +37,6 @@ public class PatternHandler extends CacheHandler<String, Pattern> {
             for (JsonElement element : jsonObject.getAsJsonArray("game_end")) {
                 gameEnd.add(Pattern.compile(element.getAsString()));
             }
-            for (JsonElement element : jsonObject.getAsJsonArray("misc")) {
-                cache.put(element.getAsJsonObject().get("id").getAsString(), Pattern.compile(element.getAsJsonObject().get("regex").getAsString()));
-            }
         });
     }
 

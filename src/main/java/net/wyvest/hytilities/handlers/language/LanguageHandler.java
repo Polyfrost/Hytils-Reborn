@@ -25,9 +25,6 @@ import gg.essential.api.utils.Multithreading;
 import gg.essential.api.utils.WebUtil;
 import net.minecraft.client.Minecraft;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +38,7 @@ import java.util.Map;
 public class LanguageHandler {
 
     private final Gson gson = new GsonBuilder().create();
-    private final LanguageData fallback = readData("en");
+    private final LanguageData fallback = new LanguageData();
     private final Map<String, String> languageMappings = new HashMap<String, String>() {{
         put("ENGLISH", "en");
         put("FRENCH", "fr");
@@ -56,24 +53,12 @@ public class LanguageHandler {
     private void initialize() {
         final String username = Minecraft.getMinecraft().getSession().getUsername();
         final JsonHolder json = WebUtil.fetchJSON("https://api.sk1er.club/player/" + username);
-        final String language = json.optJSONObject("player").defaultOptString("userLanguage", "ENGLISH");
-        current = loadData(languageMappings.getOrDefault(language, "en"));
-    }
-
-    private LanguageData loadData(String language) {
-        final LanguageData data = readData(language);
-        return data == null ? fallback : data;
-    }
-
-    private LanguageData readData(String language) {
-        try (InputStream stream = LanguageHandler.class.getResourceAsStream("/languages/" + language + ".json")) {
-            if (stream == null) return null;
-            final LanguageData data = gson.fromJson(new InputStreamReader(stream), LanguageData.class);
-            data.initialize();
-            return data;
-        } catch (IOException e) {
-            return null;
+        final String language = languageMappings.getOrDefault(json.optJSONObject("player").defaultOptString("userLanguage", "ENGLISH"), "en");
+        JsonHolder jsonHolder = WebUtil.fetchJSON("https://raw.githubusercontent.com/W-OVERFLOW/DataStorage/main/regex.json");
+        if (!jsonHolder.getKeys().isEmpty()) {
+            current = gson.fromJson(jsonHolder.has(language) ? jsonHolder.optActualJSONObject(language).toString() : jsonHolder.optActualJSONObject("en").toString(), LanguageData.class);
         }
+        current.initialize();
     }
 
     public LanguageData getCurrent() {
