@@ -378,6 +378,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hideNpcsInTab;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Don't Hide important NPCs",
+        description = "Keeps NPCs in tab in gamemodes like Skyblock and Replay.",
+        category = "General", subcategory = "Tab"
+    )
+    public static boolean keepImportantNpcsInTab;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Guild Tags in Tab",
         description = "Prevent Guild tags from showing up in tab.",
         category = "General", subcategory = "Tab"
@@ -585,6 +592,8 @@ public class HytilitiesConfig extends Vigilant {
         addDependency("blockNumber", "blockNotify");
         addDependency("blockNotifySound", "blockNotify");
         addDependency("blockNotifySound", "blockNotify");
+
+        addDependency("keepImportantNpcsInTab", "hideNpcsInTab");
 
         addDependency("highlightChestsColor", "highlightChests");
 

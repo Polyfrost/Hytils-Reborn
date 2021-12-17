@@ -39,7 +39,8 @@ public enum GameType {
     BLITZ_SG("SURVIVAL_GAMES"),
     MEGA_WALLS("WALLS3"),
     SMASH_HEROES("SUPER_SMASH"),
-    WARLORDS("BATTLEGROUND");
+    WARLORDS("BATTLEGROUND"),
+    REPLAY("REPLAY");
 
     private final String serverName;
     private static final GameType[] typeArray = values();
