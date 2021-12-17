@@ -18,9 +18,6 @@
 
 package net.wyvest.hytilities.handlers.lobby.npc;
 
-import net.wyvest.hytilities.Hytilities;
-import net.wyvest.hytilities.config.HytilitiesConfig;
-import net.wyvest.hytilities.asm.GuiPlayerTabOverlayTransformer;
 import com.google.common.collect.Collections2;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -28,9 +25,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.wyvest.hytilities.Hytilities;
+import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.game.GameType;
 import net.wyvest.hytilities.util.locraw.LocrawInformation;
-import org.objectweb.asm.tree.ClassNode;
 
 import java.util.Collection;
 
@@ -48,10 +46,6 @@ public class NPCHider {
         }
     }
 
-    /**
-     * Used in {@link GuiPlayerTabOverlayTransformer#transform(ClassNode, String)}
-     */
-    @SuppressWarnings("unused")
     public static Collection<NetworkPlayerInfo> hideTabNpcs(Collection<NetworkPlayerInfo> playerInfoCollection) {
         LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
         if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilitiesConfig.hideNpcsInTab) {

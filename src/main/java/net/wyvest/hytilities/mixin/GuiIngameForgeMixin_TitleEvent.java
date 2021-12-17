@@ -32,8 +32,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = GuiIngameForge.class, remap = false)
-public class GuiIngameForgeMixin extends GuiIngame {
-    public GuiIngameForgeMixin(Minecraft mcIn) {
+public class GuiIngameForgeMixin_TitleEvent extends GuiIngame {
+    public GuiIngameForgeMixin_TitleEvent(Minecraft mcIn) {
         super(mcIn);
     }
 

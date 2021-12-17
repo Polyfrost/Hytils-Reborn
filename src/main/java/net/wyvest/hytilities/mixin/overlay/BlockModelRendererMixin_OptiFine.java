@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.wyvest.hytilities.mixin;
+package net.wyvest.hytilities.mixin.overlay;
 
 import net.wyvest.hytilities.hooks.BlockModelRendererHook;
 import net.minecraft.block.state.IBlockState;

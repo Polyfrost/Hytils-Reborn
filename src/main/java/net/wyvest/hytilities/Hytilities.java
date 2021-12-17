@@ -93,9 +93,9 @@ public class Hytilities {
         this.config.preload();
 
         new HytilitiesCommand().register();
+        new HousingVisitCommand().register();
         final ClientCommandHandler commandRegister = ClientCommandHandler.instance;
         commandRegister.registerCommand(new PlayCommand());
-        commandRegister.registerCommand(new HousingVisitCommand());
         commandRegister.registerCommand(new SilentRemoveCommand());
         commandRegister.registerCommand(new SkyblockVisitCommand());
         CosmeticsHandler.INSTANCE.initialize();

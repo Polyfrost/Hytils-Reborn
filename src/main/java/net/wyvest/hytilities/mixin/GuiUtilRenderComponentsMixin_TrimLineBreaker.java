@@ -30,7 +30,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import java.util.List;
 
 @Mixin(GuiUtilRenderComponents.class)
-public class GuiUtilRenderComponentsMixin {
+public class GuiUtilRenderComponentsMixin_TrimLineBreaker {
 
     @Dynamic
     @Redirect(method = "splitText", at = @At(value = "INVOKE", target = "Ljava/util/List;add(ILjava/lang/Object;)V", remap = false))

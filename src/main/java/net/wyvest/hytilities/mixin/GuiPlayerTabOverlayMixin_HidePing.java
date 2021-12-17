@@ -18,26 +18,16 @@
 
 package net.wyvest.hytilities.mixin;
 
-import net.wyvest.hytilities.handlers.lobby.npc.NPCHider;
-import net.wyvest.hytilities.handlers.lobby.tab.TabChanger;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
-import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.wyvest.hytilities.handlers.lobby.tab.TabChanger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Collection;
-
 @Mixin(GuiPlayerTabOverlay.class)
-public class GuiPlayerTabOverlayMixin {
-    @Redirect(method = "renderPlayerlist", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/NetHandlerPlayClient;getPlayerInfoMap()Ljava/util/Collection;"))
-    private Collection<NetworkPlayerInfo> hideNPCs(NetHandlerPlayClient instance) {
-        return NPCHider.hideTabNpcs(instance.getPlayerInfoMap());
-    }
-
+public class GuiPlayerTabOverlayMixin_HidePing {
     @Inject(method = "drawPing", at = @At("HEAD"), cancellable = true)
     private void checkPlayer(int p_175245_1_, int p_175245_2_, int p_175245_3_, NetworkPlayerInfo networkPlayerInfoIn, CallbackInfo ci) {
         if (TabChanger.hidePing(networkPlayerInfoIn)) ci.cancel();

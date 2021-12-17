@@ -18,25 +18,25 @@
 
 package net.wyvest.hytilities.command;
 
-import net.wyvest.hytilities.Hytilities;
+import gg.essential.api.commands.Command;
+import gg.essential.api.commands.DefaultHandler;
 import gg.essential.api.utils.Multithreading;
 import net.minecraft.client.Minecraft;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.wyvest.hytilities.Hytilities;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 /**
  * Combination command & listener, since they are both small.
  */
-public class HousingVisitCommand extends CommandBase {
+public class HousingVisitCommand extends Command {
 
     /**
      * Used for performing a rudimentary check to prevent visiting invalid houses.
@@ -44,46 +44,32 @@ public class HousingVisitCommand extends CommandBase {
     protected final Pattern usernameRegex = Pattern.compile("\\w{1,16}");
 
     protected String playerName = "";
+    private final Set<Alias> hashSet = new HashSet<>();
 
-    @Override
-    public String getCommandName() {
-        return "housingvisit";
+    public HousingVisitCommand() {
+        super("housingvisit");
+        hashSet.add(new Alias("hvisit"));
     }
 
     @Override
-    public List<String> getCommandAliases() {
-        return Collections.singletonList("hvisit");
+    public Set<Alias> getCommandAliases() {
+        return hashSet;
     }
 
-    @Override
-    public String getCommandUsage(final ICommandSender sender) {
-        return "/" + getCommandName() + " <playername>";
-    }
-
-    @Override
-    public void processCommand(final ICommandSender sender, final String[] strings) {
-        if (strings.length == 1) {
-            if (usernameRegex.matcher(strings[0]).matches()) {
-                playerName = strings[0];
-                // if we are in the housing lobby, just immediately run the /visit command
-                if ("HOUSING".equals(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld
-                    .getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()))) {
-                    visit(0);
-                } else {
-                    Hytilities.INSTANCE.getCommandQueue().queue("/l housing");
-                    MinecraftForge.EVENT_BUS.register(this);
-                }
+    @DefaultHandler
+    public void handle(String playerName) {
+        if (usernameRegex.matcher(playerName).matches()) {
+            // if we are in the housing lobby, just immediately run the /visit command
+            if ("HOUSING".equals(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld
+                .getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()))) {
+                visit(0);
             } else {
-                Hytilities.INSTANCE.sendMessage("&cInvalid username!");
+                Hytilities.INSTANCE.getCommandQueue().queue("/l housing");
+                MinecraftForge.EVENT_BUS.register(this);
             }
         } else {
-            Hytilities.INSTANCE.sendMessage("&cIncorrect arguments. Command usage is: " + getCommandUsage(sender));
+            Hytilities.INSTANCE.sendMessage("&cInvalid username!");
         }
-    }
-
-    @Override
-    public int getRequiredPermissionLevel() {
-        return -1;
     }
 
     @SubscribeEvent

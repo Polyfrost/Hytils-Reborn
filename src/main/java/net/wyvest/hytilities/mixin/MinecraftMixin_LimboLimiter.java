@@ -18,43 +18,19 @@
 
 package net.wyvest.hytilities.mixin;
 
+import net.minecraft.client.Minecraft;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.lobby.limbo.LimboLimiter;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.multiplayer.PlayerControllerMP;
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
-public class MinecraftMixin {
-    @Shadow
-    public WorldClient theWorld;
-
-    @Shadow
-    public MovingObjectPosition objectMouseOver;
-
-    @Shadow
-    public EntityPlayerSP thePlayer;
+public class MinecraftMixin_LimboLimiter {
 
     @Inject(method = "getLimitFramerate", at = @At("HEAD"), cancellable = true)
     private void limitFramerate(CallbackInfoReturnable<Integer> cir) {
         if (LimboLimiter.shouldLimitFramerate()) cir.setReturnValue(HytilitiesConfig.limboFPS);
-    }
-
-    @Redirect(method = "clickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerControllerMP;clickBlock(Lnet/minecraft/util/BlockPos;Lnet/minecraft/util/EnumFacing;)Z"))
-    private boolean captureClickBlock(PlayerControllerMP instance, BlockPos itemstack, EnumFacing block1) {
-        ForgeEventFactory.onPlayerInteract(thePlayer, PlayerInteractEvent.Action.LEFT_CLICK_BLOCK, theWorld, itemstack, objectMouseOver.sideHit, objectMouseOver.hitVec);
-        return instance.clickBlock(itemstack, block1);
     }
 }

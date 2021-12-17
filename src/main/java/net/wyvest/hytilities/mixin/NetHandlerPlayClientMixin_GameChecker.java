@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(NetHandlerPlayClient.class)
-public class NetHandlerPlayClientMixin {
+public class NetHandlerPlayClientMixin_GameChecker {
     @Inject(method = "handleRespawn", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;)V"))
     private void checkScoreboard(S07PacketRespawn packetIn, CallbackInfo ci) {
         HypixelAPIUtils.checkGameModes();

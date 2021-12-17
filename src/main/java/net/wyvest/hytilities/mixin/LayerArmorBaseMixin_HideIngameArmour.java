@@ -35,7 +35,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LayerArmorBase.class)
-public abstract class LayerArmorBaseMixin {
+public abstract class LayerArmorBaseMixin_HideIngameArmour {
     @Shadow
     public abstract ItemStack getCurrentArmor(EntityLivingBase entitylivingbaseIn, int armorSlot);
 
