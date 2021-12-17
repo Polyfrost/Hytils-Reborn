@@ -88,7 +88,7 @@ public class HytilitiesConfig extends Vigilant {
         description = "Send a message 5 seconds before a Hypixel game starts.",
         category = "Automatic", subcategory = "AutoGL"
     )
-    public static boolean autoGL = false;
+    public static boolean autoGL;
 
     @Property(
         type = PropertyType.SELECTOR, name = "Auto GL Phrase",
@@ -103,14 +103,14 @@ public class HytilitiesConfig extends Vigilant {
         description = "Remove all GL messages from chat.",
         category = "Automatic", subcategory = "AutoGL"
     )
-    public static boolean antiGL = false;
+    public static boolean antiGL;
 
     @Property(
         type = PropertyType.SWITCH, name = "Automatically Check GEXP",
         description = "Automatically check your GEXP after you win a Hypixel game.\n§4Requires an API Key.",
         category = "Automatic", subcategory = "Stats"
     )
-    public static boolean autoGetGEXP = false;
+    public static boolean autoGetGEXP;
 
     @Property(
         type = PropertyType.SELECTOR, name = "GEXP Mode",
@@ -125,7 +125,7 @@ public class HytilitiesConfig extends Vigilant {
         description = "Automatically check your winstreak after you win a Hypixel game.\n§4Requires an API Key.",
         category = "Automatic", subcategory = "Stats"
     )
-    public static boolean autoGetWinstreak = false;
+    public static boolean autoGetWinstreak;
 
     // Chat
 
@@ -490,7 +490,7 @@ public class HytilitiesConfig extends Vigilant {
         description = "Make blocks that are in the Hypixel height limit a different colour.\n§4eReloads chunks automatically when toggled on and off.",
         category = "Game", subcategory = "Visual"
     )
-    public static boolean heightOverlay = false;
+    public static boolean heightOverlay;
 
     @Property(
         type = PropertyType.DECIMAL_SLIDER, name = "Height Overlay Tint Multiplier",
@@ -505,7 +505,7 @@ public class HytilitiesConfig extends Vigilant {
         description = "Pings you via a sound when your blocks are running out.",
         category = "Game", subcategory = "Sound"
     )
-    public static boolean blockNotify = false;
+    public static boolean blockNotify;
 
     @Property(
         type = PropertyType.NUMBER, name = "Block Number",
@@ -528,14 +528,14 @@ public class HytilitiesConfig extends Vigilant {
         description = "Spam the sound (this will make it VERY loud)",
         category = "Game", subcategory = "Sound"
     )
-    public static boolean spamBlockNotify = false;
+    public static boolean spamBlockNotify;
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Duels Cosmetics",
         description = "Hide Duels Cosmetics in Hypixel.",
         category = "Game", subcategory = "Visual"
     )
-    public static boolean hideDuelsCosmetics = false;
+    public static boolean hideDuelsCosmetics;
 
     // Lobby
 
