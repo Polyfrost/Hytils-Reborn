@@ -28,6 +28,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.wyvest.hytilities.handlers.game.GameType;
+import net.wyvest.hytilities.util.locraw.LocrawInformation;
 import org.objectweb.asm.tree.ClassNode;
 
 import java.util.Collection;
@@ -51,10 +53,14 @@ public class NPCHider {
      */
     @SuppressWarnings("unused")
     public static Collection<NetworkPlayerInfo> hideTabNpcs(Collection<NetworkPlayerInfo> playerInfoCollection) {
+        LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
         if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilitiesConfig.hideNpcsInTab) {
-            return playerInfoCollection;
+            if (!HytilitiesConfig.keepImportantNpcsInTab && (locraw == null || locraw.getGameType() == GameType.SKYBLOCK || locraw.getGameType() == GameType.REPLAY)) {
+                return playerInfoCollection;
+            }
         } else {
             return Collections2.filter(playerInfoCollection, player -> player != null && player.getGameProfile().getId().version() != 2);
         }
+        return playerInfoCollection;
     }
 }
