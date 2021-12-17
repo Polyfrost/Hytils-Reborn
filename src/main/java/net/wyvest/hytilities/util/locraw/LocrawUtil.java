@@ -41,12 +41,13 @@ public class LocrawUtil implements ChatReceiveModule {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !EssentialAPI.getMinecraftUtil().isHypixel() || this.tick >= 22) {
+        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !EssentialAPI.getMinecraftUtil().isHypixel()) {
             return;
         }
 
         this.tick++;
-        if (this.tick == 20 || this.tick % 1000 == 0) {
+        if (this.tick == 20 || this.tick % 500 == 0) {
+            System.out.println("Yes");
             this.listening = true;
             Hytilities.INSTANCE.getCommandQueue().queue("/locraw");
         }
@@ -61,7 +62,7 @@ public class LocrawUtil implements ChatReceiveModule {
     @SuppressWarnings("UnusedReturnValue")
     public String onMessageSend(@NotNull String message) {
         if (message.startsWith("/locraw") && !this.listening) {
-            if (this.tick == 22 || this.tick % 1000 != 0) {
+            if (this.tick == 22 || this.tick % 500 != 0) {
                 this.playerSentCommand = true;
             }
 
