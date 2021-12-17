@@ -47,7 +47,7 @@ public class MinecraftMixin {
     @Shadow
     public EntityPlayerSP thePlayer;
 
-    @Inject(method = "getLimitFramerate", at = @At("HEAD"))
+    @Inject(method = "getLimitFramerate", at = @At("HEAD"), cancellable = true)
     private void limitFramerate(CallbackInfoReturnable<Integer> cir) {
         if (LimboLimiter.shouldLimitFramerate()) cir.setReturnValue(HytilitiesConfig.limboFPS);
     }

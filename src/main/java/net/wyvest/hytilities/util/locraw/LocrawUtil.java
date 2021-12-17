@@ -46,7 +46,7 @@ public class LocrawUtil implements ChatReceiveModule {
         }
 
         this.tick++;
-        if (this.tick == 20) {
+        if (this.tick == 20 || this.tick % 1000 == 0) {
             this.listening = true;
             Hytilities.INSTANCE.getCommandQueue().queue("/locraw");
         }
@@ -60,8 +60,11 @@ public class LocrawUtil implements ChatReceiveModule {
 
     @SuppressWarnings("UnusedReturnValue")
     public String onMessageSend(@NotNull String message) {
-        if (message.startsWith("/locraw") && !this.listening && this.tick >= 22) {
-            this.playerSentCommand = true;
+        if (message.startsWith("/locraw") && !this.listening) {
+            if (this.tick == 22 || this.tick % 1000 != 0) {
+                this.playerSentCommand = true;
+            }
+
         }
         return message;
     }

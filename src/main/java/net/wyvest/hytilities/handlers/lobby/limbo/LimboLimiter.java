@@ -59,7 +59,6 @@ public class LimboLimiter {
         DefaultChatRestyler.reset(); // putting this here so we don't have to make a new event class just to do this
     }
 
-    @SuppressWarnings("unused")
     public static boolean shouldLimitFramerate() {
         return (!Display.isActive() || limboStatus) && HytilitiesConfig.limboLimiter && time * 20 >= 5
             && Minecraft.getMinecraft().gameSettings.limitFramerate > 15;

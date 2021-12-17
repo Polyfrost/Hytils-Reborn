@@ -19,6 +19,7 @@
 package net.wyvest.hytilities.handlers.cache;
 
 import net.wyvest.hytilities.Hytilities;
+import net.wyvest.hytilities.events.LocrawEvent;
 import net.wyvest.hytilities.util.HypixelAPIUtils;
 import net.wyvest.hytilities.util.JsonUtils;
 import net.wyvest.hytilities.util.locraw.LocrawInformation;
@@ -79,6 +80,13 @@ public class HeightHandler extends CacheHandler<String, Integer> {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    @SubscribeEvent
+    public void onLocraw(LocrawEvent e) {
+        currentHeight = -2;
+        printException = true;
+        getHeight();
     }
 
     @SubscribeEvent

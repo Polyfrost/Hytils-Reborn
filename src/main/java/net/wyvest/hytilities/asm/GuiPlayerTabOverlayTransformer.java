@@ -24,7 +24,7 @@ import org.objectweb.asm.tree.*;
 
 import java.util.ListIterator;
 
-//TODO: implement this as a mixin
+//TODO: implement this as a mixin apparently mixin 0.8 has custom injector things or something so use that maybe
 public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
 
     @Override
