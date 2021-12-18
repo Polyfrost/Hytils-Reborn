@@ -18,27 +18,34 @@
 
 package net.wyvest.hytilities.handlers.chat.modules.blockers;
 
+import gg.essential.universal.wrappers.message.UTextComponent;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.chat.ChatReceiveModule;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class ConnectedMessage implements ChatReceiveModule {
+public class DuelsNoStatsChange implements ChatReceiveModule {
+    private static final String[] cancelNoStatsChangeMessages = {"Your stats did not change because you /duel'ed your opponent!", "Your stats did not change because you dueled someone in your party!", "No stats will be affected in this round!"};
+
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final String strippedMessage = getStrippedMessage(event.message);
-        if (getLanguage().connectedServerConnectMessageRegex.matcher(strippedMessage).matches()) {
-            event.setCanceled(true);
+        String unformattedText = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText());
+        for (String glMessage : cancelNoStatsChangeMessages) {
+            if (unformattedText.contains(glMessage)) {
+                event.setCanceled(true);
+                return;
+            }
         }
     }
 
     @Override
     public boolean isEnabled() {
-        return HytilitiesConfig.serverConnectedMessages;
+        return HytilitiesConfig.duelsNoStatsChange;
     }
 
     @Override
     public int getPriority() {
-        return -5;
+        return -1;
     }
 }

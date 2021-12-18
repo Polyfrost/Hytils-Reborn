@@ -221,6 +221,27 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean curseOfSpam;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Remove Bridge Self Goal Death Messages",
+        description = "Hides the constant spam of Kali's curse of spam.\n§eExample: §cYou just jumped through your own goal, enjoy the void death! :)",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean bridgeOwnGoalDeath;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Duels No Stats Change Messages",
+        description = "Hides the message explaining that your stats did not change for dueling through /duel or within in a party.\n§eExamples:\n§cYour stats did not change because you /duel'ed your opponent!\n§cYour stats did not change because you dueled someone in your opponent!\n§cNo stats will be affected in this round!",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean duelsNoStatsChange;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Block Trail Disabled Messages",
+        description = "Hides the message explaining that your duel's block trail cosmetic was disabled in specific gamemodes.\n§eExample:\n§cYour block trail aura is disabled in this mode!",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean duelsBlockTrail;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Remove the Skyblock Welcome Message",
         description = "Hides the \"§eWelcome to §aHypixel SkyBlock§e!§r\" from chat.",
         category = "Chat", subcategory = "Toggles"
