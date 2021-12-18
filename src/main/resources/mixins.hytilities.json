@@ -10,6 +10,7 @@
     "GuiIngameForgeMixin_HideActionbar",
     "GuiIngameForgeMixin_TitleEvent",
     "GuiNewChatAccessor",
+    "GuiNewChatMixin_LocrawHider",
     "GuiPlayerTabOverlayMixin_HideNPCs",
     "GuiPlayerTabOverlayMixin_HidePing",
     "GuiUtilRenderComponentsMixin_TrimLineBreaker",

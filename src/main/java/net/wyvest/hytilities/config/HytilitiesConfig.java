@@ -135,6 +135,13 @@ public class HytilitiesConfig extends Vigilant {
     // Chat
 
     @Property(
+        type = PropertyType.SWITCH, name = "Hide Locraw Messages",
+        description = "Hide locraw messages in chat (e.g {\"server\": \"something\"}).",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean hideLocraw = true;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Remove Lobby Statuses",
         description = "Remove lobby join messages from chat.\n§eExample: §b[MVP§c+§b] Steve §6joined the lobby!",
         category = "Chat", subcategory = "Toggles"
