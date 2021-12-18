@@ -20,11 +20,13 @@ package net.wyvest.hytilities;
 
 import gg.essential.api.EssentialAPI;
 import gg.essential.universal.ChatColor;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.wyvest.hytilities.command.*;
 import net.wyvest.hytilities.config.HytilitiesConfig;
@@ -52,11 +54,14 @@ import net.wyvest.hytilities.handlers.lobby.npc.NPCHider;
 import net.wyvest.hytilities.handlers.render.ChestHighlighter;
 import net.wyvest.hytilities.handlers.silent.SilentRemoval;
 import net.wyvest.hytilities.util.HypixelAPIUtils;
+import net.wyvest.hytilities.updater.Updater;
 import net.wyvest.hytilities.util.friends.FriendCache;
 import net.wyvest.hytilities.util.locraw.LocrawUtil;
 import net.wyvest.hytilities.util.skyblock.SkyblockChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.File;
 
 @Mod(
     modid = Hytilities.MOD_ID,
@@ -67,12 +72,16 @@ public class Hytilities {
 
     public static final String MOD_ID = "hytilities-reborn";
     public static final String MOD_NAME = "Hytilities Reborn";
-    public static final String VERSION = "1.0.0-beta16";
+    public static final String VERSION = "1.0.0-beta17";
 
     @Mod.Instance(MOD_ID)
     public static Hytilities INSTANCE;
 
-    private final HytilitiesConfig config = new HytilitiesConfig();
+    public File jarFile;
+
+    public File modDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), MOD_NAME);
+
+    private HytilitiesConfig config;
     private final Logger logger = LogManager.getLogger("Hytilities Reborn");
 
     private final LanguageHandler languageHandler = new LanguageHandler();
@@ -89,9 +98,15 @@ public class Hytilities {
     private boolean loadedCall;
 
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
-        this.config.preload();
+    public void onFMLPreInitialization(FMLPreInitializationEvent event) {
+        if (!modDir.exists()) modDir.mkdirs();
+        jarFile = event.getSourceFile();
+    }
 
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent event) {
+        config = new HytilitiesConfig();
+        this.config.preload();
         new HytilitiesCommand().register();
         new HousingVisitCommand().register();
         final ClientCommandHandler commandRegister = ClientCommandHandler.instance;
@@ -103,6 +118,7 @@ public class Hytilities {
         HeightHandler.INSTANCE.initialize();
 
         registerHandlers();
+        Updater.update();
     }
 
     @Mod.EventHandler

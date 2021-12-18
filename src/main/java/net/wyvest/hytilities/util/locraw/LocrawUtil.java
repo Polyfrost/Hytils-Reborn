@@ -47,7 +47,6 @@ public class LocrawUtil implements ChatReceiveModule {
 
         this.tick++;
         if (this.tick == 20 || this.tick % 500 == 0) {
-            System.out.println("Yes");
             this.listening = true;
             Hytilities.INSTANCE.getCommandQueue().queue("/locraw");
         }

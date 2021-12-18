@@ -66,7 +66,7 @@ public class FriendCache {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setUseCaches(true);
-            connection.addRequestProperty("User-Agent", "Mozilla/4.76 (Hytilities Mod V0.1)");
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76 (Hytilities Reborn " + Hytilities.VERSION +  ")");
 
             // Connection will timeout after 15 seconds
             connection.setReadTimeout(15000);

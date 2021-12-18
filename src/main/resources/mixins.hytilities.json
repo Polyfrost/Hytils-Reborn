@@ -7,6 +7,7 @@
   "mixins": [
     "EntityPlayerSPMixin_MessageHandling",
     "GuiChatMixin_PlayAutocomplete",
+    "GuiIngameForgeMixin_HideActionbar",
     "GuiIngameForgeMixin_TitleEvent",
     "GuiNewChatAccessor",
     "GuiPlayerTabOverlayMixin_HideNPCs",

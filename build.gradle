@@ -23,7 +23,7 @@ plugins {
     id "org.spongepowered.mixin" version "d5f9873"
 }
 
-version = "1.0.0-beta16"
+version = "1.0.0-beta17"
 group = modGroup
 archivesBaseName = modBaseName
 
