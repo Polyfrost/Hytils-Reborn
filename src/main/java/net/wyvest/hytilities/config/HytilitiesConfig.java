@@ -341,14 +341,14 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Party Chat Swapper",
-        description = "Automatically change to a party channel when joining a party.\n§eRequires Chat Swapper.",
+        description = "Automatically change to a party channel when joining a party.",
         category = "Chat", subcategory = "Parties"
     )
     public static boolean partySwapper;
 
     @Property(
         type = PropertyType.SELECTOR, name = "Chat Swapper Channel",
-        description = "The channel to return to when leaving a party.\n§eRequires Chat Swapper.",
+        description = "The channel to return to when leaving a party.",
         category = "Chat", subcategory = "Parties",
         options = {"ALL", "GUILD", "OFFICER"}
     )
@@ -605,6 +605,9 @@ public class HytilitiesConfig extends Vigilant {
         addDependency("gexpMode", "autoGetGEXP");
 
         addDependency("antiGL", "autoGL");
+
+        addDependency("partySwapper", "chatSwapper");
+        addDependency("chatSwapperReturnChannel", "chatSwapper");
 
         addDependency("playerCountBeforePlayerName", "gameStatusRestyle");
         addDependency("playerCountOnPlayerLeave", "gameStatusRestyle");
