@@ -18,27 +18,28 @@
 
 package net.wyvest.hytilities.handlers.chat.modules.blockers;
 
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.chat.ChatReceiveModule;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class ConnectedMessage implements ChatReceiveModule {
+public class BridgeOwnGoalDeathRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final String strippedMessage = getStrippedMessage(event.message);
-        if (getLanguage().connectedServerConnectMessageRegex.matcher(strippedMessage).matches()) {
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        if (message.equals("You just jumped through your own goal, enjoy the void death! :)")) {
             event.setCanceled(true);
         }
     }
 
     @Override
     public boolean isEnabled() {
-        return HytilitiesConfig.serverConnectedMessages;
+        return HytilitiesConfig.bridgeOwnGoalDeath;
     }
 
     @Override
     public int getPriority() {
-        return -5;
+        return -1;
     }
 }

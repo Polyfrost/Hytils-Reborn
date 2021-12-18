@@ -18,27 +18,29 @@
 
 package net.wyvest.hytilities.handlers.chat.modules.blockers;
 
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.chat.ChatReceiveModule;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class ConnectedMessage implements ChatReceiveModule {
+public class DuelsBlockTrail implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final String strippedMessage = getStrippedMessage(event.message);
-        if (getLanguage().connectedServerConnectMessageRegex.matcher(strippedMessage).matches()) {
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        if (message.equals("Your block trail aura is disabled in this mode!")) {
             event.setCanceled(true);
         }
     }
 
     @Override
     public boolean isEnabled() {
-        return HytilitiesConfig.serverConnectedMessages;
+        return HytilitiesConfig.duelsBlockTrail;
     }
 
     @Override
     public int getPriority() {
-        return -5;
+        return -1;
     }
+
 }
