@@ -30,6 +30,7 @@ import net.wyvest.hytilities.updater.Updater;
 import java.awt.*;
 import java.io.File;
 
+@SuppressWarnings("unused")
 public class HytilitiesConfig extends Vigilant {
 
     // API
@@ -103,7 +104,7 @@ public class HytilitiesConfig extends Vigilant {
     public static int glPhrase = 0;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Anti-GL",
+        type = PropertyType.SWITCH, name = "Anti GL",
         description = "Remove all GL messages from chat.",
         category = "Automatic", subcategory = "AutoGL"
     )
@@ -141,7 +142,7 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean lobbyStatus;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remover others Mystery Box Rewards",
+        type = PropertyType.SWITCH, name = "Remover Other's Mystery Box Rewards",
         description = "Remove others mystery box messages from chat and only show your own.\n§eExample: §b[Mystery Box] Steve §ffound a §6Legendary Hype Train Gadget§f!",
         category = "Chat", subcategory = "Toggles"
     )
@@ -226,7 +227,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Bridge Self Goal Death Messages",
-        description = "Hides the constant spam of Kali's curse of spam.\n§eExample: §cYou just jumped through your own goal, enjoy the void death! :)",
+        description = "Hides the death message when you jump into your own goal in Bridge.\n§eExample: §cYou just jumped through your own goal, enjoy the void death! :)",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean bridgeOwnGoalDeath;
@@ -403,7 +404,7 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hideNpcsInTab;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Don't Hide important NPCs",
+        type = PropertyType.SWITCH, name = "Don't Hide Important NPCs",
         description = "Keeps NPCs in tab in gamemodes like Skyblock and Replay.",
         category = "General", subcategory = "Tab"
     )
@@ -606,6 +607,8 @@ public class HytilitiesConfig extends Vigilant {
         category = "Lobby", subcategory = "GUI"
     )
     public static boolean mysteryBoxStar;
+
+    //Updater
 
     @Property(
         type = PropertyType.SWITCH,

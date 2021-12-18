@@ -23,7 +23,7 @@ plugins {
     id "org.spongepowered.mixin" version "d5f9873"
 }
 
-version = "1.0.0-beta17"
+version = "1.0.0"
 group = modGroup
 archivesBaseName = modBaseName
 
@@ -61,7 +61,7 @@ dependencies {
     include ("gg.essential:loader-launchwrapper:1.1.2") {
         transitive = false
     }
-    implementation "gg.essential:essential-1.8.9-forge:1539+release-launch"
+    implementation "gg.essential:essential-1.8.9-forge:1655+release-launch"
 
     annotationProcessor "org.spongepowered:mixin:0.7.11-SNAPSHOT"
 }

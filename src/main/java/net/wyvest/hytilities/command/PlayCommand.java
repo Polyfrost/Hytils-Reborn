@@ -49,7 +49,7 @@ public class PlayCommand extends CommandBase {
     private void getNames() {
         Multithreading.runAsync(() -> {
             try {
-                String url = "https://gist.githubusercontent.com/asbyth/16ab6fcbca18f3f4a14d61d04e7ebeb5/raw";
+                String url = "https://raw.githubusercontent.com/W-OVERFLOW/DataStorage/main/games.json";
                 String content = WebUtil.fetchString(url);
                 Type stringStringMap = new TypeToken<HashMap<String, String>>() {
                 }.getType();
