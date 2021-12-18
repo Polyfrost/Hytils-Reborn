@@ -49,12 +49,12 @@ public class NPCHider {
     public static Collection<NetworkPlayerInfo> hideTabNpcs(Collection<NetworkPlayerInfo> playerInfoCollection) {
         LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
         if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilitiesConfig.hideNpcsInTab) {
-            if (!HytilitiesConfig.keepImportantNpcsInTab && (locraw == null || locraw.getGameType() == GameType.SKYBLOCK || locraw.getGameType() == GameType.REPLAY)) {
+            return playerInfoCollection;
+        } else {
+            if (HytilitiesConfig.keepImportantNpcsInTab && (locraw == null || locraw.getGameType() == GameType.SKYBLOCK || locraw.getGameType() == GameType.REPLAY)) {
                 return playerInfoCollection;
             }
-        } else {
             return Collections2.filter(playerInfoCollection, player -> player != null && player.getGameProfile().getId().version() != 2);
         }
-        return playerInfoCollection;
     }
 }
