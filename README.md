@@ -1,4 +1,6 @@
 # Hytilities Reborn
+<a href="https://github.com/W-OVERFLOW/Hytilities-Reborn/releases" target="_blank"></a>
+<img alt="downloads" src="https://img.shields.io/github/downloads/W-OVERFLOW/Hytilities-Reborn/total?color=F5C400&style=for-the-badge" /> <img alt="downloads latest" src="https://img.shields.io/github/downloads-pre/W-OVERFLOW/Hytilities-Reborn/latest/total?color=F5C400&style=for-the-badge" />
 
 <details open>
   <summary>User Guide</summary>
