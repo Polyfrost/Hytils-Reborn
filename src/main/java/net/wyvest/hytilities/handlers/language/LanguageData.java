@@ -71,7 +71,7 @@ public class LanguageData {
 
 
     private String autoChatSwapperPartyStatus = "^(?:You have been kicked from the party by (?:\\[.+] )?\\w{1,16}|(?:\\[.+] )?\\w{1,16} has disbanded the party!|You left the party(?:\\[.+] )?\\w{0,16}|(?:\\[.+] )?\\w{1,100}The party was disbanded(?:\\[.+] )?\\w{1,100}.)$";
-    private String autoChatSwapperPartyStatus2 = "^(?:You have joined (?:\\[.+] )?(?:.*)|Party Members(?:\\[.+] )?\\w{1,100}|(?:\\[.+] )?\\w{1,100} joined the (?:\\[.+] )?\\w{1,100}.)$";
+    private String autoChatSwapperPartyStatus2 = "^(?:You have joined (?:\\[.+] )?(?:.*)|Party Members(?:\\[.+] )?\\w{1,100}|(?:\\[.+] )?\\w{1,100} joined the party(?:.*))$";
     private String autoChatSwapperChannelSwap = "^You are now in the (?<channel>ALL|GUILD|OFFICER|PARTY) channel$";
     public String autoChatSwapperAlreadyInChannel = "You're already in this channel!";
 

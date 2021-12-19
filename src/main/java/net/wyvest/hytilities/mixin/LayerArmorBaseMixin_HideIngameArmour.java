@@ -41,33 +41,33 @@ public abstract class LayerArmorBaseMixin_HideIngameArmour {
 
     @Inject(method = "renderLayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/layers/LayerArmorBase;getArmorModel(I)Lnet/minecraft/client/model/ModelBase;"), cancellable = true)
     private void cancelArmor(EntityLivingBase entitylivingbaseIn, float p_177182_2_, float p_177182_3_, float partialTicks, float p_177182_5_, float p_177182_6_, float p_177182_7_, float scale, int armorSlot, CallbackInfo ci) {
-        if (!shouldRenderArmour(getCurrentArmor(entitylivingbaseIn, armorSlot))) {
+        if (shouldCancel(getCurrentArmor(entitylivingbaseIn, armorSlot))) {
             ci.cancel();
         }
     }
 
-    private static boolean shouldRenderArmour(ItemStack itemStack) {
-        if (!HytilitiesConfig.hideArmor || itemStack == null || !EssentialAPI.getMinecraftUtil().isHypixel()) return true;
+    private static boolean shouldCancel(ItemStack itemStack) {
+        if (!HytilitiesConfig.hideArmor || itemStack == null || !EssentialAPI.getMinecraftUtil().isHypixel()) return false;
         final LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
         final Item item = itemStack.getItem();
         if (locraw != null) {
             if (item instanceof ItemArmor && ((ItemArmor) item).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
                 switch (locraw.getGameType()) {
                     case BED_WARS:
-                        return false;
+                        return true;
                     case ARCADE_GAMES:
                         // capture the wool
-                        return !locraw.getGameMode().contains("PVP_CTW");
+                        return locraw.getGameMode().contains("PVP_CTW");
                     case DUELS:
-                        return !(locraw.getGameMode().contains("BRIDGE") || locraw.getGameMode().contains("CTF") || locraw.getGameMode().contains("CLASSIC"));
+                        return locraw.getGameMode().contains("BRIDGE") || locraw.getGameMode().contains("CTF");
                 }
             } else {
                 if (locraw.getGameType() == GameType.DUELS) {
-                    return !locraw.getGameMode().contains("CLASSIC");
+                    return locraw.getGameMode().contains("CLASSIC");
                 }
             }
         }
 
-        return true;
+        return false;
     }
 }
