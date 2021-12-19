@@ -18,14 +18,14 @@
 
 package net.wyvest.hytilities.handlers.chat.modules.blockers;
 
-import net.wyvest.hytilities.config.HytilitiesConfig;
-import net.wyvest.hytilities.handlers.chat.ChatReceiveModule;
-import gg.essential.api.EssentialAPI;
 import gg.essential.api.utils.Multithreading;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import net.wyvest.hytilities.config.HytilitiesConfig;
+import net.wyvest.hytilities.handlers.chat.ChatReceiveModule;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
@@ -46,26 +46,18 @@ public class GuildMOTD implements ChatReceiveModule {
     @SubscribeEvent
     public void onConnectedToServer(FMLNetworkEvent.ClientConnectedToServerEvent event) {
         // Allow checking of MOTD immediately after joining Hypixel.
-        canCheckMOTD = EssentialAPI.getMinecraftUtil().isHypixel();
+        canCheckMOTD = true;
         isMOTD = false;
         // Stop checking, as it shouldn't be possible for further messages to be the MOTD.
         // May have to adjust the timing.
         Multithreading.schedule(() -> canCheckMOTD = false, 3L, TimeUnit.SECONDS);
     }
 
-    /**
-     * Example of a MOTD:
-     * <p>§b-------------------------------------------</p>
-     * <p>Welcome to the guild!</p>
-     * <p>Join our Discord server!</p>
-     * <p>Enjoy your stay!</p>
-     * <p>§b-------------------------------------------</p>
-     */
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         if (canCheckMOTD) {
             // MOTD line breaker is already trimmed to chat width.
-            if (event.message.getFormattedText().startsWith("\u00a7b------")) {
+            if (EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedTextForChat()).startsWith("------")) {
                 // Received the first or last line of MOTD.
                 isMOTD = !isMOTD;
                 // Hide the MOTD line breaker.

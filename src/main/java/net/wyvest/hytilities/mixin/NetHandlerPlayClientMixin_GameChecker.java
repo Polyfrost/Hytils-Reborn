@@ -18,9 +18,9 @@
 
 package net.wyvest.hytilities.mixin;
 
-import net.wyvest.hytilities.util.HypixelAPIUtils;
 import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.network.play.server.S07PacketRespawn;
+import net.minecraft.network.play.server.S3DPacketDisplayScoreboard;
+import net.wyvest.hytilities.util.HypixelAPIUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,8 +28,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(NetHandlerPlayClient.class)
 public class NetHandlerPlayClientMixin_GameChecker {
-    @Inject(method = "handleRespawn", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;)V"))
-    private void checkScoreboard(S07PacketRespawn packetIn, CallbackInfo ci) {
+    @Inject(method = "handleDisplayScoreboard", at = @At("TAIL"))
+    private void checkScoreboard(S3DPacketDisplayScoreboard packetIn, CallbackInfo ci) {
         HypixelAPIUtils.checkGameModes();
     }
 }
