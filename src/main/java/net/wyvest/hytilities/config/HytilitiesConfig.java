@@ -404,6 +404,13 @@ public class HytilitiesConfig extends Vigilant {
     // General
 
     @Property(
+        type = PropertyType.SWITCH, name = "Notify Mining Fatigue",
+        description = "Send a notification when you get mining fatigue.",
+        category = "General", subcategory = "Potion Effects"
+    )
+    public static boolean notifyMiningFatigue;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide NPCs in Tab",
         description = "Prevent NPCs from showing up in tab.",
         category = "General", subcategory = "Tab"
