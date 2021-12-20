@@ -42,5 +42,4 @@ public class DuelsBlockTrail implements ChatReceiveModule {
     public int getPriority() {
         return -1;
     }
-
 }
