@@ -594,6 +594,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean npcHider;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Hide Lobby \"Click\" Armor Stands",
+        description = "Hides unnecessary armor stands such as those that say \"§eRIGHT CLICK§r\" or \"§eCLICK HERE§r\" in the lobby.",
+        category = "Lobby", subcategory = "Entities"
+    )
+    public static boolean hideClickArmorStands;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Limbo Limiter",
         description = "While in Limbo, limit your framerate to reduce the load of the game on your computer.",
         category = "Lobby", subcategory = "General"

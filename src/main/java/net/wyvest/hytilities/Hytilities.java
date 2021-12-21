@@ -46,6 +46,7 @@ import net.wyvest.hytilities.handlers.general.CommandQueue;
 import net.wyvest.hytilities.handlers.general.SoundHandler;
 import net.wyvest.hytilities.handlers.language.LanguageHandler;
 import net.wyvest.hytilities.handlers.lobby.LobbyChecker;
+import net.wyvest.hytilities.handlers.lobby.armorstands.ArmorStandHider;
 import net.wyvest.hytilities.handlers.lobby.bossbar.LobbyBossbar;
 import net.wyvest.hytilities.handlers.lobby.limbo.LimboLimiter;
 import net.wyvest.hytilities.handlers.lobby.limbo.LimboTitleFix;
@@ -147,6 +148,7 @@ public class Hytilities {
 
         // lobby
         eventBus.register(lobbyChecker);
+        eventBus.register(new ArmorStandHider());
         eventBus.register(new NPCHider());
         eventBus.register(new LobbyBossbar());
         eventBus.register(new LimboLimiter());

@@ -54,6 +54,7 @@ public class NPCHider {
             if (HytilitiesConfig.keepImportantNpcsInTab && (locraw == null || locraw.getGameType() == GameType.SKYBLOCK || locraw.getGameType() == GameType.REPLAY)) {
                 return playerInfoCollection;
             }
+
             return Collections2.filter(playerInfoCollection, player -> player != null && player.getGameProfile().getId().version() != 2);
         }
     }
