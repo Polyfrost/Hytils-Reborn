@@ -24,6 +24,7 @@ import gg.essential.api.utils.Multithreading;
 import gg.essential.elementa.WindowScreen;
 import kotlin.Unit;
 import net.wyvest.hytilities.Hytilities;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 
@@ -48,7 +49,7 @@ public class DownloadGui extends WindowScreen {
                 if (Updater.download(
                     Updater.updateUrl,
                     new File(
-                        "mods/Hytilities-Reborn-" + Updater.latestTag.substring(Updater.latestTag.indexOf("v")) + ".jar"
+                        "mods/Hytilities-Reborn-" + StringUtils.substringAfter(Updater.latestTag, "v") + ".jar"
                     )
                 ) && Updater.download(
                     "https://github.com/Wyvest/Deleter/releases/download/v1.2/Deleter-1.2.jar",

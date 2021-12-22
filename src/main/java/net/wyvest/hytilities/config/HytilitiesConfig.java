@@ -26,6 +26,7 @@ import net.minecraft.client.Minecraft;
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.updater.DownloadGui;
 import net.wyvest.hytilities.updater.Updater;
+import net.wyvest.hytilities.util.ColorUtils;
 
 import java.awt.*;
 import java.io.File;
@@ -538,7 +539,7 @@ public class HytilitiesConfig extends Vigilant {
         category = "Game", subcategory = "Visual",
         maxF = 1.0F
     )
-    public static float overlayAmount = 0.7F;
+    public static float overlayAmount = 0.3F;
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Duels Cosmetics",
@@ -659,9 +660,28 @@ public class HytilitiesConfig extends Vigilant {
             .push("Hytilities Reborn", "No update had been detected at startup, and thus the update GUI has not been shown.");
     }
 
+    @Property(
+        type = PropertyType.NUMBER,
+        name = "DO NOT MODIFY THIS VALUE",
+        description = "Config version",
+        category = "Updater",
+        hidden = true
+    )
+    public static int configNumber = 0;
+
+
     public HytilitiesConfig() {
         super(new File(Hytilities.INSTANCE.modDir, "hytilitiesreborn.toml"));
         initialize();
+
+        if (configNumber == 0) { // Config version has not been set
+            if (overlayAmount == 0.7F) { // Changes 0.7 to 0.3, the only change between config 0 and 1
+                overlayAmount = 0.3F;
+            }
+            configNumber = 1; // set this to the current config version
+            markDirty();
+            writeData();
+        }
 
         addDependency("autoQueueDelay", "autoQueue");
 
@@ -695,6 +715,7 @@ public class HytilitiesConfig extends Vigilant {
         registerListener("overlayAmount", (funny) -> {
             if (funny != null) {
                 overlayAmount = (float) funny;
+                ColorUtils.invalidateCache();
                 Minecraft.getMinecraft().renderGlobal.loadRenderers();
             }
         });

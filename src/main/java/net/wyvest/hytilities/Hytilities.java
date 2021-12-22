@@ -210,7 +210,7 @@ public class Hytilities {
     public LanguageHandler getLanguageHandler() {
         return languageHandler;
     }
-    @SuppressWarnings("unused")
+
     public ChatHandler getChatHandler() {
         return chatHandler;
     }

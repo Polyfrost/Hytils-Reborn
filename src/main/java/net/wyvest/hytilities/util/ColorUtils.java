@@ -18,11 +18,11 @@
 
 package net.wyvest.hytilities.util;
 
-import net.wyvest.hytilities.Hytilities;
-import net.wyvest.hytilities.config.HytilitiesConfig;
 import gg.essential.lib.caffeine.cache.Cache;
 import gg.essential.lib.caffeine.cache.Caffeine;
 import net.minecraft.block.material.MapColor;
+import net.wyvest.hytilities.Hytilities;
+import net.wyvest.hytilities.config.HytilitiesConfig;
 
 import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -43,13 +43,17 @@ public class ColorUtils {
 
     private static final Cache<Integer, Integer> cache = Caffeine.newBuilder().executor(POOL).maximumSize(100).build();
 
+    public static void invalidateCache() {
+        cache.invalidateAll();
+    }
+
     public static int getCachedDarkColor(MapColor mapColor) {
         Integer color = cache.getIfPresent(mapColor.colorIndex);
         if (color == null) {
             cache.put(mapColor.colorIndex, ((0xFF) << 24) |
-                ((Math.round(Math.max((float) ColorUtils.getRed(mapColor.colorValue) * HytilitiesConfig.overlayAmount, 0.0F)) & 0xFF) << 16) |
-                ((Math.round(Math.max((float) ColorUtils.getGreen(mapColor.colorValue) * HytilitiesConfig.overlayAmount, 0.0F)) & 0xFF) << 8) |
-                ((Math.round(Math.max((float) ColorUtils.getBlue(mapColor.colorValue) * HytilitiesConfig.overlayAmount, 0.0F)) & 0xFF)));
+                ((Math.round(Math.max((float) getRed(mapColor.colorValue) * (1F - HytilitiesConfig.overlayAmount), 0.0F)) & 0xFF) << 16) |
+                ((Math.round(Math.max((float) getGreen(mapColor.colorValue) * (1F - HytilitiesConfig.overlayAmount), 0.0F)) & 0xFF) << 8) |
+                ((Math.round(Math.max((float) getBlue(mapColor.colorValue) * (1F - HytilitiesConfig.overlayAmount), 0.0F)) & 0xFF)));
             return Objects.requireNonNull(cache.getIfPresent(mapColor.colorIndex));
         } else {
             return color;
