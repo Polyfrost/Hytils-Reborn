@@ -177,35 +177,33 @@ public class HypixelAPIUtils {
             JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/player?key=" + HytilitiesConfig.apiKey + ";uuid=" + uuid)).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
         if (locraw != null) {
             switch (locraw.getGameType()) {
-                case BED_WARS: {
+                case BED_WARS:
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("Bedwars").get("winstreak").getAsInt());
+                        return true;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return false;
                     }
-                }
-                case SKY_WARS: {
+                    break;
+                case SKY_WARS:
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("SkyWars").get("win_streak").getAsInt());
+                        return true;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return false;
                     }
-                }
-                case DUELS: {
+                    break;
+                case DUELS:
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("Duels").get("current_winstreak").getAsInt());
+                        return true;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return false;
                     }
-                }
-                default:
-                    return false;
+                    break;
             }
         }
-        return true;
+        return false;
     }
 
     /**
@@ -220,35 +218,33 @@ public class HypixelAPIUtils {
             JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/player?key=" + HytilitiesConfig.apiKey + ";uuid=" + uuid)).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
         if (locraw != null) {
             switch (locraw.getGameType()) {
-                case BED_WARS: {
+                case BED_WARS:
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("Bedwars").get("winstreak").getAsInt());
+                        return true;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return false;
                     }
-                }
-                case SKY_WARS: {
+                    break;
+                case SKY_WARS:
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("SkyWars").get("win_streak").getAsInt());
+                        return true;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return false;
                     }
-                }
-                case DUELS: {
+                    break;
+                case DUELS:
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("Duels").get("current_winstreak").getAsInt());
+                        return true;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return false;
                     }
-                }
-                default:
-                    return false;
+                    break;
             }
         }
-        return true;
+        return false;
     }
 
     /**
@@ -264,35 +260,33 @@ public class HypixelAPIUtils {
             JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/player?key=" + HytilitiesConfig.apiKey + ";uuid=" + uuid)).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
         if (game != null) {
             switch (game.toLowerCase(Locale.ENGLISH)) {
-                case "bedwars": {
+                case "bedwars":
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("Bedwars").get("winstreak").getAsInt());
+                        return true;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return false;
                     }
-                }
-                case "skywars": {
+                    break;
+                case "skywars":
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("SkyWars").get("win_streak").getAsInt());
+                        return true;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return false;
                     }
-                }
-                case "duels": {
+                    break;
+                case "duels":
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("Duels").get("current_winstreak").getAsInt());
+                        return true;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return false;
                     }
-                }
-                default:
-                    return false;
+                    break;
             }
         }
-        return true;
+        return false;
     }
 
     /**

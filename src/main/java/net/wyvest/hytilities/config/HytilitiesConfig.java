@@ -573,7 +573,7 @@ public class HytilitiesConfig extends Vigilant {
         type = PropertyType.NUMBER, name = "Block Number",
         description = "Modify the number of blocks you (don't?) have for the Notify When Blocks Run Out feature to work.",
         category = "Game", subcategory = "Sound",
-        min = 1, max = 20
+        min = 4, max = 20
     )
     public static int blockNumber = 10;
 
@@ -584,13 +584,6 @@ public class HytilitiesConfig extends Vigilant {
         options = {"Hypixel Ding", "Golem Hit", "Blaze Hit", "Anvil Land", "Horse Death", "Ghast Scream", "Guardian Floop", "Cat Meow", "Dog Bark"}
     )
     public static int blockNotifySound = 0;
-
-    @Property(
-        type = PropertyType.SWITCH, name = "Spam Block Notify Sound",
-        description = "Spam the sound (this will make it VERY loud)",
-        category = "Game", subcategory = "Sound"
-    )
-    public static boolean spamBlockNotify;
 
     // Lobby
 
