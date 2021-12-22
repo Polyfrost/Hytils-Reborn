@@ -59,7 +59,7 @@ public abstract class LayerArmorBaseMixin_HideIngameArmour {
                         // capture the wool
                         return locraw.getGameMode().contains("PVP_CTW");
                     case DUELS:
-                        return locraw.getGameMode().contains("BRIDGE") || locraw.getGameMode().contains("CTF");
+                        return locraw.getGameMode().contains("BRIDGE") || locraw.getGameMode().contains("CAPTURE");
                 }
             } else {
                 if (locraw.getGameType() == GameType.DUELS) {

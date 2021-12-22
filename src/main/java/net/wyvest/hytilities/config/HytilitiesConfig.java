@@ -220,7 +220,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Auto Activated Quest Messages",
-        description = "Remove automatically activated quest messages.",
+        description = "Remove automatically activated quest messages.\n§eExample: §aAutomatically activated: §6Daily Quest: Duels Winner",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean questsMessages;
@@ -498,6 +498,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hideArmor;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Hide Bridges Goal Nametags",
+        description = "Hide the nametags for the goals in Bridges.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideGoalArmorStands;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hardcore Hearts",
         description = "When your bed is broken/wither is killed in Bedwars/The Walls, set the heart style to Hardcore.",
         category = "Game", subcategory = "Visual"
@@ -519,13 +526,6 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hideGameCountdown;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Mute Housing Music",
-        description = "Prevent the Housing songs from being heard.",
-        category = "Game", subcategory = "Sound"
-    )
-    public static boolean muteHousingMusic;
-
-    @Property(
         type = PropertyType.SWITCH, name = "Height Overlay",
         description = "Make blocks that are in the Hypixel height limit a different colour.\n§4Reloads chunks automatically when toggled on and off.",
         category = "Game", subcategory = "Visual"
@@ -539,6 +539,27 @@ public class HytilitiesConfig extends Vigilant {
         maxF = 1.0F
     )
     public static float overlayAmount = 0.7F;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Hide Duels Cosmetics",
+        description = "Hide Duels Cosmetics in Hypixel.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideDuelsCosmetics;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Hide Actionbar in Invaders",
+        description = "Hide the Actionbar in Invaders.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideInvadersActionBar;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Mute Housing Music",
+        description = "Prevent the Housing songs from being heard.",
+        category = "Game", subcategory = "Sound"
+    )
+    public static boolean muteHousingMusic;
 
     @Property(
         type = PropertyType.SWITCH, name = "Notify When Blocks Run Out",
@@ -570,20 +591,6 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean spamBlockNotify;
 
-    @Property(
-        type = PropertyType.SWITCH, name = "Hide Duels Cosmetics",
-        description = "Hide Duels Cosmetics in Hypixel.",
-        category = "Game", subcategory = "Visual"
-    )
-    public static boolean hideDuelsCosmetics;
-
-    @Property(
-        type = PropertyType.SWITCH, name = "Hide Actionbar in Invaders",
-        description = "Hide the Actionbar in Invaders.",
-        category = "Game", subcategory = "Visual"
-    )
-    public static boolean hideInvadersActionBar;
-
     // Lobby
 
     @Property(
@@ -594,8 +601,8 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean npcHider;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide Lobby \"Click\" Armor Stands",
-        description = "Hides unnecessary armor stands such as those that say \"§eRIGHT CLICK§r\" or \"§eCLICK HERE§r\" in the lobby.",
+        type = PropertyType.SWITCH, name = "Hide Lobby \"Click\" Nametags",
+        description = "Hides unnecessary nametags such as those that say \"§eRIGHT CLICK§r\" or \"§eCLICK HERE§r\" in the lobby.",
         category = "Lobby", subcategory = "Entities"
     )
     public static boolean hideClickArmorStands;

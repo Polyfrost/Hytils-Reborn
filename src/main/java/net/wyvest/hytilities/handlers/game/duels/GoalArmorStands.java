@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.wyvest.hytilities.handlers.lobby.armorstands;
+package net.wyvest.hytilities.handlers.game.duels;
 
 import gg.essential.api.EssentialAPI;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,18 +25,19 @@ import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.config.HytilitiesConfig;
+import net.wyvest.hytilities.util.locraw.LocrawInformation;
 
-public class ArmorStandHider {
-    private static final String[] lobbyArmorStandNames = {" click", "click "};
-
+public class GoalArmorStands {
+    private static final String[] goalArmorStandNames = {"goal", "defend", "jump in to score"};
 
     @SubscribeEvent
     public void onEntityRenderer(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (HytilitiesConfig.hideClickArmorStands && EssentialAPI.getMinecraftUtil().isHypixel() && Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+        LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
+        if (HytilitiesConfig.hideGoalArmorStands && EssentialAPI.getMinecraftUtil().isHypixel() && locraw != null && locraw.getGameMode().contains("BRIDGE")) {
             if (event.entity instanceof EntityArmorStand) {
                 String unformattedText = event.entity.getCustomNameTag().toLowerCase();
-                for (String lobbyArmorStands : lobbyArmorStandNames) {
-                    if (unformattedText.contains(lobbyArmorStands)) {
+                for (String goalArmorStands : goalArmorStandNames) {
+                    if (unformattedText.contains(goalArmorStands)) {
                         event.setCanceled(true);
                     }
                 }
