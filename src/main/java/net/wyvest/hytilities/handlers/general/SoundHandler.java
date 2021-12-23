@@ -29,15 +29,26 @@ import net.wyvest.hytilities.config.HytilitiesConfig;
 
 public class SoundHandler {
 
+    private int ticks = -1;
+
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent e) {
         if (e.phase == TickEvent.Phase.START) {
             if (EssentialAPI.getMinecraftUtil().isHypixel() && Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null) {
                 if (HytilitiesConfig.blockNotify && !Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) {
-                    if (Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && !(((ItemBlock) Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem()).block instanceof BlockTNT)) {
-                        if (Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize <= HytilitiesConfig.blockNumber && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize > 4) {
+                    if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && !(((ItemBlock) Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem()).block instanceof BlockTNT) && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize <= HytilitiesConfig.blockNumber && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize > 4) {
+                        ticks++;
+                        if (ticks == 0) {
                             playSound();
+                            return;
+                        } else if (ticks == 20) {
+                            playSound();
+                            System.out.println(ticks);
+                            return;
                         }
+                        if (ticks > 40) ticks = -1;
+                    } else if (ticks != -1) {
+                        ticks = -1;
                     }
                 }
             }

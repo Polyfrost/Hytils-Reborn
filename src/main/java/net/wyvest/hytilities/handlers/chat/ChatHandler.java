@@ -77,6 +77,7 @@ public class ChatHandler {
         this.registerModule(new GrinchPresentsRemover());
         this.registerModule(new BoosterRemover());
         this.registerModule(new AutoVictory());
+        this.registerModule(new AutoPartyWarpConfirm());
 
         this.registerDualModule(new ShoutBlocker());
 

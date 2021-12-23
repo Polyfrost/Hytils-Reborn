@@ -21,14 +21,17 @@ package net.wyvest.hytilities.handlers.chat.modules.triggers;
 import gg.essential.api.EssentialAPI;
 import gg.essential.api.utils.Multithreading;
 import gg.essential.universal.wrappers.message.UTextComponent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.events.TitleEvent;
 import net.wyvest.hytilities.handlers.cache.PatternHandler;
 import net.wyvest.hytilities.handlers.chat.ChatReceiveResetModule;
+import net.wyvest.hytilities.mixin.GuiIngameAccessor;
 import net.wyvest.hytilities.util.HypixelAPIUtils;
 import net.wyvest.hytilities.util.locraw.LocrawInformation;
 import org.jetbrains.annotations.NotNull;
@@ -38,6 +41,11 @@ import java.util.regex.Pattern;
 
 public class AutoVictory implements ChatReceiveResetModule {
     private boolean victoryDetected = false;
+
+    public AutoVictory() {
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
     @Override
     public int getPriority() {
         return 3;
@@ -67,9 +75,11 @@ public class AutoVictory implements ChatReceiveResetModule {
 
     @SubscribeEvent
     public void onTitle(TitleEvent event) {
-        final String title = EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle().toLowerCase(Locale.ENGLISH));
-        if (title.equals("victory!") || title.equals("game over") || title.equals("game over!") || title.endsWith(" wins!")) {
-            doNotification();
+        if (!victoryDetected) {
+            final String title = EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle().toLowerCase(Locale.ENGLISH));
+            if (title.equals("victory!") || title.equals("game over") || title.equals("game over!") || title.endsWith(" wins!")) {
+                Multithreading.runAsync(this::doNotification);
+            }
         }
     }
 
@@ -77,45 +87,59 @@ public class AutoVictory implements ChatReceiveResetModule {
         victoryDetected = true;
         if (HytilitiesConfig.autoGetGEXP) {
             if (HytilitiesConfig.gexpMode == 0) {
-                if (HypixelAPIUtils.getGEXP()) {
-                    EssentialAPI.getNotifications()
-                        .push(
-                            Hytilities.MOD_NAME,
-                            "You currently have " + HypixelAPIUtils.gexp + " daily guild EXP."
-                        );
-                } else {
-                    EssentialAPI.getNotifications()
-                        .push(Hytilities.MOD_NAME, "There was a problem trying to get your GEXP.");
+                try {
+                    if (HypixelAPIUtils.getGEXP()) {
+                        EssentialAPI.getNotifications()
+                            .push(
+                                Hytilities.MOD_NAME,
+                                "You currently have " + HypixelAPIUtils.gexp + " daily guild EXP."
+                            );
+                        return;
+                    }
+                } catch (Exception ignored) {
+
                 }
+                EssentialAPI.getNotifications()
+                    .push(Hytilities.MOD_NAME, "There was a problem trying to get your GEXP.");
             } else {
-                if (HypixelAPIUtils.getWeeklyGEXP()) {
-                    EssentialAPI.getNotifications()
-                        .push(
-                            Hytilities.MOD_NAME,
-                            "You currently have " + HypixelAPIUtils.gexp + " weekly guild EXP."
-                        );
-                } else {
-                    EssentialAPI.getNotifications()
-                        .push(Hytilities.MOD_NAME, "There was a problem trying to get your GEXP.");
+                try {
+                    if (HypixelAPIUtils.getWeeklyGEXP()) {
+                        EssentialAPI.getNotifications()
+                            .push(
+                                Hytilities.MOD_NAME,
+                                "You currently have " + HypixelAPIUtils.gexp + " weekly guild EXP."
+                            );
+                        return;
+                    }
+                } catch (Exception ignored) {
+
                 }
+                EssentialAPI.getNotifications()
+                    .push(Hytilities.MOD_NAME, "There was a problem trying to get your GEXP.");
             }
         }
         if (isSupportedMode(Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation()) && HytilitiesConfig.autoGetWinstreak) {
-            if (HypixelAPIUtils.getWinstreak()) {
-                EssentialAPI.getNotifications().push(
-                    Hytilities.MOD_NAME,
-                    "You currently have a " + HypixelAPIUtils.winstreak + " winstreak."
-                );
-            } else {
-                EssentialAPI.getNotifications()
-                    .push(Hytilities.MOD_NAME, "There was a problem trying to get your winstreak.");
+            try {
+                if (HypixelAPIUtils.getWinstreak()) {
+                    EssentialAPI.getNotifications().push(
+                        Hytilities.MOD_NAME,
+                        "You currently have a " + HypixelAPIUtils.winstreak + " winstreak."
+                    );
+                    return;
+                }
+            } catch (Exception ignored) {
+
             }
+            EssentialAPI.getNotifications()
+                .push(Hytilities.MOD_NAME, "There was a problem trying to get your winstreak.");
         }
     }
 
     @Override
     public void reset() {
         victoryDetected = false;
+        ((GuiIngameAccessor) Minecraft.getMinecraft().ingameGUI).setDisplayedTitle("");
+        ((GuiIngameAccessor) Minecraft.getMinecraft().ingameGUI).setDisplayedSubTitle("");
     }
 
     private boolean isSupportedMode(LocrawInformation locraw) {

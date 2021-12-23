@@ -51,9 +51,9 @@ public class ColorUtils {
         Integer color = cache.getIfPresent(mapColor.colorIndex);
         if (color == null) {
             cache.put(mapColor.colorIndex, ((0xFF) << 24) |
-                ((Math.round(Math.max((float) getRed(mapColor.colorValue) * (1F - HytilitiesConfig.overlayAmount), 0.0F)) & 0xFF) << 16) |
-                ((Math.round(Math.max((float) getGreen(mapColor.colorValue) * (1F - HytilitiesConfig.overlayAmount), 0.0F)) & 0xFF) << 8) |
-                ((Math.round(Math.max((float) getBlue(mapColor.colorValue) * (1F - HytilitiesConfig.overlayAmount), 0.0F)) & 0xFF)));
+                ((Math.round(Math.max((float) getRed(mapColor.colorValue) * ((float) (1000 - HytilitiesConfig.overlayAmount) / 1000), 0.0F)) & 0xFF) << 16) |
+                ((Math.round(Math.max((float) getGreen(mapColor.colorValue) * ((float) (1000 - HytilitiesConfig.overlayAmount) / 1000), 0.0F)) & 0xFF) << 8) |
+                ((Math.round(Math.max((float) getBlue(mapColor.colorValue) * ((float) (1000 - HytilitiesConfig.overlayAmount) / 1000), 0.0F)) & 0xFF)));
             return Objects.requireNonNull(cache.getIfPresent(mapColor.colorIndex));
         } else {
             return color;

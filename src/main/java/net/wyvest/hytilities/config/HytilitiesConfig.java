@@ -389,6 +389,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean autoChatReportConfirm;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Auto Party Warp Confirm",
+        description = "Automatically confirms party warps.",
+        category = "Automatic", subcategory = "Chat"
+    )
+    public static boolean autoPartyWarpConfirm;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Guild Welcome Message",
         description = "Send a friendly welcome message when a player joins your guild.\n§eExample: §fWelcome to the guild Steve!",
         category = "Chat", subcategory = "Guild"
@@ -534,12 +541,12 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean heightOverlay;
 
     @Property(
-        type = PropertyType.DECIMAL_SLIDER, name = "Height Overlay Tint Multiplier",
+        type = PropertyType.SLIDER, name = "Height Overlay Tint Multiplier",
         description = "Adjust the tint multiplier.",
         category = "Game", subcategory = "Visual",
-        maxF = 1.0F
+        max = 1000
     )
-    public static float overlayAmount = 0.3F;
+    public static int overlayAmount = 300;
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Duels Cosmetics",
@@ -667,11 +674,11 @@ public class HytilitiesConfig extends Vigilant {
         super(new File(Hytilities.INSTANCE.modDir, "hytilitiesreborn.toml"));
         initialize();
 
-        if (configNumber == 0) { // Config version has not been set
-            if (overlayAmount == 0.7F) { // Changes 0.7 to 0.3, the only change between config 0 and 1
-                overlayAmount = 0.3F;
+        if (configNumber != 2) { // Config version has not been set or is outdated
+            if (configNumber == 1) {
+                overlayAmount = 300;
             }
-            configNumber = 1; // set this to the current config version
+            configNumber = 2; // set this to the current config version
             markDirty();
             writeData();
         }
@@ -707,7 +714,7 @@ public class HytilitiesConfig extends Vigilant {
         });
         registerListener("overlayAmount", (funny) -> {
             if (funny != null) {
-                overlayAmount = (float) funny;
+                overlayAmount = (int) funny;
                 ColorUtils.invalidateCache();
                 Minecraft.getMinecraft().renderGlobal.loadRenderers();
             }
