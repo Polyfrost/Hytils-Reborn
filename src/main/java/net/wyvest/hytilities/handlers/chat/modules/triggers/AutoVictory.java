@@ -31,7 +31,6 @@ import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.events.TitleEvent;
 import net.wyvest.hytilities.handlers.cache.PatternHandler;
 import net.wyvest.hytilities.handlers.chat.ChatReceiveResetModule;
-import net.wyvest.hytilities.mixin.GuiIngameAccessor;
 import net.wyvest.hytilities.util.HypixelAPIUtils;
 import net.wyvest.hytilities.util.locraw.LocrawInformation;
 import org.jetbrains.annotations.NotNull;
@@ -138,8 +137,8 @@ public class AutoVictory implements ChatReceiveResetModule {
     @Override
     public void reset() {
         victoryDetected = false;
-        ((GuiIngameAccessor) Minecraft.getMinecraft().ingameGUI).setDisplayedTitle("");
-        ((GuiIngameAccessor) Minecraft.getMinecraft().ingameGUI).setDisplayedSubTitle("");
+        Minecraft.getMinecraft().ingameGUI.displayedTitle = "";
+        Minecraft.getMinecraft().ingameGUI.displayedSubTitle = "";
     }
 
     private boolean isSupportedMode(LocrawInformation locraw) {
