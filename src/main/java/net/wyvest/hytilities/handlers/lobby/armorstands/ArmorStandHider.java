@@ -25,18 +25,22 @@ import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.config.HytilitiesConfig;
+import net.wyvest.hytilities.handlers.game.GameType;
+import net.wyvest.hytilities.util.locraw.LocrawInformation;
 
 public class ArmorStandHider {
-    private static final String[] lobbyArmorStandNames = {" click", "click "};
-
+    private static final String[] armorStandNames = {"click", "mystery vault", "daily reward tokens", "advent calendar reward", "free rewards", "special holiday quests", "happy holidays",
+        "festive floors", "museums", "hype", "coming soon", " set #", "fireball/tnt jumping", "parkour starts this way", "go ahead into the cave", "holiday mode", "new update", "new modes & maps",
+        "challenges released", "bug fixes & qol update"};
 
     @SubscribeEvent
     public void onEntityRenderer(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (HytilitiesConfig.hideClickArmorStands && EssentialAPI.getMinecraftUtil().isHypixel() && Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+        final LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
+        if (HytilitiesConfig.hideUselessArmorStands && EssentialAPI.getMinecraftUtil().isHypixel() && Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby() || (HytilitiesConfig.hideUselessArmorStandsSkyblock && locraw != null && locraw.getGameType() == GameType.SKYBLOCK)) {
             if (event.entity instanceof EntityArmorStand) {
-                String unformattedText = event.entity.getCustomNameTag().toLowerCase();
-                for (String lobbyArmorStands : lobbyArmorStandNames) {
-                    if (unformattedText.contains(lobbyArmorStands)) {
+                String unformattedArmorStandName = event.entity.getCustomNameTag().toLowerCase();
+                for (String armorStands : armorStandNames) {
+                    if (unformattedArmorStandName.contains(armorStands)) {
                         event.setCanceled(true);
                     }
                 }

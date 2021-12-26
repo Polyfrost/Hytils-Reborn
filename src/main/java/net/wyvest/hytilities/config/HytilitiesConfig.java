@@ -513,6 +513,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hideGoalArmorStands;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Hide Useless Skyblock Nametags",
+        description = "Hides unnecessary nametags in Skyblock such as those that say say \"§eCLICK§r\"",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideUselessArmorStandsSkyblock;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hardcore Hearts",
         description = "When your bed is broken/wither is killed in Bedwars/The Walls, set the heart style to Hardcore.",
         category = "Game", subcategory = "Visual"
@@ -602,11 +609,11 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean npcHider;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide Lobby \"Click\" Nametags",
-        description = "Hides unnecessary nametags such as those that say \"§eRIGHT CLICK§r\" or \"§eCLICK HERE§r\" in the lobby.",
+        type = PropertyType.SWITCH, name = "Hide Useless Lobby Nametags",
+        description = "Hides unnecessary nametags such as those that say \"§eRIGHT CLICK§r\" or \"§eCLICK HERE§r\" in the lobby, as well as other useless ones.",
         category = "Lobby", subcategory = "Entities"
     )
-    public static boolean hideClickArmorStands;
+    public static boolean hideUselessArmorStands;
 
     @Property(
         type = PropertyType.SWITCH, name = "Limbo Limiter",
@@ -637,19 +644,17 @@ public class HytilitiesConfig extends Vigilant {
     )
     public static boolean mysteryBoxStar;
 
-    //Updater
+    // Updater
 
     @Property(
-        type = PropertyType.SWITCH,
-        name = "Show Update Notification",
+        type = PropertyType.SWITCH, name = "Show Update Notification",
         description = "Show a notification when you start Minecraft informing you of new updates.",
         category = "Updater"
     )
     public static boolean showUpdate = true;
 
     @Property(
-        type = PropertyType.BUTTON,
-        name = "Update Now",
+        type = PropertyType.BUTTON, name = "Update Now",
         description = "Update by clicking the button.",
         category = "Updater"
     )
@@ -661,8 +666,7 @@ public class HytilitiesConfig extends Vigilant {
     }
 
     @Property(
-        type = PropertyType.NUMBER,
-        name = "DO NOT MODIFY THIS VALUE",
+        type = PropertyType.NUMBER, name = "DO NOT MODIFY THIS VALUE",
         description = "Config version",
         category = "Updater",
         hidden = true
