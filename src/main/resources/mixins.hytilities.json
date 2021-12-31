@@ -19,7 +19,6 @@
     "MinecraftMixin_LeftClickInteract",
     "MinecraftMixin_LimboLimiter",
     "NetHandlerPlayClientMixin_GameChecker",
-    "GuiIngameAccessor",
     "cosmetics.RenderItemMixin",
     "cosmetics.WorldMixin",
     "overlay.BlockModelRendererMixin_NoOptiFine",

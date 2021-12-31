@@ -22,6 +22,7 @@ import gg.essential.api.EssentialAPI;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
+import kotlin.jvm.functions.Function0;
 import net.minecraft.client.Minecraft;
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.updater.DownloadGui;
@@ -723,5 +724,23 @@ public class HytilitiesConfig extends Vigilant {
                 Minecraft.getMinecraft().renderGlobal.loadRenderers();
             }
         });
+    }
+
+    public void hideTabulous() {
+        Function0<Boolean> yes = () -> true;
+        hideNpcsInTab = false;
+        keepImportantNpcsInTab = false;
+        hideGuildTagsInTab = false;
+        hidePlayerRanksInTab = false;
+        hidePingInTab = false;
+        cleanerSkyblockTabInfo = false;
+        markDirty();
+        writeData();
+        hidePropertyIf("hideNpcsInTab", yes);
+        hidePropertyIf("keepImportantNpcsInTab", yes);
+        hidePropertyIf("hideGuildTagsInTab", yes);
+        hidePropertyIf("hidePlayerRanksInTab", yes);
+        hidePropertyIf("hidePingInTab", yes);
+        hidePropertyIf("cleanerSkyblockTabInfo", yes);
     }
 }
