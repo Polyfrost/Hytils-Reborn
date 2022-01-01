@@ -78,6 +78,7 @@ public class ChatHandler {
         this.registerModule(new BoosterRemover());
         this.registerModule(new AutoVictory());
         this.registerModule(new AutoPartyWarpConfirm());
+        this.registerModule(new ColoredFriendStatuses());
 
         this.registerDualModule(new ShoutBlocker());
 

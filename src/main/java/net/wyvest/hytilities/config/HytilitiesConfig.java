@@ -292,17 +292,24 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "White Chat",
-        description = "Make nons chat messages appear as the normal chat message color.\n§eExample: §7Steve: Hey! §e-> §fPlayer: Hey!",
+        description = "Make nons chat messages appear as the normal chat message color.\n§eExample: §7Steve: Hey! §e-> §7Player§f: Hey!",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean whiteChat;
 
     @Property(
         type = PropertyType.SWITCH, name = "White Private Messages",
-        description = "Make private messages appear as the normal chat message color.\n§eExample: §dFrom §b[MVP§c+§b] Steve: §7hey! §e-> §dFrom §b[MVP§c+§b] Player: §fhey!",
+        description = "Make private messages appear as the normal chat message color.\n§eExample: §dFrom §b[MVP§c+§b] Steve§7: hey! §e-> §dFrom §b[MVP§c+§b] Player§f: hey!",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean whitePrivateMessages;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Colored Friend/Guild Statuses",
+        description = "Colors the join/leave status of friends and guild members.\n§eExamples:\n§a§aF > §bSteve§7 §r§ejoined. -> §a§aF > §bSteve§7 §r§ajoined.§r\n§a§2G > §bSteve§7 §r§eleft. -> §a§2G > §bSteve§7 §r§cleft.§r",
+        category = "Chat", subcategory = "Visual"
+    )
+    public static boolean coloredStatuses;
 
     @Property(
         type = PropertyType.SWITCH, name = "Cleaner Game Start Counter",
@@ -515,7 +522,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Useless Skyblock Nametags",
-        description = "Hides unnecessary nametags in Skyblock such as those that say say \"§eCLICK§r\"",
+        description = "Hides unnecessary nametags in Skyblock such as those that say say \"§eCLICK§r\".",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideUselessArmorStandsSkyblock;
