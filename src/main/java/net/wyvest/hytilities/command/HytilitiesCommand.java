@@ -47,6 +47,7 @@ public class HytilitiesCommand extends Command {
         hashSet.add(new Alias("hytils"));
         hashSet.add(new Alias("hytilsreborn"));
         hashSet.add(new Alias("hytilitiesreborn"));
+        hashSet.add(new Alias("hytil"));
     }
 
     @DefaultHandler
