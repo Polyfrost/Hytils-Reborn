@@ -18,29 +18,50 @@
 
 package net.wyvest.hytilities.mixin;
 
-import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
+import net.wyvest.hytilities.config.HytilitiesConfig;
 import org.spongepowered.asm.mixin.Dynamic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(GuiUtilRenderComponents.class)
 public class GuiUtilRenderComponentsMixin_TrimLineBreaker {
 
     @Dynamic
-    @Redirect(method = "splitText", at = @At(value = "INVOKE", target = "Ljava/util/List;add(ILjava/lang/Object;)V", remap = false))
-    private static void redirectSplit(List<Object> instance, int i, Object e) {
-        if (HytilitiesConfig.lineBreakerTrim) {
-            String s = EnumChatFormatting.getTextWithoutFormattingCodes(((ChatComponentText) e).getUnformattedTextForChat());
-            if ((s.startsWith("-") && s.endsWith("-")) || (s.startsWith("▬") && s.endsWith("▬")) || (s.startsWith("≡") && s.endsWith("≡"))) {
-                return;
+    @Redirect(method = "splitText", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 1))
+    private static boolean trimLineSeperator(List<IChatComponent> list, Object obj) {
+        boolean value = false;
+        if (obj instanceof IChatComponent) {
+            value = list.add((IChatComponent) obj);
+            if (HytilitiesConfig.lineBreakerTrim) {
+                boolean seperatorFound = false;
+                int i = -1;
+                List<Integer> remove = new ArrayList<>();
+                for (IChatComponent component : list) {
+                    i++;
+                    String s = EnumChatFormatting.getTextWithoutFormattingCodes(component.getUnformattedText());
+
+                    if ((s.startsWith("-") && s.endsWith("-")) || (s.startsWith("▬") && s.endsWith("▬")) || (s.startsWith("≡") && s.endsWith("≡"))) {
+                        if (seperatorFound) {
+                            remove.add(i);
+                        } else {
+                            seperatorFound = true;
+                        }
+                    } else if (seperatorFound) {
+                        seperatorFound = false;
+                    }
+                }
+                for (Integer removed : remove) {
+                    list.remove((int) removed);
+                }
             }
         }
-        instance.add(i, e);
+        return value;
     }
 }
