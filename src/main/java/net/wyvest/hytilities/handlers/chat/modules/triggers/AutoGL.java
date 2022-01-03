@@ -40,8 +40,8 @@ public class AutoGL implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String unformattedText = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText()); // gets the message without useless codes
-        if (unformattedText.startsWith("The game starts in 5 seconds!")) {
+        String unformattedText = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText()).trim(); // gets the message without useless codes
+        if (unformattedText.endsWith("The game starts in 5 seconds!")) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/ac " + getGLMessage());
         }
     }
