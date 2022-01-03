@@ -564,6 +564,23 @@ public class HytilitiesConfig extends Vigilant {
     public static int overlayAmount = 300;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Edit Height Overlay Manually",
+        description = "Enabled the option to edit the height overlay manually.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean manuallyEditHeightOverlay;
+
+
+    @Property(
+        type = PropertyType.BUTTON, name = "Manual Height Overlay Editor",
+        description = "Click the button to edit the height limit manually.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static void editHeightOverlay() {
+        EssentialAPI.getGuiUtil().openScreen(Hytilities.INSTANCE.getBlockConfig().gui());
+    }
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Duels Cosmetics",
         description = "Hide Duels Cosmetics in Hypixel.",
         category = "Game", subcategory = "Visual"
@@ -731,6 +748,10 @@ public class HytilitiesConfig extends Vigilant {
                 Minecraft.getMinecraft().renderGlobal.loadRenderers();
             }
         });
+
+        addDependency("editHeightOverlay", "heightOverlay");
+        addDependency("manuallyEditHeightOverlay", "heightOverlay");
+        addDependency("editHeightOverlay", "manuallyEditHeightOverlay");
     }
 
     public void hideTabulous() {

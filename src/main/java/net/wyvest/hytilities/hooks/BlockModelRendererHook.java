@@ -18,14 +18,15 @@
 
 package net.wyvest.hytilities.hooks;
 
-import net.wyvest.hytilities.config.HytilitiesConfig;
-import net.wyvest.hytilities.handlers.cache.HeightHandler;
-import net.wyvest.hytilities.util.ColorUtils;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
+import net.wyvest.hytilities.config.BlockHighlightConfig;
+import net.wyvest.hytilities.config.HytilitiesConfig;
+import net.wyvest.hytilities.handlers.cache.HeightHandler;
+import net.wyvest.hytilities.util.ColorUtils;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 public class BlockModelRendererHook {
@@ -38,7 +39,7 @@ public class BlockModelRendererHook {
             }
             MapColor mapColor = stateIn.getBlock().getMapColor(stateIn);
             if (blockPosIn.getY() == (height - 1) && mapColor != null && (!(stateIn.getBlock().getMaterial() == Material.rock) || check(mapColor.colorIndex))) {
-                int color = ColorUtils.getCachedDarkColor(mapColor);
+                int color = HytilitiesConfig.manuallyEditHeightOverlay ? BlockHighlightConfig.colorMap.get(mapColor).get().getRGB() : ColorUtils.getCachedDarkColor(mapColor.colorValue);
                 args.set(0, (float) ColorUtils.getRed(color) / 255);
                 args.set(1, (float) ColorUtils.getGreen(color) / 255);
                 args.set(2, (float) ColorUtils.getBlue(color) / 255);

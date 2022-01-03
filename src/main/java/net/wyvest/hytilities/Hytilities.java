@@ -31,6 +31,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.wyvest.hytilities.command.*;
+import net.wyvest.hytilities.config.BlockHighlightConfig;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.cache.CosmeticsHandler;
 import net.wyvest.hytilities.handlers.cache.HeightHandler;
@@ -57,8 +58,9 @@ import net.wyvest.hytilities.handlers.lobby.mysterybox.MysteryBoxStar;
 import net.wyvest.hytilities.handlers.lobby.npc.NPCHider;
 import net.wyvest.hytilities.handlers.render.ChestHighlighter;
 import net.wyvest.hytilities.handlers.silent.SilentRemoval;
-import net.wyvest.hytilities.util.HypixelAPIUtils;
+import net.wyvest.hytilities.hooks.BlockModelRendererHook;
 import net.wyvest.hytilities.updater.Updater;
+import net.wyvest.hytilities.util.HypixelAPIUtils;
 import net.wyvest.hytilities.util.friends.FriendCache;
 import net.wyvest.hytilities.util.locraw.LocrawUtil;
 import net.wyvest.hytilities.util.skyblock.SkyblockChecker;
@@ -86,6 +88,7 @@ public class Hytilities {
     public File modDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), MOD_NAME);
 
     private HytilitiesConfig config;
+    private BlockHighlightConfig blockConfig;
     private final Logger logger = LogManager.getLogger("Hytilities Reborn");
 
     private final LanguageHandler languageHandler = new LanguageHandler();
@@ -110,8 +113,8 @@ public class Hytilities {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        config = new HytilitiesConfig();
-        this.config.preload();
+        (config = new HytilitiesConfig()).preload();
+        (blockConfig = new BlockHighlightConfig()).preload();
         new HytilitiesCommand().register();
         new HousingVisitCommand().register();
         final ClientCommandHandler commandRegister = ClientCommandHandler.instance;
@@ -184,6 +187,10 @@ public class Hytilities {
 
     public HytilitiesConfig getConfig() {
         return config;
+    }
+
+    public BlockHighlightConfig getBlockConfig() {
+        return blockConfig;
     }
 
     public LocrawUtil getLocrawUtil() {

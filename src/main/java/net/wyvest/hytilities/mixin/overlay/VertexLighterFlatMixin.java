@@ -23,6 +23,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.client.model.pipeline.BlockInfo;
 import net.minecraftforge.client.model.pipeline.VertexLighterFlat;
+import net.wyvest.hytilities.config.BlockHighlightConfig;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.cache.HeightHandler;
 import net.wyvest.hytilities.util.ColorUtils;
@@ -48,7 +49,7 @@ public class VertexLighterFlatMixin {
             boolean isClay = blockInfo.getBlock().getMaterial() == Material.rock;
             if (!isClay || check(mapColor.colorIndex)) {
                 args.set(5, 1.0F);
-                args.set(6, ColorUtils.getCachedDarkColor(mapColor));
+                args.set(6, (HytilitiesConfig.manuallyEditHeightOverlay ? BlockHighlightConfig.colorMap.get(mapColor).get().getRGB() : ColorUtils.getCachedDarkColor(mapColor.colorValue)));
             }
         }
     }
