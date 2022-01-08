@@ -32,6 +32,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GuiIngameForgeMixin_HideActionbar {
     @Inject(method = "renderRecordOverlay", at = @At("HEAD"), cancellable = true)
     private void cancelActionBar(int width, int height, float partialTicks, CallbackInfo ci) {
-        if (HytilitiesConfig.hideInvadersActionBar && EssentialAPI.getMinecraftUtil().isHypixel() && Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation() != null && Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation().getGameType() == GameType.PROTOTYPE && "INVADERS".equalsIgnoreCase(Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation().getGameMode())) ci.cancel();
+        if (EssentialAPI.getMinecraftUtil().isHypixel() && (HytilitiesConfig.hideInvadersActionBar && Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation() != null && Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation().getGameType() == GameType.PROTOTYPE && "INVADERS".equalsIgnoreCase(Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation().getGameMode())) || (HytilitiesConfig.hideHousingActionBar && Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation() != null && Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation().getGameType() == GameType.HOUSING)) ci.cancel();
     }
 }

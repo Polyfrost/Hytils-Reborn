@@ -595,6 +595,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hideInvadersActionBar;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Hide Actionbar in Housing",
+        description = "Hide the Actionbar in Housing.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideHousingActionBar;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Mute Housing Music",
         description = "Prevent the Housing songs from being heard.",
         category = "Game", subcategory = "Sound"
