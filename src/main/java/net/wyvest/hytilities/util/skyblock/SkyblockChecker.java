@@ -48,7 +48,9 @@ public class SkyblockChecker {
             if (sidebarObjective != null) {
                 final String objectiveName = sidebarObjective.getDisplayName().replaceAll("(?i)\\u00A7.", "");
                 for (String skyblock : skyblockInAllLanguages) {
-                    return objectiveName.startsWith(skyblock);
+                    if (objectiveName.startsWith(skyblock)) {
+                        return true;
+                    }
                 }
             }
         }

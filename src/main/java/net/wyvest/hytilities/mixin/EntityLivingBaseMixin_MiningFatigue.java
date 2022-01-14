@@ -23,6 +23,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,13 +31,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityLivingBase.class)
-public class EntityLivingBaseMixin {
+public class EntityLivingBaseMixin_MiningFatigue {
     private final EntityLivingBase $this = (EntityLivingBase) (Object) this;
 
 
-    @Inject(method = "addPotionEffect", at = @At("HEAD"))
+    @Inject(method = "addPotionEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;onNewPotionEffect(Lnet/minecraft/potion/PotionEffect;)V"))
     private void onPotionEffect(PotionEffect potioneffectIn, CallbackInfo ci) {
-        if (HytilitiesConfig.notifyMiningFatigue && potioneffectIn.getPotionID() == Potion.digSlowdown.getId() && ($this instanceof EntityPlayerSP)) {
+        if (HytilitiesConfig.notifyMiningFatigue && potioneffectIn.getPotionID() == Potion.digSlowdown.getId() && ($this instanceof EntityPlayerSP) && (!HytilitiesConfig.disableNotifyMiningFatigueSkyblock || !Hytilities.INSTANCE.getSkyblockChecker().isSkyblockScoreboard())) {
             EssentialAPI.getNotifications().push("Hytilities Reborn", "You have miner fatigue!");
         }
     }

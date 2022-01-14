@@ -21,7 +21,7 @@ package net.wyvest.hytilities.mixin;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.wyvest.hytilities.handlers.lobby.npc.NPCHider;
+import net.wyvest.hytilities.handlers.lobby.npc.NPCHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -32,6 +32,6 @@ import java.util.Collection;
 public class GuiPlayerTabOverlayMixin_HideNPCs {
     @Redirect(method = "renderPlayerlist", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/NetHandlerPlayClient;getPlayerInfoMap()Ljava/util/Collection;"))
     private Collection<NetworkPlayerInfo> hideNPCs(NetHandlerPlayClient instance) {
-        return NPCHider.hideTabNpcs(instance.getPlayerInfoMap());
+        return NPCHandler.hideTabNpcs(instance.getPlayerInfoMap());
     }
 }

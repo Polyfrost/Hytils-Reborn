@@ -5,7 +5,7 @@
   "plugin": "net.wyvest.hytilities.forge.HytilitiesMixinPlugin",
   "refmap": "mixins.hytilities.refmap.json",
   "mixins": [
-    "EntityLivingBaseMixin",
+    "EntityLivingBaseMixin_MiningFatigue",
     "EntityPlayerSPMixin_MessageHandling",
     "GuiChatMixin_PlayAutocomplete",
     "GuiIngameForgeMixin_HideActionbar",

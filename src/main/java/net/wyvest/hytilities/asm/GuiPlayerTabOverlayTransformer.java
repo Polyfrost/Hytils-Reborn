@@ -49,7 +49,7 @@ public class GuiPlayerTabOverlayTransformer implements HytilitiesTransformer {
                             // sort the player map and filter any entity with a uuid version of 2
                             if (methodInsnName.equals("getPlayerInfoMap") || methodInsnName.equals("func_175106_d")) {
                                 method.instructions.insert(next, new MethodInsnNode(Opcodes.INVOKESTATIC,
-                                    "net/wyvest/hytilities/handlers/lobby/npc/NPCHider",
+                                    "net/wyvest/hytilities/handlers/lobby/npc/NPCHandler",
                                     "hideTabNpcs",
                                     "(Ljava/util/Collection;)Ljava/util/Collection;",
                                     false));

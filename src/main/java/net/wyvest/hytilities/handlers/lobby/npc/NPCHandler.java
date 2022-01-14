@@ -22,6 +22,7 @@ import com.google.common.collect.Collections2;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -32,16 +33,21 @@ import net.wyvest.hytilities.util.locraw.LocrawInformation;
 
 import java.util.Collection;
 
-public class NPCHider {
+public class NPCHandler {
 
     @SubscribeEvent
     public void onEntityRender(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (!HytilitiesConfig.npcHider || !EssentialAPI.getMinecraftUtil().isHypixel() || !Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+        if (!EssentialAPI.getMinecraftUtil().isHypixel()) {
             return;
         }
+        final LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
 
-        // hypixel marks npc uuids as version 2, also hide the Quest Master
+        // hypixel marks npc uuids as version 2
         if (event.entity.getUniqueID().version() == 2 || (event.entity instanceof EntityVillager)) {
+            if (HytilitiesConfig.npcHider && Hytilities.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+                event.setCanceled(true);
+            }
+        } else if (HytilitiesConfig.hideNonNPCs && locraw != null && locraw.getGameType() == GameType.SKYBLOCK && !(event.entity instanceof EntityArmorStand && !event.entity.getCustomNameTag().toLowerCase().trim().isEmpty())) {
             event.setCanceled(true);
         }
     }

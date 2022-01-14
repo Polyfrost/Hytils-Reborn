@@ -55,10 +55,9 @@ import net.wyvest.hytilities.handlers.lobby.bossbar.LobbyBossbar;
 import net.wyvest.hytilities.handlers.lobby.limbo.LimboLimiter;
 import net.wyvest.hytilities.handlers.lobby.limbo.LimboTitleFix;
 import net.wyvest.hytilities.handlers.lobby.mysterybox.MysteryBoxStar;
-import net.wyvest.hytilities.handlers.lobby.npc.NPCHider;
+import net.wyvest.hytilities.handlers.lobby.npc.NPCHandler;
 import net.wyvest.hytilities.handlers.render.ChestHighlighter;
 import net.wyvest.hytilities.handlers.silent.SilentRemoval;
-import net.wyvest.hytilities.hooks.BlockModelRendererHook;
 import net.wyvest.hytilities.updater.Updater;
 import net.wyvest.hytilities.util.HypixelAPIUtils;
 import net.wyvest.hytilities.util.friends.FriendCache;
@@ -164,7 +163,7 @@ public class Hytilities {
         // lobby
         eventBus.register(lobbyChecker);
         eventBus.register(new ArmorStandHider());
-        eventBus.register(new NPCHider());
+        eventBus.register(new NPCHandler());
         eventBus.register(new LobbyBossbar());
         eventBus.register(new LimboLimiter());
         eventBus.register(new LimboTitleFix());

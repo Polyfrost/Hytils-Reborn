@@ -427,6 +427,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean notifyMiningFatigue;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Disable Mining Fatigue Notification in Skyblock",
+        description = "Disable the mining fatigue notification in Skyblock.",
+        category = "General", subcategory = "Potion Effects"
+    )
+    public static boolean disableNotifyMiningFatigueSkyblock;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide NPCs in Tab",
         description = "Prevent NPCs from showing up in tab.",
         category = "General", subcategory = "Tab"
@@ -602,6 +609,13 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean hideHousingActionBar;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Remove Non-NPCs in Skyblock",
+        description = "Remove entities that are not NPCs in Skyblock.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideNonNPCs;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Mute Housing Music",
         description = "Prevent the Housing songs from being heard.",
         category = "Game", subcategory = "Sound"
@@ -724,6 +738,8 @@ public class HytilitiesConfig extends Vigilant {
         addDependency("gexpMode", "autoGetGEXP");
 
         addDependency("antiGL", "autoGL");
+
+        addDependency("disableNotifyMiningFatigueSkyblock", "notifyMiningFatigue");
 
         addDependency("partySwapper", "chatSwapper");
         addDependency("chatSwapperReturnChannel", "chatSwapper");
