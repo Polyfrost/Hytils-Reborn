@@ -102,10 +102,10 @@ public class DefaultChatRestyler implements ChatReceiveModule {
         // changed in the future and they need to be padded.
         if (HytilitiesConfig.padPlayerCount) {
             Matcher mf = language.chatRestylerFormattedPaddingPatternRegex.matcher(message);
-//            Matcher mu = unformattedPaddingPattern.matcher(unformattedMessage);
+            // Matcher mu = unformattedPaddingPattern.matcher(unformattedMessage); regex: \\((\\d{1,2})/(\\d{1,3})\\)
             if (mf.find(0)) { // this only matches a small part so we need find()
                 mf.replaceAll("(§r§b" + pad(mf.group(1)) + "§r§e/§r§b" + mf.group(2) + "§r§e)");
-//                uf.replaceAll("(" + pad(mu.group(1)) + "/" + mu.group(2) + ")");
+                // mu.replaceAll("(" + pad(mu.group(1)) + "/" + mu.group(2) + ")");
 
                 joinMatcher = language.chatRestylerGameJoinStyleRegex.matcher(message); // recalculate since we padded
                 event.message = new ChatComponentText(message);

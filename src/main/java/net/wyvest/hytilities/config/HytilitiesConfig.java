@@ -550,7 +550,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Height Overlay",
-        description = "Make blocks that are in the Hypixel height limit a different colour.\n§4Reloads chunks automatically when toggled on and off.",
+        description = "Make blocks that are in the Hypixel height limit a different colour.\n§eReloads chunks automatically when toggled on and off.\n§4Requires Smooth Lighting.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean heightOverlay;
