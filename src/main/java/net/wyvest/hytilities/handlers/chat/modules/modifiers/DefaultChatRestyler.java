@@ -65,7 +65,7 @@ public class DefaultChatRestyler implements ChatReceiveModule {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final String message = event.message.getFormattedText().trim();
+        String message = event.message.getFormattedText().trim();
         final String unformattedMessage = event.message.getUnformattedText().trim();
         final List<IChatComponent> siblings = event.message.getSiblings();
 
@@ -101,13 +101,13 @@ public class DefaultChatRestyler implements ChatReceiveModule {
 
         // Currently unformattedMessage doesn't need to be changed but I'm leaving these in, commented, in case it's
         // changed in the future and they need to be padded.
-        if (HytilitiesConfig.padPlayerCount) { // TODO: padding doesn't work yet
-            Pattern thingy = Pattern.compile("\\(§r§b(\\d{1,2})§r§r§r§e/§r§b(\\d{1,3})§r§r§r§e\\)");
-            Matcher mf = thingy.matcher(message);
+        if (HytilitiesConfig.padPlayerCount) {
+            Matcher mf = language.chatRestylerFormattedPaddingPatternRegex.matcher(message);
             // Matcher mu = unformattedPaddingPattern.matcher(unformattedMessage); regex: \\((\\d{1,2})/(\\d{1,3})\\)
+
             if (mf.find(0)) { // this only matches a small part so we need find()
-                mf.replaceAll("(§r§b" + pad(mf.group(1)) + "§r§r§r§e/§r§b" + mf.group(2) + "§r§r§r§e)");
-                // mu.replaceAll("(" + pad(mu.group(1)) + "/" + mu.group(2) + ")");
+                message = message.replaceAll(language.chatRestylerFormattedPaddingPatternRegex.toString(), "(§r§b" + pad(mf.group(1)) + "§r§r§r§e/§r§b" + mf.group(2) + "§r§r§r§e)");
+                // message = message.replaceAll(unformattedPaddingPattern.toString(), "(" + pad(mu.group(1)) + "/" + mu.group(2) + ")");
 
                 joinMatcher = language.chatRestylerGameJoinStyleRegex.matcher(message); // recalculate since we padded
                 event.message = new ChatComponentText(message);
