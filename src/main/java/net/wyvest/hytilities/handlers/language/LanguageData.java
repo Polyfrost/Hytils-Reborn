@@ -60,14 +60,15 @@ public class LanguageData {
     private String guildPlayerJoinPattern = "^(?:\\[.*] )?(?<player>\\S{1,16}) joined the guild!$";
 
     private String chatRestylerGameJoinStyle = "^§r§e§r§(?<color>[\\da-f])(?:§k)?(?<player>\\w{1,16})§r§r§r§e has joined (?<amount>.+)!§r§e§r$";
-    private String chatRestylerGameLeaveStyle = "^§r§(?<color>[\\da-f])(?:§k)?(?<player>\\w{1,16})§r§e has quit!§r$";
-    private String chatRestylerGameStartCounterStyle = "^(?<title>(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in)) (?<time>\\d{1,3}) (?<unit>(seconds?!))$"; // todo please translate "Cages open in:" to french (also translate to chatRestylerGameStartCounterOutputStyle)
+    private String chatRestylerGameLeaveStyle = "^§r§e§r§(?<color>[\\da-f])(?:§k)?(?<player>\\w{1,16})§r§r§r§e has quit!§r§e§r$";
+    private String chatRestylerGameStartCounterStyle = "^(?<title>(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in)) (?<time>\\d{1,3}) (?<unit>(seconds?!))$"; // TODO: translate "Cages open in:" to french (also translate to chatRestylerGameStartCounterOutputStyle)
     private String chatRestylerGameStartCounterOutputStyle = "^\u00a7e\u00a7l\\* \u00a7a(The game starts in|Cages open in:) \u00a7b\u00a7l\\d{1,3} \u00a7aseconds?!\u00a7r$";
     private String chatRestylerFormattedPaddingPattern = "\\(§r§b(\\d{1,2})§r§e/§r§b(\\d{1,3})§r§e\\)";
     private String chatRestylerPartyPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Party )(\\u00a7\\w>)";
     private String chatRestylerGuildPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Guild >)";
     private String chatRestylerFriendPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Friend >)";
     private String chatRestylerOfficerPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Officer >)";
+    private String chatRestylerStatusPattern = "^(?<type>(?:§aFriend|§a§aF|§2Guild|§2§2G)) > (§r|§r§r){1,2}(?<player>§[\\da-f]\\w{1,16}) §r§e(?<status>(?:joined|left))\\.§r$";
 
 
     private String autoChatSwapperPartyStatus = "^(?:You have been kicked from the party by (?:\\[.+] )?\\w{1,16}|(?:\\[.+] )?\\w{1,16} has disbanded the party!|You left the party(?:\\[.+] )?\\w{0,16}|(?:\\[.+] )?\\w{1,100}The party was disbanded(?:\\[.+] )?\\w{1,100}.)$";
@@ -122,6 +123,7 @@ public class LanguageData {
     public Pattern chatRestylerGuildPatternRegex;
     public Pattern chatRestylerFriendPatternRegex;
     public Pattern chatRestylerOfficerPatternRegex;
+    public Pattern chatRestylerStatusPatternRegex;
 
     public Pattern autoChatSwapperPartyStatusRegex;
     public Pattern autoChatSwapperPartyStatusRegex2;
@@ -166,6 +168,7 @@ public class LanguageData {
             chatRestylerGuildPatternRegex = Pattern.compile(chatRestylerGuildPattern);
             chatRestylerFriendPatternRegex = Pattern.compile(chatRestylerFriendPattern);
             chatRestylerOfficerPatternRegex = Pattern.compile(chatRestylerOfficerPattern);
+            chatRestylerStatusPatternRegex = Pattern.compile(chatRestylerStatusPattern);
 
             autoChatSwapperPartyStatusRegex = Pattern.compile(autoChatSwapperPartyStatus);
             autoChatSwapperPartyStatusRegex2 = Pattern.compile(autoChatSwapperPartyStatus2);

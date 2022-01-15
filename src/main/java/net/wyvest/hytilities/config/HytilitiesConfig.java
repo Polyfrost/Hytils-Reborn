@@ -306,7 +306,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Colored Friend/Guild Statuses",
-        description = "Colors the join/leave status of friends and guild members.\n§eExamples:\n§a§aF > §bSteve§7 §r§ejoined. -> §a§aF > §bSteve§7 §r§ajoined.§r\n§a§2G > §bSteve§7 §r§eleft. -> §a§2G > §bSteve§7 §r§cleft.§r",
+        description = "Colors the join/leave status of friends and guild members.\n§eExamples:\n§a§aF > §bSteve§7 §r§ejoined. -> §a§aF > §bSteve§7 §ajoined§e.§r\n§a§2G > §bSteve§7 §r§eleft. -> §a§2G > §bSteve§7 §cleft§e.§r",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean coloredStatuses;
@@ -320,7 +320,7 @@ public class HytilitiesConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Short Channel Names",
-        description = "Abbreviate chat channel names.\n§eExample: §2Guild §e-> §2G§e, §9Party §e-> §9P§e, §dFriend §e-> §dF",
+        description = "Abbreviate chat channel names.\n§eExample: §2Guild §e-> §2G§e, §9Party §e-> §9P§e, §aFriend §e-> §aF",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean shortChannelNames;

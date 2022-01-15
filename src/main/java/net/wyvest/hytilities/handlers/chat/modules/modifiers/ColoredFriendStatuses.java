@@ -18,9 +18,6 @@
 
 package net.wyvest.hytilities.handlers.chat.modules.modifiers;
 
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.chat.ChatReceiveModule;
@@ -29,25 +26,20 @@ import org.jetbrains.annotations.NotNull;
 import java.util.regex.Matcher;
 
 public class ColoredFriendStatuses implements ChatReceiveModule {
-
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        final String message = event.message.getFormattedText().trim();
 
         if (HytilitiesConfig.coloredStatuses) {
-            Matcher matcher = getLanguage().chatCleanerConnectionStatusRegex.matcher(message);
-            if (matcher.find(0)) {
-                for (IChatComponent sibling : event.message.getSiblings()) {
-                    // TODO: only change the color of the status and leave the period as yellow
-                    if (sibling.getFormattedText().startsWith("§eleft")) {
-                        if (sibling.getChatStyle().getColor() == EnumChatFormatting.YELLOW) {
-                            sibling.getChatStyle().setColor(EnumChatFormatting.RED);
-                        }
+            Matcher matcher = getLanguage().chatRestylerStatusPatternRegex.matcher(message);
+            if (matcher.matches()) {
+                if (matcher.find(0)) {
+                    final String status = matcher.group("status"); // TODO: fix short channel names so we can remove the 2nd group
+                    if (status.equalsIgnoreCase("joined")) {
+                        event.message = colorMessage(matcher.group(1) + " > §r" + matcher.group(3) + " §r" + "§ajoined§r§e.");
                     }
-                    if (sibling.getFormattedText().startsWith("§ejoined")) {
-                        if (sibling.getChatStyle().getColor() == EnumChatFormatting.YELLOW) {
-                            sibling.getChatStyle().setColor(EnumChatFormatting.GREEN);
-                        }
+                    if (status.equalsIgnoreCase("left")) {
+                        event.message = colorMessage(matcher.group(1) + " > §r" + matcher.group(3) + " §r" + "§cleft§r§e.");
                     }
                 }
             }
