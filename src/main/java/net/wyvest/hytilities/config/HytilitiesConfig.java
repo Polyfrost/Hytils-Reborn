@@ -584,7 +584,11 @@ public class HytilitiesConfig extends Vigilant {
         category = "Game", subcategory = "Visual"
     )
     public static void editHeightOverlay() {
-        EssentialAPI.getGuiUtil().openScreen(Hytilities.INSTANCE.getBlockConfig().gui());
+       if (manuallyEditHeightOverlay) {
+           EssentialAPI.getGuiUtil().openScreen(Hytilities.INSTANCE.getBlockConfig().gui());
+       } else {
+           EssentialAPI.getNotifications().push("Hytilities Reborn", "You do not have manual height overlay enabled!");
+       }
     }
 
     @Property(
@@ -772,9 +776,9 @@ public class HytilitiesConfig extends Vigilant {
             }
         });
 
-        addDependency("editHeightOverlay", "heightOverlay");
+        //addDependency("editHeightOverlay", "heightOverlay");
         addDependency("manuallyEditHeightOverlay", "heightOverlay");
-        addDependency("editHeightOverlay", "manuallyEditHeightOverlay");
+        //addDependency("editHeightOverlay", "manuallyEditHeightOverlay");
     }
 
     public void hideTabulous() {
