@@ -35,7 +35,7 @@ public class GuiUtilRenderComponentsMixin_TrimLineBreaker {
 
     @Dynamic
     @Redirect(method = "splitText", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 1))
-    private static boolean trimLineSeperator(List<IChatComponent> list, Object obj) {
+    private static boolean trimLineSeparator(List<IChatComponent> list, Object obj) {
         boolean value = false;
         if (obj instanceof IChatComponent) {
             value = list.add((IChatComponent) obj);
@@ -47,7 +47,7 @@ public class GuiUtilRenderComponentsMixin_TrimLineBreaker {
                     i++;
                     String s = EnumChatFormatting.getTextWithoutFormattingCodes(component.getUnformattedText());
 
-                    if ((s.startsWith("-") && s.endsWith("-")) || (s.startsWith("▬") && s.endsWith("▬")) || (s.startsWith("≡") && s.endsWith("≡"))) {
+                    if ((s.startsWith("---") && s.endsWith("---")) || (s.startsWith("▬▬▬") && s.endsWith("▬▬▬")) || (s.startsWith("≡≡≡") && s.endsWith("≡≡≡"))) {
                         if (seperatorFound) {
                             remove.add(i);
                         } else {
