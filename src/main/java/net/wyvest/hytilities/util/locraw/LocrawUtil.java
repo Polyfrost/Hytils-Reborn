@@ -36,6 +36,7 @@ public class LocrawUtil implements ChatReceiveModule {
     private final Gson gson = new Gson();
     private LocrawInformation locrawInformation;
     private boolean listening;
+    private boolean isResending = false;
     private int tick;
     private boolean playerSentCommand = false;
 
@@ -56,6 +57,7 @@ public class LocrawUtil implements ChatReceiveModule {
     public void onWorldLoad(WorldEvent.Load event) {
         locrawInformation = null;
         tick = 0;
+        isResending = false;
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -86,7 +88,10 @@ public class LocrawUtil implements ChatReceiveModule {
                     if (!this.playerSentCommand) {
                         event.setCanceled(true);
                     }
-                    MinecraftForge.EVENT_BUS.post(new LocrawEvent(locrawInformation));
+                    if (!isResending) {
+                        MinecraftForge.EVENT_BUS.post(new LocrawEvent(locrawInformation));
+                        isResending = true;
+                    }
 
                     this.playerSentCommand = false;
                     this.listening = false;
