@@ -40,7 +40,7 @@ import net.wyvest.hytilities.handlers.chat.ChatHandler;
 import net.wyvest.hytilities.handlers.chat.modules.events.AchievementEvent;
 import net.wyvest.hytilities.handlers.chat.modules.events.LevelupEvent;
 import net.wyvest.hytilities.handlers.chat.modules.triggers.AutoQueue;
-import net.wyvest.hytilities.handlers.game.GameCountdown;
+import net.wyvest.hytilities.handlers.game.GameStartingTitles;
 import net.wyvest.hytilities.handlers.game.duels.GoalArmorStands;
 import net.wyvest.hytilities.handlers.game.hardcore.HardcoreStatus;
 import net.wyvest.hytilities.handlers.game.housing.HousingMusic;
@@ -172,7 +172,7 @@ public class Hytilities {
         // specific games
         eventBus.register(new PitLagReducer());
         eventBus.register(new HousingMusic());
-        eventBus.register(new GameCountdown());
+        eventBus.register(new GameStartingTitles());
         eventBus.register(new GoalArmorStands());
 
         // height overlay

@@ -549,11 +549,11 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean pitLagReducer;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Game Countdown Timer",
-        description = "Hide the displayed title text when a game is about to begin.",
+        type = PropertyType.SWITCH, name = "Hide Game Starting Titles",
+        description = "Hide titles such as the countdown when a game is about to begin and gamemode names.\n§eExamples: §4§lINSANE MODE",
         category = "Game", subcategory = "Visual"
     )
-    public static boolean hideGameCountdown;
+    public static boolean hideGameStartingTitles;
 
     @Property(
         type = PropertyType.SWITCH, name = "Height Overlay",

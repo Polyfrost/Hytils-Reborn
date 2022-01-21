@@ -25,12 +25,11 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class GameCountdown {
-
-    // Hides the countdown timer title text that is displayed before a game is about to start.
+public class GameStartingTitles {
+    // Hides the countdown timer title text that is displayed before a game is about to start and other titles
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onTitle(TitleEvent event) {
-        if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilitiesConfig.hideGameCountdown) {
+        if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilitiesConfig.hideGameStartingTitles) {
             return;
         }
 
@@ -41,6 +40,7 @@ public class GameCountdown {
             case "3":
             case "2":
             case "1":
+            case "INSANE MODE":
                 event.setCanceled(true);
                 break;
         }
