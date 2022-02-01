@@ -21,6 +21,7 @@ package net.wyvest.hytilities.handlers.chat.modules.triggers;
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.chat.ChatReceiveModule;
+import net.wyvest.hytilities.handlers.game.GameType;
 import net.wyvest.hytilities.handlers.language.LanguageData;
 import gg.essential.api.utils.Multithreading;
 import net.minecraft.util.IChatComponent;
@@ -28,6 +29,7 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.wyvest.hytilities.util.locraw.LocrawInformation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
@@ -56,8 +58,27 @@ public class AutoQueue implements ChatReceiveModule {
         if (message.startsWith(language.autoQueuePrefix)) {
             for (IChatComponent component : event.message.getSiblings()) {
                 final String compMsg = getStrippedMessage(event.message).trim();
-                if (compMsg.equals(language.autoQueueClick)) {
+                if (compMsg.equals(language.autoQueueClick)) { // TODO: HELP DOES NOT WORK
                     this.command = component.getChatStyle().getChatClickEvent().getValue();
+                }
+            }
+        }
+        LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
+        if (locraw != null && locraw.getGameType() == GameType.BED_WARS) {
+            if (message.startsWith(language.autoQueuePrefixBedwars)) {
+                switch (locraw.getGameMode()) {
+                    case "BEDWARS_EIGHT_ONE": // Solo
+                        this.command = "/play bedwars_eight_one";
+                    case "BEDWARS_EIGHT_TWO": // Doubles
+                        this.command = "/play bedwars_eight_two";
+                    case "BEDWARS_FOUR_THREE": // Threes
+                        this.command = "/play bedwars_four_three";
+                    case "BEDWARS_FOUR_FOUR": // Fours
+                        this.command = "/play bedwars_four_four"; // 4v4
+                    case "BEDWARS_EIGHT_TWO_VOIDLESS": // Voidless Doubles
+                        this.command = "/play bedwars_eight_two_voidless";
+                    case "BEDWARS_FOUR_FOUR_VOIDLESS": // Voidless Fours
+                        this.command = "/play bedwars_four_four_voidless";
                 }
             }
         }
