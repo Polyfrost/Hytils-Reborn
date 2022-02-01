@@ -32,6 +32,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.wyvest.hytilities.util.locraw.LocrawInformation;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class AutoQueue implements ChatReceiveModule {
@@ -55,32 +56,9 @@ public class AutoQueue implements ChatReceiveModule {
 
         final LanguageData language = getLanguage();
         final String message = getStrippedMessage(event.message);
-        if (message.startsWith(language.autoQueuePrefix)) {
-            for (IChatComponent component : event.message.getSiblings()) {
-                final String compMsg = getStrippedMessage(event.message).trim();
-                if (compMsg.equals(language.autoQueueClick)) { // TODO: HELP DOES NOT WORK
-                    this.command = component.getChatStyle().getChatClickEvent().getValue();
-                }
-            }
-        }
         LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (locraw != null && locraw.getGameType() == GameType.BED_WARS) {
-            if (message.startsWith(language.autoQueuePrefixBedwars)) {
-                switch (locraw.getGameMode()) {
-                    case "BEDWARS_EIGHT_ONE": // Solo
-                        this.command = "/play bedwars_eight_one";
-                    case "BEDWARS_EIGHT_TWO": // Doubles
-                        this.command = "/play bedwars_eight_two";
-                    case "BEDWARS_FOUR_THREE": // Threes
-                        this.command = "/play bedwars_four_three";
-                    case "BEDWARS_FOUR_FOUR": // Fours
-                        this.command = "/play bedwars_four_four"; // 4v4
-                    case "BEDWARS_EIGHT_TWO_VOIDLESS": // Voidless Doubles
-                        this.command = "/play bedwars_eight_two_voidless";
-                    case "BEDWARS_FOUR_FOUR_VOIDLESS": // Voidless Fours
-                        this.command = "/play bedwars_four_four_voidless";
-                }
-            }
+        if (message.startsWith(language.autoQueuePrefixBedwars) || message.startsWith(language.autoQueuePrefix) && locraw != null) {
+            this.command = "/play " + locraw.getGameMode().toLowerCase();
         }
     }
 
