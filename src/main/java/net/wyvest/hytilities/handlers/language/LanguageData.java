@@ -37,6 +37,7 @@ public class LanguageData {
      * GSON deserialization fields which are loaded in when the file is parsed.
      */
     public String autoQueuePrefix = "You died! Want to play again?";
+    public String autoQueuePrefixBedwars = "You have been eliminated!";
     public String autoQueueClick = "Click here!";
 
     private String chatCleanerJoinNormal = "joined the lobby";
