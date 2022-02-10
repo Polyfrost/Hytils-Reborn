@@ -25,8 +25,6 @@ import gg.essential.vigilance.data.PropertyType;
 import kotlin.jvm.functions.Function0;
 import net.minecraft.client.Minecraft;
 import net.wyvest.hytilities.Hytilities;
-import net.wyvest.hytilities.updater.DownloadGui;
-import net.wyvest.hytilities.updater.Updater;
 import net.wyvest.hytilities.util.ColorUtils;
 
 import java.awt.*;
@@ -693,27 +691,6 @@ public class HytilitiesConfig extends Vigilant {
         category = "Lobby", subcategory = "GUI"
     )
     public static boolean mysteryBoxStar;
-
-    // Updater
-
-    @Property(
-        type = PropertyType.SWITCH, name = "Show Update Notification",
-        description = "Show a notification when you start Minecraft informing you of new updates.",
-        category = "Updater"
-    )
-    public static boolean showUpdate = true;
-
-    @Property(
-        type = PropertyType.BUTTON, name = "Update Now",
-        description = "Update by clicking the button.",
-        category = "Updater"
-    )
-    public void update() {
-        if (Updater.shouldUpdate) EssentialAPI.getGuiUtil()
-            .openScreen(new DownloadGui());
-        else EssentialAPI.getNotifications()
-            .push("Hytilities Reborn", "No update had been detected at startup, and thus the update GUI has not been shown.");
-    }
 
     @Property(
         type = PropertyType.NUMBER, name = "DO NOT MODIFY THIS VALUE",

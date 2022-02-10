@@ -1,6 +1,6 @@
 /*
  * Hytilities Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2021  W-OVERFLOW
+ * Copyright (C) 2022  W-OVERFLOW
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,22 +16,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.wyvest.hytilities.mixin;
+package net.wyvest.hytilities.mixin.lineseparator;
 
 import net.minecraft.client.gui.GuiUtilRenderComponents;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
-import net.wyvest.hytilities.config.HytilitiesConfig;
+import net.wyvest.hytilities.hooks.TrimLineSeparator;
 import org.spongepowered.asm.mixin.Dynamic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(GuiUtilRenderComponents.class)
-public class GuiUtilRenderComponentsMixin_TrimLineBreaker {
+public class GuiUtilRenderComponentsMixin {
 
     @Dynamic
     @Redirect(method = "splitText", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 1))
@@ -39,29 +37,10 @@ public class GuiUtilRenderComponentsMixin_TrimLineBreaker {
         boolean value = false;
         if (obj instanceof IChatComponent) {
             value = list.add((IChatComponent) obj);
-            if (HytilitiesConfig.lineBreakerTrim) {
-                boolean seperatorFound = false;
-                int i = -1;
-                List<Integer> remove = new ArrayList<>();
-                for (IChatComponent component : list) {
-                    i++;
-                    String s = EnumChatFormatting.getTextWithoutFormattingCodes(component.getUnformattedText());
-
-                    if ((s.startsWith("---") && s.endsWith("---")) || (s.startsWith("▬▬▬") && s.endsWith("▬▬▬")) || (s.startsWith("≡≡≡") && s.endsWith("≡≡≡"))) {
-                        if (seperatorFound) {
-                            remove.add(i);
-                        } else {
-                            seperatorFound = true;
-                        }
-                    } else if (seperatorFound) {
-                        seperatorFound = false;
-                    }
-                }
-                for (Integer removed : remove) {
-                    list.remove((int) removed);
-                }
-            }
         }
+        TrimLineSeparator.trimLineSeparator(list);
         return value;
     }
+
+
 }

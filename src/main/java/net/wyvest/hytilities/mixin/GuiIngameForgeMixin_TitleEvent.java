@@ -18,6 +18,7 @@
 
 package net.wyvest.hytilities.mixin;
 
+import gg.essential.api.EssentialAPI;
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.events.TitleEvent;
 import net.minecraft.client.Minecraft;
@@ -44,13 +45,15 @@ public class GuiIngameForgeMixin_TitleEvent extends GuiIngame {
 
     @Inject(method = "renderTitle", at = @At("HEAD"), cancellable = true)
     private void postTitleEvent(int l, int age, float opacity, CallbackInfo ci) {
-        TitleEvent event = new TitleEvent(displayedTitle, displayedSubTitle);
-        MinecraftForge.EVENT_BUS.post(event);
+        if (EssentialAPI.getMinecraftUtil().isHypixel()) {
+            TitleEvent event = new TitleEvent(displayedTitle, displayedSubTitle);
+            MinecraftForge.EVENT_BUS.post(event);
 
-        // Set the title and subtitle to empty strings.
-        if (event.isCanceled()) {
-            displayTitle(null, null, -1, -1, -1);
-            ci.cancel();
+            // Set the title and subtitle to empty strings.
+            if (event.isCanceled()) {
+                displayTitle(null, null, -1, -1, -1);
+                ci.cancel();
+            }
         }
     }
 }

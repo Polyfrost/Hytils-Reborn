@@ -18,6 +18,7 @@
 
 package net.wyvest.hytilities;
 
+import cc.woverflow.wcore.utils.Updater;
 import gg.essential.api.EssentialAPI;
 import gg.essential.universal.ChatColor;
 import net.minecraft.client.Minecraft;
@@ -58,7 +59,6 @@ import net.wyvest.hytilities.handlers.lobby.mysterybox.MysteryBoxStar;
 import net.wyvest.hytilities.handlers.lobby.npc.NPCHandler;
 import net.wyvest.hytilities.handlers.render.ChestHighlighter;
 import net.wyvest.hytilities.handlers.silent.SilentRemoval;
-import net.wyvest.hytilities.updater.Updater;
 import net.wyvest.hytilities.util.HypixelAPIUtils;
 import net.wyvest.hytilities.util.friends.FriendCache;
 import net.wyvest.hytilities.util.locraw.LocrawUtil;
@@ -77,12 +77,10 @@ public class Hytilities {
 
     public static final String MOD_ID = "hytilities-reborn";
     public static final String MOD_NAME = "Hytilities Reborn";
-    public static final String VERSION = "1.4.0-alpha1";
+    public static final String VERSION = "1.4.0";
 
     @Mod.Instance(MOD_ID)
     public static Hytilities INSTANCE;
-
-    public File jarFile;
 
     public File modDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), MOD_NAME);
 
@@ -107,7 +105,7 @@ public class Hytilities {
     @Mod.EventHandler
     public void onFMLPreInitialization(FMLPreInitializationEvent event) {
         if (!modDir.exists()) modDir.mkdirs();
-        jarFile = event.getSourceFile();
+        Updater.INSTANCE.addToUpdater(event.getSourceFile(), MOD_NAME, MOD_ID, VERSION, "W-OVERFLOW/" + MOD_ID);
     }
 
     @Mod.EventHandler
@@ -125,7 +123,6 @@ public class Hytilities {
         HeightHandler.INSTANCE.initialize();
 
         registerHandlers();
-        Updater.update();
     }
 
     @Mod.EventHandler

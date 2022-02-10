@@ -18,6 +18,7 @@
 
 package net.wyvest.hytilities.handlers.lobby.limbo;
 
+import net.minecraft.util.EnumChatFormatting;
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.chat.modules.modifiers.DefaultChatRestyler;
@@ -36,7 +37,7 @@ public class LimboLimiter {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        final String message = event.message.getUnformattedText();
+        final String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
         final LanguageData language = Hytilities.INSTANCE.getLanguageHandler().getCurrent();
 
         if (message.equals(language.limboLimiterSpawned) || message.equals(language.limboLimiterAfk)) {
