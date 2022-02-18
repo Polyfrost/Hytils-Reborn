@@ -38,7 +38,6 @@ public class LanguageData {
      */
     public String autoQueuePrefix = "You died! Want to play again?";
     public String autoQueuePrefixBedwars = "You have been eliminated!";
-    public String autoQueueClick = "Click here!";
 
     private String chatCleanerJoinNormal = "joined the lobby";
     private String chatCleanerJoinHalloween = "spooked into the lobby";

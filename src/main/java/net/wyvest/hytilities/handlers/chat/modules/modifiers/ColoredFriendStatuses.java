@@ -33,14 +33,12 @@ public class ColoredFriendStatuses implements ChatReceiveModule {
         if (HytilitiesConfig.coloredStatuses) {
             Matcher matcher = getLanguage().chatRestylerStatusPatternRegex.matcher(message);
             if (matcher.matches()) {
-                if (matcher.find(0)) {
-                    final String status = matcher.group("status"); // TODO: fix short channel names so we can remove the 2nd group
-                    if (status.equalsIgnoreCase("joined")) {
-                        event.message = colorMessage(matcher.group(1) + " > §r" + matcher.group(3) + " §r" + "§ajoined§r§e.");
-                    }
-                    if (status.equalsIgnoreCase("left")) {
-                        event.message = colorMessage(matcher.group(1) + " > §r" + matcher.group(3) + " §r" + "§cleft§r§e.");
-                    }
+                final String status = matcher.group("status"); // TODO: fix short channel names so we can remove the 2nd group
+                if (status.equalsIgnoreCase("joined")) {
+                    event.message = colorMessage(matcher.group("type") + " > §r" + matcher.group("player") + " §r" + "§ajoined§e.");
+                }
+                if (status.equalsIgnoreCase("left")) {
+                    event.message = colorMessage(matcher.group("type") + " > §r" + matcher.group("player") + " §r" + "§cleft§e.");
                 }
             }
         }

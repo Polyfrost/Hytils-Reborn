@@ -21,10 +21,8 @@ package net.wyvest.hytilities.handlers.chat.modules.triggers;
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.chat.ChatReceiveModule;
-import net.wyvest.hytilities.handlers.game.GameType;
 import net.wyvest.hytilities.handlers.language.LanguageData;
 import gg.essential.api.utils.Multithreading;
-import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -58,7 +56,7 @@ public class AutoQueue implements ChatReceiveModule {
         final String message = getStrippedMessage(event.message);
         LocrawInformation locraw = Hytilities.INSTANCE.getLocrawUtil().getLocrawInformation();
         if (message.startsWith(language.autoQueuePrefixBedwars) || message.startsWith(language.autoQueuePrefix) && locraw != null) {
-            this.command = "/play " + locraw.getGameMode().toLowerCase();
+            this.command = "/play " + locraw.getGameMode().toLowerCase(Locale.ENGLISH);
         }
     }
 
