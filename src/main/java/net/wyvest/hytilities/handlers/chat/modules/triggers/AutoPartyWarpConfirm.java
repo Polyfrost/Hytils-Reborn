@@ -18,6 +18,7 @@
 
 package net.wyvest.hytilities.handlers.chat.modules.triggers;
 
+import gg.essential.api.utils.Multithreading;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -25,13 +26,16 @@ import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.chat.ChatReceiveModule;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.TimeUnit;
+
 public class AutoPartyWarpConfirm implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
         if (message.equals("Some players are still in-game, run the command again to confirm warp!")) {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/p warp");
+            event.setCanceled(true);
+            Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage("/p warp"), 1500, TimeUnit.MILLISECONDS);
         }
     }
 

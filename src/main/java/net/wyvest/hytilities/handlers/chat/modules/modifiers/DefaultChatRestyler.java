@@ -62,7 +62,6 @@ public class DefaultChatRestyler implements ChatReceiveModule {
         return 3;
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = event.message.getFormattedText().trim();

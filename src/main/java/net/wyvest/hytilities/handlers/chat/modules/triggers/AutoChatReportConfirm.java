@@ -18,11 +18,14 @@
 
 package net.wyvest.hytilities.handlers.chat.modules.triggers;
 
+import gg.essential.api.utils.Multithreading;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.concurrent.TimeUnit;
 
 public class AutoChatReportConfirm implements ChatReceiveModule {
 
@@ -34,8 +37,8 @@ public class AutoChatReportConfirm implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         if (event.message.getUnformattedText().equals("Please type /report confirm to log your report for staff review.")) {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/report confirm");
             event.setCanceled(true);
+            Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage("/report confirm"), 2, TimeUnit.SECONDS);
         }
     }
 
