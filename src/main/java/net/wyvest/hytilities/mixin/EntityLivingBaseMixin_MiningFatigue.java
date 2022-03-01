@@ -38,7 +38,7 @@ public class EntityLivingBaseMixin_MiningFatigue {
     @Inject(method = "addPotionEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;onNewPotionEffect(Lnet/minecraft/potion/PotionEffect;)V"))
     private void onPotionEffect(PotionEffect potioneffectIn, CallbackInfo ci) {
         if (HytilitiesConfig.notifyMiningFatigue && potioneffectIn.getPotionID() == Potion.digSlowdown.getId() && ($this instanceof EntityPlayerSP) && (!HytilitiesConfig.disableNotifyMiningFatigueSkyblock || !Hytilities.INSTANCE.getSkyblockChecker().isSkyblockScoreboard())) {
-            EssentialAPI.getNotifications().push("Hytilities Reborn", "You have miner fatigue!");
+            EssentialAPI.getNotifications().push("Hytilities Reborn", "You have mining fatigue!");
         }
     }
 }
