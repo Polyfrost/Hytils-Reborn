@@ -374,6 +374,13 @@ public class HytilitiesConfig extends Vigilant {
     public static int chatSwapperReturnChannel;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Swap Chatting Tab With Chat Swapper",
+        description = "Automatically switch your Chatting chat tab when chat swapper swaps your chat channel.",
+        category = "Chat", subcategory = "Parties"
+    )
+    public static boolean chattingIntegration;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Remove All Chat Message",
         description = "Hide the \"§aYou are now in the §6ALL§a channel§r\" message when auto-switching.",
         category = "Chat", subcategory = "Parties"
@@ -496,6 +503,20 @@ public class HytilitiesConfig extends Vigilant {
     public static boolean broadcastLevelup;
 
     // Game
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Notify When Kicked From Game",
+        description = "Notify in party chat when you are kicked from the game due to a connection issue.",
+        category = "Game", subcategory = "Chat"
+    )
+    public static boolean notifyWhenKick;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Put Notify Message In Capital Letters",
+        description = "Put the message in capital messages instead of proper formatting.",
+        category = "Game", subcategory = "Chat"
+    )
+    public static boolean putInCaps;
 
     @Property(
         type = PropertyType.SWITCH, name = "Highlight Opened Chests",
@@ -738,6 +759,8 @@ public class HytilitiesConfig extends Vigilant {
         addDependency("highlightChestsColor", "highlightChests");
 
         addDependency("overlayAmount", "heightOverlay");
+
+        addDependency("putInCaps", "notifyWhenKick");
 
         registerListener("heightOverlay", (funny) -> {
             if (funny != null) {

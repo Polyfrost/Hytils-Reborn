@@ -100,6 +100,7 @@ public class Hytilities {
     private final AutoQueue autoQueue = new AutoQueue();
 
     public boolean isPatcher;
+    public boolean isChatting;
     private boolean loadedCall;
 
     @Mod.EventHandler
@@ -131,6 +132,7 @@ public class Hytilities {
             config.hideTabulous();
         }
         isPatcher = Loader.isModLoaded("patcher");
+        isChatting = Loader.isModLoaded("chatting");
     }
 
     @Mod.EventHandler

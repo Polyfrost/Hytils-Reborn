@@ -40,7 +40,7 @@ minecraft {
     makeObfSourceJar = false
 
     clientJvmArgs += '-Dfml.coreMods.load=net.wyvest.hytilities.forge.FMLLoadingPlugin'
-    clientRunArgs += "--tweakClass cc.woverflow.wcore.tweaker.OneCoreTweaker"
+    clientRunArgs += "--tweakClass cc.woverflow.onecore.tweaker.OneCoreTweaker"
     clientRunArgs += "--mixin mixins.hytilities.json"
 }
 
@@ -72,7 +72,7 @@ jar {
             "ModSide": "CLIENT",
             "FMLCorePluginContainsFMLMod": "No",
             "FMLCorePlugin": "net.wyvest.hytilities.forge.FMLLoadingPlugin",
-            "TweakClass": "cc.woverflow.wcore.tweaker.OneCoreTweaker",
+            "TweakClass": "cc.woverflow.onecore.tweaker.OneCoreTweaker",
             "TweakOrder": "0",
             "FMLAT": "hytilities_at.cfg",
             "MixinConfigs": "mixins.hytilities.json"

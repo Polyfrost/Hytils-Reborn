@@ -57,6 +57,7 @@ public class ChatHandler {
         this.registerModule(new GameStartCompactor());
         this.registerModule(new DefaultChatRestyler());
         this.registerModule(new LobbyStatusRemover());
+        this.registerModule(new AutoWarn());
         this.registerModule(new MvpEmotesRemover());
         this.registerModule(new MysteryBoxRemover());
         this.registerModule(new GameAnnouncementsRemover());

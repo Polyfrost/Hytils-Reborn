@@ -18,16 +18,24 @@
 
 package net.wyvest.hytilities.handlers.chat.modules.triggers;
 
+import cc.woverflow.chatting.chat.ChatTab;
+import cc.woverflow.chatting.chat.ChatTabs;
+import cc.woverflow.chatting.config.ChattingConfig;
+import cc.woverflow.onecore.utils.Utils;
+import gg.essential.api.utils.Multithreading;
+import gg.essential.universal.wrappers.message.UTextComponent;
+import kotlin.Unit;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.wyvest.hytilities.Hytilities;
 import net.wyvest.hytilities.config.HytilitiesConfig;
 import net.wyvest.hytilities.handlers.chat.ChatReceiveModule;
 import net.wyvest.hytilities.handlers.language.LanguageData;
-import gg.essential.api.utils.Multithreading;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -41,26 +49,72 @@ public class AutoChatSwapper implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final Matcher statusMatcher = getLanguage().autoChatSwapperPartyStatusRegex.matcher(event.message.getUnformattedText());
-        final Matcher statusMatcher2 = getLanguage().autoChatSwapperPartyStatusRegex2.matcher(event.message.getUnformattedText());
-        if (statusMatcher.matches()) {
-            MinecraftForge.EVENT_BUS.register(new ChatChannelMessagePreventer());
-            switch (HytilitiesConfig.chatSwapperReturnChannel) {
-                case 0:
-                default:
-                    Hytilities.INSTANCE.getCommandQueue().queue("/chat a");
-                    break;
-                case 1:
-                    Hytilities.INSTANCE.getCommandQueue().queue("/chat g");
-                    break;
-                case 2:
-                    Hytilities.INSTANCE.getCommandQueue().queue("/chat o");
-                    break;
+        Multithreading.runAsync(() -> {
+            final Matcher statusMatcher = getLanguage().autoChatSwapperPartyStatusRegex.matcher(UTextComponent.Companion.stripFormatting(event.message.getUnformattedText()));
+            final Matcher statusMatcher2 = getLanguage().autoChatSwapperPartyStatusRegex2.matcher(UTextComponent.Companion.stripFormatting(event.message.getUnformattedText()));
+            if (statusMatcher.matches()) {
+                MinecraftForge.EVENT_BUS.register(new ChatChannelMessagePreventer());
+                switch (HytilitiesConfig.chatSwapperReturnChannel) {
+                    case 0:
+                    default:
+                        Hytilities.INSTANCE.getCommandQueue().queue("/chat a");
+                        if (Hytilities.INSTANCE.isChatting && ChattingConfig.INSTANCE.getChatTabs() && HytilitiesConfig.chattingIntegration) {
+                            ChatTab currentTab = ChatTabs.INSTANCE.getCurrentTab();
+                            Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> (StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/ac") || ((ChatTab) tab).getPrefix().isEmpty())).findFirst();
+                            if (optional.isPresent()) {
+                                ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
+                                Utils.sendBrandedNotification("Hytilities Reborn", "Hytilities Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", 4f, () -> {
+                                    ChatTabs.INSTANCE.setCurrentTab(currentTab);
+                                    return Unit.INSTANCE;
+                                });
+                            }
+                        }
+                        break;
+                    case 1:
+                        Hytilities.INSTANCE.getCommandQueue().queue("/chat g");
+                        if (Hytilities.INSTANCE.isChatting && ChattingConfig.INSTANCE.getChatTabs() && HytilitiesConfig.chattingIntegration) {
+                            ChatTab currentTab = ChatTabs.INSTANCE.getCurrentTab();
+                            Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/gc")).findFirst();
+                            if (optional.isPresent()) {
+                                ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
+                                Utils.sendBrandedNotification("Hytilities Reborn", "Hytilities Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", 4f, () -> {
+                                    ChatTabs.INSTANCE.setCurrentTab(currentTab);
+                                    return Unit.INSTANCE;
+                                });
+                            }
+                        }
+                        break;
+                    case 2:
+                        Hytilities.INSTANCE.getCommandQueue().queue("/chat o");
+                        if (Hytilities.INSTANCE.isChatting && ChattingConfig.INSTANCE.getChatTabs() && HytilitiesConfig.chattingIntegration) {
+                            ChatTab currentTab = ChatTabs.INSTANCE.getCurrentTab();
+                            Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/oc")).findFirst();
+                            if (optional.isPresent()) {
+                                ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
+                                Utils.sendBrandedNotification("Hytilities Reborn", "Hytilities Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", 4f, () -> {
+                                    ChatTabs.INSTANCE.setCurrentTab(currentTab);
+                                    return Unit.INSTANCE;
+                                });
+                            }
+                        }
+                        break;
+                }
+            } else if (statusMatcher2.matches() && HytilitiesConfig.partySwapper) {
+                MinecraftForge.EVENT_BUS.register(new ChatChannelMessagePreventer());
+                Hytilities.INSTANCE.getCommandQueue().queue("/chat p");
+                if (Hytilities.INSTANCE.isChatting && ChattingConfig.INSTANCE.getChatTabs() && HytilitiesConfig.chattingIntegration) {
+                    ChatTab currentTab = ChatTabs.INSTANCE.getCurrentTab();
+                    Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/pc")).findFirst();
+                    if (optional.isPresent()) {
+                        ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
+                        Utils.sendBrandedNotification("Hytilities Reborn", "Hytilities Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", 4f, () -> {
+                            ChatTabs.INSTANCE.setCurrentTab(currentTab);
+                            return Unit.INSTANCE;
+                        });
+                    }
+                }
             }
-        } else if (statusMatcher2.matches() && HytilitiesConfig.partySwapper) {
-            MinecraftForge.EVENT_BUS.register(new ChatChannelMessagePreventer());
-            Hytilities.INSTANCE.getCommandQueue().queue("/chat p");
-        }
+        });
     }
 
     @Override
