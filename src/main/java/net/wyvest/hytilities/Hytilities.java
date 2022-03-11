@@ -115,10 +115,10 @@ public class Hytilities {
         (blockConfig = new BlockHighlightConfig()).preload();
         new HytilitiesCommand().register();
         new HousingVisitCommand().register();
+        new SkyblockVisitCommand().register();
         final ClientCommandHandler commandRegister = ClientCommandHandler.instance;
         commandRegister.registerCommand(new PlayCommand());
         commandRegister.registerCommand(new SilentRemoveCommand());
-        commandRegister.registerCommand(new SkyblockVisitCommand());
         CosmeticsHandler.INSTANCE.initialize();
         PatternHandler.INSTANCE.initialize();
         HeightHandler.INSTANCE.initialize();
