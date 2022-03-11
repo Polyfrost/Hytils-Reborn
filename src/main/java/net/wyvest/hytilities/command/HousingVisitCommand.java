@@ -59,6 +59,8 @@ public class HousingVisitCommand extends Command {
     @DefaultHandler
     public void handle(String playerName) {
         if (usernameRegex.matcher(playerName).matches()) {
+            this.playerName = playerName;
+
             // if we are in the housing lobby, just immediately run the /visit command
             if ("HOUSING".equals(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld
                 .getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()))) {

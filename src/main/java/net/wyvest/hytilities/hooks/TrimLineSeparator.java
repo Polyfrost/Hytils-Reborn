@@ -25,7 +25,7 @@ import net.wyvest.hytilities.config.HytilitiesConfig;
 import java.util.List;
 import java.util.ListIterator;
 
-public final class TrimLineSeparator {
+public class TrimLineSeparator {
     public static boolean isSeparatingChat = false;
 
     public static void trimLineSeparator(List<IChatComponent> list) {
