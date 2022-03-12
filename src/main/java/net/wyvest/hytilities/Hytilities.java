@@ -116,6 +116,7 @@ public class Hytilities {
         new HytilitiesCommand().register();
         new HousingVisitCommand().register();
         new SkyblockVisitCommand().register();
+        new IgnoreTemporaryCommand().register();
         final ClientCommandHandler commandRegister = ClientCommandHandler.instance;
         commandRegister.registerCommand(new PlayCommand());
         commandRegister.registerCommand(new SilentRemoveCommand());

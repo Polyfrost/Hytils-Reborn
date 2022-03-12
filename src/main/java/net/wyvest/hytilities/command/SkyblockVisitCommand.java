@@ -21,6 +21,7 @@ package net.wyvest.hytilities.command;
 import com.google.common.collect.Sets;
 import gg.essential.api.commands.Command;
 import gg.essential.api.commands.DefaultHandler;
+import gg.essential.api.commands.DisplayName;
 import gg.essential.api.utils.Multithreading;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
@@ -60,7 +61,7 @@ public class SkyblockVisitCommand extends Command {
     }
 
     @DefaultHandler
-    public void handle(String playerName) {
+    public void handle(@DisplayName("Player Name") String playerName) {
         if (usernameRegex.matcher(playerName).matches()) {
             this.playerName = playerName;
             if (SKYBLOCK_IN_ALL_LANGUAGES.contains(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld

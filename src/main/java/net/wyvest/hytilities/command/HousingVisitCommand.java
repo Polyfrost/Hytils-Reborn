@@ -20,6 +20,7 @@ package net.wyvest.hytilities.command;
 
 import gg.essential.api.commands.Command;
 import gg.essential.api.commands.DefaultHandler;
+import gg.essential.api.commands.DisplayName;
 import gg.essential.api.utils.Multithreading;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
@@ -57,7 +58,7 @@ public class HousingVisitCommand extends Command {
     }
 
     @DefaultHandler
-    public void handle(String playerName) {
+    public void handle(@DisplayName("Player Name") String playerName) {
         if (usernameRegex.matcher(playerName).matches()) {
             this.playerName = playerName;
 
