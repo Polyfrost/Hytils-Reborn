@@ -5,8 +5,8 @@
     "description": "Hypixel-focused Quality of Life mod.",
     "version": "${version}",
     "mcversion": "1.8.9",
-    "url": "https://github.com/W-OVERFLOW/Hytilities-Reborn",
-    "updateUrl": "https://github.com/W-OVERFLOW/Hytilities-Reborn",
+    "url": "https://github.com/W-OVERFLOW/Hytils-Reborn",
+    "updateUrl": "https://github.com/W-OVERFLOW/Hytils-Reborn",
     "authorList": [
       "W-OVERFLOW",
       "Sk1erLLC"

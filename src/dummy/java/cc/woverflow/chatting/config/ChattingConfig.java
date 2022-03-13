@@ -1,5 +1,5 @@
 /*
- * Hytilities Reborn - Hypixel focused Quality of Life mod.
+ * Hytils Reborn - Hypixel focused Quality of Life mod.
  * Copyright (C) 2022  W-OVERFLOW
  *
  * This program is free software: you can redistribute it and/or modify
