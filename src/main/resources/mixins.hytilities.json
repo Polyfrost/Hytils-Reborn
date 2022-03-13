@@ -3,7 +3,7 @@
   "minVersion": "0.7",
   "package": "net.wyvest.hytilities.mixin",
   "plugin": "net.wyvest.hytilities.forge.HytilitiesMixinPlugin",
-  "refmap": "mixins.hytilities.refmap.json",
+  "refmap": "mixins.${id}.refmap.json",
   "mixins": [
     "EntityLivingBaseMixin_MiningFatigue",
     "EntityPlayerSPMixin_MessageHandling",

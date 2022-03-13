@@ -1,10 +1,10 @@
 [
   {
-    "modid": "hytilities-reborn",
-    "name": "Hytilities Reborn",
+    "modid": "${id}",
+    "name": "${name}",
     "description": "Hypixel-focused Quality of Life mod.",
     "version": "${version}",
-    "mcversion": "${mcversion}",
+    "mcversion": "1.8.9",
     "url": "https://github.com/W-OVERFLOW/Hytilities-Reborn",
     "updateUrl": "https://github.com/W-OVERFLOW/Hytilities-Reborn",
     "authorList": [
