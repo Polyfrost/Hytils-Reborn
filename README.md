@@ -1,16 +1,16 @@
-# Hytilities Reborn
+# Hytils Reborn
 <a href="https://github.com/W-OVERFLOW/Hytilities-Reborn/releases" target="_blank"></a>
 <img alt="downloads" src="https://img.shields.io/github/downloads/W-OVERFLOW/Hytilities-Reborn/total?color=F5C400&style=for-the-badge" /> <img alt="downloads latest" src="https://img.shields.io/github/downloads-pre/W-OVERFLOW/Hytilities-Reborn/latest/total?color=F5C400&style=for-the-badge" />
 
 <details open>
   <summary>User Guide</summary>
 
-### What is Hytilities Reborn?
-Hytilities Reborn is a [Hypixel](https://hypixel.net) focused Forge 1.8.9 mod based on [Sk1er LLC's Hytilities](https://github.com/Sk1erLLC/Hytilities), adding tons of Quality of Life features that
+### What is Hytils Reborn?
+Hytils Reborn is a [Hypixel](https://hypixel.net) focused Forge 1.8.9 mod based on [Sk1er LLC's Hytilities](https://github.com/Sk1erLLC/Hytilities), adding tons of Quality of Life features that
 you would want while on Hypixel, such as an Advertisement-Blocker, AutoQueue, AutoGL, Height Overlay, Game Status Restyle, AutoComplete for /play and plenty others to discover on your own! 
 
-### How do I use Hytilities Reborn?
-Hytilities Reborn is installed just like any other Forge mod.
+### How do I use Hytils Reborn?
+Hytils Reborn is installed just like any other Forge mod.
 
 If you do not know how to install a Forge mod, then we recommend following [this step-by-step guide](https://github.com/LizzyMaybeDev/Introduction-to-modding-mc "Credits: LizzyMaybeDev").
 ## Features
@@ -114,8 +114,8 @@ If you do not know how to install a Forge mod, then we recommend following [this
   <summary>How to contribute</summary>
 
 ## Contribution
-### How can I contribute to Hytilities Reborn?
-You can contribute to Hytilities Reborn by following the instructions below. Basic knowledge of git is required.
+### How can I contribute to Hytils Reborn?
+You can contribute to Hytils Reborn by following the instructions below. Basic knowledge of git is required.
 
 #### Setup - IntelliJ
 Press the green "Code" button.
@@ -173,7 +173,7 @@ Click on `Minecraft Client`.
 
 ![Minecraft Client](.github/minecraft_client2.png)
 
-Ensure that the classpath is set to `Hytilities Reborn.main`. If it is not, select the drop down and set it.
+Ensure that the classpath is set to `Hytils Reborn.main`. If it is not, select the drop down and set it.
 
 ![Classpath](.github/classpath.png)
 
@@ -186,7 +186,7 @@ Apply and save your changes.
 ![Apply](.github/apply.png)
 ![Save Changes](.github/save_changes.png)
 
-You should now be able to run Hytilities Reborn in the dev workspace.
+You should now be able to run Hytils Reborn in the dev workspace.
 
 ![Run](.github/run.png)
 
@@ -198,7 +198,7 @@ If you want to compile, then you must simply run `Tasks > build > build`.
 
 *Note that while you can launch the game from the Terminal, you cannot login, so playing on Hypixel in the development environment is impossible.*
 
-As with many GitHub projects, Hytilities Reborn is rather simple to set up in the Terminal. 
+As with many GitHub projects, Hytils Reborn is rather simple to set up in the Terminal. 
 
 Click the green code button.
 
@@ -213,7 +213,7 @@ Go to your terminal, and type `git clone `, paste in the URL you copied, and hit
 
 ![Git Clone](.github/clone.png)
 
-Enter the Hytilities Reborn directory. From here, what you do depends on your OS. This guide will use Linux, however the process is only slightly different on Windows. Instead of doing `./gradlew ...`, you do `gradlew ...`. If you are a Windows user, when copy and pasting commands from here, omit the `./`.
+Enter the Hytils Reborn directory. From here, what you do depends on your OS. This guide will use Linux, however the process is only slightly different on Windows. Instead of doing `./gradlew ...`, you do `gradlew ...`. If you are a Windows user, when copy and pasting commands from here, omit the `./`.
 
 Type `./gradlew setupDecompWorkspace`. This may take several minutes. It should say `BUILD SUCCESSFUL` once finished.
 
