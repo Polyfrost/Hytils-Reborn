@@ -20,6 +20,7 @@ package cc.woverflow.hytils;
 
 import cc.woverflow.hytils.command.*;
 import cc.woverflow.hytils.config.HytilsConfig;
+import cc.woverflow.hytils.handlers.chat.modules.triggers.AutoWB;
 import cc.woverflow.hytils.handlers.general.AutoStart;
 import cc.woverflow.hytils.handlers.general.CommandQueue;
 import cc.woverflow.hytils.handlers.general.SoundHandler;
@@ -100,6 +101,7 @@ public class HytilsReborn {
     private final ChatHandler chatHandler = new ChatHandler();
     private final LocrawUtil locrawUtil = new LocrawUtil();
     private final AutoQueue autoQueue = new AutoQueue();
+    private final AutoWB AutoWB = new AutoWB();
 
     public boolean isPatcher;
     public boolean isChatting;
@@ -172,6 +174,7 @@ public class HytilsReborn {
 
         // chat
         eventBus.register(chatHandler);
+        eventBus.register(AutoWB);
         eventBus.register(silentRemoval);
         eventBus.register(hardcoreStatus);
         eventBus.register(new AchievementEvent());

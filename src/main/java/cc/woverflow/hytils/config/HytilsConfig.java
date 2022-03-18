@@ -415,6 +415,130 @@ public class HytilsConfig extends Vigilant {
     )
     public static boolean guildWelcomeMessage;
 
+    // AutoWB
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "AutoWB",
+        description = "Says configurable message to your friends/guild when they join.",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static boolean AutoWB = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Toggle AutoWB for Guild",
+        description = "Toggles if the AutoWB message gets send to Guild.",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static boolean guildAutoWB = true;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Toggle AutoWB for Friends",
+        description = "Toggles If the AutoWB message gets send to Friends.",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static boolean friendsAutoWB = true;
+
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "AutoWB delay",
+        description = "After how many seconds will the AutoWB message be send.",
+        category = "Chat", subcategory = "AutoWB",
+        min = 2,
+        max = 10
+    )
+    public static int AutoWBsendSeconds = 2;
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "AutoWB Message",
+        description = "Changes the primary AutoWB message that gets send when someone joins in your guild (Also when the random messages are blank).",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static String AutoWBsendMessage1= "Welcome Back!";
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Random AutoWB messages",
+        description = "Enables random messages.",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static boolean randomAutoWB = false;
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "First random message",
+        description = "The random message that has chance to be send (leave blank to disable).",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static String AutoWBsendMessage2= "Welcome back... General %player%";
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Second random message",
+        description = "The random message that has chance to be send (leave blank to disable).",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static String AutoWBsendMessage3= "WB!";
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Third random message",
+        description = "The random message that has chance to be send (leave blank to disable).",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static String AutoWBsendMessage4= "Greetings! %player%";
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Fourth random message",
+        description = "The random message that has chance to be send (leave blank to disable).",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static String AutoWBsendMessage5= "Thanks for coming back to hell >:)";
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Fifth random message",
+        description = "The random message that has chance to be send (leave blank to disable).",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static String AutoWBsendMessage6= "Its nice having you here today %player%";
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Sixth random message",
+        description = "The random message that has chance to be send (leave blank to disable).",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static String AutoWBsendMessage7= "Yooooooooo Mr.%player%";
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Seventh random message",
+        description = "The random message that has chance to be send (leave blank to disable).",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static String AutoWBsendMessage8= "Welcome back Padawan %player%";
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Eighth random message",
+        description = "The random message that has chance to be send (leave blank to disable).",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static String AutoWBsendMessage9= "Welcome Back! <3";
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Ninth random message",
+        description = "The random message that has chance to be send (leave blank to disable).",
+        category = "Chat", subcategory = "AutoWB"
+    )
+    public static String AutoWBsendMessage10= "Thanks for coming to my TED talk.";
+
     @Property(
         type = PropertyType.SWITCH, name = "Shout Cooldown",
         description = "Show the amount of time remaining until /shout can be reused.\n§eExample: §eShout command is on cooldown. Please wait 30 more seconds.",
@@ -740,6 +864,23 @@ public class HytilsConfig extends Vigilant {
         addDependency("gexpMode", "autoGetGEXP");
 
         addDependency("antiGL", "autoGL");
+
+        addDependency("guildAutoWB", "AutoWB");
+        addDependency("friendsAutoWB", "AutoWB");
+        addDependency("AutoWBsendSeconds", "AutoWB");
+        addDependency("AutoWBsendMessage1", "AutoWB");
+        addDependency("randomAutoWB", "AutoWB");
+        addDependency("AutoWBsendMessage2", "AutoWB");
+        addDependency("AutoWBsendMessage3", "AutoWB");
+        addDependency("AutoWBsendMessage4", "AutoWB");
+        addDependency("AutoWBsendMessage5", "AutoWB");
+        addDependency("AutoWBsendMessage6", "AutoWB");
+        addDependency("AutoWBsendMessage7", "AutoWB");
+        addDependency("AutoWBsendMessage8", "AutoWB");
+        addDependency("AutoWBsendMessage9", "AutoWB");
+        addDependency("AutoWBsendMessage10", "AutoWB");
+
+
 
         addDependency("disableNotifyMiningFatigueSkyblock", "notifyMiningFatigue");
 
