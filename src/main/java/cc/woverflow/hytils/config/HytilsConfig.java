@@ -289,6 +289,13 @@ public class HytilsConfig extends Vigilant {
     public static boolean lineBreakerTrim = true;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Clean Line Separators",
+        description = "Change all line separator to become smoother.\n§eExample:§r ----- §4-> §r§m-----§r",
+        category = "Chat", subcategory = "Visual"
+    )
+    public static boolean cleanLineSeparator = true;
+
+    @Property(
         type = PropertyType.SWITCH, name = "White Chat",
         description = "Make nons chat messages appear as the normal chat message color.\n§eExample: §7Steve: Hey! §e-> §7Player§f: Hey!",
         category = "Chat", subcategory = "Visual"

@@ -18,7 +18,7 @@
 
 package cc.woverflow.hytils.mixin.lineseparator;
 
-import cc.woverflow.hytils.hooks.TrimLineSeparator;
+import cc.woverflow.hytils.hooks.LineSeparatorEnhancements;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.util.IChatComponent;
 import org.spongepowered.asm.mixin.Dynamic;
@@ -38,7 +38,7 @@ public class GuiUtilRenderComponentsMixin {
         if (obj instanceof IChatComponent) {
             value = list.add((IChatComponent) obj);
         }
-        TrimLineSeparator.trimLineSeparator(list);
+        LineSeparatorEnhancements.trimLineSeparator(list);
         return value;
     }
 

@@ -27,6 +27,7 @@ loom {
         client {
             arg("--tweakClass", "cc.woverflow.onecore.tweaker.OneCoreTweaker")
             property("onecore.mixin", "mixins.hytils.json")
+            property("mixin.debug.export", "true")
         }
     }
     runConfigs {
@@ -101,6 +102,7 @@ jar {
     manifest.attributes(
             'ModSide': 'CLIENT',
             'ForceLoadAsMod': true,
+            'FMLAT': "hytils_at.cfg",
             'TweakClass': 'cc.woverflow.onecore.tweaker.OneCoreTweaker',
             'MixinConfigs': "mixins.hytils.json",
             "TweakOrder": "0"

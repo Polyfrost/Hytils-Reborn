@@ -47,6 +47,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
         return 3;
     }
 
+    @SuppressWarnings("all")
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         Multithreading.runAsync(() -> {

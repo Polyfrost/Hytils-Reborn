@@ -18,23 +18,29 @@
 
 package cc.woverflow.hytils.mixin.lineseparator;
 
-import cc.woverflow.hytils.hooks.TrimLineSeparator;
+import cc.woverflow.hytils.hooks.LineSeparatorEnhancements;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.util.IChatComponent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GuiNewChat.class)
 public class GuiNewChatMixin {
     @Inject(method = "setChatLine", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiUtilRenderComponents;splitText(Lnet/minecraft/util/IChatComponent;ILnet/minecraft/client/gui/FontRenderer;ZZ)Ljava/util/List;"))
     private void beforeSplitText(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly, CallbackInfo ci) {
-        TrimLineSeparator.isSeparatingChat = true;
+        LineSeparatorEnhancements.isSeparatingChat = true;
     }
 
     @Inject(method = "setChatLine", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiUtilRenderComponents;splitText(Lnet/minecraft/util/IChatComponent;ILnet/minecraft/client/gui/FontRenderer;ZZ)Ljava/util/List;", shift = At.Shift.AFTER))
     private void afterSplitText(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly, CallbackInfo ci) {
-        TrimLineSeparator.isSeparatingChat = false;
+        LineSeparatorEnhancements.isSeparatingChat = false;
+    }
+
+    @ModifyArg(method = "drawChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;drawStringWithShadow(Ljava/lang/String;FFI)I"), index = 0)
+    private String changeText(String text) {
+        return LineSeparatorEnhancements.cleanLineSeparator(text);
     }
 }
