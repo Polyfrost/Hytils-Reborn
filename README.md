@@ -43,7 +43,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Remove Guild MOTD** - Remove the guild Message Of The Day.
 - **Remove Chat Emojis** - Remove MVP++ chat emojis.
 - **Remove Server Connected Messages** - Remove messages informing you of the lobby name you've just joined, or what lobby you're being sent to.
-- **Remove Auto Activated Quest Messages** - remove automatically activated quest messages.
+- **Remove Auto Activated Quest Messages** - Remove automatically activated quest messages.
 - **Remove Curse of Spam Messages** - Hides the constant spam of Kali's curse of spam.
 - **Remove Bridge Self Goal Death Messages** - Hides the death message when you jump into your own goal in Bridge.
 - **Remove Duels No Stats Change Messages** - Hides the message explaining that your stats did not change for dueling through /duel or within in a party.
