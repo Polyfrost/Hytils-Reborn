@@ -27,8 +27,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.sun.xml.internal.bind.WhiteSpaceProcessor.replace;
-
 public class AutoWB {
     @SubscribeEvent
     //The chat receive event
@@ -75,7 +73,7 @@ public class AutoWB {
         if (msg.startsWith("Friend > ") && msg.endsWith(" joined.") && (HytilsConfig.AutoWB) && (HytilsConfig.friendsAutoWB) || msg.startsWith("F > ") && msg.endsWith(" joined.") && (HytilsConfig.AutoWB) && (HytilsConfig.friendsAutoWB)){
             String name = msg.replace("Friend > ","").replace(" joined.","").replace("F > ", "");
             String message = HytilsConfig.AutoWBsendMessage1.replace("%player%", name);
-            //What happens when you have random message enabled
+            //What happens when you have random message enabled in the configs
             if (HytilsConfig.randomAutoWB){
                 while(true) {
                     int r = (int) (Math.random()*10);
