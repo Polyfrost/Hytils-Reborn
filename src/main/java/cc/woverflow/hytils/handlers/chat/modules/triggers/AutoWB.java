@@ -27,15 +27,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.sun.xml.internal.bind.WhiteSpaceProcessor.replace;
+
 public class AutoWB {
     @SubscribeEvent
     //The chat receive event
     public void onChat(ClientChatReceivedEvent event){
         String msg = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
         //Trimming of the message so its left only with the name
-        if (msg.startsWith("Guild > ") && msg.endsWith(" joined.") && (HytilsConfig.AutoWB) && (HytilsConfig.guildAutoWB)){
+        if (msg.startsWith("Guild > ") && msg.endsWith(" joined.") && (HytilsConfig.AutoWB) && (HytilsConfig.guildAutoWB) || msg.startsWith("G > ") && msg.endsWith(" joined.") && (HytilsConfig.AutoWB) && (HytilsConfig.guildAutoWB)){
             System.out.println("Worked");
-            String msgTrimmed = msg.replace("Guild > ","").replace(" joined.","");
+            String msgTrimmed = msg.replace("Guild > ","").replace(" joined.","").replace("G > ", "");
             String message = HytilsConfig.AutoWBsendMessage1.replace("%player%", msgTrimmed);
             //What happens when you have random message enabled
             if (HytilsConfig.randomAutoWB){
@@ -70,8 +72,8 @@ public class AutoWB {
             }
         }
 
-        if (msg.startsWith("Friend > ") && msg.endsWith(" joined.") && (HytilsConfig.AutoWB) && (HytilsConfig.friendsAutoWB)){
-            String name = msg.replace("Friend > ","").replace(" joined.","");
+        if (msg.startsWith("Friend > ") && msg.endsWith(" joined.") && (HytilsConfig.AutoWB) && (HytilsConfig.friendsAutoWB) || msg.startsWith("F > ") && msg.endsWith(" joined.") && (HytilsConfig.AutoWB) && (HytilsConfig.friendsAutoWB)){
+            String name = msg.replace("Friend > ","").replace(" joined.","").replace("F > ", "");
             String message = HytilsConfig.AutoWBsendMessage1.replace("%player%", name);
             //What happens when you have random message enabled
             if (HytilsConfig.randomAutoWB){
