@@ -770,6 +770,13 @@ public class HytilsConfig extends Vigilant {
     public static boolean hideNonNPCs;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Middle Waypoint in MiniWalls",
+        description = "Adds a waypoint for the 0 0 coordinates when your MiniWither is dead in MiniWalls.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean miniWallsMiddleWaypoint;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Mute Housing Music",
         description = "Prevent the Housing songs from being heard.",
         category = "Game", subcategory = "Sound"
