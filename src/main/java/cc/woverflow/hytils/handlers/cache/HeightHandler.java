@@ -76,7 +76,7 @@ public class HeightHandler extends CacheHandler<String, Integer> {
 
     public void initialize() {
         try {
-            jsonObject = JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.pinkulu.com/HeightLimitMod/Limits")).getAsJsonObject();
+            jsonObject = JsonUtils.PARSER.parse(WebUtil.fetchString("https://maps.pinkulu.com")).getAsJsonObject();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
