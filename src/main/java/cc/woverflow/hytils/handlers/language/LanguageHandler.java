@@ -54,7 +54,7 @@ public class LanguageHandler {
         final String username = Minecraft.getMinecraft().getSession().getUsername();
         final JsonHolder json = WebUtil.fetchJSON("https://api.sk1er.club/player/" + username);
         final String language = languageMappings.getOrDefault(json.optJSONObject("player").defaultOptString("userLanguage", "ENGLISH"), "en");
-        JsonHolder jsonHolder = WebUtil.fetchJSON("https://raw.githubusercontent.com/W-OVERFLOW/DataStorage/main/regex.json");
+        JsonHolder jsonHolder = WebUtil.fetchJSON("https://data.woverflow.cc/regex.json");
         if (!jsonHolder.getKeys().isEmpty()) {
             current = gson.fromJson(jsonHolder.has(language) ? jsonHolder.optActualJSONObject(language).toString() : jsonHolder.optActualJSONObject("en").toString(), LanguageData.class);
         }
