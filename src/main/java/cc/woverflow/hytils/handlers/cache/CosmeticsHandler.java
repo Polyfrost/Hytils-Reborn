@@ -32,7 +32,7 @@ public class CosmeticsHandler extends Handler<String> {
 
     public void initialize() {
         Multithreading.runAsync(() -> {
-            final String gotten = WebUtil.fetchString("https://raw.githubusercontent.com/W-OVERFLOW/DataStorage/main/cosmetics.json");
+            final String gotten = WebUtil.fetchString("https://data.woverflow.cc/cosmetics.json");
             if (gotten != null) {
                 jsonObject = parser.parse(gotten).getAsJsonObject();
                 for (JsonElement cosmetic : jsonObject.getAsJsonArray("particles")) {
