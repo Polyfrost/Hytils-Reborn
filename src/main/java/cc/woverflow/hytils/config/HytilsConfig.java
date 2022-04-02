@@ -749,13 +749,6 @@ public class HytilsConfig extends Vigilant {
     public static boolean hideDuelsCosmetics;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide Actionbar in Invaders",
-        description = "Hide the Actionbar in Invaders.",
-        category = "Game", subcategory = "Visual"
-    )
-    public static boolean hideInvadersActionBar;
-
-    @Property(
         type = PropertyType.SWITCH, name = "Hide Actionbar in Housing",
         description = "Hide the Actionbar in Housing.",
         category = "Game", subcategory = "Visual"

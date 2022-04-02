@@ -35,12 +35,15 @@ public class GameStartingTitles {
 
         switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle())) {
             case "10 seconds":
+            case "10":
             case "5":
             case "4":
             case "3":
             case "2":
             case "1":
+            case "SkyWars":
             case "INSANE MODE":
+            case "Waiting for more players...":
                 event.setCanceled(true);
                 break;
         }
