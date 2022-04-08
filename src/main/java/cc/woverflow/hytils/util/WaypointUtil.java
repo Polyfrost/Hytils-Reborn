@@ -43,10 +43,7 @@ public class WaypointUtil {
 
     private static final ResourceLocation beaconBeam = new ResourceLocation("textures/entity/beacon_beam.png");
 
-    private static void renderBeaconBeam(
-        double x, double y, double z, int rgb, float alphaMult,
-        float partialTicks, Boolean disableDepth
-    ) {
+    private static void renderBeaconBeam(double x, double y, double z, int rgb, float alphaMult, float partialTicks, Boolean disableDepth) {
         int height = 300;
         int bottomOffset = 0;
         int topOffset = bottomOffset + height;
