@@ -282,6 +282,13 @@ public class HytilsConfig extends Vigilant {
     public static boolean boosterRemover;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Remove GEXP Messages",
+        description = "Removes the GEXP messages from chat.\n§aYou earned §r§2100 GEXP §r§afrom playing SkyBlock!",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean gexpRemover;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Trim Line Separators",
         description = "Prevent separators from overflowing onto the next chat line.",
         category = "Chat", subcategory = "Visual"
@@ -664,6 +671,21 @@ public class HytilsConfig extends Vigilant {
     public static Color highlightChestsColor = Color.RED;
 
     @Property(
+        type = PropertyType.SWITCH, name = "UHC Overlay",
+        description = "Notify in party chat when you are kicked from the game due to a connection issue.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean uhcOverlay;
+
+    @Property(
+        type = PropertyType.DECIMAL_SLIDER, name = "UHC Overlay Multiplier",
+        description = "Notify in party chat when you are kicked from the game due to a connection issue.",
+        category = "Game", subcategory = "Visual",
+        minF = 1f, maxF = 5f, decimalPlaces = 1
+    )
+    public static float uhcOverlayMultiplier = 1f;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Armor",
         description = "Hide armor in games where armor is always the same.",
         category = "Game", subcategory = "Visual"
@@ -887,8 +909,6 @@ public class HytilsConfig extends Vigilant {
         addDependency("AutoWBsendMessage9", "AutoWB");
         addDependency("AutoWBsendMessage10", "AutoWB");
 
-
-
         addDependency("disableNotifyMiningFatigueSkyblock", "notifyMiningFatigue");
 
         addDependency("partySwapper", "chatSwapper");
@@ -905,6 +925,8 @@ public class HytilsConfig extends Vigilant {
         addDependency("keepImportantNpcsInTab", "hideNpcsInTab");
 
         addDependency("highlightChestsColor", "highlightChests");
+
+        addDependency("uhcOverlayMultiplier", "uhcOverlay");
 
         addDependency("overlayAmount", "heightOverlay");
 

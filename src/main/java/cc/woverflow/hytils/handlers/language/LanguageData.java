@@ -42,7 +42,7 @@ public class LanguageData {
     private String chatCleanerJoinNormal = "joined the lobby";
     private String chatCleanerJoinHalloween = "spooked into the lobby";
     private String chatCleanerJoinChristmas = "(?:sled|slid) into the lobby";
-    private String chatCleanerMysteryBoxFind = "^✦ (?<player>\\w{1,16}) found a \u2730{5} Mystery Box!$";
+    private String chatCleanerMysteryBoxFind = "^✦ (?<player>\\w{1,16}) found (?:a|an) (?:\u2730{5} Mystery Box!|\\.+ in a \\.+ Mystery Box!)$";
     private String chatCleanerSoulWellFind = "^.+ has found .+ in the Soul Well!$";
     private String chatCleanerGameAnnouncement = "^\u27A4 A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!$";
     private String chatCleanerBedwarsPartyAdvertisement = "(?<number>[1-3]/[2-4])";
@@ -51,9 +51,10 @@ public class LanguageData {
     public String chatCleanerHypeLimit = "  \u27A4 You have reached your Hype limit!";
     private String chatGiftBlocker = "They have gifted \\d+ ranks so far!";
     private String chatCleanerGrinchPresents = "(?:You found a gift! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} gifts!)";
-    private String chatCleanerBoosterRemover = "^\\W\\d{1,} coins! .\\w{1,16}.s Network Booster.";
+    private String chatCleanerBoosterRemover = "^\\W\\d{1,} coins! .\\w{1,16}.s Network Booster\\W .*";
+    private String chatGEXPRemover = "You earned \\d+ GEXP from playing \\.+!";
 
-    private String connectedServerConnectMessage = "^(You are currently connected to server \\S+)|(Sending you to \\S+.{3}!)$";
+    private String connectedServerConnectMessage = "^(You are currently connected to server \\S+)|(Sending you to \\S+.{3}!)|(Sending to server \\S+.{3})|(Warping you to your Skyblock island...)|(Warping...)|(Sending a visit request...)|(Finding player...)$";
 
     private String achievementPattern = "a>> {3}Achievement Unlocked: (?<achievement>.+) {3}<<a";
     private String levelUpPattern = "You are now Hypixel Level (?<level>\\d+)!";
@@ -107,6 +108,7 @@ public class LanguageData {
     public Pattern chatGiftBlockerRegex;
     public Pattern chatCleanerGrinchPresentsRegex;
     public Pattern chatCleanerBoosterRemoverRegex;
+    public Pattern chatGEXPRemoverRegex;
 
     public Pattern connectedServerConnectMessageRegex;
 
@@ -152,6 +154,7 @@ public class LanguageData {
             chatGiftBlockerRegex = Pattern.compile(chatGiftBlocker);
             chatCleanerGrinchPresentsRegex = Pattern.compile(chatCleanerGrinchPresents);
             chatCleanerBoosterRemoverRegex = Pattern.compile(chatCleanerBoosterRemover);
+            chatGEXPRemoverRegex = Pattern.compile(chatGEXPRemover);
 
             connectedServerConnectMessageRegex = Pattern.compile(connectedServerConnectMessage);
 

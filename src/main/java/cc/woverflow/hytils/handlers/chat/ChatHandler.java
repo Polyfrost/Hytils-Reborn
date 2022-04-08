@@ -80,6 +80,7 @@ public class ChatHandler {
         this.registerModule(new AutoVictory());
         this.registerModule(new AutoPartyWarpConfirm());
         this.registerModule(new ColoredFriendStatuses());
+        this.registerModule(new GEXPRemover());
 
         this.registerDualModule(new ShoutBlocker());
 
