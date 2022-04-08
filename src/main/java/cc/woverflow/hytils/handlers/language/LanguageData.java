@@ -53,7 +53,7 @@ public class LanguageData {
     private String chatCleanerGrinchPresents = "(?:You found a gift! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} gifts!)";
     private String chatCleanerBoosterRemover = "^\\W\\d{1,} coins! .\\w{1,16}.s Network Booster. .*";
     private String chatGEXPRemover = "You earned \\d+ GEXP from playing \\.+!";
-    private String timePlayerRemover = "^(?:\\W\\d+ .* Experience \\(Time Played\\)|\\W\\d+ coins! \\(Time Played\\)).*"; //.* at the end in case of any modifiers such as boosters
+    private String chatTimePlayerRemover = "^(?:\\W\\d+ .* Experience \\(Time Played\\)|\\W\\d+ coins! \\(Time Played\\)).*"; //.* at the end in case of any modifiers such as boosters
 
     private String connectedServerConnectMessage = "^(You are currently connected to server \\S+)|(Sending you to \\S+.{3}!)|(Sending to server \\S+.{3})|(Warping you to your Skyblock island...)|(Warping...)|(Sending a visit request...)|(Finding player...)$";
 
@@ -110,7 +110,7 @@ public class LanguageData {
     public Pattern chatCleanerGrinchPresentsRegex;
     public Pattern chatCleanerBoosterRemoverRegex;
     public Pattern chatGEXPRemoverRegex;
-    public Pattern timePlayedRemoverRegex;
+    public Pattern chatTimePlayedRemoverRegex;
 
     public Pattern connectedServerConnectMessageRegex;
 
@@ -157,7 +157,7 @@ public class LanguageData {
             chatCleanerGrinchPresentsRegex = Pattern.compile(chatCleanerGrinchPresents);
             chatCleanerBoosterRemoverRegex = Pattern.compile(chatCleanerBoosterRemover);
             chatGEXPRemoverRegex = Pattern.compile(chatGEXPRemover);
-            timePlayedRemoverRegex = Pattern.compile(timePlayerRemover);
+            chatTimePlayedRemoverRegex = Pattern.compile(chatTimePlayerRemover);
 
             connectedServerConnectMessageRegex = Pattern.compile(connectedServerConnectMessage);
 
