@@ -51,7 +51,7 @@ public class LanguageData {
     public String chatCleanerHypeLimit = "  \u27A4 You have reached your Hype limit!";
     private String chatGiftBlocker = "They have gifted \\d+ ranks so far!";
     private String chatCleanerGrinchPresents = "(?:You found a gift! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} gifts!)";
-    private String chatCleanerBoosterRemover = "^\\W\\d{1,} coins! .\\w{1,16}.s Network Booster\\W .*";
+    private String chatCleanerBoosterRemover = "^\\W\\d{1,} coins! .\\w{1,16}.s Network Booster. .*";
     private String chatGEXPRemover = "You earned \\d+ GEXP from playing \\.+!";
 
     private String connectedServerConnectMessage = "^(You are currently connected to server \\S+)|(Sending you to \\S+.{3}!)|(Sending to server \\S+.{3})|(Warping you to your Skyblock island...)|(Warping...)|(Sending a visit request...)|(Finding player...)$";
