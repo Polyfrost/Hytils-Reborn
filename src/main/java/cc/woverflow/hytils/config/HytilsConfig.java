@@ -679,16 +679,16 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "UHC Overlay",
-        description = "Notify in party chat when you are kicked from the game due to a connection issue.",
+        description = "Increase the size of dropped apples, golden apples, golden ingots, and player heads in UHC Champions and Speed UHC.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean uhcOverlay;
 
     @Property(
         type = PropertyType.DECIMAL_SLIDER, name = "UHC Overlay Multiplier",
-        description = "Notify in party chat when you are kicked from the game due to a connection issue.",
+        description = "Adjust the multiplier.",
         category = "Game", subcategory = "Visual",
-        minF = 1f, maxF = 5f, decimalPlaces = 1
+        minF = 1f, maxF = 5f
     )
     public static float uhcOverlayMultiplier = 1f;
 
