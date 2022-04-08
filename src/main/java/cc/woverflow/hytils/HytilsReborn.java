@@ -21,6 +21,8 @@ package cc.woverflow.hytils;
 import cc.woverflow.hytils.command.*;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.modules.triggers.AutoWB;
+import cc.woverflow.hytils.handlers.game.miniwalls.MiddleBeaconMiniWalls;
+import cc.woverflow.hytils.handlers.game.uhc.MiddleWaypointUHC;
 import cc.woverflow.hytils.handlers.general.AutoStart;
 import cc.woverflow.hytils.handlers.general.CommandQueue;
 import cc.woverflow.hytils.handlers.general.SoundHandler;
@@ -77,7 +79,6 @@ import java.nio.charset.StandardCharsets;
     version = HytilsReborn.VERSION
 )
 public class HytilsReborn {
-
     public static final String MOD_ID = "@ID@";
     public static final String MOD_NAME = "@NAME@";
     public static final String VERSION = "@VER@";
@@ -194,6 +195,8 @@ public class HytilsReborn {
         eventBus.register(new HousingMusic());
         eventBus.register(new GameStartingTitles());
         eventBus.register(new GoalArmorStands());
+        eventBus.register(new MiddleBeaconMiniWalls());
+        eventBus.register(new MiddleWaypointUHC());
 
         // height overlay
         eventBus.register(HeightHandler.INSTANCE);

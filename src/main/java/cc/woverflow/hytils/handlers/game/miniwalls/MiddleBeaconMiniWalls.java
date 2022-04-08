@@ -19,54 +19,42 @@
 package cc.woverflow.hytils.handlers.game.miniwalls;
 
 
+import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.events.TitleEvent;
-import cc.woverflow.onecore.utils.RenderUtils;
+import cc.woverflow.hytils.util.WaypointUtil;
+import cc.woverflow.hytils.util.locraw.LocrawInformation;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class MiddleWaypoint {
-
-
+public class MiddleBeaconMiniWalls {
     private boolean miniWitherDead;
-    private String location;
-    private Float x = 0f;
-    private Float y = 2f;
-    private Float z = 0f;
+    private final BlockPos block = new BlockPos(0, 0, 0);
 
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event) {
-        if (this.miniWitherDead) {
-            this.miniWitherDead = false;
-        }
+        if (this.miniWitherDead) this.miniWitherDead = false;
     }
 
     @SubscribeEvent
     public void onTitle(TitleEvent event) {
         final String unformattedTitle = EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle());
 
-        if (unformattedTitle != null && (unformattedTitle.equals("Your Mini Wither died!") ||
-            unformattedTitle.equals("DEATHMATCH")) &&
-            HytilsConfig.miniWallsMiddleWaypoint) {
-            miniWitherDead = true;
-        }
+        if (unformattedTitle != null && (unformattedTitle.equals("Your Mini Wither died!") || unformattedTitle.equals("DEATHMATCH")) && HytilsConfig.miniWallsMiddleBeacon) miniWitherDead = true;
     }
 
     public boolean shouldMakeBeacon() {
-        return this.miniWitherDead && HytilsConfig.miniWallsMiddleWaypoint;
+        LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
+        return EssentialAPI.getMinecraftUtil().isHypixel() && (locraw != null && locraw.getGameMode().equalsIgnoreCase("mini_walls") && this.miniWitherDead && HytilsConfig.miniWallsMiddleBeacon);
     }
 
     @SubscribeEvent
-    public void onRenderLast(RenderWorldLastEvent event) {
-        if (!HytilsConfig.miniWallsMiddleWaypoint) return;
-        int rgb = 0xa839ce;
-        if (miniWitherDead) return;{
-
-        }
+    public void onRenderWorldLast(RenderWorldLastEvent event) {
+        if (!shouldMakeBeacon()) return;
+        WaypointUtil.renderBeaconBeam(block, HytilsConfig.miniWallsMiddleBeaconColor.getRGB(), 1.0f, event.partialTicks);
     }
 }

@@ -693,6 +693,20 @@ public class HytilsConfig extends Vigilant {
     public static float uhcOverlayMultiplier = 1f;
 
     @Property(
+        type = PropertyType.SWITCH, name = "UHC Middle Waypoint",
+        description = "Adds a waypoint to signify (0,0).",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean uhcMiddleWaypoint;
+
+    @Property(
+        type = PropertyType.TEXT, name = "UHC Middle Waypoint Text",
+        description = "Text on waypoint.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static String uhcMiddleWaypointText = "0,0";
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Armor",
         description = "Hide armor in games where armor is always the same.",
         category = "Game", subcategory = "Visual"
@@ -791,11 +805,18 @@ public class HytilsConfig extends Vigilant {
     public static boolean hideNonNPCs;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Middle Waypoint in MiniWalls",
-        description = "Adds a waypoint for the 0 0 coordinates when your MiniWither is dead in MiniWalls.",
+        type = PropertyType.SWITCH, name = "Middle Waypoint Beacon in MiniWalls",
+        description = "Adds a beacon at (0,0) when your MiniWither is dead in MiniWalls.",
         category = "Game", subcategory = "Visual"
     )
-    public static boolean miniWallsMiddleWaypoint;
+    public static boolean miniWallsMiddleBeacon;
+
+    @Property(
+        type = PropertyType.COLOR, name = "Middle Waypoint Beacon in MiniWalls",
+        description = "Set the color of the beacon.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static Color miniWallsMiddleBeaconColor = Color.BLUE;
 
     @Property(
         type = PropertyType.SWITCH, name = "Mute Housing Music",
