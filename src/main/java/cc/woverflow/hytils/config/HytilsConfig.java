@@ -276,10 +276,24 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Network Booster Perk Messages",
-        description = "Removes the network booster perk messages from chat.\n§eExample: §6+50 coins (Steve's Network Booster)§r",
+        description = "Removes the network booster perk messages from chat.\n§eExample: §6+50 coins (Steve's Network Booster)",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean boosterRemover;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Time Played Messages",
+        description = "Removes the time played messages from chat.\n§eExamples:\n§b+25 Bed Wars Experience (Time Played)\n§6+10 coins! (Time Played)",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean timePlayedRemover;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove GEXP Messages",
+        description = "Removes the GEXP messages from chat.\n§eExample: §aYou earned §r§2100 GEXP §r§afrom playing SkyBlock!",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean gexpRemover;
 
     @Property(
         type = PropertyType.SWITCH, name = "Trim Line Separators",
@@ -664,6 +678,21 @@ public class HytilsConfig extends Vigilant {
     public static Color highlightChestsColor = Color.RED;
 
     @Property(
+        type = PropertyType.SWITCH, name = "UHC Overlay",
+        description = "Increase the size of dropped apples, golden apples, golden ingots, and player heads in UHC Champions and Speed UHC.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean uhcOverlay;
+
+    @Property(
+        type = PropertyType.DECIMAL_SLIDER, name = "UHC Overlay Multiplier",
+        description = "Adjust the multiplier.",
+        category = "Game", subcategory = "Visual",
+        minF = 1f, maxF = 5f
+    )
+    public static float uhcOverlayMultiplier = 1f;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Armor",
         description = "Hide armor in games where armor is always the same.",
         category = "Game", subcategory = "Visual"
@@ -726,7 +755,6 @@ public class HytilsConfig extends Vigilant {
         category = "Game", subcategory = "Visual"
     )
     public static boolean manuallyEditHeightOverlay;
-
 
     @Property(
         type = PropertyType.BUTTON, name = "Manual Height Overlay Editor",
@@ -887,8 +915,6 @@ public class HytilsConfig extends Vigilant {
         addDependency("AutoWBsendMessage9", "AutoWB");
         addDependency("AutoWBsendMessage10", "AutoWB");
 
-
-
         addDependency("disableNotifyMiningFatigueSkyblock", "notifyMiningFatigue");
 
         addDependency("partySwapper", "chatSwapper");
@@ -905,6 +931,8 @@ public class HytilsConfig extends Vigilant {
         addDependency("keepImportantNpcsInTab", "hideNpcsInTab");
 
         addDependency("highlightChestsColor", "highlightChests");
+
+        addDependency("uhcOverlayMultiplier", "uhcOverlay");
 
         addDependency("overlayAmount", "heightOverlay");
 

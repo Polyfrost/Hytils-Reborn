@@ -18,6 +18,7 @@
     "MinecraftMixin_LeftClickInteract",
     "MinecraftMixin_LimboLimiter",
     "NetHandlerPlayClientMixin_GameChecker",
+    "RenderEntityItemMixin_UHCOverlay",
     "cosmetics.RenderItemMixin",
     "cosmetics.WorldMixin",
     "lineseparator.GuiNewChatMixin",
