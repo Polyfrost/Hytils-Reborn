@@ -276,14 +276,21 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Network Booster Perk Messages",
-        description = "Removes the network booster perk messages from chat.\n§eExample: §6+50 coins (Steve's Network Booster)§r",
+        description = "Removes the network booster perk messages from chat.\n§eExample: §6+50 coins (Steve's Network Booster)",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean boosterRemover;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Remove Time Played Messages",
+        description = "Removes the time played messages from chat.\n§eExamples:\n§b+25 Bed Wars Experience (Time Played)\n§6+10 coins! (Time Played)",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean timePlayedRemover;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Remove GEXP Messages",
-        description = "Removes the GEXP messages from chat.\n§aYou earned §r§2100 GEXP §r§afrom playing SkyBlock!",
+        description = "Removes the GEXP messages from chat.\n§eExample: §aYou earned §r§2100 GEXP §r§afrom playing SkyBlock!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean gexpRemover;
@@ -748,7 +755,6 @@ public class HytilsConfig extends Vigilant {
         category = "Game", subcategory = "Visual"
     )
     public static boolean manuallyEditHeightOverlay;
-
 
     @Property(
         type = PropertyType.BUTTON, name = "Manual Height Overlay Editor",

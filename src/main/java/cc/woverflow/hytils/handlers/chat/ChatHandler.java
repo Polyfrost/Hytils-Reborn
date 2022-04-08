@@ -81,6 +81,7 @@ public class ChatHandler {
         this.registerModule(new AutoPartyWarpConfirm());
         this.registerModule(new ColoredFriendStatuses());
         this.registerModule(new GEXPRemover());
+        this.registerModule(new TimePlayedRemover());
 
         this.registerDualModule(new ShoutBlocker());
 

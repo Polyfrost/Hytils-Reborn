@@ -26,10 +26,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 
-public class GEXPRemover implements ChatReceiveModule {
+public class TimePlayedRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatGEXPRemoverRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
+        Matcher matcher = getLanguage().timePlayedRemoverRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
         if (matcher.matches()) {
             event.setCanceled(true);
         }
@@ -37,7 +37,7 @@ public class GEXPRemover implements ChatReceiveModule {
 
     @Override
     public boolean isEnabled() {
-        return HytilsConfig.gexpRemover;
+        return HytilsConfig.timePlayedRemover;
     }
 
     @Override
