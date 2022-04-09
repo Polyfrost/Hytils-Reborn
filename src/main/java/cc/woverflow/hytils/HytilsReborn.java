@@ -140,6 +140,7 @@ public class HytilsReborn {
         final ClientCommandHandler commandRegister = ClientCommandHandler.instance;
         commandRegister.registerCommand(new PlayCommand());
         commandRegister.registerCommand(new SilentRemoveCommand());
+        commandRegister.registerCommand(new LimboCommand());
         CosmeticsHandler.INSTANCE.initialize();
         PatternHandler.INSTANCE.initialize();
         HeightHandler.INSTANCE.initialize();
