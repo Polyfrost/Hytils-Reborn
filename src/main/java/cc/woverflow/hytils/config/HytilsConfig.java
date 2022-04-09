@@ -275,13 +275,6 @@ public class HytilsConfig extends Vigilant {
     public static boolean grinchPresents;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove Network Booster Perk Messages",
-        description = "Removes the network booster perk messages from chat.\n§eExample: §6+50 coins (Steve's Network Booster)",
-        category = "Chat", subcategory = "Toggles"
-    )
-    public static boolean boosterPerk;
-
-    @Property(
         type = PropertyType.SWITCH, name = "Remove Earned Coins and Experience Messages",
         description = "Removes the earned coins and experience messages from chat.\n§eExamples:\n§b+25 Bed Wars Experience\n§6+10 coins!",
         category = "Chat", subcategory = "Toggles"
