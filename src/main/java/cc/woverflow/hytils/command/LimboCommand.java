@@ -18,11 +18,9 @@
 
 package cc.woverflow.hytils.command;
 
-import cc.woverflow.hytils.HytilsReborn;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 
 public class LimboCommand extends CommandBase {

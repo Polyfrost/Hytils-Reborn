@@ -26,11 +26,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 
-public class BoosterRemover implements ChatReceiveModule {
-
+public class OnlineStatusRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatCleanerBoosterRemoverRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
+        Matcher matcher = getLanguage().chatCleanerEarnedCoinsAndExpRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
         if (matcher.matches()) {
             event.setCanceled(true);
         }
@@ -38,12 +37,11 @@ public class BoosterRemover implements ChatReceiveModule {
 
     @Override
     public boolean isEnabled() {
-        return HytilsConfig.boosterRemover;
+        return HytilsConfig.onlineStatus;
     }
 
     @Override
     public int getPriority() {
         return -1;
     }
-
 }

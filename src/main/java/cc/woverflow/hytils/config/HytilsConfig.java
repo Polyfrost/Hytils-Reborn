@@ -279,21 +279,42 @@ public class HytilsConfig extends Vigilant {
         description = "Removes the network booster perk messages from chat.\n§eExample: §6+50 coins (Steve's Network Booster)",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean boosterRemover;
+    public static boolean boosterPerk;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove Time Played Messages",
-        description = "Removes the time played messages from chat.\n§eExamples:\n§b+25 Bed Wars Experience (Time Played)\n§6+10 coins! (Time Played)",
+        type = PropertyType.SWITCH, name = "Remove Earned Coins and Experience Messages",
+        description = "Removes the earned coins and experience messages from chat.\n§eExamples:\n§b+25 Bed Wars Experience\n§6+10 coins!",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean timePlayedRemover;
+    public static boolean earnedCoinsAndExp;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove GEXP Messages",
-        description = "Removes the GEXP messages from chat.\n§eExample: §aYou earned §r§2100 GEXP §r§afrom playing SkyBlock!",
+        type = PropertyType.SWITCH, name = "Remove Replay Messages",
+        description = "Removes replay messages from chat.\n§eExample: §4Please add me.",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean gexpRemover;
+    public static boolean replayMessage;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Tip Messages",
+        description = "Removes tip messages from chat.\n§eExample: §4Please add me.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean tipMessage;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Sending Commands Too Fast Messages",
+        description = "Removes the sending commands messages from chat.\n§eExample: §4Please add me.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean sendingCommands;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Online Status Messages",
+        description = "Removes the online status messages from chat.\n§eExample: §6§lREMINDER: §r§6Your Online Status is currently set to §r§e§lAppear Offline§r",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean onlineStatus;
 
     @Property(
         type = PropertyType.SWITCH, name = "Trim Line Separators",
@@ -330,6 +351,7 @@ public class HytilsConfig extends Vigilant {
     )
     public static boolean coloredStatuses;
 
+    // TODO: add support for Murder Mystery (eg: The alpha infected will be chosen in 5 seconds!)
     @Property(
         type = PropertyType.SWITCH, name = "Cleaner Game Start Counter",
         description = "Compacts game start announcements.\n§eExample: The game starts in 20 seconds!",
