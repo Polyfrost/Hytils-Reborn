@@ -219,11 +219,25 @@ public class HytilsConfig extends Vigilant {
     public static boolean serverConnectedMessages;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Remove Game Tips Messages",
+        description = "Remove tips about the game you are playing.\n§eExample: §4Please add me.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean gameTipMessages;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Remove Auto Activated Quest Messages",
         description = "Remove automatically activated quest messages.\n§eExample: §aAutomatically activated: §6Daily Quest: Duels Winner",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean questsMessages;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Stats Messages",
+        description = "Remove the \"view your stats\" messages.\n§eExample: §4Please add me.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean statsMessages;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Curse of Spam Messages",
@@ -283,28 +297,21 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Replay Messages",
-        description = "Removes replay messages from chat.\n§eExample: §4Please add me.",
+        description = "Removes replay messages from chat.\n§eExample: §6§aThis game has been recorded. §6Click here to watch the Replay!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean replayMessage;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Tip Messages",
-        description = "Removes tip messages from chat.\n§eExample: §4Please add me.",
+        description = "Removes tip messages from chat.\n§eExample: §a§aYou tipped 5 players in 10 different games!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean tipMessage;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove Sending Commands Too Fast Messages",
-        description = "Removes the sending commands messages from chat.\n§eExample: §4Please add me.",
-        category = "Chat", subcategory = "Toggles"
-    )
-    public static boolean sendingCommands;
-
-    @Property(
         type = PropertyType.SWITCH, name = "Remove Online Status Messages",
-        description = "Removes the online status messages from chat.\n§eExample: §6§lREMINDER: §r§6Your Online Status is currently set to §r§e§lAppear Offline§r",
+        description = "Removes the online status messages from chat.\n§eExample: §6§lREMINDER: §r§6Your Online Status is currently set to §r§e§lAppear Offline",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean onlineStatus;

@@ -18,31 +18,30 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
-import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
-import cc.woverflow.hytils.handlers.language.LanguageData;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class SendingCommandsRemover implements ChatReceiveModule {
+import java.util.regex.Matcher;
+
+public class GameTipsRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final LanguageData language = HytilsReborn.INSTANCE.getLanguageHandler().getCurrent();
-
-        if (language.chatCleanerSendingCommands.equals(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()))) {
+        Matcher matcher = getLanguage().chatCleanerGameTipsRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
+        if (matcher.matches()) {
             event.setCanceled(true);
         }
     }
 
     @Override
     public boolean isEnabled() {
-        return HytilsConfig.tipMessage;
+        return HytilsConfig.gameTipMessages;
     }
 
     @Override
     public int getPriority() {
-        return -3;
+        return -1;
     }
 }

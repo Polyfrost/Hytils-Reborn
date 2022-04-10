@@ -54,7 +54,8 @@ public class LanguageData {
     private String chatCleanerReplyRecorded = "This game has been recorded. Click here to watch the Replay!";
     private String chatCleanerTip = "(?:You tipped \\d+ (?:player|players) in \\d+ (?:game|different games)!|You already tipped everyone that has boosters active, so there isn't anybody to be tipped right now!)";
     private String chatCleanerOnlineStatus = "REMINDER: Your Online Status is currently set to (?:Appear Offline|Busy|Away)";
-    public String chatCleanerSendingCommands = "You are sending commands too fast! Please slow down.";
+    private String chatCleanerGameTips = "^(?:If you get disconnected use /rejoin to join back in the game.|You may use /mmreport <skin name> to chat report in this mode!|Teaming with the *.+ is not allowed!|Teaming is not allowed *.+|Cross Teaming / Teaming with other teams is not allowed!|Cross-teaming is not allowed! Report cross-teamers using /report.|Cages opened! FIGHT!)";
+    private String chatCleanerStats = "Click to view the stats of your \\S+ game!";
 
     private String connectedServerConnectMessage = "^(You are currently connected to server \\S+)|(Sending you to \\S+.{3}!)|(Sending to server \\S+.{3})|(Warping you to your Skyblock island...)|(Warping...)|(Sending a visit request...)|(Finding player...)$";
 
@@ -112,6 +113,8 @@ public class LanguageData {
     public Pattern chatCleanerReplayRecordedRegex;
     public Pattern chatCleanerTipRegex;
     public Pattern chatCleanerOnlineStatusRegex;
+    public Pattern chatCleanerGameTipsRegex;
+    public Pattern chatCleanerStatsRegex;
 
     public Pattern connectedServerConnectMessageRegex;
 
@@ -160,6 +163,8 @@ public class LanguageData {
             chatCleanerReplayRecordedRegex = Pattern.compile(chatCleanerReplyRecorded);
             chatCleanerTipRegex = Pattern.compile(chatCleanerTip);
             chatCleanerOnlineStatusRegex = Pattern.compile(chatCleanerOnlineStatus);
+            chatCleanerGameTipsRegex = Pattern.compile(chatCleanerGameTips);
+            chatCleanerStatsRegex = Pattern.compile(chatCleanerStats);
 
             connectedServerConnectMessageRegex = Pattern.compile(connectedServerConnectMessage);
 

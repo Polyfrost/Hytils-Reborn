@@ -44,6 +44,7 @@ public class GameStartingTitles {
             case "SkyWars":
             case "INSANE MODE":
             case "Waiting for more players...":
+            case "ASSASSINS":
                 event.setCanceled(true);
                 break;
         }

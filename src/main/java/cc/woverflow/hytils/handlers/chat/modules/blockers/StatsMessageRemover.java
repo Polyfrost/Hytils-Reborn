@@ -26,10 +26,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 
-public class TipMessageRemover implements ChatReceiveModule {
+public class StatsMessageRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatCleanerTipRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
+        Matcher matcher = getLanguage().chatCleanerStatsRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
         if (matcher.matches()) {
             event.setCanceled(true);
         }
@@ -37,7 +37,7 @@ public class TipMessageRemover implements ChatReceiveModule {
 
     @Override
     public boolean isEnabled() {
-        return HytilsConfig.tipMessage;
+        return HytilsConfig.statsMessages;
     }
 
     @Override

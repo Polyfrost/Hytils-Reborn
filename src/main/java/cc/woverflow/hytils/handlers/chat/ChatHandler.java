@@ -82,8 +82,9 @@ public class ChatHandler {
         this.registerModule(new EarnedCoinsAndExpRemover());
         this.registerModule(new ReplayRecordedRemover());
         this.registerModule(new TipMessageRemover());
-        this.registerModule(new SendingCommandsRemover());
         this.registerModule(new OnlineStatusRemover());
+        this.registerModule(new GameTipsRemover());
+        this.registerModule(new StatsMessageRemover());
 
         this.registerDualModule(new ShoutBlocker());
 
