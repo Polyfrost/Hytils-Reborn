@@ -234,7 +234,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Stats Messages",
-        description = "Remove the \"view your stats\" messages.\n§eExample: §4Please add me.",
+        description = "Remove the \"view your stats\" messages.\n§eExample: §eClick to view the stats of your §bSkyWars§e game!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean statsMessages;
