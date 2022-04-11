@@ -20,17 +20,13 @@ package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.regex.Matcher;
 
 public class ReplayRecordedRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatCleanerReplayRecordedRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
-        if (matcher.matches()) {
+        if (event.message.getFormattedText().equals(getLanguage().chatCleanerReplyRecorded)) {
             event.setCanceled(true);
         }
     }

@@ -51,7 +51,7 @@ public class LanguageData {
     private String chatGiftBlocker = "They have gifted \\d+ ranks so far!";
     private String chatCleanerGrinchPresents = "(?:You found a gift! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} gifts!)";
     private String chatCleanerEarnedCoinsAndExp = "^(?:\\W\\d+ .* Experience.*|\\W\\d+ coins!.*|You earned \\d+ GEXP from playing\\.+!|.+ just earned .+ as a Guild Level Reward!)"; //.* at the end for modifiers
-    private String chatCleanerReplyRecorded = "This game has been recorded. Click here to watch the Replay!";
+    public String chatCleanerReplyRecorded = "This game has been recorded. Click here to watch the Replay!";
     private String chatCleanerTip = "(?:You tipped \\d+ (?:player|players) in \\d+ (?:game|different games)!|You already tipped everyone that has boosters active, so there isn't anybody to be tipped right now!)";
     private String chatCleanerOnlineStatus = "REMINDER: Your Online Status is currently set to (?:Appear Offline|Busy|Away)";
     private String chatCleanerGameTips = "^(?:If you get disconnected use /rejoin to join back in the game.|You may use /mmreport <skin name> to chat report in this mode!|Teaming with the *.+ is not allowed!|Teaming is not allowed *.+|Cross Teaming / Teaming with other teams is not allowed!|Cross-teaming is not allowed! Report cross-teamers using /report.|Cages opened! FIGHT!)";
@@ -110,7 +110,6 @@ public class LanguageData {
     public Pattern chatGiftBlockerRegex;
     public Pattern chatCleanerGrinchPresentsRegex;
     public Pattern chatCleanerEarnedCoinsAndExpRegex;
-    public Pattern chatCleanerReplayRecordedRegex;
     public Pattern chatCleanerTipRegex;
     public Pattern chatCleanerOnlineStatusRegex;
     public Pattern chatCleanerGameTipsRegex;
@@ -160,7 +159,6 @@ public class LanguageData {
             chatGiftBlockerRegex = Pattern.compile(chatGiftBlocker);
             chatCleanerGrinchPresentsRegex = Pattern.compile(chatCleanerGrinchPresents);
             chatCleanerEarnedCoinsAndExpRegex = Pattern.compile(chatCleanerEarnedCoinsAndExp);
-            chatCleanerReplayRecordedRegex = Pattern.compile(chatCleanerReplyRecorded);
             chatCleanerTipRegex = Pattern.compile(chatCleanerTip);
             chatCleanerOnlineStatusRegex = Pattern.compile(chatCleanerOnlineStatus);
             chatCleanerGameTipsRegex = Pattern.compile(chatCleanerGameTips);

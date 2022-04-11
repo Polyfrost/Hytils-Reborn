@@ -220,7 +220,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Game Tips Messages",
-        description = "Remove tips about the game you are playing.\n§eExample: §4Please add me.",
+        description = "Remove tips about the game you are playing.\n§eExample: §r§c§lTeaming is not allowed on Solo mode!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean gameTipMessages;

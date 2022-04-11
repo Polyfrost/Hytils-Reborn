@@ -29,7 +29,7 @@ import java.util.regex.Matcher;
 public class OnlineStatusRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatCleanerEarnedCoinsAndExpRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
+        Matcher matcher = getLanguage().chatCleanerOnlineStatusRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
         if (matcher.matches()) {
             event.setCanceled(true);
         }
