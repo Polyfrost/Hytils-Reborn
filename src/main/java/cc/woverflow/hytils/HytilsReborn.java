@@ -21,6 +21,7 @@ package cc.woverflow.hytils;
 import cc.woverflow.hytils.command.*;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.modules.triggers.AutoWB;
+import cc.woverflow.hytils.handlers.game.duels.SumoRenderDistance;
 import cc.woverflow.hytils.handlers.game.miniwalls.MiddleBeaconMiniWalls;
 import cc.woverflow.hytils.handlers.game.uhc.MiddleWaypointUHC;
 import cc.woverflow.hytils.handlers.general.AutoStart;
@@ -196,6 +197,7 @@ public class HytilsReborn {
         eventBus.register(new HousingMusic());
         eventBus.register(new GameStartingTitles());
         eventBus.register(new GoalArmorStands());
+        eventBus.register(new SumoRenderDistance());
         eventBus.register(new MiddleBeaconMiniWalls());
         eventBus.register(new MiddleWaypointUHC());
 

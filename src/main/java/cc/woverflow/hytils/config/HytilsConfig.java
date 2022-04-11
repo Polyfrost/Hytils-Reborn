@@ -729,6 +729,21 @@ public class HytilsConfig extends Vigilant {
     public static String uhcMiddleWaypointText = "0,0";
 
     @Property(
+        type = PropertyType.SWITCH, name = "Lower Render Distance in Sumo",
+        description = "Lowers render distance to your desired value in sumo duels.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean sumoRenderDistance;
+
+    @Property(
+        type = PropertyType.SLIDER, name = "Sumo Render Distance",
+        description = "Choose your render distance.",
+        category = "Game", subcategory = "Visual",
+        min = 1, max = 5
+    )
+    public static int sumoRenderDistanceAmount = 2;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Armor",
         description = "Hide armor in games where armor is always the same.",
         category = "Game", subcategory = "Visual"
@@ -976,6 +991,10 @@ public class HytilsConfig extends Vigilant {
         addDependency("highlightChestsColor", "highlightChests");
 
         addDependency("uhcOverlayMultiplier", "uhcOverlay");
+
+        addDependency("uhcMiddleWaypointText", "uhcMiddleWaypoint");
+
+        addDependency("sumoRenderDistanceAmount", "sumoRenderDistance");
 
         addDependency("overlayAmount", "heightOverlay");
 
