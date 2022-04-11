@@ -29,6 +29,7 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class MiddleWaypointUHC {
+    // y 70 is a completely arbitrary height, being slightly above sea level. feel free to change as one may see fit
     private final BlockPos block = new BlockPos(0,70,0);
 
     @SubscribeEvent
