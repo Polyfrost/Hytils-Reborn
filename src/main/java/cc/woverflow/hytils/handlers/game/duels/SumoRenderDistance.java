@@ -28,6 +28,7 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SumoRenderDistance {
+    /*
     final GameSettings gs = Minecraft.getMinecraft().gameSettings;
     final int oldRd = gs.renderDistanceChunks;
 
@@ -41,4 +42,5 @@ public class SumoRenderDistance {
             gs.renderDistanceChunks = oldRd;
         }
     }
+     */
 }
