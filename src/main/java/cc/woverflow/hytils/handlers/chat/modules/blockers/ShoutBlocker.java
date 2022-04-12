@@ -35,7 +35,6 @@ import java.text.DecimalFormat;
  * If there are more modes supporting /shout, feel free to add support for them.
  */
 public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
-
     @Override
     public int getPriority() {
         return -3;

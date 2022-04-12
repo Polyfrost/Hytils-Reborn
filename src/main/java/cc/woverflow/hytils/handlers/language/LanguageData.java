@@ -30,7 +30,6 @@ import java.util.regex.Pattern;
  */
 @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal", "DuplicatedCode"})
 public class LanguageData {
-
     private boolean hasInitialized = false;
 
     /**
@@ -51,9 +50,12 @@ public class LanguageData {
     public String chatCleanerHypeLimit = "  \u27A4 You have reached your Hype limit!";
     private String chatGiftBlocker = "They have gifted \\d+ ranks so far!";
     private String chatCleanerGrinchPresents = "(?:You found a gift! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} gifts!)";
-    private String chatCleanerBoosterRemover = "^\\W\\d{1,} coins! .\\w{1,16}.s Network Booster. .*";
-    private String chatGEXPRemover = "You earned \\d+ GEXP from playing \\.+!";
-    private String chatTimePlayerRemover = "^(?:\\W\\d+ .* Experience \\(Time Played\\)|\\W\\d+ coins! \\(Time Played\\)).*"; //.* at the end in case of any modifiers such as boosters
+    private String chatCleanerEarnedCoinsAndExp = "^(?:\\W\\d+ .* Experience.*|\\W\\d+ coins!.*|You earned \\d+ GEXP from playing\\.+!|.+ just earned .+ as a Guild Level Reward!)"; //.* at the end for modifiers
+    public String chatCleanerReplyRecorded = "This game has been recorded. Click here to watch the Replay!";
+    private String chatCleanerTip = "(?:You tipped \\d+ (?:player|players) in \\d+ (?:game|different games)!|You already tipped everyone that has boosters active, so there isn't anybody to be tipped right now!)";
+    private String chatCleanerOnlineStatus = "REMINDER: Your Online Status is currently set to (?:Appear Offline|Busy|Away)";
+    private String chatCleanerGameTips = "^(?:If you get disconnected use /rejoin to join back in the game.|You may use /mmreport <skin name> to chat report in this mode!|Teaming with the *.+ is not allowed!|Teaming is not allowed *.+|Cross Teaming / Teaming with other teams is not allowed!|Cross-teaming is not allowed! Report cross-teamers using /report.|Cages opened! FIGHT!)";
+    private String chatCleanerStats = "Click to view the stats of your \\S+ game!";
 
     private String connectedServerConnectMessage = "^(You are currently connected to server \\S+)|(Sending you to \\S+.{3}!)|(Sending to server \\S+.{3})|(Warping you to your Skyblock island...)|(Warping...)|(Sending a visit request...)|(Finding player...)$";
 
@@ -71,7 +73,6 @@ public class LanguageData {
     private String chatRestylerFriendPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Friend >)";
     private String chatRestylerOfficerPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Officer >)";
     private String chatRestylerStatusPattern = "^(?<type>(?:§aFriend|§a§aF|§2Guild|§2§2G)) > (§r|§r§r){1,2}(?<player>§[\\da-f]\\w{1,16}) §r§e(?<status>(?:joined|left))\\.§r$";
-
 
     private String autoChatSwapperPartyStatus = "^(?:You have been kicked from the party by (?:\\[.+] )?\\w{1,16}|(?:\\[.+] )?\\w{1,16} has disbanded the party!|You left the party(?:\\[.+] )?\\w{0,16}|(?:\\[.+] )?\\w{1,100}The party was disbanded(?:\\[.+] )?\\w{1,100}.)$";
     private String autoChatSwapperPartyStatus2 = "^(?:You have joined (?:\\[.+] )?(?:.*)|Party Members(?:\\[.+] )?\\w{1,100}|(?:\\[.+] )?\\w{1,100} joined the(?:.*) party(?:.*))$";
@@ -108,9 +109,11 @@ public class LanguageData {
     public Pattern chatCleanerMvpEmotesRegex;
     public Pattern chatGiftBlockerRegex;
     public Pattern chatCleanerGrinchPresentsRegex;
-    public Pattern chatCleanerBoosterRemoverRegex;
-    public Pattern chatGEXPRemoverRegex;
-    public Pattern chatTimePlayedRemoverRegex;
+    public Pattern chatCleanerEarnedCoinsAndExpRegex;
+    public Pattern chatCleanerTipRegex;
+    public Pattern chatCleanerOnlineStatusRegex;
+    public Pattern chatCleanerGameTipsRegex;
+    public Pattern chatCleanerStatsRegex;
 
     public Pattern connectedServerConnectMessageRegex;
 
@@ -155,9 +158,11 @@ public class LanguageData {
             chatCleanerMvpEmotesRegex = Pattern.compile(chatCleanerMvpEmotes);
             chatGiftBlockerRegex = Pattern.compile(chatGiftBlocker);
             chatCleanerGrinchPresentsRegex = Pattern.compile(chatCleanerGrinchPresents);
-            chatCleanerBoosterRemoverRegex = Pattern.compile(chatCleanerBoosterRemover);
-            chatGEXPRemoverRegex = Pattern.compile(chatGEXPRemover);
-            chatTimePlayedRemoverRegex = Pattern.compile(chatTimePlayerRemover);
+            chatCleanerEarnedCoinsAndExpRegex = Pattern.compile(chatCleanerEarnedCoinsAndExp);
+            chatCleanerTipRegex = Pattern.compile(chatCleanerTip);
+            chatCleanerOnlineStatusRegex = Pattern.compile(chatCleanerOnlineStatus);
+            chatCleanerGameTipsRegex = Pattern.compile(chatCleanerGameTips);
+            chatCleanerStatsRegex = Pattern.compile(chatCleanerStats);
 
             connectedServerConnectMessageRegex = Pattern.compile(connectedServerConnectMessage);
 

@@ -76,12 +76,15 @@ public class ChatHandler {
         this.registerModule(new QuestBlocker());
         this.registerModule(new GiftBlocker());
         this.registerModule(new GrinchPresentsRemover());
-        this.registerModule(new BoosterRemover());
         this.registerModule(new AutoVictory());
         this.registerModule(new AutoPartyWarpConfirm());
         this.registerModule(new ColoredFriendStatuses());
-        this.registerModule(new GEXPRemover());
-        this.registerModule(new TimePlayedRemover());
+        this.registerModule(new EarnedCoinsAndExpRemover());
+        this.registerModule(new ReplayRecordedRemover());
+        this.registerModule(new TipMessageRemover());
+        this.registerModule(new OnlineStatusRemover());
+        this.registerModule(new GameTipsRemover());
+        this.registerModule(new StatsMessageRemover());
 
         this.registerDualModule(new ShoutBlocker());
 

@@ -219,11 +219,25 @@ public class HytilsConfig extends Vigilant {
     public static boolean serverConnectedMessages;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Remove Game Tips Messages",
+        description = "Remove tips about the game you are playing.\n§eExample: §r§c§lTeaming is not allowed on Solo mode!",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean gameTipMessages;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Remove Auto Activated Quest Messages",
         description = "Remove automatically activated quest messages.\n§eExample: §aAutomatically activated: §6Daily Quest: Duels Winner",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean questsMessages;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Stats Messages",
+        description = "Remove the \"view your stats\" messages.\n§eExample: §eClick to view the stats of your §bSkyWars§e game!",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean statsMessages;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Curse of Spam Messages",
@@ -275,25 +289,32 @@ public class HytilsConfig extends Vigilant {
     public static boolean grinchPresents;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove Network Booster Perk Messages",
-        description = "Removes the network booster perk messages from chat.\n§eExample: §6+50 coins (Steve's Network Booster)",
+        type = PropertyType.SWITCH, name = "Remove Earned Coins and Experience Messages",
+        description = "Removes the earned coins and experience messages from chat.\n§eExamples:\n§b+25 Bed Wars Experience\n§6+10 coins!",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean boosterRemover;
+    public static boolean earnedCoinsAndExp;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove Time Played Messages",
-        description = "Removes the time played messages from chat.\n§eExamples:\n§b+25 Bed Wars Experience (Time Played)\n§6+10 coins! (Time Played)",
+        type = PropertyType.SWITCH, name = "Remove Replay Messages",
+        description = "Removes replay messages from chat.\n§eExample: §6§aThis game has been recorded. §6Click here to watch the Replay!",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean timePlayedRemover;
+    public static boolean replayMessage;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove GEXP Messages",
-        description = "Removes the GEXP messages from chat.\n§eExample: §aYou earned §r§2100 GEXP §r§afrom playing SkyBlock!",
+        type = PropertyType.SWITCH, name = "Remove Tip Messages",
+        description = "Removes tip messages from chat.\n§eExample: §a§aYou tipped 5 players in 10 different games!",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean gexpRemover;
+    public static boolean tipMessage;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Online Status Messages",
+        description = "Removes the online status messages from chat.\n§eExample: §6§lREMINDER: §r§6Your Online Status is currently set to §r§e§lAppear Offline",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean onlineStatus;
 
     @Property(
         type = PropertyType.SWITCH, name = "Trim Line Separators",
@@ -330,6 +351,7 @@ public class HytilsConfig extends Vigilant {
     )
     public static boolean coloredStatuses;
 
+    // TODO: add support for Murder Mystery (eg: The alpha infected will be chosen in 5 seconds!)
     @Property(
         type = PropertyType.SWITCH, name = "Cleaner Game Start Counter",
         description = "Compacts game start announcements.\n§eExample: The game starts in 20 seconds!",
@@ -693,6 +715,37 @@ public class HytilsConfig extends Vigilant {
     public static float uhcOverlayMultiplier = 1f;
 
     @Property(
+        type = PropertyType.SWITCH, name = "UHC Middle Waypoint",
+        description = "Adds a waypoint to signify (0,0).",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean uhcMiddleWaypoint;
+
+    @Property(
+        type = PropertyType.TEXT, name = "UHC Middle Waypoint Text",
+        description = "Text on waypoint.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static String uhcMiddleWaypointText = "0,0";
+
+    /*
+    @Property(
+        type = PropertyType.SWITCH, name = "Lower Render Distance in Sumo",
+        description = "Lowers render distance to your desired value in sumo duels.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean sumoRenderDistance;
+
+    @Property(
+        type = PropertyType.SLIDER, name = "Sumo Render Distance",
+        description = "Choose your render distance.",
+        category = "Game", subcategory = "Visual",
+        min = 1, max = 5
+    )
+    public static int sumoRenderDistanceAmount = 2;
+     */
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Armor",
         description = "Hide armor in games where armor is always the same.",
         category = "Game", subcategory = "Visual"
@@ -791,11 +844,18 @@ public class HytilsConfig extends Vigilant {
     public static boolean hideNonNPCs;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Middle Waypoint in MiniWalls",
-        description = "Adds a waypoint for the 0 0 coordinates when your MiniWither is dead in MiniWalls.",
+        type = PropertyType.SWITCH, name = "Middle Waypoint Beacon in MiniWalls",
+        description = "Adds a beacon at (0,0) when your MiniWither is dead in MiniWalls.",
         category = "Game", subcategory = "Visual"
     )
-    public static boolean miniWallsMiddleWaypoint;
+    public static boolean miniWallsMiddleBeacon;
+
+    @Property(
+        type = PropertyType.COLOR, name = "Middle Waypoint Beacon in MiniWalls",
+        description = "Set the color of the beacon.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static Color miniWallsMiddleBeaconColor = Color.BLUE;
 
     @Property(
         type = PropertyType.SWITCH, name = "Mute Housing Music",
@@ -933,6 +993,10 @@ public class HytilsConfig extends Vigilant {
         addDependency("highlightChestsColor", "highlightChests");
 
         addDependency("uhcOverlayMultiplier", "uhcOverlay");
+
+        addDependency("uhcMiddleWaypointText", "uhcMiddleWaypoint");
+
+        // addDependency("sumoRenderDistanceAmount", "sumoRenderDistance");
 
         addDependency("overlayAmount", "heightOverlay");
 

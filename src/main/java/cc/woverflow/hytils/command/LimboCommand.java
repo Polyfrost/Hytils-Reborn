@@ -16,34 +16,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.woverflow.hytils.handlers.chat.modules.blockers;
+package cc.woverflow.hytils.command;
 
-import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import org.jetbrains.annotations.NotNull;
+import gg.essential.api.EssentialAPI;
+import net.minecraft.client.Minecraft;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
 
-import java.util.regex.Matcher;
-
-public class BoosterRemover implements ChatReceiveModule {
-
+public class LimboCommand extends CommandBase {
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatCleanerBoosterRemoverRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
-        if (matcher.matches()) {
-            event.setCanceled(true);
-        }
+    public String getCommandName() {
+        return "limbo";
     }
 
     @Override
-    public boolean isEnabled() {
-        return HytilsConfig.boosterRemover;
+    public String getCommandUsage(ICommandSender sender) {
+        return "/limbo";
+    }
+
+    // TODO: take precedence over AutoTip, remove the Hypixel error messages created in chat
+    @Override
+    public void processCommand(ICommandSender sender, String[] args) {
+        if (EssentialAPI.getMinecraftUtil().isHypixel()) Minecraft.getMinecraft().thePlayer.sendChatMessage("§");
     }
 
     @Override
-    public int getPriority() {
+    public int getRequiredPermissionLevel() {
         return -1;
     }
-
 }
