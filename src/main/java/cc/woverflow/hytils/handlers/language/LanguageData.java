@@ -37,6 +37,7 @@ public class LanguageData {
      */
     public String autoQueuePrefix = "You died! Want to play again?";
     public String autoQueuePrefixBedwars = "You have been eliminated!";
+    public String autoQueuePrefixMurderMystery = "YOU DIED! The Murderer stabbed you!";
 
     private String chatCleanerJoinNormal = "joined the lobby";
     private String chatCleanerJoinHalloween = "spooked into the lobby";
@@ -49,7 +50,7 @@ public class LanguageData {
     private String chatCleanerMvpEmotes = "\u00a7r\u00a7(?:c\u2764|6\u272e|a\u2714|c\u2716|b\u2615|e\u279c|e\u00af\\\\_\\(\u30c4\\)_/\u00af|c\\(\u256F\u00B0\u25A1\u00B0\uFF09\u256F\u00a7r\u00a7f\uFE35\u00a7r\u00a77 \u253B\u2501\u253B|d\\( \uFF9F\u25E1\uFF9F\\)/|a1\u00a7r\u00a7e2\u00a7r\u00a7c3|b\u2609\u00a7r\u00a7e_\u00a7r\u00a7b\u2609|e\u270E\u00a7r\u00a76\\.\\.\\.|a\u221A\u00a7r\u00a7e\u00a7l\\(\u00a7r\u00a7a\u03C0\u00a7r\u00a7a\u00a7l\\+x\u00a7r\u00a7e\u00a7l\\)\u00a7r\u00a7a\u00a7l=\u00a7r\u00a7c\u00a7lL|e@\u00a7r\u00a7a'\u00a7r\u00a7e-\u00a7r\u00a7a'|6\\(\u00a7r\u00a7a0\u00a7r\u00a76\\.\u00a7r\u00a7ao\u00a7r\u00a7c\\?\u00a7r\u00a76\\)|b\u0F3C\u3064\u25D5_\u25D5\u0F3D\u3064|e\\(\u00a7r\u00a7b'\u00a7r\u00a7e-\u00a7r\u00a7b'\u00a7r\u00a7e\\)\u2283\u00a7r\u00a7c\u2501\u00a7r\u00a7d\u2606\uFF9F\\.\\*\uFF65\uFF61\uFF9F|e\u2694|a\u270C|c\u00a7lOOF|e\u00a7l<\\('O'\\)>)\u00a7r";
     public String chatCleanerHypeLimit = "  \u27A4 You have reached your Hype limit!";
     private String chatGiftBlocker = "They have gifted \\d+ ranks so far!";
-    private String chatCleanerGrinchPresents = "(?:You found a gift! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} gifts!)";
+    private String chatCleanerGrinchPresents = "(?:You found (?:an egg|a gift|a candy)! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} (?:gifts|eggs|candy)!)";
     private String chatCleanerEarnedCoinsAndExp = "^(?:\\W\\d+ .* Experience.*|\\W\\d+ coins!.*|You earned \\d+ GEXP from playing\\.+!|.+ just earned .+ as a Guild Level Reward!)"; //.* at the end for modifiers
     public String chatCleanerReplyRecorded = "This game has been recorded. Click here to watch the Replay!";
     private String chatCleanerTip = "(?:You tipped \\d+ (?:player|players) in \\d+ (?:game|different games)!|You already tipped everyone that has boosters active, so there isn't anybody to be tipped right now!)";
@@ -65,7 +66,7 @@ public class LanguageData {
 
     private String chatRestylerGameJoinStyle = "^§r§e§r§(?<color>[\\da-f])(?:§k)?(?<player>\\w{1,16})§r§r§r§e has joined (?<amount>.+)!§r§e§r$";
     private String chatRestylerGameLeaveStyle = "^§r§e§r§(?<color>[\\da-f])(?:§k)?(?<player>\\w{1,16})§r§r§r§e has quit!§r§e§r$";
-    private String chatRestylerGameStartCounterStyle = "^(?<title>(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in)) (?<time>\\d{1,3}) (?<unit>(seconds?!))$"; // TODO: translate "Cages open in:" to french (also translate to chatRestylerGameStartCounterOutputStyle)
+    private String chatRestylerGameStartCounterStyle = "^(?<title>(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in)) (?<time>\\d{1,3}) (?<unit>(seconds?!))(?: .\\d+.|)$"; // TODO: translate "Cages open in:" to french (also translate to chatRestylerGameStartCounterOutputStyle)
     private String chatRestylerGameStartCounterOutputStyle = "^\u00a7e\u00a7l\\* \u00a7a(The game starts in|Cages open in:) \u00a7b\u00a7l\\d{1,3} \u00a7aseconds?!\u00a7r$";
     private String chatRestylerFormattedPaddingPattern = "\\(§r§b(\\d{1,2})§r§r§r§e/§r§b(\\d{1,3})§r§r§r§e\\)";
     private String chatRestylerPartyPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Party )(\\u00a7\\w>)";

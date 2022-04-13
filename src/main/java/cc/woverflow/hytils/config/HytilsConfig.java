@@ -282,8 +282,8 @@ public class HytilsConfig extends Vigilant {
     public static boolean giftBlocker;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove Grinch Gifts Messages",
-        description = "Removes personal and global gifts collected messages from chat.\n§eExamples:\n§aYou found a gift! §7(5 total)\n§b[MVP§c+§b] Steve§f §ehas reached §c20 §egifts!",
+        type = PropertyType.SWITCH, name = "Remove Seasonal MiniGame Messages",
+        description = "Removes personal and global collected messages from chat for the Easter, Christmas, and Halloween variants.\n§eExamples:\n§aYou found a gift! §7(5 total)\n§b[MVP§c+§b] Steve§f §ehas reached §c20 §egifts!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean grinchPresents;
