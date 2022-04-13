@@ -197,7 +197,7 @@ public class HytilsReborn {
         eventBus.register(new HousingMusic());
         eventBus.register(new GameStartingTitles());
         eventBus.register(new GoalArmorStands());
-        // eventBus.register(new SumoRenderDistance());
+        eventBus.register(new SumoRenderDistance());
         eventBus.register(new MiddleBeaconMiniWalls());
         eventBus.register(new MiddleWaypointUHC());
 

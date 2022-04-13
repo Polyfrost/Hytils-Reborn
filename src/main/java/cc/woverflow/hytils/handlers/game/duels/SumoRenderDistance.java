@@ -24,23 +24,36 @@ import cc.woverflow.hytils.util.locraw.LocrawInformation;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraftforge.client.event.RenderWorldEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SumoRenderDistance {
-    /*
     final GameSettings gs = Minecraft.getMinecraft().gameSettings;
-    final int oldRd = gs.renderDistanceChunks;
+    int resetRd = gs.renderDistanceChunks;
+    boolean wasSumo = false;
+    boolean isFirstRender = true;
 
     @SubscribeEvent
-    public void onRenderWorld(RenderWorldLastEvent event) {
+    public void onWorldLoad(RenderWorldLastEvent event) {
         LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
         if (HytilsConfig.sumoRenderDistance && EssentialAPI.getMinecraftUtil().isHypixel() && (locraw != null && locraw.getGameMode().contains("SUMO"))) {
-            gs.renderDistanceChunks = HytilsConfig.sumoRenderDistanceAmount;
+            if (isFirstRender) {
+                final int oldRd = gs.renderDistanceChunks;
+                wasSumo = true;
+                gs.renderDistanceChunks = HytilsConfig.sumoRenderDistanceAmount;
+                resetRd = oldRd;
+            }
+            isFirstRender = false;
         }
         else {
-            gs.renderDistanceChunks = oldRd;
+            if (wasSumo) {
+                wasSumo = false;
+                isFirstRender = true;
+                gs.renderDistanceChunks = resetRd;
+
+            }
         }
     }
-     */
 }
