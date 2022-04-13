@@ -38,6 +38,11 @@ public class LanguageData {
     public String autoQueuePrefix = "You died! Want to play again?";
     public String autoQueuePrefixBedwars = "You have been eliminated!";
     public String autoQueuePrefixMurderMystery = "YOU DIED! The Murderer stabbed you!";
+    public String autoQueuePrefixMurderMysteryAssassins1 = "YOU DIED! Your assassin stabbed you!";
+    public String autoQueuePrefixMurderMysteryAssassins2 = "YOU DIED! Your target stabbed you!";
+    public String autoQueuePrefixMurderMysteryAssassins3 = "YOU DIED! Your assassin threw their knife at you!";
+    public String autoQueuePrefixMurderMysteryAssassins4 = "YOU DIED! Your target threw their knife at you!";
+    public String autoQueuePrefixMurderMysteryInfected = "YOU DIED! You were shot by a survivor";
 
     private String chatCleanerJoinNormal = "joined the lobby";
     private String chatCleanerJoinHalloween = "spooked into the lobby";
