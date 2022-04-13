@@ -55,7 +55,7 @@ public class AutoQueue implements ChatReceiveModule {
         final LanguageData language = getLanguage();
         final String message = getStrippedMessage(event.message);
         LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (message.startsWith(language.autoQueuePrefixBedwars) || message.startsWith(language.autoQueuePrefix) && locraw != null) {
+        if (message.startsWith(language.autoQueuePrefixBedwars) || message.startsWith(language.autoQueuePrefix) || message.startsWith(language.autoQueuePrefixMurderMystery) && locraw != null) {
             this.command = "/play " + locraw.getGameMode().toLowerCase(Locale.ENGLISH);
         }
     }
