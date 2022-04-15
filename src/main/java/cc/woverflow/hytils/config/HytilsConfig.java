@@ -149,8 +149,8 @@ public class HytilsConfig extends Vigilant {
     public static boolean lobbyStatus;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remover Other's Mystery Box Rewards",
-        description = "Remove others mystery box messages from chat and only show your own.\n§eExample: §b[Mystery Box] Steve §ffound a §6Legendary Hype Train Gadget§f!",
+        type = PropertyType.SWITCH, name = "Remover Mystery Box Rewards",
+        description = "Remove mystery box messages from chat and only show your own.\n§eExample: §b[Mystery Box] Steve §ffound a §6Legendary Hype Train Gadget§f!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean mysteryBoxAnnouncer;
