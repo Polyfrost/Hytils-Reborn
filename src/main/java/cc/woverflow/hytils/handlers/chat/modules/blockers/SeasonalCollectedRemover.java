@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 
-public class GrinchPresentsRemover implements ChatReceiveModule {
+public class SeasonalCollectedRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         Matcher matcher = getLanguage().chatCleanerGrinchPresentsRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));

@@ -290,6 +290,26 @@ public class HypixelAPIUtils {
     }
 
     /**
+     * Gets the Hypixel rank of the specified player.
+     *
+     * @param username The username of the player.
+     * @return Player rank
+     */
+    public static String getRank(String username) {
+        String uuid = getUUID(username);
+        JsonObject playerRank =
+            JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid)).getAsJsonObject().getAsJsonObject("player");
+        try {
+            return playerRank.get("newPackageRank").toString();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+    /**
      * Gets a UUID based on the username provided.
      *
      * @param username The username of the player to get.

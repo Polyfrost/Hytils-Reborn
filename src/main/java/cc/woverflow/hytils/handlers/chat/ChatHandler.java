@@ -42,51 +42,65 @@ public class ChatHandler {
     private final List<ChatReceiveResetModule> resetModules = new ArrayList<>();
 
     public ChatHandler() {
+
+        // Blockers
+
         this.registerModule(new AdBlocker());
-        this.registerModule(new GuildMOTD());
-        this.registerModule(new WhiteChat());
-        this.registerModule(new WhitePrivateMessages());
-        this.registerModule(new LevelupEvent());
-        this.registerModule(new GuildWelcomer());
-        this.registerModule(new ThankWatchdog());
-        this.registerModule(new AutoChatReportConfirm());
-        this.registerModule(new AutoChatSwapper());
-        this.registerModule(new AchievementEvent());
-        this.registerModule(new ConnectedMessage());
-        this.registerModule(new GameStartCompactor());
-        this.registerModule(new DefaultChatRestyler());
-        this.registerModule(new LobbyStatusRemover());
-        this.registerModule(new AutoWarn());
-        this.registerModule(new MvpEmotesRemover());
-        this.registerModule(new MysteryBoxRemover());
-        this.registerModule(new GameAnnouncementsRemover());
-        this.registerModule(new HypeLimitReminderRemover());
-        this.registerModule(new SoulWellAnnouncerRemover());
-        this.registerModule(new BedwarsAdvertisementsRemover());
-        this.registerModule(new AutoAPI());
         this.registerModule(new AntiGL());
-        this.registerModule(new AutoGL());
-        this.registerModule(new AutoFriend());
+        this.registerModule(new BedwarsAdvertisementsRemover());
+        this.registerModule(new BridgeOwnGoalDeathRemover());
+        this.registerModule(new ConnectedMessage());
         this.registerModule(new ConnectionStatusRemover());
         this.registerModule(new CurseOfSpamRemover());
-        this.registerModule(new BridgeOwnGoalDeathRemover());
-        this.registerModule(new DuelsNoStatsChange());
         this.registerModule(new DuelsBlockTrail());
-        this.registerModule(new SkyblockWelcomeRemover());
-        this.registerModule(new QuestBlocker());
-        this.registerModule(new GiftBlocker());
-        this.registerModule(new GrinchPresentsRemover());
-        this.registerModule(new AutoVictory());
-        this.registerModule(new AutoPartyWarpConfirm());
-        this.registerModule(new ColoredFriendStatuses());
+        this.registerModule(new DuelsNoStatsChange());
         this.registerModule(new EarnedCoinsAndExpRemover());
-        this.registerModule(new ReplayRecordedRemover());
-        this.registerModule(new TipMessageRemover());
-        this.registerModule(new OnlineStatusRemover());
+        this.registerModule(new GameAnnouncementsRemover());
         this.registerModule(new GameTipsRemover());
-        this.registerModule(new StatsMessageRemover());
-
+        this.registerModule(new GiftBlocker());
+        this.registerModule(new GuildMOTD());
+        this.registerModule(new HypeLimitReminderRemover());
+        this.registerModule(new LobbyStatusRemover());
+        this.registerModule(new MvpEmotesRemover());
+        this.registerModule(new MysteryBoxRemover());
+        this.registerModule(new NonCooldownBlocker());
+        this.registerModule(new OnlineStatusRemover());
+        this.registerModule(new QuestBlocker());
+        this.registerModule(new ReplayRecordedRemover());
+        this.registerModule(new SeasonalCollectedRemover());
         this.registerDualModule(new ShoutBlocker());
+        this.registerModule(new SkyblockWelcomeRemover());
+        this.registerModule(new SoulWellAnnouncerRemover());
+        this.registerModule(new StatsMessageRemover());
+        this.registerModule(new TipMessageRemover());
+
+        // Events
+
+        this.registerModule(new AchievementEvent());
+        this.registerModule(new LevelupEvent());
+
+        // Modifiers
+
+        this.registerModule(new ColoredFriendStatuses());
+        this.registerModule(new DefaultChatRestyler());
+        this.registerModule(new GameStartCompactor());
+        this.registerModule(new WhiteChat());
+        this.registerModule(new WhitePrivateMessages());
+
+        // Triggers
+
+        this.registerModule(new AutoAPI());
+        this.registerModule(new AutoChatReportConfirm());
+        this.registerModule(new AutoChatReportConfirm());
+        this.registerModule(new AutoFriend());
+        this.registerModule(new AutoGL());
+        this.registerModule(new AutoPartyWarpConfirm());
+        this.registerModule(new AutoVictory());
+        this.registerModule(new AutoWarn());
+        this.registerModule(new GuildWelcomer());
+        this.registerModule(new ThankWatchdog());
+
+        // Priority
 
         this.sendModules.sort(Comparator.comparingInt(ChatModule::getPriority));
     }

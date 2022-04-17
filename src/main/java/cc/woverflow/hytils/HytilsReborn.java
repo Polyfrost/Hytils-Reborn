@@ -103,7 +103,7 @@ public class HytilsReborn {
     private final ChatHandler chatHandler = new ChatHandler();
     private final LocrawUtil locrawUtil = new LocrawUtil();
     private final AutoQueue autoQueue = new AutoQueue();
-    private final AutoWB AutoWB = new AutoWB();
+    private final AutoWB autoWB = new AutoWB();
 
     public boolean isPatcher;
     public boolean isChatting;
@@ -161,6 +161,8 @@ public class HytilsReborn {
     @Mod.EventHandler
     public void finishedStarting(FMLLoadCompleteEvent event) {
         this.loadedCall = true;
+
+
     }
 
     private void registerHandlers() {
@@ -177,7 +179,7 @@ public class HytilsReborn {
 
         // chat
         eventBus.register(chatHandler);
-        eventBus.register(AutoWB);
+        eventBus.register(autoWB);
         eventBus.register(silentRemoval);
         eventBus.register(hardcoreStatus);
         eventBus.register(new AchievementEvent());

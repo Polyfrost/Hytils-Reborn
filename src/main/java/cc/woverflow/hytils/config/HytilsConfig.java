@@ -592,9 +592,16 @@ public class HytilsConfig extends Vigilant {
     @Property(
         type = PropertyType.SWITCH, name = "Shout Cooldown",
         description = "Show the amount of time remaining until /shout can be reused.\n§eExample: §eShout command is on cooldown. Please wait 30 more seconds.",
-        category = "Chat", subcategory = "Shout"
+        category = "Chat", subcategory = "Cooldown"
     )
     public static boolean preventShoutingOnCooldown;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Non Speech Cooldown",
+        description = "Show the amount of time remaining until you can speak if you are a non.\n§eExample: §eYour freedom of speech is on cooldown. Please wait 3 more seconds.",
+        category = "Chat", subcategory = "Cooldown"
+    )
+    public static boolean preventNonCooldown;
 
     // General
 
