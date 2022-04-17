@@ -32,10 +32,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AutoQueue implements ChatReceiveModule {
-
     /**
      * We want this to activate early so that it catches the queue message.
      */
@@ -55,7 +53,6 @@ public class AutoQueue implements ChatReceiveModule {
 
         final String message = getStrippedMessage(event.message);
         LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        final Pattern temp = Pattern.compile("^(?:You died! .+|YOU DIED! .+|You have been eliminated!)$");
         Matcher matcher = getLanguage().autoQueuePrefixGlobalRegex.matcher(message);
         if (matcher.matches() && locraw != null) {
             this.command = "/play " + locraw.getGameMode().toLowerCase(Locale.ENGLISH);

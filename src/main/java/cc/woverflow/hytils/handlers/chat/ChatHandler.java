@@ -37,7 +37,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ChatHandler {
-
     private final List<ChatReceiveModule> receiveModules = new ArrayList<>();
     private final List<ChatSendModule> sendModules = new ArrayList<>();
     private final List<ChatReceiveResetModule> resetModules = new ArrayList<>();
