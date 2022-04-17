@@ -111,6 +111,13 @@ public class HytilsConfig extends Vigilant {
     public static boolean antiGL;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Auto Friend",
+        description = "Automatically accept friend requests.",
+        category = "Automatic", subcategory = "AutoGL"
+    )
+    public static boolean autoFriend;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Automatically Check GEXP",
         description = "Automatically check your GEXP after you win a Hypixel game.\n§4Requires an API Key.",
         category = "Automatic", subcategory = "Stats"
@@ -149,7 +156,7 @@ public class HytilsConfig extends Vigilant {
     public static boolean lobbyStatus;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remover Mystery Box Rewards",
+        type = PropertyType.SWITCH, name = "Remove Mystery Box Rewards",
         description = "Remove mystery box messages from chat and only show your own.\n§eExample: §b[Mystery Box] Steve §ffound a §6Legendary Hype Train Gadget§f!",
         category = "Chat", subcategory = "Toggles"
     )
@@ -282,7 +289,7 @@ public class HytilsConfig extends Vigilant {
     public static boolean giftBlocker;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove Seasonal MiniGame Messages",
+        type = PropertyType.SWITCH, name = "Remove Seasonal Simulator Collection Messages",
         description = "Removes personal and global collected messages from chat for the Easter, Christmas, and Halloween variants.\n§eExamples:\n§aYou found a gift! §7(5 total)\n§b[MVP§c+§b] Steve§f §ehas reached §c20 §egifts!",
         category = "Chat", subcategory = "Toggles"
     )
@@ -786,6 +793,20 @@ public class HytilsConfig extends Vigilant {
     public static boolean hideGameStartingTitles;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Hide Game Ending Titles",
+        description = "Hide titles that signify when the game has ended.\n§eExamples: §4Please add me.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideGameEndingTitles;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Hide Game Ending Countdown Titles",
+        description = "Hide titles that signify the time left in a game.\n§eExamples: §4Please add me.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideGameEndingCountdownTitles;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Height Overlay",
         description = "Make blocks that are in the Hypixel height limit a different colour.\n§eReloads chunks automatically when toggled on and off.\n§4Requires Smooth Lighting.",
         category = "Game", subcategory = "Visual"
@@ -900,6 +921,13 @@ public class HytilsConfig extends Vigilant {
         category = "Lobby", subcategory = "Entities"
     )
     public static boolean hideUselessArmorStands;
+
+    @Property(
+        type = PropertyType.SWITCH, name = "Remove Limbo AFK Title",
+        description = "Remove the AFK title when you get sent to limbo for being AFK.",
+        category = "Lobby", subcategory = "General"
+    )
+    public static boolean hideLimboTitle;
 
     @Property(
         type = PropertyType.SWITCH, name = "Limbo Limiter",

@@ -18,11 +18,12 @@
 
 package cc.woverflow.hytils.handlers.lobby.limbo;
 
+import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.events.TitleEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class LimboTitleFix {
+public class LimboTitle {
 
     // Prevent the Limbo AFK text from being stuck on the player's screen indefinitely.
     @SubscribeEvent
@@ -30,7 +31,7 @@ public class LimboTitleFix {
         // The player has the AFK title text shown.
         if (event.getTitle().equals("§cYou are AFK§r") && event.getSubtitle().equals("§eMove around to return to the lobby.§r")) {
             // The player moved.
-            if (Minecraft.getMinecraft().thePlayer.moveStrafing > 0) {
+            if (Minecraft.getMinecraft().thePlayer.moveStrafing > 0 || HytilsConfig.hideLimboTitle) {
                 // Forcefully remove the title text.
                 event.setCanceled(true);
             }

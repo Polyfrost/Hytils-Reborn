@@ -35,19 +35,14 @@ public class LanguageData {
     /**
      * GSON deserialization fields which are loaded in when the file is parsed.
      */
-    public String autoQueuePrefix = "You died! Want to play again?";
-    public String autoQueuePrefixBedwars = "You have been eliminated!";
-    public String autoQueuePrefixMurderMystery = "YOU DIED! The Murderer stabbed you!";
-    public String autoQueuePrefixMurderMysteryAssassins1 = "YOU DIED! Your assassin stabbed you!";
-    public String autoQueuePrefixMurderMysteryAssassins2 = "YOU DIED! Your target stabbed you!";
-    public String autoQueuePrefixMurderMysteryAssassins3 = "YOU DIED! Your assassin threw their knife at you!";
-    public String autoQueuePrefixMurderMysteryAssassins4 = "YOU DIED! Your target threw their knife at you!";
-    public String autoQueuePrefixMurderMysteryInfected = "YOU DIED! You were shot by a survivor";
+    public String autoQueuePrefixGlobal = "^(?:You died! .+|YOU DIED! .+|You have been eliminated!)$";
+
+    public String autoFriendPattern = "\u00A7m----------------------------------------------------Friend request from (?<name>.+)\\[ACCEPT\\] - \\[DENY\\] - \\[IGNORE\\].*";
 
     private String chatCleanerJoinNormal = "joined the lobby";
     private String chatCleanerJoinHalloween = "spooked into the lobby";
     private String chatCleanerJoinChristmas = "(?:sled|slid) into the lobby";
-    private String chatCleanerMysteryBoxFind = "^✦ (?<player>\\w{1,16}) found (?:a|an) (?:\u2730{5} Mystery Box!|\\.+ in a \\.+ Mystery Box!)$";
+    private String chatCleanerMysteryBoxFind = "^✦.+(?<player>\\w{1,16}) found (?:a|an) (?:✰{5} Mystery Box!|\\.+ in a \\.+ Mystery Box!)$";
     private String chatCleanerSoulWellFind = "^.+ has found .+ in the Soul Well!$";
     private String chatCleanerGameAnnouncement = "^\u27A4 A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!$";
     private String chatCleanerBedwarsPartyAdvertisement = "(?<number>[1-3]/[2-4])";
@@ -56,7 +51,7 @@ public class LanguageData {
     public String chatCleanerHypeLimit = "  \u27A4 You have reached your Hype limit!";
     private String chatGiftBlocker = "They have gifted \\d+ ranks so far!";
     private String chatCleanerGrinchPresents = "(?:You found (?:an egg|a gift|a candy)! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} (?:gifts|eggs|candy)!)";
-    private String chatCleanerEarnedCoinsAndExp = "^(?:\\W\\d+ .* Experience.*|\\W\\d+ coins!.*|You earned \\d+ GEXP from playing\\.+!|.+ just earned .+ as a Guild Level Reward!)"; //.* at the end for modifiers
+    private String chatCleanerEarnedCoinsAndExp = "^(?:\\W\\d+ .* Experience.*|\\W\\d+ coins!.*|You earned \\d+ GEXP from playing.+!|.+ just earned .+ as a Guild Level Reward!)"; //.* at the end for modifiers
     public String chatCleanerReplyRecorded = "This game has been recorded. Click here to watch the Replay!";
     private String chatCleanerTip = "(?:You tipped \\d+ (?:player|players) in \\d+ (?:game|different games)!|You already tipped everyone that has boosters active, so there isn't anybody to be tipped right now!)";
     private String chatCleanerOnlineStatus = "REMINDER: Your Online Status is currently set to (?:Appear Offline|Busy|Away)";
@@ -105,6 +100,10 @@ public class LanguageData {
      * Cached values which use the messages read from the config file.
      * Particularly Regexes.
      */
+    public Pattern autoQueuePrefixGlobalRegex;
+
+    public Pattern autoFriendPatternRegex;
+
     public Set<Pattern> chatCleanerJoinMessageTypes;
 
     public Pattern chatCleanerMysteryBoxFindRegex;
@@ -154,6 +153,11 @@ public class LanguageData {
     public void initialize() {
         if (!hasInitialized) {
             hasInitialized = true;
+
+            autoQueuePrefixGlobalRegex = Pattern.compile(autoQueuePrefixGlobal);
+
+            autoFriendPatternRegex = Pattern.compile(autoFriendPattern);
+
             chatCleanerJoinMessageTypes = Sets.newHashSet(Pattern.compile(chatCleanerJoinNormal), Pattern.compile(chatCleanerJoinHalloween), Pattern.compile(chatCleanerJoinChristmas));
 
             chatCleanerMysteryBoxFindRegex = Pattern.compile(chatCleanerMysteryBoxFind);

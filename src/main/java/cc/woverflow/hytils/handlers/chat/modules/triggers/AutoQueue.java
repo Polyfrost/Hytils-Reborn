@@ -21,7 +21,6 @@ package cc.woverflow.hytils.handlers.chat.modules.triggers;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
-import cc.woverflow.hytils.handlers.language.LanguageData;
 import cc.woverflow.hytils.util.locraw.LocrawInformation;
 import gg.essential.api.utils.Multithreading;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -32,6 +31,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AutoQueue implements ChatReceiveModule {
 
@@ -52,13 +53,11 @@ public class AutoQueue implements ChatReceiveModule {
             return;
         }
 
-        final LanguageData language = getLanguage();
         final String message = getStrippedMessage(event.message);
         LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (message.startsWith(language.autoQueuePrefixBedwars) || message.startsWith(language.autoQueuePrefix) || message.startsWith(language.autoQueuePrefixMurderMystery) ||
-            message.startsWith(language.autoQueuePrefixMurderMysteryAssassins1) || message.startsWith(language.autoQueuePrefixMurderMysteryAssassins2) ||
-            message.startsWith(language.autoQueuePrefixMurderMysteryAssassins3) || message.startsWith(language.autoQueuePrefixMurderMysteryAssassins4) ||
-            message.startsWith(language.autoQueuePrefixMurderMysteryInfected) && locraw != null) {
+        final Pattern temp = Pattern.compile("^(?:You died! .+|YOU DIED! .+|You have been eliminated!)$");
+        Matcher matcher = getLanguage().autoQueuePrefixGlobalRegex.matcher(message);
+        if (matcher.matches() && locraw != null) {
             this.command = "/play " + locraw.getGameMode().toLowerCase(Locale.ENGLISH);
         }
     }

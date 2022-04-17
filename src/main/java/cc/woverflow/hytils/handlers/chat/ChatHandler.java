@@ -67,6 +67,7 @@ public class ChatHandler {
         this.registerModule(new AutoAPI());
         this.registerModule(new AntiGL());
         this.registerModule(new AutoGL());
+        this.registerModule(new AutoFriend());
         this.registerModule(new ConnectionStatusRemover());
         this.registerModule(new CurseOfSpamRemover());
         this.registerModule(new BridgeOwnGoalDeathRemover());
