@@ -299,9 +299,13 @@ public class HypixelAPIUtils {
     public static String getRank(String username) {
         if (!HytilsConfig.apiKey.isEmpty() || HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
             String uuid = getUUID(username);
-            JsonObject playerRank =
-                JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid)).getAsJsonObject().getAsJsonObject("player");
-            rank = playerRank.get("newPackageRank").toString();
+            try {
+                JsonObject playerRank =
+                    JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid)).getAsJsonObject().getAsJsonObject("player");
+                rank = playerRank.get("newPackageRank").toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return rank;
     }
