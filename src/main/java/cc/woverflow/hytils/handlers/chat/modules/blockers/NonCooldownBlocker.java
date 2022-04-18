@@ -21,7 +21,6 @@ package cc.woverflow.hytils.handlers.chat.modules.blockers;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatSendModule;
-import cc.woverflow.hytils.util.HypixelAPIUtils;
 import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,10 +33,9 @@ public class NonCooldownBlocker implements ChatSendModule {
 
     @Override
     public @Nullable String onMessageSend(@NotNull String message) {
-        // This needs to be moved out of here as it currently causes a lag spike every time the user sends a message.
-        // In my attempts to move it out, the rank never updates and stays null and I don't know why please help :sob:
-        String rank = HypixelAPIUtils.getRank(Minecraft.getMinecraft().thePlayer.getName());
-        if (!message.startsWith("/") && rank != null && rank.equals("DEFAULT")) {
+        String rank = HytilsReborn.INSTANCE.rank;
+        if (message.startsWith("/")) return message;
+        if (rank != null && rank.equals("DEFAULT")) {
             if (nonCooldown < System.currentTimeMillis()) {
                 nonCooldown = System.currentTimeMillis() + (getCooldownLengthInSeconds() * 1000L);
                 return message;

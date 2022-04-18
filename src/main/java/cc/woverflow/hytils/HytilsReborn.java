@@ -109,6 +109,8 @@ public class HytilsReborn {
     public boolean isChatting;
     private boolean loadedCall;
 
+    public String rank;
+
     @Mod.EventHandler
     public void onFMLPreInitialization(FMLPreInitializationEvent event) {
         if (!modDir.exists()) modDir.mkdirs();
@@ -156,13 +158,14 @@ public class HytilsReborn {
         }
         isPatcher = Loader.isModLoaded("patcher");
         isChatting = Loader.isModLoaded("chatting");
+
+        String decompilerKids = "Using getSession to prevent any nulls when compared to thePlayer";
+        rank = HypixelAPIUtils.getRank(Minecraft.getMinecraft().getSession().getUsername());
     }
 
     @Mod.EventHandler
     public void finishedStarting(FMLLoadCompleteEvent event) {
         this.loadedCall = true;
-
-
     }
 
     private void registerHandlers() {

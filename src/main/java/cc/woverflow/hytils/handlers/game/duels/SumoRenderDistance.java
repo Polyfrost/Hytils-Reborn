@@ -24,9 +24,7 @@ import cc.woverflow.hytils.util.locraw.LocrawInformation;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraftforge.client.event.RenderWorldEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SumoRenderDistance {
@@ -52,7 +50,6 @@ public class SumoRenderDistance {
                 wasSumo = false;
                 isFirstRender = true;
                 gs.renderDistanceChunks = resetRd;
-
             }
         }
     }

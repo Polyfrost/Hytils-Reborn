@@ -339,7 +339,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "White Chat",
-        description = "Make nons chat messages appear as the normal chat message color.\n§eExample: §7Steve: Hey! §e-> §7Player§f: Hey!",
+        description = "Make nons' chat messages appear as the normal chat message color.\n§eExample: §7Steve: Hey! §e-> §7Player§f: Hey!",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean whiteChat;
@@ -358,7 +358,6 @@ public class HytilsConfig extends Vigilant {
     )
     public static boolean coloredStatuses;
 
-    // TODO: add support for Murder Mystery (eg: The alpha infected will be chosen in 5 seconds!)
     @Property(
         type = PropertyType.SWITCH, name = "Cleaner Game Start Counter",
         description = "Compacts game start announcements.\n§eExample: The game starts in 20 seconds!",
@@ -598,7 +597,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Non Speech Cooldown",
-        description = "Show the amount of time remaining until you can speak if you are a non.\n§eExample: §eYour freedom of speech is on cooldown. Please wait 3 more seconds.",
+        description = "Show the amount of time remaining until you can speak if you are a non.\n§eExample: §eYour freedom of speech is on cooldown. Please wait 3 more seconds.\n§4Requires an API Key.",
         category = "Chat", subcategory = "Cooldown"
     )
     public static boolean preventNonCooldown;

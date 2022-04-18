@@ -43,6 +43,7 @@ public class HypixelAPIUtils {
     public static boolean isBridge = false;
     public static String gexp;
     public static String winstreak;
+    public static String rank;
     public static LocrawInformation locraw;
     private int ticks = 0;
 
@@ -296,15 +297,13 @@ public class HypixelAPIUtils {
      * @return Player rank
      */
     public static String getRank(String username) {
-        String uuid = getUUID(username);
-        JsonObject playerRank =
-            JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid)).getAsJsonObject().getAsJsonObject("player");
-        try {
-            return playerRank.get("newPackageRank").toString();
-        } catch (Exception e){
-            e.printStackTrace();
+        if (!HytilsConfig.apiKey.isEmpty() || HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
+            String uuid = getUUID(username);
+            JsonObject playerRank =
+                JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid)).getAsJsonObject().getAsJsonObject("player");
+            rank = playerRank.get("newPackageRank").toString();
         }
-        return null;
+        return rank;
     }
 
 
