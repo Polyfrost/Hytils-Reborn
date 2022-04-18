@@ -2,8 +2,9 @@
 <a href="https://github.com/W-OVERFLOW/Hytilities-Reborn/releases" target="_blank"></a>
 <img alt="downloads" src="https://img.shields.io/github/downloads/W-OVERFLOW/Hytilities-Reborn/total?color=F5C400&style=for-the-badge" /> <img alt="downloads latest" src="https://img.shields.io/github/downloads-pre/W-OVERFLOW/Hytilities-Reborn/latest/total?color=F5C400&style=for-the-badge" />
 
+## User Guide
 <details open>
-  <summary>User Guide</summary>
+  <summary>Info</summary>
 
 ### What is Hytils Reborn?
 Hytils Reborn is a [Hypixel](https://hypixel.net) focused Forge 1.8.9 mod based on [Sk1er LLC's Hytilities](https://github.com/Sk1erLLC/Hytilities), adding tons of Quality of Life features that
@@ -13,6 +14,8 @@ you would want while on Hypixel, such as an Advertisement-Blocker, AutoQueue, Au
 Hytils Reborn is installed just like any other Forge mod.
 
 If you do not know how to install a Forge mod, then we recommend following [this step-by-step guide](https://github.com/LizzyMaybeDev/Introduction-to-modding-mc "Credits: LizzyMaybeDev").
+</details>
+
 ## Features
 <details>
  <summary>Automatic</summary>
