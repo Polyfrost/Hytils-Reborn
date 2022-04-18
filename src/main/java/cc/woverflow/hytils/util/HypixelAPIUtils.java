@@ -306,8 +306,6 @@ public class HypixelAPIUtils {
         return rank;
     }
 
-
-
     /**
      * Gets a UUID based on the username provided.
      *
