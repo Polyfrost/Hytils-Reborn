@@ -66,7 +66,7 @@ public class LanguageData {
 
     private String chatRestylerGameJoinStyle = "^§r§e§r§(?<color>[\\da-f])(?:§k)?(?<player>\\w{1,16})§r§r§r§e has joined (?<amount>.+)!§r§e§r$";
     private String chatRestylerGameLeaveStyle = "^§r§e§r§(?<color>[\\da-f])(?:§k)?(?<player>\\w{1,16})§r§r§r§e has quit!§r§e§r$";
-    private String chatRestylerGameStartCounterStyle = "^(?<title>(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in|The alpha infected will be chosen in)) (?<time>\\d{1,3}) (?<unit>(seconds?!))(?: .\\d+.|)$"; // TODO: translate "Cages open in:" to french (also translate to chatRestylerGameStartCounterOutputStyle)
+    private String chatRestylerGameStartCounterStyle = "^(?<title>(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in|The alpha infected will be chosen in|Kill contracts will be issued in)) (?<time>\\d{1,3}) (?<unit>(seconds?!))(?: .\\d+.|)$"; // TODO: translate "Cages open in:" to french (also translate to chatRestylerGameStartCounterOutputStyle)
     private String chatRestylerGameStartCounterOutputStyle = "^\u00a7e\u00a7l\\* \u00a7a(The game starts in|Cages open in:) \u00a7b\u00a7l\\d{1,3} \u00a7aseconds?!\u00a7r$";
     private String chatRestylerFormattedPaddingPattern = "\\(§r§b(\\d{1,2})§r§r§r§e/§r§b(\\d{1,3})§r§r§r§e\\)";
     private String chatRestylerPartyPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Party )(\\u00a7\\w>)";
