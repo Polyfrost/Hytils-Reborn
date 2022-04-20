@@ -113,7 +113,7 @@ public class HytilsConfig extends Vigilant {
     @Property(
         type = PropertyType.SWITCH, name = "Auto Friend",
         description = "Automatically accept friend requests.",
-        category = "Automatic", subcategory = "AutoGL"
+        category = "Automatic", subcategory = "Social"
     )
     public static boolean autoFriend;
 
