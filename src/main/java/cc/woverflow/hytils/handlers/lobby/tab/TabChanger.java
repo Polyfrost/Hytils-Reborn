@@ -20,6 +20,7 @@ package cc.woverflow.hytils.handlers.lobby.tab;
 
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
+import cc.woverflow.hytils.util.locraw.LocrawInformation;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import org.objectweb.asm.tree.ClassNode;
@@ -60,7 +61,8 @@ public class TabChanger {
         if (EssentialAPI.getMinecraftUtil().isHypixel()) {
             final UUID uuid = networkPlayerInfo.getGameProfile().getId();
 
-            if (HytilsConfig.hidePlayerRanksInTab && name.startsWith("[", 2)) {
+
+            if (HytilsConfig.hidePlayerRanksInTab && name.startsWith("[", 2) && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
                 // keep the name color if player rank is removed
                 // §b[MVP§c+§b] Steve
                 final String color = "\u00a7" + name.charAt(1);
