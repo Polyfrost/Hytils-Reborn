@@ -52,7 +52,7 @@ public class LanguageData {
     private String chatGiftBlocker = "They have gifted \\d+ ranks so far!";
     private String chatCleanerGrinchPresents = "(?:You found (?:an egg|a gift|a candy)! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} (?:gifts|eggs|candy)!)";
     private String chatCleanerEarnedCoinsAndExp = "^(?:\\W\\d+ .* Experience.*|\\W\\d+ coins!.*|You earned \\d+ GEXP from playing.+!|.+ just earned .+ as a Guild Level Reward!)"; //.* at the end for modifiers
-    public String chatCleanerReplyRecorded = "This game has been recorded\\. Click here to watch the Replay!";
+    public String chatCleanerReplayRecorded = "§6§aThis game has been recorded. §6Click here to watch the Replay!§r";
     private String chatCleanerTip = "(?:You tipped \\d+ (?:player|players) in \\d+ (?:game|different games)!|You already tipped everyone that has boosters active, so there isn't anybody to be tipped right now!)";
     private String chatCleanerOnlineStatus = "REMINDER: Your Online Status is currently set to (?:Appear Offline|Busy|Away)";
     private String chatCleanerGameTips = "^(?:If you get disconnected use /rejoin to join back in the game\\.|You may use /mmreport <skin name> to chat report in this mode!|Teaming with the *.+ is not allowed!|Teaming is not allowed *.+|Cross Teaming / Teaming with other teams is not allowed!|Cross-teaming is not allowed! Report cross-teamers using /report.|Cages opened! FIGHT!|Queued! Use the bed to return to lobby!|Queued! Use the bed to cancel!)";

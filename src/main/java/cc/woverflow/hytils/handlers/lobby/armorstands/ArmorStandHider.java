@@ -31,7 +31,7 @@ import cc.woverflow.hytils.util.locraw.LocrawInformation;
 public class ArmorStandHider {
     private static final String[] armorStandNames = {"click", "mystery vault", "daily reward tokens", "advent calendar reward", "free rewards", "special holiday quests", "happy holidays",
         "festive floors", "museums", "hype", "coming soon", " set #", "fireball/tnt jumping", "parkour starts this way", "go ahead into the cave", "holiday mode", "new update", "new modes & maps",
-        "challenges released", "bug fixes & qol update", "catacombs m7!", "sign posting", "parkour challenge", "your arcade games profile"};
+        "challenges released", "bug fixes & qol update", "catacombs m7!", "sign posting", "parkour challenge", "your arcade games profile", "crimson isle"};
 
     @SubscribeEvent
     public void onEntityRenderer(RenderLivingEvent.Pre<EntityLivingBase> event) {
