@@ -44,8 +44,6 @@ public class TabChanger {
      * @return The displayName that was given as input but with a star added
      */
     private static String addStarToName(String displayName) {
-        // TODO: find out why stars are actually duplicating and fix this properly
-        if (displayName.contains("✯")) return displayName;
         switch (HytilsConfig.highlightFriendsInTab) {
             case 1:
                 return "§9✯ §r" + displayName;
