@@ -275,14 +275,14 @@ public class HytilsConfig extends Vigilant {
     public static boolean duelsBlockTrail;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove the Skyblock Welcome Message",
+        type = PropertyType.SWITCH, name = "Remove the SkyBlock Welcome Message",
         description = "Hides the \"§eWelcome to §aHypixel SkyBlock§e!§r\" from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean skyblockWelcome;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove Gifts Message",
+        type = PropertyType.SWITCH, name = "Remove Gifts Messages",
         description = "Removes \"They have gifted x so far!\" messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
@@ -297,7 +297,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Earned Coins and Experience Messages",
-        description = "Removes the earned coins and experience messages from chat.\n§eExamples:\n§b+25 Bed Wars Experience\n§6+10 coins!",
+        description = "Removes the earned coins and experience messages from chat.\n§eExamples:\n§b+25 Bed Wars Experience\n§6+10 coins!\n§aYou earned §2500 GEXP §afrom playing SkyBlock!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean earnedCoinsAndExp;
