@@ -275,14 +275,14 @@ public class HytilsConfig extends Vigilant {
     public static boolean duelsBlockTrail;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove the Skyblock Welcome Message",
+        type = PropertyType.SWITCH, name = "Remove the SkyBlock Welcome Message",
         description = "Hides the \"§eWelcome to §aHypixel SkyBlock§e!§r\" from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean skyblockWelcome;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove Gifts Message",
+        type = PropertyType.SWITCH, name = "Remove Gift Messages",
         description = "Removes \"They have gifted x so far!\" messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
@@ -297,7 +297,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Earned Coins and Experience Messages",
-        description = "Removes the earned coins and experience messages from chat.\n§eExamples:\n§b+25 Bed Wars Experience\n§6+10 coins!",
+        description = "Removes the earned coins and experience messages from chat.\n§eExamples:\n§b+25 Bed Wars Experience\n§6+10 coins!\n§aYou earned §2500 GEXP §afrom playing SkyBlock!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean earnedCoinsAndExp;
@@ -612,8 +612,8 @@ public class HytilsConfig extends Vigilant {
     public static boolean notifyMiningFatigue;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Disable Mining Fatigue Notification in Skyblock",
-        description = "Disable the mining fatigue notification in Skyblock.",
+        type = PropertyType.SWITCH, name = "Disable Mining Fatigue Notification in SkyBlock",
+        description = "Disable the mining fatigue notification in SkyBlock.",
         category = "General", subcategory = "Potion Effects"
     )
     public static boolean disableNotifyMiningFatigueSkyblock;
@@ -627,7 +627,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Don't Hide Important NPCs",
-        description = "Keeps NPCs in tab in gamemodes like Skyblock and Replay.",
+        description = "Keeps NPCs in tab in gamemodes like SkyBlock and Replay.",
         category = "General", subcategory = "Tab"
     )
     public static boolean keepImportantNpcsInTab;
@@ -655,8 +655,8 @@ public class HytilsConfig extends Vigilant {
     public static int highlightFriendsInTab;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Cleaner Tab in Skyblock",
-        description = "Doesn't render player heads or ping for tab entries that aren't players in Skyblock.",
+        type = PropertyType.SWITCH, name = "Cleaner Tab in SkyBlock",
+        description = "Doesn't render player heads or ping for tab entries that aren't players in SkyBlock.",
         category = "General", subcategory = "Tab"
     )
     public static boolean cleanerSkyblockTabInfo;
@@ -771,8 +771,8 @@ public class HytilsConfig extends Vigilant {
     public static boolean hideGoalArmorStands;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide Useless Skyblock Nametags",
-        description = "Hides unnecessary nametags in Skyblock such as those that say \"§eCLICK§r\".",
+        type = PropertyType.SWITCH, name = "Hide Useless SkyBlock Nametags",
+        description = "Hides unnecessary nametags in SkyBlock such as those that say \"§eCLICK§r\".",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideUselessArmorStandsSkyblock;
@@ -862,8 +862,8 @@ public class HytilsConfig extends Vigilant {
     public static boolean hideHousingActionBar;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove Non-NPCs in Skyblock",
-        description = "Remove entities that are not NPCs in Skyblock.",
+        type = PropertyType.SWITCH, name = "Remove Non-NPCs in SkyBlock",
+        description = "Remove entities that are not NPCs in SkyBlock.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideNonNPCs;
