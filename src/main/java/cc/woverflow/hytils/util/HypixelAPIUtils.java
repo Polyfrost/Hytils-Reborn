@@ -297,7 +297,7 @@ public class HypixelAPIUtils {
      * @return Player rank
      */
     public static String getRank(String username) {
-        if (!HytilsConfig.apiKey.isEmpty() || HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
+        if (!HytilsConfig.apiKey.isEmpty() && HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
             String uuid = getUUID(username);
             try {
                 JsonObject playerRank =

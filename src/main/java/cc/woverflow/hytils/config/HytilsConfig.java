@@ -772,7 +772,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Useless Skyblock Nametags",
-        description = "Hides unnecessary nametags in Skyblock such as those that say say \"§eCLICK§r\".",
+        description = "Hides unnecessary nametags in Skyblock such as those that say \"§eCLICK§r\".",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideUselessArmorStandsSkyblock;

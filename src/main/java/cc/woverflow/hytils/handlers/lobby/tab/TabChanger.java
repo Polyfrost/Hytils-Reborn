@@ -44,6 +44,8 @@ public class TabChanger {
      * @return The displayName that was given as input but with a star added
      */
     private static String addStarToName(String displayName) {
+        // TODO: find out why stars are actually duplicating and fix this properly
+        if (displayName.contains("✯")) return displayName;
         switch (HytilsConfig.highlightFriendsInTab) {
             case 1:
                 return "§9✯ §r" + displayName;
@@ -59,7 +61,6 @@ public class TabChanger {
     public static String modifyName(String name, NetworkPlayerInfo networkPlayerInfo) {
         if (EssentialAPI.getMinecraftUtil().isHypixel()) {
             final UUID uuid = networkPlayerInfo.getGameProfile().getId();
-
 
             if (HytilsConfig.hidePlayerRanksInTab && name.startsWith("[", 2) && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
                 // keep the name color if player rank is removed
@@ -82,6 +83,8 @@ public class TabChanger {
                 if (friendList != null && friendList.contains(uuid)) {
                     name = addStarToName(name);
                 }
+
+                if(name.contains("Microcontrollers")) name = addStarToName(name);
             }
         }
 
@@ -96,7 +99,7 @@ public class TabChanger {
         return EssentialAPI.getMinecraftUtil().isHypixel() && ((HytilsConfig.hidePingInTab && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) || isSkyblockTabInformationEntry(networkPlayerInfo));
     }
 
-    private static final Pattern validMinecraftUsername = Pattern.compile("\\w{1,16}");
+    private static final Pattern validMinecraftUsername = Pattern.compile("\\w{1,16}(?: .|)");
     private static final Pattern skyblockTabInformationEntryGameProfileNameRegex = Pattern.compile("![A-D]-[a-v]");
 
     private static boolean isSkyblockTabInformationEntry(NetworkPlayerInfo networkPlayerInfo) {
