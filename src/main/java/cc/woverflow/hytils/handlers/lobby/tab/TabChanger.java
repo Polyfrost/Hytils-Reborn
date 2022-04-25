@@ -95,14 +95,14 @@ public class TabChanger {
         return EssentialAPI.getMinecraftUtil().isHypixel() && ((HytilsConfig.hidePingInTab && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) || isSkyblockTabInformationEntry(networkPlayerInfo));
     }
 
-    private static final Pattern validMinecraftUsername = Pattern.compile("\\w{1,16}(?: .|)");
+    private static final Pattern validMinecraftUsername = Pattern.compile("(?:.+|)\\w{1,16}(?: .{1,3}|)");
     private static final Pattern skyblockTabInformationEntryGameProfileNameRegex = Pattern.compile("![A-D]-[a-v]");
 
     private static boolean isSkyblockTabInformationEntry(NetworkPlayerInfo networkPlayerInfo) {
         if (!HytilsConfig.cleanerSkyblockTabInfo) return false;
         return
             HytilsReborn.INSTANCE.getSkyblockChecker().isSkyblockScoreboard() &&
-            skyblockTabInformationEntryGameProfileNameRegex.matcher(networkPlayerInfo.getGameProfile().getName()).matches() &&
-            !validMinecraftUsername.matcher(networkPlayerInfo.getDisplayName().getUnformattedText()).matches();
+                skyblockTabInformationEntryGameProfileNameRegex.matcher(networkPlayerInfo.getGameProfile().getName()).matches() &&
+                !validMinecraftUsername.matcher(networkPlayerInfo.getDisplayName().getUnformattedText()).matches();
     }
 }
