@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class ReplayRecordedRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatCleanerReplyRecorded.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
+        Matcher matcher = getLanguage().chatCleanerReplyRecordedRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
         if (matcher.matches()) {
             event.setCanceled(true);
         }
