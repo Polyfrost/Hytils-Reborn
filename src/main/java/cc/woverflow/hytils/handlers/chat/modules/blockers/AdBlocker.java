@@ -49,12 +49,12 @@ public class AdBlocker implements ChatReceiveModule {
      * <p>
      * TODO: add more phrases to regex
      */
-    private final Pattern commonAdvertisements = Pattern.compile("/?(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16})|(/gift))",
+    private final Pattern commonAdvertisements = Pattern.compile("/?(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16})|(/gift)|(Gilde)|(lowballing))",
         Pattern.CASE_INSENSITIVE);
 
     // common phrases used in messages where people beg for a rank gift
     private final List<String> ranks = Arrays.asList("mvp", "vip");
-    private final List<String> begging = Arrays.asList("give", "please", "pls", "plz", "gift");
+    private final List<String> begging = Arrays.asList("give", "please", "pls", "plz", "gift", "upgrade", "rankupgrade", "rankup", "upgraderank", "beg", "begging");
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
