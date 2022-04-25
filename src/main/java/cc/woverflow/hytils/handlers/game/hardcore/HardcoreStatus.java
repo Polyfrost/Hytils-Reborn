@@ -21,11 +21,11 @@ package cc.woverflow.hytils.handlers.game.hardcore;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.events.TitleEvent;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class HardcoreStatus {
-
     private boolean danger;
 
     @SubscribeEvent
@@ -43,6 +43,13 @@ public class HardcoreStatus {
             unformattedTitle.equals("Your Wither died!") ||
             unformattedTitle.equals("BED DESTROYED!")) &&
             HytilsConfig.hardcoreHearts) {
+            danger = true;
+        }
+    }
+
+    @SubscribeEvent
+    public void onActionbar(ClientChatReceivedEvent event) {
+        if (event.message.getUnformattedText().equals("YOUR WITHER IS DEAD") && HytilsConfig.hardcoreHearts) {
             danger = true;
         }
     }

@@ -45,6 +45,10 @@ public class GameStartingTitles {
             case "INSANE MODE":
             case "Waiting for more players...":
             case "ASSASSINS":
+            case "YOU ARE RED":
+            case "YOU ARE BLUE":
+            case "YOU ARE YELLOW":
+            case "YOU ARE GREEN":
                 event.setCanceled(true);
                 break;
         }

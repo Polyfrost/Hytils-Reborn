@@ -83,8 +83,6 @@ public class TabChanger {
                 if (friendList != null && friendList.contains(uuid)) {
                     name = addStarToName(name);
                 }
-
-                if(name.contains("Microcontrollers")) name = addStarToName(name);
             }
         }
 

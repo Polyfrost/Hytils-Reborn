@@ -793,21 +793,21 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Game Starting Titles",
-        description = "Hide titles such as the countdown when a game is about to begin and gamemode names.\n§eExamples: §4§lINSANE MODE",
+        description = "Hide titles such as the countdown when a game is about to begin and gamemode names.\n§eExample: §4§lINSANE MODE",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideGameStartingTitles;
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Game Ending Titles",
-        description = "Hide titles that signify when the game has ended.\n§eExamples: §4Please add me.",
+        description = "Hide titles that signify when the game has ended.\n§eExamples:\n§6§lVICTORY!\n§4§lGAME OVER!",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideGameEndingTitles;
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Game Ending Countdown Titles",
-        description = "Hide titles that signify the time left in a game.\n§eExamples: §4Please add me.",
+        description = "Hide titles that signify the time left in a game.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideGameEndingCountdownTitles;
