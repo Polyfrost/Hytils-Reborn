@@ -328,8 +328,13 @@ public class HypixelAPIUtils {
     }
 
     public static boolean isValidKey(String key) {
-        JsonObject gotten = JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/key?key=" + key)).getAsJsonObject();
-        return gotten.has("success") && gotten.get("success").getAsBoolean();
+        try {
+            JsonObject gotten = JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/key?key=" + key)).getAsJsonObject();
+            return gotten.has("success") && gotten.get("success").getAsBoolean();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @SubscribeEvent
