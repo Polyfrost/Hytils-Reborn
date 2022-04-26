@@ -44,33 +44,39 @@ public class TabChanger {
      * @param displayName The name of the player as appears in tab menu
      * @return The displayName that was given as input but with a star added
      */
-    private static String addStarToName(String displayName) {
-        if (HytilsConfig.highlightFriendsInTab != 0) {
-            switch (HytilsConfig.highlightFriendsInTab) {
-                case 1:
-                    return "§9✯ §r" + displayName;
-                case 2:
-                    return displayName + "§r §9✯";
-                default:
-                    HytilsReborn.INSTANCE.getLogger()
-                        .warn("Method TabChanger#addStarToName called when showFriendNamesInTab was not enabled");
-                    return "§9✯ §r" + displayName;
-            }
+    private static String addStarToNameFriend(String displayName) {
+        switch (HytilsConfig.highlightFriendsInTab) {
+            case 1:
+                return "§9✯ §r" + displayName;
+            case 2:
+                return displayName + "§r §9✯";
+            default:
+                HytilsReborn.INSTANCE.getLogger()
+                    .warn("Method TabChanger#addStarToName called when highlightFriendsInTab was not enabled");
+                return "§9✯ §r" + displayName;
         }
-        if (HytilsConfig.highlightSelfInTab != 0) {
-            switch (HytilsConfig.highlightSelfInTab) {
-                case 1:
-                    return "§d✯ §r" + displayName;
-                case 2:
-                    return displayName + "§r §d✯";
-                default:
-                    HytilsReborn.INSTANCE.getLogger()
-                        .warn("Method TabChanger#addStarToName called when showFriendNamesInTab was not enabled");
-                    return "§d✯ §r" + displayName;
-            }
-        }
+    }
 
-        return displayName;
+    /**
+     * Adds a star to the display name of the user in Tab.
+     * If the star is added before or after the name is determined by the config value of highlightSelfInTab
+     * For example, the input "§b[MVP§c+§b] Steve §6[GUILD]" will return "§9✯ §r§b[MVP§c+§b] Steve §6[GUILD]" if
+     * highlightSelfInTab is set to "Left of Name"
+     *
+     * @param displayName The name of the player as appears in tab menu
+     * @return The displayName that was given as input but with a star added
+     */
+    private static String addStarToNameSelf(String displayName) {
+        switch (HytilsConfig.highlightSelfInTab) {
+            case 1:
+                return "§d✯ §r" + displayName;
+            case 2:
+                return displayName + "§r §d✯";
+            default:
+                HytilsReborn.INSTANCE.getLogger()
+                    .warn("Method TabChanger#addStarToName called when highlightSelfInTab was not enabled");
+                return "§d✯ §r" + displayName;
+        }
     }
 
     public static String modifyName(String name, NetworkPlayerInfo networkPlayerInfo) {
@@ -96,13 +102,13 @@ public class TabChanger {
                 Set<UUID> friendList = HytilsReborn.INSTANCE.getFriendCache().getFriendUUIDs();
                 // friendList will be null if the friend list has not been cached
                 if (friendList != null && friendList.contains(uuid)) {
-                    name = addStarToName(name);
+                    name = addStarToNameFriend(name);
                 }
             }
 
             if (HytilsConfig.highlightSelfInTab != 0) {
                 if (uuid.equals(Minecraft.getMinecraft().thePlayer.getUniqueID())) {
-                    name = addStarToName(name);
+                    name = addStarToNameSelf(name);
                 }
             }
         }
