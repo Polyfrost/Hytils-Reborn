@@ -655,6 +655,14 @@ public class HytilsConfig extends Vigilant {
     public static int highlightFriendsInTab;
 
     @Property(
+        type = PropertyType.SELECTOR, name = "Highlight Self In Tab",
+        description = "Add a star to your name in tab.",
+        category = "General", subcategory = "Tab",
+        options = {"Off", "Left of Name", "Right of Name"}
+    )
+    public static int highlightSelfInTab;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Cleaner Tab in SkyBlock",
         description = "Doesn't render player heads or ping for tab entries that aren't players in SkyBlock.",
         category = "General", subcategory = "Tab"

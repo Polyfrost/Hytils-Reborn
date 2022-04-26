@@ -21,6 +21,7 @@ package cc.woverflow.hytils.handlers.lobby.tab;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import gg.essential.api.EssentialAPI;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -44,16 +45,32 @@ public class TabChanger {
      * @return The displayName that was given as input but with a star added
      */
     private static String addStarToName(String displayName) {
-        switch (HytilsConfig.highlightFriendsInTab) {
-            case 1:
-                return "§9✯ §r" + displayName;
-            case 2:
-                return displayName + "§r §9✯";
-            default:
-                HytilsReborn.INSTANCE.getLogger()
-                    .warn("Method TabChanger#addStarToName called when showFriendNamesInTab was not enabled");
-                return "§9✯ §r" + displayName;
+        if (HytilsConfig.highlightFriendsInTab != 0) {
+            switch (HytilsConfig.highlightFriendsInTab) {
+                case 1:
+                    return "§9✯ §r" + displayName;
+                case 2:
+                    return displayName + "§r §9✯";
+                default:
+                    HytilsReborn.INSTANCE.getLogger()
+                        .warn("Method TabChanger#addStarToName called when showFriendNamesInTab was not enabled");
+                    return "§9✯ §r" + displayName;
+            }
         }
+        if (HytilsConfig.highlightSelfInTab != 0) {
+            switch (HytilsConfig.highlightSelfInTab) {
+                case 1:
+                    return "§d✯ §r" + displayName;
+                case 2:
+                    return displayName + "§r §d✯";
+                default:
+                    HytilsReborn.INSTANCE.getLogger()
+                        .warn("Method TabChanger#addStarToName called when showFriendNamesInTab was not enabled");
+                    return "§d✯ §r" + displayName;
+            }
+        }
+
+        return displayName;
     }
 
     public static String modifyName(String name, NetworkPlayerInfo networkPlayerInfo) {
@@ -79,6 +96,12 @@ public class TabChanger {
                 Set<UUID> friendList = HytilsReborn.INSTANCE.getFriendCache().getFriendUUIDs();
                 // friendList will be null if the friend list has not been cached
                 if (friendList != null && friendList.contains(uuid)) {
+                    name = addStarToName(name);
+                }
+            }
+
+            if (HytilsConfig.highlightSelfInTab != 0) {
+                if (uuid.equals(Minecraft.getMinecraft().thePlayer.getUniqueID())) {
                     name = addStarToName(name);
                 }
             }
