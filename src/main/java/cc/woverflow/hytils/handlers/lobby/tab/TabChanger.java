@@ -69,13 +69,13 @@ public class TabChanger {
     private static String addStarToNameSelf(String displayName) {
         switch (HytilsConfig.highlightSelfInTab) {
             case 1:
-                return "§d✯ §r" + displayName;
+                return "§5✯ §r" + displayName;
             case 2:
-                return displayName + "§r §d✯";
+                return displayName + "§r §5✯";
             default:
                 HytilsReborn.INSTANCE.getLogger()
                     .warn("Method TabChanger#addStarToName called when highlightSelfInTab was not enabled");
-                return "§d✯ §r" + displayName;
+                return "§5✯ §r" + displayName;
         }
     }
 
