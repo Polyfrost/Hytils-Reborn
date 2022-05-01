@@ -25,26 +25,26 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class GameEndingTitles {
+public class GameEndingCountdownTitles {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onTitle(TitleEvent event) {
-        if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilsConfig.hideGameEndingTitles) {
+        if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilsConfig.hideGameEndingCountdownTitles) {
             return;
         }
 
         switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle())) {
-            case "YOU WIN!":
-            case "YOU DIED!":
-            case "YOU LOSE!":
-            case "VICTORY!":
-            case "GAME OVER!":
-            case "RESPAWNED!":
-            case "DEFEAT!":
-            case "GAME END":
-            case "You Win!":
-            case "You Lose!":
-            case "YOU DIED":
-            case "DEFEAT":
+            case "60":
+            case "30":
+            case "10":
+            case "9":
+            case "8":
+            case "7":
+            case "6":
+            case "5":
+            case "4":
+            case "3":
+            case "2":
+            case "1":
                 event.setCanceled(true);
                 break;
         }

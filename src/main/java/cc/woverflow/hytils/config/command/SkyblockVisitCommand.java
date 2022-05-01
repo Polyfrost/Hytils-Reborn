@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.woverflow.hytils.command;
+package cc.woverflow.hytils.config.command;
 
 import cc.woverflow.hytils.HytilsReborn;
 import com.google.common.collect.Sets;

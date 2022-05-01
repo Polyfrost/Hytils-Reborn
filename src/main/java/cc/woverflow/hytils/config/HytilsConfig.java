@@ -157,14 +157,14 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Mystery Box Rewards",
-        description = "Remove mystery box messages from chat and only show your own.\n§eExample: §b[Mystery Box] Steve §ffound a §6Legendary Hype Train Gadget§f!",
+        description = "Remove mystery box messages from chat and only show your own.\n§eExample: §b✦ §b[MVP§c+§b] Steve §ffound a §6Legendary Hype Train Gadget§f!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean mysteryBoxAnnouncer;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Soul Well Announcements",
-        description = "Remove soul well announcements from chat.\n§eExample: §bSteve §7has found a §6Bulldozer Perk I (Insane) §7in the §bSoul Well§7!",
+        description = "Remove soul well announcements from chat.\n§eExample: §b[MVP§c+§b] Steve §7has found a §6Bulldozer Perk I (Insane) §7in the §bSoul Well§7!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean soulWellAnnouncer;

@@ -42,7 +42,7 @@ public class LanguageData {
     private String chatCleanerJoinNormal = "joined the lobby";
     private String chatCleanerJoinHalloween = "spooked into the lobby";
     private String chatCleanerJoinChristmas = "(?:sled|slid) into the lobby";
-    private String chatCleanerMysteryBoxFind = ".+(?<player>\\w{1,16}) found (?:a|an) (?:✰{5} Mystery Box!|.+ in a .+ Mystery Box!)$";
+    private String chatCleanerMysteryBoxFind = "^.+(?<player>\\w{1,16}) found (?:a|an) (?:.{5} Mystery Box!|.+ in a .+!)$";
     private String chatCleanerSoulWellFind = "^.+ has found .+ in the Soul Well!$";
     private String chatCleanerGameAnnouncement = "^\u27A4 A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!$";
     private String chatCleanerBedwarsPartyAdvertisement = "(?<number>[1-7]/[2-8])";
@@ -52,13 +52,13 @@ public class LanguageData {
     private String chatGiftBlocker = "They have gifted \\d+ ranks so far!";
     private String chatCleanerGrinchPresents = "(?:You found (?:an egg|a gift|a candy)! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} (?:gifts|eggs|candy)!)";
     private String chatCleanerEarnedCoinsAndExp = "^(?:\\W\\d+ .* Experience.*|\\W\\d+ coins!.*|You earned \\d+ GEXP from playing.+!|.+ just earned .+ as a Guild Level Reward!)"; //.* at the end for modifiers
-    public String chatCleanerReplayRecorded = "§6§aThis game has been recorded. §6Click here to watch the Replay!§r";
+    public String chatCleanerReplayRecorded = "This game has been recorded. Click here to watch the Replay!";
     private String chatCleanerTip = "(?:You tipped \\d+ (?:player|players) in \\d+ (?:game|different games)!|You already tipped everyone that has boosters active, so there isn't anybody to be tipped right now!)";
     private String chatCleanerOnlineStatus = "REMINDER: Your Online Status is currently set to (?:Appear Offline|Busy|Away)";
-    private String chatCleanerGameTips = "^(?:If you get disconnected use /rejoin to join back in the game\\.|You may use /mmreport <skin name> to chat report in this mode!|Teaming with the *.+ is not allowed!|Teaming is not allowed *.+|Cross Teaming / Teaming with other teams is not allowed!|Cross-teaming is not allowed! Report cross-teamers using /report.|Cages opened! FIGHT!|Queued! Use the bed to return to lobby!|Queued! Use the bed to cancel!)";
+    private String chatCleanerGameTips = "^(?:If you get disconnected use /rejoin to join back in the game\\.|You may use /mmreport <skin name> to chat report in this mode!|Teaming with the .+ is not allowed!|Teaming is not allowed .+|Cross Teaming / Teaming with other teams is not allowed!|Cross-teaming is not allowed! Report cross-teamers using /report.|Cages opened! FIGHT!|Queued! Use the bed to return to lobby!|Queued! Use the bed to cancel!|You can use /ic <message> to communicate with your fellow infected!)";
     private String chatCleanerStats = "Click to view the stats of your .* game!";
 
-    private String connectedServerConnectMessage = "^(You are currently connected to server \\S+)|(Sending you to \\S+.{3}!)|(Sending to server \\S+.{3})|(Warping you to your SkyBlock island...)|(Warping...)|(Sending a visit request...)|(Finding player...)$";
+    private String connectedServerConnectMessage = "^(You are currently connected to server \\S+)|(Sending you to \\S+.{3}!)|(Sending to server \\S+.{3})|(Warping you to your SkyBlock island...)|(Warping...)|(Sending a visit request...)|(Finding player...)|(Request join for (?:Hub|Dungeon Hub) .{2,4} \\S+.{3})$";
 
     private String achievementPattern = "a>> {3}Achievement Unlocked: (?<achievement>.+) {3}<<a";
     private String levelUpPattern = "You are now Hypixel Level (?<level>\\d+)!";
@@ -66,7 +66,7 @@ public class LanguageData {
 
     private String chatRestylerGameJoinStyle = "^§r§e§r§(?<color>[\\da-f])(?:§k)?(?<player>\\w{1,16})§r§r§r§e has joined (?<amount>.+)!§r§e§r$";
     private String chatRestylerGameLeaveStyle = "^§r§e§r§(?<color>[\\da-f])(?:§k)?(?<player>\\w{1,16})§r§r§r§e has quit!§r§e§r$";
-    private String chatRestylerGameStartCounterStyle = "^(?<title>(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in|The alpha infected will be chosen in|Kill contracts will be issued in)) (?<time>\\d{1,3}) (?<unit>(seconds?!))(?: .\\d+.|)$"; // TODO: translate "Cages open in:" to french (also translate to chatRestylerGameStartCounterOutputStyle)
+    private String chatRestylerGameStartCounterStyle = "^(?<title>(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in|The alpha infected will be chosen in|Kill contracts will be issued in|The Murderers get their swords in)) (?<time>\\d{1,3}) (?<unit>(seconds?!))$"; // TODO: translate "Cages open in:" to french (also translate to chatRestylerGameStartCounterOutputStyle)
     private String chatRestylerGameStartCounterOutputStyle = "^\u00a7e\u00a7l\\* \u00a7a(The game starts in|Cages open in:) \u00a7b\u00a7l\\d{1,3} \u00a7aseconds?!\u00a7r$";
     private String chatRestylerFormattedPaddingPattern = "\\(§r§b(\\d{1,2})§r§r§r§e/§r§b(\\d{1,3})§r§r§r§e\\)";
     private String chatRestylerPartyPattern = "^((?:\\u00a7r)?\\u00a7\\w)(Party )(\\u00a7\\w>)";
@@ -115,6 +115,7 @@ public class LanguageData {
     public Pattern chatGiftBlockerRegex;
     public Pattern chatCleanerGrinchPresentsRegex;
     public Pattern chatCleanerEarnedCoinsAndExpRegex;
+    public Pattern chatCleanerReplayRecordedRegex;
     public Pattern chatCleanerTipRegex;
     public Pattern chatCleanerOnlineStatusRegex;
     public Pattern chatCleanerGameTipsRegex;
@@ -169,6 +170,7 @@ public class LanguageData {
             chatGiftBlockerRegex = Pattern.compile(chatGiftBlocker);
             chatCleanerGrinchPresentsRegex = Pattern.compile(chatCleanerGrinchPresents);
             chatCleanerEarnedCoinsAndExpRegex = Pattern.compile(chatCleanerEarnedCoinsAndExp);
+            chatCleanerReplayRecordedRegex = Pattern.compile(chatCleanerReplayRecorded);
             chatCleanerTipRegex = Pattern.compile(chatCleanerTip);
             chatCleanerOnlineStatusRegex = Pattern.compile(chatCleanerOnlineStatus);
             chatCleanerGameTipsRegex = Pattern.compile(chatCleanerGameTips);
