@@ -58,7 +58,7 @@ public class LanguageData {
     private String chatCleanerGameTips = "^(?:If you get disconnected use /rejoin to join back in the game\\.|You may use /mmreport <skin name> to chat report in this mode!|Teaming with the .+ is not allowed!|Teaming is not allowed .+|Cross Teaming / Teaming with other teams is not allowed!|Cross-teaming is not allowed! Report cross-teamers using /report.|Cages opened! FIGHT!|Queued! Use the bed to return to lobby!|Queued! Use the bed to cancel!|You can use /ic <message> to communicate with your fellow infected!)";
     private String chatCleanerStats = "Click to view the stats of your .* game!";
 
-    private String connectedServerConnectMessage = "^(You are currently connected to server \\S+)|(Sending you to \\S+.{3}!)|(Sending to server \\S+.{3})|(Warping you to your SkyBlock island...)|(Warping...)|(Sending a visit request...)|(Finding player...)||(Request join for (?:Hub|Dungeon Hub) .{2,4} \\S+.{3})$";
+    private String connectedServerConnectMessage = "^(You are currently connected to server \\S+)|(Sending you to \\S+.{3}!)|(Sending to server \\S+.{3})|(Warping you to your SkyBlock island...)|(Warping...)|(Sending a visit request...)|(Finding player...)|(Request join for (?:Hub|Dungeon Hub) .{2,4} \\S+.{3})$";
 
     private String achievementPattern = "a>> {3}Achievement Unlocked: (?<achievement>.+) {3}<<a";
     private String levelUpPattern = "You are now Hypixel Level (?<level>\\d+)!";
