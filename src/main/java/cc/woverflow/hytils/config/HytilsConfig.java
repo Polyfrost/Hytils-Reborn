@@ -61,7 +61,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Auto Queue",
-        description = "Automatically queues for another game once you die.\n§eThis will require you to interact with the game in a way to prevent abuse.",
+        description = "Automatically queues for another game once you win or die.\n§eThis will require you to interact with the game in a way to prevent abuse.",
         category = "Automatic", subcategory = "Game"
     )
     public static boolean autoQueue;
