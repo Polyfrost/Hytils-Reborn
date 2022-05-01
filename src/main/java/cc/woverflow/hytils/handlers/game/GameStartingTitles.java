@@ -49,6 +49,8 @@ public class GameStartingTitles {
             case "YOU ARE BLUE":
             case "YOU ARE YELLOW":
             case "YOU ARE GREEN":
+            case "PRE ROUND":
+            case "ROUND START":
                 event.setCanceled(true);
                 break;
         }
