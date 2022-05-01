@@ -1036,6 +1036,8 @@ public class HytilsConfig extends Vigilant {
 
         addDependency("uhcMiddleWaypointText", "uhcMiddleWaypoint");
 
+        addDependency("miniWallsMiddleBeaconColor", "miniWallsMiddleBeacon");
+
         addDependency("sumoRenderDistanceAmount", "sumoRenderDistance");
 
         addDependency("overlayAmount", "heightOverlay");

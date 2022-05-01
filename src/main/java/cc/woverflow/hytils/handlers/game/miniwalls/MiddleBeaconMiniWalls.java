@@ -43,13 +43,12 @@ public class MiddleBeaconMiniWalls {
     @SubscribeEvent
     public void onTitle(TitleEvent event) {
         final String unformattedTitle = EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle());
-
-        if (unformattedTitle != null && (unformattedTitle.equals("Your Mini Wither died!") || unformattedTitle.equals("DEATHMATCH")) && HytilsConfig.miniWallsMiddleBeacon) miniWitherDead = true;
+        if (unformattedTitle != null && (unformattedTitle.equals("Your Mini Wither died!") || unformattedTitle.equals("DEATHMATCH"))) miniWitherDead = true;
     }
 
     public boolean shouldMakeBeacon() {
         LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        return EssentialAPI.getMinecraftUtil().isHypixel() && (locraw != null && locraw.getGameMode().equalsIgnoreCase("mini_walls") && this.miniWitherDead && HytilsConfig.miniWallsMiddleBeacon);
+        return EssentialAPI.getMinecraftUtil().isHypixel() && locraw != null && locraw.getGameMode().equalsIgnoreCase("mini_walls") && HytilsConfig.miniWallsMiddleBeacon && this.miniWitherDead;
     }
 
     @SubscribeEvent
