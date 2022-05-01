@@ -28,40 +28,23 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class GameEndingTitles {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onTitle(TitleEvent event) {
-        if (!EssentialAPI.getMinecraftUtil().isHypixel()) return;
-        if (HytilsConfig.hideGameEndingTitles) {
-            switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle())) {
-                case "YOU WIN!":
-                case "YOU DIED!":
-                case "YOU LOSE!":
-                case "VICTORY!":
-                case "GAME OVER!":
-                case "RESPAWNED!":
-                case "DEFEAT!":
-                case "GAME END":
-                case "You Win!":
-                case "You Lose!":
-                    event.setCanceled(true);
-                    break;
-            }
+        if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilsConfig.hideGameEndingTitles) {
+            return;
         }
-        if (HytilsConfig.hideGameEndingCountdownTitles) {
-            switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle())) {
-                case "60":
-                case "30":
-                case "10":
-                case "9":
-                case "8":
-                case "7":
-                case "6":
-                case "5":
-                case "4":
-                case "3":
-                case "2":
-                case "1":
-                    event.setCanceled(true);
-                    break;
-            }
+
+        switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle())) {
+            case "YOU WIN!":
+            case "YOU DIED!":
+            case "YOU LOSE!":
+            case "VICTORY!":
+            case "GAME OVER!":
+            case "RESPAWNED!":
+            case "DEFEAT!":
+            case "GAME END":
+            case "You Win!":
+            case "You Lose!":
+                event.setCanceled(true);
+                break;
         }
     }
 }
