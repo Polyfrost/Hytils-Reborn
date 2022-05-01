@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.woverflow.hytils.config.command;
+package cc.woverflow.hytils.command;
 
 import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;

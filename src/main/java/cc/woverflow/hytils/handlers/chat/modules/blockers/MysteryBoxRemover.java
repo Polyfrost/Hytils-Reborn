@@ -32,7 +32,9 @@ public class MysteryBoxRemover implements ChatReceiveModule {
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         Matcher matcher = getLanguage().chatCleanerMysteryBoxFindRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
         if (matcher.matches()) {
-            event.setCanceled(true);
+            if (!matcher.group("player").contains(Minecraft.getMinecraft().thePlayer.getName()) || !matcher.group("player").startsWith("You")) {
+                event.setCanceled(true);
+            }
         }
     }
 

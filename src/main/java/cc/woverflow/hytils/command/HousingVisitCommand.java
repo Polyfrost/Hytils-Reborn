@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.woverflow.hytils.config.command;
+package cc.woverflow.hytils.command;
 
 import cc.woverflow.hytils.HytilsReborn;
 import gg.essential.api.commands.Command;
