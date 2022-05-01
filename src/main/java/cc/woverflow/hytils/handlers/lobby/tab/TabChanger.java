@@ -124,7 +124,7 @@ public class TabChanger {
         return EssentialAPI.getMinecraftUtil().isHypixel() && ((HytilsConfig.hidePingInTab && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) || isSkyblockTabInformationEntry(networkPlayerInfo));
     }
 
-    private static final Pattern validMinecraftUsername = Pattern.compile("(?:.+|)\\w{1,16}(?: .{1,3}|)");
+    private static final Pattern validMinecraftUsername = Pattern.compile("\\w{1,16}(?: .{1,3}|$)");
     private static final Pattern skyblockTabInformationEntryGameProfileNameRegex = Pattern.compile("![A-D]-[a-v]");
 
     private static boolean isSkyblockTabInformationEntry(NetworkPlayerInfo networkPlayerInfo) {
