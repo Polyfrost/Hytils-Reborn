@@ -51,9 +51,9 @@ public class AutoChatSwapper implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         Multithreading.runAsync(() -> {
-            final Matcher statusMatcher = getLanguage().autoChatSwapperPartyStatusRegex.matcher(UTextComponent.Companion.stripFormatting(event.message.getUnformattedText()));
-            final Matcher statusMatcher2 = getLanguage().autoChatSwapperPartyStatusRegex2.matcher(UTextComponent.Companion.stripFormatting(event.message.getUnformattedText()));
-            if (statusMatcher.matches()) {
+            final Matcher statusMatcherLeave = getLanguage().autoChatSwapperPartyStatusRegex.matcher(UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())); // leaving party
+            final Matcher statusMatcherJoin = getLanguage().autoChatSwapperPartyStatusRegex2.matcher(UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())); // joining party
+            if (statusMatcherLeave.matches()) {
                 MinecraftForge.EVENT_BUS.register(new ChatChannelMessagePreventer());
                 switch (HytilsConfig.chatSwapperReturnChannel) {
                     case 0:
@@ -100,7 +100,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
                         }
                         break;
                 }
-            } else if (statusMatcher2.matches() && HytilsConfig.partySwapper) {
+            } else if (statusMatcherJoin.matches() && HytilsConfig.chatSwapper) {
                 MinecraftForge.EVENT_BUS.register(new ChatChannelMessagePreventer());
                 HytilsReborn.INSTANCE.getCommandQueue().queue("/chat p");
                 if (HytilsReborn.INSTANCE.isChatting && ChattingConfig.INSTANCE.getChatTabs() && HytilsConfig.chattingIntegration) {

@@ -283,7 +283,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Gift Messages",
-        description = "Removes \"They have gifted x so far!\" messages from chat.",
+        description = "Removes \"§eThey have gifted §6x §eranks so far!§r\" messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean giftBlocker;
@@ -401,18 +401,11 @@ public class HytilsConfig extends Vigilant {
     public static boolean padPlayerCount;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Chat Swapper",
-        description = "Automatically change back to a selected channel when leaving a party.",
+        type = PropertyType.SWITCH, name = "Party Chat Swapper",
+        description = "Automatically change to and out of a party channel when joining/leaving a party.",
         category = "Chat", subcategory = "Parties"
     )
     public static boolean chatSwapper;
-
-    @Property(
-        type = PropertyType.SWITCH, name = "Party Chat Swapper",
-        description = "Automatically change to a party channel when joining a party.",
-        category = "Chat", subcategory = "Parties"
-    )
-    public static boolean partySwapper;
 
     @Property(
         type = PropertyType.SELECTOR, name = "Chat Swapper Channel",
@@ -1017,7 +1010,6 @@ public class HytilsConfig extends Vigilant {
 
         addDependency("disableNotifyMiningFatigueSkyblock", "notifyMiningFatigue");
 
-        addDependency("partySwapper", "chatSwapper");
         addDependency("chatSwapperReturnChannel", "chatSwapper");
 
         addDependency("playerCountBeforePlayerName", "gameStatusRestyle");
