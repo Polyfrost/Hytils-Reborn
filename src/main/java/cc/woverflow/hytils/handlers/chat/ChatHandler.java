@@ -92,6 +92,7 @@ public class ChatHandler {
         this.registerModule(new AutoAPI());
         this.registerModule(new AutoChatReportConfirm());
         this.registerModule(new AutoChatReportConfirm());
+        this.registerModule(new AutoChatSwapper());
         this.registerModule(new AutoFriend());
         this.registerModule(new AutoGL());
         this.registerModule(new AutoPartyWarpConfirm());
