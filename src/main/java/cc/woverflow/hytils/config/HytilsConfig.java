@@ -877,7 +877,7 @@ public class HytilsConfig extends Vigilant {
     public static boolean miniWallsMiddleBeacon;
 
     @Property(
-        type = PropertyType.COLOR, name = "Middle Waypoint Beacon in MiniWalls",
+        type = PropertyType.COLOR, name = "MiniWalls Beacon Color",
         description = "Set the color of the beacon.",
         category = "Game", subcategory = "Visual"
     )
