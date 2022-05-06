@@ -69,12 +69,10 @@ import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 
 @Mod(
     modid = HytilsReborn.MOD_ID,
@@ -121,21 +119,6 @@ public class HytilsReborn {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        try {
-            File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");
-            File oldConfig = new File(oldModDir, "hytilitiesreborn.toml");
-            if (oldConfig.exists()) {
-                FileUtils.writeStringToFile(new File(modDir, "hytilsreborn.toml"), FileUtils.readFileToString(oldConfig, StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-                oldConfig.renameTo(new File(modDir, "hytilsreborn_backup.toml"));
-            }
-            File oldBlockConfig = new File(oldModDir, "blockhighlight.toml");
-            if (oldBlockConfig.exists()) {
-                FileUtils.writeStringToFile(new File(modDir, "blockhighlight.toml"), FileUtils.readFileToString(oldBlockConfig, StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-                oldBlockConfig.renameTo(new File(modDir, "blockhighlight_backup.toml"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         (config = new HytilsConfig()).preload();
         (blockConfig = new BlockHighlightConfig()).preload();
         new HytilsCommand().register();
@@ -212,6 +195,7 @@ public class HytilsReborn {
 
         // height overlay
         eventBus.register(HeightHandler.INSTANCE);
+
         eventBus.register(new HypixelAPIUtils());
     }
 

@@ -26,11 +26,14 @@ import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
 import kotlin.jvm.functions.Function0;
 import net.minecraft.client.Minecraft;
+import org.apache.commons.io.FileUtils;
 
 import java.awt.*;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
-@SuppressWarnings("unused")
 public class HytilsConfig extends Vigilant {
 
     // API
@@ -976,6 +979,19 @@ public class HytilsConfig extends Vigilant {
 
     public HytilsConfig() {
         super(new File(HytilsReborn.INSTANCE.modDir, "hytilsreborn.toml"));
+        try {
+            File modDir = HytilsReborn.INSTANCE.modDir;
+            File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");
+            File oldConfig = new File(oldModDir, "hytilitiesreborn.toml");
+            if (oldConfig.exists()) {
+                FileUtils.writeStringToFile(new File(modDir, "hytilsreborn.toml"), FileUtils.readFileToString(oldConfig, StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+                if (!oldConfig.renameTo(new File(modDir, "hytilsreborn_backup.toml"))) {
+                    Files.move(oldConfig.toPath(), modDir.toPath().resolve("hytilsreborn_backup.toml"), StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initialize();
 
         if (configNumber != 2) { // Config version has not been set or is outdated

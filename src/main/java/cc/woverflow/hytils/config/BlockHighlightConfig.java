@@ -23,9 +23,13 @@ import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
 import net.minecraft.block.material.MapColor;
+import org.apache.commons.io.FileUtils;
 
 import java.awt.*;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -162,6 +166,19 @@ public class BlockHighlightConfig extends Vigilant {
 
     public BlockHighlightConfig() {
         super(new File(HytilsReborn.INSTANCE.modDir, "blockhighlight.toml"));
+        try {
+            File modDir = HytilsReborn.INSTANCE.modDir;
+            File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");
+            File oldBlockConfig = new File(oldModDir, "blockhighlight.toml");
+            if (oldBlockConfig.exists()) {
+                FileUtils.writeStringToFile(new File(modDir, "blockhighlight.toml"), FileUtils.readFileToString(oldBlockConfig, StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+                if (!oldBlockConfig.renameTo(new File(modDir, "blockhighlight_backup.toml"))) {
+                    Files.move(oldBlockConfig.toPath(), modDir.toPath().resolve("blockhighlight_backup.toml"), StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initialize();
         colorMap.putIfAbsent(MapColor.snowColor, () -> white);
         colorMap.putIfAbsent(MapColor.adobeColor, () -> orange);
