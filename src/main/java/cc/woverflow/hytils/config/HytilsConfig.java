@@ -275,8 +275,8 @@ public class HytilsConfig extends Vigilant {
     public static boolean duelsBlockTrail;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Remove the SkyBlock Welcome Message",
-        description = "Hides the \"§eWelcome to §aHypixel SkyBlock§e!§r\" from chat.",
+        type = PropertyType.SWITCH, name = "Remove SkyBlock Welcome Messages",
+        description = "Removes \"§eWelcome to §aHypixel SkyBlock§e!§r\" messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean skyblockWelcome;
