@@ -20,6 +20,8 @@ package cc.woverflow.hytils.handlers.lobby.tab;
 
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
+import cc.woverflow.hytils.handlers.game.GameType;
+import cc.woverflow.hytils.util.locraw.LocrawInformation;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -92,7 +94,8 @@ public class TabChanger {
                 name = color + name.substring(name.indexOf("]") + 2);
             }
 
-            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]")) {
+            LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
+            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && locraw != null && locraw.getGameType() != GameType.HOUSING) {
                 // trim off the guild tag
                 // e.g. Steve §6[GUILD]
                 name = name.substring(0, name.lastIndexOf("[") - 3);

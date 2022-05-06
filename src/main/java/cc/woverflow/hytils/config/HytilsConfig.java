@@ -269,7 +269,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Block Trail Disabled Messages",
-        description = "Hides the message explaining that your duel's block trail cosmetic was disabled in specific gamemodes.\n§eExample:§cYour block trail aura is disabled in this mode!",
+        description = "Hides the message explaining that your duel's block trail cosmetic was disabled in specific gamemodes.\n§eExample: §cYour block trail aura is disabled in this mode!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean duelsBlockTrail;
