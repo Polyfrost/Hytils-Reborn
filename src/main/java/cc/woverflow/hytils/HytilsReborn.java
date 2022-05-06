@@ -103,7 +103,6 @@ public class HytilsReborn {
     private final ChatHandler chatHandler = new ChatHandler();
     private final LocrawUtil locrawUtil = new LocrawUtil();
     private final AutoQueue autoQueue = new AutoQueue();
-    private final AutoWB autoWB = new AutoWB();
 
     public boolean isPatcher;
     public boolean isChatting;
@@ -167,7 +166,6 @@ public class HytilsReborn {
 
         // chat
         eventBus.register(chatHandler);
-        eventBus.register(autoWB);
         eventBus.register(silentRemoval);
         eventBus.register(hardcoreStatus);
         eventBus.register(new AchievementEvent());

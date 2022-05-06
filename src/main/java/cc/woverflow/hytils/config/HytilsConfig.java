@@ -1016,14 +1016,14 @@ public class HytilsConfig extends Vigilant {
 
         addDependency("antiGL", "autoGL");
 
-        addDependency("guildAutoWB", "AutoWB");
-        addDependency("friendsAutoWB", "AutoWB");
-        addDependency("AutoWBsendSeconds", "AutoWB");
-        addDependency("randomAutoWB", "AutoWB");
+        addDependency("guildAutoWB", "autoWB");
+        addDependency("friendsAutoWB", "autoWB");
+        addDependency("autoWBCooldown", "autoWB");
+        addDependency("randomAutoWB", "autoWB");
 
-        for (String property : Lists.newArrayList("AutoWBsendMessage1", "autoWBMessage2", "autoWBMessage3", "autoWBMessage4", "autoWBMessage5", "AutoWBsendMessage6", "AutoWBsendMessage7", "AutoWBsendMessage8", "AutoWBsendMessage9", "AutoWBsendMessage10")) {
+        for (String property : Lists.newArrayList("autoWBMessage1", "autoWBMessage2", "autoWBMessage3", "autoWBMessage4", "autoWBMessage5", "autoWBMessage6", "autoWBMessage7", "autoWBMessage8", "autoWBMessage9", "autoWBMessage10")) {
             registerListener(property, (a) -> setWBMessages());
-            addDependency(property, "AutoWB");
+            addDependency(property, "autoWB");
         }
         setWBMessages();
 

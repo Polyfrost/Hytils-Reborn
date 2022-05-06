@@ -23,6 +23,7 @@ import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import gg.essential.api.utils.Multithreading;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -35,7 +36,7 @@ public class AutoWB implements ChatReceiveModule {
 
     @Override
     public int getPriority() {
-        return 5;
+        return -6;
     }
 
     @Override
@@ -48,32 +49,38 @@ public class AutoWB implements ChatReceiveModule {
         String msg = event.message.getFormattedText().trim();
         Matcher matcher = HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().chatRestylerStatusPatternRegex.matcher(msg);
         if (matcher.matches()) {
-            String chatType = null;
-            String name = matcher.group("player");
-            if ((matcher.group("type").equals("§2Guild") || matcher.group("type").equals("§2§2G")) && matcher.group("status").equals("joined")) {
+            final String chatType;
+            String status = EnumChatFormatting.getTextWithoutFormattingCodes(matcher.group("status"));
+            String name = EnumChatFormatting.getTextWithoutFormattingCodes(matcher.group("player"));
+            String type = EnumChatFormatting.getTextWithoutFormattingCodes(matcher.group("type"));
+            if (StringUtils.isBlank(status) || StringUtils.isBlank(name) || StringUtils.isBlank(type)) {
+                return;
+            }
+            if (!status.equals("joined")) return;
+            if (StringUtils.startsWithAny(type, "Guild", "G")) {
                 if (HytilsConfig.guildAutoWB) {
                     chatType = "/gc ";
                 } else {
                     return;
                 }
-            }
-            if ((matcher.group("type").equals("§aFriend") || matcher.group("type").equals("§a§aF")) && matcher.group("status").equals("joined")) {
+            } else if (StringUtils.startsWithAny(type, "Friend", "F")) {
                 if (HytilsConfig.friendsAutoWB) {
                     chatType = "/msg " + name + " ";
                 } else {
                     return;
                 }
+            } else {
+                return;
             }
             String message = HytilsConfig.autoWBMessage1.replace("%player%", name);
-            final String finalChatType = chatType;
             if (HytilsConfig.randomAutoWB) {
                 try {
-                    Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage(finalChatType + getNextMessage(name)), HytilsConfig.autoWBCooldown, TimeUnit.SECONDS);
+                    Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage(chatType + getNextMessage(name)), HytilsConfig.autoWBCooldown, TimeUnit.SECONDS);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
-                Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage(finalChatType + message), HytilsConfig.autoWBCooldown, TimeUnit.SECONDS);
+                Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage(chatType + message), HytilsConfig.autoWBCooldown, TimeUnit.SECONDS);
             }
         }
     }

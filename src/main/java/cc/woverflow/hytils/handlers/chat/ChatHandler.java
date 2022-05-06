@@ -47,6 +47,7 @@ public class ChatHandler {
 
         this.registerModule(new AdBlocker());
         this.registerModule(new AntiGL());
+        this.registerModule(new AutoWB());
         this.registerModule(new BedwarsAdvertisementsRemover());
         this.registerModule(new BridgeOwnGoalDeathRemover());
         this.registerModule(new ConnectedMessage());

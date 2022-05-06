@@ -83,28 +83,6 @@ public class HytilsMixinPlugin implements IMixinConfigPlugin {
                 final String methodName = FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(classNode.name, method.name, method.desc);
                 final ListIterator<AbstractInsnNode> iterator = method.instructions.iterator();
                 switch (methodName) {
-                    case "renderPlayerlist":
-                    case "func_175249_a":
-                        while (iterator.hasNext()) {
-                            final AbstractInsnNode next = iterator.next();
-
-                            if (next.getOpcode() == Opcodes.INVOKEVIRTUAL) {
-                                final String methodInsnName = mapMethodNameFromNode(next);
-
-                                // sort the player map and filter any entity with a uuid version of 2
-                                if (methodInsnName.equals("getPlayerInfoMap") || methodInsnName.equals("func_175106_d")) {
-                                    method.instructions.insert(next, new MethodInsnNode(Opcodes.INVOKESTATIC,
-                                        "cc/woverflow/hytils/handlers/lobby/npc/NPCHandler",
-                                        "hideTabNpcs",
-                                        "(Ljava/util/Collection;)Ljava/util/Collection;",
-                                        false));
-                                }
-                            } else if (next.getOpcode() == Opcodes.ILOAD && ((VarInsnNode) next).var == 11 && next.getNext().getOpcode() == Opcodes.IFEQ && !(next.getPrevious() instanceof VarInsnNode && ((VarInsnNode)next.getPrevious()).var == 10)) {
-                                method.instructions.insert(next.getNext(), shouldRenderPlayerHead(((JumpInsnNode) next.getNext()).label));
-                            }
-                        }
-                        break;
-
                     case "getPlayerName":
                     case "func_175243_a":
                         while (iterator.hasNext()) {
@@ -139,15 +117,6 @@ public class HytilsMixinPlugin implements IMixinConfigPlugin {
             "modifyName",
             "(Ljava/lang/String;Lnet/minecraft/client/network/NetworkPlayerInfo;)Ljava/lang/String;",
             false));
-        return list;
-    }
-
-    // && TabChanger.shouldRenderPlayerHead(networkplayerinfo1)
-    private InsnList shouldRenderPlayerHead(LabelNode label) {
-        InsnList list = new InsnList();
-        list.add(new VarInsnNode(Opcodes.ALOAD, 24));
-        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "cc/woverflow/hytils/handlers/lobby/tab/TabChanger", "shouldRenderPlayerHead", "(Lnet/minecraft/client/network/NetworkPlayerInfo;)Z", false));
-        list.add(new JumpInsnNode(Opcodes.IFEQ, label));
         return list;
     }
 }
