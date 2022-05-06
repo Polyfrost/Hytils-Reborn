@@ -40,7 +40,7 @@ public class RenderEntityItemMixin_UHCOverlay {
         Item item = entity.getEntityItem().getItem();
         LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
         if (EssentialAPI.getMinecraftUtil().isHypixel() && locraw != null && (locraw.getGameType() == GameType.UHC_CHAMPIONS || locraw.getGameType() == GameType.SPEED_UHC) && HytilsConfig.uhcOverlay) {
-            if (item.getRegistryName().equals("minecraft:apple") || item.getRegistryName().equals("minecraft:golden_apple") || item.getRegistryName().equals("minecraft:skull") || item.getRegistryName().equals("minecraft:gold_ingot")) {
+            if (item.getRegistryName().equals("minecraft:apple") || item.getRegistryName().equals("minecraft:golden_apple") || item.getRegistryName().equals("minecraft:skull") || item.getRegistryName().equals("minecraft:gold_ingot") || item.getRegistryName().equals("minecraft:gold_nugget")) {
                 GlStateManager.scale(HytilsConfig.uhcOverlayMultiplier, HytilsConfig.uhcOverlayMultiplier, HytilsConfig.uhcOverlayMultiplier);
             }
         }
