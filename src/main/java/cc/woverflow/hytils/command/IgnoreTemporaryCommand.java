@@ -89,10 +89,11 @@ public class IgnoreTemporaryCommand extends Command {
                     e.printStackTrace();
                 }
                 UChat.say("/ignore add " + playerName);
-                HytilsReborn.INSTANCE.sendMessage("Success! The user has been ignored, and will be removed from your ignore list in " + time);
+                HytilsReborn.INSTANCE.sendMessage(&r&aSuccessfully ignored &r&6&l" +  playerName + "&r&afor &r&e&l" + time + "&r&a. The ignore will be removed after the specified period."
+);
             } catch (Exception e) {
                 e.printStackTrace();
-                HytilsReborn.INSTANCE.sendMessage("An error has occured and the user has not been ignored.");
+                HytilsReborn.INSTANCE.sendMessage("&cAn error has occured and the user has not been ignored.");
             }
         });
     }
