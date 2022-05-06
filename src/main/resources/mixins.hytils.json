@@ -5,6 +5,7 @@
   "plugin": "cc.woverflow.hytils.forge.HytilsMixinPlugin",
   "refmap": "mixins.hytils.refmap.json",
   "mixins": [
+    "CommandLimboMixin_FixCommand",
     "EntityLivingBaseMixin_MiningFatigue",
     "EntityPlayerSPMixin_MessageHandling",
     "GuiChatMixin_PlayAutocomplete",
