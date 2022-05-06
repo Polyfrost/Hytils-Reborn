@@ -31,6 +31,6 @@ public class CommandLimboMixin_FixCommand {
     @Dynamic("AutoTip")
     @ModifyConstant(method = "onCommand", constant = @Constant(stringValue = "/achat \u00a7c"))
     private String fixAutotipCommand(String value) {
-        return "/achat §";
+        return "§";
     }
 }
