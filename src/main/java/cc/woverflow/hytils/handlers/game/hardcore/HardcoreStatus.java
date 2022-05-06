@@ -48,8 +48,10 @@ public class HardcoreStatus {
     }
 
     @SubscribeEvent
-    public void onActionbar(ClientChatReceivedEvent event) {
-        if (event.message.getUnformattedText().equals("YOUR WITHER IS DEAD") && HytilsConfig.hardcoreHearts) {
+    public void onActionbar(ClientChatReceivedEvent event) { // The forge chat event gets stuff from the action bar as well
+        String msg = event.message.getUnformattedText();
+        if ((msg.equals("YOUR WITHER IS DEAD") || msg.startsWith("BED DESTRUCTION > Your Bed was")) &&
+            HytilsConfig.hardcoreHearts) {
             danger = true;
         }
     }
