@@ -142,7 +142,7 @@ public class DefaultChatRestyler implements ChatReceiveModule {
                         // if the format (below) is changed, remember to update the regex for it (chatRestylerGameStartCounterOutputStyle)
                         event.message = colorMessage("&e&l* &a" + (startCounterMatcher.group("title")) + " &b&l" + startCounterMatcher.group("time") + " &a" + startCounterMatcher.group("unit"));
                     } else {
-                        if ("We don't have enough players! Start cancelled.".equals(unformattedMessage)) {
+                        if ("We don't have enough players! Start cancelled.".equals(unformattedMessage) || ("We don't have enough players! Start delayed.".equals(unformattedMessage))) {
                             event.message = colorMessage("&e&l* &cStart cancelled.");
                         }
                     }

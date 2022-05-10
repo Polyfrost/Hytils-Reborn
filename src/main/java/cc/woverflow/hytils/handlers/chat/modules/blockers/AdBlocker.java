@@ -24,8 +24,6 @@ import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -37,45 +35,41 @@ public class AdBlocker implements ChatReceiveModule {
     }
 
     /**
-     * [/](party join or join party) or (p join) or (guild join or join guild) or (g join)
+     * [/](party join or join party) or (p join) or (party me) or (guild join or join guild) or (g join)
      * <p>
      * Blocks twitch.tv youtube.com/youtu.be
      * <p>
      * ah + visit are common words "ah yes" would flag best to keep /ah and /visit for now?
      * <p>
-     * /visit|ah playername is blocked and visit /playername
+     * Blocks (/visit|ah playername) or (visit /playername) or common strings (my ah|visit me)
      * <p>
      * https://regexr.com/5ct10 current tests
      * <p>
+     * Blocks advertisements to join German SkyBlock guilds
+     * <p>
+     * Blocks stuff related with lowballing
+     *
      * TODO: add more phrases to regex
      */
-    private final Pattern commonAdvertisements = Pattern.compile("/?(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16})|(/gift)|(Gilde)|(lowballing))",
+    private final Pattern commonAdvertisements = Pattern.compile("/?(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|/?(party me|visit me|my ah|my smp)|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16})|(/gift)|(gilde)|(lowballing|lowbaling|lowvaling|lowvaluing|lowballers))",
         Pattern.CASE_INSENSITIVE);
 
     // common phrases used in messages where people beg for a rank gift
-    private final List<String> ranks = Arrays.asList("mvp", "vip");
-    private final List<String> begging = Arrays.asList("give", "please", "pls", "plz", "gift", "upgrade", "rankupgrade", "rankup", "upgraderank", "beg", "begging");
+    private final Pattern rankBegging = Pattern.compile("([^\\[](vip|mvp|mpv|vpi)|(please|pls|plz|give|giving)|(rank|buy me)|(gift|gifting|gifters)|(beg|begging|beggers))",
+        Pattern.CASE_INSENSITIVE);
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final String message = event.message.getUnformattedText().toLowerCase(Locale.ENGLISH);
-        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?"))) return;
+        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (message.startsWith("they have gifted") && message.endsWith("so far!")))
+            return;
         if (commonAdvertisements.matcher(message).find(0)) {
             event.setCanceled(true);
-            return;
         }
 
         if (!HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) return;
-        for (String begs : begging) {
-            if (message.contains(begs)) {
-                for (String rank : ranks) {
-                    if (message.contains(rank)) {
-                        event.setCanceled(true);
-                        break;
-                    }
-                }
-                break;
-            }
+        if (rankBegging.matcher(message).find(0)) {
+            event.setCanceled(true);
         }
     }
 

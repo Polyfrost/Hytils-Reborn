@@ -191,14 +191,14 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Player AdBlocker",
-        description = "Remove spam messages from players, usually advertising something.",
+        description = "Remove spam messages from players, usually advertising something or begging for ranks.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean playerAdBlock;
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove BedWars Advertisements",
-        description = "Remove player messages asking to join BedWars parties.\n§eExample: §7[1✫] §b[MVP§c+§b] Steve§f: Join BedWars party!",
+        description = "Remove player messages asking to join BedWars parties.\n§eExample: §7[1✫] §b[MVP§c+§b] Steve§f: Join BedWars 2/4 party!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean bedwarsAdvertisements;
