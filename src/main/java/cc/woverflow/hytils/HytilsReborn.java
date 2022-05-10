@@ -47,6 +47,7 @@ import cc.woverflow.hytils.handlers.lobby.LobbyChecker;
 import cc.woverflow.hytils.handlers.lobby.armorstands.ArmorStandHider;
 import cc.woverflow.hytils.handlers.lobby.bossbar.LobbyBossbar;
 import cc.woverflow.hytils.handlers.lobby.limbo.LimboLimiter;
+import cc.woverflow.hytils.handlers.lobby.limbo.LimboPmDing;
 import cc.woverflow.hytils.handlers.lobby.limbo.LimboTitle;
 import cc.woverflow.hytils.handlers.lobby.mysterybox.MysteryBoxStar;
 import cc.woverflow.hytils.handlers.lobby.npc.NPCHandler;
@@ -178,6 +179,7 @@ public class HytilsReborn {
         eventBus.register(new LobbyBossbar());
         eventBus.register(new LimboLimiter());
         eventBus.register(new LimboTitle());
+        eventBus.register(new LimboPmDing());
         eventBus.register(new MysteryBoxStar());
 
         // specific games

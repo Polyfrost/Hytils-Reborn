@@ -960,6 +960,13 @@ public class HytilsConfig extends Vigilant {
     public static int limboFPS = 15;
 
     @Property(
+        type = PropertyType.SWITCH, name = "Limbo PM Ding",
+        description = "While in Limbo, play the ding sound if you get a PM. Currently, Hypixel's option does not work in Limbo.",
+        category = "Lobby", subcategory = "General"
+    )
+    public static boolean limboDing;
+
+    @Property(
         type = PropertyType.SWITCH, name = "Hide Lobby Bossbars",
         description = "Hide the bossbar in the lobby.",
         category = "Lobby", subcategory = "GUI"
