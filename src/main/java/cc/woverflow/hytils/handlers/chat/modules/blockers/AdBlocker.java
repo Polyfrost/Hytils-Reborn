@@ -55,7 +55,7 @@ public class AdBlocker implements ChatReceiveModule {
         Pattern.CASE_INSENSITIVE);
 
     // common phrases used in messages where people beg for a rank gift
-    private final Pattern rankBegging = Pattern.compile("(?!.+: )((vip|mvp|mpv|vpi)|(please|pls|plz|give|giving)|(rank|buy me)|(gift|gifting|gifters)|(beg|begging|beggers))",
+    private final Pattern rankBegging = Pattern.compile("(?!.+: )([^\\[](vip|mvp|mpv|vpi)|(please|pls|plz|give|giving)|(rank|buy me|upgrade me)|(gift|gifting|gifters)|(beg|begging|beggers))",
         Pattern.CASE_INSENSITIVE);
 
     @Override
