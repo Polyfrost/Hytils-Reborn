@@ -41,7 +41,7 @@ public class AdBlocker implements ChatReceiveModule {
      * <p>
      * ah + visit are common words "ah yes" would flag best to keep /ah and /visit for now?
      * <p>
-     * Blocks (/visit|ah playername) or (visit /playername) or common strings (my ah|visit me)
+     * Blocks (/visit|ah playername) or (visit /playername) or common strings (my ah|visit me|my smp)
      * <p>
      * https://regexr.com/5ct10 current tests
      * <p>
@@ -51,11 +51,11 @@ public class AdBlocker implements ChatReceiveModule {
      *
      * TODO: add more phrases to regex
      */
-    private final Pattern commonAdvertisements = Pattern.compile("/?(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|/?(party me|visit me|my ah|my smp)|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16})|(/gift)|(gilde)|(lowballing|lowbaling|lowvaling|lowvaluing|lowballers))",
+    private final Pattern commonAdvertisements = Pattern.compile("(?!.+: )(/?(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|/?(party me|visit me|my ah|my smp)|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16})|(/gift)|(gilde)|(lowballing|lowbaling|lowvaling|lowvaluing|lowballers)))",
         Pattern.CASE_INSENSITIVE);
 
     // common phrases used in messages where people beg for a rank gift
-    private final Pattern rankBegging = Pattern.compile("([^\\[](vip|mvp|mpv|vpi)|(please|pls|plz|give|giving)|(rank|buy me)|(gift|gifting|gifters)|(beg|begging|beggers))",
+    private final Pattern rankBegging = Pattern.compile("(?!.+: )((vip|mvp|mpv|vpi)|(please|pls|plz|give|giving)|(rank|buy me)|(gift|gifting|gifters)|(beg|begging|beggers))",
         Pattern.CASE_INSENSITIVE);
 
     @Override
