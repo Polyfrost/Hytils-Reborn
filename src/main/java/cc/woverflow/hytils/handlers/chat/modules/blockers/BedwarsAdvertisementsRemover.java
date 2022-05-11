@@ -34,7 +34,7 @@ public class BedwarsAdvertisementsRemover implements ChatReceiveModule {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
         if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (message.startsWith("they have gifted") && message.endsWith("so far!")))
             return;
-        if (locrawInformation != null && locrawInformation.getGameType() == GameType.BED_WARS
+        if (locrawInformation != null && locrawInformation.getGameType() == GameType.BED_WARS && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()
             && getLanguage().chatCleanerBedwarsPartyAdvertisementRegex.matcher(message).find()) {
             event.setCanceled(true);
         }
