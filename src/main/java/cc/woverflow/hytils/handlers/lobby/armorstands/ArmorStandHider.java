@@ -29,15 +29,15 @@ import cc.woverflow.hytils.handlers.game.GameType;
 import cc.woverflow.hytils.util.locraw.LocrawInformation;
 
 public class ArmorStandHider {
-    private static final String[] armorStandNames = {"click", "mystery vault", "daily reward tokens", "advent calendar reward", "free rewards", "special holiday quests",
+    private static final String[] armorStandNames = {"click", "mystery vault", "daily reward tokens", "advent calendar reward", "free rewards", "special holiday quests", "release",
         "festive floors", "museums", "hype", "coming soon", " set #", "fireball/tnt jumping", "parkour starts this way", "go ahead into the cave", "holiday mode", "new update", "new modes & maps",
-        "challenges released", "bug fixes & qol update", "catacombs m7!", "sign posting", "parkour challenge", "your arcade games profile", "crimson isle", "featured", "limited time!", "hytale trailer",
-        "happy easter", "happy halloween", "happy holidays", "easter event", "holiday event", "halloween event", "summer event"};
+        "bug fixes & qol update", "sign posting", "parkour challenge", "your arcade games profile", "crimson isle", "featured", "limited time", "hytale trailer",
+        "happy easter", "happy halloween", "happy holidays", "easter event", "holiday event", "halloween event", "summer event", "goal", "defend", "jump in to score"};
 
     @SubscribeEvent
     public void onEntityRenderer(RenderLivingEvent.Pre<EntityLivingBase> event) {
         final LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (HytilsConfig.hideUselessArmorStands && EssentialAPI.getMinecraftUtil().isHypixel() && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() || (HytilsConfig.hideUselessArmorStandsSkyblock && locraw != null && locraw.getGameType() == GameType.SKYBLOCK)) {
+        if (HytilsConfig.hideUselessArmorStands && EssentialAPI.getMinecraftUtil().isHypixel() && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() || (HytilsConfig.hideUselessArmorStandsGame && locraw != null && locraw.getGameType() == GameType.SKYBLOCK) || (HytilsConfig.hideUselessArmorStandsGame && locraw != null && locraw.getGameType() == GameType.BED_WARS) || (HytilsConfig.hideUselessArmorStandsGame && locraw != null && locraw.getGameType() == GameType.SKY_WARS) || (HytilsConfig.hideUselessArmorStandsGame && locraw != null && locraw.getGameMode().contains("BRIDGE"))) {
             if (event.entity instanceof EntityArmorStand) {
                 String unformattedArmorStandName = event.entity.getCustomNameTag().toLowerCase();
                 for (String armorStands : armorStandNames) {
