@@ -774,7 +774,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Useless Game Nametags",
-        description = "Hides unnecessary nametags such as those that say \"§eRIGHT §eCLICK§r\" or \"§eCLICK§r\" in SkyBlock, BedWars, SkyWars, and Duels, as well as other useless ones.",
+        description = "Hides unnecessary nametags such as those that say \"§eRIGHT CLICK§r\" or \"§eCLICK§r\" in SkyBlock, BedWars, SkyWars, and Duels, as well as other useless ones.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideUselessArmorStandsGame;
