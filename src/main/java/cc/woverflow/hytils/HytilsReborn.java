@@ -28,7 +28,6 @@ import cc.woverflow.hytils.handlers.chat.ChatHandler;
 import cc.woverflow.hytils.handlers.chat.modules.events.AchievementEvent;
 import cc.woverflow.hytils.handlers.chat.modules.events.LevelupEvent;
 import cc.woverflow.hytils.handlers.chat.modules.triggers.AutoQueue;
-import cc.woverflow.hytils.handlers.chat.modules.triggers.AutoWB;
 import cc.woverflow.hytils.handlers.game.GameEndingCountdownTitles;
 import cc.woverflow.hytils.handlers.game.GameEndingTitles;
 import cc.woverflow.hytils.handlers.game.GameStartingTitles;
