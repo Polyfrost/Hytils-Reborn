@@ -43,6 +43,7 @@ public class GameStartingTitles {
             case "1":
             case "SkyWars":
             case "INSANE MODE":
+            case "Fight!":
             case "Waiting for more players...":
             case "ASSASSINS":
             case "YOU ARE RED":
@@ -51,6 +52,9 @@ public class GameStartingTitles {
             case "YOU ARE GREEN":
             case "PRE ROUND":
             case "ROUND START":
+            case "❸":
+            case "❷":
+            case "❶":
                 event.setCanceled(true);
                 break;
         }

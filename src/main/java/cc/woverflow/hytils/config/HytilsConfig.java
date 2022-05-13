@@ -752,7 +752,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Lower Render Distance in Sumo",
-        description = "Lowers render distance to your desired value in sumo duels.",
+        description = "Lowers render distance to your desired value in Sumo Duels.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean sumoRenderDistance;
@@ -773,18 +773,11 @@ public class HytilsConfig extends Vigilant {
     public static boolean hideArmor;
 
     @Property(
-        type = PropertyType.SWITCH, name = "Hide Bridges Goal Nametags",
-        description = "Hide the nametags for the goals in Bridges.",
+        type = PropertyType.SWITCH, name = "Hide Useless Game Nametags",
+        description = "Hides unnecessary nametags such as those that say \"§eRIGHT CLICK§r\" or \"§eCLICK§r\" in SkyBlock, BedWars, SkyWars, and Duels, as well as other useless ones.",
         category = "Game", subcategory = "Visual"
     )
-    public static boolean hideGoalArmorStands;
-
-    @Property(
-        type = PropertyType.SWITCH, name = "Hide Useless SkyBlock Nametags",
-        description = "Hides unnecessary nametags in SkyBlock such as those that say \"§eCLICK§r\".",
-        category = "Game", subcategory = "Visual"
-    )
-    public static boolean hideUselessArmorStandsSkyblock;
+    public static boolean hideUselessArmorStandsGame;
 
     @Property(
         type = PropertyType.SWITCH, name = "Hardcore Hearts",
@@ -932,7 +925,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Hide Useless Lobby Nametags",
-        description = "Hides unnecessary nametags such as those that say \"§eRIGHT CLICK§r\" or \"§eCLICK HERE§r\" in the lobby, as well as other useless ones.",
+        description = "Hides unnecessary nametags such as those that say \"§eRIGHT CLICK§r\" or \"§eCLICK TO PLAY§r\" in a lobby, as well as other useless ones.",
         category = "Lobby", subcategory = "Entities"
     )
     public static boolean hideUselessArmorStands;
