@@ -37,7 +37,7 @@ public class ArmorStandHider {
     @SubscribeEvent
     public void onEntityRenderer(RenderLivingEvent.Pre<EntityLivingBase> event) {
         final LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (HytilsConfig.hideUselessArmorStands && EssentialAPI.getMinecraftUtil().isHypixel() && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() || (HytilsConfig.hideUselessArmorStandsGame && locraw != null && locraw.getGameType() == GameType.SKYBLOCK) || (HytilsConfig.hideUselessArmorStandsGame && locraw != null && locraw.getGameType() == GameType.BED_WARS) || (HytilsConfig.hideUselessArmorStandsGame && locraw != null && locraw.getGameType() == GameType.SKY_WARS) || (HytilsConfig.hideUselessArmorStandsGame && locraw != null && locraw.getGameMode().contains("BRIDGE"))) {
+        if (EssentialAPI.getMinecraftUtil().isHypixel() && locraw != null && (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() && HytilsConfig.hideUselessArmorStands || HytilsConfig.hideUselessArmorStandsGame && (locraw.getGameType() == GameType.SKYBLOCK || locraw.getGameType() == GameType.BED_WARS || locraw.getGameType() == GameType.SKY_WARS || locraw.getGameMode().contains("BRIDGE")))) {
             if (event.entity instanceof EntityArmorStand) {
                 String unformattedArmorStandName = event.entity.getCustomNameTag().toLowerCase();
                 for (String armorStands : armorStandNames) {
