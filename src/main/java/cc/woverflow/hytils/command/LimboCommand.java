@@ -34,7 +34,6 @@ public class LimboCommand extends CommandBase {
         return "/limbo";
     }
 
-    // TODO: take precedence over AutoTip, remove the Hypixel error messages created in chat
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
         if (EssentialAPI.getMinecraftUtil().isHypixel()) Minecraft.getMinecraft().thePlayer.sendChatMessage("§");
