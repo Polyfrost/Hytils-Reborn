@@ -33,6 +33,7 @@ import java.util.Set;
 public class HytilsMixinPlugin implements IMixinConfigPlugin {
 
     private boolean isOptiFine = false;
+    private boolean hasApplied = false;
 
     @Override
     public void onLoad(String mixinPackage) {
@@ -78,7 +79,7 @@ public class HytilsMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void postApply(String targetClassName, ClassNode classNode, String mixinClassName, IMixinInfo mixinInfo) {
-        if (classNode != null && Objects.equals(targetClassName, "net.minecraft.client.gui.GuiPlayerTabOverlay")) {
+        if (!hasApplied && classNode != null && Objects.equals(targetClassName, "net.minecraft.client.gui.GuiPlayerTabOverlay")) {
             for (MethodNode method : classNode.methods) {
                 final String methodName = FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(classNode.name, method.name, method.desc);
                 final ListIterator<AbstractInsnNode> iterator = method.instructions.iterator();
@@ -94,6 +95,7 @@ public class HytilsMixinPlugin implements IMixinConfigPlugin {
                                 // trim the player name to remove player ranks and guild tags
                                 if (methodInsnName.equals("formatPlayerName") || methodInsnName.equals("func_96667_a")) {
                                     method.instructions.insert(next, modifyName());
+                                    hasApplied = true;
                                     break;
                                 }
                             }
