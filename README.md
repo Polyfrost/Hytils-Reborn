@@ -22,15 +22,15 @@ If you do not know how to install a Forge mod, then we recommend following [this
 
 ## Automatic
 - **Automatically Get API Key** - Automatically get the API Key from /api new.
-- **Auto Start** - Join Hypixel immediately once the client has loaded to the main menu.
-- **Auto Queue** - Automatically queues for another game once you win or die. (This will require you to interact with the game in a way to prevent abuse)
-- **Auto-Complete Play Commands** - Allows tab completion of /play commands.
-- **Auto Friend** - Automatically accept friend requests.
-- **Limbo Play Helper** - When a /play command is run in Limbo, this runs /l first and then the command.
 - **Auto GL** - Send a message 5 seconds before a Hypixel game starts.
 - **Anti GL** - Remove all GL messages from chat.
 - **Auto Chat Report Confirm** - Automatically confirms chat reports.
 - **Auto Party Warp Confirm** - Automatically confirms party warps.
+- **Auto Queue** - Automatically queues for another game once you win or die. (This will require you to interact with the game in a way to prevent abuse)
+- **Auto-Complete Play Commands** - Allows tab completion of /play commands.
+- **Limbo Play Helper** - When a /play command is run in Limbo, this runs /l first and then the command.
+- **Auto Start** - Join Hypixel immediately once the client has loaded to the main menu.
+- **Auto Friend** - Automatically accept friend requests.
 - **Automatically Check GEXP** - Automatically check your GEXP after you win a Hypixel game.
 - **Automatically Check Winstreak** - Automatically check your winstreak after you win a Hypixel game.
 </details>
@@ -61,9 +61,10 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Remove Replay Messages** - Removes replay messages from chat.
 - **Remove Tip Messages** - Removes tip messages from chat.
 - **Remove Online Status Messages** - Removes the online status messages from chat.
+- **AutoWB** - Says configurable message to your friends/guild when they join.
 - **Trim Line Separators** - Prevent separators from overflowing onto the next chat line.
 - **Clean Line Separators** - Change all line separator to become smoother.
-- **White Chat** - Make nons chat messages appear as the normal chat message color.
+- **White Chat** - Make nons' chat messages appear as the normal chat message color.
 - **White Private Messages** - Make private messages appear as the normal chat message color.
 - **Cleaner Game Start Counter** - Compacts game start announcements.
 - **Short Channel Names** - Abbreviate chat channel names.
@@ -76,7 +77,6 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Remove All Chat Message** - Hide the "You are now in the ALL channel" message when auto-switching.
 - **Thank Watchdog** - Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.
 - **Guild Welcome Message** - Send a friendly welcome message when a player joins your guild.
-- **AutoWB** - Says configurable message to your friends/guild when they join.
 - **Shout Cooldown** - Show the amount of time remaining until /shout can be reused.
 - **Non Speech Cooldown** - Show the amount of time remaining until you can speak if you are a non.
 </details>
@@ -94,9 +94,8 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Hide Guild Tags In Tab** - Prevent Guild tags from showing up in tab.
 - **Highlight Friends In Tab** - Add a star to the names of your Hypixel friends in tab.
 - **Highlight Self In Tab** - Add a star to your name in tab.
-- **Cleaner Tab in SkyBlock** - Doesn't render player heads or ping for tab entries that aren't players in Skyblock.
+- **Cleaner Tab in SkyBlock** - Doesn't render player heads or ping for tab entries that aren't players in SkyBlock.
 - **Hide Ping in Tab** - Prevent ping from showing up in tab while playing games, since the value is misleading. Ping will remain visible in lobbies.
-
 </details>
 <details>
   <summary>Game</summary>
@@ -133,5 +132,4 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Remove Limbo AFK Title** - Remove the AFK title when you get sent to limbo for being AFK.
 - **Limbo Limiter** - While in Limbo, limit your framerate to reduce the load of the game on your computer.
 - **Limbo PM Ding** - While in Limbo, play the ding sound if you get a PM. Currently, Hypixel's option does not work in Limbo.
-
 </details>
