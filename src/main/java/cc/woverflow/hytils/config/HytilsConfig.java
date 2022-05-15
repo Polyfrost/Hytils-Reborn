@@ -1014,7 +1014,7 @@ public class HytilsConfig extends Vigilant {
 
         addDependency("gexpMode", "autoGetGEXP");
 
-        addDependency("antiGL", "autoGL");
+        addDependency("glPhrase", "autoGL");
 
         addDependency("guildAutoWB", "autoWB");
         addDependency("friendsAutoWB", "autoWB");
@@ -1030,6 +1030,8 @@ public class HytilsConfig extends Vigilant {
         addDependency("disableNotifyMiningFatigueSkyblock", "notifyMiningFatigue");
 
         addDependency("chatSwapperReturnChannel", "chatSwapper");
+        addDependency("chattingIntegration", "chatSwapper");
+        addDependency("hideAllChatMessage", "chatSwapper");
 
         addDependency("playerCountBeforePlayerName", "gameStatusRestyle");
         addDependency("playerCountOnPlayerLeave", "gameStatusRestyle");

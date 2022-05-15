@@ -87,6 +87,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Broadcast Achievements** - Announce in Guild chat when you get an achievement.
 - **Broadcast Levelup** - Announce in Guild chat when you level up.
 - **Notify Mining Fatigue** - Send a notification when you get mining fatigue.
+- **Disable Mining Fatigue Notification in SkyBlock** - Disable the mining fatigue notification in SkyBlock.
 - **Hide NPCs In Tab** - Prevent NPCs from showing up in tab.
 - **Don't Hide Important NPCs** - Keeps NPCs in tab in gamemodes like SkyBlock and Replay.
 - **Hide Guild Tags in Tab** - Prevent Guild tags from showing up in tab.
