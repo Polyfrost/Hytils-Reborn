@@ -25,6 +25,7 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import cc.woverflow.hytils.HytilsReborn;
@@ -47,7 +48,7 @@ public class NPCHandler {
             if (HytilsConfig.npcHider && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
                 event.setCanceled(true);
             }
-        } else if (HytilsConfig.hideNonNPCs && locraw != null && locraw.getGameType() == GameType.SKYBLOCK && !(event.entity instanceof EntityArmorStand && !event.entity.getCustomNameTag().toLowerCase().trim().isEmpty())) {
+        } else if (HytilsConfig.hideNonNPCs && locraw != null && locraw.getGameType() == GameType.SKYBLOCK && !(event.entity instanceof EntityArmorStand && !event.entity.getCustomNameTag().toLowerCase().trim().isEmpty()) && event.entity instanceof EntityOtherPlayerMP) {
             event.setCanceled(true);
         }
     }
