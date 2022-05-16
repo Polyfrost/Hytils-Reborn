@@ -35,7 +35,7 @@ public class AutoFriend implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = event.message.getUnformattedText().replace("\n", "");
-        Matcher matcher = getLanguage().chatCleanerMysteryBoxFindRegex.matcher(message);
+        Matcher matcher = getLanguage().autoFriendPatternRegex.matcher(message);
         if (matcher.matches()) {
             String name = matcher.group("name");
             if (name.startsWith("[")) {
