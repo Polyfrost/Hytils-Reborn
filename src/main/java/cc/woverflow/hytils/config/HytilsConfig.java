@@ -865,7 +865,7 @@ public class HytilsConfig extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH, name = "Remove Non-NPCs in SkyBlock",
-        description = "Remove all entities (besides yourself) that are not NPCs in SkyBlock.",
+        description = "Remove all entities that are not NPCs (including all players besides yourself) in SkyBlock.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideNonNPCs;
