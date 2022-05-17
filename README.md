@@ -120,7 +120,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Hide Duels Cosmetics** - Hide Duels Cosmetics in Hypixel.
 - **Hide Actionbar in Housing** - Hide the Actionbar in Housing.
 - **Remove Non-NPCs in SkyBlock** - Remove entities that are not NPCs in SkyBlock.
-- **Middle Waypoint Beacon in MiniWalls** - dds a beacon at (0,0) when your MiniWither is dead in MiniWalls.
+- **Middle Waypoint Beacon in MiniWalls** - Adds a beacon at (0,0) when your MiniWither is dead in MiniWalls.
 </details>
 <details>
   <summary>Lobby</summary>

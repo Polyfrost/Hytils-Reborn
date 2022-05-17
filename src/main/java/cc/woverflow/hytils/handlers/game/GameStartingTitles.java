@@ -41,10 +41,11 @@ public class GameStartingTitles {
             case "3":
             case "2":
             case "1":
+            case "Waiting for more players...":
             case "SkyWars":
             case "INSANE MODE":
             case "Fight!":
-            case "Waiting for more players...":
+            case "Zombies":
             case "ASSASSINS":
             case "YOU ARE RED":
             case "YOU ARE BLUE":
