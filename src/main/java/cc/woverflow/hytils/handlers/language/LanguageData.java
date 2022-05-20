@@ -83,9 +83,6 @@ public class LanguageData {
     private String whiteChatNonMessage = "(?<prefix>.+)§7: (?<message>.*)";
     private String privateMessageWhiteChat = "^(?<type>§dTo|§dFrom) (?<prefix>.+): §r(?<message>§7.*)(?:§r)?$";
 
-    public String limboLimiterSpawned = "You were spawned in Limbo.";
-    public String limboLimiterAfk = "You are AFK. Move around to return from AFK.";
-
     private String silentRemovalLeaveMessage = "(?:Friend|Guild) > (?<player>\\w{1,16}) left\\.";
 
     public String noSpectatorCommands = "You are not allowed to use commands as a spectator!";
