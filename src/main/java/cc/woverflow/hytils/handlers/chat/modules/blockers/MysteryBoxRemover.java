@@ -20,7 +20,6 @@ package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
@@ -32,9 +31,7 @@ public class MysteryBoxRemover implements ChatReceiveModule {
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         Matcher matcher = getLanguage().chatCleanerMysteryBoxFindRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
         if (matcher.matches()) {
-            if (!matcher.group("player").contains(Minecraft.getMinecraft().thePlayer.getName()) && !matcher.group("player").equalsIgnoreCase("You")) {
-                event.setCanceled(true);
-            }
+            event.setCanceled(true);
         }
     }
 

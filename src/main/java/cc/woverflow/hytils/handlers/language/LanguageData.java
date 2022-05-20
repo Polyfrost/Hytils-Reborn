@@ -42,7 +42,7 @@ public class LanguageData {
     private String chatCleanerJoinNormal = "joined the lobby";
     private String chatCleanerJoinHalloween = "spooked into the lobby";
     private String chatCleanerJoinChristmas = "(?:sled|slid) into the lobby";
-    private String chatCleanerMysteryBoxFind = "^.+ (?<player>\\w{1,16}) found (?:a|an) (?:.{5} Mystery Box!|.+ in a .+!)$";
+    private String chatCleanerMysteryBoxFind = "^.+ (?<player>(?!You)\\w{1,16}) found (?:a|an) (?:.{5} Mystery Box!|.+ in a .+!)$";
     private String chatCleanerSoulWellFind = "^.+ has found .+ in the Soul Well!$";
     private String chatCleanerGameAnnouncement = "^\u27A4 A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!$";
     private String chatCleanerBedwarsPartyAdvertisement = "(?!.+: )(([1-8]/[1-8]|[1-8]v[1-8]|[2-8]s)|(any|rbw|ranked))";
@@ -53,7 +53,7 @@ public class LanguageData {
     private String chatCleanerGrinchPresents = "(?:You found (?:an egg|a gift|a candy)! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} (?:gifts|eggs|candy)!)";
     private String chatCleanerEarnedCoinsAndExp = "^(?:\\W\\d+ .* Experience.*|\\W\\d+ coins!.*|You earned \\d+ GEXP from playing.+!|.+ just earned .+ as a Guild Level Reward!)"; //.* at the end for modifiers
     public String chatCleanerReplayRecorded = "This game has been recorded. Click here to watch the Replay!";
-    private String chatCleanerTip = "(?:You tipped \\d+ (?:player|players) in \\d+ (?:game|different games)!|You already tipped everyone that has boosters active, so there isn't anybody to be tipped right now!)";
+    private String chatCleanerTip = "(?:You (?:tipped|\\(anonymously\\) tipped) (\\d+ (?:player|players)(?: in \\d+ (?:game|different games)!)|\\w{1,16} in .+!|\\d+ (?:player|players)!)|You were tipped by \\d+ (?:player|players) in the last \\S+!|You already tipped everyone that has boosters active, so there isn't anybody to be tipped right now!|You've already tipped that person today in .+! Try another user!|You've already tipped someone in the past hour in .+! Wait a bit and try again!)";
     private String chatCleanerOnlineStatus = "REMINDER: Your Online Status is currently set to (?:Appear Offline|Busy|Away)";
     private String chatCleanerGameTips = "^(?:If you get disconnected use /rejoin to join back in the game\\.|You may use /mmreport <skin name> to chat report in this mode!|Teaming with the .+ is not allowed!|Teaming is not allowed.+|Cross Teaming / Teaming with other teams is not allowed!|Cross-teaming is not allowed! Report cross-teamers using /report\\.|Cages opened! FIGHT!|Queued! Use the bed to return to lobby!|Queued! Use the bed to cancel!|You can use /ic <message> to communicate with your fellow infected!|To leave .+, type /lobby|Consider sharing some of your resources with your team mates by clicking the Banker NPC at your base\\.|You didn't pick up any more \\S+ because you have too much on you!|As a Spectator, you can talk in chat with fellow Spectators\\.|Contents of .+ Ender Chest have been dropped into their fountain\\.|Alive players cannot see dead players' chat\\.|The game has started!|You have 15s to spread out before it starts!|You will respawn next round!)";
     private String chatCleanerStats = "Click to view the stats of your .* game!";
