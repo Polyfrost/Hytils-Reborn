@@ -89,7 +89,6 @@ public class HytilsReborn {
     public File modDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), MOD_NAME);
 
     private HytilsConfig config;
-    private BlockHighlightConfig blockConfig;
     private final Logger logger = LogManager.getLogger("Hytils Reborn");
 
     private final LanguageHandler languageHandler = new LanguageHandler();
@@ -117,8 +116,7 @@ public class HytilsReborn {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        (config = new HytilsConfig()).preload();
-        (blockConfig = new BlockHighlightConfig()).preload();
+        config = new HytilsConfig();
         new HytilsCommand().register();
         new HousingVisitCommand().register();
         new SkyblockVisitCommand().register();
@@ -202,10 +200,6 @@ public class HytilsReborn {
 
     public HytilsConfig getConfig() {
         return config;
-    }
-
-    public BlockHighlightConfig getBlockConfig() {
-        return blockConfig;
     }
 
     public LocrawUtil getLocrawUtil() {

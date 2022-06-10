@@ -52,7 +52,7 @@ public class HytilsCommand extends Command {
 
     @DefaultHandler
     public void handleDefault() {
-        EssentialAPI.getGuiUtil().openScreen(HytilsReborn.INSTANCE.getConfig().gui());
+        HytilsReborn.INSTANCE.getConfig().openGui();
     }
 
     @SubCommand("gexp")
@@ -162,8 +162,7 @@ public class HytilsCommand extends Command {
         Multithreading.runAsync(() -> {
             if (HypixelAPIUtils.isValidKey(apiKey)) {
                 HytilsConfig.apiKey = apiKey;
-                HytilsReborn.INSTANCE.getConfig().markDirty();
-                HytilsReborn.INSTANCE.getConfig().writeData();
+                HytilsReborn.INSTANCE.getConfig().save();
                 HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.GREEN + "Saved API key successfully!");
             } else {
                 HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Invalid API key! Please try again.");

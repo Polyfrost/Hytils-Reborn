@@ -49,8 +49,7 @@ public class AutoAPI implements ChatReceiveModule {
                 } else {
                     // if the api key is valid add the key to the configuration and save it
                     HytilsConfig.apiKey = tempApiKey;
-                    HytilsReborn.INSTANCE.getConfig().markDirty();
-                    HytilsReborn.INSTANCE.getConfig().writeData();
+                    HytilsReborn.INSTANCE.getConfig().save();
                     HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.GREEN + "Your API Key has been automatically configured.");
                 }
             });

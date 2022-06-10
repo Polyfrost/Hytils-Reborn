@@ -26,6 +26,7 @@ loom {
     launchConfigs {
         client {
             arg("--tweakClass", "cc.woverflow.onecore.tweaker.OneCoreTweaker")
+            arg("-Dfml.coreMods.load", "cc.polyfrost.oneconfigwrapper.OneConfigWrapper")
             property("onecore.mixin", "mixins.hytils.json")
             property("mixin.debug.export", "true")
         }
@@ -50,6 +51,7 @@ configurations {
 
 repositories {
     maven { url 'https://repo.woverflow.cc/' }
+    maven { url 'https://repo.polyfrost.cc/releases'}
 }
 
 dependencies {
@@ -62,6 +64,8 @@ dependencies {
         transitive = false
     }
     compileOnly ('org.spongepowered:mixin:0.8.5-SNAPSHOT')
+    compileOnly('cc.polyfrost:oneconfig-1.8.9-forge:0.1.0-alpha3')
+    include('cc.polyfrost:oneconfig-wrapper-1.8.9-forge:1.0.0')
 }
 
 processResources {
@@ -105,6 +109,8 @@ jar {
             'FMLAT': "hytils_at.cfg",
             'TweakClass': 'cc.woverflow.onecore.tweaker.OneCoreTweaker',
             'MixinConfigs': "mixins.hytils.json",
-            "TweakOrder": "0"
+            "TweakOrder": "0",
+            "FMLCorePlugin": "cc.polyfrost.oneconfigwrapper.OneConfigWrapper",
+            "FMLCorePluginContainsFMLMod": "yes"
     )
 }

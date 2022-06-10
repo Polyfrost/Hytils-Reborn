@@ -18,14 +18,14 @@
 
 package cc.woverflow.hytils.config;
 
+import cc.polyfrost.oneconfig.config.annotations.Color;
+import cc.polyfrost.oneconfig.config.core.OneColor;
 import cc.woverflow.hytils.HytilsReborn;
-import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
 import net.minecraft.block.material.MapColor;
 import org.apache.commons.io.FileUtils;
 
-import java.awt.*;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -34,138 +34,105 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class BlockHighlightConfig extends Vigilant {
+public class BlockHighlightConfig {
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "White",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color white = new Color(MapColor.snowColor.colorValue);
+    public static OneColor white = new OneColor(MapColor.snowColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Orange",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color orange = new Color(MapColor.adobeColor.colorValue);
+    public static OneColor orange = new OneColor(MapColor.adobeColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Magenta",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color magenta = new Color(MapColor.magentaColor.colorValue);
+    public static OneColor magenta = new OneColor(MapColor.magentaColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Light Blue",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color lightBlue = new Color(MapColor.lightBlueColor.colorValue);
+    public static OneColor lightBlue = new OneColor(MapColor.lightBlueColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Yellow",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color yellow = new Color(MapColor.yellowColor.colorValue);
+    public static OneColor yellow = new OneColor(MapColor.yellowColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Lime",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color lime = new Color(MapColor.limeColor.colorValue);
+    public static OneColor lime = new OneColor(MapColor.limeColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Pink",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color pink = new Color(MapColor.pinkColor.colorValue);
+    public static OneColor pink = new OneColor(MapColor.pinkColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Gray",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color gray = new Color(MapColor.grayColor.colorValue);
+    public static OneColor gray = new OneColor(MapColor.grayColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Silver",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color silver = new Color(MapColor.silverColor.colorValue);
+    public static OneColor silver = new OneColor(MapColor.silverColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Cyan",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color cyan = new Color(MapColor.cyanColor.colorValue);
+    public static OneColor cyan = new OneColor(MapColor.cyanColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Purple",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color purple = new Color(MapColor.purpleColor.colorValue);
+    public static OneColor purple = new OneColor(MapColor.purpleColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Blue",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color blue = new Color(MapColor.blueColor.colorValue);
+    public static OneColor blue = new OneColor(MapColor.blueColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Brown",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color brown = new Color(MapColor.brownColor.colorValue);
+    public static OneColor brown = new OneColor(MapColor.brownColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Green",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color green = new Color(MapColor.greenColor.colorValue);
+    public static OneColor green = new OneColor(MapColor.greenColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Red",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color red = new Color(MapColor.redColor.colorValue);
+    public static OneColor red = new OneColor(MapColor.redColor.colorValue);
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Black",
-        category = "Colors",
-        allowAlpha = false
+        category = "Colors"
     )
-    public static Color black = new Color(MapColor.blackColor.colorValue);
+    public static OneColor black = new OneColor(MapColor.blackColor.colorValue);
 
     public BlockHighlightConfig() {
-        super(new File(HytilsReborn.INSTANCE.modDir, "blockhighlight.toml"));
         try {
             File modDir = HytilsReborn.INSTANCE.modDir;
             File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");
@@ -179,7 +146,6 @@ public class BlockHighlightConfig extends Vigilant {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        initialize();
         colorMap.putIfAbsent(MapColor.snowColor, () -> white);
         colorMap.putIfAbsent(MapColor.adobeColor, () -> orange);
         colorMap.putIfAbsent(MapColor.magentaColor, () -> magenta);
@@ -196,8 +162,7 @@ public class BlockHighlightConfig extends Vigilant {
         colorMap.putIfAbsent(MapColor.greenColor, () -> green);
         colorMap.putIfAbsent(MapColor.redColor, () -> red);
         colorMap.putIfAbsent(MapColor.blackColor, () -> black);
-
     }
 
-    public static final Map<MapColor, Supplier<Color>> colorMap = new HashMap<>();
+    public static transient final Map<MapColor, Supplier<OneColor>> colorMap = new HashMap<>();
 }

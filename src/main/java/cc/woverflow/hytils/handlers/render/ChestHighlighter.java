@@ -18,6 +18,7 @@
 
 package cc.woverflow.hytils.handlers.render;
 
+import cc.polyfrost.oneconfig.config.core.OneColor;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.game.GameType;
@@ -98,7 +99,7 @@ public class ChestHighlighter {
      * https://github.com/Moulberry/NotEnoughUpdates/blob/master/LICENSE
      * @author Moulberry
      */
-    private void drawFilledBoundingBox(AxisAlignedBB aabb, Color c) {
+    private void drawFilledBoundingBox(AxisAlignedBB aabb, OneColor c) {
         GlStateManager.enableBlend();
         GlStateManager.disableLighting();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
