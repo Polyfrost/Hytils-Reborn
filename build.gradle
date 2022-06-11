@@ -64,8 +64,8 @@ dependencies {
         transitive = false
     }
     compileOnly ('org.spongepowered:mixin:0.8.5-SNAPSHOT')
-    compileOnly('cc.polyfrost:oneconfig-1.8.9-forge:0.1.0-alpha3')
-    include('cc.polyfrost:oneconfig-wrapper-1.8.9-forge:1.0.0-alpha1')
+    compileOnly('cc.polyfrost:oneconfig-1.8.9-forge:0.1.0-alpha6')
+    include('cc.polyfrost:oneconfig-wrapper-1.8.9-forge:1.0.0-alpha2')
 }
 
 processResources {
