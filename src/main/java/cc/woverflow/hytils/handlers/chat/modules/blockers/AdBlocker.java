@@ -61,8 +61,7 @@ public class AdBlocker implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final String message = event.message.getUnformattedText().toLowerCase(Locale.ENGLISH);
-        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (message.startsWith("they have gifted") && message.endsWith("so far!")))
-            return;
+        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (!message.contains(": "))) return;
         if (commonAdvertisements.matcher(message).find(0)) {
             event.setCanceled(true);
         }
