@@ -18,15 +18,11 @@
 
 package cc.woverflow.hytils.handlers.lobby.limbo;
 
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.EssentialAPI;
-import net.minecraft.util.EnumChatFormatting;
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.modules.modifiers.DefaultChatRestyler;
-import cc.woverflow.hytils.handlers.language.LanguageData;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -53,8 +49,8 @@ public class LimboLimiter {
     }
 
     public static boolean shouldLimitFramerate() {
-        LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (EssentialAPI.getMinecraftUtil().isHypixel() && locraw != null && locraw.getServerId().equals("limbo")) limboStatus = true;
+        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        if (HypixelUtils.INSTANCE.isHypixel() && locraw != null && locraw.getServerId().equals("limbo")) limboStatus = true;
         return (!Display.isActive() || limboStatus) && HytilsConfig.limboLimiter && time * 20 >= 5
             && Minecraft.getMinecraft().gameSettings.limitFramerate > 15;
         // if the FPS limit is > 15, don't activate, as you would be increasing the fps limit

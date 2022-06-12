@@ -18,9 +18,10 @@
 
 package cc.woverflow.hytils.handlers.lobby.npc;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
 import com.google.common.collect.Collections2;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -29,8 +30,6 @@ import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.handlers.game.GameType;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
 
 import java.util.Collection;
 
@@ -38,27 +37,27 @@ public class NPCHandler {
 
     @SubscribeEvent
     public void onEntityRender(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (!EssentialAPI.getMinecraftUtil().isHypixel()) {
+        if (!HypixelUtils.INSTANCE.isHypixel()) {
             return;
         }
-        final LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
+        final LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
 
         // hypixel marks npc uuids as version 2
         if (event.entity.getUniqueID().version() == 2 || (event.entity instanceof EntityVillager)) {
             if (HytilsConfig.npcHider && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
                 event.setCanceled(true);
             }
-        } else if (HytilsConfig.hideNonNPCs && locraw != null && locraw.getGameType() == GameType.SKYBLOCK && !(event.entity instanceof EntityArmorStand && !event.entity.getCustomNameTag().toLowerCase().trim().isEmpty()) && event.entity instanceof EntityOtherPlayerMP) {
+        } else if (HytilsConfig.hideNonNPCs && locraw != null && locraw.getGameType() == LocrawInfo.GameType.SKYBLOCK && !(event.entity instanceof EntityArmorStand && !event.entity.getCustomNameTag().toLowerCase().trim().isEmpty()) && event.entity instanceof EntityOtherPlayerMP) {
             event.setCanceled(true);
         }
     }
 
     public static Collection<NetworkPlayerInfo> hideTabNpcs(Collection<NetworkPlayerInfo> playerInfoCollection) {
-        LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilsConfig.hideNpcsInTab) {
+        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.hideNpcsInTab) {
             return playerInfoCollection;
         } else {
-            if (HytilsConfig.keepImportantNpcsInTab && (locraw == null || locraw.getGameType() == GameType.SKYBLOCK || locraw.getGameType() == GameType.REPLAY)) {
+            if (HytilsConfig.keepImportantNpcsInTab && (locraw == null || locraw.getGameType() == LocrawInfo.GameType.SKYBLOCK || locraw.getRawGameType().equals("REPLAY"))) {
                 return playerInfoCollection;
             }
 

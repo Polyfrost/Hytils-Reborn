@@ -16,19 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.woverflow.hytils.handlers.cache;
+package cc.woverflow.hytils.command.parser;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-//TODO: needs a cleanup idk what im doing
-public abstract class Handler<A> {
-    public static Handler INSTANCE;
-    public JsonObject jsonObject = null;
-
-    /**
-     * Initializes the handler.
-     */
-    public abstract void initialize();
-
+public class GameName {
+    public final String name;
+    public GameName(String name) {
+        this.name = name;
+    }
 }

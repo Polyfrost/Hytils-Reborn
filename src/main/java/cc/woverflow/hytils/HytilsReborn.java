@@ -18,8 +18,12 @@
 
 package cc.woverflow.hytils;
 
+import cc.polyfrost.oneconfig.events.EventManager;
+import cc.polyfrost.oneconfig.libs.universal.ChatColor;
+import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import cc.woverflow.hytils.command.*;
-import cc.woverflow.hytils.config.BlockHighlightConfig;
+import cc.woverflow.hytils.command.parser.PlayerNameParser;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.CosmeticsHandler;
 import cc.woverflow.hytils.handlers.cache.HeightHandler;
@@ -53,13 +57,8 @@ import cc.woverflow.hytils.handlers.render.ChestHighlighter;
 import cc.woverflow.hytils.handlers.silent.SilentRemoval;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
 import cc.woverflow.hytils.util.friends.FriendCache;
-import cc.woverflow.hytils.util.locraw.LocrawUtil;
 import cc.woverflow.hytils.util.skyblock.SkyblockChecker;
-import cc.woverflow.onecore.utils.Updater;
-import gg.essential.api.EssentialAPI;
-import gg.essential.universal.ChatColor;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -99,7 +98,6 @@ public class HytilsReborn {
     private final CommandQueue commandQueue = new CommandQueue();
     private final LobbyChecker lobbyChecker = new LobbyChecker();
     private final ChatHandler chatHandler = new ChatHandler();
-    private final LocrawUtil locrawUtil = new LocrawUtil();
     private final AutoQueue autoQueue = new AutoQueue();
 
     public boolean isPatcher;
@@ -111,20 +109,21 @@ public class HytilsReborn {
     @Mod.EventHandler
     public void onFMLPreInitialization(FMLPreInitializationEvent event) {
         if (!modDir.exists()) modDir.mkdirs();
-        Updater.INSTANCE.addToUpdater(event.getSourceFile(), MOD_NAME, MOD_ID, VERSION, "W-OVERFLOW/Hytils-Reborn");
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         config = new HytilsConfig();
-        new HytilsCommand().register();
-        new HousingVisitCommand().register();
-        new SkyblockVisitCommand().register();
-        new IgnoreTemporaryCommand().register();
-        final ClientCommandHandler commandRegister = ClientCommandHandler.instance;
-        commandRegister.registerCommand(new PlayCommand());
-        commandRegister.registerCommand(new SilentRemoveCommand());
-        commandRegister.registerCommand(new LimboCommand());
+
+        CommandManager.INSTANCE.addParser(new PlayerNameParser());
+        CommandManager.INSTANCE.registerCommand(HousingVisitCommand.class);
+        CommandManager.INSTANCE.registerCommand(HytilsCommand.class);
+        CommandManager.INSTANCE.registerCommand(IgnoreTemporaryCommand.class);
+        CommandManager.INSTANCE.registerCommand(LimboCommand.class);
+        CommandManager.INSTANCE.registerCommand(PlayCommand.class);
+        CommandManager.INSTANCE.registerCommand(SilentRemoveCommand.class);
+        CommandManager.INSTANCE.registerCommand(SkyblockVisitCommand.class);
+
         CosmeticsHandler.INSTANCE.initialize();
         PatternHandler.INSTANCE.initialize();
         HeightHandler.INSTANCE.initialize();
@@ -140,7 +139,6 @@ public class HytilsReborn {
         isPatcher = Loader.isModLoaded("patcher");
         isChatting = Loader.isModLoaded("chatting");
 
-        String decompilerKids = "Using getSession to prevent any nulls when compared to thePlayer";
         rank = HypixelAPIUtils.getRank(Minecraft.getMinecraft().getSession().getUsername());
     }
 
@@ -154,7 +152,6 @@ public class HytilsReborn {
 
         // general stuff
         eventBus.register(autoQueue);
-        eventBus.register(locrawUtil);
         eventBus.register(commandQueue);
         eventBus.register(languageHandler);
         eventBus.register(new AutoStart());
@@ -189,21 +186,17 @@ public class HytilsReborn {
         eventBus.register(new MiddleWaypointUHC());
 
         // height overlay
-        eventBus.register(HeightHandler.INSTANCE);
+        EventManager.INSTANCE.register(HeightHandler.INSTANCE);
 
         eventBus.register(new HypixelAPIUtils());
     }
 
     public void sendMessage(String message) {
-        EssentialAPI.getMinecraftUtil().sendMessage(ChatColor.GOLD + "[" + MOD_NAME + "] ", ChatColor.Companion.translateAlternateColorCodes('&', message));
+        UChat.chat(ChatColor.GOLD + "[" + MOD_NAME + "] " + ChatColor.Companion.translateAlternateColorCodes('&', message));
     }
 
     public HytilsConfig getConfig() {
         return config;
-    }
-
-    public LocrawUtil getLocrawUtil() {
-        return locrawUtil;
     }
 
     public SilentRemoval getSilentRemoval() {

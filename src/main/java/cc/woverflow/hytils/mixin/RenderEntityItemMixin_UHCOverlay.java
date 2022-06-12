@@ -18,11 +18,9 @@
 
 package cc.woverflow.hytils.mixin;
 
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.handlers.game.GameType;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.client.resources.model.IBakedModel;
@@ -38,8 +36,8 @@ public class RenderEntityItemMixin_UHCOverlay {
     @Inject(method = "func_177077_a(Lnet/minecraft/entity/item/EntityItem;DDDFLnet/minecraft/client/resources/model/IBakedModel;)I", at = @At(("TAIL")))
     public void scaleSpecialItems(EntityItem entity, double f4, double f5, double flag, float i, IBakedModel f, CallbackInfoReturnable<Integer> cir) {
         Item item = entity.getEntityItem().getItem();
-        LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (EssentialAPI.getMinecraftUtil().isHypixel() && locraw != null && (locraw.getGameType() == GameType.UHC_CHAMPIONS || locraw.getGameType() == GameType.SPEED_UHC) && HytilsConfig.uhcOverlay) {
+        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        if (HypixelUtils.INSTANCE.isHypixel() && locraw != null && (locraw.getGameType() == LocrawInfo.GameType.UHC_CHAMPIONS || locraw.getGameType() == LocrawInfo.GameType.SPEED_UHC) && HytilsConfig.uhcOverlay) {
             if (item.getRegistryName().equals("minecraft:apple") || item.getRegistryName().equals("minecraft:golden_apple") || item.getRegistryName().equals("minecraft:skull") || item.getRegistryName().equals("minecraft:gold_ingot") || item.getRegistryName().equals("minecraft:gold_nugget")) {
                 GlStateManager.scale(HytilsConfig.uhcOverlayMultiplier, HytilsConfig.uhcOverlayMultiplier, HytilsConfig.uhcOverlayMultiplier);
             }

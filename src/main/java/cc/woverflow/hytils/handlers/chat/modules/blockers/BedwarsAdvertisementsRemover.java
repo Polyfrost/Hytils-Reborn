@@ -18,11 +18,11 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import cc.woverflow.hytils.handlers.game.GameType;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
@@ -30,11 +30,11 @@ import org.jetbrains.annotations.NotNull;
 public class BedwarsAdvertisementsRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        LocrawInformation locrawInformation = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
+        LocrawInfo locrawInformation = HypixelUtils.INSTANCE.getLocrawInfo();
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
         if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (message.startsWith("they have gifted") && message.endsWith("so far!")))
             return;
-        if (locrawInformation != null && locrawInformation.getGameType() == GameType.BED_WARS && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()
+        if (locrawInformation != null && locrawInformation.getGameType() == LocrawInfo.GameType.BEDWARS && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()
             && getLanguage().chatCleanerBedwarsPartyAdvertisementRegex.matcher(message).find()) {
             event.setCanceled(true);
         }

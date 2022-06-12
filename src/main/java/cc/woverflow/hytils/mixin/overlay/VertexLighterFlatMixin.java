@@ -19,7 +19,7 @@
 package cc.woverflow.hytils.mixin.overlay;
 
 import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.util.ColorUtils;
+import cc.woverflow.hytils.util.DarkColorUtils;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -49,7 +49,7 @@ public class VertexLighterFlatMixin {
             boolean isClay = blockInfo.getBlock().getMaterial() == Material.rock;
             if (!isClay || check(mapColor.colorIndex)) {
                 args.set(5, 1.0F);
-                args.set(6, (HytilsConfig.manuallyEditHeightOverlay ? BlockHighlightConfig.colorMap.get(mapColor).get().getRGB() : ColorUtils.getCachedDarkColor(mapColor.colorValue)));
+                args.set(6, (HytilsConfig.manuallyEditHeightOverlay ? BlockHighlightConfig.colorMap.get(mapColor).get().getRGB() : DarkColorUtils.getCachedDarkColor(mapColor.colorValue)));
             }
         }
     }

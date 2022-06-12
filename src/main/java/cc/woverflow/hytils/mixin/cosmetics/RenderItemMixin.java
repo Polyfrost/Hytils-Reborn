@@ -18,10 +18,11 @@
 
 package cc.woverflow.hytils.mixin.cosmetics;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.CosmeticsHandler;
-import cc.woverflow.hytils.handlers.game.GameType;
 import net.minecraft.block.BlockPumpkin;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.resources.model.IBakedModel;
@@ -38,8 +39,8 @@ public class RenderItemMixin {
     @Inject(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/resources/model/IBakedModel;)V", at = @At("HEAD"), cancellable = true)
     private void yeah(ItemStack stack, IBakedModel model, CallbackInfo ci) {
         if (stack == null) return;
-        if (HytilsConfig.hideDuelsCosmetics && HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation() != null &&
-            HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation().getGameType() == GameType.DUELS && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() &&
+        if (HytilsConfig.hideDuelsCosmetics && HypixelUtils.INSTANCE.getLocrawInfo() != null &&
+            HypixelUtils.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.DUELS && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() &&
             (stack.getItem() instanceof ItemDoublePlant || stack.getItem() instanceof ItemDye || stack.getItem() instanceof ItemRecord || shouldRemove(stack.getItem().getUnlocalizedName()) ||(stack.getItem() instanceof ItemBlock && (shouldRemove(((ItemBlock) stack.getItem()).block.getUnlocalizedName()) || ((ItemBlock) stack.getItem()).block instanceof BlockPumpkin)))) ci.cancel();
     }
 

@@ -18,15 +18,14 @@
 
 package cc.woverflow.hytils.handlers.lobby.armorstands;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.handlers.game.GameType;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
 
 public class ArmorStandHider {
     private static final String[] armorStandNames = {"click", "mystery vault", "daily reward tokens", "advent calendar reward", "free rewards", "special holiday quests", "release",
@@ -36,8 +35,8 @@ public class ArmorStandHider {
 
     @SubscribeEvent
     public void onEntityRenderer(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        final LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (EssentialAPI.getMinecraftUtil().isHypixel() && locraw != null && (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() && HytilsConfig.hideUselessArmorStands || HytilsConfig.hideUselessArmorStandsGame && (locraw.getGameType() == GameType.SKYBLOCK || locraw.getGameType() == GameType.BED_WARS || locraw.getGameType() == GameType.SKY_WARS || locraw.getGameMode().contains("BRIDGE")))) {
+        final LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        if (HypixelUtils.INSTANCE.isHypixel() && locraw != null && (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() && HytilsConfig.hideUselessArmorStands || HytilsConfig.hideUselessArmorStandsGame && (locraw.getGameType() == LocrawInfo.GameType.SKYBLOCK || locraw.getGameType() == LocrawInfo.GameType.BEDWARS || locraw.getGameType() == LocrawInfo.GameType.SKYWARS || locraw.getGameMode().contains("BRIDGE")))) {
             if (event.entity instanceof EntityArmorStand) {
                 String unformattedArmorStandName = event.entity.getCustomNameTag().toLowerCase();
                 for (String armorStands : armorStandNames) {

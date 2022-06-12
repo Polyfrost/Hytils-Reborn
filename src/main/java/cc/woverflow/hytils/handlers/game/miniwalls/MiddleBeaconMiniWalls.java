@@ -19,12 +19,11 @@
 package cc.woverflow.hytils.handlers.game.miniwalls;
 
 
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.events.TitleEvent;
 import cc.woverflow.hytils.util.WaypointUtil;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -47,8 +46,8 @@ public class MiddleBeaconMiniWalls {
     }
 
     public boolean shouldMakeBeacon() {
-        LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        return EssentialAPI.getMinecraftUtil().isHypixel() && locraw != null && locraw.getGameMode().equalsIgnoreCase("mini_walls") && HytilsConfig.miniWallsMiddleBeacon && this.miniWitherDead;
+        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        return HypixelUtils.INSTANCE.isHypixel() && locraw != null && locraw.getGameMode().equalsIgnoreCase("mini_walls") && HytilsConfig.miniWallsMiddleBeacon && this.miniWitherDead;
     }
 
     @SubscribeEvent

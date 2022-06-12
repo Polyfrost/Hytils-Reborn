@@ -18,7 +18,8 @@
 
 package cc.woverflow.hytils.hooks;
 
-import cc.woverflow.hytils.util.ColorUtils;
+import cc.polyfrost.oneconfig.utils.color.ColorUtils;
+import cc.woverflow.hytils.util.DarkColorUtils;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -39,7 +40,7 @@ public class BlockModelRendererHook {
             }
             MapColor mapColor = stateIn.getBlock().getMapColor(stateIn);
             if (blockPosIn.getY() == (height - 1) && mapColor != null && (!(stateIn.getBlock().getMaterial() == Material.rock) || check(mapColor.colorIndex))) {
-                int color = HytilsConfig.manuallyEditHeightOverlay ? BlockHighlightConfig.colorMap.get(mapColor).get().getRGB() : ColorUtils.getCachedDarkColor(mapColor.colorValue);
+                int color = HytilsConfig.manuallyEditHeightOverlay ? BlockHighlightConfig.colorMap.get(mapColor).get().getRGB() : DarkColorUtils.getCachedDarkColor(mapColor.colorValue);
                 args.set(0, (float) ColorUtils.getRed(color) / 255);
                 args.set(1, (float) ColorUtils.getGreen(color) / 255);
                 args.set(2, (float) ColorUtils.getBlue(color) / 255);

@@ -18,16 +18,17 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.triggers;
 
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+import cc.polyfrost.oneconfig.utils.Multithreading;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.events.TitleEvent;
 import cc.woverflow.hytils.handlers.cache.PatternHandler;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveResetModule;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.EssentialAPI;
-import gg.essential.api.utils.Multithreading;
-import gg.essential.universal.wrappers.message.UTextComponent;
+import cc.woverflow.hytils.util.notification.NotificationManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -88,7 +89,7 @@ public class AutoVictory implements ChatReceiveResetModule {
             if (!HytilsConfig.gexpMode) {
                 try {
                     if (HypixelAPIUtils.getGEXP()) {
-                        EssentialAPI.getNotifications()
+                        NotificationManager.INSTANCE
                             .push(
                                 HytilsReborn.MOD_NAME,
                                 "You currently have " + HypixelAPIUtils.gexp + " daily guild EXP."
@@ -98,12 +99,12 @@ public class AutoVictory implements ChatReceiveResetModule {
                 } catch (Exception ignored) {
 
                 }
-                EssentialAPI.getNotifications()
+                NotificationManager.INSTANCE
                     .push(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
             } else {
                 try {
                     if (HypixelAPIUtils.getWeeklyGEXP()) {
-                        EssentialAPI.getNotifications()
+                        NotificationManager.INSTANCE
                             .push(
                                 HytilsReborn.MOD_NAME,
                                 "You currently have " + HypixelAPIUtils.gexp + " weekly guild EXP."
@@ -113,14 +114,14 @@ public class AutoVictory implements ChatReceiveResetModule {
                 } catch (Exception ignored) {
 
                 }
-                EssentialAPI.getNotifications()
+                NotificationManager.INSTANCE
                     .push(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
             }
         }
-        if (isSupportedMode(HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation()) && HytilsConfig.autoGetWinstreak) {
+        if (isSupportedMode(HypixelUtils.INSTANCE.getLocrawInfo()) && HytilsConfig.autoGetWinstreak) {
             try {
                 if (HypixelAPIUtils.getWinstreak()) {
-                    EssentialAPI.getNotifications().push(
+                    NotificationManager.INSTANCE.push(
                         HytilsReborn.MOD_NAME,
                         "You currently have a " + HypixelAPIUtils.winstreak + " winstreak."
                     );
@@ -129,7 +130,7 @@ public class AutoVictory implements ChatReceiveResetModule {
             } catch (Exception ignored) {
 
             }
-            EssentialAPI.getNotifications()
+            NotificationManager.INSTANCE
                 .push(HytilsReborn.MOD_NAME, "There was a problem trying to get your winstreak.");
         }
     }
@@ -141,11 +142,11 @@ public class AutoVictory implements ChatReceiveResetModule {
         Minecraft.getMinecraft().ingameGUI.displayedSubTitle = "";
     }
 
-    private boolean isSupportedMode(LocrawInformation locraw) {
+    private boolean isSupportedMode(LocrawInfo locraw) {
         if (locraw != null && locraw.getGameType() != null) {
             switch (locraw.getGameType()) {
-                case BED_WARS:
-                case SKY_WARS:
+                case BEDWARS:
+                case SKYWARS:
                 case DUELS:
                     return true;
             }

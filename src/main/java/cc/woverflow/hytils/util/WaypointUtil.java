@@ -38,7 +38,6 @@ import java.awt.*;
  * @author Moulberry
  */
 public class WaypointUtil {
-    public static final Minecraft mc = Minecraft.getMinecraft();
 
     private static final ResourceLocation beaconBeam = new ResourceLocation("textures/entity/beacon_beam.png");
 

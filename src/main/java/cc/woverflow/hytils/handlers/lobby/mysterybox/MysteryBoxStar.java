@@ -18,9 +18,9 @@
 
 package cc.woverflow.hytils.handlers.lobby.mysterybox;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiChest;
@@ -45,7 +45,7 @@ public class MysteryBoxStar {
 
     @SubscribeEvent
     public void onDrawScreenPre(GuiScreenEvent.DrawScreenEvent.Pre event) {
-        if (!HytilsConfig.mysteryBoxStar || !EssentialAPI.getMinecraftUtil().isHypixel() || !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+        if (!HytilsConfig.mysteryBoxStar || !HypixelUtils.INSTANCE.isHypixel() || !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
             return;
         }
 

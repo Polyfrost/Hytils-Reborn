@@ -18,11 +18,9 @@
 
 package cc.woverflow.hytils.mixin;
 
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import cc.woverflow.hytils.handlers.game.GameType;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -47,13 +45,13 @@ public abstract class LayerArmorBaseMixin_HideIngameArmour {
     }
 
     private static boolean shouldCancel(ItemStack itemStack) {
-        if (!HytilsConfig.hideArmor || itemStack == null || !EssentialAPI.getMinecraftUtil().isHypixel()) return false;
-        final LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
+        if (!HytilsConfig.hideArmor || itemStack == null || !HypixelUtils.INSTANCE.isHypixel()) return false;
+        final LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
         final Item item = itemStack.getItem();
         if (locraw != null) {
             if (item instanceof ItemArmor && ((ItemArmor) item).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
                 switch (locraw.getGameType()) {
-                    case BED_WARS:
+                    case BEDWARS:
                         return true;
                     case ARCADE_GAMES:
                         // capture the wool
@@ -62,7 +60,7 @@ public abstract class LayerArmorBaseMixin_HideIngameArmour {
                         return locraw.getGameMode().contains("BRIDGE") || locraw.getGameMode().contains("CAPTURE") || locraw.getGameMode().contains("ARENA");
                 }
             } else {
-                if (locraw.getGameType() == GameType.DUELS) {
+                if (locraw.getGameType() == LocrawInfo.GameType.DUELS) {
                     return locraw.getGameMode().contains("CLASSIC");
                 }
             }

@@ -18,9 +18,9 @@
 
 package cc.woverflow.hytils.handlers.game;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.events.TitleEvent;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class GameEndingTitles {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onTitle(TitleEvent event) {
-        if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilsConfig.hideGameEndingTitles) {
+        if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.hideGameEndingTitles) {
             return;
         }
 

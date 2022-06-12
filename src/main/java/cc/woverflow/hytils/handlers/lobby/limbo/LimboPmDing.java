@@ -18,22 +18,18 @@
 
 package cc.woverflow.hytils.handlers.lobby.limbo;
 
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class LimboPmDing {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (EssentialAPI.getMinecraftUtil().isHypixel() && locraw != null && locraw.getServerId().equals("limbo") && event.message.getFormattedText().startsWith("§dFrom §r") && HytilsConfig.limboDing) {
+        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        if (HypixelUtils.INSTANCE.isHypixel() && locraw != null && locraw.getServerId().equals("limbo") && event.message.getFormattedText().startsWith("§dFrom §r") && HytilsConfig.limboDing) {
             Minecraft.getMinecraft().thePlayer.playSound("random.orb", 1f, 1f);
         }
     }

@@ -18,11 +18,9 @@
 
 package cc.woverflow.hytils.handlers.game.pit;
 
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.handlers.game.GameType;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -43,12 +41,12 @@ public class PitLagReducer {
 
     @SubscribeEvent
     public void onRenderLiving(RenderLivingEvent.Pre<EntityLiving> event) {
-        if (!EssentialAPI.getMinecraftUtil().isHypixel()) {
+        if (!HypixelUtils.INSTANCE.isHypixel()) {
             return;
         }
 
-        LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (locraw == null || locraw.getGameType() != GameType.PIT) {
+        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        if (locraw == null || locraw.getGameType() != LocrawInfo.GameType.PIT) {
             return;
         }
 

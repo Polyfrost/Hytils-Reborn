@@ -16,19 +16,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.woverflow.hytils.handlers.cache;
+package cc.woverflow.hytils.util.notification;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+final class Notification {
 
-//TODO: needs a cleanup idk what im doing
-public abstract class Handler<A> {
-    public static Handler INSTANCE;
-    public JsonObject jsonObject = null;
+    // these are package private on purpose im not an idiot
+    String title;
+    String description;
+    Runnable runnable;
 
-    /**
-     * Initializes the handler.
-     */
-    public abstract void initialize();
+    float time;
+    float width;
+    float mouseOverAdd;
+    boolean closing;
+    boolean clicked;
 
+    Notification(String title, String description, Runnable runnable) {
+        this.title = title;
+        this.description = description;
+        this.runnable = runnable;
+
+        this.time = 0;
+        this.width = 0;
+        this.mouseOverAdd = 0;
+        this.closing = false;
+        this.clicked = false;
+    }
 }

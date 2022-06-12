@@ -18,11 +18,12 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.triggers;
 
+import cc.polyfrost.oneconfig.utils.Multithreading;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.utils.Multithreading;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -52,7 +53,7 @@ public class AutoQueue implements ChatReceiveModule {
         }
 
         final String message = getStrippedMessage(event.message);
-        LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
+        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
         Matcher matcher = getLanguage().autoQueuePrefixGlobalRegex.matcher(message);
         if (matcher.matches() && locraw != null) {
             this.command = "/play " + locraw.getGameMode().toLowerCase(Locale.ENGLISH);

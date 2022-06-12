@@ -18,13 +18,13 @@
 
 package cc.woverflow.hytils.handlers.chat;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.handlers.chat.modules.blockers.*;
 import cc.woverflow.hytils.handlers.chat.modules.events.AchievementEvent;
 import cc.woverflow.hytils.handlers.chat.modules.events.LevelupEvent;
 import cc.woverflow.hytils.handlers.chat.modules.modifiers.*;
 import cc.woverflow.hytils.handlers.chat.modules.triggers.*;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -134,13 +134,12 @@ public class ChatHandler {
 
     @SubscribeEvent
     public void handleChat(ClientChatReceivedEvent event) {
-        if (!EssentialAPI.getMinecraftUtil().isHypixel()) {
+        if (!HypixelUtils.INSTANCE.isHypixel()) {
             return;
         }
 
         // These don't cast to ChatReceiveModule for god knows why, so we can't include them in receiveModules.
         // Therefore, we manually trigger them here.
-        HytilsReborn.INSTANCE.getLocrawUtil().onMessageReceived(event);
         HytilsReborn.INSTANCE.getAutoQueue().onMessageReceived(event);
 
         for (ChatReceiveModule module : this.receiveModules) {
@@ -163,11 +162,9 @@ public class ChatHandler {
     @SuppressWarnings({"unused", "RedundantSuppression"})
     @Nullable
     public String handleSentMessage(@NotNull String message) {
-        if (!EssentialAPI.getMinecraftUtil().isHypixel()) {
+        if (!HypixelUtils.INSTANCE.isHypixel()) {
             return message;
         }
-
-        HytilsReborn.INSTANCE.getLocrawUtil().onMessageSend(message);
 
         for (ChatSendModule module : this.sendModules) {
             if (module.isEnabled()) {

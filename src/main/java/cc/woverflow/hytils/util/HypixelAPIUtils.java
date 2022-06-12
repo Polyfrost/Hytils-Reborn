@@ -18,22 +18,22 @@
 
 package cc.woverflow.hytils.util;
 
+import cc.polyfrost.oneconfig.events.event.LocrawEvent;
+import cc.polyfrost.oneconfig.events.event.Stage;
+import cc.polyfrost.oneconfig.events.event.TickEvent;
+import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import cc.polyfrost.oneconfig.utils.NetworkUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.HeightHandler;
-import cc.woverflow.hytils.events.LocrawEvent;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import gg.essential.api.EssentialAPI;
-import gg.essential.api.utils.JsonHolder;
-import gg.essential.api.utils.WebUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -44,7 +44,7 @@ public class HypixelAPIUtils {
     public static String gexp;
     public static String winstreak;
     public static String rank;
-    public static LocrawInformation locraw;
+    public static LocrawInfo locraw;
     private int ticks = 0;
 
     private static String getCurrentESTTime() {
@@ -54,7 +54,7 @@ public class HypixelAPIUtils {
     }
 
     public static void checkGameModes() {
-        if (EssentialAPI.getMinecraftUtil().isHypixel()) {
+        if (HypixelUtils.INSTANCE.isHypixel()) {
             ScoreObjective scoreboardObj = Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1);
             if (scoreboardObj != null) {
                 String scObjName = ScoreboardUtil.cleanSB(scoreboardObj.getDisplayName());
@@ -85,7 +85,7 @@ public class HypixelAPIUtils {
     public static boolean getGEXP() {
         String gexp = null;
         String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
-        JsonArray guildMembers = JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid)).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
+        JsonArray guildMembers = NetworkUtils.getJsonElement("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
         for (JsonElement e : guildMembers) {
             if (e.getAsJsonObject().get("uuid").getAsString().equals(uuid)) {
                 gexp = Integer.toString(e.getAsJsonObject().getAsJsonObject("expHistory").get(getCurrentESTTime()).getAsInt());
@@ -106,7 +106,7 @@ public class HypixelAPIUtils {
     public static boolean getGEXP(String username) {
         String gexp = null;
         String uuid = getUUID(username);
-        JsonArray guildMembers = JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid)).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
+        JsonArray guildMembers = NetworkUtils.getJsonElement("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
         for (JsonElement e : guildMembers) {
             if (e.getAsJsonObject().get("uuid").getAsString().equals(uuid)) {
                 gexp = Integer.toString(e.getAsJsonObject().getAsJsonObject("expHistory").get(getCurrentESTTime()).getAsInt());
@@ -126,7 +126,7 @@ public class HypixelAPIUtils {
     public static boolean getWeeklyGEXP() {
         String gexp = null;
         String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
-        JsonArray guildMembers = JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid)).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
+        JsonArray guildMembers = NetworkUtils.getJsonElement("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
         for (JsonElement e : guildMembers) {
             if (e.getAsJsonObject().get("uuid").getAsString().equals(uuid)) {
                 int addGEXP = 0;
@@ -151,7 +151,7 @@ public class HypixelAPIUtils {
     public static boolean getWeeklyGEXP(String username) {
         String gexp = null;
         String uuid = getUUID(username);
-        JsonArray guildMembers = JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid)).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
+        JsonArray guildMembers = NetworkUtils.getJsonElement("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
         for (JsonElement e : guildMembers) {
             if (e.getAsJsonObject().get("uuid").getAsString().equals(uuid)) {
                 int addGEXP = 0;
@@ -175,10 +175,10 @@ public class HypixelAPIUtils {
     public static boolean getWinstreak() {
         String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
         JsonObject playerStats =
-            JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid)).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
+            NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
         if (locraw != null) {
             switch (locraw.getGameType()) {
-                case BED_WARS:
+                case BEDWARS:
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("Bedwars").get("winstreak").getAsInt());
                         return true;
@@ -186,7 +186,7 @@ public class HypixelAPIUtils {
                         e.printStackTrace();
                     }
                     break;
-                case SKY_WARS:
+                case SKYWARS:
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("SkyWars").get("win_streak").getAsInt());
                         return true;
@@ -216,10 +216,10 @@ public class HypixelAPIUtils {
     public static boolean getWinstreak(String username) {
         String uuid = getUUID(username);
         JsonObject playerStats =
-            JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid)).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
+            NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
         if (locraw != null) {
             switch (locraw.getGameType()) {
-                case BED_WARS:
+                case BEDWARS:
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("Bedwars").get("winstreak").getAsInt());
                         return true;
@@ -227,7 +227,7 @@ public class HypixelAPIUtils {
                         e.printStackTrace();
                     }
                     break;
-                case SKY_WARS:
+                case SKYWARS:
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("SkyWars").get("win_streak").getAsInt());
                         return true;
@@ -258,7 +258,7 @@ public class HypixelAPIUtils {
     public static boolean getWinstreak(String username, String game) {
         String uuid = getUUID(username);
         JsonObject playerStats =
-            JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid)).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
+            NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
         if (game != null) {
             switch (game.toLowerCase(Locale.ENGLISH)) {
                 case "bedwars":
@@ -301,7 +301,7 @@ public class HypixelAPIUtils {
             String uuid = getUUID(username);
             try {
                 JsonObject playerRank =
-                    JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid)).getAsJsonObject().getAsJsonObject("player");
+                    NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player");
                 rank = playerRank.get("newPackageRank").toString();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -316,20 +316,20 @@ public class HypixelAPIUtils {
      * @param username The username of the player to get.
      */
     public static String getUUID(String username) {
-        JsonHolder uuidResponse =
-            WebUtil.fetchJSON("https://api.mojang.com/users/profiles/minecraft/" + username);
+        JsonObject uuidResponse =
+            NetworkUtils.getJsonElement("https://api.mojang.com/users/profiles/minecraft/" + username).getAsJsonObject();
         if (uuidResponse.has("error")) {
             HytilsReborn.INSTANCE.sendMessage(
-                EnumChatFormatting.RED + "Failed with error: " + uuidResponse.optString("reason")
+                EnumChatFormatting.RED + "Failed with error: " + uuidResponse.get("reason").getAsString()
             );
             return null;
         }
-        return uuidResponse.optString("id");
+        return uuidResponse.get("id").getAsString();
     }
 
     public static boolean isValidKey(String key) {
         try {
-            JsonObject gotten = JsonUtils.PARSER.parse(WebUtil.fetchString("https://api.hypixel.net/key?key=" + key)).getAsJsonObject();
+            JsonObject gotten = NetworkUtils.getJsonElement("https://api.hypixel.net/key?key=" + key).getAsJsonObject();
             return gotten.has("success") && gotten.get("success").getAsBoolean();
         } catch (Exception e) {
             e.printStackTrace();
@@ -337,9 +337,9 @@ public class HypixelAPIUtils {
         return false;
     }
 
-    @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.START) {
+    @Subscribe
+    public void onTick(TickEvent event) {
+        if (event.stage == Stage.START) {
             if (ticks % 20 == 0) {
                 if (Minecraft.getMinecraft().thePlayer != null) {
                     checkGameModes();
@@ -352,8 +352,8 @@ public class HypixelAPIUtils {
         }
     }
 
-    @SubscribeEvent
-    public void onLocraw(LocrawEvent event) {
-        locraw = event.locraw;
+    @Subscribe
+    private void onLocraw(LocrawEvent event) {
+        locraw = event.info;
     }
 }

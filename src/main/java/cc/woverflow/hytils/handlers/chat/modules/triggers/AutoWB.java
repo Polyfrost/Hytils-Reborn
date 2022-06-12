@@ -18,10 +18,10 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.triggers;
 
+import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
-import gg.essential.api.utils.Multithreading;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;

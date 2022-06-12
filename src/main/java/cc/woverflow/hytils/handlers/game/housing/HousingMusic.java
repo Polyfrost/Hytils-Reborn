@@ -18,11 +18,9 @@
 
 package cc.woverflow.hytils.handlers.game.housing;
 
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.handlers.game.GameType;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.EssentialAPI;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -30,9 +28,9 @@ public class HousingMusic {
 
     @SubscribeEvent
     public void onPlaySound(PlaySoundEvent event) {
-        if (EssentialAPI.getMinecraftUtil().isHypixel() && HytilsConfig.muteHousingMusic) {
-            LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-            if (locraw != null && locraw.getGameType() == GameType.HOUSING && event.name.startsWith("note.")) {
+        if (HypixelUtils.INSTANCE.isHypixel() && HytilsConfig.muteHousingMusic) {
+            LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+            if (locraw != null && locraw.getGameType() == LocrawInfo.GameType.HOUSING && event.name.startsWith("note.")) {
                 event.result = null;
             }
         }

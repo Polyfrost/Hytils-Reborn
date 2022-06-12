@@ -18,14 +18,14 @@
 
 package cc.woverflow.hytils.handlers.cache;
 
+import cc.polyfrost.oneconfig.events.event.LocrawEvent;
+import cc.polyfrost.oneconfig.events.event.WorldLoadEvent;
+import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import cc.polyfrost.oneconfig.utils.NetworkUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.events.LocrawEvent;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
-import cc.woverflow.hytils.util.JsonUtils;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.utils.WebUtil;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -39,10 +39,10 @@ public class HeightHandler extends CacheHandler<String, Integer> {
 
     public int getHeight() {
         if (currentHeight != -2) return currentHeight;
-        if (HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation() == null || jsonObject == null || HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby())
+        if (HypixelUtils.INSTANCE.getLocrawInfo() == null || jsonObject == null || HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby())
             return -1;
         try {
-            LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
+            LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
             if (HypixelAPIUtils.isBedwars) {
                 if (locraw.getMapName() != null && !locraw.getMapName().trim().isEmpty()) {
                     String map = locraw.getMapName().toLowerCase(Locale.ENGLISH).replace(" ", "_");
@@ -76,21 +76,21 @@ public class HeightHandler extends CacheHandler<String, Integer> {
 
     public void initialize() {
         try {
-            jsonObject = JsonUtils.PARSER.parse(WebUtil.fetchString("https://maps.pinkulu.com")).getAsJsonObject();
+            jsonObject = NetworkUtils.getJsonElement("https://maps.pinkulu.com").getAsJsonObject();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    @SubscribeEvent
+    @Subscribe
     public void onLocraw(LocrawEvent e) {
         currentHeight = -2;
         printException = true;
         getHeight();
     }
 
-    @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load e) {
+    @Subscribe
+    public void onWorldLoad(WorldLoadEvent e) {
         currentHeight = -2;
         printException = true;
     }

@@ -18,9 +18,8 @@
 
 package cc.woverflow.hytils.handlers.lobby;
 
-import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.EssentialAPI;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -35,8 +34,8 @@ public class LobbyChecker {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        final LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !EssentialAPI.getMinecraftUtil().isHypixel() || this.tick >= 52 || locraw == null) {
+        final LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        if (event.phase != TickEvent.Phase.START || Minecraft.getMinecraft().thePlayer == null || !HypixelUtils.INSTANCE.isHypixel() || this.tick >= 52 || locraw == null) {
             return;
         }
 

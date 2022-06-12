@@ -16,14 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.woverflow.hytils.events;
+package cc.woverflow.hytils.command.parser;
 
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import net.minecraftforge.fml.common.eventhandler.Event;
-
-public class LocrawEvent extends Event {
-    public LocrawInformation locraw;
-    public LocrawEvent(LocrawInformation locraw) {
-        this.locraw = locraw;
-    }
+public enum WinstreakType {
+    BEDWARS, SKYWARS, DUELS
 }

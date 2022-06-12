@@ -18,155 +18,176 @@
 
 package cc.woverflow.hytils.command;
 
+import cc.polyfrost.oneconfig.utils.Multithreading;
+import cc.polyfrost.oneconfig.utils.commands.CommandManager;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Name;
+import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand;
 import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.util.HypixelAPIUtils;
-import gg.essential.api.EssentialAPI;
-import gg.essential.api.commands.Command;
-import gg.essential.api.commands.DefaultHandler;
-import gg.essential.api.commands.DisplayName;
-import gg.essential.api.commands.SubCommand;
-import gg.essential.api.utils.Multithreading;
-import net.minecraft.util.EnumChatFormatting;
+import cc.woverflow.hytils.command.parser.*;
 import cc.woverflow.hytils.config.HytilsConfig;
+import cc.woverflow.hytils.util.HypixelAPIUtils;
+import cc.woverflow.hytils.util.notification.NotificationManager;
+import net.minecraft.util.EnumChatFormatting;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.Locale;
 
-public class HytilsCommand extends Command {
+@Command(value = "hytils", aliases = {"hytilities", "hytilsreborn", "hytilitiesreborn", "hytil"})
+public class HytilsCommand {
 
-    private final Set<Alias> hashSet = new HashSet<>();
-
-    @Override
-    public Set<Alias> getCommandAliases() {
-        return hashSet;
+    static {
+        CommandManager.INSTANCE.addParser(new GEXPTypeParser());
+        CommandManager.INSTANCE.addParser(new WinstreakTypeParser());
     }
 
-    public HytilsCommand() {
-        super("hytils", true);
-        hashSet.add(new Alias("hytilities"));
-        hashSet.add(new Alias("hytilsreborn"));
-        hashSet.add(new Alias("hytilitiesreborn"));
-        hashSet.add(new Alias("hytil"));
-    }
-
-    @DefaultHandler
-    public void handleDefault() {
+    @Main
+    private static void handleDefault() {
         HytilsReborn.INSTANCE.getConfig().openGui();
     }
 
     @SubCommand("gexp")
-    public void getGEXP(@DisplayName("username") Optional<String> username, @DisplayName("type") Optional<String> type) {
-        Multithreading.runAsync(() -> {
-            if (HytilsConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
-                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
-                return;
-            }
-            if (username.isPresent()) {
-                if (!type.isPresent()) {
-                    if (HypixelAPIUtils.getGEXP(username.get())) {
-                        EssentialAPI.getNotifications()
-                            .push(HytilsReborn.MOD_NAME, username.get() + " currently has " + HypixelAPIUtils.gexp + " guild EXP.");
-                    } else {
-                        EssentialAPI.getNotifications()
-                            .push(HytilsReborn.MOD_NAME, "There was a problem trying to get " + username.get() + "'s GEXP.");
-                    }
-                } else {
-                    if (type.get().equals("daily")) {
-                        if (HypixelAPIUtils.getGEXP(username.get())) {
-                            EssentialAPI.getNotifications()
-                                .push(
-                                    HytilsReborn.MOD_NAME,
-                                    username.get() + " currently has " + HypixelAPIUtils.gexp + " daily guild EXP."
-                                );
+    private static class GEXPCommand {
+        @Main
+        private static void getGEXP() {
+            getGEXP(null, null);
+        }
+
+        @Main
+        private static void getGEXP(@Name("username") PlayerName username) {
+            getGEXP(username, null);
+        }
+
+        @SuppressWarnings("SameParameterValue")
+        @Main
+        private static void getGEXP(@Name("username") @Nullable PlayerName username, @Name("type") @Nullable GEXPType type) {
+            Multithreading.runAsync(() -> {
+                if (HytilsConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
+                    HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
+                    return;
+                }
+                if (username != null) {
+                    if (type == null) {
+                        if (HypixelAPIUtils.getGEXP(username.name)) {
+                            NotificationManager.INSTANCE
+                                .push(HytilsReborn.MOD_NAME, username.name + " currently has " + HypixelAPIUtils.gexp + " guild EXP.");
                         } else {
-                            EssentialAPI.getNotifications()
-                                .push(HytilsReborn.MOD_NAME, "There was a problem trying to get $username's daily GEXP.");
-                        }
-                    } else if (type.get().equals("weekly")) {
-                        if (HypixelAPIUtils.getWeeklyGEXP(username.get())) {
-                            EssentialAPI.getNotifications()
-                                .push(
-                                    HytilsReborn.MOD_NAME,
-                                    username.get() + " currently has " + HypixelAPIUtils.gexp + " weekly guild EXP."
-                                );
-                        } else {
-                            EssentialAPI.getNotifications()
-                                .push(HytilsReborn.MOD_NAME, "There was a problem trying to get " + username.get() + "'s weekly GEXP.");
+                            NotificationManager.INSTANCE
+                                .push(HytilsReborn.MOD_NAME, "There was a problem trying to get " + username.name + "'s GEXP.");
                         }
                     } else {
-                        EssentialAPI.getNotifications()
-                            .push(HytilsReborn.MOD_NAME, "The type argument was not valid.");
+                        switch (type) {
+                            case DAILY:
+                                if (HypixelAPIUtils.getGEXP(username.name)) {
+                                    NotificationManager.INSTANCE
+                                        .push(
+                                            HytilsReborn.MOD_NAME,
+                                            username.name + " currently has " + HypixelAPIUtils.gexp + " daily guild EXP."
+                                        );
+                                } else {
+                                    NotificationManager.INSTANCE
+                                        .push(HytilsReborn.MOD_NAME, "There was a problem trying to get $username's daily GEXP.");
+                                }
+                            case WEEKLY:
+                                if (HypixelAPIUtils.getWeeklyGEXP(username.name)) {
+                                    NotificationManager.INSTANCE
+                                        .push(
+                                            HytilsReborn.MOD_NAME,
+                                            username.name + " currently has " + HypixelAPIUtils.gexp + " weekly guild EXP."
+                                        );
+                                } else {
+                                    NotificationManager.INSTANCE
+                                        .push(HytilsReborn.MOD_NAME, "There was a problem trying to get " + username.name + "'s weekly GEXP.");
+                                }
+                        }
+                    }
+                } else {
+                    if (HypixelAPIUtils.getGEXP()) {
+                        NotificationManager.INSTANCE
+                            .push(HytilsReborn.MOD_NAME, "You currently have " + HypixelAPIUtils.gexp + " guild EXP.");
+                    } else {
+                        NotificationManager.INSTANCE
+                            .push(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
                     }
                 }
-            } else {
-                if (HypixelAPIUtils.getGEXP()) {
-                    EssentialAPI.getNotifications()
-                        .push(HytilsReborn.MOD_NAME, "You currently have " + HypixelAPIUtils.gexp + " guild EXP.");
-                } else {
-                    EssentialAPI.getNotifications()
-                        .push(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
-                }
-            }
-        });
+            });
+        }
     }
 
     @SubCommand("winstreak")
-    public void getWinstreak(@DisplayName("username") Optional<String> username, @DisplayName("gamemode") Optional<String> gamemode) {
-        Multithreading.runAsync(() -> {
-            if (HytilsConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
-                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
-                return;
-            }
-            if (username.isPresent()) {
-                if (gamemode.isPresent()) {
-                    if (HypixelAPIUtils.getWinstreak(username.get(), gamemode.get())) {
-                        EssentialAPI.getNotifications()
-                            .push(
-                                HytilsReborn.MOD_NAME,
-                                username.get() + " currently has a " + HypixelAPIUtils.winstreak + " winstreak in " + gamemode.get() + "."
-                            );
+    private static class WinStreakCommand {
+        @Main
+        private static void getWinStreak() {
+            getWinStreak(null, null);
+        }
+
+        @Main
+        private static void getWinStreak(@Name("username") PlayerName username) {
+            getWinStreak(username, null);
+        }
+
+        @SuppressWarnings("SameParameterValue")
+        @Main
+        private static void getWinStreak(@Name("username") @Nullable PlayerName player, @Name("type") @Nullable WinstreakType gamemode) {
+            Multithreading.runAsync(() -> {
+                if (HytilsConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
+                    HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
+                    return;
+                }
+                if (player != null) {
+                    if (gamemode != null) {
+                        if (HypixelAPIUtils.getWinstreak(player.name, gamemode.name())) {
+                            NotificationManager.INSTANCE
+                                .push(
+                                    HytilsReborn.MOD_NAME,
+                                    player.name + " currently has a " + HypixelAPIUtils.winstreak + " winstreak in " + gamemode.name().toLowerCase(Locale.ENGLISH) + "."
+                                );
+                        } else {
+                            NotificationManager.INSTANCE
+                                .push(
+                                    HytilsReborn.MOD_NAME,
+                                    "There was a problem trying to get " + player.name + "'s winstreak in $gamemode."
+                                );
+                        }
                     } else {
-                        EssentialAPI.getNotifications()
-                            .push(
-                                HytilsReborn.MOD_NAME,
-                                "There was a problem trying to get " + username.get() + "'s winstreak in $gamemode."
-                            );
+                        if (HypixelAPIUtils.getWinstreak(player.name)) {
+                            NotificationManager.INSTANCE
+                                .push(
+                                    HytilsReborn.MOD_NAME,
+                                    player.name + " currently has a " + HypixelAPIUtils.winstreak + " winstreak."
+                                );
+                        } else {
+                            NotificationManager.INSTANCE
+                                .push(HytilsReborn.MOD_NAME, "There was a problem trying to get " + player.name + "'s winstreak.");
+                        }
                     }
                 } else {
-                    if (HypixelAPIUtils.getWinstreak(username.get())) {
-                        EssentialAPI.getNotifications()
-                            .push(
-                                HytilsReborn.MOD_NAME,
-                                username.get() + " currently has a " + HypixelAPIUtils.winstreak + " winstreak."
-                            );
+                    if (HypixelAPIUtils.getWinstreak()) {
+                        NotificationManager.INSTANCE
+                            .push(HytilsReborn.MOD_NAME, "You currently have a " + HypixelAPIUtils.winstreak + " winstreak.");
                     } else {
-                        EssentialAPI.getNotifications()
-                            .push(HytilsReborn.MOD_NAME, "There was a problem trying to get " + username.get() + "'s winstreak.");
+                        NotificationManager.INSTANCE
+                            .push(HytilsReborn.MOD_NAME, "There was a problem trying to get your winstreak.");
                     }
                 }
-            } else {
-                if (HypixelAPIUtils.getWinstreak()) {
-                    EssentialAPI.getNotifications()
-                        .push(HytilsReborn.MOD_NAME, "You currently have a " + HypixelAPIUtils.winstreak + " winstreak.");
-                } else {
-                    EssentialAPI.getNotifications()
-                        .push(HytilsReborn.MOD_NAME, "There was a problem trying to get your winstreak.");
-                }
-            }
-        });
+            });
+        }
     }
 
     @SubCommand("setkey")
-    public void setKey(@DisplayName("API Key") String apiKey) {
-        Multithreading.runAsync(() -> {
-            if (HypixelAPIUtils.isValidKey(apiKey)) {
-                HytilsConfig.apiKey = apiKey;
-                HytilsReborn.INSTANCE.getConfig().save();
-                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.GREEN + "Saved API key successfully!");
-            } else {
-                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Invalid API key! Please try again.");
-            }
-        });
+    private static class SetKeyCommand {
+        @Main
+        private static void setKey(@Name("API Key") String apiKey) {
+            Multithreading.runAsync(() -> {
+                if (HypixelAPIUtils.isValidKey(apiKey)) {
+                    HytilsConfig.apiKey = apiKey;
+                    HytilsReborn.INSTANCE.getConfig().save();
+                    HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.GREEN + "Saved API key successfully!");
+                } else {
+                    HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Invalid API key! Please try again.");
+                }
+            });
+        }
     }
 }

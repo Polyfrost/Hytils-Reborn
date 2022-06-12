@@ -18,12 +18,11 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import cc.woverflow.hytils.handlers.chat.ChatSendModule;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import cc.woverflow.hytils.handlers.game.GameType;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
@@ -59,14 +58,14 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
     }
 
     private long getCooldownLengthInSeconds() {
-        LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
+        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
         if (locraw != null && !"LOBBY".equals(locraw.getGameMode())) {
             switch (locraw.getGameType()) {
-                case BED_WARS: {
+                case BEDWARS: {
                     if (!locraw.getGameMode().equals("BEDWARS_EIGHT_ONE")) return 60L;
                     break;
                 }
-                case SKY_WARS: {
+                case SKYWARS: {
                     return 3L;
                 }
                 case ARCADE_GAMES: {
@@ -84,9 +83,9 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
+        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
         if (locraw != null && (
-            (locraw.getGameType() == GameType.SKY_WARS && event.message.getFormattedText().equals(getLanguage().cannotShoutBeforeSkywars)) || // fun fact: there is no message when you shout after a skywars game
+            (locraw.getGameType() == LocrawInfo.GameType.SKYWARS && event.message.getFormattedText().equals(getLanguage().cannotShoutBeforeSkywars)) || // fun fact: there is no message when you shout after a skywars game
                 event.message.getFormattedText().equals(getLanguage().cannotShoutAfterGame) ||
                 event.message.getFormattedText().equals(getLanguage().cannotShoutBeforeGame) ||
                 event.message.getFormattedText().equals(getLanguage().noSpectatorCommands)

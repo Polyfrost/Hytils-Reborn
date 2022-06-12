@@ -18,12 +18,10 @@
 
 package cc.woverflow.hytils.handlers.game.uhc;
 
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.handlers.game.GameType;
 import cc.woverflow.hytils.util.WaypointUtil;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -34,8 +32,8 @@ public class MiddleWaypointUHC {
 
     @SubscribeEvent
     public void onRenderWorldLast(RenderWorldLastEvent event) {
-        LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (EssentialAPI.getMinecraftUtil().isHypixel() && HytilsConfig.uhcMiddleWaypoint && (locraw != null && (locraw.getGameType() == GameType.UHC_CHAMPIONS || locraw.getGameType() == GameType.SPEED_UHC))) {
+        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        if (HypixelUtils.INSTANCE.isHypixel() && HytilsConfig.uhcMiddleWaypoint && (locraw != null && (locraw.getGameType() == LocrawInfo.GameType.UHC_CHAMPIONS || locraw.getGameType() == LocrawInfo.GameType.SPEED_UHC))) {
             WaypointUtil.renderWayPoint(HytilsConfig.uhcMiddleWaypointText, block, event.partialTicks);
         }
     }

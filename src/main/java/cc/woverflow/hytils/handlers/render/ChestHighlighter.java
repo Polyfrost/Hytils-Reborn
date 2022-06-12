@@ -19,9 +19,9 @@
 package cc.woverflow.hytils.handlers.render;
 
 import cc.polyfrost.oneconfig.config.core.OneColor;
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.handlers.game.GameType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -38,7 +38,6 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -161,6 +160,6 @@ public class ChestHighlighter {
     }
 
     private boolean isNotSupported() {
-        return HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation() == null || (HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation().getGameType() != GameType.SKY_WARS && HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation().getGameType() != GameType.BLITZ_SG && (HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation().getGameType() != GameType.DUELS || !HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation().getGameMode().contains("_SW_")));
+        return HypixelUtils.INSTANCE.getLocrawInfo() == null || (HypixelUtils.INSTANCE.getLocrawInfo().getGameType() != LocrawInfo.GameType.SKYWARS && HypixelUtils.INSTANCE.getLocrawInfo().getGameType() != LocrawInfo.GameType.BLITZ_SG && (HypixelUtils.INSTANCE.getLocrawInfo().getGameType() != LocrawInfo.GameType.DUELS || !HypixelUtils.INSTANCE.getLocrawInfo().getGameMode().contains("_SW_")));
     }
 }

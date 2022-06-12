@@ -18,11 +18,11 @@
 
 package cc.woverflow.hytils.handlers.language;
 
+import cc.polyfrost.oneconfig.utils.Multithreading;
+import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import gg.essential.api.utils.JsonHolder;
-import gg.essential.api.utils.Multithreading;
-import gg.essential.api.utils.WebUtil;
+import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 
 import java.util.HashMap;
@@ -52,11 +52,18 @@ public class LanguageHandler {
 
     private void initialize() {
         final String username = Minecraft.getMinecraft().getSession().getUsername();
-        final JsonHolder json = WebUtil.fetchJSON("https://api.sk1er.club/player/" + username);
-        final String language = languageMappings.getOrDefault(json.optJSONObject("player").defaultOptString("userLanguage", "ENGLISH"), "en");
-        JsonHolder jsonHolder = WebUtil.fetchJSON("https://data.woverflow.cc/regex.json");
-        if (!jsonHolder.getKeys().isEmpty()) {
-            current = gson.fromJson(jsonHolder.has(language) ? jsonHolder.optActualJSONObject(language).toString() : jsonHolder.optActualJSONObject("en").toString(), LanguageData.class);
+        final JsonObject json = NetworkUtils.getJsonElement("https://api.sk1er.club/player/" + username).getAsJsonObject();
+        final JsonObject player = json.getAsJsonObject("player");
+        String userLanguage;
+        if (player.has("userLanguage")) {
+            userLanguage = player.get("userLanguage").getAsString();
+        } else {
+            userLanguage = "ENGLISH";
+        }
+        final String language = languageMappings.getOrDefault(userLanguage, "en");
+        JsonObject finalJsonObject = NetworkUtils.getJsonElement("https://data.woverflow.cc/regex.json").getAsJsonObject();
+        if (!finalJsonObject.entrySet().isEmpty()) {
+            current = gson.fromJson(finalJsonObject.has(language) ? finalJsonObject.getAsJsonObject(language).toString() : finalJsonObject.getAsJsonObject("en").toString(), LanguageData.class);
         }
         current.initialize();
     }

@@ -18,10 +18,9 @@
 
 package cc.woverflow.hytils.handlers.cache;
 
-import cc.woverflow.hytils.util.JsonUtils;
+import cc.polyfrost.oneconfig.utils.JsonUtils;
+import cc.polyfrost.oneconfig.utils.Multithreading;
 import com.google.gson.JsonElement;
-import gg.essential.api.utils.Multithreading;
-import gg.essential.api.utils.WebUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class PatternHandler extends CacheHandler<String, Pattern> {
 
     public void initialize() {
         Multithreading.runAsync(() -> {
-            jsonObject = JsonUtils.PARSER.parse(WebUtil.fetchString("https://data.woverflow.cc/regex.json")).getAsJsonObject();
+            jsonObject = JsonUtils.parseString("https://data.woverflow.cc/regex.json").getAsJsonObject();
             for (JsonElement element : jsonObject.getAsJsonArray("game_end")) {
                 gameEnd.add(Pattern.compile(element.getAsString()));
             }

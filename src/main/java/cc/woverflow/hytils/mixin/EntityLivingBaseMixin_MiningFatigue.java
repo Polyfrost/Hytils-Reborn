@@ -20,7 +20,7 @@ package cc.woverflow.hytils.mixin;
 
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
-import gg.essential.api.EssentialAPI;
+import cc.woverflow.hytils.util.notification.NotificationManager;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
@@ -38,7 +38,7 @@ public class EntityLivingBaseMixin_MiningFatigue {
     @Inject(method = "addPotionEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;onNewPotionEffect(Lnet/minecraft/potion/PotionEffect;)V"))
     private void onPotionEffect(PotionEffect potioneffectIn, CallbackInfo ci) {
         if (HytilsConfig.notifyMiningFatigue && potioneffectIn.getPotionID() == Potion.digSlowdown.getId() && ($this instanceof EntityPlayerSP) && (!HytilsConfig.disableNotifyMiningFatigueSkyblock || !HytilsReborn.INSTANCE.getSkyblockChecker().isSkyblockScoreboard())) {
-            EssentialAPI.getNotifications().push("Hytils Reborn", "You have mining fatigue!");
+            NotificationManager.INSTANCE.push("Hytils Reborn", "You have mining fatigue!");
         }
     }
 }

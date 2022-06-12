@@ -19,82 +19,63 @@
 package cc.woverflow.hytils.command;
 
 
+import cc.polyfrost.oneconfig.utils.Multithreading;
+import cc.polyfrost.oneconfig.utils.NetworkUtils;
+import cc.polyfrost.oneconfig.utils.commands.CommandManager;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.handlers.lobby.limbo.LimboLimiter;
+import cc.woverflow.hytils.command.parser.GameName;
+import cc.woverflow.hytils.command.parser.GameNameParser;
 import cc.woverflow.hytils.config.HytilsConfig;
+import cc.woverflow.hytils.handlers.lobby.limbo.LimboLimiter;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import gg.essential.api.EssentialAPI;
-import gg.essential.api.utils.Multithreading;
-import gg.essential.api.utils.WebUtil;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.util.BlockPos;
+import net.minecraft.client.Minecraft;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
-public class PlayCommand extends CommandBase {
-    private Map<String, String> games = new HashMap<>();
-    private String[] gameCache = null;
+@Command("play")
+public class PlayCommand {
+    private static Map<String, String> games = new HashMap<>();
 
-    public PlayCommand() {
-        this.getNames();
-    }
-
-    private void getNames() {
+    static {
         Multithreading.runAsync(() -> {
             try {
                 String url = "https://data.woverflow.cc/games.json";
-                String content = WebUtil.fetchString(url);
+                String content = NetworkUtils.getString(url);
                 Type stringStringMap = new TypeToken<HashMap<String, String>>() {
                 }.getType();
                 games = new Gson().fromJson(content, stringStringMap);
+                Minecraft.getMinecraft().addScheduledTask(() -> CommandManager.INSTANCE.addParser(new GameNameParser(games)));
             } catch (JsonSyntaxException e) {
                 HytilsReborn.INSTANCE.getLogger().error("Failed to fetch /play game list.", e);
             }
         });
     }
 
-    @Override
-    public String getCommandName() {
-        return "play";
-    }
-
-    @Override
-    public String getCommandUsage(ICommandSender iCommandSender) {
-        return "/play [game]";
-    }
-
-    @Override
-    public void processCommand(ICommandSender iCommandSender, String[] args) {
+    @Main
+    private static void play(GameName game) {
         boolean autocompletePlayCommands = HytilsConfig.autocompletePlayCommands;
-        if (!EssentialAPI.getMinecraftUtil().isHypixel()) {
-            HytilsReborn.INSTANCE.getCommandQueue().queue("/play " + String.join(" ", args));
+        if (!HypixelUtils.INSTANCE.isHypixel()) {
+            HytilsReborn.INSTANCE.getCommandQueue().queue("/play " + game.name);
             return;
         }
 
-        if (args.length != 1) {
-            if (autocompletePlayCommands) {
-                HytilsReborn.INSTANCE.sendMessage("&cSpecify a game");
-            }
-
-            return;
-        }
-
-        String command = args[0];
+        String command = game.name;
         if (autocompletePlayCommands) {
-            String value = games.get(args[0].toLowerCase());
+            String value = games.get(game.name.toLowerCase(Locale.ENGLISH));
             if (value != null) {
                 command = value;
-            } else if (games.containsValue(args[0].toLowerCase())) {
-                command = args[0];
+            } else if (games.containsValue(game.name.toLowerCase(Locale.ENGLISH))) {
+                command = game.name;
             } else {
-                HytilsReborn.INSTANCE.sendMessage("&cInvalid game: \"" + args[0] + "\"");
+                HytilsReborn.INSTANCE.sendMessage("&cInvalid game: \"" + game.name + "\"");
                 return;
             }
         }
@@ -103,20 +84,5 @@ public class PlayCommand extends CommandBase {
             HytilsReborn.INSTANCE.getCommandQueue().queue("/l");
         }
         HytilsReborn.INSTANCE.getCommandQueue().queue("/play " + command);
-    }
-
-    @Override
-    public int getRequiredPermissionLevel() {
-        return -1;
-    }
-
-    @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
-        return (HytilsConfig.autocompletePlayCommands && EssentialAPI.getMinecraftUtil().isHypixel()) ? getListOfStringsMatchingLastWord(args, getListOfGames()) : null;
-    }
-
-    private String[] getListOfGames() {
-        if (this.gameCache != null) return this.gameCache;
-        return this.gameCache = Stream.concat(games.keySet().stream(), games.values().stream()).distinct().toArray(String[]::new);
     }
 }

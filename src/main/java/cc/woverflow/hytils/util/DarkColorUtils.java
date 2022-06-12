@@ -18,10 +18,11 @@
 
 package cc.woverflow.hytils.util;
 
-import cc.woverflow.hytils.config.HytilsConfig;
-import gg.essential.lib.caffeine.cache.Cache;
-import gg.essential.lib.caffeine.cache.Caffeine;
+import cc.polyfrost.oneconfig.utils.color.ColorUtils;
 import cc.woverflow.hytils.HytilsReborn;
+import cc.woverflow.hytils.config.HytilsConfig;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -29,7 +30,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ColorUtils {
+public class DarkColorUtils {
     private static final AtomicInteger counter = new AtomicInteger(0);
     private static final ThreadPoolExecutor POOL = new ThreadPoolExecutor(
         50, 50,
@@ -50,33 +51,12 @@ public class ColorUtils {
         Integer color = cache.getIfPresent(mapColor);
         if (color == null) {
             cache.put(mapColor, ((0xFF) << 24) |
-                ((Math.round(Math.max((float) getRed(mapColor) * ((float) (1000 - HytilsConfig.overlayAmount) / 1000), 0.0F)) & 0xFF) << 16) |
-                ((Math.round(Math.max((float) getGreen(mapColor) * ((float) (1000 - HytilsConfig.overlayAmount) / 1000), 0.0F)) & 0xFF) << 8) |
-                ((Math.round(Math.max((float) getBlue(mapColor) * ((float) (1000 - HytilsConfig.overlayAmount) / 1000), 0.0F)) & 0xFF)));
+                ((Math.round(Math.max((float) ColorUtils.getRed(mapColor) * ((float) (1000 - HytilsConfig.overlayAmount) / 1000), 0.0F)) & 0xFF) << 16) |
+                ((Math.round(Math.max((float) ColorUtils.getGreen(mapColor) * ((float) (1000 - HytilsConfig.overlayAmount) / 1000), 0.0F)) & 0xFF) << 8) |
+                ((Math.round(Math.max((float) ColorUtils.getBlue(mapColor) * ((float) (1000 - HytilsConfig.overlayAmount) / 1000), 0.0F)) & 0xFF)));
             return Objects.requireNonNull(cache.getIfPresent(mapColor));
         } else {
             return color;
         }
-    }
-
-    /**
-     * @return The red value of the provided RGBA value.
-     */
-    public static int getRed(int rgba) {
-        return (rgba >> 16) & 0xFF;
-    }
-
-    /**
-     * @return The green value of the provided RGBA value.
-     */
-    public static int getGreen(int rgba) {
-        return (rgba >> 8) & 0xFF;
-    }
-
-    /**
-     * @return The blue value of the provided RGBA value.
-     */
-    public static int getBlue(int rgba) {
-        return (rgba) & 0xFF;
     }
 }

@@ -18,8 +18,8 @@
 
 package cc.woverflow.hytils.mixin;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.HytilsReborn;
-import gg.essential.api.EssentialAPI;
 import cc.woverflow.hytils.events.TitleEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
@@ -45,7 +45,7 @@ public class GuiIngameForgeMixin_TitleEvent extends GuiIngame {
 
     @Inject(method = "renderTitle", at = @At("HEAD"), cancellable = true)
     private void postTitleEvent(int l, int age, float opacity, CallbackInfo ci) {
-        if (EssentialAPI.getMinecraftUtil().isHypixel()) {
+        if (HypixelUtils.INSTANCE.isHypixel()) {
             TitleEvent event = new TitleEvent(displayedTitle, displayedSubTitle);
             MinecraftForge.EVENT_BUS.post(event);
 

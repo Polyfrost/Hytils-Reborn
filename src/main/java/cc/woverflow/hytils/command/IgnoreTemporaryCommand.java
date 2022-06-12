@@ -18,13 +18,14 @@
 
 package cc.woverflow.hytils.command;
 
+import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.utils.Multithreading;
+import cc.polyfrost.oneconfig.utils.commands.annotations.*;
 import cc.woverflow.hytils.HytilsReborn;
+import cc.woverflow.hytils.command.parser.PlayerName;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import gg.essential.api.commands.*;
-import gg.essential.api.utils.Multithreading;
-import gg.essential.universal.UChat;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
@@ -41,14 +42,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class IgnoreTemporaryCommand extends Command {
-    private JsonObject json;
+@Command("ignoretemp")
+public class IgnoreTemporaryCommand {
+    private static JsonObject json;
     private static final JsonParser PARSER = new JsonParser();
     private static final File file = new File(HytilsReborn.INSTANCE.modDir, "ignore.json");
     private static final Pattern regex = Pattern.compile("(\\d+)( ?)((month|day|hour|minute|second|millisecond|y|m|d|h|s)s?)", Pattern.CASE_INSENSITIVE);
 
-    public IgnoreTemporaryCommand() {
-        super("ignoretemp");
+    static {
         initialize();
         Multithreading.runAsync(() -> {
             Timer timer = new Timer(1, ignored -> {
@@ -77,19 +78,19 @@ public class IgnoreTemporaryCommand extends Command {
         });
     }
 
-    @DefaultHandler
-    public void handle(@DisplayName("Player Name") String playerName, @DisplayName("Time") @Greedy String time) {
+    @Main
+    private static void handle(@Name("Player Name") PlayerName playerName, @Name("Time") @Greedy String time) {
         Multithreading.runAsync(() -> {
             try {
                 long millis = addMillis(time.replace(",", "").replace(" ", ""));
-                json.addProperty(playerName, millis + new Date().getTime());
+                json.addProperty(playerName.name, millis + new Date().getTime());
                 try {
                     FileUtils.writeStringToFile(file, json.toString(), StandardCharsets.UTF_8);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                UChat.say("/ignore add " + playerName);
-                HytilsReborn.INSTANCE.sendMessage("&r&aSuccessfully ignored &r&6&l" + playerName + "&r&a for &r&e&l" + time + "&r&a. The ignore will be removed after the specified period."
+                UChat.say("/ignore add " + playerName.name);
+                HytilsReborn.INSTANCE.sendMessage("&r&aSuccessfully ignored &r&6&l" + playerName.name + "&r&a for &r&e&l" + time + "&r&a. The ignore will be removed after the specified period."
 );
             } catch (Exception e) {
                 e.printStackTrace();
@@ -119,24 +120,30 @@ public class IgnoreTemporaryCommand extends Command {
     }
 
     @SubCommand("add")
-    public void add(@DisplayName("Player Name") String playerName, @DisplayName("Time") @Greedy String time) {
-        handle(playerName, time);
+    private static class AddSubCommand {
+        @Main
+        private static void add(@Name("Player Name") PlayerName playerName, @Name("Time") @Greedy String time) {
+            handle(playerName, time);
+        }
     }
 
     @SubCommand("remove")
-    public void remove(@DisplayName("Player Name") String playerName) {
-        json.remove(playerName);
-        Multithreading.runAsync(() -> {
-            try {
-                FileUtils.writeStringToFile(file, json.toString(), StandardCharsets.UTF_8);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        UChat.say("/ignore remove " + playerName);
+    private static class RemoveSubCommand {
+        @Main
+        private static void remove(@Name("Player Name") PlayerName playerName) {
+            json.remove(playerName.name);
+            Multithreading.runAsync(() -> {
+                try {
+                    FileUtils.writeStringToFile(file, json.toString(), StandardCharsets.UTF_8);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            UChat.say("/ignore remove " + playerName.name);
+        }
     }
 
-    private void initialize() {
+    private static void initialize() {
         if (file.exists()) {
             try {
                 json = PARSER.parse(FileUtils.readFileToString(file, StandardCharsets.UTF_8)).getAsJsonObject();

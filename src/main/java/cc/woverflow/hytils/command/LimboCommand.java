@@ -18,29 +18,16 @@
 
 package cc.woverflow.hytils.command;
 
-import gg.essential.api.EssentialAPI;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
 
-public class LimboCommand extends CommandBase {
-    @Override
-    public String getCommandName() {
-        return "limbo";
-    }
+@Command("limbo")
+public class LimboCommand {
 
-    @Override
-    public String getCommandUsage(ICommandSender sender) {
-        return "/limbo";
-    }
-
-    @Override
-    public void processCommand(ICommandSender sender, String[] args) {
-        if (EssentialAPI.getMinecraftUtil().isHypixel()) Minecraft.getMinecraft().thePlayer.sendChatMessage("§");
-    }
-
-    @Override
-    public int getRequiredPermissionLevel() {
-        return -1;
+    @Main
+    private static void main() {
+        if (HypixelUtils.INSTANCE.isHypixel()) Minecraft.getMinecraft().thePlayer.sendChatMessage("§");
     }
 }

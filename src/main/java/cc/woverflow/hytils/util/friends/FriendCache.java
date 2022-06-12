@@ -18,18 +18,15 @@
 
 package cc.woverflow.hytils.util.friends;
 
+import cc.polyfrost.oneconfig.utils.Multithreading;
+import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import cc.woverflow.hytils.HytilsReborn;
-import gg.essential.api.utils.Multithreading;
-import gg.essential.api.utils.JsonHolder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
-import org.apache.commons.io.IOUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -57,42 +54,25 @@ public class FriendCache {
      * @return A list of UUIDs that the player is friends on Hypixel with, or null if the request failed
      */
     private Set<UUID> downloadFriendDataFromApi() {
-        String apiEndpoint = "https://api.sk1er.club/friends/" + Minecraft.getMinecraft().getSession().getPlayerID();
+        String url = "https://api.sk1er.club/friends/" + Minecraft.getMinecraft().getSession().getPlayerID();
         try {
-            // Set URL to be https://api.sk1er.club/friends/playerUUID
-            URL url = new URL(apiEndpoint);
-
-            // Open connection with URL
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setUseCaches(true);
-            connection.addRequestProperty("User-Agent", "Mozilla/4.76 (Hytils Reborn " + HytilsReborn.VERSION +  ")");
-
-            // Connection will timeout after 15 seconds
-            connection.setReadTimeout(15000);
-            connection.setConnectTimeout(15000);
-
-            // Read output from connection
-            connection.setDoOutput(true);
-            try (InputStream is = connection.getInputStream()) {
-                // Convert output format into a list of names
-                // TODO: Error handling if JSON data is in bad format
-                JsonHolder holder = new JsonHolder(IOUtils.toString(is, Charset.defaultCharset()));
-                Set<UUID> friends = new HashSet<>();
-                // Note that the keys are the UUIDs
-                for (String key : holder.getKeys()) {
-                    // Key needs to have hyphens inserted, see https://stackoverflow.com/a/19399768
-                    String keyWithHyphens = key.replaceFirst(
-                        "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
-                        "$1-$2-$3-$4-$5");
-                    friends.add(UUID.fromString(keyWithHyphens));
-                }
-
-                // Return the list of friends
-                return friends;
+            // Convert output format into a list of names
+            // TODO: Error handling if JSON data is in bad format
+            JsonObject json = NetworkUtils.getJsonElement(url, "OneConfig/1.0.0", 15000, false).getAsJsonObject();
+            Set<UUID> friends = new HashSet<>();
+            // Note that the keys are the UUIDs
+            for (Map.Entry<String, JsonElement> key : json.entrySet()) {
+                // Key needs to have hyphens inserted, see https://stackoverflow.com/a/19399768
+                String keyWithHyphens = key.getKey().replaceFirst(
+                    "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
+                    "$1-$2-$3-$4-$5");
+                friends.add(UUID.fromString(keyWithHyphens));
             }
-        } catch (IOException e) {
-            HytilsReborn.INSTANCE.getLogger().error("Failed retrieving friend list from {}", apiEndpoint, e);
+
+            // Return the list of friends
+            return friends;
+        } catch (Exception e) {
+            HytilsReborn.INSTANCE.getLogger().error("Failed retrieving friend list from {}", url, e);
 
             // If connection fails, return null
             return null;

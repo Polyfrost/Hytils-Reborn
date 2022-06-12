@@ -20,24 +20,17 @@ package cc.woverflow.hytils.config;
 
 import cc.polyfrost.oneconfig.config.Config;
 import cc.polyfrost.oneconfig.config.annotations.*;
-import cc.polyfrost.oneconfig.config.annotations.Button;
 import cc.polyfrost.oneconfig.config.core.OneColor;
 import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.config.data.PageLocation;
 import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator;
 import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.util.ColorUtils;
+import cc.woverflow.hytils.util.DarkColorUtils;
 import com.google.common.collect.Lists;
-import gg.essential.api.EssentialAPI;
-import gg.essential.vigilance.Vigilant;
-import gg.essential.vigilance.data.Property;
-import gg.essential.vigilance.data.PropertyType;
-import kotlin.jvm.functions.Function0;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.io.FileUtils;
 
-import java.awt.*;
 import java.awt.Color;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -924,7 +917,7 @@ public class HytilsConfig extends Config {
 
         addListener("heightOverlay", () -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
         addListener("overlayAmount", () -> {
-            ColorUtils.invalidateCache();
+            DarkColorUtils.invalidateCache();
             Minecraft.getMinecraft().renderGlobal.loadRenderers();
         });
 
@@ -934,7 +927,6 @@ public class HytilsConfig extends Config {
     }
 
     public void hideTabulous() {
-        Function0<Boolean> yes = () -> true;
         hideNpcsInTab = false;
         keepImportantNpcsInTab = false;
         hideGuildTagsInTab = false;

@@ -18,10 +18,9 @@
 
 package cc.woverflow.hytils.handlers.game.duels;
 
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -35,8 +34,8 @@ public class SumoRenderDistance {
 
     @SubscribeEvent
     public void onWorldLoad(RenderWorldLastEvent event) {
-        LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-        if (HytilsConfig.sumoRenderDistance && EssentialAPI.getMinecraftUtil().isHypixel() && (locraw != null && locraw.getGameMode().contains("SUMO"))) {
+        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        if (HytilsConfig.sumoRenderDistance && HypixelUtils.INSTANCE.isHypixel() && (locraw != null && locraw.getGameMode().contains("SUMO"))) {
             if (isFirstRender) {
                 final int oldRd = gs.renderDistanceChunks;
                 wasSumo = true;

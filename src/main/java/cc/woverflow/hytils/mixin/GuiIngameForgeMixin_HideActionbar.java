@@ -18,11 +18,10 @@
 
 package cc.woverflow.hytils.mixin;
 
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
-import gg.essential.api.EssentialAPI;
 import net.minecraftforge.client.GuiIngameForge;
-import cc.woverflow.hytils.handlers.game.GameType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,6 +31,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GuiIngameForgeMixin_HideActionbar {
     @Inject(method = "renderRecordOverlay", at = @At("HEAD"), cancellable = true)
     private void cancelActionBar(int width, int height, float partialTicks, CallbackInfo ci) {
-        if (EssentialAPI.getMinecraftUtil().isHypixel() && HytilsConfig.hideHousingActionBar && HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation() != null && HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation().getGameType() == GameType.HOUSING) ci.cancel();
+        if (HypixelUtils.INSTANCE.isHypixel() && HytilsConfig.hideHousingActionBar && HypixelUtils.INSTANCE.getLocrawInfo() != null && HypixelUtils.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.HOUSING) ci.cancel();
     }
 }

@@ -18,12 +18,12 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.triggers;
 
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
-import gg.essential.api.utils.Multithreading;
-import gg.essential.universal.wrappers.message.UTextComponent;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;

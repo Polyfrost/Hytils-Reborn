@@ -18,9 +18,9 @@
 
 package cc.woverflow.hytils.handlers.game;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.events.TitleEvent;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,7 +29,7 @@ public class GameStartingTitles {
     // Hides the countdown timer title text that is displayed before a game is about to start and other titles
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onTitle(TitleEvent event) {
-        if (!EssentialAPI.getMinecraftUtil().isHypixel() || !HytilsConfig.hideGameStartingTitles) {
+        if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.hideGameStartingTitles) {
             return;
         }
 

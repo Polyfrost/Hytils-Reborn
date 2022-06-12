@@ -18,8 +18,8 @@
 
 package cc.woverflow.hytils.handlers.general;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.config.HytilsConfig;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemBlock;
@@ -34,7 +34,7 @@ public class SoundHandler {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent e) {
         if (e.phase == TickEvent.Phase.START) {
-            if (EssentialAPI.getMinecraftUtil().isHypixel() && Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null) {
+            if (HypixelUtils.INSTANCE.isHypixel() && Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null) {
                 if (HytilsConfig.blockNotify && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
                     if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && !(((ItemBlock) Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem()).block instanceof BlockTNT) && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize <= HytilsConfig.blockNumber && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize > 4) {
                         ticks++;

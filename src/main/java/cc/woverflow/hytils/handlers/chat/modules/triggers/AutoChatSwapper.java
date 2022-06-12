@@ -18,6 +18,8 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.triggers;
 
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.woverflow.chatting.chat.ChatTab;
 import cc.woverflow.chatting.chat.ChatTabs;
 import cc.woverflow.chatting.config.ChattingConfig;
@@ -25,10 +27,7 @@ import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import cc.woverflow.hytils.handlers.language.LanguageData;
-import cc.woverflow.onecore.utils.Utils;
-import gg.essential.api.utils.Multithreading;
-import gg.essential.universal.wrappers.message.UTextComponent;
-import kotlin.Unit;
+import cc.woverflow.hytils.util.notification.NotificationManager;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -64,9 +63,8 @@ public class AutoChatSwapper implements ChatReceiveModule {
                             Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> (StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/ac") || ((ChatTab) tab).getPrefix().isEmpty())).findFirst();
                             if (optional.isPresent()) {
                                 ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
-                                Utils.sendBrandedNotification("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", 4f, () -> {
+                                NotificationManager.INSTANCE.push("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", () -> {
                                     ChatTabs.INSTANCE.setCurrentTab(currentTab);
-                                    return Unit.INSTANCE;
                                 });
                             }
                         }
@@ -78,9 +76,8 @@ public class AutoChatSwapper implements ChatReceiveModule {
                             Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/gc")).findFirst();
                             if (optional.isPresent()) {
                                 ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
-                                Utils.sendBrandedNotification("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", 4f, () -> {
+                                NotificationManager.INSTANCE.push("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", () -> {
                                     ChatTabs.INSTANCE.setCurrentTab(currentTab);
-                                    return Unit.INSTANCE;
                                 });
                             }
                         }
@@ -92,9 +89,8 @@ public class AutoChatSwapper implements ChatReceiveModule {
                             Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/oc")).findFirst();
                             if (optional.isPresent()) {
                                 ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
-                                Utils.sendBrandedNotification("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", 4f, () -> {
+                                NotificationManager.INSTANCE.push("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", () -> {
                                     ChatTabs.INSTANCE.setCurrentTab(currentTab);
-                                    return Unit.INSTANCE;
                                 });
                             }
                         }
@@ -108,9 +104,8 @@ public class AutoChatSwapper implements ChatReceiveModule {
                     Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/pc")).findFirst();
                     if (optional.isPresent()) {
                         ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
-                        Utils.sendBrandedNotification("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", 4f, () -> {
+                        NotificationManager.INSTANCE.push("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", () -> {
                             ChatTabs.INSTANCE.setCurrentTab(currentTab);
-                            return Unit.INSTANCE;
                         });
                     }
                 }
@@ -129,7 +124,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
         private final ScheduledFuture<?> unregisterTimer;
 
         ChatChannelMessagePreventer() { // if the message somehow doesn't send, we unregister after 20 seconds
-            this.unregisterTimer = Multithreading.schedule(() -> { // to prevent blocking the next time it's used
+            this.unregisterTimer = Multithreading.submitScheduled(() -> { // to prevent blocking the next time it's used
                 if (!this.hasDetected) {
                     MinecraftForge.EVENT_BUS.unregister(this);
                 }

@@ -18,59 +18,41 @@
 
 package cc.woverflow.hytils.command;
 
+import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
+import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand;
 import cc.woverflow.hytils.HytilsReborn;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.util.BlockPos;
+import cc.woverflow.hytils.command.parser.PlayerName;
 
-import java.util.List;
 import java.util.Set;
 
-public class SilentRemoveCommand extends CommandBase {
-    @Override
-    public String getCommandName() {
-        return "silentremove";
-    }
+@Command("silentremove")
+public class SilentRemoveCommand {
 
-    @Override
-    public String getCommandUsage(ICommandSender sender) {
-        return "/" + getCommandName() + " <username|clear>";
-    }
-
-    @Override
-    public void processCommand(ICommandSender sender, String[] args) {
-        if (args.length != 1) {
-            HytilsReborn.INSTANCE.sendMessage("&cInvalid usage: " + getCommandUsage(sender));
-        } else {
-            final Set<String> silentUsers = HytilsReborn.INSTANCE.getSilentRemoval().getSilentUsers();
-            if (args[0].equalsIgnoreCase("clear")) {
-                if (silentUsers.isEmpty()) {
-                    HytilsReborn.INSTANCE.sendMessage("&cSilent Removal list is already empty.");
-                    return;
-                }
-
-                silentUsers.clear();
-            } else {
-                final String player = args[0];
-                if (silentUsers.contains(player)) {
-                    silentUsers.remove(player);
-                    HytilsReborn.INSTANCE.sendMessage("&aRemoved &e" + player + " &afrom the removal queue.");
-                    return;
-                }
-
-                silentUsers.add(player);
-                HytilsReborn.INSTANCE.sendMessage("&aAdded &e" + player + " &ato the removal queue.");
-            }
+    @Main
+    private static void add(PlayerName player) {
+        String name = player.name;
+        final Set<String> silentUsers = HytilsReborn.INSTANCE.getSilentRemoval().getSilentUsers();
+        if (silentUsers.contains(name)) {
+            silentUsers.remove(name);
+            HytilsReborn.INSTANCE.sendMessage("&aRemoved &e" + name + " &afrom the removal queue.");
+            return;
         }
+
+        silentUsers.add(name);
+        HytilsReborn.INSTANCE.sendMessage("&aAdded &e" + name + " &ato the removal queue.");
     }
 
-    @Override
-    public int getRequiredPermissionLevel() {
-        return -1;
-    }
-
-    @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
-        return args.length == 1 ? getListOfStringsMatchingLastWord(args, "clear") : null;
+    @SubCommand("clear")
+    private static class ClearSubCommand {
+        @Main
+        private static void clear() {
+            final Set<String> silentUsers = HytilsReborn.INSTANCE.getSilentRemoval().getSilentUsers();
+            if (silentUsers.isEmpty()) {
+                HytilsReborn.INSTANCE.sendMessage("&cSilent Removal list is already empty.");
+                return;
+            }
+            silentUsers.clear();
+        }
     }
 }

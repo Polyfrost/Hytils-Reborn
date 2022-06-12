@@ -18,22 +18,19 @@
 
 package cc.woverflow.hytils.handlers.lobby.tab;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.handlers.game.GameType;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import org.objectweb.asm.tree.ClassNode;
-import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
- * Used in {@link cc.woverflow.hytils.forge.HytilsMixinPlugin#postApply(String, ClassNode, String, IMixinInfo)}
+ * Used in {@link cc.woverflow.hytils.forge.HytilsMixinPlugin
  */
 @SuppressWarnings("unused")
 public class TabChanger {
@@ -82,7 +79,7 @@ public class TabChanger {
     }
 
     public static String modifyName(String name, NetworkPlayerInfo networkPlayerInfo) {
-        if (EssentialAPI.getMinecraftUtil().isHypixel()) {
+        if (HypixelUtils.INSTANCE.isHypixel()) {
             final UUID uuid = networkPlayerInfo.getGameProfile().getId();
 
             if (HytilsConfig.hidePlayerRanksInTab && name.startsWith("[", 2) && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
@@ -94,8 +91,8 @@ public class TabChanger {
                 name = color + name.substring(name.indexOf("]") + 2);
             }
 
-            LocrawInformation locraw = HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
-            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && locraw != null && locraw.getGameType() != GameType.HOUSING) {
+            LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && locraw != null && locraw.getGameType() != LocrawInfo.GameType.HOUSING) {
                 // trim off the guild tag
                 // e.g. Steve §6[GUILD]
                 name = name.substring(0, name.lastIndexOf("[") - 3);
@@ -120,11 +117,11 @@ public class TabChanger {
     }
 
     public static boolean shouldRenderPlayerHead(NetworkPlayerInfo networkPlayerInfo) {
-        return !EssentialAPI.getMinecraftUtil().isHypixel() || !isSkyblockTabInformationEntry(networkPlayerInfo);
+        return !HypixelUtils.INSTANCE.isHypixel() || !isSkyblockTabInformationEntry(networkPlayerInfo);
     }
 
     public static boolean hidePing(NetworkPlayerInfo networkPlayerInfo) {
-        return EssentialAPI.getMinecraftUtil().isHypixel() && ((HytilsConfig.hidePingInTab && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) || isSkyblockTabInformationEntry(networkPlayerInfo));
+        return HypixelUtils.INSTANCE.isHypixel() && ((HytilsConfig.hidePingInTab && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) || isSkyblockTabInformationEntry(networkPlayerInfo));
     }
 
     private static final Pattern validMinecraftUsername = Pattern.compile("\\w{1,16}(?: .{1,3}|$)");

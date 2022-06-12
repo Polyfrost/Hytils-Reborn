@@ -19,8 +19,8 @@
 package cc.woverflow.hytils.handlers.cache;
 
 import cc.woverflow.hytils.HytilsReborn;
-import gg.essential.lib.caffeine.cache.Cache;
-import gg.essential.lib.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;

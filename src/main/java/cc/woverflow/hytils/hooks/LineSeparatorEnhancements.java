@@ -20,8 +20,8 @@ package cc.woverflow.hytils.hooks;
 
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
-import gg.essential.lib.caffeine.cache.Cache;
-import gg.essential.lib.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;

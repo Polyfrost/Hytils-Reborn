@@ -18,16 +18,15 @@
 
 package cc.woverflow.hytils.handlers.chat;
 
+import cc.polyfrost.oneconfig.libs.universal.ChatColor;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.language.LanguageData;
-import cc.woverflow.hytils.util.locraw.LocrawInformation;
-import cc.woverflow.hytils.util.locraw.LocrawUtil;
-import gg.essential.universal.ChatColor;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
-import cc.woverflow.hytils.handlers.chat.modules.triggers.AutoQueue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,9 +54,6 @@ interface ChatModule {
      * have increased responsiveness in the case of a large amount of activated modules. You must find
      * a good balance.
      * <p>
-     * Note that {@link LocrawUtil} and
-     * {@link AutoQueue} are always executed before
-     * any other {@link ChatModule}, regardless of priority.
      *
      * @return the class's priority (lower goes first)
      */
@@ -99,8 +95,8 @@ interface ChatModule {
      * Get the player's server location.
      */
     @Nullable
-    default LocrawInformation getLocraw() {
-        return HytilsReborn.INSTANCE.getLocrawUtil().getLocrawInformation();
+    default LocrawInfo getLocraw() {
+        return HypixelUtils.INSTANCE.getLocrawInfo();
     }
 
     /**
