@@ -19,7 +19,6 @@
 package cc.woverflow.hytils;
 
 import cc.woverflow.hytils.command.*;
-import cc.woverflow.hytils.config.BlockHighlightConfig;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.CosmeticsHandler;
 import cc.woverflow.hytils.handlers.cache.HeightHandler;

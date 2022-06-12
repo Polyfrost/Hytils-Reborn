@@ -26,9 +26,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class LimboPmDing {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {

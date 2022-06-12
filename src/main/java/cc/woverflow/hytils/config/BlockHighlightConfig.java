@@ -21,8 +21,6 @@ package cc.woverflow.hytils.config;
 import cc.polyfrost.oneconfig.config.annotations.Color;
 import cc.polyfrost.oneconfig.config.core.OneColor;
 import cc.woverflow.hytils.HytilsReborn;
-import gg.essential.vigilance.data.Property;
-import gg.essential.vigilance.data.PropertyType;
 import net.minecraft.block.material.MapColor;
 import org.apache.commons.io.FileUtils;
 
