@@ -20,21 +20,22 @@ package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
-import gg.essential.universal.wrappers.message.UTextComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class AntiGL implements ChatReceiveModule {
-    private static final String[] cancelGlMessages = {"glhf", "Good Luck", "GL", "Have a good game!", "gl", "Good luck!", "AutoGL By Sk1er"};
+import java.util.Locale;
+import java.util.regex.Pattern;
 
+public class AntiGL implements ChatReceiveModule {
+    private final Pattern cancelGlMessages = Pattern.compile("(?!.+: )(gl|glhf|good luck|have a good game|autogl by sk1er)",
+        Pattern.CASE_INSENSITIVE);
+    
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String unformattedText = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText());
-        for (String glMessage : cancelGlMessages) {
-            if (unformattedText.contains(glMessage)) {
-                event.setCanceled(true);
-                return;
-            }
+        final String message = event.message.getUnformattedText().toLowerCase(Locale.ENGLISH);
+        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (!message.contains(": "))) return;
+        if (cancelGlMessages.matcher(message).find(0)) {
+            event.setCanceled(true);
         }
     }
 
