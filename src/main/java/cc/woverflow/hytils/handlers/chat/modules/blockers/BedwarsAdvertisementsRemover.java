@@ -32,8 +32,7 @@ public class BedwarsAdvertisementsRemover implements ChatReceiveModule {
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         LocrawInfo locrawInformation = HypixelUtils.INSTANCE.getLocrawInfo();
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (message.startsWith("they have gifted") && message.endsWith("so far!")))
-            return;
+        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (!message.contains(": "))) return;
         if (locrawInformation != null && locrawInformation.getGameType() == LocrawInfo.GameType.BEDWARS && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()
             && getLanguage().chatCleanerBedwarsPartyAdvertisementRegex.matcher(message).find()) {
             event.setCanceled(true);
