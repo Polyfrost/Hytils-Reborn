@@ -18,9 +18,9 @@
 
 package cc.woverflow.hytils.handlers.cache;
 
+import cc.polyfrost.oneconfig.libs.caffeine.cache.Cache;
+import cc.polyfrost.oneconfig.libs.caffeine.cache.Caffeine;
 import cc.woverflow.hytils.HytilsReborn;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;

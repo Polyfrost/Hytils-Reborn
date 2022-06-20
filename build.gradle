@@ -25,7 +25,7 @@ compileJava.options.encoding = 'UTF-8'
 loom {
     launchConfigs {
         client {
-            arg("-Dfml.coreMods.load", "cc.polyfrost.oneconfigwrapper.OneConfigWrapper")
+            arg("--tweakClass", "cc.polyfrost.oneconfigwrapper.OneConfigWrapper")
             property("onecore.mixin", "mixins.hytils.json")
             property("mixin.debug.export", "true")
         }
@@ -57,10 +57,8 @@ dependencies {
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
-    compileOnly('cc.polyfrost:oneconfig-1.8.9-forge:0.1.0-alpha11')
-    include('cc.polyfrost:oneconfig-wrapper-1.8.9-forge:1.0.0-alpha5')
-    //noinspection GradlePackageUpdate
-    include('com.github.ben-manes.caffeine:caffeine:2.9.3')
+    compileOnly('cc.polyfrost:oneconfig-1.8.9-forge:0.1.0-alpha22')
+    include('cc.polyfrost:oneconfig-wrapper-1.8.9-forge:1.0.0-alpha6')
 }
 
 processResources {
@@ -104,7 +102,6 @@ jar {
             'FMLAT': "hytils_at.cfg",
             'MixinConfigs': "mixins.hytils.json",
             "TweakOrder": "0",
-            "FMLCorePlugin": "cc.polyfrost.oneconfigwrapper.OneConfigWrapper",
-            "FMLCorePluginContainsFMLMod": "yes"
+            'TweakClass': "cc.polyfrost.oneconfigwrapper.OneConfigWrapper"
     )
 }

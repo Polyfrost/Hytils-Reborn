@@ -18,11 +18,11 @@
 
 package cc.woverflow.hytils.util;
 
+import cc.polyfrost.oneconfig.libs.caffeine.cache.Cache;
+import cc.polyfrost.oneconfig.libs.caffeine.cache.Caffeine;
 import cc.polyfrost.oneconfig.utils.color.ColorUtils;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 
 import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
