@@ -18,33 +18,18 @@
 
 package cc.woverflow.hytils.hooks;
 
-import cc.polyfrost.oneconfig.libs.caffeine.cache.Cache;
-import cc.polyfrost.oneconfig.libs.caffeine.cache.Caffeine;
-import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class LineSeparatorEnhancements {
-    private static final AtomicInteger counter = new AtomicInteger(0);
-    private static final ThreadPoolExecutor POOL = new ThreadPoolExecutor(
-        50, 50,
-        0L, TimeUnit.SECONDS,
-        new LinkedBlockingQueue<>(), (r) -> new Thread(
-        r,
-        String.format("%s Cache Thread (Handler %s) %s", HytilsReborn.MOD_NAME, LineSeparatorEnhancements.class.getSimpleName(), counter.incrementAndGet())
-    )
-    );
 
-    private static final Cache<String, String> cache = Caffeine.newBuilder().executor(POOL).maximumSize(10000).build();
+    private static final HashMap<String, String> cache = new HashMap<>();
 
     public static boolean isSeparatingChat = false;
 
@@ -73,7 +58,7 @@ public class LineSeparatorEnhancements {
 
     public static String cleanLineSeparator(String formattedText) {
         if (HytilsConfig.cleanLineSeparator) {
-            String cached = cache.getIfPresent(formattedText);
+            String cached = cache.get(formattedText);
             if (cached != null) {
                 return cached;
             } else {

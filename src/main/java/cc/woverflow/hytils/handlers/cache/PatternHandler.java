@@ -22,22 +22,29 @@ import cc.polyfrost.oneconfig.utils.JsonUtils;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class PatternHandler extends CacheHandler<String, Pattern> {
+public class PatternHandler {
     public static PatternHandler INSTANCE = new PatternHandler();
     public List<Pattern> gameEnd = new ArrayList<>(); // OKAY DEFTU
 
     public void initialize() {
         Multithreading.runAsync(() -> {
-            jsonObject = JsonUtils.parseString(NetworkUtils.getString("https://data.woverflow.cc/regex.json")).getAsJsonObject();
-            for (JsonElement element : jsonObject.getAsJsonArray("game_end")) {
-                gameEnd.add(Pattern.compile(element.getAsString()));
+            try {
+                final String gotten = NetworkUtils.getString("https://data.woverflow.cc/regex.json");
+                if (gotten != null) {
+                    JsonObject jsonObject = JsonUtils.parseString(gotten).getAsJsonObject();
+                    for (JsonElement element : jsonObject.getAsJsonArray("game_end")) {
+                        gameEnd.add(Pattern.compile(element.getAsString()));
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
-
 }

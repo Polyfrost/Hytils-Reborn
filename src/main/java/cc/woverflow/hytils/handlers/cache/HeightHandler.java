@@ -26,14 +26,18 @@ import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
+import com.google.gson.JsonObject;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
 
-public class HeightHandler extends CacheHandler<String, Integer> {
+public class HeightHandler {
     public static HeightHandler INSTANCE = new HeightHandler();
 
     private boolean printException = true;
+    private JsonObject jsonObject = null;
+    public final HashMap<String, Integer> cache = new HashMap<>();
 
     private int currentHeight = -2;
 
@@ -47,15 +51,10 @@ public class HeightHandler extends CacheHandler<String, Integer> {
                 if (locraw.getMapName() != null && !locraw.getMapName().trim().isEmpty()) {
                     String map = locraw.getMapName().toLowerCase(Locale.ENGLISH).replace(" ", "_");
                     if (jsonObject.getAsJsonObject("bedwars").has(map)) {
-                        Integer cached = cache.getIfPresent(map);
-                        if (cached == null) {
+                        if (!cache.containsKey(map))
                             cache.put(map, (jsonObject.getAsJsonObject("bedwars").get(map).getAsInt()));
-                            currentHeight = Objects.requireNonNull(cache.getIfPresent(map));
-                            return currentHeight;
-                        } else {
-                            currentHeight = cached;
-                            return cached;
-                        }
+                        currentHeight = cache.get(map);
+                        return currentHeight;
                     }
                 }
             } else if (HypixelAPIUtils.isBridge) {

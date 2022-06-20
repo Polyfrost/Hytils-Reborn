@@ -22,11 +22,12 @@ import cc.polyfrost.oneconfig.utils.JsonUtils;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CosmeticsHandler extends Handler<String> {
+public class CosmeticsHandler {
     public static CosmeticsHandler INSTANCE = new CosmeticsHandler();
     public List<String> particleCosmetics = new ArrayList<>();
     public List<String> itemCosmetics = new ArrayList<>();
@@ -35,7 +36,7 @@ public class CosmeticsHandler extends Handler<String> {
         Multithreading.runAsync(() -> {
             final String gotten = NetworkUtils.getString("https://data.woverflow.cc/cosmetics.json");
             if (gotten != null) {
-                jsonObject = JsonUtils.parseString(gotten).getAsJsonObject();
+                JsonObject jsonObject = JsonUtils.parseString(gotten).getAsJsonObject();
                 for (JsonElement cosmetic : jsonObject.getAsJsonArray("particles")) {
                     particleCosmetics.add(cosmetic.getAsString());
                 }
