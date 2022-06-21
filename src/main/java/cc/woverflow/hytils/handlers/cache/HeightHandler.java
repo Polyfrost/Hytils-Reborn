@@ -20,6 +20,8 @@ package cc.woverflow.hytils.handlers.cache;
 
 import cc.polyfrost.oneconfig.events.event.LocrawEvent;
 import cc.polyfrost.oneconfig.events.event.WorldLoadEvent;
+import cc.polyfrost.oneconfig.libs.caffeine.cache.Cache;
+import cc.polyfrost.oneconfig.libs.caffeine.cache.Caffeine;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
@@ -28,16 +30,29 @@ import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
 import com.google.gson.JsonObject;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class HeightHandler {
     public static HeightHandler INSTANCE = new HeightHandler();
 
     private boolean printException = true;
     private JsonObject jsonObject = null;
-    public final HashMap<String, Integer> cache = new HashMap<>();
+    private final AtomicInteger counter = new AtomicInteger(0);
+    private final ThreadPoolExecutor POOL = new ThreadPoolExecutor(
+        50, 50,
+        0L, TimeUnit.SECONDS,
+        new LinkedBlockingQueue<>(), (r) -> new Thread(
+        r,
+        String.format("%s Cache Thread (Handler %s) %s", HytilsReborn.MOD_NAME, getClass().getSimpleName(), counter.incrementAndGet())
+    )
+    );
+
+    public final Cache<String, Integer> cache = Caffeine.newBuilder().executor(POOL).maximumSize(100).build();
 
     private int currentHeight = -2;
 
@@ -51,10 +66,15 @@ public class HeightHandler {
                 if (locraw.getMapName() != null && !locraw.getMapName().trim().isEmpty()) {
                     String map = locraw.getMapName().toLowerCase(Locale.ENGLISH).replace(" ", "_");
                     if (jsonObject.getAsJsonObject("bedwars").has(map)) {
-                        if (!cache.containsKey(map))
+                        Integer cached = cache.getIfPresent(map);
+                        if (cached == null) {
                             cache.put(map, (jsonObject.getAsJsonObject("bedwars").get(map).getAsInt()));
-                        currentHeight = cache.get(map);
-                        return currentHeight;
+                            currentHeight = Objects.requireNonNull(cache.getIfPresent(map));
+                            return currentHeight;
+                        } else {
+                            currentHeight = cached;
+                            return cached;
+                        }
                     }
                 }
             } else if (HypixelAPIUtils.isBridge) {

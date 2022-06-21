@@ -18,7 +18,6 @@
 
 package cc.woverflow.hytils.handlers.cache;
 
-import cc.polyfrost.oneconfig.utils.JsonUtils;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import com.google.gson.JsonElement;
@@ -34,9 +33,9 @@ public class CosmeticsHandler {
 
     public void initialize() {
         Multithreading.runAsync(() -> {
-            final String gotten = NetworkUtils.getString("https://data.woverflow.cc/cosmetics.json");
+            final JsonElement gotten = NetworkUtils.getJsonElement("https://data.woverflow.cc/cosmetics.json");
             if (gotten != null) {
-                JsonObject jsonObject = JsonUtils.parseString(gotten).getAsJsonObject();
+                JsonObject jsonObject = gotten.getAsJsonObject();
                 for (JsonElement cosmetic : jsonObject.getAsJsonArray("particles")) {
                     particleCosmetics.add(cosmetic.getAsString());
                 }
