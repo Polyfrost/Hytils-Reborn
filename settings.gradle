@@ -1,7 +1,8 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        maven { url = "https://repo.woverflow.cc" }
+        maven { url = "https://repo.polyfrost.cc/releases" }
+        maven { url = "https://maven.architectury.dev/" }
     }
 }
 
