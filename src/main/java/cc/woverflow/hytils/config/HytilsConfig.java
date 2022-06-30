@@ -846,6 +846,7 @@ public class HytilsConfig extends Config {
 
     public HytilsConfig() {
         super(new Mod("Hytils Reborn", ModType.UTIL_QOL, new VigilanceMigrator(new File(HytilsReborn.INSTANCE.modDir, "hytilsreborn.toml").getAbsolutePath())), "hytilsreborn.json");
+        initialize();
         try {
             File modDir = HytilsReborn.INSTANCE.modDir;
             File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");
