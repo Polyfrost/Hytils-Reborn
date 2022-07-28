@@ -53,6 +53,7 @@ public class NPCHandler {
     }
 
     public static Collection<NetworkPlayerInfo> hideTabNpcs(Collection<NetworkPlayerInfo> playerInfoCollection) {
+        if (playerInfoCollection == null) return null;
         LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
         if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.hideNpcsInTab) {
             return playerInfoCollection;
