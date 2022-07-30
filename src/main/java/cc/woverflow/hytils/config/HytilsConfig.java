@@ -745,6 +745,12 @@ public class HytilsConfig extends Config {
     public static boolean hideHousingActionBar;
 
     @Switch(
+        name = "Hide Actionbar in Dropper",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideDropperActionBar;
+
+    @Switch(
         name = "Remove Non-NPCs in SkyBlock",
         category = "Game", subcategory = "Visual"
     )
