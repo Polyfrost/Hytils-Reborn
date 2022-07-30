@@ -4,7 +4,9 @@
   "package": "cc.woverflow.hytils.mixin",
   "plugin": "cc.woverflow.hytils.forge.HytilsMixinPlugin",
   "refmap": "mixins.hytils.refmap.json",
-  "mixins": [
+  "verbose": true,
+  "client": [
+    "beds.ModelLoaderMixin",
     "CommandLimboMixin_FixCommand",
     "EntityLivingBaseMixin_MiningFatigue",
     "EntityPlayerSPMixin_MessageHandling",
@@ -27,6 +29,5 @@
     "overlay.BlockModelRendererMixin_NoOptiFine",
     "overlay.BlockModelRendererMixin_OptiFine",
     "overlay.VertexLighterFlatMixin"
-  ],
-  "verbose": true
+  ]
 }

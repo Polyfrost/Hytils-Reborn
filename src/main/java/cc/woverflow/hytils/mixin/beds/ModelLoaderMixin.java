@@ -16,20 +16,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.woverflow.hytils.mixin;
+package cc.woverflow.hytils.mixin.beds;
 
-import cc.woverflow.hytils.util.HypixelAPIUtils;
-import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.network.play.server.S3DPacketDisplayScoreboard;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-@Mixin(NetHandlerPlayClient.class)
-public class NetHandlerPlayClientMixin_GameChecker {
-    @Inject(method = "handleDisplayScoreboard", at = @At("TAIL"))
-    private void checkScoreboard(S3DPacketDisplayScoreboard packetIn, CallbackInfo ci) {
-        HypixelAPIUtils.checkGameModes();
+import java.util.List;
+
+@Mixin(ModelLoader.class)
+public class ModelLoaderMixin {
+    @ModifyArg(method = "loadBlocks", at = @At(value = "INVOKE", target = "Ljava/util/Collections;sort(Ljava/util/List;Ljava/util/Comparator;)V"), index = 0)
+    private List<ModelResourceLocation> addBedModels(List<ModelResourceLocation> list) {
+        // add bed models
+        return list;
     }
 }
