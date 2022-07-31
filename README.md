@@ -2,6 +2,8 @@
 <a href="https://github.com/W-OVERFLOW/Hytilities-Reborn/releases" target="_blank"></a>
 <img alt="downloads" src="https://img.shields.io/github/downloads/W-OVERFLOW/Hytilities-Reborn/total?color=F5C400&style=for-the-badge" /> <img alt="downloads latest" src="https://img.shields.io/github/downloads-pre/W-OVERFLOW/Hytilities-Reborn/latest/total?color=F5C400&style=for-the-badge" />
 
+**💡 THERE HAS RECENTLY BEEN A LICENSING UPDATE. IF YOU ARE A MOD DEVELOPER, PLEASE ALSO READ THE SECTION LABELLED "LICENSING UPDATE" AT THE END OF THIS README.** Normal users of the mod can ignore this.
+
 ## User Guide
 <details open>
   <summary>Info</summary>
@@ -134,3 +136,9 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Limbo Limiter** - While in Limbo, limit your framerate to reduce the load of the game on your computer.
 - **Limbo PM Ding** - While in Limbo, play the ding sound if you get a PM. Currently, Hypixel's option does not work in Limbo.
 </details>
+
+### LICENSING UPDATE
+
+The LGPLv3 licensing was not valid licensing to be used for this project. The use of Version 3 of the GNU Lesser General Public License was a legal foresight. We recently discovered this issue ourselves. Henceforth, to correct this foresight, we would like to clarify that **ALL** commits to this project are covered **ONLY** under the terms of Version 3 of the GNU General Public License or (at your option) any later version. **YOU MAY NOT USE THIS PROJECT, INCLUDING OLDER VERSIONS, UNDER THE TERMS OF THE LGPLv3.**
+
+File headers have also been edited in the newest commit to reflect this change. We are looking into amending previous commits.
