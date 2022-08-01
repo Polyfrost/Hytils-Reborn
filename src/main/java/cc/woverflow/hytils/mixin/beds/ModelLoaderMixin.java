@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 import java.util.List;
 
-@Mixin(ModelLoader.class)
+@Mixin(value = ModelLoader.class, remap = false)
 public class ModelLoaderMixin {
     @ModifyArg(method = "loadBlocks", at = @At(value = "INVOKE", target = "Ljava/util/Collections;sort(Ljava/util/List;Ljava/util/Comparator;)V"), index = 0)
     private List<ModelResourceLocation> addBedModels(List<ModelResourceLocation> list) {
