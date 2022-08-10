@@ -1,6 +1,6 @@
 # Hytils Reborn
-<a href="https://github.com/W-OVERFLOW/Hytilities-Reborn/releases" target="_blank"></a>
-<img alt="downloads" src="https://img.shields.io/github/downloads/W-OVERFLOW/Hytilities-Reborn/total?color=F5C400&style=for-the-badge" /> <img alt="downloads latest" src="https://img.shields.io/github/downloads-pre/W-OVERFLOW/Hytilities-Reborn/latest/total?color=F5C400&style=for-the-badge" />
+<a href="https://github.com/Polyfrost/Hytils-Reborn/releases" target="_blank"></a>
+<img alt="downloads" src="https://img.shields.io/github/downloads/Polyfrost/Hytils-Reborn/total?color=F5C400&style=for-the-badge" /> <img alt="downloads latest" src="https://img.shields.io/github/downloads-pre/Polyfrost/Hytils-Reborn/latest/total?color=F5C400&style=for-the-badge" />
 
 **💡 THERE HAS RECENTLY BEEN A LICENSING UPDATE. IF YOU ARE A MOD DEVELOPER, PLEASE ALSO READ THE SECTION LABELLED "LICENSING UPDATE" AT THE END OF THIS README.** Normal users of the mod can ignore this.
 
@@ -75,7 +75,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Player Count on Player Leave** - Include the player count when players leave.
 - **Player Count Padding** - Place zeros at the beginning of the player count to align with the max player count.
 - **Party Chat Swapper** - Automatically change to and out of a party channel when joining/leaving a party.
-- **Swap Chatting Tab With Chat Swapper** - Automatically switch your [Chatting](https://github.com/W-OVERFLOW/Chatting) chat tab when chat swapper swaps your chat channel.
+- **Swap Chatting Tab With Chat Swapper** - Automatically switch your [Chatting](https://github.com/Polyfrost/Chatting) chat tab when chat swapper swaps your chat channel.
 - **Remove All Chat Message** - Hide the "You are now in the ALL channel" message when auto-switching.
 - **Thank Watchdog** - Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.
 - **Guild Welcome Message** - Send a friendly welcome message when a player joins your guild.
