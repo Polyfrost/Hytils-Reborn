@@ -61,7 +61,7 @@ public abstract class LayerArmorBaseMixin_HideIngameArmour {
                 }
             } else {
                 if (locraw.getGameType() == LocrawInfo.GameType.DUELS) {
-                    return locraw.getGameMode().contains("CLASSIC");
+                    return locraw.getGameMode().contains("CLASSIC") || locraw.getGameMode().contains("UHC");
                 }
             }
         }
