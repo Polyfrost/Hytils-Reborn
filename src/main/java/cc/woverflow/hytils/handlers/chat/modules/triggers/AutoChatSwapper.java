@@ -20,6 +20,7 @@ package cc.woverflow.hytils.handlers.chat.modules.triggers;
 
 import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 import cc.polyfrost.oneconfig.utils.Multithreading;
+import cc.polyfrost.oneconfig.utils.Notifications;
 import cc.woverflow.chatting.chat.ChatTab;
 import cc.woverflow.chatting.chat.ChatTabs;
 import cc.woverflow.chatting.config.ChattingConfig;
@@ -27,7 +28,6 @@ import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import cc.woverflow.hytils.handlers.language.LanguageData;
-import cc.woverflow.hytils.util.notification.NotificationManager;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -63,7 +63,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
                             Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> (StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/ac") || ((ChatTab) tab).getPrefix().isEmpty())).findFirst();
                             if (optional.isPresent()) {
                                 ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
-                                NotificationManager.INSTANCE.push("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", () -> {
+                                Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", () -> {
                                     ChatTabs.INSTANCE.setCurrentTab(currentTab);
                                 });
                             }
@@ -76,7 +76,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
                             Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/gc")).findFirst();
                             if (optional.isPresent()) {
                                 ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
-                                NotificationManager.INSTANCE.push("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", () -> {
+                                Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", () -> {
                                     ChatTabs.INSTANCE.setCurrentTab(currentTab);
                                 });
                             }
@@ -89,7 +89,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
                             Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/oc")).findFirst();
                             if (optional.isPresent()) {
                                 ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
-                                NotificationManager.INSTANCE.push("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", () -> {
+                                Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", () -> {
                                     ChatTabs.INSTANCE.setCurrentTab(currentTab);
                                 });
                             }
@@ -104,7 +104,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
                     Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/pc")).findFirst();
                     if (optional.isPresent()) {
                         ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
-                        NotificationManager.INSTANCE.push("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", () -> {
+                        Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", () -> {
                             ChatTabs.INSTANCE.setCurrentTab(currentTab);
                         });
                     }
