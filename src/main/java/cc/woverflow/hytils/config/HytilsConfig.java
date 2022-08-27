@@ -847,6 +847,7 @@ public class HytilsConfig extends Config {
 
     public static int configNumber = 0;
 
+    @Exclude
     public static final ArrayList<String> wbMessages = new ArrayList<>();
 
 
