@@ -407,6 +407,18 @@ public class HytilsConfig extends Config {
     )
     public static boolean guildWelcomeMessage;
 
+    @Switch(
+        name = "Shout Cooldown",
+        category = "Chat", subcategory = "Cooldown"
+    )
+    public static boolean preventShoutingOnCooldown;
+
+    @Switch(
+        name = "Non Speech Cooldown",
+        category = "Chat", subcategory = "Cooldown"
+    )
+    public static boolean preventNonCooldown;
+
     // AutoWB
 
     @Switch(
@@ -510,19 +522,6 @@ public class HytilsConfig extends Config {
         size = 2
     )
     public static String autoWBMessage10 = "Thanks for coming to my TED talk.";
-
-
-    @Switch(
-        name = "Shout Cooldown",
-        category = "Chat", subcategory = "Cooldown"
-    )
-    public static boolean preventShoutingOnCooldown;
-
-    @Switch(
-        name = "Non Speech Cooldown",
-        category = "Chat", subcategory = "Cooldown"
-    )
-    public static boolean preventNonCooldown;
 
     // General
 
