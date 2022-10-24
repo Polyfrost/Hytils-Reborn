@@ -18,13 +18,14 @@
 
 package cc.woverflow.hytils.command;
 
+import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Description;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Name;
 import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.command.parser.PlayerName;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
@@ -47,9 +48,14 @@ public class HousingVisitCommand {
     protected static String playerName = "";
 
     @Main
-    private static void handle(@Name("Player Name") PlayerName player) {
-        if (usernameRegex.matcher(player.name).matches()) {
-            playerName = player.name;
+    private void handle() {
+        UChat.say(EnumChatFormatting.RED + "Usage: /housingvisit <username>");
+    }
+
+    //FIXME
+    private void handle(@Description("Player Name") EntityPlayer player) {
+        if (usernameRegex.matcher(player.getName()).matches()) {
+            playerName = player.getName();
 
             // if we are in the housing lobby, just immediately run the /visit command
             if ("HOUSING".equals(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()))) {
@@ -63,13 +69,13 @@ public class HousingVisitCommand {
         }
     }
 
-    private static void visit(final long time) {
+    private void visit(final long time) {
         if (playerName != null) {
             Multithreading.schedule(() -> HytilsReborn.INSTANCE.getCommandQueue().queue("/visit " + playerName), time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
         }
     }
 
-    private static class HousingVisitHook {
+    private class HousingVisitHook {
         @SubscribeEvent
         public void onHousingLobbyJoin(final WorldEvent.Load event) {
             MinecraftForge.EVENT_BUS.unregister(this);

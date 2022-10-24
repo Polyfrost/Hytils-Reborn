@@ -22,8 +22,8 @@ import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.Notifications;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Description;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Name;
 import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.command.parser.*;
@@ -36,158 +36,128 @@ import java.util.Locale;
 
 @Command(value = "hytils", aliases = {"hytilities", "hytilsreborn", "hytilitiesreborn", "hytil"})
 public class HytilsCommand {
-
     static {
         CommandManager.INSTANCE.addParser(new GEXPTypeParser());
         CommandManager.INSTANCE.addParser(new WinstreakTypeParser());
     }
 
     @Main
-    private static void handleDefault() {
+    private void handleDefault() {
         HytilsReborn.INSTANCE.getConfig().openGui();
     }
 
-    @SubCommand("gexp")
-    private static class GEXPCommand {
-        @Main
-        private static void getGEXP() {
-            getGEXP(null, null);
-        }
-
-        @Main
-        private static void getGEXP(@Name("username") PlayerName username) {
-            getGEXP(username, null);
-        }
-
-        @SuppressWarnings("SameParameterValue")
-        @Main
-        private static void getGEXP(@Name("username") @Nullable PlayerName username, @Name("type") @Nullable GEXPType type) {
-            Multithreading.runAsync(() -> {
-                if (HytilsConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
-                    HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
-                    return;
-                }
-                if (username != null) {
-                    if (type == null) {
-                        if (HypixelAPIUtils.getGEXP(username.name)) {
-                            Notifications.INSTANCE
-                                .send(HytilsReborn.MOD_NAME, username.name + " currently has " + HypixelAPIUtils.gexp + " guild EXP.");
-                        } else {
-                            Notifications.INSTANCE
-                                .send(HytilsReborn.MOD_NAME, "There was a problem trying to get " + username.name + "'s GEXP.");
-                        }
+    @SubCommand(description = "Shows your guild experience", aliases = {"guildexp", "guildexperience"})
+    @SuppressWarnings("SameParameterValue")
+    private void gexp(@Description("username") @Nullable PlayerName username, @Description("type") @Nullable GEXPType type) {
+        Multithreading.runAsync(() -> {
+            if (HytilsConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
+                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
+                return;
+            }
+            if (username != null) {
+                if (type == null) {
+                    if (HypixelAPIUtils.getGEXP(username.name)) {
+                        Notifications.INSTANCE
+                            .send(HytilsReborn.MOD_NAME, username.name + " currently has " + HypixelAPIUtils.gexp + " guild EXP.");
                     } else {
-                        switch (type) {
-                            case DAILY:
-                                if (HypixelAPIUtils.getGEXP(username.name)) {
-                                    Notifications.INSTANCE
-                                        .send(
-                                            HytilsReborn.MOD_NAME,
-                                            username.name + " currently has " + HypixelAPIUtils.gexp + " daily guild EXP."
-                                        );
-                                } else {
-                                    Notifications.INSTANCE
-                                        .send(HytilsReborn.MOD_NAME, "There was a problem trying to get " + username.name + "'s daily GEXP.");
-                                }
-                            case WEEKLY:
-                                if (HypixelAPIUtils.getWeeklyGEXP(username.name)) {
-                                    Notifications.INSTANCE
-                                        .send(
-                                            HytilsReborn.MOD_NAME,
-                                            username.name + " currently has " + HypixelAPIUtils.gexp + " weekly guild EXP."
-                                        );
-                                } else {
-                                    Notifications.INSTANCE
-                                        .send(HytilsReborn.MOD_NAME, "There was a problem trying to get " + username.name + "'s weekly GEXP.");
-                                }
-                        }
+                        Notifications.INSTANCE
+                            .send(HytilsReborn.MOD_NAME, "There was a problem trying to get " + username.name + "'s GEXP.");
                     }
                 } else {
-                    if (HypixelAPIUtils.getGEXP()) {
-                        Notifications.INSTANCE
-                            .send(HytilsReborn.MOD_NAME, "You currently have " + HypixelAPIUtils.gexp + " guild EXP.");
-                    } else {
-                        Notifications.INSTANCE
-                            .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
+                    switch (type) {
+                        case DAILY:
+                            if (HypixelAPIUtils.getGEXP(username.name)) {
+                                Notifications.INSTANCE
+                                    .send(
+                                        HytilsReborn.MOD_NAME,
+                                        username.name + " currently has " + HypixelAPIUtils.gexp + " daily guild EXP."
+                                    );
+                            } else {
+                                Notifications.INSTANCE
+                                    .send(HytilsReborn.MOD_NAME, "There was a problem trying to get " + username.name + "'s daily GEXP.");
+                            }
+                        case WEEKLY:
+                            if (HypixelAPIUtils.getWeeklyGEXP(username.name)) {
+                                Notifications.INSTANCE
+                                    .send(
+                                        HytilsReborn.MOD_NAME,
+                                        username.name + " currently has " + HypixelAPIUtils.gexp + " weekly guild EXP."
+                                    );
+                            } else {
+                                Notifications.INSTANCE
+                                    .send(HytilsReborn.MOD_NAME, "There was a problem trying to get " + username.name + "'s weekly GEXP.");
+                            }
                     }
                 }
-            });
-        }
+            } else {
+                if (HypixelAPIUtils.getGEXP()) {
+                    Notifications.INSTANCE
+                        .send(HytilsReborn.MOD_NAME, "You currently have " + HypixelAPIUtils.gexp + " guild EXP.");
+                } else {
+                    Notifications.INSTANCE
+                        .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
+                }
+            }
+        });
     }
 
-    @SubCommand("winstreak")
-    private static class WinStreakCommand {
-        @Main
-        private static void getWinStreak() {
-            getWinStreak(null, null);
-        }
-
-        @Main
-        private static void getWinStreak(@Name("username") PlayerName username) {
-            getWinStreak(username, null);
-        }
-
-        @SuppressWarnings("SameParameterValue")
-        @Main
-        private static void getWinStreak(@Name("username") @Nullable PlayerName player, @Name("type") @Nullable WinstreakType gamemode) {
-            Multithreading.runAsync(() -> {
-                if (HytilsConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
-                    HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
-                    return;
-                }
-                if (player != null) {
-                    if (gamemode != null) {
-                        if (HypixelAPIUtils.getWinstreak(player.name, gamemode.name())) {
-                            Notifications.INSTANCE
-                                .send(
-                                    HytilsReborn.MOD_NAME,
-                                    player.name + " currently has a " + HypixelAPIUtils.winstreak + " winstreak in " + gamemode.name().toLowerCase(Locale.ENGLISH) + "."
-                                );
-                        } else {
-                            Notifications.INSTANCE
-                                .send(
-                                    HytilsReborn.MOD_NAME,
-                                    "There was a problem trying to get " + player.name + "'s winstreak in $gamemode."
-                                );
-                        }
+    @SubCommand(description = "Shows your winstreak", aliases = {"winstreak", "ws"})
+    @SuppressWarnings("SameParameterValue")
+    private void winstreak(@Description("username") @Nullable PlayerName player, @Description("type") @Nullable WinstreakType gamemode) {
+        Multithreading.runAsync(() -> {
+            if (HytilsConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
+                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
+                return;
+            }
+            if (player != null) {
+                if (gamemode != null) {
+                    if (HypixelAPIUtils.getWinstreak(player.name, gamemode.name())) {
+                        Notifications.INSTANCE
+                            .send(
+                                HytilsReborn.MOD_NAME,
+                                player.name + " currently has a " + HypixelAPIUtils.winstreak + " winstreak in " + gamemode.name().toLowerCase(Locale.ENGLISH) + "."
+                            );
                     } else {
-                        if (HypixelAPIUtils.getWinstreak(player.name)) {
-                            Notifications.INSTANCE
-                                .send(
-                                    HytilsReborn.MOD_NAME,
-                                    player.name + " currently has a " + HypixelAPIUtils.winstreak + " winstreak."
-                                );
-                        } else {
-                            Notifications.INSTANCE
-                                .send(HytilsReborn.MOD_NAME, "There was a problem trying to get " + player.name + "'s winstreak.");
-                        }
+                        Notifications.INSTANCE
+                            .send(
+                                HytilsReborn.MOD_NAME,
+                                "There was a problem trying to get " + player.name + "'s winstreak in $gamemode."
+                            );
                     }
                 } else {
-                    if (HypixelAPIUtils.getWinstreak()) {
+                    if (HypixelAPIUtils.getWinstreak(player.name)) {
                         Notifications.INSTANCE
-                            .send(HytilsReborn.MOD_NAME, "You currently have a " + HypixelAPIUtils.winstreak + " winstreak.");
+                            .send(
+                                HytilsReborn.MOD_NAME,
+                                player.name + " currently has a " + HypixelAPIUtils.winstreak + " winstreak."
+                            );
                     } else {
                         Notifications.INSTANCE
-                            .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your winstreak.");
+                            .send(HytilsReborn.MOD_NAME, "There was a problem trying to get " + player.name + "'s winstreak.");
                     }
                 }
-            });
-        }
+            } else {
+                if (HypixelAPIUtils.getWinstreak()) {
+                    Notifications.INSTANCE
+                        .send(HytilsReborn.MOD_NAME, "You currently have a " + HypixelAPIUtils.winstreak + " winstreak.");
+                } else {
+                    Notifications.INSTANCE
+                        .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your winstreak.");
+                }
+            }
+        });
     }
 
-    @SubCommand("setkey")
-    private static class SetKeyCommand {
-        @Main
-        private static void setKey(@Name("API Key") String apiKey) {
-            Multithreading.runAsync(() -> {
-                if (HypixelAPIUtils.isValidKey(apiKey)) {
-                    HytilsConfig.apiKey = apiKey;
-                    HytilsReborn.INSTANCE.getConfig().save();
-                    HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.GREEN + "Saved API key successfully!");
-                } else {
-                    HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Invalid API key! Please try again.");
-                }
-            });
-        }
+    @SubCommand(description = "Sets your API key.", aliases = "setkey")
+    private static void key(@Description("API Key") String apiKey) {
+        Multithreading.runAsync(() -> {
+            if (HypixelAPIUtils.isValidKey(apiKey)) {
+                HytilsConfig.apiKey = apiKey;
+                HytilsReborn.INSTANCE.getConfig().save();
+                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.GREEN + "Saved API key successfully!");
+            } else {
+                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Invalid API key! Please try again.");
+            }
+        });
     }
 }

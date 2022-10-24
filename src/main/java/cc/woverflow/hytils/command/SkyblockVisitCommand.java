@@ -18,10 +18,11 @@
 
 package cc.woverflow.hytils.command;
 
+import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Description;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Name;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.command.parser.PlayerName;
 import com.google.common.collect.Sets;
@@ -50,7 +51,12 @@ public class SkyblockVisitCommand {
         "SKYBLOCK", "\u7A7A\u5C9B\u751F\u5B58", "\u7A7A\u5CF6\u751F\u5B58");
 
     @Main
-    private static void handle(@Name("Player Name") PlayerName player) {
+    private void handle() {
+        UChat.say(EnumChatFormatting.RED + "Usage: /skyblockvisit <username>");
+    }
+
+    //FIXME: @Main
+    private void handle(@Description("Player Name") PlayerName player) {
         if (usernameRegex.matcher(player.name).matches()) {
             playerName = player.name;
             if (SKYBLOCK_IN_ALL_LANGUAGES.contains(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld
@@ -65,7 +71,7 @@ public class SkyblockVisitCommand {
         }
     }
 
-    private static void visit(final long time) {
+    private void visit(final long time) {
         if (playerName != null) {
             Multithreading.schedule(
                 () -> HytilsReborn.INSTANCE.getCommandQueue().queue("/visit " + playerName),
@@ -73,7 +79,7 @@ public class SkyblockVisitCommand {
         }
     }
 
-    private static class SkyblockVisitHook {
+    private class SkyblockVisitHook {
         @SubscribeEvent
         public void onSkyblockLobbyJoin(final WorldEvent.Load event) {
             MinecraftForge.EVENT_BUS.unregister(this);

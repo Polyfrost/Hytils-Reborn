@@ -23,7 +23,6 @@ import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.command.parser.GameName;
@@ -59,8 +58,8 @@ public class PlayCommand {
         });
     }
 
-    @Main
-    private static void play(GameName game) {
+    //FIXME: @Main
+    private void play(GameName game) {
         boolean autocompletePlayCommands = HytilsConfig.autocompletePlayCommands;
         if (!HypixelUtils.INSTANCE.isHypixel()) {
             HytilsReborn.INSTANCE.getCommandQueue().queue("/play " + game.name);

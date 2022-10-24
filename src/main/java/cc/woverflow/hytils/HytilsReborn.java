@@ -108,7 +108,9 @@ public class HytilsReborn {
 
     @Mod.EventHandler
     public void onFMLPreInitialization(FMLPreInitializationEvent event) {
-        if (!modDir.exists()) modDir.mkdirs();
+        if (!modDir.exists() && !modDir.mkdirs()) {
+            throw new RuntimeException("Failed to create mod directory! Please report this https://polyfrost.cc/discord");
+        }
     }
 
     @Mod.EventHandler
@@ -116,13 +118,13 @@ public class HytilsReborn {
         config = new HytilsConfig();
 
         CommandManager.INSTANCE.addParser(new PlayerNameParser());
-        CommandManager.INSTANCE.registerCommand(HousingVisitCommand.class);
-        CommandManager.INSTANCE.registerCommand(HytilsCommand.class);
-        CommandManager.INSTANCE.registerCommand(IgnoreTemporaryCommand.class);
-        CommandManager.INSTANCE.registerCommand(LimboCommand.class);
-        CommandManager.INSTANCE.registerCommand(PlayCommand.class);
-        CommandManager.INSTANCE.registerCommand(SilentRemoveCommand.class);
-        CommandManager.INSTANCE.registerCommand(SkyblockVisitCommand.class);
+        CommandManager.INSTANCE.registerCommand(new HousingVisitCommand());
+        CommandManager.INSTANCE.registerCommand(new HytilsCommand());
+        CommandManager.INSTANCE.registerCommand(new IgnoreTemporaryCommand());
+        CommandManager.INSTANCE.registerCommand(new LimboCommand());
+        CommandManager.INSTANCE.registerCommand(new PlayCommand());
+        CommandManager.INSTANCE.registerCommand(new SilentRemoveCommand());
+        CommandManager.INSTANCE.registerCommand(new SkyblockVisitCommand());
 
         CosmeticsHandler.INSTANCE.initialize();
         PatternHandler.INSTANCE.initialize();

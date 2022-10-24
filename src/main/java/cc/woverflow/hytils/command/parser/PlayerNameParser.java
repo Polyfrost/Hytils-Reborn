@@ -19,30 +19,31 @@
 package cc.woverflow.hytils.command.parser;
 
 import cc.polyfrost.oneconfig.utils.commands.arguments.ArgumentParser;
-import cc.polyfrost.oneconfig.utils.commands.arguments.Arguments;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Parameter;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PlayerNameParser extends ArgumentParser<PlayerName> {
+    @Nullable
     @Override
-    public @Nullable PlayerName parse(Arguments arguments) {
-        return new PlayerName(arguments.poll());
+    public PlayerName parse(@NotNull String arg) throws Exception {
+        return new PlayerName(arg);
     }
 
     @Override
-    public @Nullable List<String> complete(Arguments arguments, Parameter parameter) {
+    public @NotNull List<String> complete(String current, Parameter parameter) {
         if (Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().theWorld.playerEntities != null) {
-            String complete = arguments.poll();
             return Minecraft.getMinecraft().theWorld.playerEntities.stream()
                 .map(EntityPlayer::getName)
-                .filter(name -> name.toLowerCase().startsWith(complete.toLowerCase()))
+                .filter(name -> name.toLowerCase().startsWith(current.toLowerCase()))
                 .collect(Collectors.toList());
         }
-        return null;
+        return Collections.emptyList();
     }
 }

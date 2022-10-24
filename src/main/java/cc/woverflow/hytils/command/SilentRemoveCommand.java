@@ -19,7 +19,6 @@
 package cc.woverflow.hytils.command;
 
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.command.parser.PlayerName;
@@ -29,8 +28,10 @@ import java.util.Set;
 @Command("silentremove")
 public class SilentRemoveCommand {
 
-    @Main
-    private static void add(PlayerName player) {
+    //FIXME
+    @/*Main*/
+        SubCommand(description = "Adds or removes a player from the silent list")
+    private void player(PlayerName player) {
         String name = player.name;
         final Set<String> silentUsers = HytilsReborn.INSTANCE.getSilentRemoval().getSilentUsers();
         if (silentUsers.contains(name)) {
@@ -43,16 +44,13 @@ public class SilentRemoveCommand {
         HytilsReborn.INSTANCE.sendMessage("&aAdded &e" + name + " &ato the removal queue.");
     }
 
-    @SubCommand("clear")
-    private static class ClearSubCommand {
-        @Main
-        private static void clear() {
-            final Set<String> silentUsers = HytilsReborn.INSTANCE.getSilentRemoval().getSilentUsers();
-            if (silentUsers.isEmpty()) {
-                HytilsReborn.INSTANCE.sendMessage("&cSilent Removal list is already empty.");
-                return;
-            }
-            silentUsers.clear();
+    @SubCommand(description = "Clears the silent removal queue.")
+    private void clear() {
+        final Set<String> silentUsers = HytilsReborn.INSTANCE.getSilentRemoval().getSilentUsers();
+        if (silentUsers.isEmpty()) {
+            HytilsReborn.INSTANCE.sendMessage("&cSilent Removal list is already empty.");
+            return;
         }
+        silentUsers.clear();
     }
 }

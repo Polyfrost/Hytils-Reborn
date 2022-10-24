@@ -78,8 +78,8 @@ public class IgnoreTemporaryCommand {
         });
     }
 
-    @Main
-    private static void handle(@Name("Player Name") PlayerName playerName, @Name("Time") @Greedy String time) {
+    //FIXME: @Main
+    private void handle(@Description("Player Name") PlayerName playerName, @Description("Time") @Greedy String time) {
         Multithreading.runAsync(() -> {
             try {
                 long millis = addMillis(time.replace(",", "").replace(" ", ""));
@@ -90,8 +90,7 @@ public class IgnoreTemporaryCommand {
                     e.printStackTrace();
                 }
                 UChat.say("/ignore add " + playerName.name);
-                HytilsReborn.INSTANCE.sendMessage("&r&aSuccessfully ignored &r&6&l" + playerName.name + "&r&a for &r&e&l" + time + "&r&a. The ignore will be removed after the specified period."
-);
+                HytilsReborn.INSTANCE.sendMessage("&r&aSuccessfully ignored &r&6&l" + playerName.name + "&r&a for &r&e&l" + time + "&r&a. The ignore will be removed after the specified period.");
             } catch (Exception e) {
                 e.printStackTrace();
                 HytilsReborn.INSTANCE.sendMessage("&cAn error has occured and the user has not been ignored.");
@@ -99,48 +98,22 @@ public class IgnoreTemporaryCommand {
         });
     }
 
-    private static long addMillis(String time) {
-        long millis = 0L;
-        Matcher matcher = regex.matcher(time);
-        if (matcher.find()) {
-            long timeTime = Long.parseLong(matcher.group(1));
-            String name = matcher.group(4);
-            for (TimeUnit unit : TimeUnit.values()) {
-                if (name.equalsIgnoreCase(unit.pair.getKey()) || name.equalsIgnoreCase(unit.pair.getValue())) {
-                    millis += unit.millis * timeTime;
-                    break;
-                }
-            }
-            String next = StringUtils.substringAfter(time, matcher.group());
-            if (StringUtils.isNotBlank(next)) {
-                millis += addMillis(next);
-            }
-        }
-        return millis;
+    @SubCommand(description = "Adds a player to the ignore list for a specified amount of time.")
+    private void add(@Description("Player Name") PlayerName playerName, @Description("Time") @Greedy String time) {
+        handle(playerName, time);
     }
 
-    @SubCommand("add")
-    private static class AddSubCommand {
-        @Main
-        private static void add(@Name("Player Name") PlayerName playerName, @Name("Time") @Greedy String time) {
-            handle(playerName, time);
-        }
-    }
-
-    @SubCommand("remove")
-    private static class RemoveSubCommand {
-        @Main
-        private static void remove(@Name("Player Name") PlayerName playerName) {
-            json.remove(playerName.name);
-            Multithreading.runAsync(() -> {
-                try {
-                    FileUtils.writeStringToFile(file, json.toString(), StandardCharsets.UTF_8);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-            UChat.say("/ignore remove " + playerName.name);
-        }
+    @SubCommand(description = "Removes a player from the ignore list.")
+    private void remove(@Description("Player Name") PlayerName playerName) {
+        json.remove(playerName.name);
+        Multithreading.runAsync(() -> {
+            try {
+                FileUtils.writeStringToFile(file, json.toString(), StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        UChat.say("/ignore remove " + playerName.name);
     }
 
     private static void initialize() {
@@ -164,6 +137,25 @@ public class IgnoreTemporaryCommand {
         }
     }
 
+    private static long addMillis(String time) {
+        long millis = 0L;
+        Matcher matcher = regex.matcher(time);
+        if (matcher.find()) {
+            long timeTime = Long.parseLong(matcher.group(1));
+            String name = matcher.group(4);
+            for (TimeUnit unit : TimeUnit.values()) {
+                if (name.equalsIgnoreCase(unit.pair.getKey()) || name.equalsIgnoreCase(unit.pair.getValue())) {
+                    millis += unit.millis * timeTime;
+                    break;
+                }
+            }
+            String next = StringUtils.substringAfter(time, matcher.group());
+            if (StringUtils.isNotBlank(next)) {
+                millis += addMillis(next);
+            }
+        }
+        return millis;
+    }
 
     private enum TimeUnit {
         MONTH(new ImmutablePair<>("month", null), 2628000000L),

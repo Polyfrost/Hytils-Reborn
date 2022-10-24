@@ -19,34 +19,28 @@
 package cc.woverflow.hytils.command.parser;
 
 import cc.polyfrost.oneconfig.utils.commands.arguments.ArgumentParser;
-import cc.polyfrost.oneconfig.utils.commands.arguments.Arguments;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class WinstreakTypeParser extends ArgumentParser<WinstreakType> {
+    private static final List<String> DEFAULT_COMPLETIONS =
+        Arrays.stream(WinstreakType.values()).map(Enum::name).collect(Collectors.toList());
 
     @Override
-    public @Nullable WinstreakType parse(Arguments arguments) {
-        String arg = arguments.poll();
-        if (!arg.isEmpty()) {
-            for (WinstreakType type : WinstreakType.values()) {
-                if (type.name().toLowerCase(Locale.ENGLISH).startsWith(arg.toLowerCase(Locale.ENGLISH))) {
-                    return type;
-                }
-            }
-        }
-        return null;
+    public WinstreakType parse(@NotNull String arg) {
+        return WinstreakType.valueOf(arg.toUpperCase(Locale.ROOT));
     }
 
     @Override
-    public @Nullable List<String> complete(Arguments arguments, Parameter parameter) {
-        String arg = arguments.poll();
+    public @NotNull List<String> complete(String arg, Parameter parameter) {
         if (arg.isEmpty()) {
-            return null;
+            return DEFAULT_COMPLETIONS;
         }
         List<String> completions = new ArrayList<>();
         for (WinstreakType type : WinstreakType.values()) {

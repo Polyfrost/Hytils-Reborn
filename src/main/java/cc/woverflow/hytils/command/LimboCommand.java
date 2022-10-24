@@ -25,9 +25,10 @@ import net.minecraft.client.Minecraft;
 
 @Command("limbo")
 public class LimboCommand {
-
     @Main
-    private static void main() {
-        if (HypixelUtils.INSTANCE.isHypixel()) Minecraft.getMinecraft().thePlayer.sendChatMessage("§");
+    private void main() {
+        if (HypixelUtils.INSTANCE.isHypixel()) {
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("§");
+        }
     }
 }

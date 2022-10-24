@@ -19,33 +19,26 @@
 package cc.woverflow.hytils.command.parser;
 
 import cc.polyfrost.oneconfig.utils.commands.arguments.ArgumentParser;
-import cc.polyfrost.oneconfig.utils.commands.arguments.Arguments;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 public class GEXPTypeParser extends ArgumentParser<GEXPType> {
+    @Nullable
     @Override
-    public @Nullable GEXPType parse(Arguments arguments) {
-        String arg = arguments.poll();
-        if (!arg.isEmpty()) {
-            for (GEXPType type : GEXPType.values()) {
-                if (type.name().toLowerCase(Locale.ENGLISH).startsWith(arg.toLowerCase(Locale.ENGLISH))) {
-                    return type;
-                }
-            }
-        }
-        return null;
+    public GEXPType parse(@NotNull String arg) {
+        return GEXPType.valueOf(arg.toUpperCase(Locale.ROOT));
     }
 
     @Override
-    public @Nullable List<String> complete(Arguments arguments, Parameter parameter) {
-        String arg = arguments.poll();
+    public @NotNull List<String> complete(String arg, Parameter parameter) {
         if (arg.isEmpty()) {
-            return null;
+            return Collections.emptyList();
         }
         List<String> completions = new ArrayList<>();
         for (GEXPType type : GEXPType.values()) {

@@ -19,12 +19,13 @@
 package cc.woverflow.hytils.command.parser;
 
 import cc.polyfrost.oneconfig.utils.commands.arguments.ArgumentParser;
-import cc.polyfrost.oneconfig.utils.commands.arguments.Arguments;
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.config.HytilsConfig;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Parameter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,28 +34,29 @@ import java.util.stream.Stream;
 public class GameNameParser extends ArgumentParser<GameName> {
     private String[] gameCache = null;
     private final Map<String, String> games;
+
     public GameNameParser(Map<String, String> games) {
         this.games = games;
     }
+
+    @Nullable
     @Override
-    public @Nullable GameName parse(Arguments arguments) {
-        StringBuilder builder = new StringBuilder();
-        while (arguments.hasNext()) {
-            String arg = arguments.poll();
-            builder.append(arg).append(" ");
-        }
-        return new GameName(builder.toString().trim());
+    public GameName parse(@NotNull String arg) throws Exception {
+        return new GameName(arg);
     }
 
     @Override
-    public @Nullable List<String> complete(Arguments arguments, Parameter parameter) {
-        if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.autocompletePlayCommands) return null;
-        String game = arguments.poll();
+    public @NotNull List<String> complete(String game, Parameter parameter) {
+        if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.autocompletePlayCommands) {
+            return Collections.emptyList();
+        }
         return Stream.of(getListOfGames()).filter(s -> s.startsWith(game)).collect(Collectors.toList());
     }
 
     private String[] getListOfGames() {
-        if (this.gameCache != null) return this.gameCache;
-        return this.gameCache = Stream.concat(games.keySet().stream(), games.values().stream()).distinct().toArray(String[]::new);
+        if (this.gameCache == null) {
+            this.gameCache = Stream.concat(games.keySet().stream(), games.values().stream()).distinct().toArray(String[]::new);
+        }
+        return this.gameCache;
     }
 }
