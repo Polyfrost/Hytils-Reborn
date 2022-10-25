@@ -24,9 +24,9 @@ import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Description;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.command.parser.PlayerName;
 import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
@@ -52,13 +52,13 @@ public class SkyblockVisitCommand {
 
     @Main
     private void handle() {
-        UChat.say(EnumChatFormatting.RED + "Usage: /skyblockvisit <username>");
+        UChat.chat(EnumChatFormatting.RED + "Usage: /skyblockvisit <username>");
     }
 
-    //FIXME: @Main
-    private void handle(@Description("Player Name") PlayerName player) {
-        if (usernameRegex.matcher(player.name).matches()) {
-            playerName = player.name;
+    @Main
+    private void handle(@Description("Player Name") EntityPlayer player) {
+        if (usernameRegex.matcher(player.getName()).matches()) {
+            playerName = player.getName();
             if (SKYBLOCK_IN_ALL_LANGUAGES.contains(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld
                 .getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName().split(" ")[0]))) {
                 visit(0);

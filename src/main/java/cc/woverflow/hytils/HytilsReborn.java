@@ -23,7 +23,6 @@ import cc.polyfrost.oneconfig.libs.universal.ChatColor;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import cc.woverflow.hytils.command.*;
-import cc.woverflow.hytils.command.parser.PlayerNameParser;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.CosmeticsHandler;
 import cc.woverflow.hytils.handlers.cache.HeightHandler;
@@ -108,6 +107,7 @@ public class HytilsReborn {
 
     @Mod.EventHandler
     public void onFMLPreInitialization(FMLPreInitializationEvent event) {
+
         if (!modDir.exists() && !modDir.mkdirs()) {
             throw new RuntimeException("Failed to create mod directory! Please report this https://polyfrost.cc/discord");
         }
@@ -117,14 +117,16 @@ public class HytilsReborn {
     public void init(FMLInitializationEvent event) {
         config = new HytilsConfig();
 
-        CommandManager.INSTANCE.addParser(new PlayerNameParser());
         CommandManager.INSTANCE.registerCommand(new HousingVisitCommand());
         CommandManager.INSTANCE.registerCommand(new HytilsCommand());
         CommandManager.INSTANCE.registerCommand(new IgnoreTemporaryCommand());
         CommandManager.INSTANCE.registerCommand(new LimboCommand());
-        CommandManager.INSTANCE.registerCommand(new PlayCommand());
         CommandManager.INSTANCE.registerCommand(new SilentRemoveCommand());
         CommandManager.INSTANCE.registerCommand(new SkyblockVisitCommand());
+
+        // We initialize it a different way because it requires the
+        // GameNameParser to be initialized, and that depends on networking.
+        PlayCommand.init();
 
         CosmeticsHandler.INSTANCE.initialize();
         PatternHandler.INSTANCE.initialize();

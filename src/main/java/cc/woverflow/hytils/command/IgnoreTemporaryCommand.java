@@ -22,11 +22,11 @@ import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.commands.annotations.*;
 import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.command.parser.PlayerName;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -78,19 +78,24 @@ public class IgnoreTemporaryCommand {
         });
     }
 
-    //FIXME: @Main
-    private void handle(@Description("Player Name") PlayerName playerName, @Description("Time") @Greedy String time) {
+    @Main
+    private void handle() {
+        UChat.chat("Usage: /ignoretemp <player> <time>");
+    }
+
+    @Main
+    private void handle(@Description("Player Name") EntityPlayer playerName, @Description("Time") @Greedy String time) {
         Multithreading.runAsync(() -> {
             try {
                 long millis = addMillis(time.replace(",", "").replace(" ", ""));
-                json.addProperty(playerName.name, millis + new Date().getTime());
+                json.addProperty(playerName.getName(), millis + new Date().getTime());
                 try {
                     FileUtils.writeStringToFile(file, json.toString(), StandardCharsets.UTF_8);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                UChat.say("/ignore add " + playerName.name);
-                HytilsReborn.INSTANCE.sendMessage("&r&aSuccessfully ignored &r&6&l" + playerName.name + "&r&a for &r&e&l" + time + "&r&a. The ignore will be removed after the specified period.");
+                UChat.say("/ignore add " + playerName.getName());
+                HytilsReborn.INSTANCE.sendMessage("&r&aSuccessfully ignored &r&6&l" + playerName.getName() + "&r&a for &r&e&l" + time + "&r&a. The ignore will be removed after the specified period.");
             } catch (Exception e) {
                 e.printStackTrace();
                 HytilsReborn.INSTANCE.sendMessage("&cAn error has occured and the user has not been ignored.");
@@ -99,13 +104,13 @@ public class IgnoreTemporaryCommand {
     }
 
     @SubCommand(description = "Adds a player to the ignore list for a specified amount of time.")
-    private void add(@Description("Player Name") PlayerName playerName, @Description("Time") @Greedy String time) {
+    private void add(@Description("Player Name") EntityPlayer playerName, @Description("Time") @Greedy String time) {
         handle(playerName, time);
     }
 
     @SubCommand(description = "Removes a player from the ignore list.")
-    private void remove(@Description("Player Name") PlayerName playerName) {
-        json.remove(playerName.name);
+    private void remove(@Description("Player Name") EntityPlayer playerName) {
+        json.remove(playerName.getName());
         Multithreading.runAsync(() -> {
             try {
                 FileUtils.writeStringToFile(file, json.toString(), StandardCharsets.UTF_8);
@@ -113,7 +118,7 @@ public class IgnoreTemporaryCommand {
                 e.printStackTrace();
             }
         });
-        UChat.say("/ignore remove " + playerName.name);
+        UChat.say("/ignore remove " + playerName.getName());
     }
 
     private static void initialize() {

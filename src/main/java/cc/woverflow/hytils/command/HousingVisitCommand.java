@@ -18,6 +18,7 @@
 
 package cc.woverflow.hytils.command;
 
+import cc.polyfrost.oneconfig.libs.universal.ChatColor;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
@@ -49,10 +50,10 @@ public class HousingVisitCommand {
 
     @Main
     private void handle() {
-        UChat.say(EnumChatFormatting.RED + "Usage: /housingvisit <username>");
+        UChat.chat(ChatColor.RED + "Usage: /housingvisit <username>");
     }
 
-    //FIXME
+    @Main
     private void handle(@Description("Player Name") EntityPlayer player) {
         if (usernameRegex.matcher(player.getName()).matches()) {
             playerName = player.getName();

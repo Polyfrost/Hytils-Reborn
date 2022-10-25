@@ -19,10 +19,14 @@
 package cc.woverflow.hytils.command;
 
 
+import cc.polyfrost.oneconfig.libs.universal.ChatColor;
+import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.command.parser.GameName;
@@ -43,7 +47,7 @@ import java.util.Map;
 public class PlayCommand {
     private static Map<String, String> games = new HashMap<>();
 
-    static {
+    public static void init() {
         Multithreading.runAsync(() -> {
             try {
                 String url = "https://data.woverflow.cc/games.json";
@@ -51,14 +55,23 @@ public class PlayCommand {
                 Type stringStringMap = new TypeToken<HashMap<String, String>>() {
                 }.getType();
                 games = new Gson().fromJson(content, stringStringMap);
-                Minecraft.getMinecraft().addScheduledTask(() -> CommandManager.INSTANCE.addParser(new GameNameParser(games)));
             } catch (JsonSyntaxException e) {
                 HytilsReborn.INSTANCE.getLogger().error("Failed to fetch /play game list.", e);
             }
+
+            Minecraft.getMinecraft().addScheduledTask(() -> {
+                CommandManager.INSTANCE.addParser(new GameNameParser(games));
+                CommandManager.INSTANCE.registerCommand(new PlayCommand());
+            });
         });
     }
 
-    //FIXME: @Main
+    @Main
+    public void handle() {
+        UChat.chat(ChatColor.RED + "Usage: /play <game>");
+    }
+
+    @Main
     private void play(GameName game) {
         boolean autocompletePlayCommands = HytilsConfig.autocompletePlayCommands;
         if (!HypixelUtils.INSTANCE.isHypixel()) {

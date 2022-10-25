@@ -18,21 +18,28 @@
 
 package cc.woverflow.hytils.command;
 
+import cc.polyfrost.oneconfig.libs.universal.ChatColor;
+import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand;
 import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.command.parser.PlayerName;
+import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.Set;
 
 @Command("silentremove")
 public class SilentRemoveCommand {
 
-    //FIXME
-    @/*Main*/
-        SubCommand(description = "Adds or removes a player from the silent list")
-    private void player(PlayerName player) {
-        String name = player.name;
+    @Main
+    public void handle() {
+        UChat.chat(ChatColor.RED + "Usage: /silentremove <add/list> <player>");
+        UChat.chat(ChatColor.RED + "   or: /silentremove <player>");
+    }
+
+    @Main(description = "Adds or removes a player from the silent list")
+    private void player(EntityPlayer player) {
+        String name = player.getName();
         final Set<String> silentUsers = HytilsReborn.INSTANCE.getSilentRemoval().getSilentUsers();
         if (silentUsers.contains(name)) {
             silentUsers.remove(name);
@@ -42,6 +49,11 @@ public class SilentRemoveCommand {
 
         silentUsers.add(name);
         HytilsReborn.INSTANCE.sendMessage("&aAdded &e" + name + " &ato the removal queue.");
+    }
+
+    @SubCommand(description = "Adds a player to the silent list")
+    private void add(EntityPlayer entityPlayer) {
+        player(entityPlayer);
     }
 
     @SubCommand(description = "Clears the silent removal queue.")
