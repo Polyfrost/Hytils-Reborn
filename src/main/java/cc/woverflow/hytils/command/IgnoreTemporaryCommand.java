@@ -83,7 +83,7 @@ public class IgnoreTemporaryCommand {
         UChat.chat("Usage: /ignoretemp <player> <time>");
     }
 
-    @Main
+    //@Main
     private void handle(@Description("Player Name") EntityPlayer playerName, @Description("Time") @Greedy String time) {
         Multithreading.runAsync(() -> {
             try {
