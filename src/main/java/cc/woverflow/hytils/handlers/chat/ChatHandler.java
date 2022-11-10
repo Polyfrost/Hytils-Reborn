@@ -143,11 +143,15 @@ public class ChatHandler {
         HytilsReborn.INSTANCE.getAutoQueue().onMessageReceived(event);
 
         for (ChatReceiveModule module : this.receiveModules) {
-            if (module.isEnabled()) {
-                module.onMessageReceived(event);
-                if (event.isCanceled()) {
-                    return;
+            try {
+                if (module.isEnabled()) {
+                    module.onMessageReceived(event);
+                    if (event.isCanceled()) {
+                        return;
+                    }
                 }
+            } catch (Exception e) {
+                HytilsReborn.INSTANCE.getLogger().error("An error occurred while handling a chat message with module " + module.getClass().getSimpleName(), e);
             }
         }
     }
@@ -167,11 +171,15 @@ public class ChatHandler {
         }
 
         for (ChatSendModule module : this.sendModules) {
-            if (module.isEnabled()) {
-                message = module.onMessageSend(message);
-                if (message == null) {
-                    return null;
+            try {
+                if (module.isEnabled()) {
+                    message = module.onMessageSend(message);
+                    if (message == null) {
+                        return null;
+                    }
                 }
+            } catch (Exception e) {
+                HytilsReborn.INSTANCE.getLogger().error("An error occurred while handling a sent message with module " + module.getClass().getSimpleName(), e);
             }
         }
 
