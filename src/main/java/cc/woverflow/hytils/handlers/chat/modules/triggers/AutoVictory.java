@@ -28,6 +28,7 @@ import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.events.TitleEvent;
 import cc.woverflow.hytils.handlers.cache.PatternHandler;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveResetModule;
+import cc.woverflow.hytils.mixin.GuiIngameAccessor;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
@@ -138,8 +139,8 @@ public class AutoVictory implements ChatReceiveResetModule {
     @Override
     public void reset() {
         victoryDetected = false;
-        Minecraft.getMinecraft().ingameGUI.displayedTitle = "";
-        Minecraft.getMinecraft().ingameGUI.displayedSubTitle = "";
+        ((GuiIngameAccessor) Minecraft.getMinecraft().ingameGUI).setDisplayedTitle("");
+        ((GuiIngameAccessor) Minecraft.getMinecraft().ingameGUI).setDisplayedSubTitle("");
     }
 
     private boolean isSupportedMode(LocrawInfo locraw) {

@@ -21,6 +21,7 @@ package cc.woverflow.hytils.handlers.cache;
 import cc.polyfrost.oneconfig.utils.JsonUtils;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
+import cc.woverflow.hytils.HytilsReborn;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -35,16 +36,24 @@ public class PatternHandler {
     public void initialize() {
         Multithreading.runAsync(() -> {
             try {
+                JsonObject cached = HytilsReborn.INSTANCE.getLanguageHandler().getRegexJson();
+                if (cached != null) {
+                    processJson(cached);
+                    return;
+                }
                 final String gotten = NetworkUtils.getString("https://data.woverflow.cc/regex.json");
                 if (gotten != null) {
-                    JsonObject jsonObject = JsonUtils.parseString(gotten).getAsJsonObject();
-                    for (JsonElement element : jsonObject.getAsJsonArray("game_end")) {
-                        gameEnd.add(Pattern.compile(element.getAsString()));
-                    }
+                    processJson(JsonUtils.parseString(gotten).getAsJsonObject());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+    }
+
+    private void processJson(JsonObject jsonObject) {
+        for (JsonElement element : jsonObject.getAsJsonArray("game_end")) {
+            gameEnd.add(Pattern.compile(element.getAsString()));
+        }
     }
 }

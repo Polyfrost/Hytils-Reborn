@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +45,8 @@ public class LanguageHandler {
         put("FRENCH", "fr");
     }};
 
+    private JsonObject regex = null;
+
     private LanguageData current = fallback;
 
     public LanguageHandler() {
@@ -61,11 +64,15 @@ public class LanguageHandler {
             userLanguage = "ENGLISH";
         }
         final String language = languageMappings.getOrDefault(userLanguage, "en");
-        JsonObject finalJsonObject = NetworkUtils.getJsonElement("https://data.woverflow.cc/regex.json").getAsJsonObject();
-        if (!finalJsonObject.entrySet().isEmpty()) {
-            current = gson.fromJson(finalJsonObject.has(language) ? finalJsonObject.getAsJsonObject(language).toString() : finalJsonObject.getAsJsonObject("en").toString(), LanguageData.class);
+        regex = NetworkUtils.getJsonElement("https://data.woverflow.cc/regex.json").getAsJsonObject();
+        if (!regex.entrySet().isEmpty()) {
+            current = gson.fromJson(regex.has(language) ? regex.getAsJsonObject(language).toString() : regex.getAsJsonObject("en").toString(), LanguageData.class);
         }
         current.initialize();
+    }
+
+    public @Nullable JsonObject getRegexJson() {
+        return regex;
     }
 
     public LanguageData getCurrent() {
