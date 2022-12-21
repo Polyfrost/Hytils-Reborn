@@ -16,8 +16,8 @@ out1
 !.idea/copyright
 
 # gradle
-# build
-# .gradle
+build
+.gradle
 
 # other
 eclipse
