@@ -18,9 +18,6 @@
 
 package cc.woverflow.hytils.handlers.language;
 
-import com.google.common.collect.Sets;
-
-import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -39,9 +36,7 @@ public class LanguageData {
 
     public String autoFriendPattern = "\u00A7m----------------------------------------------------Friend request from (?<name>.+)\\[ACCEPT\\] - \\[DENY\\] - \\[IGNORE\\].*";
 
-    private String chatCleanerJoinNormal = "joined the lobby";
-    private String chatCleanerJoinHalloween = "spooked into the lobby";
-    private String chatCleanerJoinChristmas = "(?:sled|slid) into the lobby";
+    private String chatCleanerJoin = "(?:sled into|slid into|joined|spooked into) the lobby";
     private String chatCleanerMysteryBoxFind = "^.+ (?<player>(?!You)\\w{1,16}) found (?:a|an) (?:.{5} Mystery Box!|.+ in a .+!)$";
     private String chatCleanerSoulWellFind = "^.+ has found .+ in the Soul Well!$";
     private String chatCleanerGameAnnouncement = "^\u27A4 A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!$";
@@ -50,6 +45,8 @@ public class LanguageData {
     private String chatCleanerMvpEmotes = "\u00a7r\u00a7(?:c\u2764|6\u272e|a\u2714|c\u2716|b\u2615|e\u279c|e\u00af\\\\_\\(\u30c4\\)_/\u00af|c\\(\u256F\u00B0\u25A1\u00B0\uFF09\u256F\u00a7r\u00a7f\uFE35\u00a7r\u00a77 \u253B\u2501\u253B|d\\( \uFF9F\u25E1\uFF9F\\)/|a1\u00a7r\u00a7e2\u00a7r\u00a7c3|b\u2609\u00a7r\u00a7e_\u00a7r\u00a7b\u2609|e\u270E\u00a7r\u00a76\\.\\.\\.|a\u221A\u00a7r\u00a7e\u00a7l\\(\u00a7r\u00a7a\u03C0\u00a7r\u00a7a\u00a7l\\+x\u00a7r\u00a7e\u00a7l\\)\u00a7r\u00a7a\u00a7l=\u00a7r\u00a7c\u00a7lL|e@\u00a7r\u00a7a'\u00a7r\u00a7e-\u00a7r\u00a7a'|6\\(\u00a7r\u00a7a0\u00a7r\u00a76\\.\u00a7r\u00a7ao\u00a7r\u00a7c\\?\u00a7r\u00a76\\)|b\u0F3C\u3064\u25D5_\u25D5\u0F3D\u3064|e\\(\u00a7r\u00a7b'\u00a7r\u00a7e-\u00a7r\u00a7b'\u00a7r\u00a7e\\)\u2283\u00a7r\u00a7c\u2501\u00a7r\u00a7d\u2606\uFF9F\\.\\*\uFF65\uFF61\uFF9F|e\u2694|a\u270C|c\u00a7lOOF|e\u00a7l<\\('O'\\)>)\u00a7r";
     public String chatCleanerHypeLimit = "  \u27A4 You have reached your Hype limit!";
     private String chatGiftBlocker = "They have gifted \\d+ (?:rank|ranks) so far!";
+    private String chatCommonAdvertisements = "(?!.+: )(/?(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|/?(party me|visit me|duel me|my ah|my smp)|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16})|(/gift)|(gilde)|(lowballing|lowbaling|lowvaling|lowvaluing|lowballer)))";
+    private String chatRankBegging = "(?!.+: )([^\\[](vip|mvp|mpv|vpi)|(please|pls|plz|give|giving)|(rank|buy me|upgrade me)|(gift|gifting|gifters)|(beg|begging|beggers))";
     private String chatCleanerGrinchPresents = "(?:You found (?:an egg|a gift|a candy)! .\\d{1,3} total.|^\\W{0,3}\\w{0,}\\S{0,3}\\s{0,1}\\w{1,16} has reached \\d{2,3} (?:gifts|eggs|candy)!)";
     private String chatCleanerEarnedCoinsAndExp = "^(?:\\W\\d+ .* Experience.*|\\W\\d+ coins!.*|You earned \\d+ GEXP from playing.+!|.+ just earned .+ as a Guild Level Reward!)"; //.* at the end for modifiers
     public String chatCleanerReplayRecorded = "This game has been recorded. Click here to watch the Replay!";
@@ -91,7 +88,11 @@ public class LanguageData {
     public String cannotShoutBeforeGame = "You can't use /shout before the game has started.";
     public String cannotShoutAfterGame = "You can't use /shout after the game has finished.";
 
+    public String cancelGlMessages = "(?!.+: )(gl|glhf|good luck|have a good game|autogl by sk1er)";
+
     private String hypixelLevelUp = "You are now Hypixel Level (?<level>\\d+)!";
+
+    public String[] armorStandNames = {"click", "mystery vault", "daily reward tokens", "advent calendar reward", "free rewards", "special holiday quests", "release", "festive floors", "museums", "hype", "coming soon", " set #", "fireball/tnt jumping", "parkour starts this way", "go ahead into the cave", "holiday mode", "new update", "new modes & maps", "sign posting", "parkour challenge", "your arcade games profile", "featured", "limited time", "hytale trailer", "pixel party v1.0", "kuudra infernal", "0.2 update", "recorded on level gain", "recorded on achievement completion", "happy easter", "happy halloween", "happy holidays", "easter event", "holiday event", "halloween event", "summer event", "goal", "defend", "jump in to score"};
 
     /**
      * Cached values which use the messages read from the config file.
@@ -101,8 +102,7 @@ public class LanguageData {
 
     public Pattern autoFriendPatternRegex;
 
-    public Set<Pattern> chatCleanerJoinMessageTypes;
-
+    public Pattern chatCleanerJoinRegex;
     public Pattern chatCleanerMysteryBoxFindRegex;
     public Pattern chatCleanerSoulWellFindRegex;
     public Pattern chatCleanerGameAnnouncementRegex;
@@ -110,6 +110,8 @@ public class LanguageData {
     public Pattern chatCleanerConnectionStatusRegex;
     public Pattern chatCleanerMvpEmotesRegex;
     public Pattern chatGiftBlockerRegex;
+    public Pattern chatCommonAdvertisementsRegex;
+    public Pattern chatRankBeggingRegex;
     public Pattern chatCleanerGrinchPresentsRegex;
     public Pattern chatCleanerEarnedCoinsAndExpRegex;
     public Pattern chatCleanerReplayRecordedRegex;
@@ -143,6 +145,8 @@ public class LanguageData {
     public Pattern privateMessageWhiteChatRegex;
     public Pattern silentRemovalLeaveMessageRegex;
 
+    public Pattern cancelGlMessagesRegex;
+
     public Pattern hypixelLevelUpRegex;
 
     /**
@@ -156,8 +160,7 @@ public class LanguageData {
 
             autoFriendPatternRegex = Pattern.compile(autoFriendPattern);
 
-            chatCleanerJoinMessageTypes = Sets.newHashSet(Pattern.compile(chatCleanerJoinNormal), Pattern.compile(chatCleanerJoinHalloween), Pattern.compile(chatCleanerJoinChristmas));
-
+            chatCleanerJoinRegex = Pattern.compile(chatCleanerJoin);
             chatCleanerMysteryBoxFindRegex = Pattern.compile(chatCleanerMysteryBoxFind);
             chatCleanerSoulWellFindRegex = Pattern.compile(chatCleanerSoulWellFind);
             chatCleanerGameAnnouncementRegex = Pattern.compile(chatCleanerGameAnnouncement);
@@ -165,6 +168,8 @@ public class LanguageData {
             chatCleanerConnectionStatusRegex = Pattern.compile(chatCleanerConnectionStatus);
             chatCleanerMvpEmotesRegex = Pattern.compile(chatCleanerMvpEmotes);
             chatGiftBlockerRegex = Pattern.compile(chatGiftBlocker);
+            chatCommonAdvertisementsRegex = Pattern.compile(chatCommonAdvertisements, Pattern.CASE_INSENSITIVE);
+            chatRankBeggingRegex = Pattern.compile(chatRankBegging, Pattern.CASE_INSENSITIVE);
             chatCleanerGrinchPresentsRegex = Pattern.compile(chatCleanerGrinchPresents);
             chatCleanerEarnedCoinsAndExpRegex = Pattern.compile(chatCleanerEarnedCoinsAndExp);
             chatCleanerReplayRecordedRegex = Pattern.compile(chatCleanerReplayRecorded);
@@ -199,6 +204,8 @@ public class LanguageData {
             silentRemovalLeaveMessageRegex = Pattern.compile(silentRemovalLeaveMessage);
 
             hypixelLevelUpRegex = Pattern.compile(hypixelLevelUp);
+
+            cancelGlMessagesRegex = Pattern.compile(cancelGlMessages, Pattern.CASE_INSENSITIVE);
         }
 
     }
