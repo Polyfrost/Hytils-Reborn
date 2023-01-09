@@ -941,12 +941,12 @@ public class HytilsConfig extends Config {
         hidePingInTab = false;
         cleanerSkyblockTabInfo = false;
         save();
-        addDependency("hideNpcsInTab", false);
-        addDependency("keepImportantNpcsInTab", false);
-        addDependency("hideGuildTagsInTab", false);
-        addDependency("hidePlayerRanksInTab", false);
-        addDependency("hidePingInTab", false);
-        addDependency("cleanerSkyblockTabInfo", false);
+        addDependency("hideNpcsInTab", () -> false);
+        addDependency("keepImportantNpcsInTab", () -> false);
+        addDependency("hideGuildTagsInTab", () -> false);
+        addDependency("hidePlayerRanksInTab", () -> false);
+        addDependency("hidePingInTab", () -> false);
+        addDependency("cleanerSkyblockTabInfo", () -> false);
     }
 
     private void setWBMessages() {
