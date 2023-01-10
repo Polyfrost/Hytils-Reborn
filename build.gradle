@@ -50,7 +50,6 @@ configurations {
 
 repositories {
     maven { url 'https://repo.polyfrost.cc/releases' }
-    maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
 }
 
 dependencies {
