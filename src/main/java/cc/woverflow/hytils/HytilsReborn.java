@@ -24,6 +24,7 @@ import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import cc.woverflow.hytils.command.*;
 import cc.woverflow.hytils.config.HytilsConfig;
+import cc.woverflow.hytils.handlers.cache.ArmorStandHandler;
 import cc.woverflow.hytils.handlers.cache.CosmeticsHandler;
 import cc.woverflow.hytils.handlers.cache.HeightHandler;
 import cc.woverflow.hytils.handlers.cache.PatternHandler;
@@ -128,6 +129,7 @@ public class HytilsReborn {
         // GameNameParser to be initialized, and that depends on networking.
         PlayCommand.init();
 
+        ArmorStandHandler.INSTANCE.initialize();
         CosmeticsHandler.INSTANCE.initialize();
         PatternHandler.INSTANCE.initialize();
         HeightHandler.INSTANCE.initialize();

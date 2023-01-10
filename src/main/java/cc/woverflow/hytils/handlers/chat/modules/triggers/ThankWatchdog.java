@@ -33,7 +33,7 @@ public class ThankWatchdog implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        if (event.message.getUnformattedText().equals("[WATCHDOG ANNOUNCEMENT]")) {
+        if (event.message.getUnformattedText().equals("[WATCHDOG ANNOUNCEMENT]") || event.message.getUnformattedText().startsWith("A player has been removed from your")) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/achat Thanks Watchdog!");
         }
     }

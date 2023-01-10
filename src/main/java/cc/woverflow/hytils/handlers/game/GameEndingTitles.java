@@ -32,7 +32,7 @@ public class GameEndingTitles {
             return;
         }
 
-        switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle())) {
+        switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle().toUpperCase())) {
             case "YOU WIN!":
             case "YOU DIED!":
             case "YOU LOSE!":
@@ -41,9 +41,6 @@ public class GameEndingTitles {
             case "RESPAWNED!":
             case "DEFEAT!":
             case "GAME END":
-            case "You Win!":
-            case "You Lose!":
-            case "Game Over!":
             case "YOU DIED":
             case "DEFEAT":
                 event.setCanceled(true);

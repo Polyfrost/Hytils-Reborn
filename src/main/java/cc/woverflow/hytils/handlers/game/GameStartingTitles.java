@@ -33,19 +33,22 @@ public class GameStartingTitles {
             return;
         }
 
-        switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle())) {
-            case "10 seconds":
+        switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle().toUpperCase())) {
+            case "10 SECONDS":
             case "10":
             case "5":
             case "4":
             case "3":
             case "2":
             case "1":
-            case "Waiting for more players...":
-            case "SkyWars":
+            case "❸":
+            case "❷":
+            case "❶":
+            case "WAITING FOR MORE PLAYERS...":
+            case "SKYWARS":
             case "INSANE MODE":
-            case "Fight!":
-            case "Zombies":
+            case "FIGHT!":
+            case "ZOMBIES":
             case "ASSASSINS":
             case "YOU ARE RED":
             case "YOU ARE BLUE":
@@ -53,9 +56,6 @@ public class GameStartingTitles {
             case "YOU ARE GREEN":
             case "PRE ROUND":
             case "ROUND START":
-            case "❸":
-            case "❷":
-            case "❶":
                 event.setCanceled(true);
                 break;
         }
