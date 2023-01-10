@@ -35,7 +35,7 @@ public class ArmorStandHider {
         if (HypixelUtils.INSTANCE.isHypixel() && locraw != null && (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() && HytilsConfig.hideUselessArmorStands || HytilsConfig.hideUselessArmorStandsGame && (locraw.getGameType() == LocrawInfo.GameType.SKYBLOCK || locraw.getGameType() == LocrawInfo.GameType.BEDWARS || locraw.getGameType() == LocrawInfo.GameType.SKYWARS || locraw.getGameMode().contains("BRIDGE")))) {
             if (event.entity instanceof EntityArmorStand) {
                 String unformattedArmorStandName = event.entity.getCustomNameTag().toLowerCase();
-                for (String armorStands : ArmorStandHandler.INSTANCE.ArmorStandNames) {
+                for (String armorStands : ArmorStandHandler.INSTANCE.armorStandNames) {
                     if (unformattedArmorStandName.contains(armorStands)) {
                         event.setCanceled(true);
                         break;

@@ -28,7 +28,7 @@ import java.util.List;
 
 public class ArmorStandHandler {
     public static ArmorStandHandler INSTANCE = new ArmorStandHandler();
-    public List<String> ArmorStandNames = new ArrayList<>();
+    public List<String> armorStandNames = new ArrayList<>();
 
     public void initialize() {
         Multithreading.runAsync(() -> {
@@ -36,7 +36,7 @@ public class ArmorStandHandler {
             if (gotten != null) {
                 JsonObject jsonObject = gotten.getAsJsonObject();
                 for (JsonElement tag : jsonObject.getAsJsonArray("tags")) {
-                    ArmorStandNames.add(tag.getAsString());
+                    armorStandNames.add(tag.getAsString());
                 }
             }
         });
