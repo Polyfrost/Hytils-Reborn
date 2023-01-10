@@ -82,7 +82,6 @@ public class ChatHandler {
 
         // Modifiers
 
-        this.registerModule(new ColoredFriendStatuses());
         this.registerModule(new DefaultChatRestyler());
         this.registerModule(new GameStartCompactor());
         this.registerModule(new WhiteChat());

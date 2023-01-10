@@ -21,6 +21,7 @@ package cc.woverflow.hytils.handlers.chat.modules.triggers;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +30,7 @@ import java.util.regex.Matcher;
 /**
  * Taken and adapted from AutoFriend under MIT
  * https://github.com/minemanpi/AutoFriend/blob/master/LICENSE
+ *
  * @author 2Pi
  */
 public class AutoFriend implements ChatReceiveModule {
@@ -36,12 +38,14 @@ public class AutoFriend implements ChatReceiveModule {
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = event.message.getUnformattedText().replace("\n", "");
         Matcher matcher = getLanguage().autoFriendPatternRegex.matcher(message);
-        if (matcher.matches()) {
+        if (message.contains(": ")) return;
+        if (matcher.find()) {
             String name = matcher.group("name");
             if (name.startsWith("[")) {
                 name = name.substring(name.indexOf("] ") + 2);
-                HytilsReborn.INSTANCE.getCommandQueue().queue("/friend " + name);
             }
+            HytilsReborn.INSTANCE.getCommandQueue().queue("/friend " + name);
+            HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.GREEN + "Automatically added " + name + " to your friend list.");
         }
     }
 

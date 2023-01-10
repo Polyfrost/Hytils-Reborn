@@ -97,6 +97,18 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             }
         }
 
+        if (HytilsConfig.coloredStatuses) {
+            Matcher statusMatcher = getLanguage().chatRestylerStatusPatternRegex.matcher(event.message.getFormattedText().trim());
+            if (statusMatcher.matches()) {
+                final String status = statusMatcher.group("status");
+                if (status.equalsIgnoreCase("joined")) {
+                    event.message = colorMessage(statusMatcher.group("type") + " > &r" + statusMatcher.group("player") + " &r&ajoined&e.");
+                } else if (status.equalsIgnoreCase("left")) {
+                    event.message = colorMessage(statusMatcher.group("type") + " > &r" + statusMatcher.group("player") + " &r&cleft&e.");
+                }
+            }
+        }
+
         // Currently unformattedMessage doesn't need to be changed but I'm leaving these in, commented, in case it's
         // changed in the future and they need to be padded.
         if (HytilsConfig.padPlayerCount) {
@@ -142,8 +154,10 @@ public class DefaultChatRestyler implements ChatReceiveModule {
                         // if the format (below) is changed, remember to update the regex for it (chatRestylerGameStartCounterOutputStyle)
                         event.message = colorMessage("&e&l* &a" + (startCounterMatcher.group("title")) + " &b&l" + startCounterMatcher.group("time") + " &a" + startCounterMatcher.group("unit"));
                     } else {
-                        if ("We don't have enough players! Start cancelled.".equals(unformattedMessage) || ("We don't have enough players! Start delayed.".equals(unformattedMessage))) {
+                        if ("We don't have enough players! Start cancelled.".equals(unformattedMessage)) {
                             event.message = colorMessage("&e&l* &cStart cancelled.");
+                        } else if ("We don't have enough players! Start delayed.".equals(unformattedMessage)) {
+                            event.message = colorMessage("&e&l* &cStart delayed.");
                         }
                     }
                 }
@@ -174,9 +188,9 @@ public class DefaultChatRestyler implements ChatReceiveModule {
      * Handles the replacement of channel names
      * Loops through all siblings to find a replacement
      *
-     * @param message The message being modified
-     * @param pattern The regular expression to check the message and it's components against
-     * @param replacement The text that replaces what is matched by the regular expression
+     * @param message              The message being modified
+     * @param pattern              The regular expression to check the message and it's components against
+     * @param replacement          The text that replaces what is matched by the regular expression
      * @param checkParentComponent Whether or not to check the parent chat component
      */
     private ChatComponentText shortenChannelName(IChatComponent message, String pattern, String replacement, boolean checkParentComponent) {

@@ -21,11 +21,11 @@ package cc.woverflow.hytils.handlers.chat.modules.blockers;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
-import java.util.regex.Pattern;
 
 public class AdBlocker implements ChatReceiveModule {
 
@@ -48,26 +48,20 @@ public class AdBlocker implements ChatReceiveModule {
      * Blocks advertisements to join German SkyBlock guilds
      * <p>
      * Blocks stuff related with lowballing
-     *
+     * <p>
      * TODO: add more phrases to regex
      */
-    private final Pattern commonAdvertisements = Pattern.compile("(?!.+: )(/?(((party join|join party)|p join|(guild join)|(join guild)|g join) \\w{1,16})|/?(party me|visit me|duel me|my ah|my smp)|(twitch.tv)|(youtube.com|youtu.be)|(/(visit|ah) \\w{1,16}|(visit /\\w{1,16})|(/gift)|(gilde)|(lowballing|lowbaling|lowvaling|lowvaluing|lowballer)))",
-        Pattern.CASE_INSENSITIVE);
-
-    // common phrases used in messages where people beg for a rank gift
-    private final Pattern rankBegging = Pattern.compile("(?!.+: )([^\\[](vip|mvp|mpv|vpi)|(please|pls|plz|give|giving)|(rank|buy me|upgrade me)|(gift|gifting|gifters)|(beg|begging|beggers))",
-        Pattern.CASE_INSENSITIVE);
-
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final String message = event.message.getUnformattedText().toLowerCase(Locale.ENGLISH);
-        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (!message.contains(": "))) return;
-        if (commonAdvertisements.matcher(message).find(0)) {
+        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase())))
+            return;
+        if (getLanguage().chatCommonAdvertisementsRegex.matcher(message).find(0)) {
             event.setCanceled(true);
         }
 
         if (!HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) return;
-        if (rankBegging.matcher(message).find(0)) {
+        if (getLanguage().chatRankBeggingRegex.matcher(message).find(0)) {
             event.setCanceled(true);
         }
     }

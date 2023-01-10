@@ -38,7 +38,7 @@ public class LevelupEvent implements ChatReceiveModule {
         final String unformattedText = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
         final Matcher matcher = getLanguage().hypixelLevelUpRegex.matcher(unformattedText.trim());
         if (matcher.find()) {
-            if (unformattedText.contains(":")) return; // TODO: This is a temporary solution to prevent regular player messages from triggering it. Fix the regex!
+            if (unformattedText.contains(": ")) return; // TODO: This is a temporary solution to prevent regular player messages from triggering it. Fix the regex!
             final String level = matcher.group("level");
             if (StringUtils.isNumeric(level)) {
                 MinecraftForge.EVENT_BUS.post(new HypixelLevelupEvent(Integer.parseInt(level)));
