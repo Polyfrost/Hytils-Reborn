@@ -38,7 +38,6 @@ public class AutoFriend implements ChatReceiveModule {
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = event.message.getUnformattedText().replace("\n", "");
         Matcher matcher = getLanguage().autoFriendPatternRegex.matcher(message);
-        if (message.contains(": ")) return;
         if (matcher.find()) {
             String name = matcher.group("name");
             if (name.startsWith("[")) {

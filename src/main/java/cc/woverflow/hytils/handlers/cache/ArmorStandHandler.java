@@ -32,7 +32,7 @@ public class ArmorStandHandler {
 
     public void initialize() {
         Multithreading.runAsync(() -> {
-            final JsonElement gotten = NetworkUtils.getJsonElement("https://raw.githubusercontent.com/SirXThe/DataStorage/main/armorstands.json");
+            final JsonElement gotten = NetworkUtils.getJsonElement("https://data.woverflow.cc/armorstands.json");
             if (gotten != null) {
                 JsonObject jsonObject = gotten.getAsJsonObject();
                 for (JsonElement tag : jsonObject.getAsJsonArray("tags")) {
