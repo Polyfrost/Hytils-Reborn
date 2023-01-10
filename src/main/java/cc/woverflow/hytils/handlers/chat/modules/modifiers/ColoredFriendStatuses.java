@@ -34,11 +34,22 @@ public class ColoredFriendStatuses implements ChatReceiveModule {
             Matcher matcher = getLanguage().chatRestylerStatusPatternRegex.matcher(message);
             if (matcher.matches()) {
                 final String status = matcher.group("status"); // TODO: fix short channel names so we can remove the 2nd group
+
+                String channelStarter = null; // Fixes short channel name incompatibility since it randomly popped up despite what appears to be no changes
+                if (matcher.group("type").contains("F")) {
+                    if (HytilsConfig.shortChannelNames) channelStarter = "§aF > §r";
+                    else channelStarter = "§aFriend > §r";
+                }
+                if (matcher.group("type").contains("G")) {
+                    if (HytilsConfig.shortChannelNames) channelStarter = "§2G > §r";
+                    else channelStarter = "§2Guild > §r";
+                }
+
                 if (status.equalsIgnoreCase("joined")) {
-                    event.message = colorMessage(matcher.group("type") + " > §r" + matcher.group("player") + " §r" + "§ajoined§e.");
+                    event.message = colorMessage(channelStarter + matcher.group("player") + " §r" + "§ajoined§e.");
                 }
                 if (status.equalsIgnoreCase("left")) {
-                    event.message = colorMessage(matcher.group("type") + " > §r" + matcher.group("player") + " §r" + "§cleft§e.");
+                    event.message = colorMessage(channelStarter + matcher.group("player") + " §r" + "§cleft§e.");
                 }
             }
         }
