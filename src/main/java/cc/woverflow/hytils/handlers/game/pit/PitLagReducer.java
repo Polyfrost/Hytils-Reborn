@@ -20,6 +20,7 @@ package cc.woverflow.hytils.handlers.game.pit;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
@@ -45,7 +46,7 @@ public class PitLagReducer {
             return;
         }
 
-        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (locraw == null || locraw.getGameType() != LocrawInfo.GameType.PIT) {
             return;
         }

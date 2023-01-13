@@ -25,8 +25,8 @@ import cc.woverflow.hytils.HytilsReborn;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -84,7 +84,7 @@ public class IgnoreTemporaryCommand {
     }
 
     //@Main
-    private void handle(@Description("Player Name") EntityPlayer playerName, @Description("Time") @Greedy String time) {
+    private void handle(@Description("Player Name") GameProfile playerName, @Description("Time") @Greedy String time) {
         Multithreading.runAsync(() -> {
             try {
                 long millis = addMillis(time.replace(",", "").replace(" ", ""));
@@ -104,12 +104,12 @@ public class IgnoreTemporaryCommand {
     }
 
     @SubCommand(description = "Adds a player to the ignore list for a specified amount of time.")
-    private void add(@Description("Player Name") EntityPlayer playerName, @Description("Time") @Greedy String time) {
+    private void add(@Description("Player Name") GameProfile playerName, @Description("Time") @Greedy String time) {
         handle(playerName, time);
     }
 
     @SubCommand(description = "Removes a player from the ignore list.")
-    private void remove(@Description("Player Name") EntityPlayer playerName) {
+    private void remove(@Description("Player Name") GameProfile playerName) {
         json.remove(playerName.getName());
         Multithreading.runAsync(() -> {
             try {

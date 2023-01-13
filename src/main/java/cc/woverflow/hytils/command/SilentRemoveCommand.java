@@ -24,7 +24,7 @@ import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand;
 import cc.woverflow.hytils.HytilsReborn;
-import net.minecraft.entity.player.EntityPlayer;
+import com.mojang.authlib.GameProfile;
 
 import java.util.Set;
 
@@ -38,7 +38,7 @@ public class SilentRemoveCommand {
     }
 
     @Main(description = "Adds or removes a player from the silent list")
-    private void player(EntityPlayer player) {
+    private void player(GameProfile player) {
         String name = player.getName();
         final Set<String> silentUsers = HytilsReborn.INSTANCE.getSilentRemoval().getSilentUsers();
         if (silentUsers.contains(name)) {
@@ -52,7 +52,7 @@ public class SilentRemoveCommand {
     }
 
     @SubCommand(description = "Adds a player to the silent list")
-    private void add(EntityPlayer entityPlayer) {
+    private void add(GameProfile entityPlayer) {
         player(entityPlayer);
     }
 

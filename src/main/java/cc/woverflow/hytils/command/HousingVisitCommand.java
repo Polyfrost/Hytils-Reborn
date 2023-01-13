@@ -25,8 +25,8 @@ import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Description;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.woverflow.hytils.HytilsReborn;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
@@ -54,7 +54,7 @@ public class HousingVisitCommand {
     }
 
     @Main
-    private void handle(@Description("Player Name") EntityPlayer player) {
+    private void handle(@Description("Player Name") GameProfile player) {
         if (usernameRegex.matcher(player.getName()).matches()) {
             playerName = player.getName();
 

@@ -20,6 +20,7 @@ package cc.woverflow.hytils.mixin;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;
@@ -46,7 +47,7 @@ public abstract class LayerArmorBaseMixin_HideIngameArmour {
 
     private static boolean shouldCancel(ItemStack itemStack) {
         if (!HytilsConfig.hideArmor || itemStack == null || !HypixelUtils.INSTANCE.isHypixel()) return false;
-        final LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        final LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         final Item item = itemStack.getItem();
         if (locraw != null) {
             if (item instanceof ItemArmor && ((ItemArmor) item).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {

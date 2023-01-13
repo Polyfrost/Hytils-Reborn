@@ -20,6 +20,7 @@ package cc.woverflow.hytils.mixin;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraftforge.client.GuiIngameForge;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,6 +32,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GuiIngameForgeMixin_HideActionbar {
     @Inject(method = "renderRecordOverlay", at = @At("HEAD"), cancellable = true)
     private void cancelActionBar(int width, int height, float partialTicks, CallbackInfo ci) {
-        if (HypixelUtils.INSTANCE.isHypixel() && HypixelUtils.INSTANCE.getLocrawInfo() != null && (HytilsConfig.hideHousingActionBar && HypixelUtils.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.HOUSING) || HytilsConfig.hideDropperActionBar && HypixelUtils.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.DROPPER) ci.cancel();
+        if (HypixelUtils.INSTANCE.isHypixel() && LocrawUtil.INSTANCE.getLocrawInfo() != null && (HytilsConfig.hideHousingActionBar && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.HOUSING) || HytilsConfig.hideDropperActionBar && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.DROPPER) ci.cancel();
     }
 }

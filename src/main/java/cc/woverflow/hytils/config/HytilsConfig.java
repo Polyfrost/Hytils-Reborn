@@ -48,15 +48,10 @@ public class HytilsConfig extends Config {
         category = "API",
         secure = true
     )
+    @HypixelKey
     public static String apiKey = "";
 
     // Automatic
-
-    @Switch(
-        name = "Automatically Get API Key",
-        category = "Automatic", subcategory = "API"
-    )
-    public static boolean autoGetAPI = true;
 
     @Switch(
         name = "Auto Start",
