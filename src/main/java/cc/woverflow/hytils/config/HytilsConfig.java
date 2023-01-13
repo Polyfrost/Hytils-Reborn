@@ -45,6 +45,7 @@ public class HytilsConfig extends Config {
 
     @Text(
         name = "API Key",
+        description = "Automatically get the API Key from /api new.",
         category = "API",
         secure = true
     )
@@ -55,12 +56,14 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Auto Start",
+        description = "Join Hypixel immediately once the client has loaded to the main menu.",
         category = "Automatic", subcategory = "General"
     )
     public static boolean autoStart;
 
     @Switch(
         name = "Auto Queue",
+        description = "Automatically queues for another game once you win or die. (This will require you to interact with the game in a way to prevent abuse)",
         category = "Automatic", subcategory = "Game"
     )
     public static boolean autoQueue;
@@ -74,18 +77,21 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Auto-Complete Play Commands",
+        description = "Allows tab completion of /play commands.",
         category = "Automatic", subcategory = "Game"
     )
     public static boolean autocompletePlayCommands;
 
     @Switch(
         name = "Limbo Play Helper",
+        description = "When a /play command is run in Limbo, this runs /l first and then the command.",
         category = "Automatic", subcategory = "Game"
     )
     public static boolean limboPlayCommandHelper;
 
     @Switch(
         name = "Auto GL",
+        description = "Send a message 5 seconds before a Hypixel game starts.",
         category = "Automatic", subcategory = "AutoGL"
     )
     public static boolean autoGL;
@@ -99,18 +105,21 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Anti GL",
+        description = "Remove all GL messages from chat.",
         category = "Automatic", subcategory = "AutoGL"
     )
     public static boolean antiGL;
 
     @Switch(
         name = "Auto Friend",
+        description = "Automatically accept friend requests.",
         category = "Automatic", subcategory = "Social"
     )
     public static boolean autoFriend;
 
     @Switch(
         name = "Automatically Check GEXP",
+        description = "Automatically check your GEXP after you win a Hypixel game.",
         category = "Automatic", subcategory = "Stats"
     )
     public static boolean autoGetGEXP;
@@ -125,6 +134,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Automatically Check Winstreak",
+        description = "Automatically check your winstreak after you win a Hypixel game.",
         category = "Automatic", subcategory = "Stats"
     )
     public static boolean autoGetWinstreak;
@@ -133,228 +143,266 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Hide Locraw Messages",
+        description = "Hide Locraw Messages",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean hideLocraw = true;
 
     @Switch(
         name = "Remove Lobby Statuses",
+        description = "Remove lobby join messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean lobbyStatus;
 
     @Switch(
         name = "Remove Mystery Box Rewards",
+        description = "Remove others mystery box messages from chat and only show your own.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean mysteryBoxAnnouncer;
 
     @Switch(
         name = "Remove Soul Well Announcements",
+        description = "Remove soul well announcements from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean soulWellAnnouncer;
 
     @Switch(
         name = "Remove Game Announcements",
+        description = "Remove game announcements from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean gameAnnouncements;
 
     @Switch(
         name = "Remove Hype Limit Reminder",
+        description = "Remove Hype limit reminders from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean hypeLimitReminder;
 
     @Switch(
         name = "Player AdBlocker",
+        description = "Remove spam messages from players, usually advertising something or begging for ranks.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean playerAdBlock;
 
     @Switch(
         name = "Remove BedWars Advertisements",
+        description = "Remove player messages asking to join BedWars parties.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean bedwarsAdvertisements;
 
     @Switch(
         name = "Remove Friend/Guild Statuses",
+        description = "Remove join/quit messages from friend/guild members.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean connectionStatus;
 
     @Switch(
         name = "Remove Guild MOTD",
+        description = "Remove the guild Message Of The Day.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean guildMotd;
 
     @Switch(
         name = "Remove Chat Emojis",
+        description = "Remove MVP++ chat emojis.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean mvpEmotes;
 
     @Switch(
         name = "Remove Server Connected Messages",
+        description = "Remove messages informing you of the lobby name you've just joined, or what lobby you're being sent to.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean serverConnectedMessages;
 
     @Switch(
         name = "Remove Game Tips Messages",
+        description = "Remove messages informing you of how to play the game you're currently in.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean gameTipMessages;
 
     @Switch(
         name = "Remove Auto Activated Quest Messages",
+        description = "Remove automatically activated quest messages.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean questsMessages;
 
     @Switch(
         name = "Remove Stats Messages",
+        description = "Remove messages informing you if you want to view your stats after a game",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean statsMessages;
 
     @Switch(
         name = "Remove Curse of Spam Messages",
+        description = "Hides the constant spam of Kali's curse of spam.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean curseOfSpam;
 
     @Switch(
         name = "Remove Bridge Self Goal Death Messages",
+        description = "Hides the death message when you jump into your own goal in Bridge.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean bridgeOwnGoalDeath;
 
     @Switch(
         name = "Remove Duels No Stats Change Messages",
+        description = "Hides the message explaining that your stats did not change for dueling through /duel or within in a party.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean duelsNoStatsChange;
 
     @Switch(
         name = "Remove Block Trail Disabled Messages",
+        description = "Hides the message explaining that your duel's block trail cosmetic was disabled in specific gamemodes.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean duelsBlockTrail;
 
     @Switch(
         name = "Remove SkyBlock Welcome Messages",
+        description = "Removes \"Welcome to Hypixel SkyBlock!\" messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean skyblockWelcome;
 
     @Switch(
         name = "Remove Gift Messages",
+        description = "Removes \"They have gifted x so far!\" messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean giftBlocker;
 
     @Switch(
         name = "Remove Seasonal Simulator Collection Messages",
+        description = "Removes personal and global collected messages from chat for the Easter, Christmas, and Halloween variants.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean grinchPresents;
 
     @Switch(
         name = "Remove Earned Coins and Experience Messages",
+        description = "Removes the earned coins and experience messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean earnedCoinsAndExp;
 
     @Switch(
         name = "Remove Replay Messages",
+        description = "Removes replay messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean replayMessage;
 
     @Switch(
         name = "Remove Tip Messages",
+        description = "Removes tip messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean tipMessage;
 
     @Switch(
         name = "Remove Online Status Messages",
+        description = "Removes the online status messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean onlineStatus;
 
     @Switch(
         name = "Trim Line Separators",
+        description = "Prevent separators from overflowing onto the next chat line.",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean lineBreakerTrim = true;
 
     @Switch(
         name = "Clean Line Separators",
+        description = "Change all line separator to become smoother.",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean cleanLineSeparator = true;
 
     @Switch(
         name = "White Chat",
+        description = "Make nons' chat messages appear as the normal chat message color.",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean whiteChat;
 
     @Switch(
         name = "White Private Messages",
+        description = "Make private messages appear as the normal chat message color.",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean whitePrivateMessages;
 
     @Switch(
         name = "Colored Friend/Guild Statuses",
+        description = "Colors the join/leave status of friends and guild members.",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean coloredStatuses;
 
     @Switch(
         name = "Cleaner Game Start Counter",
+        description = "Compacts game start announcements.",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean cleanerGameStartAnnouncements;
 
     @Switch(
         name = "Short Channel Names",
+        description = "Abbreviate chat channel names.",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean shortChannelNames;
 
     @Switch(
         name = "Game Status Restyle",
+        description = "Replace common game status messages with a new style.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean gameStatusRestyle;
 
     @Switch(
         name = "Player Count Before Player Name",
+        description = "Put the player count before the player name in game join/leave messages.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean playerCountBeforePlayerName;
 
     @Switch(
         name = "Player Count on Player Leave",
+        description = "Include the player count when players leave.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean playerCountOnPlayerLeave;
 
     @Switch(
         name = "Player Count Padding",
+        description = "Place zeros at the beginning of the player count to align with the max player count.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean padPlayerCount;
 
     @Switch(
         name = "Party Chat Swapper",
+        description = "Automatically change to and out of a party channel when joining/leaving a party.",
         category = "Chat", subcategory = "Parties"
     )
     public static boolean chatSwapper;
@@ -368,48 +416,56 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Swap Chatting Tab With Chat Swapper",
+        description = " Automatically switch your Chatting chat tab when chat swapper swaps your chat channel.",
         category = "Chat", subcategory = "Parties"
     )
     public static boolean chattingIntegration;
 
     @Switch(
         name = "Remove All Chat Message",
+        description = "Hide the \"You are now in the ALL channel\" message when auto-switching.",
         category = "Chat", subcategory = "Parties"
     )
     public static boolean hideAllChatMessage;
 
     @Switch(
         name = "Thank Watchdog",
+        description = "Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.",
         category = "Chat", subcategory = "Watchdog"
     )
     public static boolean thankWatchdog;
 
     @Switch(
         name = "Auto Chat Report Confirm",
+        description = "Automatically confirms chat reports.",
         category = "Automatic", subcategory = "Chat"
     )
     public static boolean autoChatReportConfirm;
 
     @Switch(
         name = "Auto Party Warp Confirm",
+        description = "Automatically confirms party warps.",
         category = "Automatic", subcategory = "Chat"
     )
     public static boolean autoPartyWarpConfirm;
 
     @Switch(
         name = "Guild Welcome Message",
+        description = "Send a friendly welcome message when a player joins your guild.",
         category = "Chat", subcategory = "Guild"
     )
     public static boolean guildWelcomeMessage;
 
     @Switch(
         name = "Shout Cooldown",
+        description = "Show the amount of time remaining until /shout can be reused.",
         category = "Chat", subcategory = "Cooldown"
     )
     public static boolean preventShoutingOnCooldown;
 
     @Switch(
         name = "Non Speech Cooldown",
+        description = "Show the amount of time remaining until you can speak if you are a non.",
         category = "Chat", subcategory = "Cooldown"
     )
     public static boolean preventNonCooldown;
@@ -418,6 +474,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "AutoWB",
+        description = "Says configurable message to your friends/guild when they join.",
         category = "Chat", subcategory = "AutoWB"
     )
     public static boolean autoWB = false;
@@ -522,42 +579,49 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Notify Mining Fatigue",
+        description = "Send a notification when you get mining fatigue.",
         category = "General", subcategory = "Potion Effects"
     )
     public static boolean notifyMiningFatigue;
 
     @Switch(
         name = "Disable Mining Fatigue Notification in SkyBlock",
+        description = "Disable the mining fatigue notification in SkyBlock.",
         category = "General", subcategory = "Potion Effects"
     )
     public static boolean disableNotifyMiningFatigueSkyblock;
 
     @Switch(
         name = "Hide NPCs in Tab",
+        description = "Prevent NPCs from showing up in tab.",
         category = "General", subcategory = "Tab"
     )
     public static boolean hideNpcsInTab;
 
     @Switch(
         name = "Don't Hide Important NPCs",
+        description = "Keeps NPCs in tab in gamemodes like SkyBlock and Replay.",
         category = "General", subcategory = "Tab"
     )
     public static boolean keepImportantNpcsInTab;
 
     @Switch(
         name = "Hide Guild Tags in Tab",
+        description = "Prevent Guild tags from showing up in tab.",
         category = "General", subcategory = "Tab"
     )
     public static boolean hideGuildTagsInTab;
 
     @Switch(
         name = "Hide Player Ranks in Tab",
+        description = "Prevent player ranks from showing up in tab.",
         category = "General", subcategory = "Tab"
     )
     public static boolean hidePlayerRanksInTab;
 
     @Dropdown(
         name = "Highlight Friends In Tab",
+        description = "Add a star to the names of your Hypixel friends in tab.",
         category = "General", subcategory = "Tab",
         options = {"Off", "Left of Name", "Right of Name"}
     )
@@ -565,6 +629,7 @@ public class HytilsConfig extends Config {
 
     @Dropdown(
         name = "Highlight Self In Tab",
+        description = "Add a star to your name in tab.",
         category = "General", subcategory = "Tab",
         options = {"Off", "Left of Name", "Right of Name"}
     )
@@ -572,24 +637,28 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Cleaner Tab in SkyBlock",
+        description = "Doesn't render player heads or ping for tab entries that aren't players in SkyBlock.",
         category = "General", subcategory = "Tab"
     )
     public static boolean cleanerSkyblockTabInfo;
 
     @Switch(
         name = "Hide Ping in Tab",
+        description = "Prevent ping from showing up in tab while playing games, since the value is misleading. Ping will remain visible in lobbies.",
         category = "General", subcategory = "Tab"
     )
     public static boolean hidePingInTab;
 
     @Switch(
         name = "Broadcast Achievements",
+        description = "Announce in Guild chat when you get an achievement.",
         category = "General", subcategory = "Guilds"
     )
     public static boolean broadcastAchievements;
 
     @Switch(
         name = "Broadcast Levelup",
+        description = "Announce in Guild chat when you level up.",
         category = "General", subcategory = "Guilds"
     )
     public static boolean broadcastLevelup;
@@ -598,6 +667,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Notify When Kicked From Game",
+        description = "Notify in party chat when you are kicked from the game due to a connection issue.",
         category = "Game", subcategory = "Chat"
     )
     public static boolean notifyWhenKick;
@@ -610,6 +680,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Highlight Opened Chests",
+        description = "Highlight chests that have been opened.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean highlightChests;
@@ -622,6 +693,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "UHC Overlay",
+        description = "Increase the size of dropped apples, golden apples, golden ingots, and player heads in UHC Champions and Speed UHC.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean uhcOverlay;
@@ -635,6 +707,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "UHC Middle Waypoint",
+        description = "Adds a waypoint to signify (0,0).",
         category = "Game", subcategory = "Visual"
     )
     public static boolean uhcMiddleWaypoint;
@@ -647,6 +720,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Lower Render Distance in Sumo",
+        description = "Lowers render distance to your desired value in Sumo Duels.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean sumoRenderDistance;
@@ -660,48 +734,56 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Hide Armor",
+        description = "Hide armor in games where armor is always the same.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideArmor;
 
     @Switch(
         name = "Hide Useless Game Nametags",
+        description = "Hides unnecessary nametags such as those that say \"RIGHT CLICK\" or \"CLICK\" in SkyBlock, BedWars, SkyWars, and Duels, as well as other useless ones.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideUselessArmorStandsGame;
 
     @Switch(
         name = "Hardcore Hearts",
+        description = "When your bed is broken/wither is killed in Bedwars/The Walls, set the heart style to Hardcore.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hardcoreHearts;
 
     @Switch(
         name = "Pit Lag Reducer",
+        description = "Hide entities at spawn while you are in the PVP area.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean pitLagReducer;
 
     @Switch(
         name = "Hide Game Starting Titles",
+        description = "Hide titles such as the countdown when a game is about to begin and gamemode names.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideGameStartingTitles;
 
     @Switch(
         name = "Hide Game Ending Titles",
+        description = "Hide titles that signify when the game has ended.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideGameEndingTitles;
 
     @Switch(
         name = "Hide Game Ending Countdown Titles",
+        description = "Hide titles that signify the time left in a game.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideGameEndingCountdownTitles;
 
     @Switch(
         name = "Height Overlay",
+        description = "Make blocks that are in the Hypixel height limit a different color.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean heightOverlay;
@@ -728,30 +810,35 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Hide Duels Cosmetics",
+        description = "Hide Duels Cosmetics in Hypixel.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideDuelsCosmetics;
 
     @Switch(
         name = "Hide Actionbar in Housing",
+        description = "Hide the Actionbar in Housing.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideHousingActionBar;
 
     @Switch(
         name = "Hide Actionbar in Dropper",
+        description = "Hide the Actionbar in Dropper.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideDropperActionBar;
 
     @Switch(
         name = "Remove Non-NPCs in SkyBlock",
+        description = "Remove entities that are not NPCs in SkyBlock.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideNonNPCs;
 
     @Switch(
         name = "Middle Waypoint Beacon in MiniWalls",
+        description = "Adds a beacon at (0,0) when your MiniWither is dead in MiniWalls.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean miniWallsMiddleBeacon;
@@ -764,12 +851,14 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Mute Housing Music",
+        description = "Prevent the Housing songs from being heard.",
         category = "Game", subcategory = "Sound"
     )
     public static boolean muteHousingMusic;
 
     @Switch(
         name = "Notify When Blocks Run Out",
+        description = "Pings you via a sound when your blocks are running out.",
         category = "Game", subcategory = "Sound"
     )
     public static boolean blockNotify;
@@ -792,24 +881,28 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Hide Lobby NPCs",
+        description = "Hide NPCs in the lobby.",
         category = "Lobby", subcategory = "Entities"
     )
     public static boolean npcHider;
 
     @Switch(
         name = "Hide Useless Lobby Nametags",
+        description = "Hides unnecessary nametags such as those that say \"RIGHT CLICK\" or \"CLICK TO PLAY\" in a lobby, as well as other useless ones.",
         category = "Lobby", subcategory = "Entities"
     )
     public static boolean hideUselessArmorStands;
 
     @Switch(
         name = "Remove Limbo AFK Title",
+        description = "Remove the AFK title when you get sent to limbo for being AFK.",
         category = "Lobby", subcategory = "General"
     )
     public static boolean hideLimboTitle;
 
     @Switch(
         name = "Limbo Limiter",
+        description = "While in Limbo, limit your framerate to reduce the load of the game on your computer.",
         category = "Lobby", subcategory = "General"
     )
     public static boolean limboLimiter;
@@ -823,18 +916,21 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Limbo PM Ding",
+        description = "While in Limbo, play the ding sound if you get a PM. Currently, Hypixel's option does not work in Limbo.",
         category = "Lobby", subcategory = "General"
     )
     public static boolean limboDing;
 
     @Switch(
         name = "Hide Lobby Bossbars",
+        description = "Hide the bossbar in the lobby.",
         category = "Lobby", subcategory = "GUI"
     )
     public static boolean lobbyBossbar;
 
     @Switch(
         name = "Mystery Box Star",
+        description = "Shows what star a mystery box is in the Mystery Box Vault, Orange stars are special boxes.",
         category = "Lobby", subcategory = "GUI"
     )
     public static boolean mysteryBoxStar;

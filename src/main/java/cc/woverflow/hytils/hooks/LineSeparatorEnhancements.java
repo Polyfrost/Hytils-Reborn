@@ -78,7 +78,7 @@ public class LineSeparatorEnhancements {
                 return cached;
             } else {
                 String unformattedText = EnumChatFormatting.getTextWithoutFormattingCodes(formattedText);
-                if (isUncleanSeparator(unformattedText) || ((unformattedText.startsWith("-") && unformattedText.endsWith("-")) && formattedText.contains("§m"))) {
+                if (isUncleanSeparator(unformattedText) || ((unformattedText.startsWith("-") && unformattedText.endsWith("-")) && !formattedText.contains("§m"))) {
                     String processedText = Minecraft.getMinecraft().fontRendererObj.trimStringToWidth(formattedText.replace("▬▬", "§m--").replace("≡≡", "§m--").replace("--", "§m--"), Minecraft.getMinecraft().ingameGUI.getChatGUI().getChatWidth() + 6);
                     cache.put(formattedText, processedText);
                     return processedText;
