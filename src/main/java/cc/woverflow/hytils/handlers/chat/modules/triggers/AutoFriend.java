@@ -43,6 +43,7 @@ public class AutoFriend implements ChatReceiveModule {
             if (name.startsWith("[")) {
                 name = name.substring(name.indexOf("] ") + 2);
             }
+            HytilsReborn.INSTANCE.getCommandQueue().queue("/friend " + name);
             Notifications.INSTANCE.send(HytilsReborn.MOD_NAME, "Automatically added " + name + " to your friend list.");
         }
     }
