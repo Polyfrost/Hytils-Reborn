@@ -143,7 +143,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Hide Locraw Messages",
-        description = "Hide Locraw Messages",
+        description = "Hide Locraw Messages.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean hideLocraw = true;
@@ -241,7 +241,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Remove Stats Messages",
-        description = "Remove messages informing you if you want to view your stats after a game",
+        description = "Remove messages informing you if you want to view your stats after a game.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean statsMessages;
