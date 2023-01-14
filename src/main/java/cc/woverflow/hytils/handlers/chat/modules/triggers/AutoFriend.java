@@ -18,10 +18,10 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.triggers;
 
+import cc.polyfrost.oneconfig.utils.Notifications;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -44,7 +44,7 @@ public class AutoFriend implements ChatReceiveModule {
                 name = name.substring(name.indexOf("] ") + 2);
             }
             HytilsReborn.INSTANCE.getCommandQueue().queue("/friend " + name);
-            HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.GREEN + "Automatically added " + name + " to your friend list.");
+            Notifications.INSTANCE.send(HytilsReborn.MOD_NAME, "Automatically added " + name + " to your friend list.");
         }
     }
 
