@@ -27,10 +27,11 @@ import cc.woverflow.hytils.handlers.cache.ArmorStandHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ArmorStandHider {
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onEntityRenderer(RenderLivingEvent.Pre<EntityLivingBase> event) {
         final LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HypixelUtils.INSTANCE.isHypixel() && locraw != null && (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() && HytilsConfig.hideUselessArmorStands || HytilsConfig.hideUselessArmorStandsGame && (locraw.getGameType() == LocrawInfo.GameType.SKYBLOCK || locraw.getGameType() == LocrawInfo.GameType.BEDWARS || locraw.getGameType() == LocrawInfo.GameType.SKYWARS || locraw.getGameMode().contains("BRIDGE")))) {
