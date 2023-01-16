@@ -18,9 +18,9 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,9 +29,9 @@ public class DuelsNoStatsChange implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String unformattedText = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText());
-        for (String glMessage : cancelNoStatsChangeMessages) {
-            if (unformattedText.contains(glMessage)) {
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        for (String statsMessage : cancelNoStatsChangeMessages) {
+            if (message.contains(statsMessage)) {
                 event.setCanceled(true);
                 return;
             }

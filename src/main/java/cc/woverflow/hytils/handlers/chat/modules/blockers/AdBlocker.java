@@ -22,17 +22,11 @@ import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Locale;
-
 public class AdBlocker implements ChatReceiveModule {
-
-    @Override
-    public int getPriority() {
-        return -3;
-    }
 
     /**
      * [/](party join or join party) or (p join) or (party me) or (guild join or join guild) or (g join)
@@ -53,9 +47,8 @@ public class AdBlocker implements ChatReceiveModule {
      */
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final String message = event.message.getUnformattedText().toLowerCase(Locale.ENGLISH);
-        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase())))
-            return;
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase()))) return;
         if (getLanguage().chatCommonAdvertisementsRegex.matcher(message).find(0)) {
             event.setCanceled(true);
         }
@@ -69,5 +62,10 @@ public class AdBlocker implements ChatReceiveModule {
     @Override
     public boolean isEnabled() {
         return HytilsConfig.playerAdBlock;
+    }
+
+    @Override
+    public int getPriority() {
+        return -3;
     }
 }

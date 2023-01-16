@@ -38,11 +38,13 @@ public class AutoFriend implements ChatReceiveModule {
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = event.message.getUnformattedText().replace("\n", "");
         Matcher matcher = getLanguage().autoFriendPatternRegex.matcher(message);
+        if (message.contains(": ")) return;
         if (matcher.find()) {
             String name = matcher.group("name");
             if (name.startsWith("[")) {
                 name = name.substring(name.indexOf("] ") + 2);
             }
+            event.setCanceled(true);
             HytilsReborn.INSTANCE.getCommandQueue().queue("/friend " + name);
             Notifications.INSTANCE.send(HytilsReborn.MOD_NAME, "Automatically added " + name + " to your friend list.");
         }

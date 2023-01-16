@@ -56,7 +56,7 @@ public class GameStartCompactor implements ChatReceiveModule {
                 for (int i = accessor.getDrawnChatLines().size() - 1; i >= 0; i--) { // tries to find the last message in drawn chat lines, if found, it removes them
                     final ChatLine drawnLine = accessor.getDrawnChatLines().get(i);
                     for (IChatComponent oldTimerLine : oldTimerLines) {
-                        if (drawnLine.getChatComponent().getFormattedText().equals(oldTimerLine.getFormattedText())) {
+                        if (drawnLine.getChatComponent().getFormattedText().startsWith(oldTimerLine.getFormattedText())) {
                             accessor.getDrawnChatLines().remove(i);
                             oldTimerLines.remove(oldTimerLine);
                             break;

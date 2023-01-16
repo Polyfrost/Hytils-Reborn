@@ -18,33 +18,31 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
+import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Locale;
-
 public class AntiGL implements ChatReceiveModule {
-
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final String message = event.message.getUnformattedText().toLowerCase(Locale.ENGLISH);
-        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase())))
-            return;
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().toLowerCase());
+        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase())) || (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby())) return;
         if (getLanguage().cancelGlMessagesRegex.matcher(message).find(0)) {
             event.setCanceled(true);
         }
     }
 
     @Override
-    public int getPriority() {
-        return 3;
+    public boolean isEnabled() {
+        return HytilsConfig.antiGL;
     }
 
     @Override
-    public boolean isEnabled() {
-        return HytilsConfig.antiGL;
+    public int getPriority() {
+        return -3;
     }
 }

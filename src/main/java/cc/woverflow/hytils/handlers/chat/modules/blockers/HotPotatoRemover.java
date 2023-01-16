@@ -24,20 +24,18 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.regex.Matcher;
-
-public class SeasonalCollectedRemover implements ChatReceiveModule {
+public class HotPotatoRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatCleanerGrinchPresentsRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
-        if (matcher.matches()) {
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        if (getLanguage().chatCleanerHotPotatoRegex.matcher(message).matches()) {
             event.setCanceled(true);
         }
     }
 
     @Override
     public boolean isEnabled() {
-        return HytilsConfig.grinchPresents;
+        return HytilsConfig.hotPotato;
     }
 
     @Override
@@ -45,3 +43,4 @@ public class SeasonalCollectedRemover implements ChatReceiveModule {
         return -1;
     }
 }
+

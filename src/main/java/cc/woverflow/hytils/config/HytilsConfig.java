@@ -324,6 +324,20 @@ public class HytilsConfig extends Config {
     public static boolean onlineStatus;
 
     @Switch(
+        name = "Remove Main Lobby Fishing Announcements",
+        description = "Removes Main Lobby Fishing announcements from chat when a player catches a special fish.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean lobbyFishing;
+
+    @Switch(
+        name = "Remove Hot Potato Messages",
+        description = "Removes Hot Potato messages from chat.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean hotPotato;
+
+    @Switch(
         name = "Trim Line Separators",
         description = "Prevent separators from overflowing onto the next chat line.",
         category = "Chat", subcategory = "Visual"

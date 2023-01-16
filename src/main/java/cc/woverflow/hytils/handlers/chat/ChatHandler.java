@@ -60,7 +60,9 @@ public class ChatHandler {
         this.registerModule(new GameTipsRemover());
         this.registerModule(new GiftBlocker());
         this.registerModule(new GuildMOTD());
+        this.registerModule(new HotPotatoRemover());
         this.registerModule(new HypeLimitReminderRemover());
+        this.registerModule(new LobbyFishingAnnouncementRemover());
         this.registerModule(new LobbyStatusRemover());
         this.registerModule(new MvpEmotesRemover());
         this.registerModule(new MysteryBoxRemover());

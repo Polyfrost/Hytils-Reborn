@@ -18,15 +18,19 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.triggers;
 
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class AutoGL implements ChatReceiveModule {
     private static final String[] glmessages = {"glhf", "Good Luck", "GL", "Have a good game!", "gl", "Good luck!"};
+
+    private static String getGLMessage() {
+        return glmessages[HytilsConfig.glPhrase];
+    }
 
     @Override
     public int getPriority() {
@@ -40,13 +44,10 @@ public class AutoGL implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String unformattedText = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText()).trim(); // gets the message without useless codes
-        if (unformattedText.endsWith("The game starts in 5 seconds!")) {
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()).trim();
+        if (message.contains(": ")) return;
+        if (message.endsWith("The game starts in 5 seconds!")) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/ac " + getGLMessage());
         }
-    }
-
-    private static String getGLMessage() {
-        return glmessages[HytilsConfig.glPhrase];
     }
 }
