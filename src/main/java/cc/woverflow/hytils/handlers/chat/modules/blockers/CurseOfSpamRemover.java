@@ -28,7 +28,7 @@ public class CurseOfSpamRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (message.equals("KALI HAS STRIKEN YOU WITH THE CURSE OF SPAM")) {
+        if (message.equals(getLanguage().chatCleanerCurseOfSpam)) {
             event.setCanceled(true);
         }
     }

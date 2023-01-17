@@ -36,7 +36,7 @@ public class AutoChatReportConfirm implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        if (event.message.getUnformattedText().equals("Please type /report confirm to log your report for staff review.")) {
+        if (event.message.getUnformattedText().equals(getLanguage().autoChatReportConfirm)) {
             event.setCanceled(true);
             Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage("/report confirm"), 1, TimeUnit.SECONDS);
         }

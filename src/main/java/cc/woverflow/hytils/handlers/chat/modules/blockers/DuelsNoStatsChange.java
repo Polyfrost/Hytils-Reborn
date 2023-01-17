@@ -25,16 +25,11 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class DuelsNoStatsChange implements ChatReceiveModule {
-    private static final String[] cancelNoStatsChangeMessages = {"Your stats did not change because you /duel'ed your opponent!", "Your stats did not change because you dueled someone in your party!", "No stats will be affected in this round!"};
-
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        for (String statsMessage : cancelNoStatsChangeMessages) {
-            if (message.contains(statsMessage)) {
-                event.setCanceled(true);
-                return;
-            }
+        if (getLanguage().chatCleanerDuelsNoStatsChangeRegex.matcher(message).matches()) {
+            event.setCanceled(true);
         }
     }
 

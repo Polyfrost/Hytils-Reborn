@@ -33,7 +33,7 @@ public class AutoPartyWarpConfirm implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (message.equals("Some players are still in-game, run the command again to confirm warp!")) {
+        if (message.equals(getLanguage().autoPartyWarpConfirm)) {
             event.setCanceled(true);
             Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage("/p warp"), 1500, TimeUnit.MILLISECONDS);
         }

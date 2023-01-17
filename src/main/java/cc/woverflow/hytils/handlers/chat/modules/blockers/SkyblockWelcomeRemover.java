@@ -28,7 +28,7 @@ public class SkyblockWelcomeRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (message.equals("Welcome to Hypixel SkyBlock!")) {
+        if (message.equals(getLanguage().chatCleanerSkyblockWelcome)) {
             event.setCanceled(true);
         }
     }

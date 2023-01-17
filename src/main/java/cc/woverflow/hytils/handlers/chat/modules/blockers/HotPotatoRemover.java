@@ -43,4 +43,3 @@ public class HotPotatoRemover implements ChatReceiveModule {
         return -1;
     }
 }
-

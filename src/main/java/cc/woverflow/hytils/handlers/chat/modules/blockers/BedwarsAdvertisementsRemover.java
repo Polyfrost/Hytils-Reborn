@@ -31,7 +31,7 @@ public class BedwarsAdvertisementsRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         LocrawInfo locrawInformation = getLocraw();
-        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().toLowerCase());
         if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase()))) return;
         if (locrawInformation != null && locrawInformation.getGameType() == LocrawInfo.GameType.BEDWARS && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()
             && getLanguage().chatCleanerBedwarsPartyAdvertisementRegex.matcher(message).find()) {

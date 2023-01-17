@@ -57,6 +57,11 @@ public class LanguageData {
     private String chatCleanerStats = "Click to view the stats of your .* game!";
     private String chatCleanerLobbyFishingAnnouncement = "(?<rank>\\[\\S+] )?(?<player>(?!You )\\w{1,16} )caught .+";
     private String chatCleanerHotPotato = "\\w{1,16} burnt to a crisp due to a hot potato!";
+    private String chatCleanerDuelsNoStatsChange = "Your stats did not change because you /duel'ed your opponent!|Your stats did not change because you dueled someone in your party!|No stats will be affected in this round!";
+    public String chatCleanerBridgeOwnGoalDeath = "You just jumped through your own goal, enjoy the void death! :)";
+    public String chatCleanerCurseOfSpam = "KALI HAS STRIKEN YOU WITH THE CURSE OF SPAM";
+    public String chatCleanerDuelsBlockTrail = "Your block trail aura is disabled in this mode!";
+    public String chatCleanerSkyblockWelcome = "Your stats did not change because you /duel'ed your opponent!";
 
     private String achievementPattern = "a>> {3}Achievement Unlocked: (?<achievement>.+) {3}<<a";
     private String levelUpPattern = "You are now Hypixel Level (?<level>\\d+)!";
@@ -93,6 +98,9 @@ public class LanguageData {
 
     private String cancelGlMessages = "(?!.+: )(gl|glhf|good luck|have a good game|autogl by sk1er)";
 
+    public String autoChatReportConfirm = "Please type /report confirm to log your report for staff review.";
+    public String autoPartyWarpConfirm = "Some players are still in-game, run the command again to confirm warp!";
+
     /**
      * Cached values which use the messages read from the config file.
      * Particularly Regexes.
@@ -121,6 +129,7 @@ public class LanguageData {
     public Pattern chatCleanerStatsRegex;
     public Pattern chatCleanerLobbyFishingAnnouncementRegex;
     public Pattern chatCleanerHotPotatoRegex;
+    public Pattern chatCleanerDuelsNoStatsChangeRegex;
 
     public Pattern achievementRegex;
     public Pattern levelUpRegex;
@@ -180,6 +189,7 @@ public class LanguageData {
             chatCleanerStatsRegex = Pattern.compile(chatCleanerStats);
             chatCleanerLobbyFishingAnnouncementRegex = Pattern.compile(chatCleanerLobbyFishingAnnouncement);
             chatCleanerHotPotatoRegex = Pattern.compile(chatCleanerHotPotato);
+            chatCleanerDuelsNoStatsChangeRegex = Pattern.compile(chatCleanerDuelsNoStatsChange);
 
             achievementRegex = Pattern.compile(achievementPattern);
             levelUpRegex = Pattern.compile(levelUpPattern);

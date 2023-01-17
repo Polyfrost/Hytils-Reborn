@@ -43,4 +43,3 @@ public class LobbyFishingAnnouncementRemover implements ChatReceiveModule {
         return -1;
     }
 }
-

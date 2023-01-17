@@ -47,7 +47,7 @@ public class AdBlocker implements ChatReceiveModule {
      */
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().toLowerCase());
         if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase()))) return;
         if (getLanguage().chatCommonAdvertisementsRegex.matcher(message).find(0)) {
             event.setCanceled(true);
