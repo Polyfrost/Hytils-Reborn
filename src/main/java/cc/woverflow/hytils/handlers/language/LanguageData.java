@@ -61,7 +61,7 @@ public class LanguageData {
     public String chatCleanerBridgeOwnGoalDeath = "You just jumped through your own goal, enjoy the void death! :)";
     public String chatCleanerCurseOfSpam = "KALI HAS STRIKEN YOU WITH THE CURSE OF SPAM";
     public String chatCleanerDuelsBlockTrail = "Your block trail aura is disabled in this mode!";
-    public String chatCleanerSkyblockWelcome = "Your stats did not change because you /duel'ed your opponent!";
+    public String chatCleanerSkyblockWelcome = "Welcome to Hypixel SkyBlock!";
 
     private String achievementPattern = "a>> {3}Achievement Unlocked: (?<achievement>.+) {3}<<a";
     private String levelUpPattern = "You are now Hypixel Level (?<level>\\d+)!";
