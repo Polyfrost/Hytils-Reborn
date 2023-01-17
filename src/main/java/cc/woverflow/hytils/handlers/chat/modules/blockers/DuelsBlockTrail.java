@@ -28,7 +28,7 @@ public class DuelsBlockTrail implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (message.equals("Your block trail aura is disabled in this mode!")) {
+        if (message.equals(getLanguage().chatCleanerDuelsBlockTrail)) {
             event.setCanceled(true);
         }
     }

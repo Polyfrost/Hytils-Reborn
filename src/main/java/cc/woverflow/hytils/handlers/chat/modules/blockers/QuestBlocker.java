@@ -25,11 +25,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class QuestBlocker implements ChatReceiveModule {
     @Override
-    public int getPriority() {
-        return -3;
-    }
-
-    @Override
     public void onMessageReceived(@NotNull final ClientChatReceivedEvent event) {
         final String message = event.message.getUnformattedText();
         if (message.startsWith("§aAutomatically activated:")) {
@@ -40,5 +35,10 @@ public class QuestBlocker implements ChatReceiveModule {
     @Override
     public boolean isEnabled() {
         return HytilsConfig.questsMessages;
+    }
+
+    @Override
+    public int getPriority() {
+        return -3;
     }
 }

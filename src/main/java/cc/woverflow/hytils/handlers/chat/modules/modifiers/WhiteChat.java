@@ -30,25 +30,26 @@ import java.util.regex.Matcher;
 public class WhiteChat implements ChatReceiveModule {
 
     @Override
-    public int getPriority() {
-        return 5;
-    }
-
-    @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final String message = event.message.getFormattedText();
-
-        if (HytilsConfig.whiteChat) {
-            final Matcher matcher = getLanguage().whiteChatNonMessageRegex.matcher(message);
-            if (matcher.find(0)) {
-                boolean foundStart = false;
-                for (IChatComponent sibling : event.message.getSiblings()) {
-                    if (sibling.getFormattedText().startsWith("§7: ")) foundStart = true;
-                    if (foundStart && sibling.getChatStyle().getColor() == EnumChatFormatting.GRAY) {
-                        sibling.getChatStyle().setColor(EnumChatFormatting.WHITE);
-                    }
+        final Matcher matcher = getLanguage().whiteChatNonMessageRegex.matcher(event.message.getFormattedText());
+        if (matcher.find(0)) {
+            boolean foundStart = false;
+            for (IChatComponent sibling : event.message.getSiblings()) {
+                if (sibling.getFormattedText().startsWith("§7: ")) foundStart = true;
+                if (foundStart && sibling.getChatStyle().getColor() == EnumChatFormatting.GRAY) {
+                    sibling.getChatStyle().setColor(EnumChatFormatting.WHITE);
                 }
             }
         }
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return HytilsConfig.whiteChat;
+    }
+
+    @Override
+    public int getPriority() {
+        return 5;
     }
 }

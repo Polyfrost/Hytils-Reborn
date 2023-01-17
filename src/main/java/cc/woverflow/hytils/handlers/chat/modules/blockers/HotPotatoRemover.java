@@ -24,18 +24,18 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class SkyblockWelcomeRemover implements ChatReceiveModule {
+public class HotPotatoRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (message.equals(getLanguage().chatCleanerSkyblockWelcome)) {
+        if (getLanguage().chatCleanerHotPotatoRegex.matcher(message).matches()) {
             event.setCanceled(true);
         }
     }
 
     @Override
     public boolean isEnabled() {
-        return HytilsConfig.skyblockWelcome;
+        return HytilsConfig.hotPotato;
     }
 
     @Override

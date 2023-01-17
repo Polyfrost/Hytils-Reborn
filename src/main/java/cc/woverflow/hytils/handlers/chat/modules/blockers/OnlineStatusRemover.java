@@ -24,13 +24,11 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.regex.Matcher;
-
 public class OnlineStatusRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Matcher matcher = getLanguage().chatCleanerOnlineStatusRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
-        if (matcher.matches()) {
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        if (getLanguage().chatCleanerOnlineStatusRegex.matcher(message).matches()) {
             event.setCanceled(true);
         }
     }

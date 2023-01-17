@@ -28,7 +28,7 @@ public class BridgeOwnGoalDeathRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (message.equals("You just jumped through your own goal, enjoy the void death! :)")) {
+        if (message.equals(getLanguage().chatCleanerBridgeOwnGoalDeath)) {
             event.setCanceled(true);
         }
     }
