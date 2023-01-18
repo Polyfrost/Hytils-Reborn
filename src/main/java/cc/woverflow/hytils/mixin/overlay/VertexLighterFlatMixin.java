@@ -18,6 +18,7 @@
 
 package cc.woverflow.hytils.mixin.overlay;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.util.DarkColorUtils;
 import net.minecraft.block.BlockColored;
@@ -42,9 +43,10 @@ public class VertexLighterFlatMixin {
 
     @ModifyArgs(method = "processQuad", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/client/model/pipeline/VertexLighterFlat;updateColor([F[FFFFFI)V"))
     private void modifyArgs(Args args) {
-        int height = HeightHandler.INSTANCE.getHeight();
-        if (height == -1) return;
-        if (HytilsConfig.heightOverlay && blockInfo.getBlockPos().getY() == (height - 1) && blockInfo.getBlock() instanceof BlockColored) {
+        if (HypixelUtils.INSTANCE.isHypixel() && HytilsConfig.heightOverlay && blockInfo.getBlock() instanceof BlockColored) {
+            int height = HeightHandler.INSTANCE.getHeight();
+            if (height == -1) return;
+            if (blockInfo.getBlockPos().getY() != (height - 1)) return;
             MapColor mapColor = blockInfo.getBlock().getMapColor(blockInfo.getWorld().getBlockState(blockInfo.getBlockPos()));
             boolean isClay = blockInfo.getBlock().getMaterial() == Material.rock;
             if (!isClay || check(mapColor.colorIndex)) {

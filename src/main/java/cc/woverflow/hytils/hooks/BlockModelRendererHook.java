@@ -19,6 +19,7 @@
 package cc.woverflow.hytils.hooks;
 
 import cc.polyfrost.oneconfig.utils.color.ColorUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.util.DarkColorUtils;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.MapColor;
@@ -33,7 +34,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 public class BlockModelRendererHook {
 
     public static void handleHeightOverlay(Args args, IBlockState stateIn, BlockPos blockPosIn) {
-        if (HytilsConfig.heightOverlay && stateIn.getBlock() instanceof BlockColored) {
+        if (HypixelUtils.INSTANCE.isHypixel() && HytilsConfig.heightOverlay && stateIn.getBlock() instanceof BlockColored) {
             int height = HeightHandler.INSTANCE.getHeight();
             if (height == -1) {
                 return;
