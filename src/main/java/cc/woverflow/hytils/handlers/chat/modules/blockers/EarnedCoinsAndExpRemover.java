@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class EarnedCoinsAndExpRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().replace("\n", "")); // Support doubled coins (guild rewards) message
         if (getLanguage().chatCleanerEarnedCoinsAndExpRegex.matcher(message).matches()) {
             event.setCanceled(true);
         }

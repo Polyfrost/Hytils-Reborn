@@ -118,6 +118,7 @@ public class HytilsReborn {
     public void init(FMLInitializationEvent event) {
         config = new HytilsConfig();
 
+        CommandManager.INSTANCE.registerCommand(new BlockCommand());
         CommandManager.INSTANCE.registerCommand(new HousingVisitCommand());
         CommandManager.INSTANCE.registerCommand(new HytilsCommand());
         CommandManager.INSTANCE.registerCommand(new IgnoreTemporaryCommand());

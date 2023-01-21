@@ -33,11 +33,11 @@ public class SilentRemoveCommand {
 
     @Main
     public void handle() {
-        UChat.chat(ChatColor.RED + "Usage: /silentremove <add/list> <player>");
+        UChat.chat(ChatColor.RED + "Usage: /silentremove <add/remove> <player>");
         UChat.chat(ChatColor.RED + "   or: /silentremove <player>");
     }
 
-    @Main(description = "Adds or removes a player from the silent list")
+    @Main(description = "Adds or removes a player from the silent list.")
     private void player(GameProfile player) {
         String name = player.getName();
         final Set<String> silentUsers = HytilsReborn.INSTANCE.getSilentRemoval().getSilentUsers();
@@ -51,8 +51,13 @@ public class SilentRemoveCommand {
         HytilsReborn.INSTANCE.sendMessage("&aAdded &e" + name + " &ato the removal queue.");
     }
 
-    @SubCommand(description = "Adds a player to the silent list")
+    @SubCommand(description = "Adds a player to the silent list.")
     private void add(GameProfile entityPlayer) {
+        player(entityPlayer);
+    }
+
+    @SubCommand(description = "Removes a player from the silent list.")
+    private void remove(GameProfile entityPlayer) {
         player(entityPlayer);
     }
 
@@ -60,9 +65,10 @@ public class SilentRemoveCommand {
     private void clear() {
         final Set<String> silentUsers = HytilsReborn.INSTANCE.getSilentRemoval().getSilentUsers();
         if (silentUsers.isEmpty()) {
-            HytilsReborn.INSTANCE.sendMessage("&cSilent Removal list is already empty.");
+            HytilsReborn.INSTANCE.sendMessage("&cSilent removal list is already empty.");
             return;
         }
         silentUsers.clear();
+        HytilsReborn.INSTANCE.sendMessage("&aCleared the silent removal list.");
     }
 }

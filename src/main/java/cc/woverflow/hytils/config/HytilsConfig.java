@@ -70,6 +70,7 @@ public class HytilsConfig extends Config {
 
     @Slider(
         name = "Auto Queue Delay",
+        description = "Delays the execution of Auto Queue.\n§eMeasured in seconds.",
         category = "Automatic", subcategory = "Game",
         min = 0, max = 10
     )
@@ -98,6 +99,7 @@ public class HytilsConfig extends Config {
 
     @Dropdown(
         name = "Auto GL Phrase",
+        description = "Choose what message is said.",
         category = "Automatic", subcategory = "AutoGL",
         options = {"glhf", "Good Luck", "GL", "Have a good game!", "gl", "Good luck!"}
     )
@@ -119,7 +121,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Automatically Check GEXP",
-        description = "Automatically check your GEXP after you win a Hypixel game.",
+        description = "Automatically check your GEXP after you win a Hypixel game.\n§4Requires an API Key.",
         category = "Automatic", subcategory = "Stats"
     )
     public static boolean autoGetGEXP;
@@ -127,6 +129,7 @@ public class HytilsConfig extends Config {
     @DualOption(
         name = "GEXP Mode",
         category = "Automatic", subcategory = "Stats",
+        description = "Choose which GEXP to get.",
         left = "Daily",
         right = "Weekly"
     )
@@ -134,7 +137,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Automatically Check Winstreak",
-        description = "Automatically check your winstreak after you win a Hypixel game.",
+        description = "Automatically check your winstreak after you win a Hypixel game.\n§4Requires an API Key.",
         category = "Automatic", subcategory = "Stats"
     )
     public static boolean autoGetWinstreak;
@@ -143,42 +146,42 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Hide Locraw Messages",
-        description = "Hide Locraw Messages.",
+        description = "Hide locraw messages in chat (e.g {\"server\": \"something\"}).",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean hideLocraw = true;
 
     @Switch(
         name = "Remove Lobby Statuses",
-        description = "Remove lobby join messages from chat.",
+        description = "Remove lobby join messages from chat.\n§eExample: §b[MVP§c+§b] Steve §6joined the lobby!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean lobbyStatus;
 
     @Switch(
         name = "Remove Mystery Box Rewards",
-        description = "Remove others mystery box messages from chat and only show your own.",
+        description = "Remove mystery box messages from chat and only show your own.\n§eExample: §b[MVP§c+§b] Steve §ffound a §6Legendary Hype Train Gadget§f!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean mysteryBoxAnnouncer;
 
     @Switch(
         name = "Remove Soul Well Announcements",
-        description = "Remove soul well announcements from chat.",
+        description = "Remove soul well announcements from chat.\n§eExample: §b[MVP§c+§b] Steve §7has found a §6Bulldozer Perk I (Insane) §7in the §bSoul Well§7!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean soulWellAnnouncer;
 
     @Switch(
         name = "Remove Game Announcements",
-        description = "Remove game announcements from chat.",
+        description = "Remove game announcements from chat.\n§eExample: A §e§lMega Skywars §bgame is available to join! §6§lCLICK HERE §bto join!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean gameAnnouncements;
 
     @Switch(
         name = "Remove Hype Limit Reminder",
-        description = "Remove Hype limit reminders from chat.",
+        description = "Remove Hype limit reminders from chat.\n§eExample: §6You have reached your Hype limit...",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean hypeLimitReminder;
@@ -192,14 +195,14 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Remove BedWars Advertisements",
-        description = "Remove player messages asking to join BedWars parties.",
+        description = "Remove player messages asking to join BedWars parties.\n§eExample: §b[MVP§c+§b] Steve§f: Join BedWars 2/4 party!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean bedwarsAdvertisements;
 
     @Switch(
         name = "Remove Friend/Guild Statuses",
-        description = "Remove join/quit messages from friend/guild members.",
+        description = "Remove join/quit messages from friend/guild members.\n§eExample: §aFriend > §bSteve §ejoined.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean connectionStatus;
@@ -213,126 +216,126 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Remove Chat Emojis",
-        description = "Remove MVP++ chat emojis.",
+        description = "Remove MVP++ chat emojis.\n§eExample: §c§lOOF",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean mvpEmotes;
 
     @Switch(
         name = "Remove Server Connected Messages",
-        description = "Remove messages informing you of the lobby name you've just joined, or what lobby you're being sent to.",
+        description = "Remove messages informing you of the lobby name you've just joined, or what lobby you're being sent to.\n§eExample: §bYou are currently connected to server §6mini104H§b.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean serverConnectedMessages;
 
     @Switch(
         name = "Remove Game Tips Messages",
-        description = "Remove messages informing you of how to play the game you're currently in.",
+        description = "Remove tips about the game you are playing.\n§eExample: §r§c§lTeaming is not allowed on Solo mode!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean gameTipMessages;
 
     @Switch(
         name = "Remove Auto Activated Quest Messages",
-        description = "Remove automatically activated quest messages.",
+       description = "Remove automatically activated quest messages.\n§eExample: §aAutomatically activated: §6Daily Quest: Duels Winner",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean questsMessages;
 
     @Switch(
         name = "Remove Stats Messages",
-        description = "Remove messages informing you if you want to view your stats after a game.",
+        description = "Remove the \"view your stats\" messages.\n§eExample: §eClick to view the stats of your §bSkyWars§e game!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean statsMessages;
 
     @Switch(
         name = "Remove Curse of Spam Messages",
-        description = "Hides the constant spam of Kali's curse of spam.",
+        description = "Hides the constant spam of Kali's curse of spam.\n§eExample: §eKALI HAS STRIKEN YOU WITH THE CURSE OF SPAM",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean curseOfSpam;
 
     @Switch(
         name = "Remove Bridge Self Goal Death Messages",
-        description = "Hides the death message when you jump into your own goal in Bridge.",
+        description = "Hides the death message when you jump into your own goal in Bridge.\n§eExample: §cYou just jumped through your own goal, enjoy the void death! :)",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean bridgeOwnGoalDeath;
 
     @Switch(
         name = "Remove Duels No Stats Change Messages",
-        description = "Hides the message explaining that your stats did not change for dueling through /duel or within in a party.",
+        description = "Hides the message explaining that your stats did not change for dueling through /duel or within in a party.\n§eExamples:\n§cYour stats did not change because you /duel'ed your opponent!\n§cYour stats did not change because you dueled someone in your party!\n§cNo stats will be affected in this round!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean duelsNoStatsChange;
 
     @Switch(
         name = "Remove Block Trail Disabled Messages",
-        description = "Hides the message explaining that your duel's block trail cosmetic was disabled in specific gamemodes.",
+        description = "Hides the message explaining that your duel's block trail cosmetic was disabled in specific gamemodes.\n§eExample: §cYour block trail aura is disabled in this mode!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean duelsBlockTrail;
 
     @Switch(
         name = "Remove SkyBlock Welcome Messages",
-        description = "Removes \"Welcome to Hypixel SkyBlock!\" messages from chat.",
+        description = "Removes \"§eWelcome to §aHypixel SkyBlock§e!§r\" messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean skyblockWelcome;
 
     @Switch(
         name = "Remove Gift Messages",
-        description = "Removes \"They have gifted x so far!\" messages from chat.",
+        description = "Removes \"§eThey have gifted §6x §eranks so far!§r\" messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean giftBlocker;
 
     @Switch(
         name = "Remove Seasonal Simulator Collection Messages",
-        description = "Removes personal and global collected messages from chat for the Easter, Christmas, and Halloween variants.",
+        description = "Removes personal and global collected messages from chat for the Easter, Christmas, and Halloween variants.\n§eExamples:\n§aYou found a gift! §7(5 total)\n§b[MVP§c+§b] Steve§f §ehas reached §c20 §egifts!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean grinchPresents;
 
     @Switch(
         name = "Remove Earned Coins and Experience Messages",
-        description = "Removes the earned coins and experience messages from chat.",
+        description = "Removes the earned coins and experience messages from chat.\n§eExamples:\n§b+25 Bed Wars Experience\n§6+10 coins!\n§aYou earned §2500 GEXP §afrom playing SkyBlock!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean earnedCoinsAndExp;
 
     @Switch(
         name = "Remove Replay Messages",
-        description = "Removes replay messages from chat.",
+        description = "Removes replay messages from chat.\n§eExample: §6§aThis game has been recorded. §6Click here to watch the Replay!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean replayMessage;
 
     @Switch(
         name = "Remove Tip Messages",
-        description = "Removes tip messages from chat.",
+        description = "Removes tip messages from chat.\n§eExample: §a§aYou tipped 5 players in 10 different games!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean tipMessage;
 
     @Switch(
         name = "Remove Online Status Messages",
-        description = "Removes the online status messages from chat.",
+        description = "Removes the online status messages from chat.\n§eExample: §6§lREMINDER: §r§6Your Online Status is currently set to §r§e§lAppear Offline",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean onlineStatus;
 
     @Switch(
         name = "Remove Main Lobby Fishing Announcements",
-        description = "Removes Main Lobby Fishing announcements from chat when a player catches a special fish.",
+        description = "Removes Main Lobby Fishing announcements from chat when a player catches a special fish.\n§eExample: §b[MVP§c+§b] Steve§a caught §e§lNemo§a! Maybe he's lost again?",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean lobbyFishing;
 
     @Switch(
         name = "Remove Hot Potato Messages",
-        description = "Removes Hot Potato messages from chat.",
+        description = "Removes Hot Potato messages from chat.\n§eExample: §c§lSteve burnt to a crisp due to a hot potato!",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean hotPotato;
@@ -374,42 +377,42 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Cleaner Game Start Counter",
-        description = "Compacts game start announcements.",
+        description = "Compacts game start announcements.\n§eExample: The game starts in 20 seconds!",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean cleanerGameStartAnnouncements;
 
     @Switch(
         name = "Short Channel Names",
-        description = "Abbreviate chat channel names.",
+        description = "Abbreviate chat channel names.\n§eExample: §2Guild §e-> §2G§e, §9Party §e-> §9P§e, §aFriend §e-> §aF",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean shortChannelNames;
 
     @Switch(
         name = "Game Status Restyle",
-        description = "Replace common game status messages with a new style.",
+        description = "Replace common game status messages with a new style.\n§eExamples:\n§a§l+ §bSteve §e(§b1§e/§b12§e)\n§c§l- §bSteve§r\n§e§l* §aGame starts in §b§l5 §aseconds.",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean gameStatusRestyle;
 
     @Switch(
         name = "Player Count Before Player Name",
-        description = "Put the player count before the player name in game join/leave messages.",
+        description = "Put the player count before the player name in game join/leave messages.\n§eExample: §a§l+ §e(§b1§e/§b12§e) §bSteve",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean playerCountBeforePlayerName;
 
     @Switch(
         name = "Player Count on Player Leave",
-        description = "Include the player count when players leave.",
+        description = "Include the player count when players leave.\n§eExample: §c§l- §bSteve §r§e(§b1§e/§b12§e)§r",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean playerCountOnPlayerLeave;
 
     @Switch(
         name = "Player Count Padding",
-        description = "Place zeros at the beginning of the player count to align with the max player count.",
+        description = "Place zeros at the beginning of the player count to align with the max player count.\n§eExample: §a§l+ §bSteve §e(§b001§e/§b100§e)",
         category = "Chat", subcategory = "Restyler"
     )
     public static boolean padPlayerCount;
@@ -423,6 +426,7 @@ public class HytilsConfig extends Config {
 
     @Dropdown(
         name = "Chat Swapper Channel",
+        description = "The channel to return to when leaving a party.",
         category = "Chat", subcategory = "Parties",
         options = {"ALL", "GUILD", "OFFICER"}
     )
@@ -444,7 +448,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Thank Watchdog",
-        description = "Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.",
+        description = "Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.\n§eExample: §fThanks Watchdog!",
         category = "Chat", subcategory = "Watchdog"
     )
     public static boolean thankWatchdog;
@@ -465,21 +469,21 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Guild Welcome Message",
-        description = "Send a friendly welcome message when a player joins your guild.",
+        description = "Send a friendly welcome message when a player joins your guild.\n§eExample: §fWelcome to the guild Steve!",
         category = "Chat", subcategory = "Guild"
     )
     public static boolean guildWelcomeMessage;
 
     @Switch(
         name = "Shout Cooldown",
-        description = "Show the amount of time remaining until /shout can be reused.",
+        description = "Show the amount of time remaining until /shout can be reused.\n§eExample: §eShout command is on cooldown. Please wait 30 more seconds.",
         category = "Chat", subcategory = "Cooldown"
     )
     public static boolean preventShoutingOnCooldown;
 
     @Switch(
         name = "Non Speech Cooldown",
-        description = "Show the amount of time remaining until you can speak if you are a non.",
+        description = "Show the amount of time remaining until you can speak if you are a non.\n§eExample: §eYour freedom of speech is on cooldown. Please wait 3 more seconds.\n§4Requires an API Key.",
         category = "Chat", subcategory = "Cooldown"
     )
     public static boolean preventNonCooldown;
@@ -688,6 +692,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Put Notify Message In Capital Letters",
+        description = "Put the message in capital messages instead of proper formatting.",
         category = "Game", subcategory = "Chat"
     )
     public static boolean putInCaps;
@@ -714,6 +719,7 @@ public class HytilsConfig extends Config {
 
     @Slider(
         name = "UHC Overlay Multiplier",
+        description = "Adjust the multiplier.",
         category = "Game", subcategory = "Visual",
         min = 1f, max = 5f
     )
@@ -728,6 +734,7 @@ public class HytilsConfig extends Config {
 
     @Text(
         name = "UHC Middle Waypoint Text",
+        description = "Text on waypoint.",
         category = "Game", subcategory = "Visual"
     )
     public static String uhcMiddleWaypointText = "0,0";
@@ -741,8 +748,9 @@ public class HytilsConfig extends Config {
 
     @Slider(
         name = "Sumo Render Distance",
+        description = "Choose your render distance.",
         category = "Game", subcategory = "Visual",
-        min = 1, max = 5
+        min = 1, max = 5, step = 1
     )
     public static int sumoRenderDistanceAmount = 2;
 
@@ -776,14 +784,14 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Hide Game Starting Titles",
-        description = "Hide titles such as the countdown when a game is about to begin and gamemode names.",
+        description = "Hide titles such as the countdown when a game is about to begin and gamemode names.\n§eExample: §4§lINSANE MODE",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideGameStartingTitles;
 
     @Switch(
         name = "Hide Game Ending Titles",
-        description = "Hide titles that signify when the game has ended.",
+        description = "Hide titles that signify when the game has ended.\n§eExamples:\n§6§lVICTORY!\n§4§lGAME OVER!",
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideGameEndingTitles;
@@ -797,13 +805,14 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Height Overlay",
-        description = "Make blocks that are in the Hypixel height limit a different color.",
+        description = "Make blocks that are in the Hypixel height limit a different colour.\n§eReloads chunks automatically when toggled on and off.\n§4Requires Smooth Lighting.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean heightOverlay;
 
     @Slider(
         name = "Height Overlay Tint Multiplier",
+        description = "Adjust the tint multiplier.",
         category = "Game", subcategory = "Visual",
         min = 1, max = 1000
     )
@@ -811,6 +820,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Edit Height Overlay Manually",
+        description = "Enabled the option to edit the height overlay manually.",
         category = "Game", subcategory = "Visual"
     )
     public static boolean manuallyEditHeightOverlay;
@@ -879,6 +889,7 @@ public class HytilsConfig extends Config {
 
     @Slider(
         name = "Block Number",
+        description = "Modify the number of blocks you (don't?) have for the Notify When Blocks Run Out feature to work.",
         category = "Game", subcategory = "Sound",
         min = 4, max = 20
     )
@@ -886,6 +897,7 @@ public class HytilsConfig extends Config {
 
     @Dropdown(
         name = "Block Notify Sound",
+        description = "Choose what sound to play.",
         category = "Game", subcategory = "Sound",
         options = {"Hypixel Ding", "Golem Hit", "Blaze Hit", "Anvil Land", "Horse Death", "Ghast Scream", "Guardian Floop", "Cat Meow", "Dog Bark"}
     )
@@ -923,6 +935,7 @@ public class HytilsConfig extends Config {
 
     @Slider(
         name = "Limbo Limiter FPS",
+        description = "Set the maximal FPS while in Limbo.",
         category = "Lobby", subcategory = "General",
         min = 1, max = 60
     )
