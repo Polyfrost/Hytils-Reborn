@@ -750,7 +750,7 @@ public class HytilsConfig extends Config {
         name = "Sumo Render Distance",
         description = "Choose your render distance.",
         category = "Game", subcategory = "Visual",
-        min = 1, max = 5, step = 1
+        min = 2, max = 5, step = 1
     )
     public static int sumoRenderDistanceAmount = 2;
 
@@ -838,6 +838,13 @@ public class HytilsConfig extends Config {
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideDuelsCosmetics;
+
+    @Switch(
+        name = "Hide Arcade Cosmetics",
+        description = "Hide Arcade Cosmetics in Hypixel.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideArcadeCosmetics;
 
     @Switch(
         name = "Hide Actionbar in Housing",
