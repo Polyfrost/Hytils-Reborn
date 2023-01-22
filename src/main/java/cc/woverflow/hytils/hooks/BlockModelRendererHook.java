@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
