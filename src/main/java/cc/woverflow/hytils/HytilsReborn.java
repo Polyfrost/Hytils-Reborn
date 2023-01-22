@@ -129,7 +129,7 @@ public class HytilsReborn {
         ArmorStandHandler.INSTANCE.initialize();
         CosmeticsHandler.INSTANCE.initialize();
         PatternHandler.INSTANCE.initialize();
-        //BedLocationHandler.INSTANCE.initialize();
+        BedLocationHandler.INSTANCE.initialize();
         HeightHandler.INSTANCE.initialize();
 
         registerHandlers();

@@ -18,29 +18,24 @@
 
 package cc.woverflow.hytils.mixin.beds;
 
-import cc.woverflow.hytils.handlers.cache.BedLocationHandler;
 import cc.woverflow.hytils.hooks.BedModelHook;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.resources.model.IBakedModel;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Set;
-
-@Mixin(value = ModelLoader.class, remap = false)
-public class ModelLoaderMixin {
-    @Shadow
-    @Final
-    private Set<ResourceLocation> textures;
-
-    @Inject(method = "setupModelRegistry", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/texture/TextureMap;loadSprites(Lnet/minecraft/client/resources/IResourceManager;Lnet/minecraft/client/renderer/texture/IIconCreator;)V"))
-    private void getVariantsTextureLocations(CallbackInfoReturnable<Set<ResourceLocation>> cir) {
-        for (String color : BedLocationHandler.COLORS_REVERSE.values()) {
-            textures.add(new ResourceLocation(BedModelHook.COLORED_BED + color));
+@Mixin(BlockRendererDispatcher.class)
+public class BlockRendererDispatcherMixin {
+    @Inject(method = "getModelFromBlockState", at = @At("RETURN"), cancellable = true)
+    private void addBedModels(IBlockState state, IBlockAccess worldIn, BlockPos pos, CallbackInfoReturnable<IBakedModel> cir) {
+        IBakedModel model = BedModelHook.getBedModel(state, pos, cir.getReturnValue());
+        if (model != null) {
+            cir.setReturnValue(model);
         }
     }
 }

@@ -823,6 +823,13 @@ public class HytilsConfig extends Config {
     public static BlockHighlightConfig blockHighlightConfig = new BlockHighlightConfig();
 
     @Switch(
+        name = "Colored Beds",
+        description = "Make beds a different color depending on the team they are on.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean coloredBeds = true;
+
+    @Switch(
         name = "Hide Duels Cosmetics",
         description = "Hide Duels Cosmetics in Hypixel.",
         category = "Game", subcategory = "Visual"

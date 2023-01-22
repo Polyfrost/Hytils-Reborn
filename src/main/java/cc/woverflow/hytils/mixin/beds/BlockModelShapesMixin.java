@@ -18,29 +18,30 @@
 
 package cc.woverflow.hytils.mixin.beds;
 
-import cc.woverflow.hytils.handlers.cache.BedLocationHandler;
 import cc.woverflow.hytils.hooks.BedModelHook;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockModelShapes;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.IBakedModel;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Set;
-
-@Mixin(value = ModelLoader.class, remap = false)
-public class ModelLoaderMixin {
-    @Shadow
-    @Final
-    private Set<ResourceLocation> textures;
-
-    @Inject(method = "setupModelRegistry", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/texture/TextureMap;loadSprites(Lnet/minecraft/client/resources/IResourceManager;Lnet/minecraft/client/renderer/texture/IIconCreator;)V"))
-    private void getVariantsTextureLocations(CallbackInfoReturnable<Set<ResourceLocation>> cir) {
-        for (String color : BedLocationHandler.COLORS_REVERSE.values()) {
-            textures.add(new ResourceLocation(BedModelHook.COLORED_BED + color));
+@Mixin(BlockModelShapes.class)
+public class BlockModelShapesMixin {
+    @Inject(method = "getTexture", at = @At("HEAD"), cancellable = true)
+    private void addBedTextures(IBlockState state, CallbackInfoReturnable<TextureAtlasSprite> cir) {
+        IBakedModel model = BedModelHook.getBedModel(state, Minecraft.getMinecraft().thePlayer.getPosition(), null);
+        if (model != null) {
+            cir.setReturnValue(model.getParticleTexture());
         }
+    }
+
+    @Inject(method = "reloadModels", at = @At("HEAD"))
+    private void reloadModels(CallbackInfo ci) {
+        BedModelHook.reloadModels();
     }
 }

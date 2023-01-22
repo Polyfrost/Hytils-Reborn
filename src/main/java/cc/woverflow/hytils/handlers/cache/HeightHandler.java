@@ -23,6 +23,7 @@ import cc.polyfrost.oneconfig.events.event.WorldLoadEvent;
 import cc.polyfrost.oneconfig.libs.caffeine.cache.Cache;
 import cc.polyfrost.oneconfig.libs.caffeine.cache.Caffeine;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
@@ -94,11 +95,13 @@ public class HeightHandler {
 
 
     public void initialize() {
-        try {
-            jsonObject = NetworkUtils.getJsonElement("https://maps.pinkulu.com").getAsJsonObject();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        Multithreading.runAsync(() -> {
+            try {
+                jsonObject = NetworkUtils.getJsonElement("https://maps.pinkulu.com").getAsJsonObject();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     @Subscribe

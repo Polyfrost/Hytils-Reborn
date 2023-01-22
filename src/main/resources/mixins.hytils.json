@@ -22,6 +22,8 @@
         "MinecraftMixin_LimboLimiter",
         "NetHandlerPlayClientMixin_GameChecker",
         "RenderEntityItemMixin_UHCOverlay",
+        "beds.BlockModelShapesMixin",
+        "beds.BlockRendererDispatcherMixin",
         "beds.ModelLoaderMixin",
         "cosmetics.RenderItemMixin",
         "cosmetics.WorldMixin",
