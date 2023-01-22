@@ -46,7 +46,7 @@ public class BedModelHook {
         }
     }};
     private static final String OAK = "minecraft:blocks/planks_oak";
-    public static final String COLORED_BED = "minecraft:hytils_beds/";
+    public static final String COLORED_BED = "hytils:hytils_beds/";
     private static final FaceBakery faceBakery = new FaceBakery();
 
     public static IBakedModel getBedModel(IBlockState state, BlockPos pos, IBakedModel model) {
