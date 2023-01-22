@@ -24,8 +24,8 @@ import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.CosmeticsHandler;
 import net.minecraft.block.BlockPumpkin;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.resources.model.IBakedModel;
+import net.minecraft.client.renderer.entity.RenderEntityItem;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,14 +34,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@Mixin(RenderItem.class)
-public class RenderItemMixin {
-    @Inject(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/resources/model/IBakedModel;)V", at = @At("HEAD"), cancellable = true)
-    private void yeah(ItemStack stack, IBakedModel model, CallbackInfo ci) {
+@Mixin(RenderEntityItem.class)
+public class RenderEntityItemMixin {
+    @Inject(method = "doRender(Lnet/minecraft/entity/item/EntityItem;DDDFF)V", at = @At("HEAD"), cancellable = true)
+    private void removeItemCosmetics(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
+        ItemStack stack = entity.getEntityItem();
         if (stack == null) return;
-        if (HytilsConfig.hideDuelsCosmetics && LocrawUtil.INSTANCE.getLocrawInfo() != null &&
-            LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.DUELS && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() &&
-            (stack.getItem() instanceof ItemDoublePlant || stack.getItem() instanceof ItemDye || stack.getItem() instanceof ItemRecord || shouldRemove(stack.getItem().getUnlocalizedName()) ||(stack.getItem() instanceof ItemBlock && (shouldRemove(((ItemBlock) stack.getItem()).block.getUnlocalizedName()) || ((ItemBlock) stack.getItem()).block instanceof BlockPumpkin)))) ci.cancel();
+        if ((HytilsConfig.hideDuelsCosmetics && LocrawUtil.INSTANCE.getLocrawInfo() != null &&
+            LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.DUELS) || (HytilsConfig.hideArcadeCosmetics && LocrawUtil.INSTANCE.getLocrawInfo() != null &&
+            LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.ARCADE_GAMES) && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() &&
+            (stack.getItem() instanceof ItemDoublePlant || stack.getItem() instanceof ItemDye || stack.getItem() instanceof ItemRecord || shouldRemove(stack.getItem().getUnlocalizedName()) || (stack.getItem() instanceof ItemBlock && (shouldRemove(((ItemBlock) stack.getItem()).block.getUnlocalizedName()) || ((ItemBlock) stack.getItem()).block instanceof BlockPumpkin)))) ci.cancel();
     }
 
     private boolean shouldRemove(String name) {

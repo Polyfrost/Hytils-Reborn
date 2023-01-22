@@ -25,7 +25,7 @@
         "beds.BlockModelShapesMixin",
         "beds.BlockRendererDispatcherMixin",
         "beds.ModelLoaderMixin",
-        "cosmetics.RenderItemMixin",
+        "cosmetics.RenderEntityItemMixin",
         "cosmetics.WorldMixin",
         "lineseparator.GuiNewChatMixin",
         "lineseparator.GuiUtilRenderComponentsMixin",

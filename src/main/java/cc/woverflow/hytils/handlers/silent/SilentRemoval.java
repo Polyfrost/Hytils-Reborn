@@ -18,7 +18,9 @@
 
 package cc.woverflow.hytils.handlers.silent;
 
+import cc.polyfrost.oneconfig.utils.Notifications;
 import cc.woverflow.hytils.HytilsReborn;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -31,9 +33,9 @@ public class SilentRemoval {
 
     private final Set<String> silentUsers = new HashSet<>();
 
-    @SubscribeEvent(priority = EventPriority.LOW)
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public void onChat(ClientChatReceivedEvent event) {
-        final Matcher matcher = HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().silentRemovalLeaveMessageRegex.matcher(event.message.getUnformattedText());
+        final Matcher matcher = HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().silentRemovalLeaveMessageRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
 
         if (matcher.matches()) {
             // not a friend anymore :(
@@ -41,6 +43,7 @@ public class SilentRemoval {
                 if (matcher.group("player").equalsIgnoreCase(friend)) {
                     HytilsReborn.INSTANCE.getCommandQueue().queue("/f remove " + friend);
                     silentUsers.remove(friend);
+                    Notifications.INSTANCE.send("Hytils Reborn", "Silently removed " + friend + " from your friends list.");
                 }
             }
         }

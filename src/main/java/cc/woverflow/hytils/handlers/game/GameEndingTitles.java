@@ -43,6 +43,7 @@ public class GameEndingTitles {
             case "GAME END":
             case "YOU DIED":
             case "DEFEAT":
+            case "GAME OVER":
                 event.setCanceled(true);
                 break;
         }

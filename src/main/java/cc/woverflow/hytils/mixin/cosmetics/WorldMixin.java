@@ -35,7 +35,8 @@ public class WorldMixin {
 
     @Inject(method = "spawnParticle(IZDDDDDD[I)V", at = @At("HEAD"), cancellable = true)
     private void removeParticles(int particleID, boolean p_175720_2_, double xCood, double yCoord, double zCoord, double xOffset, double yOffset, double zOffset, int[] p_175720_15_, CallbackInfo ci) {
-        if (HytilsConfig.hideDuelsCosmetics && LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.DUELS && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+        if ((HytilsConfig.hideDuelsCosmetics && LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.DUELS) ||
+            (HytilsConfig.hideArcadeCosmetics && LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.ARCADE_GAMES) && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
             String particleName = EnumParticleTypes.getParticleFromId(particleID).getParticleName();
             CosmeticsHandler.INSTANCE.particleCosmetics.forEach((particle) -> {
                 if (particleName.equalsIgnoreCase(particle)) {
