@@ -108,7 +108,8 @@ public class BedLocationHandler {
                         return (this.bedLocations = processColors(overrideObject.getAsJsonArray("locations")));
                     }
                 }
-            } else if (overrideObject.has("modes") && locrawInfo.getGameMode() != null) {
+            }
+            if (overrideObject.has("modes") && locrawInfo.getGameMode() != null) {
                 JsonArray modes = overrideObject.getAsJsonArray("modes");
                 for (JsonElement mode : modes) {
                     if (mode.getAsString().equalsIgnoreCase(locrawInfo.getGameMode())) {
