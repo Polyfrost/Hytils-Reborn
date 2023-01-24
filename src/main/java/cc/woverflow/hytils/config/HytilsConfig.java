@@ -762,6 +762,13 @@ public class HytilsConfig extends Config {
     public static boolean hideArmor;
 
     @Switch(
+        name = "Hide HUD Elements",
+        description = "Hide HUD elements such as health, hunger, and armor bars where they are the same.",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean hideHudElements;
+
+    @Switch(
         name = "Hide Useless Game Nametags",
         description = "Hides unnecessary nametags such as those that say \"RIGHT CLICK\" or \"CLICK\" in SkyBlock, BedWars, SkyWars, and Duels, as well as other useless ones.",
         category = "Game", subcategory = "Visual"
