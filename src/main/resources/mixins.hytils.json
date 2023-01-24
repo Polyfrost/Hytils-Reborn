@@ -12,7 +12,7 @@
     "GuiChatMixin_PlayAutocomplete",
     "GuiIngameAccessor",
     "GuiIngameForgeMixin_HideActionbar",
-    "GUIIngameForgeMixin_HideHotbar",
+    "GuiIngameForgeMixin_HideHotbar",
     "GuiIngameForgeMixin_TitleEvent",
     "GuiNewChatAccessor",
     "GuiNewChatMixin_LocrawHider",

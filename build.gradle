@@ -50,7 +50,14 @@ configurations {
 }
 
 repositories {
-    maven { url 'https://repo.polyfrost.cc/releases' }
+    maven {
+        url 'https://repo.polyfrost.cc/releases'
+        content {
+            // force use of snapshots
+            excludeModule("cc.polyfrost", "oneconfig-1.8.9-forge")
+        }
+    }
+    maven { url 'https://repo.polyfrost.cc/snapshots' }
 }
 
 dependencies {
