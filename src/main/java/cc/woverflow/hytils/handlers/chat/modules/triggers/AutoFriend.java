@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.triggers;
 
+import cc.polyfrost.oneconfig.utils.Notifications;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
@@ -29,6 +30,7 @@ import java.util.regex.Matcher;
 /**
  * Taken and adapted from AutoFriend under MIT
  * https://github.com/minemanpi/AutoFriend/blob/master/LICENSE
+ *
  * @author 2Pi
  */
 public class AutoFriend implements ChatReceiveModule {
@@ -36,12 +38,15 @@ public class AutoFriend implements ChatReceiveModule {
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = event.message.getUnformattedText().replace("\n", "");
         Matcher matcher = getLanguage().autoFriendPatternRegex.matcher(message);
-        if (matcher.matches()) {
+        if (message.contains(": ")) return;
+        if (matcher.find()) {
             String name = matcher.group("name");
             if (name.startsWith("[")) {
                 name = name.substring(name.indexOf("] ") + 2);
-                HytilsReborn.INSTANCE.getCommandQueue().queue("/friend " + name);
             }
+            event.setCanceled(true);
+            HytilsReborn.INSTANCE.getCommandQueue().queue("/friend " + name);
+            Notifications.INSTANCE.send(HytilsReborn.MOD_NAME, "Automatically added " + name + " to your friend list.");
         }
     }
 

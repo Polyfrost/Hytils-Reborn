@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ package cc.woverflow.hytils.handlers.game.duels;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
@@ -34,7 +35,7 @@ public class SumoRenderDistance {
 
     @SubscribeEvent
     public void onWorldLoad(RenderWorldLastEvent event) {
-        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HytilsConfig.sumoRenderDistance && HypixelUtils.INSTANCE.isHypixel() && (locraw != null && locraw.getGameMode().contains("SUMO"))) {
             if (isFirstRender) {
                 final int oldRd = gs.renderDistanceChunks;

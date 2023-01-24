@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.command.parser.*;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
-import net.minecraft.entity.player.EntityPlayer;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.util.EnumChatFormatting;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,7 +49,7 @@ public class HytilsCommand {
 
     @SubCommand(description = "Shows your guild experience", aliases = {"guildexp", "guildexperience"})
     @SuppressWarnings("SameParameterValue")
-    private void gexp(@Description("username") @Nullable EntityPlayer player, @Description("type") @Nullable GEXPType type) {
+    private void gexp(@Description("username") @Nullable GameProfile player, @Description("type") @Nullable GEXPType type) {
         Multithreading.runAsync(() -> {
             if (HytilsConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
                 HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
@@ -104,7 +104,7 @@ public class HytilsCommand {
 
     @SubCommand(description = "Shows your winstreak", aliases = {"winstreak", "ws"})
     @SuppressWarnings("SameParameterValue")
-    private void winstreak(@Description("username") @Nullable EntityPlayer player, @Description("type") @Nullable WinstreakType gamemode) {
+    private void winstreak(@Description("username") @Nullable GameProfile player, @Description("type") @Nullable WinstreakType gamemode) {
         Multithreading.runAsync(() -> {
             if (HytilsConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
                 HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");

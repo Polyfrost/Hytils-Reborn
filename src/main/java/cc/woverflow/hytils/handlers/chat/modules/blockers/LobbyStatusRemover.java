@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,18 +24,13 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.regex.Pattern;
-
 public class LobbyStatusRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (message.contains(":")) return;
-        for (Pattern messages : getLanguage().chatCleanerJoinMessageTypes) {
-            if (messages.matcher(message).find()) {
-                event.setCanceled(true);
-                return;
-            }
+        if (message.contains(": ")) return;
+        if (getLanguage().chatCleanerJoinRegex.matcher(message).find()) {
+            event.setCanceled(true);
         }
     }
 

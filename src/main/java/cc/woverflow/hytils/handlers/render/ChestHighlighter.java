@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@
 package cc.woverflow.hytils.handlers.render;
 
 import cc.polyfrost.oneconfig.config.core.OneColor;
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -160,6 +160,6 @@ public class ChestHighlighter {
     }
 
     private boolean isNotSupported() {
-        return HypixelUtils.INSTANCE.getLocrawInfo() == null || (HypixelUtils.INSTANCE.getLocrawInfo().getGameType() != LocrawInfo.GameType.SKYWARS && HypixelUtils.INSTANCE.getLocrawInfo().getGameType() != LocrawInfo.GameType.BLITZ_SG && (HypixelUtils.INSTANCE.getLocrawInfo().getGameType() != LocrawInfo.GameType.DUELS || !HypixelUtils.INSTANCE.getLocrawInfo().getGameMode().contains("_SW_")));
+        return LocrawUtil.INSTANCE.getLocrawInfo() == null || (LocrawUtil.INSTANCE.getLocrawInfo().getGameType() != LocrawInfo.GameType.SKYWARS && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() != LocrawInfo.GameType.BLITZ_SG && (LocrawUtil.INSTANCE.getLocrawInfo().getGameType() != LocrawInfo.GameType.DUELS || !LocrawUtil.INSTANCE.getLocrawInfo().getGameMode().contains("_SW_")));
     }
 }

@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,9 +24,7 @@ import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import cc.woverflow.hytils.command.*;
 import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.handlers.cache.CosmeticsHandler;
-import cc.woverflow.hytils.handlers.cache.HeightHandler;
-import cc.woverflow.hytils.handlers.cache.PatternHandler;
+import cc.woverflow.hytils.handlers.cache.*;
 import cc.woverflow.hytils.handlers.chat.ChatHandler;
 import cc.woverflow.hytils.handlers.chat.modules.events.AchievementEvent;
 import cc.woverflow.hytils.handlers.chat.modules.events.LevelupEvent;
@@ -117,6 +115,7 @@ public class HytilsReborn {
     public void init(FMLInitializationEvent event) {
         config = new HytilsConfig();
 
+        CommandManager.INSTANCE.registerCommand(new BlockCommand());
         CommandManager.INSTANCE.registerCommand(new HousingVisitCommand());
         CommandManager.INSTANCE.registerCommand(new HytilsCommand());
         CommandManager.INSTANCE.registerCommand(new IgnoreTemporaryCommand());
@@ -128,8 +127,10 @@ public class HytilsReborn {
         // GameNameParser to be initialized, and that depends on networking.
         PlayCommand.init();
 
+        ArmorStandHandler.INSTANCE.initialize();
         CosmeticsHandler.INSTANCE.initialize();
         PatternHandler.INSTANCE.initialize();
+        BedLocationHandler.INSTANCE.initialize();
         HeightHandler.INSTANCE.initialize();
 
         registerHandlers();

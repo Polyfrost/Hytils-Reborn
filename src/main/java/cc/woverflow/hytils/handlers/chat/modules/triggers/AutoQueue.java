@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 package cc.woverflow.hytils.handlers.chat.modules.triggers;
 
 import cc.polyfrost.oneconfig.utils.Multithreading;
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
@@ -53,7 +52,7 @@ public class AutoQueue implements ChatReceiveModule {
         }
 
         final String message = getStrippedMessage(event.message);
-        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        LocrawInfo locraw = getLocraw();
         Matcher matcher = getLanguage().autoQueuePrefixGlobalRegex.matcher(message);
         if (matcher.matches() && locraw != null) {
             this.command = "/play " + locraw.getGameMode().toLowerCase(Locale.ENGLISH);

@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ package cc.woverflow.hytils.handlers.lobby.limbo;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.modules.modifiers.DefaultChatRestyler;
 import net.minecraft.client.Minecraft;
@@ -49,7 +50,7 @@ public class LimboLimiter {
     }
 
     public static boolean shouldLimitFramerate() {
-        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HypixelUtils.INSTANCE.isHypixel() && locraw != null && locraw.getServerId().equals("limbo")) limboStatus = true;
         return (!Display.isActive() || limboStatus) && HytilsConfig.limboLimiter && time * 20 >= 5
             && Minecraft.getMinecraft().gameSettings.limitFramerate > 15;

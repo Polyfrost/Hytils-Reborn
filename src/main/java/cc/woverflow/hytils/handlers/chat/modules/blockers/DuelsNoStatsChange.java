@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,23 +18,18 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class DuelsNoStatsChange implements ChatReceiveModule {
-    private static final String[] cancelNoStatsChangeMessages = {"Your stats did not change because you /duel'ed your opponent!", "Your stats did not change because you dueled someone in your party!", "No stats will be affected in this round!"};
-
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String unformattedText = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText());
-        for (String glMessage : cancelNoStatsChangeMessages) {
-            if (unformattedText.contains(glMessage)) {
-                event.setCanceled(true);
-                return;
-            }
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        if (getLanguage().chatCleanerDuelsNoStatsChangeRegex.matcher(message).matches()) {
+            event.setCanceled(true);
         }
     }
 

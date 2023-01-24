@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
 
 package cc.woverflow.hytils.mixin.cosmetics;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.CosmeticsHandler;
@@ -35,7 +35,8 @@ public class WorldMixin {
 
     @Inject(method = "spawnParticle(IZDDDDDD[I)V", at = @At("HEAD"), cancellable = true)
     private void removeParticles(int particleID, boolean p_175720_2_, double xCood, double yCoord, double zCoord, double xOffset, double yOffset, double zOffset, int[] p_175720_15_, CallbackInfo ci) {
-        if (HytilsConfig.hideDuelsCosmetics && HypixelUtils.INSTANCE.getLocrawInfo() != null && HypixelUtils.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.DUELS && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+        if ((HytilsConfig.hideDuelsCosmetics && LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.DUELS) ||
+            (HytilsConfig.hideArcadeCosmetics && LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.ARCADE_GAMES) && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
             String particleName = EnumParticleTypes.getParticleFromId(particleID).getParticleName();
             CosmeticsHandler.INSTANCE.particleCosmetics.forEach((particle) -> {
                 if (particleName.equalsIgnoreCase(particle)) {

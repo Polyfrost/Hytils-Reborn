@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,9 @@ public class ChatHandler {
         this.registerModule(new GameTipsRemover());
         this.registerModule(new GiftBlocker());
         this.registerModule(new GuildMOTD());
+        this.registerModule(new HotPotatoRemover());
         this.registerModule(new HypeLimitReminderRemover());
+        this.registerModule(new LobbyFishingAnnouncementRemover());
         this.registerModule(new LobbyStatusRemover());
         this.registerModule(new MvpEmotesRemover());
         this.registerModule(new MysteryBoxRemover());
@@ -82,15 +84,12 @@ public class ChatHandler {
 
         // Modifiers
 
-        this.registerModule(new ColoredFriendStatuses());
         this.registerModule(new DefaultChatRestyler());
         this.registerModule(new GameStartCompactor());
         this.registerModule(new WhiteChat());
         this.registerModule(new WhitePrivateMessages());
 
         // Triggers
-
-        this.registerModule(new AutoAPI());
         this.registerModule(new AutoChatReportConfirm());
         this.registerModule(new AutoChatReportConfirm());
         this.registerModule(new AutoChatSwapper());

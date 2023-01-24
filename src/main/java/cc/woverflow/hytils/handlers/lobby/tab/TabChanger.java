@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ package cc.woverflow.hytils.handlers.lobby.tab;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
@@ -91,7 +92,7 @@ public class TabChanger {
                 name = color + name.substring(name.indexOf("]") + 2);
             }
 
-            LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+            LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
             if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && locraw != null && locraw.getGameType() != LocrawInfo.GameType.HOUSING) {
                 // trim off the guild tag
                 // e.g. Steve §6[GUILD]

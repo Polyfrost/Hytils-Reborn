@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ public class GameStartCompactor implements ChatReceiveModule {
                 for (int i = accessor.getDrawnChatLines().size() - 1; i >= 0; i--) { // tries to find the last message in drawn chat lines, if found, it removes them
                     final ChatLine drawnLine = accessor.getDrawnChatLines().get(i);
                     for (IChatComponent oldTimerLine : oldTimerLines) {
-                        if (drawnLine.getChatComponent().getFormattedText().equals(oldTimerLine.getFormattedText())) {
+                        if (drawnLine.getChatComponent().getFormattedText().startsWith(oldTimerLine.getFormattedText())) {
                             accessor.getDrawnChatLines().remove(i);
                             oldTimerLines.remove(oldTimerLine);
                             break;

@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,10 @@ import cc.polyfrost.oneconfig.events.event.WorldLoadEvent;
 import cc.polyfrost.oneconfig.libs.caffeine.cache.Cache;
 import cc.polyfrost.oneconfig.libs.caffeine.cache.Caffeine;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
 import com.google.gson.JsonObject;
@@ -58,10 +59,10 @@ public class HeightHandler {
 
     public int getHeight() {
         if (currentHeight != -2) return currentHeight;
-        if (HypixelUtils.INSTANCE.getLocrawInfo() == null || jsonObject == null || HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby())
+        if (LocrawUtil.INSTANCE.getLocrawInfo() == null || jsonObject == null || HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby())
             return -1;
         try {
-            LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+            LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
             if (HypixelAPIUtils.isBedwars) {
                 if (locraw.getMapName() != null && !locraw.getMapName().trim().isEmpty()) {
                     String map = locraw.getMapName().toLowerCase(Locale.ENGLISH).replace(" ", "_");
@@ -94,11 +95,13 @@ public class HeightHandler {
 
 
     public void initialize() {
-        try {
-            jsonObject = NetworkUtils.getJsonElement("https://maps.pinkulu.com").getAsJsonObject();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        Multithreading.runAsync(() -> {
+            try {
+                jsonObject = NetworkUtils.getJsonElement("https://maps.pinkulu.com").getAsJsonObject();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     @Subscribe

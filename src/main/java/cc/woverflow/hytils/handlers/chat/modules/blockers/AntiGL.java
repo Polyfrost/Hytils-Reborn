@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,34 +18,31 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
+import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Locale;
-import java.util.regex.Pattern;
-
 public class AntiGL implements ChatReceiveModule {
-    private final Pattern cancelGlMessages = Pattern.compile("(?!.+: )(gl|glhf|good luck|have a good game|autogl by sk1er)",
-        Pattern.CASE_INSENSITIVE);
-    
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final String message = event.message.getUnformattedText().toLowerCase(Locale.ENGLISH);
-        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (message.startsWith("?") && message.endsWith("?")) || (!message.contains(": "))) return;
-        if (cancelGlMessages.matcher(message).find(0)) {
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().toLowerCase());
+        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase())) || (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby())) return;
+        if (getLanguage().cancelGlMessagesRegex.matcher(message).find(0)) {
             event.setCanceled(true);
         }
     }
 
     @Override
-    public int getPriority() {
-        return 3;
+    public boolean isEnabled() {
+        return HytilsConfig.antiGL;
     }
 
     @Override
-    public boolean isEnabled() {
-        return HytilsConfig.antiGL;
+    public int getPriority() {
+        return -3;
     }
 }

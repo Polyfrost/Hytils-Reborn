@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,10 +32,14 @@ import java.util.concurrent.TimeUnit;
 
 public class GuildMOTD implements ChatReceiveModule {
 
-    /** True if the player just joined the server very recently.
-     *  MOTD can only be received when logging into Hypixel. */
+    /**
+     * True if the player just joined the server very recently.
+     * MOTD can only be received when logging into Hypixel.
+     */
     private boolean canCheckMOTD;
-    /** True if the received chat messages are considered part of the guild MOTD. */
+    /**
+     * True if the received chat messages are considered part of the guild MOTD.
+     */
     private boolean isMOTD;
 
     public GuildMOTD() {

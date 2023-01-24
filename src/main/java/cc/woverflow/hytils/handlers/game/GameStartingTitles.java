@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,19 +33,22 @@ public class GameStartingTitles {
             return;
         }
 
-        switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle())) {
-            case "10 seconds":
+        switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle().toUpperCase())) {
+            case "10 SECONDS":
             case "10":
             case "5":
             case "4":
             case "3":
             case "2":
             case "1":
-            case "Waiting for more players...":
-            case "SkyWars":
+            case "❸":
+            case "❷":
+            case "❶":
+            case "WAITING FOR MORE PLAYERS...":
+            case "SKYWARS":
             case "INSANE MODE":
-            case "Fight!":
-            case "Zombies":
+            case "FIGHT!":
+            case "ZOMBIES":
             case "ASSASSINS":
             case "YOU ARE RED":
             case "YOU ARE BLUE":
@@ -53,9 +56,6 @@ public class GameStartingTitles {
             case "YOU ARE GREEN":
             case "PRE ROUND":
             case "ROUND START":
-            case "❸":
-            case "❷":
-            case "❶":
                 event.setCanceled(true);
                 break;
         }

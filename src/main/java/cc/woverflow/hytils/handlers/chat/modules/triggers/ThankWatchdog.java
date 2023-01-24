@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ public class ThankWatchdog implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        if (event.message.getUnformattedText().equals("[WATCHDOG ANNOUNCEMENT]")) {
+        if (event.message.getUnformattedText().equals("[WATCHDOG ANNOUNCEMENT]") || event.message.getUnformattedText().startsWith("A player has been removed from your")) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/achat Thanks Watchdog!");
         }
     }

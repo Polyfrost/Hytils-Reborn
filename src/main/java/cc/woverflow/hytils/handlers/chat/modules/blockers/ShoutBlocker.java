@@ -1,6 +1,6 @@
 /*
  * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022  Polyfrost, Sk1er LLC and contributors
+ * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
@@ -58,7 +57,7 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
     }
 
     private long getCooldownLengthInSeconds() {
-        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        LocrawInfo locraw = getLocraw();
         if (locraw != null && !"LOBBY".equals(locraw.getGameMode())) {
             switch (locraw.getGameType()) {
                 case BEDWARS: {
@@ -83,7 +82,7 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        LocrawInfo locraw = HypixelUtils.INSTANCE.getLocrawInfo();
+        LocrawInfo locraw = getLocraw();
         if (locraw != null && (
             (locraw.getGameType() == LocrawInfo.GameType.SKYWARS && event.message.getFormattedText().equals(getLanguage().cannotShoutBeforeSkywars)) || // fun fact: there is no message when you shout after a skywars game
                 event.message.getFormattedText().equals(getLanguage().cannotShoutAfterGame) ||
