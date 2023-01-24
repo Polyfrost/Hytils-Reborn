@@ -44,20 +44,34 @@ public class GuiIngameForgeMixin_HideHotbar {
             }
 
             LocrawInfo.GameType gameType = locraw.getGameType();
+            String gameMode = locraw.getGameMode();
             switch (gameType) {
                 case DROPPER:
                 case HOUSING:
+                case BUILD_BATTLE:
+                case LIMBO:
+                case QUAKE:
+                case REPLAY:
+                case TNT_GAMES:
+                    // break out of the switch if it's a duels game that has varying health
+                    if (gameMode.contains("CAPTURE") || gameMode.contains("PVPRUN")) {
+                        break;
+                    }
                 case BEDWARS:
                     ci.cancel();
                     return;
             }
 
-            String gameMode = locraw.getGameMode();
             Arrays.asList(
                 "DUELS_PARKOUR",
                 "DUELS_BOWSPLEEF_DUEL",
                 "DUELS_PARKOUR",
-                "DUELS_BOXING_DUEL"
+                "DUELS_BOXING_DUEL",
+                "PIXEL_PARTY",
+                "HOLE_IN_THE_WALL",
+                "SOCCER",
+                "DRAW_THEIR_THING",
+                "ENDER"
             ).forEach((mode) -> {
                 if (gameMode.contains(mode)) {
                     ci.cancel();
@@ -76,21 +90,47 @@ public class GuiIngameForgeMixin_HideHotbar {
             }
 
             LocrawInfo.GameType gameType = locraw.getGameType();
+            String gameMode = locraw.getGameMode();
             switch (gameType) {
                 case BEDWARS:
                 case MURDER_MYSTERY:
                 case HOUSING:
+                case LIMBO:
                 case TNT_GAMES:
+                    // break out of the switch if it's a duels game that has varying hunger
+                    if (gameMode.contains("CAPTURE")) {
+                        break;
+                    }
                 case CLASSIC_GAMES:
-                case COPS_AND_CRIMS:
-                case SMASH_HEROES:
                 case PIT:
-                case WARLORDS:
                 case DROPPER:
                 case DUELS:
-                case WOOL_GAMES:
+                case BUILD_BATTLE:
+                case QUAKE:
+                case REPLAY:
+                case WOOL_WARS:
+                case VAMPIREZ:
                     ci.cancel();
             }
+
+            Arrays.asList(
+                "PIXEL_PARTY",
+                "PVP_CTW",
+                "ZOMBIES_",
+                "HIDE_AND_SEEK_",
+                "MINI_WALLS",
+                "STARWARS",
+                "HOLE_IN_THE_WALL",
+                "SOCCER",
+                "ONEINTHEQUIVER",
+                "DRAW_THEIR_THING",
+                "DEFENDER",
+                "ENDER"
+            ).forEach((mode) -> {
+                if (gameMode.contains(mode)) {
+                    ci.cancel();
+                }
+            });
         }
     }
 
@@ -107,12 +147,46 @@ public class GuiIngameForgeMixin_HideHotbar {
             String gameMode = locraw.getGameMode();
             switch (gameType) {
                 case DUELS:
-                    // break out of the switch if it's a duels game that has armor
-                    if (gameMode.contains("DUELS_SW_DUEL") || gameMode.contains("DUELS_UHC_MEEUP_DUEL")) {
+                    // break out of the switch if it's a duels game that has varying armor
+                    if (gameMode.contains("DUELS_SW_DUEL") || gameMode.contains("DUELS_UHC_MEETUP_DUEL")) {
                         break;
                     }
                 case DROPPER:
+                case REPLAY:
+                case BUILD_BATTLE:
+                case LIMBO:
+                case QUAKE:
                 case TNT_GAMES:
+                    ci.cancel();
+            }
+
+            Arrays.asList(
+                "HOLE_IN_THE_WALL",
+                "SOCCER",
+                "ONEINTHEQUIVER",
+                "DRAW_THEIR_THING",
+                "ENDER"
+            ).forEach((mode) -> {
+                if (gameMode.contains(mode)) {
+                    ci.cancel();
+                }
+            });
+        }
+    }
+
+    @Inject(method = "renderAir", at = @At("HEAD"), cancellable = true)
+    public void cancelAir(int width, int height, CallbackInfo ci) {
+        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
+        if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
+            if (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+                ci.cancel();
+                return;
+            }
+
+            LocrawInfo.GameType gameType = locraw.getGameType();
+            switch (gameType) {
+                case BUILD_BATTLE:
+                case REPLAY:
                     ci.cancel();
             }
         }
