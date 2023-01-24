@@ -23,6 +23,7 @@ import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.GuiIngameForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,6 +40,10 @@ public class GuiIngameForgeMixin_HideHotbar {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
             if (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+                // rudimentary check if player has engaged in pvp or something
+                if (Minecraft.getMinecraft().thePlayer.getHealth() < 20) {
+                    return;
+                }
                 ci.cancel();
                 return;
             }
@@ -48,30 +53,32 @@ public class GuiIngameForgeMixin_HideHotbar {
             switch (gameType) {
                 case DROPPER:
                 case HOUSING:
+                    // rudimentary check if player has engaged in pvp or something
+                    if (Minecraft.getMinecraft().thePlayer.getHealth() < 20) {
+                        break;
+                    }
                 case BUILD_BATTLE:
                 case LIMBO:
                 case QUAKE:
-                case REPLAY:
                 case TNT_GAMES:
                     // break out of the switch if it's a duels game that has varying health
                     if (gameMode.contains("CAPTURE") || gameMode.contains("PVPRUN")) {
                         break;
                     }
-                case BEDWARS:
+                case REPLAY:
                     ci.cancel();
                     return;
             }
 
             Arrays.asList(
-                "DUELS_PARKOUR",
-                "DUELS_BOWSPLEEF_DUEL",
-                "DUELS_PARKOUR",
-                "DUELS_BOXING_DUEL",
-                "PIXEL_PARTY",
-                "HOLE_IN_THE_WALL",
-                "SOCCER",
-                "DRAW_THEIR_THING",
-                "ENDER"
+                "DUELS_PARKOUR",        // parkour (duels)
+                "DUELS_BOWSPLEEF_DUEL", // tnt games (duels)
+                "DUELS_BOXING_DUEL",    // boxing (duels)
+                "PIXEL_PARTY",          // pixel party (arcade)
+                "HOLE_IN_THE_WALL",     // hole in the wall (arcade)
+                "SOCCER",               // football (arcade)
+                "DRAW_THEIR_THING",     // pixel painters (arcade)
+                "ENDER"                 // ender spleef (arcade)
             ).forEach((mode) -> {
                 if (gameMode.contains(mode)) {
                     ci.cancel();
@@ -114,18 +121,18 @@ public class GuiIngameForgeMixin_HideHotbar {
             }
 
             Arrays.asList(
-                "PIXEL_PARTY",
-                "PVP_CTW",
-                "ZOMBIES_",
-                "HIDE_AND_SEEK_",
-                "MINI_WALLS",
-                "STARWARS",
-                "HOLE_IN_THE_WALL",
-                "SOCCER",
-                "ONEINTHEQUIVER",
-                "DRAW_THEIR_THING",
-                "DEFENDER",
-                "ENDER"
+                "PIXEL_PARTY",      // pixel party (arcade)
+                "PVP_CTW",          // capture the wool (arcade)
+                "ZOMBIES_",         // zombies (arcade)
+                "HIDE_AND_SEEK_",   // hide and seek (arcade)
+                "MINI_WALLS",       // miniwalls (arcade)
+                "STARWARS",         // galaxy wars (arcade)
+                "HOLE_IN_THE_WALL", // hole in the wall (arcade)
+                "SOCCER",           // football (arcade)
+                "ONEINTHEQUIVER",   // bounty hunters (arcade)
+                "DRAW_THEIR_THING", // pixel painters (arcade)
+                "DEFENDER",         // wizards (tnt run)
+                "ENDER"             // ender spleef (arcade)
             ).forEach((mode) -> {
                 if (gameMode.contains(mode)) {
                     ci.cancel();
@@ -161,11 +168,11 @@ public class GuiIngameForgeMixin_HideHotbar {
             }
 
             Arrays.asList(
-                "HOLE_IN_THE_WALL",
-                "SOCCER",
-                "ONEINTHEQUIVER",
-                "DRAW_THEIR_THING",
-                "ENDER"
+                "HOLE_IN_THE_WALL", // hole in the wall (arcade)
+                "SOCCER",           // football (arcade)
+                "ONEINTHEQUIVER",   // bounty hunters (arcade)
+                "DRAW_THEIR_THING", // pixel painters (arcade)
+                "ENDER"             // ender spleef (arcade)
             ).forEach((mode) -> {
                 if (gameMode.contains(mode)) {
                     ci.cancel();
