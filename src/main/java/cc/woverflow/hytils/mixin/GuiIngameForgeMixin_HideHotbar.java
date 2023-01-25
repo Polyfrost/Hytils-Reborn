@@ -84,7 +84,7 @@ public class GuiIngameForgeMixin_HideHotbar {
     public void cancelFood(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
-            if (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() && !(locraw.getGameType() == LocrawInfo.GameType.DUELS)) {
+            if (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
                 ci.cancel();
                 return;
             }
