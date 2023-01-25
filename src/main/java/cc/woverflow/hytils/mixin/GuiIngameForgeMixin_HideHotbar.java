@@ -30,8 +30,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Arrays;
-
 @Mixin(value = GuiIngameForge.class, remap = false)
 public class GuiIngameForgeMixin_HideHotbar {
     // currently doesn't account for admin abuse lobbies, duels lobby pvp, or housing pvp
@@ -41,9 +39,7 @@ public class GuiIngameForgeMixin_HideHotbar {
         if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
             if (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
                 // rudimentary check if player has engaged in pvp or something
-                if (Minecraft.getMinecraft().thePlayer.getHealth() < 20) {
-                    return;
-                }
+                if (Minecraft.getMinecraft().thePlayer.getHealth() < 20) return;
                 ci.cancel();
                 return;
             }
@@ -51,39 +47,36 @@ public class GuiIngameForgeMixin_HideHotbar {
             LocrawInfo.GameType gameType = locraw.getGameType();
             String gameMode = locraw.getGameMode();
             switch (gameType) {
-                case DROPPER:
+                case TNT_GAMES:
+                    // break out of the switch if it's a duels game that has varying health
+                    if (gameMode.contains("CAPTURE") || gameMode.contains("PVPRUN")) break;
                 case HOUSING:
-                    // rudimentary check if player has engaged in pvp or something
-                    if (Minecraft.getMinecraft().thePlayer.getHealth() < 20) {
-                        break;
-                    }
+                case MURDER_MYSTERY:
                 case BUILD_BATTLE:
                 case LIMBO:
                 case QUAKE:
-                case TNT_GAMES:
-                    // break out of the switch if it's a duels game that has varying health
-                    if (gameMode.contains("CAPTURE") || gameMode.contains("PVPRUN")) {
-                        break;
-                    }
                 case REPLAY:
+                    // rudimentary check if player has engaged in pvp or something
+                    if (Minecraft.getMinecraft().thePlayer.getHealth() < 20) break;
                     ci.cancel();
                     return;
             }
 
-            Arrays.asList(
-                "DUELS_PARKOUR",        // parkour (duels)
-                "DUELS_BOWSPLEEF_DUEL", // tnt games (duels)
-                "DUELS_BOXING_DUEL",    // boxing (duels)
-                "PIXEL_PARTY",          // pixel party (arcade)
-                "HOLE_IN_THE_WALL",     // hole in the wall (arcade)
-                "SOCCER",               // football (arcade)
-                "DRAW_THEIR_THING",     // pixel painters (arcade)
-                "ENDER"                 // ender spleef (arcade)
-            ).forEach((mode) -> {
-                if (gameMode.contains(mode)) {
+            switch (gameMode) {
+                case "DUELS_PARKOUR":        // parkour (duels)
+                case "DUELS_BOWSPLEEF_DUEL": // tnt games (duels)
+                case "DUELS_BOXING_DUEL":  // boxing (duels)
+                case "PIXEL_PARTY":       // pixel party (arcade)
+                case "PIXEL_PARTY_HYPER":       // pixel party (arcade)
+                case "HOLE_IN_THE_WALL":     // hole in the wall (arcade)
+                case "SOCCER":            // football (arcade)
+                case "DRAW_THEIR_THING":     // pixel painters (arcade)
+                case "DROPPER":
+                    // rudimentary check if player has engaged in pvp or something
+                    if (Minecraft.getMinecraft().thePlayer.getHealth() < 20) break;
+                case "ENDER":   // ender spleef (arcade)
                     ci.cancel();
-                }
-            });
+            }
         }
     }
 
@@ -91,7 +84,7 @@ public class GuiIngameForgeMixin_HideHotbar {
     public void cancelFood(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
-            if (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+            if (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() && !(locraw.getGameType() == LocrawInfo.GameType.DUELS)) {
                 ci.cancel();
                 return;
             }
@@ -99,45 +92,45 @@ public class GuiIngameForgeMixin_HideHotbar {
             LocrawInfo.GameType gameType = locraw.getGameType();
             String gameMode = locraw.getGameMode();
             switch (gameType) {
+                case TNT_GAMES:
+                    // break out of the switch if it's a tnt game that has varying hunger
+                    if (gameMode.contains("CAPTURE")) {
+                        break;
+                    }
                 case BEDWARS:
                 case MURDER_MYSTERY:
                 case HOUSING:
                 case LIMBO:
-                case TNT_GAMES:
-                    // break out of the switch if it's a duels game that has varying hunger
-                    if (gameMode.contains("CAPTURE")) {
-                        break;
-                    }
-                case CLASSIC_GAMES:
+                case PAINTBALL:
                 case PIT:
-                case DROPPER:
                 case DUELS:
                 case BUILD_BATTLE:
                 case QUAKE:
                 case REPLAY:
                 case WOOL_WARS:
-                case VAMPIREZ:
                     ci.cancel();
             }
 
-            Arrays.asList(
-                "PIXEL_PARTY",      // pixel party (arcade)
-                "PVP_CTW",          // capture the wool (arcade)
-                "ZOMBIES_",         // zombies (arcade)
-                "HIDE_AND_SEEK_",   // hide and seek (arcade)
-                "MINI_WALLS",       // miniwalls (arcade)
-                "STARWARS",         // galaxy wars (arcade)
-                "HOLE_IN_THE_WALL", // hole in the wall (arcade)
-                "SOCCER",           // football (arcade)
-                "ONEINTHEQUIVER",   // bounty hunters (arcade)
-                "DRAW_THEIR_THING", // pixel painters (arcade)
-                "DEFENDER",         // wizards (tnt run)
-                "ENDER"             // ender spleef (arcade)
-            ).forEach((mode) -> {
-                if (gameMode.contains(mode)) {
+            switch (gameMode) {
+                case "PIXEL_PARTY":      // pixel party (arcade)
+                case "PIXEL_PARTY_HYPER":       // pixel party (arcade)
+                case "PVP_CTW":          // capture the wool (arcade)
+                case "ZOMBIES_DEAD_END": // zombies (arcade)
+                case "ZOMBIES_BAD_BLOOD": // zombies (arcade)
+                case "ZOMBIES_ALIEN_ARCADIUM": // zombies (arcade)
+                case "HIDE_AND_SEEK_PROP_HUNT":   // hide and seek (arcade)
+                case "HIDE_AND_SEEK_PARTY_POOPER":  // hide and seek (arcade)
+                case "MINI_WALLS":       // miniwalls (arcade)
+                case "STARWARS":        // galaxy wars (arcade)
+                case "HOLE_IN_THE_WALL": // hole in the wall (arcade)
+                case "SOCCER":           // football (arcade)
+                case "ONEINTHEQUIVER":   // bounty hunters (arcade)
+                case "DRAW_THEIR_THING": // pixel painters (arcade)
+                case "DEFENDER":        // wizards (tnt run)
+                case "ENDER":           // ender spleef (arcade)
+                case "DROPPER":
                     ci.cancel();
-                }
-            });
+            }
         }
     }
 
@@ -158,8 +151,8 @@ public class GuiIngameForgeMixin_HideHotbar {
                     if (gameMode.contains("DUELS_SW_DUEL") || gameMode.contains("DUELS_UHC_MEETUP_DUEL")) {
                         break;
                     }
-                case DROPPER:
                 case REPLAY:
+                case MURDER_MYSTERY:
                 case BUILD_BATTLE:
                 case LIMBO:
                 case QUAKE:
@@ -167,17 +160,13 @@ public class GuiIngameForgeMixin_HideHotbar {
                     ci.cancel();
             }
 
-            Arrays.asList(
-                "HOLE_IN_THE_WALL", // hole in the wall (arcade)
-                "SOCCER",           // football (arcade)
-                "ONEINTHEQUIVER",   // bounty hunters (arcade)
-                "DRAW_THEIR_THING", // pixel painters (arcade)
-                "ENDER"             // ender spleef (arcade)
-            ).forEach((mode) -> {
-                if (gameMode.contains(mode)) {
+            switch (gameMode) {
+                case "SOCCER":           // football (arcade)
+                case "ONEINTHEQUIVER":   // bounty hunters (arcade)
+                case "ENDER":            // ender spleef (arcade)
+                case "DROPPER":
                     ci.cancel();
-                }
-            });
+            }
         }
     }
 
