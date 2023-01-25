@@ -126,7 +126,6 @@ public class GuiIngameForgeMixin_HideHotbar {
                 case "SOCCER":           // football (arcade)
                 case "ONEINTHEQUIVER":   // bounty hunters (arcade)
                 case "DRAW_THEIR_THING": // pixel painters (arcade)
-                case "DEFENDER":        // wizards (tnt run)
                 case "ENDER":           // ender spleef (arcade)
                 case "DROPPER":
                     ci.cancel();
