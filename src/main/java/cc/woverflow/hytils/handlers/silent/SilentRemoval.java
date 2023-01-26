@@ -19,6 +19,7 @@
 package cc.woverflow.hytils.handlers.silent;
 
 import cc.polyfrost.oneconfig.utils.Notifications;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.HytilsReborn;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -35,6 +36,7 @@ public class SilentRemoval {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onChat(ClientChatReceivedEvent event) {
+        if (!HypixelUtils.INSTANCE.isHypixel()) return;
         final Matcher matcher = HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().silentRemovalLeaveMessageRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
 
         if (matcher.matches()) {

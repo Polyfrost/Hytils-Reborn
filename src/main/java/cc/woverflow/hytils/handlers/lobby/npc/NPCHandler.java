@@ -59,7 +59,7 @@ public class NPCHandler {
         if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.hideNpcsInTab) {
             return playerInfoCollection;
         } else {
-            if (HytilsConfig.keepImportantNpcsInTab && (locraw == null || locraw.getGameType() == LocrawInfo.GameType.SKYBLOCK || locraw.getRawGameType().equals("REPLAY"))) {
+            if (HytilsConfig.keepImportantNpcsInTab && (locraw == null || locraw.getGameType() == LocrawInfo.GameType.SKYBLOCK || locraw.getGameType() == LocrawInfo.GameType.REPLAY)) {
                 return playerInfoCollection;
             }
 
