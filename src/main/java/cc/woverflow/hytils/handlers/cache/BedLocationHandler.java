@@ -124,7 +124,7 @@ public class BedLocationHandler {
 
     @Subscribe
     private void onLocraw(LocrawEvent event) {
-        if (event.info != LocrawUtil.INSTANCE.getLastLocrawInfo() && event.info.getGameType() == LocrawInfo.GameType.BEDWARS) {
+        if (event.info != LocrawUtil.INSTANCE.getLastLocrawInfo() && event.info.getGameType() == LocrawInfo.GameType.BEDWARS && LocrawUtil.INSTANCE.isInGame()) {
             bedLocations = null;
             if (getBedLocations() != null) {
                 Minecraft.getMinecraft().renderGlobal.loadRenderers();
