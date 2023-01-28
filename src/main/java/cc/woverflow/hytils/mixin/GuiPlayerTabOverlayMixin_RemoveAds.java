@@ -19,6 +19,7 @@
 package cc.woverflow.hytils.mixin;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
 import net.minecraft.scoreboard.ScoreObjective;
@@ -44,11 +45,11 @@ public class GuiPlayerTabOverlayMixin_RemoveAds {
     private void renderPlayerlist(int width, Scoreboard scoreboard, ScoreObjective objective, CallbackInfo ci) {
         if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel()) {
             if (footer != null) {
-                String formattedFooter = footer.getFormattedText().replaceAll("(\n\u00a7r)?\u00a7r\u00a7aRanks, Boosters & MORE! \u00a7r\u00a7c\u00a7lSTORE\\.HYPIXEL\\.NET", "");
+                String formattedFooter = footer.getFormattedText().replaceAll(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabFooterAdvertisementRegex.pattern(), "");
                 if (formattedFooter.endsWith("\u00a7r")) footer = new ChatComponentText(formattedFooter.substring(0, formattedFooter.length() - 2).trim());
             }
             if (header != null) {
-                String formattedHeader = header.getFormattedText().replaceAll("\u00a7r\u00a7bYou are playing on \u00a7r\u00a7e\u00a7lMC\\.HYPIXEL\\.NET(\u00a7r\n)?", "");
+                String formattedHeader = header.getFormattedText().replaceAll(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabHeaderAdvertisementRegex.pattern(), "");
                 if (formattedHeader.endsWith("\u00a7r")) header = new ChatComponentText(formattedHeader.substring(0, formattedHeader.length() - 2).trim());
             }
         }
