@@ -18,6 +18,7 @@
     "GuiNewChatMixin_LocrawHider",
     "GuiPlayerTabOverlayMixin_HideNPCs",
     "GuiPlayerTabOverlayMixin_HidePing",
+    "GuiPlayerTabOverlayMixin_RemoveAds",
     "LayerArmorBaseMixin_HideIngameArmour",
     "MinecraftMixin_LeftClickInteract",
     "MinecraftMixin_LimboLimiter",

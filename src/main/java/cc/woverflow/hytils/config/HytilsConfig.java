@@ -237,7 +237,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Remove Auto Activated Quest Messages",
-       description = "Remove automatically activated quest messages.\n§eExample: §aAutomatically activated: §6Daily Quest: Duels Winner",
+        description = "Remove automatically activated quest messages.\n§eExample: §aAutomatically activated: §6Daily Quest: Duels Winner",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean questsMessages;
@@ -666,6 +666,13 @@ public class HytilsConfig extends Config {
         category = "General", subcategory = "Tab"
     )
     public static boolean hidePingInTab;
+
+    @Switch(
+        name = "Hide Hypixel Advertisements in Tab",
+        description = "Prevent Hypixel's advertisements from showing up in tab.",
+        category = "General", subcategory = "Tab"
+    )
+    public static boolean hideAdsInTab;
 
     @Switch(
         name = "Broadcast Achievements",
