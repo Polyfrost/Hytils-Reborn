@@ -102,7 +102,9 @@ public class LanguageData {
     public String autoPartyWarpConfirm = "Some players are still in-game, run the command again to confirm warp!";
 
     private String tabFooterAdvertisement = "(\n\u00a7r)?\u00a7r\u00a7aRanks, Boosters & MORE! \u00a7r\u00a7c\u00a7lSTORE\\.HYPIXEL\\.NET(\n)?";
+    private String rawTabFooterAdvertisement = "(\n)?(\u00a7s)?(\n)?Ranks, Boosters & MORE! STORE\\.HYPIXEL\\.NET(\n)?";
     private String tabHeaderAdvertisement = "(\n)?\u00a7r\u00a7bYou are playing on \u00a7r\u00a7e\u00a7lMC\\.HYPIXEL\\.NET(\u00a7r\n)?(\u00a7s)?";
+    private String rawTabHeaderAdvertisement = "(\n)?You are playing on MC\\.HYPIXEL\\.NET(\n)?(\u00a7s)?";
 
     /**
      * Cached values which use the messages read from the config file.
@@ -162,7 +164,9 @@ public class LanguageData {
     public Pattern cancelGlMessagesRegex;
 
     public Pattern tabFooterAdvertisementRegex;
+    public Pattern rawTabFooterAdvertisementRegex;
     public Pattern tabHeaderAdvertisementRegex;
+    public Pattern rawTabHeaderAdvertisementRegex;
 
     /**
      * Compiles all the required patterns and caches them for later use.
@@ -225,7 +229,9 @@ public class LanguageData {
             cancelGlMessagesRegex = Pattern.compile(cancelGlMessages, Pattern.CASE_INSENSITIVE);
 
             tabFooterAdvertisementRegex = Pattern.compile(tabFooterAdvertisement);
+            rawTabFooterAdvertisementRegex = Pattern.compile(rawTabFooterAdvertisement);
             tabHeaderAdvertisementRegex = Pattern.compile(tabHeaderAdvertisement);
+            rawTabHeaderAdvertisementRegex = Pattern.compile(rawTabHeaderAdvertisement);
         }
 
     }

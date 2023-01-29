@@ -45,10 +45,9 @@ public class GuiPlayerTabOverlayMixin_RemoveAds {
     private void renderPlayerlist(int width, Scoreboard scoreboard, ScoreObjective objective, CallbackInfo ci) {
         if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel()) {
             if (footer != null) {
-                if (footer.getUnformattedText().matches("(\n)?(\u00a7s)?(\n)?Ranks, Boosters & MORE! STORE\\.HYPIXEL\\.NET(\n)?")) {
+                if (footer.getUnformattedText().matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().rawTabFooterAdvertisementRegex.pattern())) {
                     footer = null;
                 } else {
-                    System.out.println(footer.getFormattedText().replaceAll("\n", "/n"));
                     String formattedFooter = footer.getFormattedText().replaceAll(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabFooterAdvertisementRegex.pattern(), "");
                     if (formattedFooter.endsWith("\u00a7r"))
                         footer = new ChatComponentText(formattedFooter.substring(0, formattedFooter.length() - 2).trim());
@@ -56,7 +55,7 @@ public class GuiPlayerTabOverlayMixin_RemoveAds {
             }
 
             if (header != null) {
-                if (header.getUnformattedText().matches("(\n)?You are playing on MC\\.HYPIXEL\\.NET(\n)?(\u00a7s)?")) {
+                if (header.getUnformattedText().matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().rawTabHeaderAdvertisementRegex.pattern())) {
                     header = null;
                 } else {
                     String formattedHeader = header.getFormattedText().replaceAll(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabHeaderAdvertisementRegex.pattern(), "");
