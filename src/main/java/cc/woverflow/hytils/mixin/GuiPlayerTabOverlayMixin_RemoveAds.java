@@ -45,7 +45,7 @@ public class GuiPlayerTabOverlayMixin_RemoveAds {
     private void renderPlayerlist(int width, Scoreboard scoreboard, ScoreObjective objective, CallbackInfo ci) {
         if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel()) {
             if (footer != null) {
-                if (footer.getUnformattedText().matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().rawTabFooterAdvertisementRegex.pattern())) {
+                if (footer.getFormattedText().substring(0, footer.getFormattedText().length() - 2).matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabFooterAdvertisementRegex.pattern())) {
                     footer = null;
                 } else {
                     String formattedFooter = footer.getFormattedText().replaceAll(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabFooterAdvertisementRegex.pattern(), "");
@@ -55,7 +55,7 @@ public class GuiPlayerTabOverlayMixin_RemoveAds {
             }
 
             if (header != null) {
-                if (header.getUnformattedText().matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().rawTabHeaderAdvertisementRegex.pattern())) {
+                if (header.getFormattedText().substring(0, header.getFormattedText().length() - 2).matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabHeaderAdvertisementRegex.pattern())) {
                     header = null;
                 } else {
                     String formattedHeader = header.getFormattedText().replaceAll(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabHeaderAdvertisementRegex.pattern(), "");
