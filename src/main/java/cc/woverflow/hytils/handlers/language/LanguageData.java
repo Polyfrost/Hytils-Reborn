@@ -101,8 +101,8 @@ public class LanguageData {
     public String autoChatReportConfirm = "Please type /report confirm to log your report for staff review.";
     public String autoPartyWarpConfirm = "Some players are still in-game, run the command again to confirm warp!";
 
-    private String tabFooterAdvertisement = "(\n\u00a7r)?\u00a7r\u00a7aRanks, Boosters & MORE! \u00a7r\u00a7c\u00a7lSTORE\\.HYPIXEL\\.NET";
-    private String tabHeaderAdvertisement = "\u00a7r\u00a7bYou are playing on \u00a7r\u00a7e\u00a7lMC\\.HYPIXEL\\.NET(\u00a7r\n)?";
+    private String tabFooterAdvertisement = "(\n\u00a7r)?\u00a7r\u00a7aRanks, Boosters & MORE! \u00a7r\u00a7c\u00a7lSTORE\\.HYPIXEL\\.NET(\n)?";
+    private String tabHeaderAdvertisement = "(\n)?\u00a7r\u00a7bYou are playing on \u00a7r\u00a7e\u00a7lMC\\.HYPIXEL\\.NET(\u00a7r\n)?(\u00a7s)?";
 
     /**
      * Cached values which use the messages read from the config file.

@@ -45,12 +45,24 @@ public class GuiPlayerTabOverlayMixin_RemoveAds {
     private void renderPlayerlist(int width, Scoreboard scoreboard, ScoreObjective objective, CallbackInfo ci) {
         if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel()) {
             if (footer != null) {
-                String formattedFooter = footer.getFormattedText().replaceAll(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabFooterAdvertisementRegex.pattern(), "");
-                if (formattedFooter.endsWith("\u00a7r")) footer = new ChatComponentText(formattedFooter.substring(0, formattedFooter.length() - 2).trim());
+                if (footer.getUnformattedText().matches("(\n)?(\u00a7s)?(\n)?Ranks, Boosters & MORE! STORE\\.HYPIXEL\\.NET(\n)?")) {
+                    footer = null;
+                } else {
+                    System.out.println(footer.getFormattedText().replaceAll("\n", "/n"));
+                    String formattedFooter = footer.getFormattedText().replaceAll(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabFooterAdvertisementRegex.pattern(), "");
+                    if (formattedFooter.endsWith("\u00a7r"))
+                        footer = new ChatComponentText(formattedFooter.substring(0, formattedFooter.length() - 2).trim());
+                }
             }
+
             if (header != null) {
-                String formattedHeader = header.getFormattedText().replaceAll(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabHeaderAdvertisementRegex.pattern(), "");
-                if (formattedHeader.endsWith("\u00a7r")) header = new ChatComponentText(formattedHeader.substring(0, formattedHeader.length() - 2).trim());
+                if (header.getUnformattedText().matches("(\n)?You are playing on MC\\.HYPIXEL\\.NET(\n)?(\u00a7s)?")) {
+                    header = null;
+                } else {
+                    String formattedHeader = header.getFormattedText().replaceAll(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabHeaderAdvertisementRegex.pattern(), "");
+                    if (formattedHeader.endsWith("\u00a7r"))
+                        header = new ChatComponentText(formattedHeader.substring(0, formattedHeader.length() - 2).trim());
+                }
             }
         }
     }
