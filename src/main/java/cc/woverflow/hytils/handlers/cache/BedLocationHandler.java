@@ -122,13 +122,23 @@ public class BedLocationHandler {
         return (this.bedLocations = defaultBedLocations);
     }
 
+    private String lastServer;
+
     @Subscribe
     private void onLocraw(LocrawEvent event) {
-        if (event.info != LocrawUtil.INSTANCE.getLastLocrawInfo() && event.info.getGameType() == LocrawInfo.GameType.BEDWARS && LocrawUtil.INSTANCE.isInGame()) {
-            bedLocations = null;
-            if (getBedLocations() != null) {
-                Minecraft.getMinecraft().renderGlobal.loadRenderers();
-            }
+        if (!LocrawUtil.INSTANCE.isInGame() || event.info.getGameType() != LocrawInfo.GameType.BEDWARS) {
+            return;
+        }
+
+        String serverId = event.info.getServerId();
+        if (lastServer.equals(serverId)) {
+            return;
+        }
+        lastServer = serverId;
+
+        bedLocations = null;
+        if (getBedLocations() != null) {
+            Minecraft.getMinecraft().renderGlobal.loadRenderers();
         }
     }
 }
