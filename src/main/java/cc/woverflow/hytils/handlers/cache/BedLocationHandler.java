@@ -59,6 +59,7 @@ public class BedLocationHandler {
     private boolean setDefault = false;
     private int[] bedLocations = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
     private JsonObject locations = null;
+    private String lastServer = null;
 
     private BedLocationHandler() {
         EventManager.INSTANCE.register(this);
@@ -121,8 +122,6 @@ public class BedLocationHandler {
         }
         return (this.bedLocations = defaultBedLocations);
     }
-
-    private String lastServer;
 
     @Subscribe
     private void onLocraw(LocrawEvent event) {
