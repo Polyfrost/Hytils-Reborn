@@ -668,8 +668,8 @@ public class HytilsConfig extends Config {
     public static boolean hidePingInTab;
 
     @Switch(
-        name = "Hide Hypixel Advertisements in Tab",
-        description = "Prevent Hypixel's advertisements from showing up in tab.",
+        name = "Hide Advertisements in Tab",
+        description = "Prevent Hypixel's advertisements from showing up in tab.\n§eExample: §aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET",
         category = "General", subcategory = "Tab"
     )
     public static boolean hideAdsInTab;
@@ -774,6 +774,13 @@ public class HytilsConfig extends Config {
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideHudElements;
+
+    @Switch(
+        name = "Hide Advertisements in Bossbars",
+        description = "Hide bossbars that advertise Hypixel.\n§eExample: §e§lPlaying §f§lSKYWARS §e§lon §f§lMC.HYPIXEL.NET",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean gameAdBossbar;
 
     @Switch(
         name = "Hide Useless Game Nametags",

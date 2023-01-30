@@ -20,6 +20,7 @@ package cc.woverflow.hytils.handlers.lobby.bossbar;
 
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
+import net.minecraft.entity.boss.BossStatus;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -27,9 +28,8 @@ public class LobbyBossbar {
 
     @SubscribeEvent
     public void onBossbarRender(RenderGameOverlayEvent.Pre event) {
-        if (event.type == RenderGameOverlayEvent.ElementType.BOSSHEALTH
-            && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()
-            && HytilsConfig.lobbyBossbar) {
+        if (event.type == RenderGameOverlayEvent.ElementType.BOSSHEALTH && BossStatus.bossName != null &&
+            ((HytilsConfig.gameAdBossbar && BossStatus.bossName.matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().gameBossbarAdvertisementRegex.pattern())) || (HytilsConfig.lobbyBossbar && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()))) {
             event.setCanceled(true);
         }
     }
