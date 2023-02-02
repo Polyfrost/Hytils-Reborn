@@ -108,6 +108,7 @@ public class GuiIngameForgeMixin_HideHotbar {
                 case QUAKE:
                 case REPLAY:
                 case WOOL_WARS:
+                case SKYBLOCK:
                     ci.cancel();
                     return;
             }
@@ -157,6 +158,7 @@ public class GuiIngameForgeMixin_HideHotbar {
                 case LIMBO:
                 case QUAKE:
                 case TNT_GAMES:
+                case SKYBLOCK:
                     ci.cancel();
                     return;
             }
