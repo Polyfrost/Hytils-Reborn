@@ -32,6 +32,7 @@ import com.google.gson.JsonPrimitive;
 import net.minecraft.client.Minecraft;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class BedLocationHandler {
     public static final BedLocationHandler INSTANCE = new BedLocationHandler();
@@ -130,7 +131,7 @@ public class BedLocationHandler {
         }
 
         String serverId = event.info.getServerId();
-        if (lastServer.equals(serverId)) {
+        if (Objects.equals(lastServer, serverId)) {
             return;
         }
         lastServer = serverId;
