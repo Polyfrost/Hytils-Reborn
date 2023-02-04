@@ -237,7 +237,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Remove Auto Activated Quest Messages",
-       description = "Remove automatically activated quest messages.\n§eExample: §aAutomatically activated: §6Daily Quest: Duels Winner",
+        description = "Remove automatically activated quest messages.\n§eExample: §aAutomatically activated: §6Daily Quest: Duels Winner",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean questsMessages;
@@ -668,6 +668,13 @@ public class HytilsConfig extends Config {
     public static boolean hidePingInTab;
 
     @Switch(
+        name = "Hide Advertisements in Tab",
+        description = "Prevent Hypixel's advertisements from showing up in tab.\n§eExample: §aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET",
+        category = "General", subcategory = "Tab"
+    )
+    public static boolean hideAdsInTab;
+
+    @Switch(
         name = "Broadcast Achievements",
         description = "Announce in Guild chat when you get an achievement.",
         category = "General", subcategory = "Guilds"
@@ -767,6 +774,13 @@ public class HytilsConfig extends Config {
         category = "Game", subcategory = "Visual"
     )
     public static boolean hideHudElements;
+
+    @Switch(
+        name = "Hide Advertisements in Bossbars",
+        description = "Hide bossbars that advertise Hypixel.\n§eExample: §e§lPlaying §f§lSKYWARS §e§lon §f§lMC.HYPIXEL.NET",
+        category = "Game", subcategory = "Visual"
+    )
+    public static boolean gameAdBossbar;
 
     @Switch(
         name = "Hide Useless Game Nametags",

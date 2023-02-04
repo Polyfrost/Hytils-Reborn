@@ -101,6 +101,11 @@ public class LanguageData {
     public String autoChatReportConfirm = "Please type /report confirm to log your report for staff review.";
     public String autoPartyWarpConfirm = "Some players are still in-game, run the command again to confirm warp!";
 
+    private String tabFooterAdvertisement = "((\n.+)\n\u00a7r)?\u00a7r\u00a7aRanks, Boosters & MORE! \u00a7r\u00a7c\u00a7lSTORE\\.HYPIXEL\\.NET(\n)?";
+    private String tabHeaderAdvertisement = "(\n)?\u00a7r\u00a7bYou are playing on \u00a7r\u00a7e\u00a7lMC\\.HYPIXEL\\.NET(\u00a7r(\n.+)\u00a7s)?";
+
+    private String gameBossbarAdvertisement = "\u00a7e\u00a7lPlaying \u00a7f\u00a7l.+ \u00a7e\u00a7lon \u00a7\\S\u00a7lMC\\.HYPIXEL\\.NET\u00a7r";
+
     /**
      * Cached values which use the messages read from the config file.
      * Particularly Regexes.
@@ -157,6 +162,11 @@ public class LanguageData {
     public Pattern hypixelLevelUpRegex;
 
     public Pattern cancelGlMessagesRegex;
+
+    public Pattern tabFooterAdvertisementRegex;
+    public Pattern tabHeaderAdvertisementRegex;
+
+    public Pattern gameBossbarAdvertisementRegex;
 
     /**
      * Compiles all the required patterns and caches them for later use.
@@ -217,6 +227,11 @@ public class LanguageData {
             hypixelLevelUpRegex = Pattern.compile(hypixelLevelUp);
 
             cancelGlMessagesRegex = Pattern.compile(cancelGlMessages, Pattern.CASE_INSENSITIVE);
+
+            tabFooterAdvertisementRegex = Pattern.compile(tabFooterAdvertisement);
+            tabHeaderAdvertisementRegex = Pattern.compile(tabHeaderAdvertisement);
+
+            gameBossbarAdvertisementRegex = Pattern.compile(gameBossbarAdvertisement);
         }
 
     }
