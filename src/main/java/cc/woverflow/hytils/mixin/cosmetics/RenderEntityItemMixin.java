@@ -20,7 +20,6 @@ package cc.woverflow.hytils.mixin.cosmetics;
 
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
-import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.CosmeticsHandler;
 import net.minecraft.block.BlockPumpkin;
@@ -42,7 +41,7 @@ public class RenderEntityItemMixin {
         if (stack == null) return;
         if ((HytilsConfig.hideDuelsCosmetics && LocrawUtil.INSTANCE.getLocrawInfo() != null &&
             LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.DUELS) || (HytilsConfig.hideArcadeCosmetics && LocrawUtil.INSTANCE.getLocrawInfo() != null &&
-            LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.ARCADE_GAMES) && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby() &&
+            LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.ARCADE_GAMES) && LocrawUtil.INSTANCE.isInGame() &&
             (stack.getItem() instanceof ItemDoublePlant || stack.getItem() instanceof ItemDye || stack.getItem() instanceof ItemRecord || shouldRemove(stack.getItem().getUnlocalizedName()) || (stack.getItem() instanceof ItemBlock && (shouldRemove(((ItemBlock) stack.getItem()).block.getUnlocalizedName()) || ((ItemBlock) stack.getItem()).block instanceof BlockPumpkin)))) ci.cancel();
     }
 

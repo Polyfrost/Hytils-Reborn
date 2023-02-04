@@ -23,7 +23,6 @@ import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
@@ -32,15 +31,15 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
-import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
 
 public class HypixelAPIUtils {
-    public static boolean isBedwars = false;
-    public static boolean isBridge = false;
     public static String gexp;
     public static String winstreak;
     public static String rank;
@@ -53,29 +52,6 @@ public class HypixelAPIUtils {
         return simpleDateFormat.format(new Date(System.currentTimeMillis()));
     }
 
-    public static void checkGameModes() {
-        if (HypixelUtils.INSTANCE.isHypixel()) {
-            ScoreObjective scoreboardObj = Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1);
-            if (scoreboardObj != null) {
-                String scObjName = ScoreboardUtil.cleanSB(scoreboardObj.getDisplayName());
-                if (scObjName.contains("BED WARS")) {
-                    isBedwars = true;
-                    isBridge = false;
-                    return;
-                } else if (scObjName.contains("DUELS")) {
-                    for (String s : ScoreboardUtil.getSidebarLines()) {
-                        if (s.toLowerCase(Locale.ENGLISH).contains("bridge ")) {
-                            isBridge = true;
-                            isBedwars = false;
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-        isBedwars = false;
-        isBridge = false;
-    }
 
     /**
      * Gets the player's GEXP and stores it in a variable.
@@ -342,7 +318,6 @@ public class HypixelAPIUtils {
         if (event.stage == Stage.START) {
             if (ticks % 20 == 0) {
                 if (Minecraft.getMinecraft().thePlayer != null) {
-                    checkGameModes();
                     HeightHandler.INSTANCE.getHeight();
                 }
                 ticks = 0;

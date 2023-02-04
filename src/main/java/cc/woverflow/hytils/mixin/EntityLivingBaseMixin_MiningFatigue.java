@@ -19,7 +19,8 @@
 package cc.woverflow.hytils.mixin;
 
 import cc.polyfrost.oneconfig.utils.Notifications;
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
@@ -37,7 +38,7 @@ public class EntityLivingBaseMixin_MiningFatigue {
 
     @Inject(method = "addPotionEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;onNewPotionEffect(Lnet/minecraft/potion/PotionEffect;)V"))
     private void onPotionEffect(PotionEffect potioneffectIn, CallbackInfo ci) {
-        if (HytilsConfig.notifyMiningFatigue && potioneffectIn.getPotionID() == Potion.digSlowdown.getId() && ($this instanceof EntityPlayerSP) && (!HytilsConfig.disableNotifyMiningFatigueSkyblock || !HytilsReborn.INSTANCE.getSkyblockChecker().isSkyblockScoreboard())) {
+        if (HytilsConfig.notifyMiningFatigue && potioneffectIn.getPotionID() == Potion.digSlowdown.getId() && ($this instanceof EntityPlayerSP) && (!HytilsConfig.disableNotifyMiningFatigueSkyblock || !(LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.SKYBLOCK))) {
             Notifications.INSTANCE.send("Hytils Reborn", "You have mining fatigue!");
         }
     }

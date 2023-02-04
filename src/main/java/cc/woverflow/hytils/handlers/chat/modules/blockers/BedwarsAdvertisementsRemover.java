@@ -19,7 +19,7 @@
 package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
@@ -33,7 +33,7 @@ public class BedwarsAdvertisementsRemover implements ChatReceiveModule {
         LocrawInfo locrawInformation = getLocraw();
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().toLowerCase());
         if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase()))) return;
-        if (locrawInformation != null && locrawInformation.getGameType() == LocrawInfo.GameType.BEDWARS && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()
+        if (locrawInformation != null && locrawInformation.getGameType() == LocrawInfo.GameType.BEDWARS && !LocrawUtil.INSTANCE.isInGame()
             && getLanguage().chatCleanerBedwarsPartyAdvertisementRegex.matcher(message).find()) {
             event.setCanceled(true);
         }

@@ -19,13 +19,13 @@
 package cc.woverflow.hytils.handlers.general;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import cc.woverflow.hytils.HytilsReborn;
 
 public class SoundHandler {
 
@@ -35,7 +35,7 @@ public class SoundHandler {
     public void onTick(TickEvent.ClientTickEvent e) {
         if (e.phase == TickEvent.Phase.START) {
             if (HypixelUtils.INSTANCE.isHypixel() && Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null) {
-                if (HytilsConfig.blockNotify && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+                if (HytilsConfig.blockNotify && LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.isInGame()) {
                     if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && !(((ItemBlock) Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem()).block instanceof BlockTNT) && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize <= HytilsConfig.blockNumber && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize > 4) {
                         ticks++;
                         if (ticks == 0) {

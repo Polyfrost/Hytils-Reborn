@@ -18,7 +18,7 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
@@ -30,7 +30,7 @@ public class AntiGL implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().toLowerCase());
-        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase())) || (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby())) return;
+        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase())) || (LocrawUtil.INSTANCE.getLocrawInfo() != null && !LocrawUtil.INSTANCE.isInGame())) return;
         if (getLanguage().cancelGlMessagesRegex.matcher(message).find(0)) {
             event.setCanceled(true);
         }

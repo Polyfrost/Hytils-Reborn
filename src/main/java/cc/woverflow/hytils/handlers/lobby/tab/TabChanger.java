@@ -83,7 +83,7 @@ public class TabChanger {
         if (HypixelUtils.INSTANCE.isHypixel()) {
             final UUID uuid = networkPlayerInfo.getGameProfile().getId();
 
-            if (HytilsConfig.hidePlayerRanksInTab && name.startsWith("[", 2) && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+            if (HytilsConfig.hidePlayerRanksInTab && name.startsWith("[", 2) && LocrawUtil.INSTANCE.getLocrawInfo() != null && !LocrawUtil.INSTANCE.isInGame()) {
                 // keep the name color if player rank is removed
                 // §b[MVP§c+§b] Steve
                 final String color = "\u00a7" + name.charAt(1);
@@ -122,7 +122,7 @@ public class TabChanger {
     }
 
     public static boolean hidePing(NetworkPlayerInfo networkPlayerInfo) {
-        return HypixelUtils.INSTANCE.isHypixel() && ((HytilsConfig.hidePingInTab && !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) || isSkyblockTabInformationEntry(networkPlayerInfo));
+        return HypixelUtils.INSTANCE.isHypixel() && ((HytilsConfig.hidePingInTab && LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.isInGame()) || isSkyblockTabInformationEntry(networkPlayerInfo));
     }
 
     private static final Pattern validMinecraftUsername = Pattern.compile("\\w{1,16}(?: .{1,3}|$)");
@@ -131,7 +131,7 @@ public class TabChanger {
     private static boolean isSkyblockTabInformationEntry(NetworkPlayerInfo networkPlayerInfo) {
         if (!HytilsConfig.cleanerSkyblockTabInfo) return false;
         return
-            HytilsReborn.INSTANCE.getSkyblockChecker().isSkyblockScoreboard() &&
+            LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.SKYBLOCK &&
                 skyblockTabInformationEntryGameProfileNameRegex.matcher(networkPlayerInfo.getGameProfile().getName()).matches() &&
                 !validMinecraftUsername.matcher(networkPlayerInfo.getDisplayName().getUnformattedText()).matches();
     }

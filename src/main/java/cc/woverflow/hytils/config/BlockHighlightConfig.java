@@ -130,7 +130,7 @@ public class BlockHighlightConfig {
     )
     public static OneColor black = new OneColor(MapColor.blackColor.colorValue);
 
-    public void init() {
+    public void initialize() {
         try {
             File modDir = HytilsReborn.INSTANCE.modDir;
             File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");

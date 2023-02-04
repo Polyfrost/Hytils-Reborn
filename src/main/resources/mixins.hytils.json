@@ -22,7 +22,6 @@
     "LayerArmorBaseMixin_HideIngameArmour",
     "MinecraftMixin_LeftClickInteract",
     "MinecraftMixin_LimboLimiter",
-    "NetHandlerPlayClientMixin_GameChecker",
     "RenderEntityItemMixin_UHCOverlay",
     "beds.BlockModelShapesMixin",
     "beds.BlockRendererDispatcherMixin",

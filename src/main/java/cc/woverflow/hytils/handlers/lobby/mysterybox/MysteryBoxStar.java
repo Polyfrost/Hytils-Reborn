@@ -19,7 +19,7 @@
 package cc.woverflow.hytils.handlers.lobby.mysterybox;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -45,7 +45,7 @@ public class MysteryBoxStar {
 
     @SubscribeEvent
     public void onDrawScreenPre(GuiScreenEvent.DrawScreenEvent.Pre event) {
-        if (!HytilsConfig.mysteryBoxStar || !HypixelUtils.INSTANCE.isHypixel() || !HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+        if (!HytilsConfig.mysteryBoxStar || !HypixelUtils.INSTANCE.isHypixel() || LocrawUtil.INSTANCE.getLocrawInfo() == null || LocrawUtil.INSTANCE.isInGame()) {
             return;
         }
 

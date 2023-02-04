@@ -126,7 +126,7 @@ public class BedLocationHandler {
 
     @Subscribe
     private void onLocraw(LocrawEvent event) {
-        if (!LocrawUtil.INSTANCE.isInGame() || event.info.getGameType() != LocrawInfo.GameType.BEDWARS) {
+        if (!LocrawUtil.INSTANCE.isInGame() || event.info.getGameType() != LocrawInfo.GameType.BEDWARS || event.info.getGameMode().equals("BEDWARS_PRACTICE")) {
             return;
         }
 
