@@ -18,6 +18,7 @@
 
 package cc.woverflow.hytils.handlers.lobby.bossbar;
 
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraft.entity.boss.BossStatus;
@@ -29,7 +30,7 @@ public class LobbyBossbar {
     @SubscribeEvent
     public void onBossbarRender(RenderGameOverlayEvent.Pre event) {
         if (event.type == RenderGameOverlayEvent.ElementType.BOSSHEALTH && BossStatus.bossName != null &&
-            ((HytilsConfig.gameAdBossbar && BossStatus.bossName.matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().gameBossbarAdvertisementRegex.pattern())) || (HytilsConfig.lobbyBossbar && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()))) {
+            ((HytilsConfig.gameAdBossbar && BossStatus.bossName.matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().gameBossbarAdvertisementRegex.pattern())) || (HytilsConfig.lobbyBossbar && LocrawUtil.INSTANCE.getLocrawInfo() != null && !LocrawUtil.INSTANCE.isInGame()))) {
             event.setCanceled(true);
         }
     }

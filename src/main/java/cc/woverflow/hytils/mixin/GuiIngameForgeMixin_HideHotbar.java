@@ -21,7 +21,6 @@ package cc.woverflow.hytils.mixin;
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
-import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.GuiIngameForge;
@@ -36,7 +35,7 @@ public class GuiIngameForgeMixin_HideHotbar {
     public void cancelHealthbar(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
-            if (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+            if (!LocrawUtil.INSTANCE.isInGame()) {
                 // rudimentary check if player has engaged in pvp or something
                 if (Minecraft.getMinecraft().thePlayer.getHealth() < 20) return;
                 ci.cancel();
@@ -84,7 +83,7 @@ public class GuiIngameForgeMixin_HideHotbar {
     public void cancelFood(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
-            if (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+            if (!LocrawUtil.INSTANCE.isInGame()) {
                 ci.cancel();
                 return;
             }
@@ -139,7 +138,7 @@ public class GuiIngameForgeMixin_HideHotbar {
     public void cancelArmor(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
-            if (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+            if (!LocrawUtil.INSTANCE.isInGame()) {
                 ci.cancel();
                 return;
             }
@@ -177,7 +176,7 @@ public class GuiIngameForgeMixin_HideHotbar {
     public void cancelAir(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
-            if (HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+            if (!LocrawUtil.INSTANCE.isInGame()) {
                 ci.cancel();
                 return;
             }

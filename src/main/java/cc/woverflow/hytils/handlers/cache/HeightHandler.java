@@ -28,7 +28,6 @@ import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.util.HypixelAPIUtils;
 import com.google.gson.JsonObject;
 
 import java.util.Locale;
@@ -59,11 +58,11 @@ public class HeightHandler {
 
     public int getHeight() {
         if (currentHeight != -2) return currentHeight;
-        if (LocrawUtil.INSTANCE.getLocrawInfo() == null || jsonObject == null || HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby())
+        if (LocrawUtil.INSTANCE.getLocrawInfo() == null || jsonObject == null || !LocrawUtil.INSTANCE.isInGame())
             return -1;
         try {
             LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-            if (HypixelAPIUtils.isBedwars) {
+            if (locraw != null && locraw.getGameType() == LocrawInfo.GameType.BEDWARS) {
                 if (locraw.getMapName() != null && !locraw.getMapName().trim().isEmpty()) {
                     String map = locraw.getMapName().toLowerCase(Locale.ENGLISH).replace(" ", "_");
                     if (jsonObject.getAsJsonObject("bedwars").has(map)) {
@@ -78,7 +77,7 @@ public class HeightHandler {
                         }
                     }
                 }
-            } else if (HypixelAPIUtils.isBridge) {
+            } else if (locraw != null && locraw.getGameMode().equals("BRIDGE")) {
                 currentHeight = 100;
                 return currentHeight;
             }

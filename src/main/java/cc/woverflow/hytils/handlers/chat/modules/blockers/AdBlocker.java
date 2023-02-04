@@ -18,7 +18,7 @@
 
 package cc.woverflow.hytils.handlers.chat.modules.blockers;
 
-import cc.woverflow.hytils.HytilsReborn;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
@@ -53,7 +53,7 @@ public class AdBlocker implements ChatReceiveModule {
             event.setCanceled(true);
         }
 
-        if (!HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) return;
+        if (LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.isInGame()) return;
         if (getLanguage().chatRankBeggingRegex.matcher(message).find(0)) {
             event.setCanceled(true);
         }

@@ -42,7 +42,6 @@ import cc.woverflow.hytils.handlers.general.AutoStart;
 import cc.woverflow.hytils.handlers.general.CommandQueue;
 import cc.woverflow.hytils.handlers.general.SoundHandler;
 import cc.woverflow.hytils.handlers.language.LanguageHandler;
-import cc.woverflow.hytils.handlers.lobby.LobbyChecker;
 import cc.woverflow.hytils.handlers.lobby.armorstands.ArmorStandHider;
 import cc.woverflow.hytils.handlers.lobby.bossbar.LobbyBossbar;
 import cc.woverflow.hytils.handlers.lobby.limbo.LimboLimiter;
@@ -54,7 +53,6 @@ import cc.woverflow.hytils.handlers.render.ChestHighlighter;
 import cc.woverflow.hytils.handlers.silent.SilentRemoval;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
 import cc.woverflow.hytils.util.friends.FriendCache;
-import cc.woverflow.hytils.util.skyblock.SkyblockChecker;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
@@ -88,12 +86,10 @@ public class HytilsReborn {
     private final Logger logger = LogManager.getLogger("Hytils Reborn");
 
     private final LanguageHandler languageHandler = new LanguageHandler();
-    private final SkyblockChecker skyblockChecker = new SkyblockChecker();
     private final FriendCache friendCache = new FriendCache();
     private final HardcoreStatus hardcoreStatus = new HardcoreStatus();
     private final SilentRemoval silentRemoval = new SilentRemoval();
     private final CommandQueue commandQueue = new CommandQueue();
-    private final LobbyChecker lobbyChecker = new LobbyChecker();
     private final ChatHandler chatHandler = new ChatHandler();
     private final AutoQueue autoQueue = new AutoQueue();
 
@@ -172,7 +168,6 @@ public class HytilsReborn {
         eventBus.register(new LevelupEvent());
 
         // lobby
-        eventBus.register(lobbyChecker);
         eventBus.register(new ArmorStandHider());
         eventBus.register(new NPCHandler());
         eventBus.register(new LobbyBossbar());
@@ -209,10 +204,6 @@ public class HytilsReborn {
         return silentRemoval;
     }
 
-    public LobbyChecker getLobbyChecker() {
-        return lobbyChecker;
-    }
-
     public HardcoreStatus getHardcoreStatus() {
         return hardcoreStatus;
     }
@@ -243,10 +234,6 @@ public class HytilsReborn {
 
     public Logger getLogger() {
         return logger;
-    }
-
-    public SkyblockChecker getSkyblockChecker() {
-        return skyblockChecker;
     }
 
     public FriendCache getFriendCache() {

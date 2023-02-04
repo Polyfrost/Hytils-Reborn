@@ -30,7 +30,6 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import cc.woverflow.hytils.HytilsReborn;
 
 import java.util.Collection;
 
@@ -45,7 +44,7 @@ public class NPCHandler {
 
         // hypixel marks npc uuids as version 2
         if (event.entity.getUniqueID().version() == 2 || (event.entity instanceof EntityVillager)) {
-            if (HytilsConfig.npcHider && HytilsReborn.INSTANCE.getLobbyChecker().playerIsInLobby()) {
+            if (HytilsConfig.npcHider && LocrawUtil.INSTANCE.getLocrawInfo() != null && !LocrawUtil.INSTANCE.isInGame()) {
                 event.setCanceled(true);
             }
         } else if (HytilsConfig.hideNonNPCs && locraw != null && locraw.getGameType() == LocrawInfo.GameType.SKYBLOCK && !(event.entity instanceof EntityArmorStand && !event.entity.getCustomNameTag().toLowerCase().trim().isEmpty()) && event.entity instanceof EntityOtherPlayerMP) {
