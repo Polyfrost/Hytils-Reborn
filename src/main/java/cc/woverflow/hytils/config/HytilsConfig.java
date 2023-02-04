@@ -1004,7 +1004,7 @@ public class HytilsConfig extends Config {
 
 
     public HytilsConfig() {
-        super(new Mod("Hytils Reborn", ModType.HYPIXEL, new VigilanceMigrator(new File(HytilsReborn.INSTANCE.modDir, "hytilsreborn.toml").getAbsolutePath())), "hytilsreborn.json");
+        super(new Mod("Hytils Reborn", ModType.HYPIXEL, "/assets/hytils/hypixel.png", new VigilanceMigrator(new File(HytilsReborn.INSTANCE.modDir, "hytilsreborn.toml").getAbsolutePath())), "hytilsreborn.json");
         initialize();
         try {
             File modDir = HytilsReborn.INSTANCE.modDir;
@@ -1094,12 +1094,12 @@ public class HytilsConfig extends Config {
         hidePingInTab = false;
         cleanerSkyblockTabInfo = false;
         save();
-        addDependency("hideNpcsInTab", () -> false);
-        addDependency("keepImportantNpcsInTab", () -> false);
-        addDependency("hideGuildTagsInTab", () -> false);
-        addDependency("hidePlayerRanksInTab", () -> false);
-        addDependency("hidePingInTab", () -> false);
-        addDependency("cleanerSkyblockTabInfo", () -> false);
+        addDependency("hideNpcsInTab", "Tabulous", () -> false);
+        addDependency("keepImportantNpcsInTab", "Tabulous", () -> false);
+        addDependency("hideGuildTagsInTab", "Tabulous", () -> false);
+        addDependency("hidePlayerRanksInTab", "Tabulous", () -> false);
+        addDependency("hidePingInTab", "Tabulous", () -> false);
+        addDependency("cleanerSkyblockTabInfo", "Tabulous", () -> false);
     }
 
     private void setWBMessages() {
