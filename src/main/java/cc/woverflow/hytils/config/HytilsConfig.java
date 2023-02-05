@@ -1004,10 +1004,10 @@ public class HytilsConfig extends Config {
 
 
     public HytilsConfig() {
-        super(new Mod("Hytils Reborn", ModType.HYPIXEL, "/assets/hytils/hypixel.png", new VigilanceMigrator(new File(HytilsReborn.INSTANCE.modDir, "hytilsreborn.toml").getAbsolutePath())), "hytilsreborn.json");
+        super(new Mod("Hytils Reborn", ModType.HYPIXEL, "/assets/hytils/hypixel.png", new VigilanceMigrator(new File(HytilsReborn.INSTANCE.oldModDir, "hytilsreborn.toml").getAbsolutePath())), "hytilsreborn.json");
         initialize();
         try {
-            File modDir = HytilsReborn.INSTANCE.modDir;
+            File modDir = HytilsReborn.INSTANCE.oldModDir;
             File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");
             File oldConfig = new File(oldModDir, "hytilitiesreborn.toml");
             if (oldConfig.exists()) {

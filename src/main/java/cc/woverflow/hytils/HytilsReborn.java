@@ -60,7 +60,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -80,7 +79,7 @@ public class HytilsReborn {
     @Mod.Instance(MOD_ID)
     public static HytilsReborn INSTANCE;
 
-    public File modDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), MOD_NAME);
+    public File oldModDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), MOD_NAME);
 
     private HytilsConfig config;
     private final Logger logger = LogManager.getLogger("Hytils Reborn");
@@ -98,14 +97,6 @@ public class HytilsReborn {
     private boolean loadedCall;
 
     public String rank;
-
-    @Mod.EventHandler
-    public void onFMLPreInitialization(FMLPreInitializationEvent event) {
-
-        if (!modDir.exists() && !modDir.mkdirs()) {
-            throw new RuntimeException("Failed to create mod directory! Please report this https://polyfrost.cc/discord");
-        }
-    }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
