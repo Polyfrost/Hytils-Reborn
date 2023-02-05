@@ -18,6 +18,7 @@
 
 package cc.woverflow.hytils.command;
 
+import cc.polyfrost.oneconfig.config.core.ConfigUtils;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.commands.annotations.*;
@@ -46,7 +47,7 @@ import java.util.regex.Pattern;
 public class IgnoreTemporaryCommand {
     private static JsonObject json;
     private static final JsonParser PARSER = new JsonParser();
-    private static final File file = new File(HytilsReborn.INSTANCE.modDir, "ignore.json");
+    private static final File ignoreFile = ConfigUtils.getProfileFile("tempignore.json");
     private static final Pattern regex = Pattern.compile("(\\d+)( ?)((month|day|hour|minute|second|millisecond|y|m|d|h|s)s?)", Pattern.CASE_INSENSITIVE);
 
     static {
@@ -66,7 +67,7 @@ public class IgnoreTemporaryCommand {
                         }
                         if (dirty) {
                             try {
-                                FileUtils.writeStringToFile(file, json.toString(), StandardCharsets.UTF_8);
+                                FileUtils.writeStringToFile(ignoreFile, json.toString(), StandardCharsets.UTF_8);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -90,7 +91,7 @@ public class IgnoreTemporaryCommand {
                 long millis = addMillis(time.replace(",", "").replace(" ", ""));
                 json.addProperty(playerName.getName(), millis + new Date().getTime());
                 try {
-                    FileUtils.writeStringToFile(file, json.toString(), StandardCharsets.UTF_8);
+                    FileUtils.writeStringToFile(ignoreFile, json.toString(), StandardCharsets.UTF_8);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -113,7 +114,7 @@ public class IgnoreTemporaryCommand {
         json.remove(playerName.getName());
         Multithreading.runAsync(() -> {
             try {
-                FileUtils.writeStringToFile(file, json.toString(), StandardCharsets.UTF_8);
+                FileUtils.writeStringToFile(ignoreFile, json.toString(), StandardCharsets.UTF_8);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -122,18 +123,18 @@ public class IgnoreTemporaryCommand {
     }
 
     private static void initialize() {
-        if (file.exists()) {
+        if (ignoreFile.exists()) {
             try {
-                json = PARSER.parse(FileUtils.readFileToString(file, StandardCharsets.UTF_8)).getAsJsonObject();
+                json = PARSER.parse(FileUtils.readFileToString(ignoreFile, StandardCharsets.UTF_8)).getAsJsonObject();
             } catch (Exception e) {
                 e.printStackTrace();
-                file.delete();
+                ignoreFile.delete();
                 initialize();
             }
         } else {
             try {
-                file.createNewFile();
-                FileUtils.writeStringToFile(file, new JsonObject().toString(), Charsets.UTF_8);
+                ignoreFile.createNewFile();
+                FileUtils.writeStringToFile(ignoreFile, new JsonObject().toString(), Charsets.UTF_8);
                 initialize();
             } catch (Exception e) {
                 e.printStackTrace();
