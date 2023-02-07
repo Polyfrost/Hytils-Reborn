@@ -718,7 +718,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Hardcore Hearts",
-        description = "When your bed is broken is killed in BedWars/The Walls, set the heart style to Hardcore.",
+        description = "When your bed is broken/wither is killed in Bedwars/MiniWalls, set the heart style to Hardcore.",
         category = "Game", subcategory = "GUI"
     )
     public static boolean hardcoreHearts;
@@ -780,6 +780,7 @@ public class HytilsConfig extends Config {
         options = {"Hypixel Ding", "Golem Hit", "Blaze Hit", "Anvil Land", "Horse Death", "Ghast Scream", "Guardian Floop", "Cat Meow", "Dog Bark"}
     )
     public static int blockNotifySound = 0;
+
     @Switch(
         name = "Middle Waypoint Beacon in MiniWalls",
         description = "Adds a beacon at (0,0) when your MiniWither is dead in MiniWalls.",
