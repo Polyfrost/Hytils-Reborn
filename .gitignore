@@ -1,4 +1,5 @@
 # eclipse
+eclipse
 bin
 *.launch
 .settings
@@ -8,7 +9,7 @@ bin
 
 # idea
 out
-out1
+classes
 *.ipr
 *.iws
 *.iml
@@ -19,6 +20,12 @@ out1
 build
 .gradle
 
+#Netbeans
+.nb-gradle
+.nb-gradle-properties
+
 # other
-eclipse
 run
+.DS_Store
+Thumbs.db
+.vscode

@@ -38,7 +38,7 @@ public class GuiIngameForgeMixin_TitleEvent extends GuiIngame {
         super(mcIn);
     }
 
-    @Redirect(method = "renderHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/storage/WorldInfo;isHardcoreModeEnabled()Z"))
+    @Redirect(method = "renderHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/storage/WorldInfo;isHardcoreModeEnabled()Z", remap = true))
     private boolean isHardcore(WorldInfo instance) {
         return instance.isHardcoreModeEnabled() || HytilsReborn.INSTANCE.getHardcoreStatus().shouldChangeStyle();
     }
