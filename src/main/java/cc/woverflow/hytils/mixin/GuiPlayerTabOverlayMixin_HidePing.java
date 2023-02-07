@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = GuiPlayerTabOverlay.class, priority = 0)
+@Mixin(value = GuiPlayerTabOverlay.class, priority = 990)
 public class GuiPlayerTabOverlayMixin_HidePing {
     @Inject(method = "drawPing", at = @At("HEAD"), cancellable = true)
     private void checkPlayer(int p_175245_1_, int p_175245_2_, int p_175245_3_, NetworkPlayerInfo networkPlayerInfoIn, CallbackInfo ci) {
