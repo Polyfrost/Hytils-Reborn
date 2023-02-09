@@ -23,9 +23,14 @@ import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
+import cc.woverflow.hytils.handlers.language.LanguageData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -35,6 +40,11 @@ import java.util.regex.Pattern;
  */
 @SuppressWarnings("unused")
 public class TabChanger {
+    private static final LanguageData language = HytilsReborn.INSTANCE.getLanguageHandler().getCurrent();
+    private static final Pattern validMinecraftUsername = Pattern.compile("(\\[\\d+])? \\w{1,16}(?: .{1,3}|$)");
+    private static final Pattern skyblockTabInformationEntryGameProfileNameRegex = Pattern.compile("![A-D]-[a-v]");
+    private static final Pattern trimChatComponentTextRegex = Pattern.compile("^(?:\\s|§r|§s)*|(?:\\s|§r|§s)*$");
+
     /**
      * Adds a star to the display name of a player in Tab.
      * If the star is added before or after the name is determined by the config value of highlightFriendsInTab
@@ -117,6 +127,38 @@ public class TabChanger {
         return name;
     }
 
+    public static IChatComponent modifyFooter(IChatComponent footer) {
+        if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel() && footer != null && footer.getFormattedText().contains(language.tabFooterAdvertisement)) {
+            String trimmedFooter = footer.getFormattedText().replaceAll((trimChatComponentTextRegex.pattern()), "");
+            if (trimmedFooter.matches(language.tabFooterAdvertisement)) {
+                footer = null;
+            } else {
+                for (String line : new ArrayList<>(Arrays.asList(trimmedFooter.split("\n")))) {
+                    if (line.contains(language.tabFooterAdvertisement)) {
+                        footer = new ChatComponentText(footer.getFormattedText().replace(line, "").replaceAll(("^|(?:\\s|§r|§s)*$"), ""));
+                    }
+                }
+            }
+        }
+        return footer;
+    }
+
+    public static IChatComponent modifyHeader(IChatComponent header) {
+        if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel() && header != null && header.getFormattedText().contains(language.tabHeaderAdvertisement)) {
+            String trimmedHeader = header.getFormattedText().replaceAll((trimChatComponentTextRegex.pattern()), "");
+            if (trimmedHeader.matches(language.tabHeaderAdvertisement)) {
+                header = null;
+            } else {
+                for (String line : new ArrayList<>(Arrays.asList(trimmedHeader.split("\n")))) {
+                    if (line.contains(language.tabHeaderAdvertisement)) {
+                        header = new ChatComponentText(header.getFormattedText().replace(line, "").replaceAll(("^(?:\\s|§r|§s)*|$"), ""));
+                    }
+                }
+            }
+        }
+        return header;
+    }
+
     public static boolean shouldRenderPlayerHead(NetworkPlayerInfo networkPlayerInfo) {
         return !HypixelUtils.INSTANCE.isHypixel() || !isSkyblockTabInformationEntry(networkPlayerInfo);
     }
@@ -124,9 +166,6 @@ public class TabChanger {
     public static boolean hidePing(NetworkPlayerInfo networkPlayerInfo) {
         return HypixelUtils.INSTANCE.isHypixel() && ((HytilsConfig.hidePingInTab && LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.isInGame()) || isSkyblockTabInformationEntry(networkPlayerInfo));
     }
-
-    private static final Pattern validMinecraftUsername = Pattern.compile("\\w{1,16}(?: .{1,3}|$)");
-    private static final Pattern skyblockTabInformationEntryGameProfileNameRegex = Pattern.compile("![A-D]-[a-v]");
 
     private static boolean isSkyblockTabInformationEntry(NetworkPlayerInfo networkPlayerInfo) {
         if (!HytilsConfig.cleanerSkyblockTabInfo) return false;
