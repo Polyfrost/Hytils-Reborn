@@ -18,13 +18,10 @@
 
 package cc.woverflow.hytils.mixin;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.config.HytilsConfig;
+import cc.woverflow.hytils.handlers.lobby.tab.TabChanger;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -42,27 +39,8 @@ public class GuiPlayerTabOverlayMixin_RemoveAds {
     private IChatComponent header;
 
     @Inject(method = "renderPlayerlist", at = @At("HEAD"))
-    private void renderPlayerlist(int width, Scoreboard scoreboard, ScoreObjective objective, CallbackInfo ci) {
-        if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel()) {
-            if (footer != null) {
-                if (footer.getFormattedText().substring(0, footer.getFormattedText().length() - 2).matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabFooterAdvertisementRegex.pattern())) {
-                    footer = null;
-                } else {
-                    String formattedFooter = footer.getFormattedText().replaceAll(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabFooterAdvertisementRegex.pattern(), "");
-                    if (formattedFooter.endsWith("\u00a7r"))
-                        footer = new ChatComponentText(formattedFooter.substring(0, formattedFooter.length() - 2).trim());
-                }
-            }
-
-            if (header != null) {
-                if (header.getFormattedText().substring(0, header.getFormattedText().length() - 2).matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabHeaderAdvertisementRegex.pattern())) {
-                    header = null;
-                } else {
-                    String formattedHeader = header.getFormattedText().replaceAll(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().tabHeaderAdvertisementRegex.pattern(), "");
-                    if (formattedHeader.endsWith("\u00a7r"))
-                        header = new ChatComponentText(formattedHeader.substring(0, formattedHeader.length() - 2).trim());
-                }
-            }
-        }
+    private void hideAdvertisementsInTab(int width, Scoreboard scoreboard, ScoreObjective objective, CallbackInfo ci) {
+        footer = TabChanger.modifyFooter(footer);
+        header = TabChanger.modifyHeader(header);
     }
 }

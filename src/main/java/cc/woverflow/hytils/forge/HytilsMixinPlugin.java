@@ -33,7 +33,8 @@ import java.util.Set;
 public class HytilsMixinPlugin implements IMixinConfigPlugin {
 
     private boolean isOptiFine = false;
-    private boolean hasApplied = false;
+    private boolean hasAppliedRenderHeads = false;
+    private boolean hasAppliedModifyName = false;
 
     @Override
     public void onLoad(String mixinPackage) {
@@ -79,11 +80,22 @@ public class HytilsMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void postApply(String targetClassName, org.spongepowered.asm.lib.tree.ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-        if (!hasApplied && targetClass != null && Objects.equals(targetClassName, "net.minecraft.client.gui.GuiPlayerTabOverlay")) {
+        if (!hasAppliedModifyName && !hasAppliedRenderHeads && targetClass != null && Objects.equals(targetClassName, "net.minecraft.client.gui.GuiPlayerTabOverlay")) {
             for (MethodNode method : targetClass.methods) {
                 final String methodName = FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(targetClass.name, method.name, method.desc);
                 final ListIterator<AbstractInsnNode> iterator = method.instructions.iterator();
                 switch (methodName) {
+                    case "renderPlayerlist":
+                    case "func_175249_a":
+                        while (iterator.hasNext()) {
+                            final AbstractInsnNode next = iterator.next();
+
+                            if (next.getOpcode() == Opcodes.ILOAD && ((VarInsnNode) next).var == 11 && next.getNext().getOpcode() == Opcodes.IFEQ && !(next.getPrevious() instanceof VarInsnNode && ((VarInsnNode) next.getPrevious()).var == 10)) {
+                                method.instructions.insert(next.getNext(), shouldRenderPlayerHead(((JumpInsnNode) next.getNext()).label));
+                                hasAppliedRenderHeads = true;
+                            }
+                        }
+                        break;
                     case "getPlayerName":
                     case "func_175243_a":
                         while (iterator.hasNext()) {
@@ -95,7 +107,7 @@ public class HytilsMixinPlugin implements IMixinConfigPlugin {
                                 // trim the player name to remove player ranks and guild tags
                                 if (methodInsnName.equals("formatPlayerName") || methodInsnName.equals("func_96667_a")) {
                                     method.instructions.insert(next, modifyName());
-                                    hasApplied = true;
+                                    hasAppliedModifyName = true;
                                     break;
                                 }
                             }
@@ -119,6 +131,18 @@ public class HytilsMixinPlugin implements IMixinConfigPlugin {
             "modifyName",
             "(Ljava/lang/String;Lnet/minecraft/client/network/NetworkPlayerInfo;)Ljava/lang/String;",
             false));
+        return list;
+    }
+
+    private InsnList shouldRenderPlayerHead(LabelNode label) {
+        InsnList list = new InsnList();
+        list.add(new VarInsnNode(Opcodes.ALOAD, 24));
+        list.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
+            "cc/woverflow/hytils/handlers/lobby/tab/TabChanger",
+            "shouldRenderPlayerHead",
+            "(Lnet/minecraft/client/network/NetworkPlayerInfo;)Z",
+            false));
+        list.add(new JumpInsnNode(Opcodes.IFEQ, label));
         return list;
     }
 }

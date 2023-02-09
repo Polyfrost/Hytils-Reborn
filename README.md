@@ -20,7 +20,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 
 ## Features
 <details>
- <summary>Automatic</summary>
+ <summary>General</summary>
 
 ## General
 - **Auto Start** - Join Hypixel immediately once the client has loaded to the main menu.
@@ -91,7 +91,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **AutoWB** - Says configurable message to your friends/guild when they join.
 </details>
 <details>
-  <summary>General</summary>
+  <summary>Tab</summary>
 
 # Tab
 - **Highlight Friends In Tab** - Add a star to the names of your Hypixel friends in tab.
