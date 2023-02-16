@@ -110,7 +110,7 @@ public class HytilsReborn {
         CommandManager.INSTANCE.registerCommand(new SilentRemoveCommand());
         CommandManager.INSTANCE.registerCommand(new SkyblockVisitCommand());
         CommandManager.INSTANCE.registerCommand(new UnblockCommand());
-        CommandManager.INSTANCE.registerCommand(new RequeCommand());
+        CommandManager.INSTANCE.registerCommand(new RequeueCommand());
 
         // We initialize it a different way because it requires the
         // GameNameParser to be initialized, and that depends on networking.

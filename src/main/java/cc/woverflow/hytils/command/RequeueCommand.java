@@ -29,14 +29,10 @@ import cc.woverflow.hytils.HytilsReborn;
 
 import java.util.Objects;
 
-@Command(value = "reque", aliases = "rq")
-public class RequeCommand {
+@Command(value = "requeue", aliases = "rq")
+public class RequeueCommand {
     @Main
-    public void handle(@Greedy String args) {
-        HytilsReborn.INSTANCE.getCommandQueue().queue("/reque " + args);
-    }
-    @Main
-    public void reque() {
+    public void requeue() {
         if (!HypixelUtils.INSTANCE.isHypixel()) {
             UChat.chat(ChatColor.RED + "You must be on Hypixel to use this command.");
             return;
