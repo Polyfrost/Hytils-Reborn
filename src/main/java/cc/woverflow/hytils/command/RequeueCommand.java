@@ -26,18 +26,20 @@ import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.HytilsReborn;
+import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.LocrawGamesHandler;
+import cc.woverflow.hytils.handlers.lobby.limbo.LimboLimiter;
 
 @Command(value = "requeue", aliases = "rq")
 public class RequeueCommand {
 
     protected static String game = "";
 
-    @Main
+    @Main(description = "Requeues you into the last game you played.")
     private void requeue() {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         LocrawInfo lastLocraw = LocrawUtil.INSTANCE.getLastLocrawInfo();
-        if (!HypixelUtils.INSTANCE.isHypixel() || locraw == null /*|| lastLocraw == null*/) {
+        if (!HypixelUtils.INSTANCE.isHypixel() || locraw == null || lastLocraw == null) {
             return;
         }
 
@@ -50,9 +52,15 @@ public class RequeueCommand {
                     return;
             }
             game = locraw.getGameMode();
-        } /*else if (!LocrawUtil.INSTANCE.isInGame() && !lastLocraw.getGameMode().equals("lobby")) {
+        } else if (!LocrawUtil.INSTANCE.isInGame() && !lastLocraw.getGameMode().equals("lobby")) {
+            switch (lastLocraw.getGameType()) {
+                case HOUSING:
+                case REPLAY:
+                    UChat.chat(ChatColor.RED + "The last round has to be a valid game to use this command.");
+                    return;
+            }
             game = lastLocraw.getGameMode();
-        }*/ else {
+        } else {
             UChat.chat(ChatColor.RED + "The last round has to be a game to use this command.");
             return;
         }
@@ -60,6 +68,10 @@ public class RequeueCommand {
         String value = LocrawGamesHandler.locrawGames.get(locraw.getRawGameType() + "_" + game.toLowerCase());
         if (value != null) {
             game = value;
+        }
+
+        if (HytilsConfig.limboPlayCommandHelper && LimboLimiter.inLimbo()) {
+            HytilsReborn.INSTANCE.getCommandQueue().queue("/lobby");
         }
         HytilsReborn.INSTANCE.getCommandQueue().queue("/play " + game.toLowerCase());
     }
