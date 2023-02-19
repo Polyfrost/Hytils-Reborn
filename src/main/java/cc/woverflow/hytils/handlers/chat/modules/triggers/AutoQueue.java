@@ -22,6 +22,7 @@ import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
+import cc.woverflow.hytils.handlers.cache.LocrawGamesHandler;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -29,11 +30,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 public class AutoQueue implements ChatReceiveModule {
+    private String command = null;
+    private boolean sentCommand;
+
     /**
      * We want this to activate early so that it catches the queue message.
      */
@@ -41,9 +44,6 @@ public class AutoQueue implements ChatReceiveModule {
     public int getPriority() {
         return -11;
     }
-
-    private String command = null;
-    private boolean sentCommand;
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
@@ -55,7 +55,12 @@ public class AutoQueue implements ChatReceiveModule {
         LocrawInfo locraw = getLocraw();
         Matcher matcher = getLanguage().autoQueuePrefixGlobalRegex.matcher(message);
         if (matcher.matches() && locraw != null) {
-            this.command = "/play " + locraw.getGameMode().toLowerCase(Locale.ENGLISH);
+            String game = locraw.getGameMode();
+            String value = LocrawGamesHandler.locrawGames.get(locraw.getRawGameType().toLowerCase() + "_" + game.toLowerCase());
+            if (value != null) {
+                game = value;
+            }
+            this.command = "/play " + game.toLowerCase();
         }
     }
 
