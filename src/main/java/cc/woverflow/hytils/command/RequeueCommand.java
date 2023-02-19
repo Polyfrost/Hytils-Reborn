@@ -65,7 +65,7 @@ public class RequeueCommand {
             return;
         }
 
-        String value = LocrawGamesHandler.locrawGames.get(locraw.getRawGameType() + "_" + game.toLowerCase());
+        String value = LocrawGamesHandler.locrawGames.get(locraw.getRawGameType().toLowerCase() + "_" + game.toLowerCase());
         if (value != null) {
             game = value;
         }
