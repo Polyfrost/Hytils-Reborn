@@ -107,6 +107,7 @@ public class HytilsReborn {
         CommandManager.INSTANCE.registerCommand(new HytilsCommand());
         CommandManager.INSTANCE.registerCommand(new IgnoreTemporaryCommand());
         CommandManager.INSTANCE.registerCommand(new LimboCommand());
+        CommandManager.INSTANCE.registerCommand(new RequeueCommand());
         CommandManager.INSTANCE.registerCommand(new SilentRemoveCommand());
         CommandManager.INSTANCE.registerCommand(new SkyblockVisitCommand());
         CommandManager.INSTANCE.registerCommand(new UnblockCommand());
@@ -119,6 +120,7 @@ public class HytilsReborn {
         CosmeticsHandler.INSTANCE.initialize();
         PatternHandler.INSTANCE.initialize();
         BedLocationHandler.INSTANCE.initialize();
+        LocrawGamesHandler.INSTANCE.initialize();
         HeightHandler.INSTANCE.initialize();
 
         registerHandlers();
