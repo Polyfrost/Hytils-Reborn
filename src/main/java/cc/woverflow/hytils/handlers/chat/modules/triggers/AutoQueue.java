@@ -19,7 +19,6 @@
 package cc.woverflow.hytils.handlers.chat.modules.triggers;
 
 import cc.polyfrost.oneconfig.utils.Multithreading;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.LocrawGamesHandler;
@@ -52,11 +51,10 @@ public class AutoQueue implements ChatReceiveModule {
         }
 
         final String message = getStrippedMessage(event.message);
-        LocrawInfo locraw = getLocraw();
         Matcher matcher = getLanguage().autoQueuePrefixGlobalRegex.matcher(message);
-        if (matcher.matches() && locraw != null) {
-            String game = locraw.getGameMode();
-            String value = LocrawGamesHandler.locrawGames.get(locraw.getRawGameType().toLowerCase() + "_" + game.toLowerCase());
+        if (matcher.matches() && getLocraw() != null) {
+            String game = getLocraw().getGameMode();
+            String value = LocrawGamesHandler.locrawGames.get(getLocraw().getRawGameType().toLowerCase() + "_" + game.toLowerCase());
             if (value != null) {
                 game = value;
             }

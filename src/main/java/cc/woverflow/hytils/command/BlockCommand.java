@@ -21,6 +21,7 @@ package cc.woverflow.hytils.command;
 import cc.polyfrost.oneconfig.libs.universal.ChatColor;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Description;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.HytilsReborn;
@@ -35,10 +36,12 @@ public class BlockCommand {
     }
 
     @Main(description = "Adds a player to the ignore list.")
-    private void main(GameProfile player) {
+    private void main(@Description("Player Name") GameProfile player) {
         if (HypixelUtils.INSTANCE.isHypixel()) {
             String name = player.getName();
             HytilsReborn.INSTANCE.getCommandQueue().queue("/ignore add " + name);
+        } else {
+            UChat.chat(ChatColor.RED + "You must be on Hypixel to use this command.");
         }
     }
 }

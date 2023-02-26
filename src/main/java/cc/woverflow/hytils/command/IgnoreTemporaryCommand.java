@@ -22,7 +22,6 @@ import cc.polyfrost.oneconfig.config.core.ConfigUtils;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.commands.annotations.*;
-import cc.woverflow.hytils.HytilsReborn;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -96,10 +95,10 @@ public class IgnoreTemporaryCommand {
                     e.printStackTrace();
                 }
                 UChat.say("/ignore add " + playerName.getName());
-                HytilsReborn.INSTANCE.sendMessage("&r&aSuccessfully ignored &r&6&l" + playerName.getName() + "&r&a for &r&e&l" + time + "&r&a. The ignore will be removed after the specified period.");
+                UChat.chat("&r&aSuccessfully ignored &r&6&l" + playerName.getName() + "&r&a for &r&e&l" + time + "&r&a. The ignore will be removed after the specified period.");
             } catch (Exception e) {
                 e.printStackTrace();
-                HytilsReborn.INSTANCE.sendMessage("&cAn error has occured and the user has not been ignored.");
+                UChat.chat("&cAn error has occured and the user has not been ignored.");
             }
         });
     }

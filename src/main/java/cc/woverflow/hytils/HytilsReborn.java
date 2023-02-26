@@ -29,14 +29,15 @@ import cc.woverflow.hytils.handlers.chat.ChatHandler;
 import cc.woverflow.hytils.handlers.chat.modules.events.AchievementEvent;
 import cc.woverflow.hytils.handlers.chat.modules.events.LevelupEvent;
 import cc.woverflow.hytils.handlers.chat.modules.triggers.AutoQueue;
-import cc.woverflow.hytils.handlers.game.GameEndingCountdownTitles;
-import cc.woverflow.hytils.handlers.game.GameEndingTitles;
-import cc.woverflow.hytils.handlers.game.GameStartingTitles;
+import cc.woverflow.hytils.handlers.chat.modules.triggers.SilentRemoval;
 import cc.woverflow.hytils.handlers.game.duels.SumoRenderDistance;
 import cc.woverflow.hytils.handlers.game.hardcore.HardcoreStatus;
 import cc.woverflow.hytils.handlers.game.housing.HousingMusic;
 import cc.woverflow.hytils.handlers.game.miniwalls.MiddleBeaconMiniWalls;
 import cc.woverflow.hytils.handlers.game.pit.PitLagReducer;
+import cc.woverflow.hytils.handlers.game.titles.CountdownTitles;
+import cc.woverflow.hytils.handlers.game.titles.GameEndingTitles;
+import cc.woverflow.hytils.handlers.game.titles.GameStartingTitles;
 import cc.woverflow.hytils.handlers.game.uhc.MiddleWaypointUHC;
 import cc.woverflow.hytils.handlers.general.AutoStart;
 import cc.woverflow.hytils.handlers.general.CommandQueue;
@@ -50,7 +51,6 @@ import cc.woverflow.hytils.handlers.lobby.limbo.LimboTitle;
 import cc.woverflow.hytils.handlers.lobby.mysterybox.MysteryBoxStar;
 import cc.woverflow.hytils.handlers.lobby.npc.NPCHandler;
 import cc.woverflow.hytils.handlers.render.ChestHighlighter;
-import cc.woverflow.hytils.handlers.silent.SilentRemoval;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
 import cc.woverflow.hytils.util.friends.FriendCache;
 import net.minecraft.client.Minecraft;
@@ -174,7 +174,7 @@ public class HytilsReborn {
         eventBus.register(new HousingMusic());
         eventBus.register(new GameStartingTitles());
         eventBus.register(new GameEndingTitles());
-        eventBus.register(new GameEndingCountdownTitles());
+        eventBus.register(new CountdownTitles());
         eventBus.register(new SumoRenderDistance());
         eventBus.register(new MiddleBeaconMiniWalls());
         eventBus.register(new MiddleWaypointUHC());
@@ -191,10 +191,6 @@ public class HytilsReborn {
 
     public HytilsConfig getConfig() {
         return config;
-    }
-
-    public SilentRemoval getSilentRemoval() {
-        return silentRemoval;
     }
 
     public HardcoreStatus getHardcoreStatus() {

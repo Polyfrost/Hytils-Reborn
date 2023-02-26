@@ -36,6 +36,12 @@ public class SoundHandler {
         if (e.phase == TickEvent.Phase.START) {
             if (HypixelUtils.INSTANCE.isHypixel() && Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null) {
                 if (HytilsConfig.blockNotify && LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.isInGame()) {
+                    switch (LocrawUtil.INSTANCE.getLocrawInfo().getGameType()) {
+                        case BUILD_BATTLE:
+                        case HOUSING:
+                        case SKYBLOCK:
+                            return;
+                    }
                     if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && !(((ItemBlock) Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem()).block instanceof BlockTNT) && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize <= HytilsConfig.blockNumber && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize > 4) {
                         ticks++;
                         if (ticks == 0) {

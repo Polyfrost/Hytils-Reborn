@@ -18,21 +18,22 @@
 
 package cc.woverflow.hytils.command;
 
+import cc.polyfrost.oneconfig.libs.universal.ChatColor;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Description;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.HytilsReborn;
-import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
@@ -46,28 +47,27 @@ public class SkyblockVisitCommand {
 
     protected static String playerName = "";
 
-    // thank you DJ; https://github.com/BiscuitDevelopment/SkyblockAddons/blob/development/src/main/java/codes/biscuit/skyblockaddons/utils/Utils.java#L100
-    private static final Set<String> SKYBLOCK_IN_ALL_LANGUAGES = Sets.newHashSet(
-        "SKYBLOCK", "\u7A7A\u5C9B\u751F\u5B58", "\u7A7A\u5CF6\u751F\u5B58");
-
     @Main
     private void handle() {
         UChat.chat(EnumChatFormatting.RED + "Usage: /skyblockvisit <username>");
     }
 
-    @Main
-    private void handle(@Description("Player Name") GameProfile player) {
+    @Main(description = "Visit a player's SkyBlock island.")
+    private void main(@Description("Player Name") GameProfile player) {
+        if (!HypixelUtils.INSTANCE.isHypixel()) {
+            UChat.chat(ChatColor.RED + "You must be on Hypixel to use this command!");
+            return;
+        }
         if (usernameRegex.matcher(player.getName()).matches()) {
             playerName = player.getName();
-            if (SKYBLOCK_IN_ALL_LANGUAGES.contains(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld
-                .getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName().split(" ")[0]))) {
+            if (LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.SKYBLOCK && LocrawUtil.INSTANCE.isInGame()) {
                 visit(0);
                 return;
             }
             HytilsReborn.INSTANCE.getCommandQueue().queue("/play skyblock");
             MinecraftForge.EVENT_BUS.register(new SkyblockVisitHook());
         } else {
-            HytilsReborn.INSTANCE.sendMessage("&cInvalid playername!");
+            UChat.chat(ChatColor.RED + "Invalid username!");
         }
     }
 

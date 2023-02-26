@@ -21,6 +21,7 @@ package cc.woverflow.hytils.config;
 import cc.polyfrost.oneconfig.config.Config;
 import cc.polyfrost.oneconfig.config.annotations.*;
 import cc.polyfrost.oneconfig.config.core.OneColor;
+import cc.polyfrost.oneconfig.config.data.InfoType;
 import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.config.data.PageLocation;
@@ -39,6 +40,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@SuppressWarnings("unused")
 public class HytilsConfig extends Config {
 
     // API
@@ -57,13 +59,34 @@ public class HytilsConfig extends Config {
     @Switch(
         name = "Auto Start",
         description = "Join Hypixel immediately once the client has loaded to the main menu.",
-        category = "General", subcategory = "Automatic"
+        category = "General", subcategory = "Automatic", size = 2
     )
     public static boolean autoStart;
 
     @Switch(
+        name = "Auto-Complete Play Commands",
+        description = "Allows tab completion of /play commands.",
+        category = "General", subcategory = "Automatic"
+    )
+    public static boolean autocompletePlayCommands = true;
+
+    @Checkbox(
+        name = "Limbo Play Helper",
+        description = "When a /play or /requeue command is run in Limbo, this runs /l first and then the command.",
+        category = "General", subcategory = "Automatic"
+    )
+    public static boolean limboPlayCommandHelper = true;
+
+    @Info(
+        text = "Auto Queue will require you to interact with the game in a way to prevent abuse.",
+        category = "General", subcategory = "Automatic",
+        type = InfoType.WARNING, size = 2
+    )
+    private static boolean autoQueueInfo;
+
+    @Switch(
         name = "Auto Queue",
-        description = "Automatically queues for another game once you win or die. (This will require you to interact with the game in a way to prevent abuse)",
+        description = "Automatically queues for another game once you win or die.",
         category = "General", subcategory = "Automatic"
     )
     public static boolean autoQueue;
@@ -76,37 +99,16 @@ public class HytilsConfig extends Config {
     )
     public static int autoQueueDelay;
 
-    @Switch(
-        name = "Auto-Complete Play Commands",
-        description = "Allows tab completion of /play commands.",
-        category = "General", subcategory = "Automatic"
+    @Info(
+        text = "Automatically Check GEXP and Automatically Check Winstreak require an API Key to work.",
+        category = "General", subcategory = "Automatic",
+        type = InfoType.ERROR, size = 2
     )
-    public static boolean autocompletePlayCommands;
-
-    @Checkbox(
-        name = "Limbo Play Helper",
-        description = "When a /play command is run in Limbo, this runs /l first and then the command.",
-        category = "General", subcategory = "Automatic"
-    )
-    public static boolean limboPlayCommandHelper;
-
-    @Switch(
-        name = "Notify Mining Fatigue",
-        description = "Send a notification when you get mining fatigue.",
-        category = "General", subcategory = "Potion Effects"
-    )
-    public static boolean notifyMiningFatigue;
-
-    @Checkbox(
-        name = "Disable Mining Fatigue Notification in SkyBlock",
-        description = "Disable the mining fatigue notification in SkyBlock.",
-        category = "General", subcategory = "Potion Effects"
-    )
-    public static boolean disableNotifyMiningFatigueSkyblock;
+    private static boolean autoCheckInfo;
 
     @Switch(
         name = "Automatically Check GEXP",
-        description = "Automatically check your GEXP after you win a Hypixel game.\n§4Requires an API Key.",
+        description = "Automatically check your GEXP after you win a Hypixel game.",
         category = "General", subcategory = "Automatic"
     )
     public static boolean autoGetGEXP;
@@ -122,10 +124,24 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Automatically Check Winstreak",
-        description = "Automatically check your winstreak after you win a Hypixel game.\n§4Requires an API Key.",
+        description = "Automatically check your winstreak after you win a Hypixel game.",
         category = "General", subcategory = "Automatic"
     )
     public static boolean autoGetWinstreak;
+
+    @Switch(
+        name = "Notify Mining Fatigue",
+        description = "Send a notification when you get mining fatigue.",
+        category = "General", subcategory = "Potion Effects"
+    )
+    public static boolean notifyMiningFatigue = true;
+
+    @Checkbox(
+        name = "Disable Mining Fatigue Notification in SkyBlock",
+        description = "Disable the mining fatigue notification in SkyBlock.",
+        category = "General", subcategory = "Potion Effects"
+    )
+    public static boolean disableNotifyMiningFatigueSkyblock = true;
 
     // Chat
 
@@ -177,28 +193,29 @@ public class HytilsConfig extends Config {
         description = "Replace common game status messages with a new style.\n§eExamples:\n§a§l+ §bSteve §e(§b1§e/§b12§e)\n§c§l- §bSteve§r\n§e§l* §aGame starts in §b§l5 §aseconds.",
         category = "Chat", subcategory = "Restyler"
     )
-    public static boolean gameStatusRestyle;
+    public static boolean gameStatusRestyle = true;
 
     @Switch(
         name = "Player Count Before Player Name",
         description = "Put the player count before the player name in game join/leave messages.\n§eExample: §a§l+ §e(§b1§e/§b12§e) §bSteve",
         category = "Chat", subcategory = "Restyler"
     )
-    public static boolean playerCountBeforePlayerName;
+    public static boolean playerCountBeforePlayerName = true;
 
     @Switch(
         name = "Player Count on Player Leave",
         description = "Include the player count when players leave.\n§eExample: §c§l- §bSteve §r§e(§b1§e/§b12§e)§r",
         category = "Chat", subcategory = "Restyler"
     )
-    public static boolean playerCountOnPlayerLeave;
+    public static boolean playerCountOnPlayerLeave = true;
 
     @Switch(
         name = "Player Count Padding",
         description = "Place zeros at the beginning of the player count to align with the max player count.\n§eExample: §a§l+ §bSteve §e(§b001§e/§b100§e)",
         category = "Chat", subcategory = "Restyler"
     )
-    public static boolean padPlayerCount;
+    public static boolean padPlayerCount = true;
+
     @Switch(
         name = "Trim Line Separators",
         description = "Prevent separators from overflowing onto the next chat line.",
@@ -232,14 +249,14 @@ public class HytilsConfig extends Config {
         description = "Colors the join/leave status of friends and guild members.",
         category = "Chat", subcategory = "Visual"
     )
-    public static boolean coloredStatuses;
+    public static boolean coloredStatuses = true;
 
     @Switch(
         name = "Cleaner Game Counter",
         description = "Compacts counting announcements.\n§eExample: The game starts in 20 seconds!",
         category = "Chat", subcategory = "Visual"
     )
-    public static boolean cleanerGameStartAnnouncements;
+    public static boolean cleanerGameStartAnnouncements = true;
 
     @Switch(
         name = "Short Channel Names",
@@ -318,19 +335,26 @@ public class HytilsConfig extends Config {
     )
     public static boolean thankWatchdog;
 
+    @Info(
+        text = "Non Speech Cooldown requires an API Key to work.",
+        category = "Chat", subcategory = "Cooldown",
+        type = InfoType.ERROR
+    )
+    private static boolean nonSpeechCooldownInfo;
+
+    @Switch(
+        name = "Non Speech Cooldown",
+        description = "Show the amount of time remaining until you can speak if you are a non.\n§eExample: §eYour freedom of speech is on cooldown. Please wait 3 more seconds.",
+        category = "Chat", subcategory = "Cooldown"
+    )
+    public static boolean preventNonCooldown;
+
     @Switch(
         name = "Shout Cooldown",
         description = "Show the amount of time remaining until /shout can be reused.\n§eExample: §eShout command is on cooldown. Please wait 30 more seconds.",
         category = "Chat", subcategory = "Cooldown"
     )
-    public static boolean preventShoutingOnCooldown;
-
-    @Switch(
-        name = "Non Speech Cooldown",
-        description = "Show the amount of time remaining until you can speak if you are a non.\n§eExample: §eYour freedom of speech is on cooldown. Please wait 3 more seconds.\n§4Requires an API Key.",
-        category = "Chat", subcategory = "Cooldown"
-    )
-    public static boolean preventNonCooldown;
+    public static boolean preventShoutingOnCooldown = true;
 
     @Switch(
         name = "Hide Locraw Messages",
@@ -656,14 +680,14 @@ public class HytilsConfig extends Config {
         description = "Prevent NPCs from showing up in tab.",
         category = "Tab", subcategory = "Toggles"
     )
-    public static boolean hideNpcsInTab;
+    public static boolean hideNpcsInTab = true;
 
     @Checkbox(
         name = "Don't Hide Important NPCs",
         description = "Keeps NPCs in tab in gamemodes like SkyBlock and Replay.",
         category = "Tab", subcategory = "Toggles"
     )
-    public static boolean keepImportantNpcsInTab;
+    public static boolean keepImportantNpcsInTab = true;
 
     @Switch(
         name = "Hide Guild Tags in Tab",
@@ -684,21 +708,21 @@ public class HytilsConfig extends Config {
         description = "Prevent ping from showing up in tab while playing games, since the value is misleading. Ping will remain visible in lobbies.",
         category = "Tab", subcategory = "Toggles"
     )
-    public static boolean hidePingInTab;
+    public static boolean hidePingInTab = true;
 
     @Switch(
         name = "Cleaner Tab in SkyBlock",
         description = "Doesn't render player heads or ping for tab entries that aren't players in SkyBlock.",
         category = "Tab", subcategory = "Toggles"
     )
-    public static boolean cleanerSkyblockTabInfo;
+    public static boolean cleanerSkyblockTabInfo = true;
 
     @Switch(
         name = "Hide Advertisements in Tab",
         description = "Prevent Hypixel's advertisements from showing up in tab.\n§eExample: §aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET",
         category = "Tab", subcategory = "Toggles"
     )
-    public static boolean hideAdsInTab;
+    public static boolean hideAdsInTab = true;
 
     // Game
 
@@ -707,25 +731,25 @@ public class HytilsConfig extends Config {
         description = "Hide HUD elements such as health, hunger, and armor bars where they are the same.",
         category = "Game", subcategory = "GUI"
     )
-    public static boolean hideHudElements;
+    public static boolean hideHudElements = true;
 
     @Switch(
         name = "Hide Advertisements in Bossbars",
         description = "Hide bossbars that advertise Hypixel.\n§eExample: §e§lPlaying §f§lSKYWARS §e§lon §f§lMC.HYPIXEL.NET",
         category = "Game", subcategory = "GUI"
     )
-    public static boolean gameAdBossbar;
+    public static boolean gameAdBossbar = true;
 
     @Switch(
         name = "Hardcore Hearts",
         description = "When your bed is broken/wither is killed in Bedwars/MiniWalls, set the heart style to Hardcore.",
         category = "Game", subcategory = "GUI"
     )
-    public static boolean hardcoreHearts;
+    public static boolean hardcoreHearts = true;
 
     @Switch(
         name = "Hide Game Starting Titles",
-        description = "Hide titles such as the countdown when a game is about to begin and gamemode names.\n§eExample: §4§lINSANE MODE",
+        description = "Hide titles such as gamemode names.\n§eExample: §4§lINSANE MODE",
         category = "Game", subcategory = "GUI"
     )
     public static boolean hideGameStartingTitles;
@@ -738,25 +762,25 @@ public class HytilsConfig extends Config {
     public static boolean hideGameEndingTitles;
 
     @Switch(
-        name = "Hide Game Ending Countdown Titles",
-        description = "Hide titles that signify the time left in a game.",
+        name = "Hide Countdown Titles",
+        description = "Hide countdowns that signify when a game is about to begin/end.",
         category = "Game", subcategory = "GUI"
     )
-    public static boolean hideGameEndingCountdownTitles;
+    public static boolean hideCountdownTitles;
 
     @Switch(
         name = "Hide Armor",
         description = "Hide armor in games where armor is always the same.",
         category = "Game", subcategory = "Entities"
     )
-    public static boolean hideArmor;
+    public static boolean hideArmor = true;
 
     @Switch(
         name = "Hide Useless Game Nametags",
         description = "Hides unnecessary nametags such as those that say \"RIGHT CLICK\" or \"CLICK\" in SkyBlock, BedWars, SkyWars, and Duels, as well as other useless ones.",
         category = "Game", subcategory = "Entities"
     )
-    public static boolean hideUselessArmorStandsGame;
+    public static boolean hideUselessArmorStandsGame = true;
 
     @Switch(
         name = "Notify When Blocks Run Out",
@@ -792,7 +816,7 @@ public class HytilsConfig extends Config {
         name = "MiniWalls Beacon Color",
         category = "Game", subcategory = "Arcade"
     )
-    public static OneColor miniWallsMiddleBeaconColor = new OneColor(Color.BLUE);
+    public static OneColor miniWallsMiddleBeaconColor = new OneColor(Color.RED);
 
     @Switch(
         name = "Hide Arcade Cosmetics",
@@ -804,13 +828,27 @@ public class HytilsConfig extends Config {
     @Switch(
         name = "Colored Beds",
         description = "Make beds a different color depending on the team they are on.",
-        category = "Game", subcategory = "BedWars"
+        category = "Game", subcategory = "BedWars", size = 2
     )
     public static boolean coloredBeds = true;
 
+    @Info(
+        text = "Height Overlay requires Smooth Lightning to work.",
+        category = "Game", subcategory = "BedWars",
+        type = InfoType.ERROR
+    )
+    private static boolean heightOverlayInfo;
+
+    @Info(
+        text = "Height Overlay reloads chunks automatically when toggled.",
+        category = "Game", subcategory = "BedWars",
+        type = InfoType.WARNING
+    )
+    private static boolean heightOverlayInfo2;
+
     @Switch(
         name = "Height Overlay",
-        description = "Make blocks that are in the Hypixel height limit a different colour.\n§eReloads chunks automatically when toggled on and off.\n§4Requires Smooth Lighting.",
+        description = "Make blocks that are in the Hypixel height limit a different color.",
         category = "Game", subcategory = "BedWars"
     )
     public static boolean heightOverlay;
@@ -825,7 +863,7 @@ public class HytilsConfig extends Config {
 
     @Checkbox(
         name = "Edit Height Overlay Manually",
-        description = "Enabled the option to edit the height overlay manually.",
+        description = "Enables the option to edit the height overlay manually.",
         category = "Game", subcategory = "BedWars"
     )
     public static boolean manuallyEditHeightOverlay;
@@ -883,9 +921,9 @@ public class HytilsConfig extends Config {
     @Switch(
         name = "Pit Lag Reducer",
         description = "Hide entities at spawn while you are in the PVP area.",
-        category = "Game", subcategory = "PIT"
+        category = "Game", subcategory = "Pit"
     )
-    public static boolean pitLagReducer;
+    public static boolean pitLagReducer = true;
 
     @Switch(
         name = "Remove Non-NPCs in SkyBlock",
@@ -950,21 +988,21 @@ public class HytilsConfig extends Config {
         description = "Hides unnecessary nametags such as those that say \"RIGHT CLICK\" or \"CLICK TO PLAY\" in a lobby, as well as other useless ones.",
         category = "Lobby", subcategory = "NPCs"
     )
-    public static boolean hideUselessArmorStands;
+    public static boolean hideUselessArmorStands = true;
 
     @Switch(
         name = "Hide Lobby Bossbars",
         description = "Hide the bossbar in the lobby.",
         category = "Lobby", subcategory = "GUI"
     )
-    public static boolean lobbyBossbar;
+    public static boolean lobbyBossbar = true;
 
     @Switch(
         name = "Mystery Box Star",
         description = "Shows what star a mystery box is in the Mystery Box Vault, Orange stars are special boxes.",
         category = "Lobby", subcategory = "GUI"
     )
-    public static boolean mysteryBoxStar;
+    public static boolean mysteryBoxStar = true;
 
     @Switch(
         name = "Remove Limbo AFK Title",
@@ -993,7 +1031,7 @@ public class HytilsConfig extends Config {
         description = "While in Limbo, play the ding sound if you get a PM. Currently, Hypixel's option does not work in Limbo.",
         category = "Lobby", subcategory = "Limbo"
     )
-    public static boolean limboDing;
+    public static boolean limboDing = true;
 
     public static int configNumber = 0;
 

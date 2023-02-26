@@ -36,7 +36,7 @@ public class RequeueCommand {
     protected static String game = "";
 
     @Main(description = "Requeues you into the last game you played.")
-    private void requeue() {
+    private void main() {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         LocrawInfo lastLocraw = LocrawUtil.INSTANCE.getLastLocrawInfo();
         if (!HypixelUtils.INSTANCE.isHypixel() || locraw == null || lastLocraw == null) {
@@ -44,32 +44,37 @@ public class RequeueCommand {
         }
 
         if (LocrawUtil.INSTANCE.isInGame()) {
+            game = locraw.getGameMode();
             switch (locraw.getGameType()) {
-                case HOUSING:
                 case SKYBLOCK:
+                case HOUSING:
                 case REPLAY:
                     UChat.chat(ChatColor.RED + "You must be in a valid game to use this command.");
                     return;
             }
-            game = locraw.getGameMode();
         } else if (!LocrawUtil.INSTANCE.isInGame() && !lastLocraw.getGameMode().equals("lobby")) {
+            game = lastLocraw.getGameMode();
             switch (lastLocraw.getGameType()) {
+                case SKYBLOCK:
+                    game = lastLocraw.getRawGameType(); // requeues you back into SkyBlock when you are in the lobby. Useful when you get kicked for being AFK.
+                    break;
                 case HOUSING:
                 case REPLAY:
                     UChat.chat(ChatColor.RED + "The last round has to be a valid game to use this command.");
                     return;
             }
-            game = lastLocraw.getGameMode();
         } else {
             UChat.chat(ChatColor.RED + "The last round has to be a game to use this command.");
             return;
         }
 
+        // tries to get the game name from the LocrawGamesHandler, if it doesn't exist, it will use the game name from the LocrawInfo.
         String value = LocrawGamesHandler.locrawGames.get(locraw.getRawGameType().toLowerCase() + "_" + game.toLowerCase());
         if (value != null) {
             game = value;
         }
 
+        // if the limboPlayCommandHelper is enabled and the player is in limbo, it will queue the /lobby command before the /play command.
         if (HytilsConfig.limboPlayCommandHelper && LimboLimiter.inLimbo()) {
             HytilsReborn.INSTANCE.getCommandQueue().queue("/lobby");
         }

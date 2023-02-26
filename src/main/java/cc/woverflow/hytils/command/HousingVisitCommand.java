@@ -24,10 +24,11 @@ import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Description;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.HytilsReborn;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -53,20 +54,24 @@ public class HousingVisitCommand {
         UChat.chat(ChatColor.RED + "Usage: /housingvisit <username>");
     }
 
-    @Main
-    private void handle(@Description("Player Name") GameProfile player) {
+    @Main(description = "Visits a player's house in Housing.")
+    private void main(@Description("Player Name") GameProfile player) {
+        if (!HypixelUtils.INSTANCE.isHypixel()) {
+            UChat.chat(ChatColor.RED + "You must be on Hypixel to use this command!");
+            return;
+        }
         if (usernameRegex.matcher(player.getName()).matches()) {
             playerName = player.getName();
 
             // if we are in the housing lobby, just immediately run the /visit command
-            if ("HOUSING".equals(EnumChatFormatting.getTextWithoutFormattingCodes(Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()))) {
+            if (LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.HOUSING && !LocrawUtil.INSTANCE.isInGame()) {
                 visit(0);
             } else {
                 HytilsReborn.INSTANCE.getCommandQueue().queue("/l housing");
                 MinecraftForge.EVENT_BUS.register(new HousingVisitHook());
             }
         } else {
-            HytilsReborn.INSTANCE.sendMessage("&cInvalid username!");
+            UChat.chat(ChatColor.RED + "Invalid username!");
         }
     }
 

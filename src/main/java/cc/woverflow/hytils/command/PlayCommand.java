@@ -86,12 +86,12 @@ public class PlayCommand {
             } else if (games.containsValue(game.name.toLowerCase(Locale.ENGLISH))) {
                 command = game.name;
             } else {
-                HytilsReborn.INSTANCE.sendMessage("&cInvalid game: \"" + game.name + "\"");
+                UChat.chat(ChatColor.RED + "Invalid game: \"" + game.name + "\"");
                 return;
             }
         }
 
-        if (HytilsConfig.limboPlayCommandHelper && LimboLimiter.inLimbo()){
+        if (HytilsConfig.limboPlayCommandHelper && LimboLimiter.inLimbo()) {
             HytilsReborn.INSTANCE.getCommandQueue().queue("/l");
         }
         HytilsReborn.INSTANCE.getCommandQueue().queue("/play " + command);

@@ -23,7 +23,10 @@ import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.handlers.chat.modules.blockers.*;
 import cc.woverflow.hytils.handlers.chat.modules.events.AchievementEvent;
 import cc.woverflow.hytils.handlers.chat.modules.events.LevelupEvent;
-import cc.woverflow.hytils.handlers.chat.modules.modifiers.*;
+import cc.woverflow.hytils.handlers.chat.modules.modifiers.DefaultChatRestyler;
+import cc.woverflow.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
+import cc.woverflow.hytils.handlers.chat.modules.modifiers.WhiteChat;
+import cc.woverflow.hytils.handlers.chat.modules.modifiers.WhitePrivateMessages;
 import cc.woverflow.hytils.handlers.chat.modules.triggers.*;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -99,6 +102,7 @@ public class ChatHandler {
         this.registerModule(new AutoVictory());
         this.registerModule(new AutoWarn());
         this.registerModule(new GuildWelcomer());
+        this.registerModule(new SilentRemoval());
         this.registerModule(new ThankWatchdog());
 
         // Priority

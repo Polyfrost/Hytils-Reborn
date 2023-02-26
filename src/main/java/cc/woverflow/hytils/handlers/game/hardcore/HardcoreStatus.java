@@ -38,10 +38,11 @@ public class HardcoreStatus {
     @SubscribeEvent
     public void onTitle(TitleEvent event) {
         final String unformattedTitle = EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle());
+        final String unformattedSubTitle = EnumChatFormatting.getTextWithoutFormattingCodes(event.getSubtitle());
 
         if (unformattedTitle != null && (unformattedTitle.equals("Your Mini Wither died!") ||
             unformattedTitle.equals("Your Wither died!") ||
-            unformattedTitle.equals("BED DESTROYED!")) &&
+            unformattedSubTitle.equals("You will no longer respawn!")) &&
             HytilsConfig.hardcoreHearts) {
             danger = true;
         }

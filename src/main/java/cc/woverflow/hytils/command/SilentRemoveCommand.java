@@ -21,54 +21,51 @@ package cc.woverflow.hytils.command;
 import cc.polyfrost.oneconfig.libs.universal.ChatColor;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Description;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand;
-import cc.woverflow.hytils.HytilsReborn;
+import cc.woverflow.hytils.handlers.chat.modules.triggers.SilentRemoval;
 import com.mojang.authlib.GameProfile;
 
 import java.util.Set;
+import java.util.regex.Pattern;
 
 @Command("silentremove")
 public class SilentRemoveCommand {
 
+    protected static final Pattern usernameRegex = Pattern.compile("\\w{1,16}");
+
     @Main
     public void handle() {
-        UChat.chat(ChatColor.RED + "Usage: /silentremove <add/remove> <player>");
-        UChat.chat(ChatColor.RED + "   or: /silentremove <player>");
+        UChat.chat(ChatColor.RED + "Usage: /silentremove <player>");
     }
 
     @Main(description = "Adds or removes a player from the silent list.")
-    private void player(GameProfile player) {
+    private void main(@Description("Player Name") GameProfile player) {
         String name = player.getName();
-        final Set<String> silentUsers = HytilsReborn.INSTANCE.getSilentRemoval().getSilentUsers();
+        if (!usernameRegex.matcher(name).matches()) {
+            UChat.chat(ChatColor.RED + "Invalid username.");
+            return;
+        }
+        final Set<String> silentUsers = SilentRemoval.getSilentUsers();
         if (silentUsers.contains(name)) {
             silentUsers.remove(name);
-            HytilsReborn.INSTANCE.sendMessage("&aRemoved &e" + name + " &afrom the removal queue.");
+            UChat.chat("&aRemoved &e" + name + " &afrom the removal queue.");
             return;
         }
 
         silentUsers.add(name);
-        HytilsReborn.INSTANCE.sendMessage("&aAdded &e" + name + " &ato the removal queue.");
-    }
-
-    @SubCommand(description = "Adds a player to the silent list.")
-    private void add(GameProfile entityPlayer) {
-        player(entityPlayer);
-    }
-
-    @SubCommand(description = "Removes a player from the silent list.")
-    private void remove(GameProfile entityPlayer) {
-        player(entityPlayer);
+        UChat.chat("&aAdded &e" + name + " &ato the removal queue.");
     }
 
     @SubCommand(description = "Clears the silent removal queue.")
     private void clear() {
-        final Set<String> silentUsers = HytilsReborn.INSTANCE.getSilentRemoval().getSilentUsers();
+        final Set<String> silentUsers = SilentRemoval.getSilentUsers();
         if (silentUsers.isEmpty()) {
-            HytilsReborn.INSTANCE.sendMessage("&cSilent removal list is already empty.");
+            UChat.chat(ChatColor.RED + "Silent removal list is already empty.");
             return;
         }
         silentUsers.clear();
-        HytilsReborn.INSTANCE.sendMessage("&aCleared the silent removal list.");
+        UChat.chat(ChatColor.GREEN + "Cleared the silent removal list.");
     }
 }
