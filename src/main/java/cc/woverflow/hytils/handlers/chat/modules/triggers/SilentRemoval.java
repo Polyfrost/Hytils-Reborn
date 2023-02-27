@@ -16,28 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.woverflow.hytils.handlers.silent;
+package cc.woverflow.hytils.handlers.chat.modules.triggers;
 
 import cc.polyfrost.oneconfig.utils.Notifications;
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.HytilsReborn;
+import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 
-public class SilentRemoval {
+public class SilentRemoval implements ChatReceiveModule {
 
-    private final Set<String> silentUsers = new HashSet<>();
+    private static final Set<String> silentUsers = new HashSet<>();
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public void onChat(ClientChatReceivedEvent event) {
-        if (!HypixelUtils.INSTANCE.isHypixel()) return;
-        final Matcher matcher = HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().silentRemovalLeaveMessageRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
+    @Override
+    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+        final Matcher matcher = getLanguage().silentRemovalLeaveMessageRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
 
         if (matcher.matches()) {
             // not a friend anymore :(
@@ -51,7 +49,12 @@ public class SilentRemoval {
         }
     }
 
-    public Set<String> getSilentUsers() {
+    public static Set<String> getSilentUsers() {
         return silentUsers;
+    }
+
+    @Override
+    public int getPriority() {
+        return -10;
     }
 }

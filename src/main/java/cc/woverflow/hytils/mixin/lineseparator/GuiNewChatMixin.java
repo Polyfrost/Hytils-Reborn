@@ -39,7 +39,7 @@ public class GuiNewChatMixin {
         LineSeparatorEnhancements.isSeparatingChat = false;
     }
 
-    @ModifyArg(method = "drawChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;drawStringWithShadow(Ljava/lang/String;FFI)I"), index = 0)
+    @ModifyArg(method = "drawChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;drawStringWithShadow(Ljava/lang/String;FFI)I"))
     private String changeText(String text) {
         return LineSeparatorEnhancements.cleanLineSeparator(text);
     }

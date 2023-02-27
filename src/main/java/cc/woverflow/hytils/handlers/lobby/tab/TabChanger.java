@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 @SuppressWarnings("unused")
 public class TabChanger {
     private static final LanguageData language = HytilsReborn.INSTANCE.getLanguageHandler().getCurrent();
-    private static final Pattern validMinecraftUsername = Pattern.compile("(\\[\\d+])? \\w{1,16}(?: .{1,3}|$)");
+    private static final Pattern validMinecraftUsername = Pattern.compile("\\[\\d+] \\w{1,16}(?: .{1,3}|$)");
     private static final Pattern skyblockTabInformationEntryGameProfileNameRegex = Pattern.compile("![A-D]-[a-v]");
     private static final Pattern trimChatComponentTextRegex = Pattern.compile("^(?:\\s|§r|§s)*|(?:\\s|§r|§s)*$");
 
@@ -103,7 +103,7 @@ public class TabChanger {
             }
 
             LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && locraw != null && locraw.getGameType() != LocrawInfo.GameType.HOUSING) {
+            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && locraw != null && (locraw.getGameType() != LocrawInfo.GameType.HOUSING || !LocrawUtil.INSTANCE.isInGame())) {
                 // trim off the guild tag
                 // e.g. Steve §6[GUILD]
                 name = name.substring(0, name.lastIndexOf("[") - 3);

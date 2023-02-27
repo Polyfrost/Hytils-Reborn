@@ -32,97 +32,97 @@ public class BlockHighlightConfig {
         name = "White",
         category = "Colors"
     )
-    public static OneColor white = new OneColor(MapColor.snowColor.colorValue);
+    public static OneColor white = new OneColor(MapColor.snowColor.getMapColor(2));
 
     @Color(
         name = "Orange",
         category = "Colors"
     )
-    public static OneColor orange = new OneColor(MapColor.adobeColor.colorValue);
+    public static OneColor orange = new OneColor(MapColor.adobeColor.getMapColor(2));
 
     @Color(
         name = "Magenta",
         category = "Colors"
     )
-    public static OneColor magenta = new OneColor(MapColor.magentaColor.colorValue);
+    public static OneColor magenta = new OneColor(MapColor.magentaColor.getMapColor(2));
 
     @Color(
         name = "Light Blue",
         category = "Colors"
     )
-    public static OneColor lightBlue = new OneColor(MapColor.lightBlueColor.colorValue);
+    public static OneColor lightBlue = new OneColor(MapColor.lightBlueColor.getMapColor(2));
 
     @Color(
         name = "Yellow",
         category = "Colors"
     )
-    public static OneColor yellow = new OneColor(MapColor.yellowColor.colorValue);
+    public static OneColor yellow = new OneColor(MapColor.yellowColor.getMapColor(2));
 
     @Color(
         name = "Lime",
         category = "Colors"
     )
-    public static OneColor lime = new OneColor(MapColor.limeColor.colorValue);
+    public static OneColor lime = new OneColor(MapColor.limeColor.getMapColor(2));
 
     @Color(
         name = "Pink",
         category = "Colors"
     )
-    public static OneColor pink = new OneColor(MapColor.pinkColor.colorValue);
+    public static OneColor pink = new OneColor(MapColor.pinkColor.getMapColor(2));
 
     @Color(
         name = "Gray",
         category = "Colors"
     )
-    public static OneColor gray = new OneColor(MapColor.grayColor.colorValue);
+    public static OneColor gray = new OneColor(MapColor.grayColor.getMapColor(2));
 
     @Color(
         name = "Silver",
         category = "Colors"
     )
-    public static OneColor silver = new OneColor(MapColor.silverColor.colorValue);
+    public static OneColor silver = new OneColor(MapColor.silverColor.getMapColor(2));
 
     @Color(
         name = "Cyan",
         category = "Colors"
     )
-    public static OneColor cyan = new OneColor(MapColor.cyanColor.colorValue);
+    public static OneColor cyan = new OneColor(MapColor.cyanColor.getMapColor(2));
 
     @Color(
         name = "Purple",
         category = "Colors"
     )
-    public static OneColor purple = new OneColor(MapColor.purpleColor.colorValue);
+    public static OneColor purple = new OneColor(MapColor.purpleColor.getMapColor(2));
 
     @Color(
         name = "Blue",
         category = "Colors"
     )
-    public static OneColor blue = new OneColor(MapColor.blueColor.colorValue);
+    public static OneColor blue = new OneColor(MapColor.blueColor.getMapColor(2));
 
     @Color(
         name = "Brown",
         category = "Colors"
     )
-    public static OneColor brown = new OneColor(MapColor.brownColor.colorValue);
+    public static OneColor brown = new OneColor(MapColor.brownColor.getMapColor(2));
 
     @Color(
         name = "Green",
         category = "Colors"
     )
-    public static OneColor green = new OneColor(MapColor.greenColor.colorValue);
+    public static OneColor green = new OneColor(MapColor.greenColor.getMapColor(2));
 
     @Color(
         name = "Red",
         category = "Colors"
     )
-    public static OneColor red = new OneColor(MapColor.redColor.colorValue);
+    public static OneColor red = new OneColor(MapColor.redColor.getMapColor(2));
 
     @Color(
         name = "Black",
         category = "Colors"
     )
-    public static OneColor black = new OneColor(MapColor.blackColor.colorValue);
+    public static OneColor black = new OneColor(MapColor.blackColor.getMapColor(2));
 
     public BlockHighlightConfig() {
         colorMap.putIfAbsent(MapColor.snowColor, () -> white);

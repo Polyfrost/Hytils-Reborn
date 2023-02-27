@@ -18,6 +18,8 @@
 
 package cc.woverflow.hytils.command;
 
+import cc.polyfrost.oneconfig.libs.universal.ChatColor;
+import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
@@ -25,10 +27,12 @@ import net.minecraft.client.Minecraft;
 
 @Command("limbo")
 public class LimboCommand {
-    @Main
+    @Main(description = "Sends you to limbo.")
     private void main() {
         if (HypixelUtils.INSTANCE.isHypixel()) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("§");
+        } else {
+            UChat.chat(ChatColor.RED + "You must be on Hypixel to use this command.");
         }
     }
 }

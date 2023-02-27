@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.woverflow.hytils.handlers.game;
+package cc.woverflow.hytils.handlers.game.titles;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.config.HytilsConfig;
@@ -25,37 +25,30 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class GameStartingTitles {
-    // Hides the countdown timer title text that is displayed before a game is about to start and other titles
+public class CountdownTitles {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onTitle(TitleEvent event) {
-        if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.hideGameStartingTitles) {
+        if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.hideCountdownTitles) {
             return;
         }
 
-        switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle().toUpperCase())) {
-            case "10 SECONDS":
+        switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle())) {
+            case "60":
+            case "30":
             case "10":
+            case "9":
+            case "8":
+            case "7":
+            case "6":
             case "5":
             case "4":
             case "3":
             case "2":
             case "1":
+            case "10 SECONDS":
             case "❸":
             case "❷":
             case "❶":
-            case "WAITING FOR MORE PLAYERS...":
-            case "SKYWARS":
-            case "INSANE MODE":
-            case "FIGHT!":
-            case "ZOMBIES":
-            case "ASSASSINS":
-            case "YOU ARE RED":
-            case "YOU ARE BLUE":
-            case "YOU ARE YELLOW":
-            case "YOU ARE GREEN":
-            case "PRE ROUND":
-            case "ROUND START":
                 event.setCanceled(true);
                 break;
         }

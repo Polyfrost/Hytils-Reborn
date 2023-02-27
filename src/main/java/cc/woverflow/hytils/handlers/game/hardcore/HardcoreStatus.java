@@ -38,10 +38,11 @@ public class HardcoreStatus {
     @SubscribeEvent
     public void onTitle(TitleEvent event) {
         final String unformattedTitle = EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle());
+        final String unformattedSubTitle = EnumChatFormatting.getTextWithoutFormattingCodes(event.getSubtitle());
 
         if (unformattedTitle != null && (unformattedTitle.equals("Your Mini Wither died!") ||
             unformattedTitle.equals("Your Wither died!") ||
-            unformattedTitle.equals("BED DESTROYED!")) &&
+            unformattedSubTitle.equals("You will no longer respawn!")) &&
             HytilsConfig.hardcoreHearts) {
             danger = true;
         }
@@ -50,7 +51,7 @@ public class HardcoreStatus {
     @SubscribeEvent
     public void onActionbar(ClientChatReceivedEvent event) { // The forge chat event gets stuff from the action bar as well
         String msg = event.message.getUnformattedText();
-        if ((msg.equals("YOUR WITHER IS DEAD") || msg.startsWith("BED DESTRUCTION > Your Bed was")) &&
+        if ((msg.equals("YOUR WITHER IS DEAD") || msg.startsWith("BED DESTRUCTION > Your Bed was") || msg.equals("All beds have been destroyed!")) &&
             HytilsConfig.hardcoreHearts) {
             danger = true;
         }

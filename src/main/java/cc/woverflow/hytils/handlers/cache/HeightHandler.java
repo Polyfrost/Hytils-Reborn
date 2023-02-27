@@ -77,7 +77,7 @@ public class HeightHandler {
                         }
                     }
                 }
-            } else if (locraw != null && locraw.getGameMode().equals("BRIDGE")) {
+            } else if (locraw != null && locraw.getGameMode().contains("BRIDGE")) {
                 currentHeight = 100;
                 return currentHeight;
             }
