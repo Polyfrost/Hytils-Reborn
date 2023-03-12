@@ -32,7 +32,7 @@ public class CountdownTitles {
             return;
         }
 
-        switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle())) {
+        switch (EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle().toUpperCase())) {
             case "60":
             case "30":
             case "10":

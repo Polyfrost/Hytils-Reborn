@@ -292,15 +292,23 @@ public class HypixelAPIUtils {
      * @param username The username of the player to get.
      */
     public static String getUUID(String username) {
-        JsonObject uuidResponse =
-            NetworkUtils.getJsonElement("https://api.mojang.com/users/profiles/minecraft/" + username).getAsJsonObject();
-        if (uuidResponse.has("error")) {
+        try {
+            JsonObject uuidResponse =
+                NetworkUtils.getJsonElement("https://api.mojang.com/users/profiles/minecraft/" + username).getAsJsonObject();
+            if (uuidResponse.has("error")) {
+                HytilsReborn.INSTANCE.sendMessage(
+                    EnumChatFormatting.RED + "Failed with error: " + uuidResponse.get("reason").getAsString()
+                );
+                return null;
+            }
+            return uuidResponse.get("id").getAsString();
+        } catch (Exception e) {
+            e.printStackTrace();
             HytilsReborn.INSTANCE.sendMessage(
-                EnumChatFormatting.RED + "Failed with error: " + uuidResponse.get("reason").getAsString()
+                EnumChatFormatting.RED + "The Mojang API is currently down. Please try again later."
             );
             return null;
         }
-        return uuidResponse.get("id").getAsString();
     }
 
     public static boolean isValidKey(String key) {

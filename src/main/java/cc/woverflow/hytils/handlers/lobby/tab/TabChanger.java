@@ -25,14 +25,10 @@ import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.language.LanguageData;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -127,36 +123,36 @@ public class TabChanger {
         return name;
     }
 
-    public static IChatComponent modifyFooter(IChatComponent footer) {
-        if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel() && footer != null && footer.getFormattedText().contains(language.tabFooterAdvertisement)) {
-            String trimmedFooter = footer.getFormattedText().replaceAll((trimChatComponentTextRegex.pattern()), "");
+    public static List<String> modifyFooter(FontRenderer instance, String formattedFooter, int wrapWidth) {
+        if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel() && formattedFooter.contains(language.tabFooterAdvertisement)) {
+            String trimmedFooter = formattedFooter.replaceAll((trimChatComponentTextRegex.pattern()), "");
             if (trimmedFooter.matches(language.tabFooterAdvertisement)) {
-                footer = null;
+                return new ArrayList<>();
             } else {
                 for (String line : new ArrayList<>(Arrays.asList(trimmedFooter.split("\n")))) {
                     if (line.contains(language.tabFooterAdvertisement)) {
-                        footer = new ChatComponentText(footer.getFormattedText().replace(line, "").replaceAll(("^|(?:\\s|§r|§s)*$"), ""));
+                        formattedFooter = formattedFooter.replace(line, "").replaceAll(("^|(?:\\s|§r|§s)*$"), "");
                     }
                 }
             }
         }
-        return footer;
+        return instance.listFormattedStringToWidth(formattedFooter, wrapWidth - 50);
     }
 
-    public static IChatComponent modifyHeader(IChatComponent header) {
-        if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel() && header != null && header.getFormattedText().contains(language.tabHeaderAdvertisement)) {
-            String trimmedHeader = header.getFormattedText().replaceAll((trimChatComponentTextRegex.pattern()), "");
+    public static List<String> modifyHeader(FontRenderer instance, String formattedHeader, int wrapWidth) {
+        if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel() && formattedHeader.contains(language.tabHeaderAdvertisement)) {
+            String trimmedHeader = formattedHeader.replaceAll((trimChatComponentTextRegex.pattern()), "");
             if (trimmedHeader.matches(language.tabHeaderAdvertisement)) {
-                header = null;
+                return new ArrayList<>();
             } else {
                 for (String line : new ArrayList<>(Arrays.asList(trimmedHeader.split("\n")))) {
                     if (line.contains(language.tabHeaderAdvertisement)) {
-                        header = new ChatComponentText(header.getFormattedText().replace(line, "").replaceAll(("^(?:\\s|§r|§s)*|$"), ""));
+                        formattedHeader = formattedHeader.replace(line, "").replaceAll(("^(?:\\s|§r|§s)*|$"), "");
                     }
                 }
             }
         }
-        return header;
+        return instance.listFormattedStringToWidth(formattedHeader, wrapWidth - 50);
     }
 
     public static boolean shouldRenderPlayerHead(NetworkPlayerInfo networkPlayerInfo) {
