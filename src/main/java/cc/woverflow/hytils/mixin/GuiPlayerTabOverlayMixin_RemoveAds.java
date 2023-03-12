@@ -19,28 +19,26 @@
 package cc.woverflow.hytils.mixin;
 
 import cc.woverflow.hytils.handlers.lobby.tab.TabChanger;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
-import net.minecraft.scoreboard.ScoreObjective;
-import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.util.IChatComponent;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.Redirect;
+
+import java.util.List;
 
 @Mixin(GuiPlayerTabOverlay.class)
 public class GuiPlayerTabOverlayMixin_RemoveAds {
 
-    @Shadow
-    private IChatComponent footer;
+    @Redirect(method = "renderPlayerlist", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;listFormattedStringToWidth(Ljava/lang/String;I)Ljava/util/List;", ordinal = 1))
+    private List<String> hideAdvertisementsInTabFooter(FontRenderer instance, String formattedFooter, int wrapWidth) {
+        return TabChanger.modifyFooter(instance, formattedFooter, wrapWidth);
 
-    @Shadow
-    private IChatComponent header;
+    }
 
-    @Inject(method = "renderPlayerlist", at = @At("HEAD"))
-    private void hideAdvertisementsInTab(int width, Scoreboard scoreboard, ScoreObjective objective, CallbackInfo ci) {
-        footer = TabChanger.modifyFooter(footer);
-        header = TabChanger.modifyHeader(header);
+    @Redirect(method = "renderPlayerlist", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;listFormattedStringToWidth(Ljava/lang/String;I)Ljava/util/List;", ordinal = 0))
+    private List<String> hideAdvertisementsInTabHeader(FontRenderer instance, String formattedHeader, int wrapWidth) {
+        return TabChanger.modifyHeader(instance, formattedHeader, wrapWidth);
+
     }
 }

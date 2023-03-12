@@ -34,14 +34,14 @@ public class GuiIngameForgeMixin_HideHotbar {
     @Inject(method = "renderHealth", at = @At("HEAD"), cancellable = true)
     public void cancelHealthbar(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-        if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
+        if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
             if (!LocrawUtil.INSTANCE.isInGame()) {
                 // rudimentary check if player has engaged in pvp or something
                 if (Minecraft.getMinecraft().thePlayer.getHealth() < 20) return;
                 ci.cancel();
                 return;
             }
-
+            if (locraw == null) return;
             LocrawInfo.GameType gameType = locraw.getGameType();
             String gameMode = locraw.getGameMode();
             switch (gameType) {
@@ -82,12 +82,12 @@ public class GuiIngameForgeMixin_HideHotbar {
     @Inject(method = "renderFood", at = @At("HEAD"), cancellable = true)
     public void cancelFood(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-        if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
+        if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
             if (!LocrawUtil.INSTANCE.isInGame()) {
                 ci.cancel();
                 return;
             }
-
+            if (locraw == null) return;
             LocrawInfo.GameType gameType = locraw.getGameType();
             String gameMode = locraw.getGameMode();
             switch (gameType) {
@@ -137,12 +137,12 @@ public class GuiIngameForgeMixin_HideHotbar {
     @Inject(method = "renderArmor", at = @At("HEAD"), cancellable = true)
     public void cancelArmor(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-        if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
+        if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
             if (!LocrawUtil.INSTANCE.isInGame()) {
                 ci.cancel();
                 return;
             }
-
+            if (locraw == null) return;
             LocrawInfo.GameType gameType = locraw.getGameType();
             String gameMode = locraw.getGameMode();
             switch (gameType) {
@@ -175,12 +175,12 @@ public class GuiIngameForgeMixin_HideHotbar {
     @Inject(method = "renderAir", at = @At("HEAD"), cancellable = true)
     public void cancelAir(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-        if (HytilsConfig.hideHudElements && locraw != null && HypixelUtils.INSTANCE.isHypixel()) {
+        if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
             if (!LocrawUtil.INSTANCE.isInGame()) {
                 ci.cancel();
                 return;
             }
-
+            if (locraw == null) return;
             LocrawInfo.GameType gameType = locraw.getGameType();
             switch (gameType) {
                 case BUILD_BATTLE:

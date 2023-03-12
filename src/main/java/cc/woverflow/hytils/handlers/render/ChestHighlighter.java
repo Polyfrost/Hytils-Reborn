@@ -22,6 +22,7 @@ import cc.polyfrost.oneconfig.config.core.OneColor;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
+import cc.woverflow.hytils.events.TitleEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -32,6 +33,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -62,6 +64,13 @@ public class ChestHighlighter {
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Unload event) {
         highlightedChestPositions.clear();
+    }
+
+    @SubscribeEvent
+    public void onTitle(TitleEvent event) {
+        if (EnumChatFormatting.getTextWithoutFormattingCodes(event.getSubtitle()).equals("All chests have been refilled!")) {
+            highlightedChestPositions.clear();
+        }
     }
 
     @SubscribeEvent
@@ -96,6 +105,7 @@ public class ChestHighlighter {
     /**
      * Taken from NotEnoughUpdates under Creative Commons Attribution-NonCommercial 3.0
      * https://github.com/Moulberry/NotEnoughUpdates/blob/master/LICENSE
+     *
      * @author Moulberry
      */
     private void drawFilledBoundingBox(AxisAlignedBB aabb, OneColor c) {
@@ -107,7 +117,7 @@ public class ChestHighlighter {
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 
-        GlStateManager.color(c.getRed()/255f, c.getGreen()/255f, c.getBlue()/255f, c.getAlpha()/255f* (float) 0.8);
+        GlStateManager.color(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, c.getAlpha() / 255f * (float) 0.8);
 
         //vertical
         worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
@@ -124,7 +134,7 @@ public class ChestHighlighter {
         tessellator.draw();
 
 
-        GlStateManager.color(c.getRed()/255f*0.8f, c.getGreen()/255f*0.8f, c.getBlue()/255f*0.8f, c.getAlpha()/255f* (float) 0.8);
+        GlStateManager.color(c.getRed() / 255f * 0.8f, c.getGreen() / 255f * 0.8f, c.getBlue() / 255f * 0.8f, c.getAlpha() / 255f * (float) 0.8);
 
         //x
         worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
@@ -141,7 +151,7 @@ public class ChestHighlighter {
         tessellator.draw();
 
 
-        GlStateManager.color(c.getRed()/255f*0.9f, c.getGreen()/255f*0.9f, c.getBlue()/255f*0.9f, c.getAlpha()/255f* (float) 0.8);
+        GlStateManager.color(c.getRed() / 255f * 0.9f, c.getGreen() / 255f * 0.9f, c.getBlue() / 255f * 0.9f, c.getAlpha() / 255f * (float) 0.8);
         //z
         worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
         worldrenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
