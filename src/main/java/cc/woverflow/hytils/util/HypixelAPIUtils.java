@@ -23,10 +23,12 @@ import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.HeightHandler;
+import cc.woverflow.hytils.util.ranks.RankType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -42,9 +44,9 @@ import java.util.TimeZone;
 public class HypixelAPIUtils {
     public static String gexp;
     public static String winstreak;
-    public static String rank;
     public static LocrawInfo locraw;
     private int ticks = 0;
+    private static final String[] rankValues = {"rank", "monthlyPackageRank", "newPackageRank", "packageRank"};
 
     private static String getCurrentESTTime() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -270,20 +272,25 @@ public class HypixelAPIUtils {
      * Gets the Hypixel rank of the specified player.
      *
      * @param username The username of the player.
-     * @return Player rank
+     * @return Player rank, RankType.UNKNOWN if the player does not exist or the API key is empty
      */
-    public static String getRank(String username) {
-        if (!HytilsConfig.apiKey.isEmpty() && HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
+    public static RankType getRank(String username) {
+        if (!HytilsConfig.apiKey.isEmpty() && HypixelUtils.INSTANCE.isValidKey(HytilsConfig.apiKey)) {
             String uuid = getUUID(username);
             try {
                 JsonObject playerRank =
                     NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player");
-                rank = playerRank.get("newPackageRank").toString();
+                for (String value : rankValues) {
+                    if (playerRank.has(value) && !playerRank.get(value).getAsString().matches("NONE|NORMAL")) {
+                        return RankType.getRank(playerRank.get(value).getAsString());
+                    }
+                }
+                return RankType.NON;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return rank;
+        return RankType.UNKNOWN;
     }
 
     /**
@@ -303,22 +310,11 @@ public class HypixelAPIUtils {
             }
             return uuidResponse.get("id").getAsString();
         } catch (Exception e) {
-            e.printStackTrace();
             HytilsReborn.INSTANCE.sendMessage(
-                EnumChatFormatting.RED + "The Mojang API is currently down. Please try again later."
+                EnumChatFormatting.RED + "Failed to fetch " + username + "'s data. Please make sure this user exists."
             );
             return null;
         }
-    }
-
-    public static boolean isValidKey(String key) {
-        try {
-            JsonObject gotten = NetworkUtils.getJsonElement("https://api.hypixel.net/key?key=" + key).getAsJsonObject();
-            return gotten.has("success") && gotten.get("success").getAsBoolean();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     @Subscribe
