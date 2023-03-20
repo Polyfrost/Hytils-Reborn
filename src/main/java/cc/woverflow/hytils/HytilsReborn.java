@@ -21,6 +21,7 @@ package cc.woverflow.hytils;
 import cc.polyfrost.oneconfig.events.EventManager;
 import cc.polyfrost.oneconfig.libs.universal.ChatColor;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import cc.woverflow.hytils.command.*;
 import cc.woverflow.hytils.config.HytilsConfig;
@@ -53,6 +54,7 @@ import cc.woverflow.hytils.handlers.lobby.npc.NPCHandler;
 import cc.woverflow.hytils.handlers.render.ChestHighlighter;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
 import cc.woverflow.hytils.util.friends.FriendCache;
+import cc.woverflow.hytils.util.ranks.RankType;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
@@ -96,7 +98,7 @@ public class HytilsReborn {
     public boolean isChatting;
     private boolean loadedCall;
 
-    public String rank;
+    private RankType rank;
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
@@ -134,7 +136,7 @@ public class HytilsReborn {
         isPatcher = Loader.isModLoaded("patcher");
         isChatting = Loader.isModLoaded("chatting");
 
-        rank = HypixelAPIUtils.getRank(Minecraft.getMinecraft().getSession().getUsername());
+        Multithreading.runAsync(() -> rank = HypixelAPIUtils.getRank(Minecraft.getMinecraft().getSession().getUsername()));
     }
 
     @Mod.EventHandler
@@ -227,5 +229,9 @@ public class HytilsReborn {
 
     public FriendCache getFriendCache() {
         return friendCache;
+    }
+
+    public RankType getRank() {
+        return rank;
     }
 }

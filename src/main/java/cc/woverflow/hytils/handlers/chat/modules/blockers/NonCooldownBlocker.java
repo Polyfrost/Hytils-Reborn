@@ -21,6 +21,7 @@ package cc.woverflow.hytils.handlers.chat.modules.blockers;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatSendModule;
+import cc.woverflow.hytils.util.ranks.RankType;
 import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,9 +34,8 @@ public class NonCooldownBlocker implements ChatSendModule {
 
     @Override
     public @Nullable String onMessageSend(@NotNull String message) {
-        String rank = HytilsReborn.INSTANCE.rank;
         if (message.startsWith("/")) return message;
-        if (rank != null && rank.equals("DEFAULT")) {
+        if (HytilsReborn.INSTANCE.getRank() == RankType.NON) {
             if (nonCooldown < System.currentTimeMillis()) {
                 nonCooldown = System.currentTimeMillis() + (getCooldownLengthInSeconds() * 1000L);
                 return message;

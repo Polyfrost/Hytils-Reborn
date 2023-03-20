@@ -20,7 +20,9 @@ package cc.woverflow.hytils.handlers.lobby.mysterybox;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.config.HytilsConfig;
+import cc.woverflow.hytils.util.ranks.RankType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiChest;
@@ -42,6 +44,10 @@ import java.util.regex.Pattern;
 public class MysteryBoxStar {
 
     private final Pattern mysteryBoxStarPattern = Pattern.compile("\\u00a75\\u00a7o\\u00a77\\u00a77Quality: \\u00a7e(?<stars>\\u2730+).*");
+
+    private boolean missingRank(int stars) {
+        return (HytilsReborn.INSTANCE.getRank() == RankType.NON && stars >= 4) || ((HytilsReborn.INSTANCE.getRank() == RankType.VIP || HytilsReborn.INSTANCE.getRank() == RankType.VIP_PLUS) && stars == 5);
+    }
 
     @SubscribeEvent
     public void onDrawScreenPre(GuiScreenEvent.DrawScreenEvent.Pre event) {
@@ -99,7 +105,8 @@ public class MysteryBoxStar {
             String rankedBoxLine = tooltip.get(tooltip.size() - 5);
             Matcher rankedBoxMatcher = mysteryBoxStarPattern.matcher(rankedBoxLine);
             if (rankedBoxMatcher.matches()) {
-                fontRenderer.drawStringWithShadow(rankedBoxMatcher.group("stars").length() + "\u2730", x, y, -14080);
+                // prints the star in red if you cant open it
+                fontRenderer.drawStringWithShadow(rankedBoxMatcher.group("stars").length() + "\u2730", x, y, missingRank(rankedBoxMatcher.group("stars").length()) ? -43691 : -14080);
                 return;
             }
 

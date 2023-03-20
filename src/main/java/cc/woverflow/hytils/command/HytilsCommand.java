@@ -25,6 +25,7 @@ import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Description;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.command.parser.GEXPType;
 import cc.woverflow.hytils.command.parser.GEXPTypeParser;
@@ -54,7 +55,7 @@ public class HytilsCommand {
     @SuppressWarnings("SameParameterValue")
     private void gexp(@Description("username") @Nullable GameProfile player, @Description("type") @Nullable GEXPType type) {
         Multithreading.runAsync(() -> {
-            if (HytilsConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
+            if (HytilsConfig.apiKey.isEmpty() || !HypixelUtils.INSTANCE.isValidKey(HytilsConfig.apiKey)) {
                 HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
                 return;
             }
@@ -80,6 +81,7 @@ public class HytilsCommand {
                                 Notifications.INSTANCE
                                     .send(HytilsReborn.MOD_NAME, "There was a problem trying to get " + player.getName() + "'s daily GEXP.");
                             }
+                            break;
                         case WEEKLY:
                             if (HypixelAPIUtils.getWeeklyGEXP(player.getName())) {
                                 Notifications.INSTANCE
@@ -91,6 +93,7 @@ public class HytilsCommand {
                                 Notifications.INSTANCE
                                     .send(HytilsReborn.MOD_NAME, "There was a problem trying to get " + player.getName() + "'s weekly GEXP.");
                             }
+                            break;
                     }
                 }
             } else {
@@ -109,7 +112,7 @@ public class HytilsCommand {
     @SuppressWarnings("SameParameterValue")
     private void winstreak(@Description("username") @Nullable GameProfile player, @Description("type") @Nullable WinstreakType gamemode) {
         Multithreading.runAsync(() -> {
-            if (HytilsConfig.apiKey.isEmpty() || !HypixelAPIUtils.isValidKey(HytilsConfig.apiKey)) {
+            if (HytilsConfig.apiKey.isEmpty() || !HypixelUtils.INSTANCE.isValidKey(HytilsConfig.apiKey)) {
                 HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
                 return;
             }
@@ -125,7 +128,7 @@ public class HytilsCommand {
                         Notifications.INSTANCE
                             .send(
                                 HytilsReborn.MOD_NAME,
-                                "There was a problem trying to get " + player.getName() + "'s winstreak in $gamemode."
+                                "There was a problem trying to get " + player.getName() + "'s winstreak in " + gamemode + "."
                             );
                     }
                 } else {
@@ -155,7 +158,7 @@ public class HytilsCommand {
     @SubCommand(description = "Sets your API key.", aliases = "setkey")
     private static void key(@Description("API Key") String apiKey) {
         Multithreading.runAsync(() -> {
-            if (HypixelAPIUtils.isValidKey(apiKey)) {
+            if (HypixelUtils.INSTANCE.isValidKey(apiKey)) {
                 HytilsConfig.apiKey = apiKey;
                 HytilsReborn.INSTANCE.getConfig().save();
                 HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.GREEN + "Saved API key successfully!");
