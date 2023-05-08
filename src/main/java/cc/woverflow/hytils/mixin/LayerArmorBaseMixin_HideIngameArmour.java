@@ -40,7 +40,7 @@ public abstract class LayerArmorBaseMixin_HideIngameArmour {
 
     @Inject(method = "renderLayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/layers/LayerArmorBase;getArmorModel(I)Lnet/minecraft/client/model/ModelBase;"), cancellable = true)
     private void cancelArmor(EntityLivingBase entitylivingbaseIn, float p_177182_2_, float p_177182_3_, float partialTicks, float p_177182_5_, float p_177182_6_, float p_177182_7_, float scale, int armorSlot, CallbackInfo ci) {
-        if (shouldCancel(getCurrentArmor(entitylivingbaseIn, armorSlot))) {
+        if (shouldCancel(getCurrentArmor(entitylivingbaseIn, armorSlot)) && !entitylivingbaseIn.isInvisible()) {
             ci.cancel();
         }
     }

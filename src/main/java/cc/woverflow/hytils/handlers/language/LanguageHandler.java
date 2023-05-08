@@ -54,6 +54,7 @@ public class LanguageHandler {
     }
 
     private void initialize() {
+        fallback.initialize();
         final String username = Minecraft.getMinecraft().getSession().getUsername();
         final JsonObject json = NetworkUtils.getJsonElement("https://api.sk1er.club/player/" + username).getAsJsonObject();
         final JsonObject player = json.getAsJsonObject("player");

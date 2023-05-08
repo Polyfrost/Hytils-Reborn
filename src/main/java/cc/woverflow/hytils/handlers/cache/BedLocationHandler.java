@@ -83,7 +83,7 @@ public class BedLocationHandler {
 
     public int[] getBedLocations() {
         LocrawInfo locrawInfo = LocrawUtil.INSTANCE.getLocrawInfo();
-        if (locations == null || locrawInfo == null || locrawInfo.getGameType() != LocrawInfo.GameType.BEDWARS) {
+        if (locations == null || locrawInfo == null || !LocrawUtil.INSTANCE.isInGame() || locrawInfo.getGameType() != LocrawInfo.GameType.BEDWARS || locrawInfo.getGameMode().equals("BEDWARS_PRACTICE")) {
             return (this.bedLocations = null);
         }
         if (!setDefault) {
@@ -124,17 +124,18 @@ public class BedLocationHandler {
         return (this.bedLocations = defaultBedLocations);
     }
 
+    @SuppressWarnings("unused")
     @Subscribe
     private void onLocraw(LocrawEvent event) {
-        if (!LocrawUtil.INSTANCE.isInGame() || event.info.getGameType() != LocrawInfo.GameType.BEDWARS || event.info.getGameMode().equals("BEDWARS_PRACTICE")) {
-            return;
-        }
-
         String serverId = event.info.getServerId();
         if (Objects.equals(lastServer, serverId)) {
             return;
         }
         lastServer = serverId;
+
+        if (!LocrawUtil.INSTANCE.isInGame() || event.info.getGameType() != LocrawInfo.GameType.BEDWARS) {
+            return;
+        }
 
         bedLocations = null;
         if (getBedLocations() != null) {

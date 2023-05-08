@@ -49,7 +49,6 @@ public class SoundHandler {
                             return;
                         } else if (ticks == 20) {
                             playSound();
-                            System.out.println(ticks);
                             return;
                         }
                         if (ticks > 40) ticks = -1;

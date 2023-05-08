@@ -16,30 +16,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.woverflow.hytils.handlers.chat.modules.blockers;
+package cc.woverflow.hytils.handlers.lobby.sound;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import cc.woverflow.hytils.config.HytilsConfig;
-import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class TipMessageRemover implements ChatReceiveModule {
-    @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().replace("\n", ""));
-        if (getLanguage().chatCleanerTipRegex.matcher(message).matches()) {
-            event.setCanceled(true);
+public class SilentLobby {
+
+    @SubscribeEvent
+    public void onSoundPlay(PlaySoundEvent event) {
+        if (HypixelUtils.INSTANCE.isHypixel() && !LocrawUtil.INSTANCE.isInGame() && HytilsConfig.silentLobby) {
+            if (!event.name.startsWith("gui.")) {
+                event.result = null;
+            }
         }
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return HytilsConfig.tipMessage;
-    }
-
-    @Override
-    public int getPriority() {
-        return -1;
     }
 }

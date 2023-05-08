@@ -25,6 +25,7 @@ import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.ArmorStandHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -35,7 +36,7 @@ public class ArmorStandHider {
         final LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HypixelUtils.INSTANCE.isHypixel() && ((!LocrawUtil.INSTANCE.isInGame() && HytilsConfig.hideUselessArmorStands) || (HytilsConfig.hideUselessArmorStandsGame && LocrawUtil.INSTANCE.isInGame() && locraw != null && (locraw.getGameType() == LocrawInfo.GameType.SKYBLOCK || locraw.getGameType() == LocrawInfo.GameType.BEDWARS || locraw.getGameType() == LocrawInfo.GameType.SKYWARS || locraw.getGameMode().contains("BRIDGE"))))) {
             if (event.entity instanceof EntityArmorStand) {
-                String unformattedArmorStandName = event.entity.getCustomNameTag().toLowerCase();
+                String unformattedArmorStandName = EnumChatFormatting.getTextWithoutFormattingCodes(event.entity.getCustomNameTag().toLowerCase());
                 for (String armorStands : ArmorStandHandler.INSTANCE.armorStandNames) {
                     if (unformattedArmorStandName.contains(armorStands)) {
                         event.setCanceled(true);

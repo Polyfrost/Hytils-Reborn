@@ -1005,6 +1005,13 @@ public class HytilsConfig extends Config {
     public static boolean mysteryBoxStar = true;
 
     @Switch(
+        name = "Silent Lobby",
+        description = "Prevent all sounds from playing when you are in a lobby.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean silentLobby;
+
+    @Switch(
         name = "Remove Limbo AFK Title",
         description = "Remove the AFK title when you get sent to limbo for being AFK.",
         category = "Lobby", subcategory = "Limbo"
@@ -1110,6 +1117,8 @@ public class HytilsConfig extends Config {
         addDependency("overlayAmount", "heightOverlay");
 
         addDependency("putInCaps", "notifyWhenKick");
+
+        addListener("coloredBeds", () -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
 
         addListener("heightOverlay", () -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
         addListener("overlayAmount", () -> {
