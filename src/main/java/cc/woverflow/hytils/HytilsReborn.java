@@ -51,6 +51,7 @@ import cc.woverflow.hytils.handlers.lobby.limbo.LimboPmDing;
 import cc.woverflow.hytils.handlers.lobby.limbo.LimboTitle;
 import cc.woverflow.hytils.handlers.lobby.mysterybox.MysteryBoxStar;
 import cc.woverflow.hytils.handlers.lobby.npc.NPCHandler;
+import cc.woverflow.hytils.handlers.lobby.sound.SilentLobby;
 import cc.woverflow.hytils.handlers.render.ChestHighlighter;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
 import cc.woverflow.hytils.util.friends.FriendCache;
@@ -170,6 +171,7 @@ public class HytilsReborn {
         eventBus.register(new LimboTitle());
         eventBus.register(new LimboPmDing());
         eventBus.register(new MysteryBoxStar());
+        eventBus.register(new SilentLobby());
 
         // specific games
         eventBus.register(new PitLagReducer());
