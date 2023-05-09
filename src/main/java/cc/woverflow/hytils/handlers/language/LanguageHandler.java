@@ -40,10 +40,6 @@ public class LanguageHandler {
 
     private final Gson gson = new GsonBuilder().create();
     private final LanguageData fallback = new LanguageData();
-    private final Map<String, String> languageMappings = new HashMap<String, String>() {{
-        put("ENGLISH", "en");
-        put("FRENCH", "fr");
-    }};
 
     private JsonObject regex = null;
 
@@ -55,19 +51,9 @@ public class LanguageHandler {
 
     private void initialize() {
         fallback.initialize();
-        final String username = Minecraft.getMinecraft().getSession().getUsername();
-        final JsonObject json = NetworkUtils.getJsonElement("https://api.sk1er.club/player/" + username).getAsJsonObject();
-        final JsonObject player = json.getAsJsonObject("player");
-        String userLanguage;
-        if (player.has("userLanguage")) {
-            userLanguage = player.get("userLanguage").getAsString();
-        } else {
-            userLanguage = "ENGLISH";
-        }
-        final String language = languageMappings.getOrDefault(userLanguage, "en");
         regex = NetworkUtils.getJsonElement("https://data.woverflow.cc/regex.json").getAsJsonObject();
         if (!regex.entrySet().isEmpty()) {
-            current = gson.fromJson(regex.has(language) ? regex.getAsJsonObject(language).toString() : regex.getAsJsonObject("en").toString(), LanguageData.class);
+            current = gson.fromJson(regex.getAsJsonObject("en").toString(), LanguageData.class);
         }
         current.initialize();
     }
