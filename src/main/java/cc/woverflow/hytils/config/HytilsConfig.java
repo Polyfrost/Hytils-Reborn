@@ -731,7 +731,7 @@ public class HytilsConfig extends Config {
         description = "Hide HUD elements such as health, hunger, and armor bars where they are the same.",
         category = "Game", subcategory = "GUI"
     )
-    public static boolean hideHudElements = true;
+    public static boolean hideHudElements = false;
 
     @Switch(
         name = "Hide Advertisements in Bossbars",
