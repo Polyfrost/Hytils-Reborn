@@ -883,6 +883,13 @@ public class HytilsConfig extends Config {
     public static boolean hideDropperActionBar;
 
     @Switch(
+        name = "Mute Hurt Sounds in Dropper",
+        description = "Hide the sounds of other player's failing in Dropper.",
+        category = "Game", subcategory = "Dropper"
+    )
+    public static boolean muteDropperHurtSound;
+
+    @Switch(
         name = "Lower Render Distance in Sumo",
         description = "Lowers render distance to your desired value in Sumo Duels.",
         category = "Game", subcategory = "Duels"

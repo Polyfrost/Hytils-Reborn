@@ -31,6 +31,7 @@ import cc.woverflow.hytils.handlers.chat.modules.events.AchievementEvent;
 import cc.woverflow.hytils.handlers.chat.modules.events.LevelupEvent;
 import cc.woverflow.hytils.handlers.chat.modules.triggers.AutoQueue;
 import cc.woverflow.hytils.handlers.chat.modules.triggers.SilentRemoval;
+import cc.woverflow.hytils.handlers.game.dropper.DropperHurtSound;
 import cc.woverflow.hytils.handlers.game.duels.SumoRenderDistance;
 import cc.woverflow.hytils.handlers.game.hardcore.HardcoreStatus;
 import cc.woverflow.hytils.handlers.game.housing.HousingMusic;
@@ -182,6 +183,7 @@ public class HytilsReborn {
         eventBus.register(new SumoRenderDistance());
         eventBus.register(new MiddleBeaconMiniWalls());
         eventBus.register(new MiddleWaypointUHC());
+        eventBus.register(new DropperHurtSound());
 
         // height overlay
         EventManager.INSTANCE.register(HeightHandler.INSTANCE);
