@@ -884,7 +884,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Mute Hurt Sounds in Dropper",
-        description = "Hide the sounds of other player's failing in Dropper.",
+        description = "Mute the sounds of other player's failing in Dropper.",
         category = "Game", subcategory = "Dropper"
     )
     public static boolean muteDropperHurtSound;
