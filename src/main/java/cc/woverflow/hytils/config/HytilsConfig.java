@@ -27,6 +27,7 @@ import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.config.data.PageLocation;
 import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator;
 import cc.woverflow.hytils.HytilsReborn;
+import cc.woverflow.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
 import cc.woverflow.hytils.util.DarkColorUtils;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
@@ -1101,6 +1102,10 @@ public class HytilsConfig extends Config {
         addDependency("chattingIntegration", "chatSwapper");
         addDependency("hideAllChatMessage", "chatSwapper");
 
+        addListener("cleanerGameStartAnnouncements", () -> {
+            if (!cleanerGameStartAnnouncements) GameStartCompactor.lastMessage = null;
+        });
+
         addDependency("playerCountBeforePlayerName", "gameStatusRestyle");
         addDependency("playerCountOnPlayerLeave", "gameStatusRestyle");
         addDependency("padPlayerCount", "gameStatusRestyle");
@@ -1145,6 +1150,7 @@ public class HytilsConfig extends Config {
         hidePlayerRanksInTab = false;
         hidePingInTab = false;
         cleanerSkyblockTabInfo = false;
+        hideAdsInTab = false;
         save();
         addDependency("hideNpcsInTab", "Tabulous", () -> false);
         addDependency("keepImportantNpcsInTab", "Tabulous", () -> false);
@@ -1152,6 +1158,7 @@ public class HytilsConfig extends Config {
         addDependency("hidePlayerRanksInTab", "Tabulous", () -> false);
         addDependency("hidePingInTab", "Tabulous", () -> false);
         addDependency("cleanerSkyblockTabInfo", "Tabulous", () -> false);
+        addDependency("hideAdsInTab", "Tabulous", () -> false);
     }
 
     private void setWBMessages() {

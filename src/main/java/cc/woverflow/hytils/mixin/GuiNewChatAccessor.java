@@ -27,6 +27,9 @@ import java.util.List;
 
 @Mixin(GuiNewChat.class)
 public interface GuiNewChatAccessor {
-    @Accessor("drawnChatLines")
+    @Accessor
+    List<ChatLine> getChatLines();
+
+    @Accessor
     List<ChatLine> getDrawnChatLines();
 }
