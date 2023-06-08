@@ -21,6 +21,7 @@ package cc.woverflow.hytils.handlers.chat.modules.modifiers;
 import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.chat.ChatReceiveModule;
 import cc.woverflow.hytils.mixin.GuiNewChatAccessor;
+import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
 import net.minecraft.client.gui.GuiNewChat;
@@ -30,6 +31,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -40,9 +42,7 @@ public class GameStartCompactor implements ChatReceiveModule {
         return 7;
     }
 
-    // Used to determine if the property has changed. TODO: Once ModCore 2 is out, have a listener for this.
-    private boolean prevConfigValue = HytilsConfig.cleanerGameStartAnnouncements;
-    private IChatComponent lastMessage = null;
+    public static IChatComponent lastMessage = null;
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
@@ -51,32 +51,37 @@ public class GameStartCompactor implements ChatReceiveModule {
         if (gameStartMatcher.matches() || (HytilsConfig.gameStatusRestyle && chatRestylerMatcher.matches())) {
             if (lastMessage != null) {
                 final GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
-                final List<IChatComponent> oldTimerLines = GuiUtilRenderComponents.splitText(lastMessage, MathHelper.floor_float((float) chat.getChatWidth() / chat.getChatScale()), Minecraft.getMinecraft().fontRendererObj, false, false);
                 final GuiNewChatAccessor accessor = ((GuiNewChatAccessor) chat);
-                for (int i = accessor.getDrawnChatLines().size() - 1; i >= 0; i--) { // tries to find the last message in drawn chat lines, if found, it removes them
-                    final ChatLine drawnLine = accessor.getDrawnChatLines().get(i);
-                    for (IChatComponent oldTimerLine : oldTimerLines) {
-                        if (drawnLine.getChatComponent().getFormattedText().startsWith(oldTimerLine.getFormattedText())) {
-                            accessor.getDrawnChatLines().remove(i);
-                            oldTimerLines.remove(oldTimerLine);
-                            break;
-                        }
-                    }
-                }
+                final List<IChatComponent> oldTimerLines = GuiUtilRenderComponents.splitText(lastMessage, MathHelper.floor_float((float) chat.getChatWidth() / chat.getChatScale()), Minecraft.getMinecraft().fontRendererObj, false, false);
+                removeChatLines(accessor.getChatLines(), Lists.newArrayList(lastMessage));
+                removeChatLines(accessor.getDrawnChatLines(), oldTimerLines);
             }
 
             lastMessage = event.message.createCopy();
         }
     }
 
+    private void removeChatLines(List<ChatLine> currentLines, List<IChatComponent> oldTimerLines) {
+        Iterator<ChatLine> iterator = currentLines.iterator();
+        while (iterator.hasNext()) {
+            final ChatLine drawnLine = iterator.next();
+            if (drawnLine.getChatComponent().getFormattedText().contains(lastMessage.getFormattedText())) {
+                iterator.remove();
+                return;
+            }
+            for (IChatComponent oldTimerLine : oldTimerLines) {
+                if (drawnLine.getChatComponent().getFormattedText().contains(oldTimerLine.getFormattedText())) {
+                    iterator.remove();
+                    oldTimerLines.remove(oldTimerLine);
+                    break;
+                }
+            }
+            if (oldTimerLines.isEmpty()) return;
+        }
+    }
+
     @Override
     public boolean isEnabled() {
-        // don't affect messages sent when the config value was false (or was true and was set to false later)
-        if (!prevConfigValue && HytilsConfig.cleanerGameStartAnnouncements) {
-            prevConfigValue = true;
-            lastMessage = null;
-        }
-
         return HytilsConfig.cleanerGameStartAnnouncements;
     }
 
