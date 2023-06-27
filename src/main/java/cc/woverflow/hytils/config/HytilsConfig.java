@@ -555,7 +555,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Remove Discord Safety Warning Messages",
-        description = "Removes \"§4Please be mindful of Discord link in chat as they may pose a security risk\"",
+        description = "Removes \"§4Please be mindful of Discord links in chat as they may pose a security risk\"",
         category = "Chat", subcategory = "Toggles"
     )
     public static boolean discordSafetyWarning;
