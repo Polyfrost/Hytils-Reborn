@@ -62,6 +62,7 @@ public class LanguageData {
     public String chatCleanerCurseOfSpam = "KALI HAS STRIKEN YOU WITH THE CURSE OF SPAM";
     public String chatCleanerDuelsBlockTrail = "Your block trail aura is disabled in this mode!";
     public String chatCleanerSkyblockWelcome = "Welcome to Hypixel SkyBlock!";
+    public String chatDiscordSafetyWarning = "Please be mindful of Discord link in chat as they may pose a security risk";
 
     private String achievementPattern = "a>> {3}Achievement Unlocked: (?<achievement>.+) {3}<<a";
     private String levelUpPattern = "You are now Hypixel Level (?<level>\\d+)!";

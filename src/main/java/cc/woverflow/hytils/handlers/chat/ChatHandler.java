@@ -56,6 +56,7 @@ public class ChatHandler {
         this.registerModule(new ConnectedMessage());
         this.registerModule(new ConnectionStatusRemover());
         this.registerModule(new CurseOfSpamRemover());
+        this.registerModule(new DiscordSafetyWarningRemover());
         this.registerModule(new DuelsBlockTrail());
         this.registerModule(new DuelsNoStatsChange());
         this.registerModule(new EarnedCoinsAndExpRemover());
