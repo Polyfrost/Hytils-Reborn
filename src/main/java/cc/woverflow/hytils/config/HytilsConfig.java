@@ -44,6 +44,17 @@ import java.util.Arrays;
 @SuppressWarnings("unused")
 public class HytilsConfig extends Config {
 
+    // API
+
+    @Text(
+        name = "API Key",
+        description = "Automatically get the API Key from /api new.",
+        category = "API",
+        secure = true
+    )
+    @HypixelKey
+    public static String apiKey = "";
+
     // Automatic
 
     @Switch(

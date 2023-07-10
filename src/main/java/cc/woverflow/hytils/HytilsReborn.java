@@ -138,7 +138,7 @@ public class HytilsReborn {
         isPatcher = Loader.isModLoaded("patcher");
         isChatting = Loader.isModLoaded("chatting");
 
-        Multithreading.runAsync(() -> rank = HypixelAPIUtils.getRank());
+        Multithreading.runAsync(() -> rank = HypixelAPIUtils.getRank(Minecraft.getMinecraft().getSession().getUsername()));
     }
 
     @Mod.EventHandler

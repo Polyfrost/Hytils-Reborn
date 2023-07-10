@@ -23,46 +23,35 @@ import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
+import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.HeightHandler;
 import cc.woverflow.hytils.util.ranks.RankType;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mojang.authlib.exceptions.AuthenticationException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 
-import java.math.BigInteger;
-import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
 
 public class HypixelAPIUtils {
     public static String gexp;
     public static String winstreak;
     public static LocrawInfo locraw;
     private int ticks = 0;
+    private static final String[] rankValues = {"rank", "monthlyPackageRank", "newPackageRank", "packageRank"};
 
-    public HypixelAPIUtils() {
-        authorize();
-    }
-
-    private static boolean authorize() {
-        Random r1 = new Random();
-        Random r2 = new Random(System.identityHashCode(new Object()));
-        BigInteger random1Bi = new BigInteger(128, r1);
-        BigInteger random2Bi = new BigInteger(128, r2);
-        BigInteger serverBi = random1Bi.xor(random2Bi);
-        String serverId = serverBi.toString(16);
-        try {
-            Minecraft.getMinecraft().getSessionService().joinServer(Minecraft
-                .getMinecraft()
-                .getSession()
-                .getProfile(), Minecraft.getMinecraft().getSession().getToken(), serverId);
-        } catch (AuthenticationException e) {
-            e.printStackTrace();
-            return false;
-        }
-        JsonObject response = NetworkUtils.getJsonElement("https://api.polyfrost.cc/hypixel/authentication?username=" + Minecraft.getMinecraft().getSession().getUsername() + "&serverId=" + serverId).getAsJsonObject();
-        return !response.has("error");
+    private static String getCurrentESTTime() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
+        return simpleDateFormat.format(new Date(System.currentTimeMillis()));
     }
 
 
@@ -72,19 +61,17 @@ public class HypixelAPIUtils {
      * @return Whether the "getting" was successful.
      */
     public static boolean getGEXP() {
-        JsonObject exp = NetworkUtils.getJsonElement("https://api.polyfrost.cc/hypixel/guild-exp").getAsJsonObject();
-        if (exp.has("error")) {
-            if (Objects.equals(exp.get("error").getAsString(), "INVALID_AUTHORIZATION")) {
-                if (authorize()) {
-                    return getGEXP();
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
+        String gexp = null;
+        String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
+        JsonArray guildMembers = NetworkUtils.getJsonElement("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
+        for (JsonElement e : guildMembers) {
+            if (e.getAsJsonObject().get("uuid").getAsString().equals(uuid)) {
+                gexp = Integer.toString(e.getAsJsonObject().getAsJsonObject("expHistory").get(getCurrentESTTime()).getAsInt());
+                break;
             }
         }
-        gexp = exp.get("exp").getAsString();
+        if (gexp == null) return false;
+        HypixelAPIUtils.gexp = gexp;
         return true;
     }
 
@@ -95,19 +82,17 @@ public class HypixelAPIUtils {
      * @return Whether the "getting" was successful.
      */
     public static boolean getGEXP(String username) {
-        JsonObject exp = NetworkUtils.getJsonElement("https://api.polyfrost.cc/hypixel/guild-exp?username=" + username).getAsJsonObject();
-        if (exp.has("error")) {
-            if (Objects.equals(exp.get("error").getAsString(), "INVALID_AUTHORIZATION")) {
-                if (authorize()) {
-                    return getGEXP(username);
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
+        String gexp = null;
+        String uuid = getUUID(username);
+        JsonArray guildMembers = NetworkUtils.getJsonElement("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
+        for (JsonElement e : guildMembers) {
+            if (e.getAsJsonObject().get("uuid").getAsString().equals(uuid)) {
+                gexp = Integer.toString(e.getAsJsonObject().getAsJsonObject("expHistory").get(getCurrentESTTime()).getAsInt());
+                break;
             }
         }
-        gexp = exp.get("exp").getAsString();
+        if (gexp == null) return false;
+        HypixelAPIUtils.gexp = gexp;
         return true;
     }
 
@@ -117,19 +102,21 @@ public class HypixelAPIUtils {
      * @return Whether the "getting" was successful.
      */
     public static boolean getWeeklyGEXP() {
-        JsonObject exp = NetworkUtils.getJsonElement("https://api.polyfrost.cc/hypixel/guild-exp").getAsJsonObject();
-        if (exp.has("error")) {
-            if (Objects.equals(exp.get("error").getAsString(), "INVALID_AUTHORIZATION")) {
-                if (authorize()) {
-                    return getWeeklyGEXP();
-                } else {
-                    return false;
+        String gexp = null;
+        String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
+        JsonArray guildMembers = NetworkUtils.getJsonElement("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
+        for (JsonElement e : guildMembers) {
+            if (e.getAsJsonObject().get("uuid").getAsString().equals(uuid)) {
+                int addGEXP = 0;
+                for (Map.Entry<String, JsonElement> set : e.getAsJsonObject().get("expHistory").getAsJsonObject().entrySet()) {
+                    addGEXP += set.getValue().getAsInt();
                 }
-            } else {
-                return false;
+                gexp = Integer.toString(addGEXP);
+                break;
             }
         }
-        gexp = exp.get("weeklyExp").getAsString();
+        if (gexp == null) return false;
+        HypixelAPIUtils.gexp = gexp;
         return true;
     }
 
@@ -140,19 +127,21 @@ public class HypixelAPIUtils {
      * @return Whether the "getting" was successful.
      */
     public static boolean getWeeklyGEXP(String username) {
-        JsonObject exp = NetworkUtils.getJsonElement("https://api.polyfrost.cc/hypixel/guild-exp?username=" + username).getAsJsonObject();
-        if (exp.has("error")) {
-            if (Objects.equals(exp.get("error").getAsString(), "INVALID_AUTHORIZATION")) {
-                if (authorize()) {
-                    return getWeeklyGEXP(username);
-                } else {
-                    return false;
+        String gexp = null;
+        String uuid = getUUID(username);
+        JsonArray guildMembers = NetworkUtils.getJsonElement("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
+        for (JsonElement e : guildMembers) {
+            if (e.getAsJsonObject().get("uuid").getAsString().equals(uuid)) {
+                int addGEXP = 0;
+                for (Map.Entry<String, JsonElement> set : e.getAsJsonObject().get("expHistory").getAsJsonObject().entrySet()) {
+                    addGEXP += set.getValue().getAsInt();
                 }
-            } else {
-                return false;
+                gexp = Integer.toString(addGEXP);
+                break;
             }
         }
-        gexp = exp.get("weeklyExp").getAsString();
+        if (gexp == null) return false;
+        HypixelAPIUtils.gexp = gexp;
         return true;
     }
 
@@ -162,36 +151,38 @@ public class HypixelAPIUtils {
      * @return Whether the "getting" was successful.
      */
     public static boolean getWinstreak() {
-        String gameType = "bedwars";
+        String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
+        JsonObject playerStats =
+            NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
         if (locraw != null) {
             switch (locraw.getGameType()) {
                 case BEDWARS:
-                    gameType = "bedwars";
+                    try {
+                        winstreak = Integer.toString(playerStats.getAsJsonObject("Bedwars").get("winstreak").getAsInt());
+                        return true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case SKYWARS:
-                    gameType = "skywars";
+                    try {
+                        winstreak = Integer.toString(playerStats.getAsJsonObject("SkyWars").get("win_streak").getAsInt());
+                        return true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case DUELS:
-                    gameType = "duels";
+                    try {
+                        winstreak = Integer.toString(playerStats.getAsJsonObject("Duels").get("current_winstreak").getAsInt());
+                        return true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
-                default:
-                    return false;
             }
         }
-        JsonObject winstreak = NetworkUtils.getJsonElement("https://api.polyfrost.cc/hypixel/winstreak?game=" + gameType).getAsJsonObject();
-        if (winstreak.has("error")) {
-            if (Objects.equals(winstreak.get("error").getAsString(), "INVALID_AUTHORIZATION")) {
-                if (authorize()) {
-                    return getWinstreak();
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        HypixelAPIUtils.winstreak = String.valueOf(winstreak.get("winstreak").getAsInt());
-        return true;
+        return false;
     }
 
     /**
@@ -201,36 +192,38 @@ public class HypixelAPIUtils {
      * @return Whether the "getting" was successful.
      */
     public static boolean getWinstreak(String username) {
-        String gameType = "bedwars";
+        String uuid = getUUID(username);
+        JsonObject playerStats =
+            NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
         if (locraw != null) {
             switch (locraw.getGameType()) {
                 case BEDWARS:
-                    gameType = "bedwars";
+                    try {
+                        winstreak = Integer.toString(playerStats.getAsJsonObject("Bedwars").get("winstreak").getAsInt());
+                        return true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case SKYWARS:
-                    gameType = "skywars";
+                    try {
+                        winstreak = Integer.toString(playerStats.getAsJsonObject("SkyWars").get("win_streak").getAsInt());
+                        return true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case DUELS:
-                    gameType = "duels";
+                    try {
+                        winstreak = Integer.toString(playerStats.getAsJsonObject("Duels").get("current_winstreak").getAsInt());
+                        return true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
-                default:
-                    return false;
             }
         }
-        JsonObject winstreak = NetworkUtils.getJsonElement("https://api.polyfrost.cc/hypixel/winstreak?game=" + gameType + "&username=" + username).getAsJsonObject();
-        if (winstreak.has("error")) {
-            if (Objects.equals(winstreak.get("error").getAsString(), "INVALID_AUTHORIZATION")) {
-                if (authorize()) {
-                    return getWinstreak(username);
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        HypixelAPIUtils.winstreak = String.valueOf(winstreak.get("winstreak").getAsInt());
-        return true;
+        return false;
     }
 
     /**
@@ -241,45 +234,63 @@ public class HypixelAPIUtils {
      * @return Whether the "getting" was successful.
      */
     public static boolean getWinstreak(String username, String game) {
-        if (!Objects.equals(game, "bedwars") && !Objects.equals(game, "skywars") && !Objects.equals(game, "duels")) {
-            return false;
-        }
-        JsonObject winstreak = NetworkUtils.getJsonElement("https://api.polyfrost.cc/hypixel/winstreak?game=" + game + "&username=" + username).getAsJsonObject();
-        if (winstreak.has("error")) {
-            if (Objects.equals(winstreak.get("error").getAsString(), "INVALID_AUTHORIZATION")) {
-                if (authorize()) {
-                    return getWinstreak(username, game);
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
+        String uuid = getUUID(username);
+        JsonObject playerStats =
+            NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
+        if (game != null) {
+            switch (game.toLowerCase(Locale.ENGLISH)) {
+                case "bedwars":
+                    try {
+                        winstreak = Integer.toString(playerStats.getAsJsonObject("Bedwars").get("winstreak").getAsInt());
+                        return true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "skywars":
+                    try {
+                        winstreak = Integer.toString(playerStats.getAsJsonObject("SkyWars").get("win_streak").getAsInt());
+                        return true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "duels":
+                    try {
+                        winstreak = Integer.toString(playerStats.getAsJsonObject("Duels").get("current_winstreak").getAsInt());
+                        return true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
         }
-        HypixelAPIUtils.winstreak = String.valueOf(winstreak.get("winstreak").getAsInt());
-        return true;
+        return false;
     }
 
     /**
      * Gets the Hypixel rank of the specified player.
      *
+     * @param username The username of the player.
      * @return Player rank, RankType.UNKNOWN if the player does not exist or the API key is empty
      */
-    public static RankType getRank() {
-        JsonObject playerRank =
-            NetworkUtils.getJsonElement("https://api.polyfrost.cc/hypixel/rank").getAsJsonObject();
-        if (playerRank.has("error")) {
-            if (Objects.equals(playerRank.get("error").getAsString(), "INVALID_AUTHORIZATION")) {
-                if (authorize()) {
-                    return getRank();
-                } else {
-                    return RankType.UNKNOWN;
+    public static RankType getRank(String username) {
+        if (!HytilsConfig.apiKey.isEmpty() && HypixelUtils.INSTANCE.isValidKey(HytilsConfig.apiKey)) {
+            String uuid = getUUID(username);
+            try {
+                JsonObject playerRank =
+                    NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player");
+                for (String value : rankValues) {
+                    if (playerRank.has(value) && !playerRank.get(value).getAsString().matches("NONE|NORMAL")) {
+                        return RankType.getRank(playerRank.get(value).getAsString());
+                    }
                 }
-            } else {
-                return RankType.UNKNOWN;
+                return RankType.NON;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        return RankType.getRank(playerRank.get("rank").getAsString());
+        return RankType.UNKNOWN;
     }
 
     /**
@@ -307,7 +318,7 @@ public class HypixelAPIUtils {
     }
 
     @Subscribe
-    private void onTick(TickEvent event) {
+    public void onTick(TickEvent event) {
         if (event.stage == Stage.START) {
             if (ticks % 20 == 0) {
                 if (Minecraft.getMinecraft().thePlayer != null) {
