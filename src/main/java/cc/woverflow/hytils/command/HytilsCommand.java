@@ -25,16 +25,13 @@ import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Description;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand;
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.woverflow.hytils.HytilsReborn;
 import cc.woverflow.hytils.command.parser.GEXPType;
 import cc.woverflow.hytils.command.parser.GEXPTypeParser;
 import cc.woverflow.hytils.command.parser.WinstreakType;
 import cc.woverflow.hytils.command.parser.WinstreakTypeParser;
-import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.util.HypixelAPIUtils;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.util.EnumChatFormatting;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -55,10 +52,6 @@ public class HytilsCommand {
     @SuppressWarnings("SameParameterValue")
     private void gexp(@Description("username") @Nullable GameProfile player, @Description("type") @Nullable GEXPType type) {
         Multithreading.runAsync(() -> {
-            if (HytilsConfig.apiKey.isEmpty() || !HypixelUtils.INSTANCE.isValidKey(HytilsConfig.apiKey)) {
-                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
-                return;
-            }
             if (player != null) {
                 if (type == null) {
                     if (HypixelAPIUtils.getGEXP(player.getName())) {
@@ -112,10 +105,6 @@ public class HytilsCommand {
     @SuppressWarnings("SameParameterValue")
     private void winstreak(@Description("username") @Nullable GameProfile player, @Description("type") @Nullable WinstreakType gamemode) {
         Multithreading.runAsync(() -> {
-            if (HytilsConfig.apiKey.isEmpty() || !HypixelUtils.INSTANCE.isValidKey(HytilsConfig.apiKey)) {
-                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "You need to provide a valid API key to run this command! Type /api new to autoset a key.");
-                return;
-            }
             if (player != null) {
                 if (gamemode != null) {
                     if (HypixelAPIUtils.getWinstreak(player.getName(), gamemode.name())) {
@@ -151,19 +140,6 @@ public class HytilsCommand {
                     Notifications.INSTANCE
                         .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your winstreak.");
                 }
-            }
-        });
-    }
-
-    @SubCommand(description = "Sets your API key.", aliases = "setkey")
-    private static void key(@Description("API Key") String apiKey) {
-        Multithreading.runAsync(() -> {
-            if (HypixelUtils.INSTANCE.isValidKey(apiKey)) {
-                HytilsConfig.apiKey = apiKey;
-                HytilsReborn.INSTANCE.getConfig().save();
-                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.GREEN + "Saved API key successfully!");
-            } else {
-                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Invalid API key! Please try again.");
             }
         });
     }

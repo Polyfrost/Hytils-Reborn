@@ -22,36 +22,124 @@ import cc.polyfrost.oneconfig.events.event.LocrawEvent;
 import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import cc.polyfrost.oneconfig.utils.JsonUtils;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.woverflow.hytils.HytilsReborn;
-import cc.woverflow.hytils.config.HytilsConfig;
 import cc.woverflow.hytils.handlers.cache.HeightHandler;
 import cc.woverflow.hytils.util.ranks.RankType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.exceptions.AuthenticationException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
+import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.*;
 
 public class HypixelAPIUtils {
+    private static final String[] rankValues = {"rank", "monthlyPackageRank", "newPackageRank", "packageRank"};
     public static String gexp;
     public static String winstreak;
     public static LocrawInfo locraw;
+    @Nullable
+    private static String token;
+    @Nullable
+    private static Instant expiry;
+    @Nullable
+    private static String username;
+    @Nullable
+    private static String serverId;
     private int ticks = 0;
-    private static final String[] rankValues = {"rank", "monthlyPackageRank", "newPackageRank", "packageRank"};
 
     private static String getCurrentESTTime() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
         return simpleDateFormat.format(new Date(System.currentTimeMillis()));
+    }
+
+    private static boolean authorize() {
+        String serverId = UUID.randomUUID().toString();
+        try {
+            GameProfile profile = Minecraft.getMinecraft().getSession().getProfile();
+            String token = Minecraft.getMinecraft().getSession().getToken();
+            Minecraft.getMinecraft().getSessionService().joinServer(profile, token, serverId);
+            username = profile.getName();
+            HypixelAPIUtils.serverId = serverId;
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    private static JsonObject getJsonObjectAuth(String url) {
+        HttpURLConnection connection = setupConnection(url);
+        if (connection == null) return null;
+        try (InputStreamReader input = new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)) {
+            JsonElement element = JsonUtils.parseString(IOUtils.toString(input));
+            if (username != null && serverId != null) {
+                token = connection.getHeaderField("x-ursa-token");
+                expiry = calculateExpiry(connection.getHeaderField("x-ursa-expires"));
+                username = null;
+                serverId = null;
+            }
+            if (element == null || !element.isJsonObject()) {
+                return null;
+            }
+            return element.getAsJsonObject();
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    private static Instant calculateExpiry(String expiry) {
+        try {
+            long expiryLong = Long.parseLong(expiry);
+            return Instant.ofEpochMilli(expiryLong);
+        } catch (NumberFormatException e) {
+            return Instant.now().plus(Duration.ofMinutes(55));
+        }
+    }
+
+    private static HttpURLConnection setupConnection(String url) {
+        HttpURLConnection connection;
+        try {
+            connection = ((HttpURLConnection) new URL(url).openConnection());
+            connection.setRequestMethod("GET");
+            connection.setUseCaches(false);
+            connection.addRequestProperty("User-Agent", "Hytils-Reborn/" + HytilsReborn.VERSION);
+            connection.setReadTimeout(5000);
+            connection.setConnectTimeout(5000);
+            connection.setDoOutput(true);
+            if (token != null && expiry != null && expiry.isAfter(Instant.now())) {
+                connection.addRequestProperty("x-ursa-token", token);
+            } else {
+                token = null;
+                expiry = null;
+                if (authorize()) {
+                    connection.addRequestProperty("x-ursa-username", username);
+                    connection.addRequestProperty("x-ursa-serverid", serverId);
+                } else {
+                    return null;
+                }
+            }
+            return connection;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
@@ -63,7 +151,11 @@ public class HypixelAPIUtils {
     public static boolean getGEXP() {
         String gexp = null;
         String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
-        JsonArray guildMembers = NetworkUtils.getJsonElement("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
+        JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/guild/" + uuid);
+        if (jsonObject == null) {
+            return false;
+        }
+        JsonArray guildMembers = jsonObject.getAsJsonObject("guild").getAsJsonArray("members");
         for (JsonElement e : guildMembers) {
             if (e.getAsJsonObject().get("uuid").getAsString().equals(uuid)) {
                 gexp = Integer.toString(e.getAsJsonObject().getAsJsonObject("expHistory").get(getCurrentESTTime()).getAsInt());
@@ -84,7 +176,11 @@ public class HypixelAPIUtils {
     public static boolean getGEXP(String username) {
         String gexp = null;
         String uuid = getUUID(username);
-        JsonArray guildMembers = NetworkUtils.getJsonElement("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
+        JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/guild/" + uuid);
+        if (jsonObject == null) {
+            return false;
+        }
+        JsonArray guildMembers = jsonObject.getAsJsonObject("guild").getAsJsonArray("members");
         for (JsonElement e : guildMembers) {
             if (e.getAsJsonObject().get("uuid").getAsString().equals(uuid)) {
                 gexp = Integer.toString(e.getAsJsonObject().getAsJsonObject("expHistory").get(getCurrentESTTime()).getAsInt());
@@ -104,7 +200,11 @@ public class HypixelAPIUtils {
     public static boolean getWeeklyGEXP() {
         String gexp = null;
         String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
-        JsonArray guildMembers = NetworkUtils.getJsonElement("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
+        JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/guild/" + uuid);
+        if (jsonObject == null) {
+            return false;
+        }
+        JsonArray guildMembers = jsonObject.getAsJsonObject("guild").getAsJsonArray("members");
         for (JsonElement e : guildMembers) {
             if (e.getAsJsonObject().get("uuid").getAsString().equals(uuid)) {
                 int addGEXP = 0;
@@ -129,7 +229,11 @@ public class HypixelAPIUtils {
     public static boolean getWeeklyGEXP(String username) {
         String gexp = null;
         String uuid = getUUID(username);
-        JsonArray guildMembers = NetworkUtils.getJsonElement("https://api.hypixel.net/guild?key=" + HytilsConfig.apiKey + ";player=" + uuid).getAsJsonObject().getAsJsonObject("guild").getAsJsonArray("members");
+        JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/guild/" + uuid);
+        if (jsonObject == null) {
+            return false;
+        }
+        JsonArray guildMembers = jsonObject.getAsJsonObject("guild").getAsJsonArray("members");
         for (JsonElement e : guildMembers) {
             if (e.getAsJsonObject().get("uuid").getAsString().equals(uuid)) {
                 int addGEXP = 0;
@@ -152,8 +256,11 @@ public class HypixelAPIUtils {
      */
     public static boolean getWinstreak() {
         String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
-        JsonObject playerStats =
-            NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
+        JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/player/" + uuid);
+        if (jsonObject == null) {
+            return false;
+        }
+        JsonObject playerStats = jsonObject.getAsJsonObject("player").getAsJsonObject("stats");
         if (locraw != null) {
             switch (locraw.getGameType()) {
                 case BEDWARS:
@@ -193,8 +300,11 @@ public class HypixelAPIUtils {
      */
     public static boolean getWinstreak(String username) {
         String uuid = getUUID(username);
-        JsonObject playerStats =
-            NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
+        JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/player/" + uuid);
+        if (jsonObject == null) {
+            return false;
+        }
+        JsonObject playerStats = jsonObject.getAsJsonObject("player").getAsJsonObject("stats");
         if (locraw != null) {
             switch (locraw.getGameType()) {
                 case BEDWARS:
@@ -235,8 +345,11 @@ public class HypixelAPIUtils {
      */
     public static boolean getWinstreak(String username, String game) {
         String uuid = getUUID(username);
-        JsonObject playerStats =
-            NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player").getAsJsonObject("stats");
+        JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/player/" + uuid);
+        if (jsonObject == null) {
+            return false;
+        }
+        JsonObject playerStats = jsonObject.getAsJsonObject("player").getAsJsonObject("stats");
         if (game != null) {
             switch (game.toLowerCase(Locale.ENGLISH)) {
                 case "bedwars":
@@ -275,20 +388,21 @@ public class HypixelAPIUtils {
      * @return Player rank, RankType.UNKNOWN if the player does not exist or the API key is empty
      */
     public static RankType getRank(String username) {
-        if (!HytilsConfig.apiKey.isEmpty() && HypixelUtils.INSTANCE.isValidKey(HytilsConfig.apiKey)) {
-            String uuid = getUUID(username);
-            try {
-                JsonObject playerRank =
-                    NetworkUtils.getJsonElement("https://api.hypixel.net/player?key=" + HytilsConfig.apiKey + ";uuid=" + uuid).getAsJsonObject().getAsJsonObject("player");
-                for (String value : rankValues) {
-                    if (playerRank.has(value) && !playerRank.get(value).getAsString().matches("NONE|NORMAL")) {
-                        return RankType.getRank(playerRank.get(value).getAsString());
-                    }
-                }
-                return RankType.NON;
-            } catch (Exception e) {
-                e.printStackTrace();
+        String uuid = getUUID(username);
+        try {
+            JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/player/" + uuid);
+            if (jsonObject == null) {
+                return RankType.UNKNOWN;
             }
+            JsonObject playerRank = jsonObject.getAsJsonObject("player");
+            for (String value : rankValues) {
+                if (playerRank.has(value) && !playerRank.get(value).getAsString().matches("NONE|NORMAL")) {
+                    return RankType.getRank(playerRank.get(value).getAsString());
+                }
+            }
+            return RankType.NON;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return RankType.UNKNOWN;
     }
@@ -300,19 +414,14 @@ public class HypixelAPIUtils {
      */
     public static String getUUID(String username) {
         try {
-            JsonObject uuidResponse =
-                NetworkUtils.getJsonElement("https://api.mojang.com/users/profiles/minecraft/" + username).getAsJsonObject();
+            JsonObject uuidResponse = NetworkUtils.getJsonElement("https://api.mojang.com/users/profiles/minecraft/" + username).getAsJsonObject();
             if (uuidResponse.has("error")) {
-                HytilsReborn.INSTANCE.sendMessage(
-                    EnumChatFormatting.RED + "Failed with error: " + uuidResponse.get("reason").getAsString()
-                );
+                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Failed with error: " + uuidResponse.get("reason").getAsString());
                 return null;
             }
             return uuidResponse.get("id").getAsString();
         } catch (Exception e) {
-            HytilsReborn.INSTANCE.sendMessage(
-                EnumChatFormatting.RED + "Failed to fetch " + username + "'s data. Please make sure this user exists."
-            );
+            HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Failed to fetch " + username + "'s data. Please make sure this user exists.");
             return null;
         }
     }
