@@ -6,6 +6,7 @@
   "refmap": "mixins.hytils.refmap.json",
   "verbose": true,
   "client": [
+    "BossStatusMixin_HideBossbar",
     "CommandLimboMixin_FixCommand",
     "EntityLivingBaseMixin_MiningFatigue",
     "EntityPlayerSPMixin_MessageHandling",

@@ -46,7 +46,6 @@ import cc.woverflow.hytils.handlers.general.CommandQueue;
 import cc.woverflow.hytils.handlers.general.SoundHandler;
 import cc.woverflow.hytils.handlers.language.LanguageHandler;
 import cc.woverflow.hytils.handlers.lobby.armorstands.ArmorStandHider;
-import cc.woverflow.hytils.handlers.lobby.bossbar.LobbyBossbar;
 import cc.woverflow.hytils.handlers.lobby.limbo.LimboLimiter;
 import cc.woverflow.hytils.handlers.lobby.limbo.LimboPmDing;
 import cc.woverflow.hytils.handlers.lobby.limbo.LimboTitle;
@@ -167,7 +166,6 @@ public class HytilsReborn {
         // lobby
         eventBus.register(new ArmorStandHider());
         eventBus.register(new NPCHandler());
-        eventBus.register(new LobbyBossbar());
         eventBus.register(new LimboLimiter());
         eventBus.register(new LimboTitle());
         eventBus.register(new LimboPmDing());
