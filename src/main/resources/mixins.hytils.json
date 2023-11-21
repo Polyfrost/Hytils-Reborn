@@ -1,8 +1,8 @@
 {
   "compatibilityLevel": "JAVA_8",
   "minVersion": "0.7",
-  "package": "cc.woverflow.hytils.mixin",
-  "plugin": "cc.woverflow.hytils.forge.HytilsMixinPlugin",
+  "package": "org.polyfrost.hytils.mixin",
+  "plugin": "org.polyfrost.hytils.forge.HytilsMixinPlugin",
   "refmap": "mixins.hytils.refmap.json",
   "verbose": true,
   "client": [
