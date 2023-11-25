@@ -1,5 +1,5 @@
 # Hytils Reborn
-![OneConfig Supported](https://i.imgur.com/pFqMYWp.png)
+![Compact Powered by OneConfig](https://polyfrost.org/img/compact_vector.svg)
 ![Dev Workflow Status](https://img.shields.io/github/v/release/Polyfrost/Hytils-Reborn.svg?style=for-the-badge&color=1452cc&label=release)
 
 ## User Guide
