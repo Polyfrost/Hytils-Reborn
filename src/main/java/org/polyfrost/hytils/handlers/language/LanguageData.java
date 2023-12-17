@@ -37,7 +37,7 @@ public class LanguageData {
     private String autoFriendPattern = "Friend request from (?<name>.+)\\[ACCEPT] - \\[DENY] - \\[IGNORE].*";
 
     private String chatCleanerJoin = "(?:sled into|slid into|joined|spooked into) the lobby";
-    private String chatCleanerMysteryBoxFind = "^.+ (?<player>(?!You )\\w{1,16} )found (?:a|an) (?:.{5} Mystery Box!|.+ in a .+!)$";
+    private String chatCleanerTicketAnnouncer = "^(?<player>(?!You )\\w{1,16} )has found an? .+$";
     private String chatCleanerSoulWellFind = "^.+ has found .+ in the Soul Well!$";
     private String chatCleanerGameAnnouncement = "^\u27a4 A .+ game is (?:available to join|starting in .+ seconds)! CLICK HERE to join!$";
     private String chatCleanerBedwarsPartyAdvertisement = "(?!.+: )(([1-8]/[1-8]|[1-8]v[1-8]|[2-8]s)|(any|rbw|ranked))";
@@ -116,7 +116,7 @@ public class LanguageData {
     public Pattern autoFriendPatternRegex;
 
     public Pattern chatCleanerJoinRegex;
-    public Pattern chatCleanerMysteryBoxFindRegex;
+    public Pattern chatCleanerTicketAnnouncerRegex;
     public Pattern chatCleanerSoulWellFindRegex;
     public Pattern chatCleanerGameAnnouncementRegex;
     public Pattern chatCleanerBedwarsPartyAdvertisementRegex;
@@ -178,7 +178,7 @@ public class LanguageData {
             autoFriendPatternRegex = Pattern.compile(autoFriendPattern);
 
             chatCleanerJoinRegex = Pattern.compile(chatCleanerJoin);
-            chatCleanerMysteryBoxFindRegex = Pattern.compile(chatCleanerMysteryBoxFind);
+            chatCleanerTicketAnnouncerRegex = Pattern.compile(chatCleanerTicketAnnouncer);
             chatCleanerSoulWellFindRegex = Pattern.compile(chatCleanerSoulWellFind);
             chatCleanerGameAnnouncementRegex = Pattern.compile(chatCleanerGameAnnouncement);
             chatCleanerBedwarsPartyAdvertisementRegex = Pattern.compile(chatCleanerBedwarsPartyAdvertisement);

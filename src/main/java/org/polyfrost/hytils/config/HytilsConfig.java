@@ -361,11 +361,11 @@ public class HytilsConfig extends Config {
     public static boolean lobbyStatus;
 
     @Switch(
-        name = "Remove Mystery Box Rewards",
-        description = "Remove mystery box messages from chat and only show your own.\n§eExample: §b[MVP§c+§b] Steve §ffound a §6Legendary Hype Train Gadget§f!",
+        name = "Remove Ticket Machine Rewards",
+        description = "Remove ticket machine messages from chat and only show your own.\n§eExample: Steve has found a COMMON Figurine",
         category = "Chat", subcategory = "Toggles"
     )
-    public static boolean mysteryBoxAnnouncer;
+    public static boolean ticketMachineAnnouncer;
 
     @Switch(
         name = "Remove Soul Well Announcements",
@@ -1000,13 +1000,6 @@ public class HytilsConfig extends Config {
         category = "Lobby", subcategory = "GUI"
     )
     public static boolean lobbyBossbar = true;
-
-    @Switch(
-        name = "Mystery Box Star",
-        description = "Shows what star a mystery box is in the Mystery Box Vault, Orange stars are special boxes.",
-        category = "Lobby", subcategory = "GUI"
-    )
-    public static boolean mysteryBoxStar = true;
 
     @Switch(
         name = "Silent Lobby",

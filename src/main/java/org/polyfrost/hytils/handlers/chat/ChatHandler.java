@@ -69,7 +69,6 @@ public class ChatHandler {
         this.registerModule(new LobbyFishingAnnouncementRemover());
         this.registerModule(new LobbyStatusRemover());
         this.registerModule(new MvpEmotesRemover());
-        this.registerModule(new MysteryBoxRemover());
         this.registerModule(new NonCooldownBlocker());
         this.registerModule(new OnlineStatusRemover());
         this.registerModule(new QuestBlocker());
@@ -79,6 +78,7 @@ public class ChatHandler {
         this.registerModule(new SkyblockWelcomeRemover());
         this.registerModule(new SoulWellAnnouncerRemover());
         this.registerModule(new StatsMessageRemover());
+        this.registerModule(new TicketMachineRemover());
         this.registerModule(new TipMessageRemover());
 
         // Events

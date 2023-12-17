@@ -50,7 +50,6 @@ import org.polyfrost.hytils.handlers.lobby.armorstands.ArmorStandHider;
 import org.polyfrost.hytils.handlers.lobby.limbo.LimboLimiter;
 import org.polyfrost.hytils.handlers.lobby.limbo.LimboPmDing;
 import org.polyfrost.hytils.handlers.lobby.limbo.LimboTitle;
-import org.polyfrost.hytils.handlers.lobby.mysterybox.MysteryBoxStar;
 import org.polyfrost.hytils.handlers.lobby.npc.NPCHandler;
 import org.polyfrost.hytils.handlers.lobby.sound.SilentLobby;
 import org.polyfrost.hytils.handlers.render.ChestHighlighter;
@@ -182,7 +181,6 @@ public class HytilsReborn {
         eventBus.register(new LimboLimiter());
         eventBus.register(new LimboTitle());
         eventBus.register(new LimboPmDing());
-        eventBus.register(new MysteryBoxStar());
         eventBus.register(new SilentLobby());
 
         // specific games
