@@ -89,13 +89,6 @@ public class HytilsConfig extends Config {
     )
     public static int autoQueueDelay;
 
-    @Info(
-        text = "Automatically Check GEXP and Automatically Check Winstreak require an API Key to work.",
-        category = "General", subcategory = "Automatic",
-        type = InfoType.ERROR, size = 2
-    )
-    private static boolean autoCheckInfo;
-
     @Switch(
         name = "Automatically Check GEXP",
         description = "Automatically check your GEXP after you win a Hypixel game.",
@@ -324,13 +317,6 @@ public class HytilsConfig extends Config {
         category = "Chat", subcategory = "Watchdog"
     )
     public static boolean thankWatchdog;
-
-    @Info(
-        text = "Non Speech Cooldown requires an API Key to work.",
-        category = "Chat", subcategory = "Cooldown",
-        type = InfoType.ERROR
-    )
-    private static boolean nonSpeechCooldownInfo;
 
     @Switch(
         name = "Non Speech Cooldown",
