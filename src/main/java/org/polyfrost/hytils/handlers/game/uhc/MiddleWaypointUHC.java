@@ -34,7 +34,7 @@ public class MiddleWaypointUHC {
     @SubscribeEvent
     public void onRenderWorldLast(RenderWorldLastEvent event) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-        if (HypixelUtils.INSTANCE.isHypixel() && HytilsConfig.uhcMiddleWaypoint && (locraw != null && (locraw.getGameType() == LocrawInfo.GameType.UHC_CHAMPIONS || locraw.getGameType() == LocrawInfo.GameType.SPEED_UHC))) {
+        if (HypixelUtils.INSTANCE.isHypixel() && LocrawUtil.INSTANCE.isInGame() && HytilsConfig.uhcMiddleWaypoint && (locraw != null && (locraw.getGameType() == LocrawInfo.GameType.UHC_CHAMPIONS || locraw.getGameType() == LocrawInfo.GameType.SPEED_UHC))) {
             WaypointUtil.renderWayPoint(HytilsConfig.uhcMiddleWaypointText, block, event.partialTicks);
         }
     }
