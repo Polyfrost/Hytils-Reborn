@@ -2,25 +2,13 @@
 ![Compact Powered by OneConfig](https://polyfrost.org/img/compact_vector.svg)
 ![Dev Workflow Status](https://img.shields.io/github/v/release/Polyfrost/Hytils-Reborn.svg?style=for-the-badge&color=1452cc&label=release)
 
-## User Guide
-<details open>
-  <summary>Info</summary>
-
-### What is Hytils Reborn?
 Hytils Reborn is a [Hypixel](https://hypixel.net) focused Forge 1.8.9 mod based on [Sk1er LLC's Hytilities](https://github.com/Sk1erLLC/Hytilities), adding tons of Quality of Life features that
-you would want while on Hypixel, such as an Advertisement-Blocker, AutoQueue, AutoGL, Height Overlay, Game Status Restyle, AutoComplete for /play and plenty others to discover on your own!
-
-### How do I use Hytils Reborn?
-Hytils Reborn is installed just like any other Forge mod.
-
-If you do not know how to install a Forge mod, then we recommend following [this step-by-step guide](https://github.com/LizzyMaybeDev/Introduction-to-modding-mc "Credits: LizzyMaybeDev").
-</details>
-
+you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Message Blockers, Auto Queue, Autocomplete for /play and plenty others to discover on your own!
 ## Features
 <details>
  <summary>General</summary>
 
-## General
+### General
 - **Auto Start** - Join Hypixel immediately once the client has loaded to the main menu.
 - **Auto Queue** - Automatically queues for another game once you win or die. (This will require you to interact with the game in a way to prevent abuse)
 - **Auto-Complete Play Commands** - Allows tab completion of /play commands.
@@ -33,7 +21,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 <details>
   <summary>Chat</summary>
 
-# Chat
+### Chat
 - **Auto GL** - Send a message 5 seconds before a Hypixel game starts.
 - **Anti GL** - Remove all GL messages from chat.
 - **Auto Friend** - Automatically accept friend requests.
@@ -62,7 +50,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Non Speech Cooldown** - Show the amount of time remaining until you can speak if you are a non.
 - **Hide Locraw Messages** - Hide locraw messages in chat.
 - **Remove Lobby Statuses** - Remove lobby join messages from chat.
-- **Remove Mystery Box Rewards** - Remove others mystery box messages from chat and only show your own.
+- **Remove Ticket Machine Rewards** - Remove ticket machine messages from chat and only show your own.
 - **Remove Soul Well Announcements** - Remove soul well announcements from chat.
 - **Remove Game Announcements** - Remove game announcements from chat.
 - **Remove Hype Limit Reminder** - Remove Hype limit reminders from chat.
@@ -86,12 +74,15 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Remove Replay Messages** - Removes replay messages from chat.
 - **Remove Tip Messages** - Removes tip messages from chat.
 - **Remove Online Status Messages** - Removes the online status messages from chat.
+- **Remove Main Lobby Fishing Announcements** - Removes Main Lobby Fishing announcements from chat when a player catches a special fish.
+- **Remove Hot Potato Messages** - Removes Hot Potato messages from chat.
+- **Remove Discord Safety Warning Messages** - Removes "Please be mindful of Discord links in chat as they may pose a security risk".
 - **AutoWB** - Says configurable message to your friends/guild when they join.
 </details>
 <details>
   <summary>Tab</summary>
 
-# Tab
+### Tab
 - **Highlight Friends In Tab** - Add a star to the names of your Hypixel friends in tab.
 - **Highlight Self In Tab** - Add a star to your name in tab.
 - **Hide NPCs In Tab** - Prevent NPCs from showing up in tab.
@@ -105,7 +96,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 <details>
   <summary>Game</summary>
 
-# Game
+### Game
 - **Hide HUD Elements** - Hide HUD elements such as health, hunger, and armor bars where they are the same.
 - **Hide Advertisements in Bossbars** - Hide bossbars that advertise Hypixel.
 - **Hardcore Hearts** - When your bed is broken/wither is killed in Bedwars/MiniWalls, set the heart style to Hardcore.
@@ -120,6 +111,7 @@ If you do not know how to install a Forge mod, then we recommend following [this
 - **Colored Beds** - Make beds a different color depending on the team they are on.
 - **Height Overlay** - Make blocks that are in the Hypixel height limit a different color.
 - **Hide Actionbar in Dropper** - Hide the Actionbar in Dropper.
+- **Mute Hurt Sounds in Dropper** - Mute the sounds of other players failing in Dropper.
 - **Lower Render Distance in Sumo** - Lowers render distance to your desired value in Sumo Duels.
 - **Hide Duels Cosmetics** - Hide Duels Cosmetics in Hypixel.
 - **Mute Housing Music** - Prevent the Housing songs from being heard.
@@ -133,11 +125,11 @@ If you do not know how to install a Forge mod, then we recommend following [this
 <details>
   <summary>Lobby</summary>
 
-# Lobby
+### Lobby
 - **Hide Lobby NPCs** - Hide NPCs in the lobby.
 - **Hide Useless Lobby Nametags** - Hides unnecessary nametags such as those that say "RIGHT CLICK" or "CLICK TO PLAY" in a lobby, as well as other useless ones.
 - **Hide Lobby Bossbars** - Hide the bossbar in the lobby.
-- **Mystery Box Star** - Shows what star a mystery box is in the Mystery Box Vault, Orange stars are special boxes.
+- **Silent Lobby** - Prevent all sounds from playing when you are in a lobby.
 - **Remove Limbo AFK Title** - Remove the AFK title when you get sent to limbo for being AFK.
 - **Limbo Limiter** - While in Limbo, limit your framerate to reduce the load of the game on your computer.
 - **Limbo PM Ding** - While in Limbo, play the ding sound if you get a PM. Currently, Hypixel's option does not work in Limbo.
