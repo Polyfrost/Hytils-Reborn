@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.util;
 
-
+import cc.polyfrost.oneconfig.config.core.OneColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -27,10 +27,9 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.*;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
-
-import java.awt.*;
 
 /**
  * Taken and adapted from NotEnoughUpdates under Creative Commons Attribution-NonCommercial 3.0
@@ -38,10 +37,9 @@ import java.awt.*;
  * @author Moulberry
  */
 public class WaypointUtil {
-
     private static final ResourceLocation beaconBeam = new ResourceLocation("textures/entity/beacon_beam.png");
 
-    private static void renderBeaconBeam(double x, double y, double z, int rgb, float alphaMult, float partialTicks, boolean disableDepth) {
+    private static void renderBeaconBeam(double x, double y, double z, OneColor color, float alphaMult, float partialTicks, boolean disableDepth) {
         int height = 300;
         int bottomOffset = 0;
         int topOffset = bottomOffset + height;
@@ -66,9 +64,10 @@ public class WaypointUtil {
         double time = Minecraft.getMinecraft().theWorld.getTotalWorldTime() + (double) partialTicks;
         double d1 = MathHelper.func_181162_h(-time * 0.2D - (double) MathHelper.floor_double(-time * 0.1D));
 
-        float r = ((rgb >> 16) & 0xFF) / 255f;
-        float g = ((rgb >> 8) & 0xFF) / 255f;
-        float b = (rgb & 0xFF) / 255f;
+        float r = color.getRed();
+        float g = color.getGreen();
+        float b = color.getBlue();
+        float a = color.getAlpha() * alphaMult;
         double d2 = time * 0.025D * -1.5D;
         double d4 = 0.5D + Math.cos(d2 + 2.356194490192345D) * 0.2D;
         double d5 = 0.5D + Math.sin(d2 + 2.356194490192345D) * 0.2D;
@@ -81,22 +80,22 @@ public class WaypointUtil {
         double d14 = -1.0D + d1;
         double d15 = (double) (height) * 2.5D + d14;
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        worldrenderer.pos(x + d4, y + topOffset, z + d5).tex(1.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
+        worldrenderer.pos(x + d4, y + topOffset, z + d5).tex(1.0D, d15).color(r, g, b, a).endVertex();
         worldrenderer.pos(x + d4, y + bottomOffset, z + d5).tex(1.0D, d14).color(r, g, b, 1.0F).endVertex();
         worldrenderer.pos(x + d6, y + bottomOffset, z + d7).tex(0.0D, d14).color(r, g, b, 1.0F).endVertex();
-        worldrenderer.pos(x + d6, y + topOffset, z + d7).tex(0.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
-        worldrenderer.pos(x + d10, y + topOffset, z + d11).tex(1.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
+        worldrenderer.pos(x + d6, y + topOffset, z + d7).tex(0.0D, d15).color(r, g, b, a).endVertex();
+        worldrenderer.pos(x + d10, y + topOffset, z + d11).tex(1.0D, d15).color(r, g, b, a).endVertex();
         worldrenderer.pos(x + d10, y + bottomOffset, z + d11).tex(1.0D, d14).color(r, g, b, 1.0F).endVertex();
         worldrenderer.pos(x + d8, y + bottomOffset, z + d9).tex(0.0D, d14).color(r, g, b, 1.0F).endVertex();
-        worldrenderer.pos(x + d8, y + topOffset, z + d9).tex(0.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
-        worldrenderer.pos(x + d6, y + topOffset, z + d7).tex(1.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
+        worldrenderer.pos(x + d8, y + topOffset, z + d9).tex(0.0D, d15).color(r, g, b, a).endVertex();
+        worldrenderer.pos(x + d6, y + topOffset, z + d7).tex(1.0D, d15).color(r, g, b, a).endVertex();
         worldrenderer.pos(x + d6, y + bottomOffset, z + d7).tex(1.0D, d14).color(r, g, b, 1.0F).endVertex();
         worldrenderer.pos(x + d10, y + bottomOffset, z + d11).tex(0.0D, d14).color(r, g, b, 1.0F).endVertex();
-        worldrenderer.pos(x + d10, y + topOffset, z + d11).tex(0.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
-        worldrenderer.pos(x + d8, y + topOffset, z + d9).tex(1.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
+        worldrenderer.pos(x + d10, y + topOffset, z + d11).tex(0.0D, d15).color(r, g, b, a).endVertex();
+        worldrenderer.pos(x + d8, y + topOffset, z + d9).tex(1.0D, d15).color(r, g, b, a).endVertex();
         worldrenderer.pos(x + d8, y + bottomOffset, z + d9).tex(1.0D, d14).color(r, g, b, 1.0F).endVertex();
         worldrenderer.pos(x + d4, y + bottomOffset, z + d5).tex(0.0D, d14).color(r, g, b, 1.0F).endVertex();
-        worldrenderer.pos(x + d4, y + topOffset, z + d5).tex(0.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
+        worldrenderer.pos(x + d4, y + topOffset, z + d5).tex(0.0D, d15).color(r, g, b, a).endVertex();
         tessellator.draw();
 
         GlStateManager.disableCull();
@@ -104,22 +103,22 @@ public class WaypointUtil {
         double d13 = height + d12;
 
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.2D).tex(1.0D, d13).color(r, g, b, 0.25F * alphaMult).endVertex();
+        worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.2D).tex(1.0D, d13).color(r, g, b, 0.25F * a).endVertex();
         worldrenderer.pos(x + 0.2D, y + bottomOffset, z + 0.2D).tex(1.0D, d12).color(r, g, b, 0.25F).endVertex();
         worldrenderer.pos(x + 0.8D, y + bottomOffset, z + 0.2D).tex(0.0D, d12).color(r, g, b, 0.25F).endVertex();
-        worldrenderer.pos(x + 0.8D, y + topOffset, z + 0.2D).tex(0.0D, d13).color(r, g, b, 0.25F * alphaMult).endVertex();
-        worldrenderer.pos(x + 0.8D, y + topOffset, z + 0.8D).tex(1.0D, d13).color(r, g, b, 0.25F * alphaMult).endVertex();
+        worldrenderer.pos(x + 0.8D, y + topOffset, z + 0.2D).tex(0.0D, d13).color(r, g, b, 0.25F * a).endVertex();
+        worldrenderer.pos(x + 0.8D, y + topOffset, z + 0.8D).tex(1.0D, d13).color(r, g, b, 0.25F * a).endVertex();
         worldrenderer.pos(x + 0.8D, y + bottomOffset, z + 0.8D).tex(1.0D, d12).color(r, g, b, 0.25F).endVertex();
         worldrenderer.pos(x + 0.2D, y + bottomOffset, z + 0.8D).tex(0.0D, d12).color(r, g, b, 0.25F).endVertex();
-        worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.8D).tex(0.0D, d13).color(r, g, b, 0.25F * alphaMult).endVertex();
-        worldrenderer.pos(x + 0.8D, y + topOffset, z + 0.2D).tex(1.0D, d13).color(r, g, b, 0.25F * alphaMult).endVertex();
+        worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.8D).tex(0.0D, d13).color(r, g, b, 0.25F * a).endVertex();
+        worldrenderer.pos(x + 0.8D, y + topOffset, z + 0.2D).tex(1.0D, d13).color(r, g, b, 0.25F * a).endVertex();
         worldrenderer.pos(x + 0.8D, y + bottomOffset, z + 0.2D).tex(1.0D, d12).color(r, g, b, 0.25F).endVertex();
         worldrenderer.pos(x + 0.8D, y + bottomOffset, z + 0.8D).tex(0.0D, d12).color(r, g, b, 0.25F).endVertex();
-        worldrenderer.pos(x + 0.8D, y + topOffset, z + 0.8D).tex(0.0D, d13).color(r, g, b, 0.25F * alphaMult).endVertex();
-        worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.8D).tex(1.0D, d13).color(r, g, b, 0.25F * alphaMult).endVertex();
+        worldrenderer.pos(x + 0.8D, y + topOffset, z + 0.8D).tex(0.0D, d13).color(r, g, b, 0.25F * a).endVertex();
+        worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.8D).tex(1.0D, d13).color(r, g, b, 0.25F * a).endVertex();
         worldrenderer.pos(x + 0.2D, y + bottomOffset, z + 0.8D).tex(1.0D, d12).color(r, g, b, 0.25F).endVertex();
         worldrenderer.pos(x + 0.2D, y + bottomOffset, z + 0.2D).tex(0.0D, d12).color(r, g, b, 0.25F).endVertex();
-        worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.2D).tex(0.0D, d13).color(r, g, b, 0.25F * alphaMult).endVertex();
+        worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.2D).tex(0.0D, d13).color(r, g, b, 0.25F * a).endVertex();
         tessellator.draw();
 
         GlStateManager.disableLighting();
@@ -129,28 +128,28 @@ public class WaypointUtil {
         }
     }
 
-    private static void renderBoundingBox(double x, double y, double z, int rgb, float alphaMult, float partialTicks) {
+    private static void renderBoundingBox(double x, double y, double z, OneColor color, float alphaMult) {
         AxisAlignedBB bb = new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1);
 
         GlStateManager.disableDepth();
         GlStateManager.disableCull();
         GlStateManager.disableTexture2D();
-        drawFilledBoundingBox(bb, 1f, new Color(rgb));
+        drawFilledBoundingBox(bb, color, alphaMult);
         GlStateManager.enableTexture2D();
         GlStateManager.enableCull();
         GlStateManager.enableDepth();
     }
 
-    public static void drawFilledBoundingBox(AxisAlignedBB boundingBox, float alpha, Color color) {
+    public static void drawFilledBoundingBox(AxisAlignedBB boundingBox, OneColor color, float alphaMult) {
 
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
         GlStateManager.disableTexture2D();
 
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 
-        GlStateManager.color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f * alpha);
+        GlStateManager.color(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F * alphaMult);
 
         //vertical
         worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
@@ -167,10 +166,10 @@ public class WaypointUtil {
         tessellator.draw();
 
         GlStateManager.color(
-            color.getRed() / 255f * 0.8f,
-            color.getGreen() / 255f * 0.8f,
-            color.getBlue() / 255f * 0.8f,
-            color.getAlpha() / 255f * alpha
+            color.getRed() / 255F * 0.8f,
+            color.getGreen() / 255F * 0.8f,
+            color.getBlue() / 255F * 0.8f,
+            color.getAlpha() / 255F * alphaMult
         );
 
         //x
@@ -188,10 +187,10 @@ public class WaypointUtil {
         tessellator.draw();
 
         GlStateManager.color(
-            color.getRed() / 255f * 0.9f,
-            color.getGreen() / 255f * 0.9f,
-            color.getBlue() / 255f * 0.9f,
-            color.getAlpha() / 255f * alpha
+            color.getRed() / 255F * 0.9F,
+            color.getGreen() / 255F * 0.9F,
+            color.getBlue() / 255F * 0.9F,
+            color.getAlpha() / 255F * alphaMult
         );
         //z
         worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
@@ -208,7 +207,81 @@ public class WaypointUtil {
         tessellator.draw();
     }
 
-    public static void renderBeaconBeam(BlockPos block, int rgb, float alphaMult, float partialTicks) {
+    public static void drawBoundingBox(RenderWorldLastEvent event, BlockPos pos, OneColor color) {
+        Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+        double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * event.partialTicks;
+        double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * event.partialTicks;
+        double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * event.partialTicks;
+
+        double x = pos.getX() - viewerX;
+        double y = pos.getY() - viewerY;
+        double z = pos.getZ() - viewerZ;
+        GlStateManager.disableCull();
+        drawFilledBoundingBox(new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1).expand(0.01, 0.01, 0.01), color);
+        GlStateManager.enableCull();
+    }
+    private static void drawFilledBoundingBox(AxisAlignedBB aabb, OneColor c) {
+        GlStateManager.enableBlend();
+        GlStateManager.disableLighting();
+        GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+        GlStateManager.disableTexture2D();
+
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+
+        GlStateManager.color(c.getRed() / 255F, c.getGreen() / 255F, c.getBlue() / 255F, c.getAlpha() / 255F * (float) 0.8);
+
+        //vertical
+        worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+        worldrenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
+        worldrenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
+        worldrenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
+        worldrenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
+        tessellator.draw();
+        worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+        worldrenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
+        worldrenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
+        worldrenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
+        worldrenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
+        tessellator.draw();
+
+
+        GlStateManager.color(c.getRed() / 255F * 0.8f, c.getGreen() / 255F * 0.8f, c.getBlue() / 255F * 0.8f, c.getAlpha() / 255F * (float) 0.8);
+
+        //x
+        worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+        worldrenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
+        worldrenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
+        worldrenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
+        worldrenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
+        tessellator.draw();
+        worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+        worldrenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
+        worldrenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
+        worldrenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
+        worldrenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
+        tessellator.draw();
+
+
+        GlStateManager.color(c.getRed() / 255F * 0.9F, c.getGreen() / 255F * 0.9F, c.getBlue() / 255F * 0.9F, c.getAlpha() / 255F * (float) 0.8);
+        //z
+        worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+        worldrenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
+        worldrenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
+        worldrenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
+        worldrenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
+        tessellator.draw();
+        worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+        worldrenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
+        worldrenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
+        worldrenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
+        worldrenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
+        tessellator.draw();
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+    }
+
+    public static void renderBeaconBeam(BlockPos block, OneColor color, float alphaMult, float partialTicks) {
         double viewerX;
         double viewerY;
         double viewerZ;
@@ -224,10 +297,10 @@ public class WaypointUtil {
 
         double distSq = x * x + y * y + z * z;
 
-        WaypointUtil.renderBeaconBeam(x, y, z, rgb, 1.0f, partialTicks, distSq > 10 * 10);
+        WaypointUtil.renderBeaconBeam(x, y, z, color, alphaMult, partialTicks, distSq > 10 * 10);
     }
 
-    public static void renderBeaconBeamOrBoundingBox(BlockPos block, int rgb, float alphaMult, float partialTicks) {
+    public static void renderBeaconBeamOrBoundingBox(BlockPos block, OneColor color, float alphaMult, float partialTicks) {
         double viewerX;
         double viewerY;
         double viewerZ;
@@ -244,9 +317,9 @@ public class WaypointUtil {
         double distSq = x * x + y * y + z * z;
 
         if (distSq > 10 * 10) {
-            WaypointUtil.renderBeaconBeam(x, y, z, rgb, 1.0f, partialTicks, true);
+            WaypointUtil.renderBeaconBeam(x, y, z, color, alphaMult, partialTicks, true);
         } else {
-            WaypointUtil.renderBoundingBox(x, y, z, rgb, 1.0f, partialTicks);
+            WaypointUtil.renderBoundingBox(x, y, z, color, alphaMult);
         }
     }
 
@@ -278,7 +351,9 @@ public class WaypointUtil {
         GlStateManager.translate(x, y, z);
         GlStateManager.translate(0, viewer.getEyeHeight(), 0);
 
-        renderNametag(str);
+        OneColor color = new OneColor(-1);
+
+        renderNametag(str, color);
 
         GlStateManager.rotate(-Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(Minecraft.getMinecraft().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
@@ -286,14 +361,14 @@ public class WaypointUtil {
         GlStateManager.rotate(-Minecraft.getMinecraft().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
         GlStateManager.rotate(Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
 
-        renderNametag(EnumChatFormatting.YELLOW.toString() + Math.round(dist) + "m");
+        renderNametag(EnumChatFormatting.YELLOW.toString() + Math.round(dist) + "m", color);
 
         GlStateManager.popMatrix();
 
         GlStateManager.disableLighting();
     }
 
-    public static void renderNametag(String str) {
+    public static void renderNametag(String str, OneColor textColor) {
         FontRenderer fontrenderer = Minecraft.getMinecraft().fontRendererObj;
         float f = 1.6F;
         float f1 = 0.016666668F * f;
@@ -306,7 +381,7 @@ public class WaypointUtil {
         GlStateManager.depthMask(false);
         GlStateManager.disableDepth();
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         int i = 0;
@@ -327,7 +402,7 @@ public class WaypointUtil {
 
         GlStateManager.enableDepth();
         GlStateManager.enableBlend();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(textColor.getRed(), textColor.getGreen(), textColor.getBlue(), textColor.getAlpha());
         GlStateManager.popMatrix();
     }
 }
