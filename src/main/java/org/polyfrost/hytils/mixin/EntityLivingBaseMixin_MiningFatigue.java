@@ -35,7 +35,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class EntityLivingBaseMixin_MiningFatigue {
     private final EntityLivingBase $this = (EntityLivingBase) (Object) this;
 
-
     @Inject(method = "addPotionEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;onNewPotionEffect(Lnet/minecraft/potion/PotionEffect;)V"))
     private void onPotionEffect(PotionEffect potioneffectIn, CallbackInfo ci) {
         if (HytilsConfig.notifyMiningFatigue && potioneffectIn.getPotionID() == Potion.digSlowdown.getId() && LocrawUtil.INSTANCE.getLocrawInfo() != null && ($this instanceof EntityPlayerSP) && (!HytilsConfig.disableNotifyMiningFatigueSkyblock || !(LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.SKYBLOCK))) {

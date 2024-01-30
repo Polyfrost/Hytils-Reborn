@@ -16,32 +16,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.polyfrost.hytils.handlers.game.pit;
+package org.polyfrost.hytils.mixin.compat;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
-import org.polyfrost.hytils.config.HytilsConfig;
+import club.sk1er.mods.levelhead.render.AboveHeadRender;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.hytils.config.HytilsConfig;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-public class PitLagReducer {
+import static org.polyfrost.hytils.handlers.game.pit.PitLagReducer.pitSpawnPos;
 
-    /** The y-position of the spawn platform in The Pit. */
-    public static double pitSpawnPos;
-
-    @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event) {
-        // Allow the spawn position to be updated.
-        pitSpawnPos = -1;
-    }
-
-    @SubscribeEvent
-    public void onRenderLiving(RenderLivingEvent.Pre<EntityLiving> event) {
+@Pseudo
+@Mixin(value = AboveHeadRender.class, remap = false)
+public class AboveHeadRendererMixin_RemoveLevelheadPit {
+    @Inject(method = "render(Lnet/minecraftforge/client/event/RenderLivingEvent$Specials$Post;)V", at = @At("HEAD"), cancellable = true)
+    private void removeLevelhead(RenderLivingEvent.Specials.Post<EntityLivingBase> event, CallbackInfo ci) {
         if (!HypixelUtils.INSTANCE.isHypixel()) {
             return;
         }
@@ -51,15 +48,10 @@ public class PitLagReducer {
             return;
         }
 
-        if (pitSpawnPos == -1) {
-            // Update the spawn position by finding an armor stand in spawn.
-            if (event.entity instanceof EntityArmorStand && event.entity.getName().equals("§a§lJUMP! §c§lFIGHT!")) {
-                pitSpawnPos = event.entity.posY - 5;
-            }
-        } else if (HytilsConfig.pitLagReducer) {
+        if (HytilsConfig.pitLagReducer) {
             // If the entity being rendered is at spawn, and you are below spawn, cancel the rendering.
             if (event.entity.posY > pitSpawnPos && Minecraft.getMinecraft().thePlayer.posY < pitSpawnPos) {
-                event.setCanceled(true);
+                ci.cancel();
             }
         }
     }

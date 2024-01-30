@@ -16,32 +16,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.polyfrost.hytils.handlers.game.pit;
+package org.polyfrost.hytils.mixin;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
-import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RendererLivingEntity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.ResourceLocation;
+import org.polyfrost.hytils.config.HytilsConfig;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-public class PitLagReducer {
+import static org.polyfrost.hytils.handlers.game.pit.PitLagReducer.pitSpawnPos;
 
-    /** The y-position of the spawn platform in The Pit. */
-    public static double pitSpawnPos;
-
-    @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event) {
-        // Allow the spawn position to be updated.
-        pitSpawnPos = -1;
+@Mixin(RendererLivingEntity.class)
+public class RenderingLivingEntityMixin_HideNametags<T extends EntityLivingBase> extends Render<T> {
+    protected RenderingLivingEntityMixin_HideNametags(RenderManager renderManager) {
+        super(renderManager);
     }
 
-    @SubscribeEvent
-    public void onRenderLiving(RenderLivingEvent.Pre<EntityLiving> event) {
+    protected ResourceLocation getEntityTexture(T entity) {
+        return null;
+    }
+
+    @Inject(method = "renderName(Lnet/minecraft/entity/EntityLivingBase;DDD)V", at = @At("HEAD"), cancellable = true)
+    private void hideNametag(T entity, double x, double y, double z, CallbackInfo ci) {
         if (!HypixelUtils.INSTANCE.isHypixel()) {
             return;
         }
@@ -51,15 +56,10 @@ public class PitLagReducer {
             return;
         }
 
-        if (pitSpawnPos == -1) {
-            // Update the spawn position by finding an armor stand in spawn.
-            if (event.entity instanceof EntityArmorStand && event.entity.getName().equals("§a§lJUMP! §c§lFIGHT!")) {
-                pitSpawnPos = event.entity.posY - 5;
-            }
-        } else if (HytilsConfig.pitLagReducer) {
+        if (HytilsConfig.pitLagReducer) {
             // If the entity being rendered is at spawn, and you are below spawn, cancel the rendering.
-            if (event.entity.posY > pitSpawnPos && Minecraft.getMinecraft().thePlayer.posY < pitSpawnPos) {
-                event.setCanceled(true);
+            if (entity.posY > pitSpawnPos && Minecraft.getMinecraft().thePlayer.posY < pitSpawnPos) {
+                ci.cancel();
             }
         }
     }
