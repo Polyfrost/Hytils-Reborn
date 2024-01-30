@@ -21,11 +21,11 @@ package org.polyfrost.hytils.mixin.compat;
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
-import club.sk1er.mods.levelhead.render.AboveHeadRender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import org.polyfrost.hytils.config.HytilsConfig;
+import org.polyfrost.hytils.handlers.game.pit.PitLagReducer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,7 +35,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static org.polyfrost.hytils.handlers.game.pit.PitLagReducer.pitSpawnPos;
 
 @Pseudo
-@Mixin(value = AboveHeadRender.class, remap = false)
+@Mixin(targets = "club.sk1er.mods.levelhead.render.AboveHeadRender.AboveHeadRender", remap = false)
 public class AboveHeadRendererMixin_RemoveLevelheadPit {
     @Inject(method = "render(Lnet/minecraftforge/client/event/RenderLivingEvent$Specials$Post;)V", at = @At("HEAD"), cancellable = true)
     private void removeLevelhead(RenderLivingEvent.Specials.Post<EntityLivingBase> event, CallbackInfo ci) {

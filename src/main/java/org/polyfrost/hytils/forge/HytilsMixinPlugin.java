@@ -19,6 +19,7 @@
 package org.polyfrost.hytils.forge;
 
 
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.lib.tree.*;
@@ -33,6 +34,7 @@ import java.util.Set;
 public class HytilsMixinPlugin implements IMixinConfigPlugin {
 
     private boolean isOptiFine = false;
+    private boolean isLevelhead = false;
     private boolean hasAppliedRenderHeads = false;
     private boolean hasAppliedModifyName = false;
 
@@ -46,6 +48,7 @@ public class HytilsMixinPlugin implements IMixinConfigPlugin {
             System.out.println("OptiFine not detected, not applying OptiFine compat mixin.");
             isOptiFine = false;
         }
+        if (Loader.isModLoaded("level_head")) isLevelhead = true;
     }
 
     @Override
@@ -59,6 +62,9 @@ public class HytilsMixinPlugin implements IMixinConfigPlugin {
             return isOptiFine;
         } else if (mixinClassName.endsWith("_NoOptiFine")) {
             return !isOptiFine;
+        }
+        if (mixinClassName.equals("AboveHeadRendererMixin_RemoveLevelheadPit")) {
+            return isLevelhead;
         }
         return true;
     }
