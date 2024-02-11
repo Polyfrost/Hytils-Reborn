@@ -32,8 +32,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 /**
- * Taken and adapted from NotEnoughUpdates under Creative Commons Attribution-NonCommercial 3.0
- * https://github.com/Moulberry/NotEnoughUpdates/blob/master/LICENSE
+ * Taken and adapted from NotEnoughUpdates under LGPL-3.0
+ * https://github.com/NotEnoughUpdates/NotEnoughUpdates/blob/master/COPYING.LESSER
  * @author Moulberry
  */
 public class WaypointUtil {
