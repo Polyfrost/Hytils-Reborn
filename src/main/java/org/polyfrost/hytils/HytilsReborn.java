@@ -105,7 +105,6 @@ public class HytilsReborn {
     public void init(FMLInitializationEvent event) {
         config = new HytilsConfig();
 
-        CommandManager.INSTANCE.registerCommand(new BlockCommand());
         CommandManager.INSTANCE.registerCommand(new HousingVisitCommand());
         CommandManager.INSTANCE.registerCommand(new HytilsCommand());
         CommandManager.INSTANCE.registerCommand(new IgnoreTemporaryCommand());
@@ -113,7 +112,6 @@ public class HytilsReborn {
         CommandManager.INSTANCE.registerCommand(new RequeueCommand());
         CommandManager.INSTANCE.registerCommand(new SilentRemoveCommand());
         CommandManager.INSTANCE.registerCommand(new SkyblockVisitCommand());
-        CommandManager.INSTANCE.registerCommand(new UnblockCommand());
 
         // We initialize it a different way because it requires the
         // GameNameParser to be initialized, and that depends on networking.

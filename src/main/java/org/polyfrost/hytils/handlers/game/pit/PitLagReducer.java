@@ -21,6 +21,7 @@ package org.polyfrost.hytils.handlers.game.pit;
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
@@ -40,7 +41,7 @@ public class PitLagReducer {
         pitSpawnPos = -1;
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onRenderLiving(RenderLivingEvent.Pre<EntityLiving> event) {
         if (!HypixelUtils.INSTANCE.isHypixel()) {
             return;
