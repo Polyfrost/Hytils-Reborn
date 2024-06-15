@@ -18,20 +18,19 @@
 
 package org.polyfrost.hytils.handlers.game.housing;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 public class HousingMusic {
 
     @SubscribeEvent
     public void onPlaySound(PlaySoundEvent event) {
         if (HypixelUtils.INSTANCE.isHypixel() && HytilsConfig.muteHousingMusic) {
-            LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-            if (locraw != null && locraw.getGameType() == LocrawInfo.GameType.HOUSING && event.name.startsWith("note.")) {
+            HypixelAPI.Location location = HypixelAPI.getLocation();
+            if (location.getGameType().orElse(null) == GameType.HOUSING && event.name.startsWith("note.")) {
                 event.result = null;
             }
         }

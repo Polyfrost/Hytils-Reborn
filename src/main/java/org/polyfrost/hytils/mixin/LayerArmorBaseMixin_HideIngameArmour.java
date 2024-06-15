@@ -18,15 +18,14 @@
 
 package org.polyfrost.hytils.mixin;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -47,22 +46,22 @@ public abstract class LayerArmorBaseMixin_HideIngameArmour {
 
     private static boolean shouldCancel(ItemStack itemStack) {
         if (!HytilsConfig.hideArmor || itemStack == null || !HypixelUtils.INSTANCE.isHypixel()) return false;
-        final LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
+        final HypixelAPI.Location location = HypixelAPI.getLocation();
         final Item item = itemStack.getItem();
-        if (locraw != null) {
+        if (location.getGameType().isPresent() && location.getMode().isPresent()) {
             if (item instanceof ItemArmor && ((ItemArmor) item).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
-                switch (locraw.getGameType()) {
+                switch (location.getGameType().get()) {
                     case BEDWARS:
                         return true;
-                    case ARCADE_GAMES:
+                    case ARCADE:
                         // capture the wool
-                        return locraw.getGameMode().contains("PVP_CTW");
+                        return location.getMode().get().contains("PVP_CTW");
                     case DUELS:
-                        return locraw.getGameMode().contains("BRIDGE") || locraw.getGameMode().contains("CAPTURE") || locraw.getGameMode().contains("ARENA");
+                        return location.getMode().get().contains("BRIDGE") || location.getMode().get().contains("CAPTURE") || location.getMode().get().contains("ARENA");
                 }
             } else {
-                if (locraw.getGameType() == LocrawInfo.GameType.DUELS) {
-                    return locraw.getGameMode().contains("CLASSIC") || locraw.getGameMode().contains("UHC");
+                if (location.getGameType().get() == GameType.DUELS) {
+                    return location.getMode().get().contains("CLASSIC") || location.getMode().get().contains("UHC");
                 }
             }
         }

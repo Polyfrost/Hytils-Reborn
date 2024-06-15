@@ -18,9 +18,7 @@
 
 package org.polyfrost.hytils.handlers.game.pit;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
@@ -29,6 +27,7 @@ import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 public class PitLagReducer {
 
@@ -47,8 +46,8 @@ public class PitLagReducer {
             return;
         }
 
-        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-        if (locraw == null || locraw.getGameType() != LocrawInfo.GameType.PIT) {
+        HypixelAPI.Location location = HypixelAPI.getLocation();
+        if (location.getGameType().orElse(null) != GameType.PIT) {
             return;
         }
 

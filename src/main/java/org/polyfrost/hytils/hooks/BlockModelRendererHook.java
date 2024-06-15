@@ -18,8 +18,6 @@
 
 package org.polyfrost.hytils.hooks;
 
-import cc.polyfrost.oneconfig.utils.color.ColorUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import org.polyfrost.hytils.util.DarkColorUtils;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.MapColor;
@@ -29,6 +27,7 @@ import net.minecraft.util.BlockPos;
 import org.polyfrost.hytils.config.BlockHighlightConfig;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.HeightHandler;
+import org.polyfrost.polyui.utils.ColorUtils;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 public class BlockModelRendererHook {

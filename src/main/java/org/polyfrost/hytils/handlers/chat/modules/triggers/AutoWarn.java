@@ -18,8 +18,8 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+import org.polyfrost.universal.UChat;
+import org.polyfrost.universal.wrappers.message.UTextComponent;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;

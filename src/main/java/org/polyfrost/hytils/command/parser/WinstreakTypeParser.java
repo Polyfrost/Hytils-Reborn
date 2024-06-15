@@ -18,10 +18,10 @@
 
 package org.polyfrost.hytils.command.parser;
 
-import cc.polyfrost.oneconfig.utils.commands.arguments.ArgumentParser;
+import org.jetbrains.annotations.Nullable;
+import org.polyfrost.oneconfig.api.commands.v1.arguments.ArgumentParser;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +38,12 @@ public class WinstreakTypeParser extends ArgumentParser<WinstreakType> {
     }
 
     @Override
-    public @NotNull List<String> complete(String arg, Parameter parameter) {
+    public Class<WinstreakType> getType() {
+        return WinstreakType.class;
+    }
+
+    @Override
+    public @Nullable List<String> getAutoCompletions(String arg) {
         if (arg.isEmpty()) {
             return DEFAULT_COMPLETIONS;
         }

@@ -41,7 +41,7 @@ public class CommandQueue {
     }
 
     @SubscribeEvent
-    public void tick(TickEvent.ClientTickEvent event) {
+    public void ticks(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) {
             return;
         }

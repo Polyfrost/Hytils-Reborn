@@ -18,13 +18,13 @@
 
 package org.polyfrost.hytils.command;
 
-import cc.polyfrost.oneconfig.utils.Multithreading;
-import cc.polyfrost.oneconfig.utils.Notifications;
-import cc.polyfrost.oneconfig.utils.commands.CommandManager;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Description;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
-import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
+import org.polyfrost.oneconfig.utils.v1.Notifications;
+import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Description;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Main;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.SubCommand;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.command.parser.GEXPType;
 import org.polyfrost.hytils.command.parser.GEXPTypeParser;

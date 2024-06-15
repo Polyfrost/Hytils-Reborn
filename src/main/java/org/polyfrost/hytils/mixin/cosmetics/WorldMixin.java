@@ -18,12 +18,12 @@
 
 package org.polyfrost.hytils.mixin.cosmetics;
 
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.CosmeticsHandler;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -34,8 +34,8 @@ public class WorldMixin {
 
     @Inject(method = "spawnParticle(IZDDDDDD[I)V", at = @At("HEAD"), cancellable = true)
     private void removeParticles(int particleID, boolean p_175720_2_, double xCood, double yCoord, double zCoord, double xOffset, double yOffset, double zOffset, int[] p_175720_15_, CallbackInfo ci) {
-        if ((HytilsConfig.hideDuelsCosmetics && LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.DUELS) ||
-            (HytilsConfig.hideArcadeCosmetics && LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.ARCADE_GAMES) && LocrawUtil.INSTANCE.isInGame()) {
+        if ((HytilsConfig.hideDuelsCosmetics && HypixelAPI.getLocation().getGameType().orElse(null) == GameType.DUELS) ||
+            (HytilsConfig.hideArcadeCosmetics && HypixelAPI.getLocation().getGameType().orElse(null) == GameType.ARCADE) && HypixelAPI.getLocation().isGame()) {
             String particleName = EnumParticleTypes.getParticleFromId(particleID).getParticleName();
             CosmeticsHandler.INSTANCE.particleCosmetics.forEach((particle) -> {
                 if (particleName.equalsIgnoreCase(particle)) {

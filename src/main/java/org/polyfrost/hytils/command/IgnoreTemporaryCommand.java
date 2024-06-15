@@ -18,10 +18,10 @@
 
 package org.polyfrost.hytils.command;
 
-import cc.polyfrost.oneconfig.config.core.ConfigUtils;
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.utils.Multithreading;
-import cc.polyfrost.oneconfig.utils.commands.annotations.*;
+import org.polyfrost.oneconfig.api.config.v1.core.ConfigUtils;
+import org.polyfrost.universal.UChat;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.*;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

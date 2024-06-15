@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.mixin;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;

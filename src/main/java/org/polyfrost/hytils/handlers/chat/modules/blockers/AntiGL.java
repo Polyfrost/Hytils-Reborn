@@ -18,19 +18,20 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 public class AntiGL implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().toLowerCase());
-        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase())) || (LocrawUtil.INSTANCE.getLocrawInfo() != null && !LocrawUtil.INSTANCE.isInGame())) return;
+        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) ||
+            (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase())) || !(HypixelAPI.getLocation().isGame())) return;
         if (getLanguage().cancelGlMessagesRegex.matcher(message).find(0)) {
             event.setCanceled(true);
         }

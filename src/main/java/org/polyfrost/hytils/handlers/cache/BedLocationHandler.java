@@ -18,13 +18,12 @@
 
 package org.polyfrost.hytils.handlers.cache;
 
-import cc.polyfrost.oneconfig.events.EventManager;
-import cc.polyfrost.oneconfig.events.event.LocrawEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
-import cc.polyfrost.oneconfig.utils.Multithreading;
-import cc.polyfrost.oneconfig.utils.NetworkUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
+import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.EventHandler;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
+import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -63,7 +62,23 @@ public class BedLocationHandler {
     private String lastServer = null;
 
     private BedLocationHandler() {
-        EventManager.INSTANCE.register(this);
+        EventHandler.of(HypixelLocationEvent.class, (event) -> {
+            HypixelAPI.Location location = event.getLocation();
+            String serverId = location.getServerId();
+            if (Objects.equals(lastServer, serverId)) {
+                return;
+            }
+            lastServer = serverId;
+
+            if (!location.isGame() || location.getGameType().orElse(null) != GameType.BEDWARS) {
+                return;
+            }
+
+            bedLocations = null;
+            if (getBedLocations() != null) {
+                Minecraft.getMinecraft().renderGlobal.loadRenderers();
+            }
+        }).register();
     }
 
     public void initialize() {
@@ -82,10 +97,11 @@ public class BedLocationHandler {
     }
 
     public int[] getBedLocations() {
-        LocrawInfo locrawInfo = LocrawUtil.INSTANCE.getLocrawInfo();
-        if (locations == null || locrawInfo == null || !LocrawUtil.INSTANCE.isInGame() || locrawInfo.getGameType() != LocrawInfo.GameType.BEDWARS || locrawInfo.getGameMode().equals("BEDWARS_PRACTICE")) {
+        HypixelAPI.Location location = HypixelAPI.getLocation();
+        if (locations == null || !location.isGame() || location.getGameType().orElse(null) != GameType.BEDWARS || "BEDWARS_PRACTICE".equals(location.getMode().orElse(null))) {
             return (this.bedLocations = null);
         }
+
         if (!setDefault) {
             setDefault = true;
             COLORS_REVERSE.clear();
@@ -103,18 +119,18 @@ public class BedLocationHandler {
         JsonArray overrides = locations.getAsJsonArray("overrides");
         for (JsonElement override : overrides) {
             JsonObject overrideObject = override.getAsJsonObject();
-            if (overrideObject.has("maps") && locrawInfo.getMapName() != null) {
+            if (overrideObject.has("maps") && location.getMapName().isPresent()) {
                 JsonArray maps = overrideObject.getAsJsonArray("maps");
                 for (JsonElement map : maps) {
-                    if (map.getAsString().equalsIgnoreCase(locrawInfo.getMapName())) {
+                    if (map.getAsString().equalsIgnoreCase(location.getMapName().get())) {
                         return (this.bedLocations = processColors(overrideObject.getAsJsonArray("locations")));
                     }
                 }
             }
-            if (overrideObject.has("modes") && locrawInfo.getGameMode() != null) {
+            if (overrideObject.has("modes") && location.getMode().isPresent()) {
                 JsonArray modes = overrideObject.getAsJsonArray("modes");
                 for (JsonElement mode : modes) {
-                    if (mode.getAsString().equalsIgnoreCase(locrawInfo.getGameMode())) {
+                    if (mode.getAsString().equalsIgnoreCase(location.getMode().get())) {
                         this.bedLocations = processColors(overrideObject.getAsJsonArray("locations"));
                         return (this.bedLocations = processColors(overrideObject.getAsJsonArray("locations")));
                     }
@@ -122,24 +138,5 @@ public class BedLocationHandler {
             }
         }
         return (this.bedLocations = defaultBedLocations);
-    }
-
-    @SuppressWarnings("unused")
-    @Subscribe
-    private void onLocraw(LocrawEvent event) {
-        String serverId = event.info.getServerId();
-        if (Objects.equals(lastServer, serverId)) {
-            return;
-        }
-        lastServer = serverId;
-
-        if (!LocrawUtil.INSTANCE.isInGame() || event.info.getGameType() != LocrawInfo.GameType.BEDWARS) {
-            return;
-        }
-
-        bedLocations = null;
-        if (getBedLocations() != null) {
-            Minecraft.getMinecraft().renderGlobal.loadRenderers();
-        }
     }
 }

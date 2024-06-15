@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import cc.polyfrost.oneconfig.utils.Multithreading;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;

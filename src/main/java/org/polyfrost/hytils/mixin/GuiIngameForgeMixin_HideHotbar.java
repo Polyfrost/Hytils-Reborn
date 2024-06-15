@@ -18,9 +18,8 @@
 
 package org.polyfrost.hytils.mixin;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.GuiIngameForge;
@@ -33,26 +32,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GuiIngameForgeMixin_HideHotbar {
     @Inject(method = "renderHealth", at = @At("HEAD"), cancellable = true)
     public void cancelHealthbar(int width, int height, CallbackInfo ci) {
-        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
+        HypixelAPI.Location location = HypixelAPI.getLocation();
         if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
-            if (!LocrawUtil.INSTANCE.isInGame()) {
+            if (!location.isGame() || !location.getGameType().isPresent()) {
                 // rudimentary check if player has engaged in pvp or something
                 if (Minecraft.getMinecraft().thePlayer.getHealth() < 20) return;
                 ci.cancel();
                 return;
             }
-            if (locraw == null) return;
-            LocrawInfo.GameType gameType = locraw.getGameType();
-            String gameMode = locraw.getGameMode();
+            GameType gameType = location.getGameType().get();
+            String gameMode = location.getMode().orElse("");
             switch (gameType) {
-                case TNT_GAMES:
+                case TNTGAMES:
                     // break out of the switch if it's a duels game that has varying health
                     if (gameMode.contains("CAPTURE") || gameMode.contains("PVPRUN")) break;
                 case HOUSING:
                 case MURDER_MYSTERY:
                 case BUILD_BATTLE:
-                case LIMBO:
-                case QUAKE:
+                case LIMBO: // TODO have to test how to find limbo
+                case QUAKECRAFT:
                 case REPLAY:
                     // rudimentary check if player has engaged in pvp or something
                     if (Minecraft.getMinecraft().thePlayer.getHealth() < 20) break;
@@ -81,17 +79,16 @@ public class GuiIngameForgeMixin_HideHotbar {
 
     @Inject(method = "renderFood", at = @At("HEAD"), cancellable = true)
     public void cancelFood(int width, int height, CallbackInfo ci) {
-        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
+        HypixelAPI.Location location = HypixelAPI.getLocation();
         if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
-            if (!LocrawUtil.INSTANCE.isInGame()) {
+            if (!location.isGame() || !location.getGameType().isPresent()) {
                 ci.cancel();
                 return;
             }
-            if (locraw == null) return;
-            LocrawInfo.GameType gameType = locraw.getGameType();
-            String gameMode = locraw.getGameMode();
+            GameType gameType = location.getGameType().get();
+            String gameMode = location.getMode().orElse("");
             switch (gameType) {
-                case TNT_GAMES:
+                case TNTGAMES:
                     // break out of the switch if it's a tnt game that has varying hunger
                     if (gameMode.contains("CAPTURE")) {
                         break;
@@ -104,9 +101,9 @@ public class GuiIngameForgeMixin_HideHotbar {
                 case PIT:
                 case DUELS:
                 case BUILD_BATTLE:
-                case QUAKE:
+                case QUAKECRAFT:
                 case REPLAY:
-                case WOOL_WARS:
+                case WOOL_GAMES:
                 case SKYBLOCK:
                     ci.cancel();
                     return;
@@ -136,15 +133,14 @@ public class GuiIngameForgeMixin_HideHotbar {
 
     @Inject(method = "renderArmor", at = @At("HEAD"), cancellable = true)
     public void cancelArmor(int width, int height, CallbackInfo ci) {
-        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
+        HypixelAPI.Location location = HypixelAPI.getLocation();
         if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
-            if (!LocrawUtil.INSTANCE.isInGame()) {
+            if (!location.isGame() || !location.getGameType().isPresent()) {
                 ci.cancel();
                 return;
             }
-            if (locraw == null) return;
-            LocrawInfo.GameType gameType = locraw.getGameType();
-            String gameMode = locraw.getGameMode();
+            GameType gameType = location.getGameType().get();
+            String gameMode = location.getMode().orElse("");
             switch (gameType) {
                 case DUELS:
                     // break out of the switch if it's a duels game that has varying armor
@@ -155,8 +151,8 @@ public class GuiIngameForgeMixin_HideHotbar {
                 case MURDER_MYSTERY:
                 case BUILD_BATTLE:
                 case LIMBO:
-                case QUAKE:
-                case TNT_GAMES:
+                case QUAKECRAFT:
+                case TNTGAMES:
                 case SKYBLOCK:
                     ci.cancel();
                     return;
@@ -174,14 +170,14 @@ public class GuiIngameForgeMixin_HideHotbar {
 
     @Inject(method = "renderAir", at = @At("HEAD"), cancellable = true)
     public void cancelAir(int width, int height, CallbackInfo ci) {
-        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
+        HypixelAPI.Location location = HypixelAPI.getLocation();
         if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
-            if (!LocrawUtil.INSTANCE.isInGame()) {
+            if (!location.isGame() || !location.getGameType().isPresent()) {
                 ci.cancel();
                 return;
             }
-            if (locraw == null) return;
-            LocrawInfo.GameType gameType = locraw.getGameType();
+            GameType gameType = location.getGameType().get();
+            String gameMode = location.getMode().orElse("");
             switch (gameType) {
                 case BUILD_BATTLE:
                 case REPLAY:
@@ -189,7 +185,6 @@ public class GuiIngameForgeMixin_HideHotbar {
                     return;
             }
 
-            String gameMode = locraw.getGameMode();
             switch (gameMode) {
                 case "DROPPER": // dropper (prototype)
                     ci.cancel();

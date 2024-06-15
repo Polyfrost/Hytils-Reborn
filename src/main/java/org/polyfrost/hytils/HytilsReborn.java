@@ -18,12 +18,13 @@
 
 package org.polyfrost.hytils;
 
-import cc.polyfrost.oneconfig.events.EventManager;
-import cc.polyfrost.oneconfig.libs.universal.ChatColor;
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.utils.Multithreading;
-import cc.polyfrost.oneconfig.utils.Notifications;
-import cc.polyfrost.oneconfig.utils.commands.CommandManager;
+import org.polyfrost.oneconfig.api.config.v1.ConfigManager;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
+import org.polyfrost.universal.ChatColor;
+import org.polyfrost.universal.UChat;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
+import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
 import org.polyfrost.hytils.command.*;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.*;
@@ -105,13 +106,13 @@ public class HytilsReborn {
     public void init(FMLInitializationEvent event) {
         config = new HytilsConfig();
 
-        CommandManager.INSTANCE.registerCommand(new HousingVisitCommand());
-        CommandManager.INSTANCE.registerCommand(new HytilsCommand());
-        CommandManager.INSTANCE.registerCommand(new IgnoreTemporaryCommand());
-        CommandManager.INSTANCE.registerCommand(new LimboCommand());
-        CommandManager.INSTANCE.registerCommand(new RequeueCommand());
-        CommandManager.INSTANCE.registerCommand(new SilentRemoveCommand());
-        CommandManager.INSTANCE.registerCommand(new SkyblockVisitCommand());
+        CommandManager.registerCommand(new HousingVisitCommand());
+        CommandManager.registerCommand(new HytilsCommand());
+        CommandManager.registerCommand(new IgnoreTemporaryCommand());
+        CommandManager.registerCommand(new LimboCommand());
+        CommandManager.registerCommand(new RequeueCommand());
+        CommandManager.registerCommand(new SilentRemoveCommand());
+        CommandManager.registerCommand(new SkyblockVisitCommand());
 
         // We initialize it a different way because it requires the
         // GameNameParser to be initialized, and that depends on networking.
@@ -141,7 +142,7 @@ public class HytilsReborn {
                 isChatting = false;
                 if (HytilsConfig.chattingIntegration) {
                     HytilsConfig.chattingIntegration = false;
-                    config.save();
+                    ConfigManager.active().save(config.getTree());
                     Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has detected Chatting, but it is not the latest version. Please update Chatting to the latest version.");
                 }
             }

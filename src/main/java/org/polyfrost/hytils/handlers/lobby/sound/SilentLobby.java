@@ -18,17 +18,16 @@
 
 package org.polyfrost.hytils.handlers.lobby.sound;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 public class SilentLobby {
 
     @SubscribeEvent
     public void onSoundPlay(PlaySoundEvent event) {
-        if (HypixelUtils.INSTANCE.isHypixel() && !LocrawUtil.INSTANCE.isInGame() && HytilsConfig.silentLobby) {
+        if (HypixelUtils.INSTANCE.isHypixel() && !HypixelAPI.getLocation().isGame() && HytilsConfig.silentLobby) {
             if (!event.name.startsWith("gui.")) {
                 event.result = null;
             }

@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.game.titles;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
 import net.minecraft.util.EnumChatFormatting;

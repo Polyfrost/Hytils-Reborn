@@ -18,9 +18,7 @@
 
 package org.polyfrost.hytils.handlers.lobby.tab;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.language.LanguageData;
@@ -28,6 +26,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import org.polyfrost.hytils.forge.HytilsMixinPlugin;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -90,7 +89,7 @@ public class TabChanger {
         if (HypixelUtils.INSTANCE.isHypixel()) {
             final UUID uuid = networkPlayerInfo.getGameProfile().getId();
 
-            if (HytilsConfig.hidePlayerRanksInTab && name.startsWith("[", 2) && LocrawUtil.INSTANCE.getLocrawInfo() != null && !LocrawUtil.INSTANCE.isInGame()) {
+            if (HytilsConfig.hidePlayerRanksInTab && name.startsWith("[", 2) && !HypixelAPI.getLocation().isGame()) {
                 // keep the name color if player rank is removed
                 // §b[MVP§c+§b] Steve
                 final String color = "\u00a7" + name.charAt(1);
@@ -99,8 +98,8 @@ public class TabChanger {
                 name = color + name.substring(name.indexOf("]") + 2);
             }
 
-            LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && locraw != null && (locraw.getGameType() != LocrawInfo.GameType.HOUSING || !LocrawUtil.INSTANCE.isInGame())) {
+            HypixelAPI.Location location = HypixelAPI.getLocation();
+            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && (location.getGameType().orElse(null) != GameType.HOUSING || !location.isGame())) {
                 // trim off the guild tag
                 // e.g. Steve §6[GUILD]
                 name = name.substring(0, name.lastIndexOf("[") - 3);
@@ -161,13 +160,13 @@ public class TabChanger {
     }
 
     public static boolean hidePing(NetworkPlayerInfo networkPlayerInfo) {
-        return HypixelUtils.INSTANCE.isHypixel() && ((HytilsConfig.hidePingInTab && LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.isInGame()) || isSkyblockTabInformationEntry(networkPlayerInfo));
+        return HypixelUtils.INSTANCE.isHypixel() && ((HytilsConfig.hidePingInTab && HypixelAPI.getLocation().isGame()) || isSkyblockTabInformationEntry(networkPlayerInfo));
     }
 
     private static boolean isSkyblockTabInformationEntry(NetworkPlayerInfo networkPlayerInfo) {
         if (!HytilsConfig.cleanerSkyblockTabInfo) return false;
         return
-            LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.SKYBLOCK &&
+            HypixelAPI.getLocation().getGameType().orElse(null) == GameType.SKYBLOCK &&
                 skyblockTabInformationEntryGameProfileNameRegex.matcher(networkPlayerInfo.getGameProfile().getName()).matches() &&
                 !validMinecraftUsername.matcher(networkPlayerInfo.getDisplayName().getUnformattedText()).matches();
     }

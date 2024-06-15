@@ -12,7 +12,7 @@ plugins {
     id("org.polyfrost.defaults.java")
     id("org.polyfrost.defaults.loom")
     id("com.github.johnrengelman.shadow")
-    id("net.kyori.blossom") version "1.3.1"
+    id("net.kyori.blossom") version "1.3.2"
     id("signing")
     java
 }
@@ -26,6 +26,10 @@ val mod_archives_name: String by project
 // Sets up the variables for when we preprocess to other Minecraft versions.
 preprocess {
     vars.put("MODERN", if (project.platform.mcMinor >= 16) 1 else 0)
+}
+
+kotlin.jvmToolchain {
+    this.languageVersion.set(JavaLanguageVersion.of(8))
 }
 
 // Replaces the variables in `ExampleMod.java` to the ones specified in `gradle.properties`.
@@ -89,13 +93,18 @@ sourceSets {
 
 // Adds the Polyfrost maven repository so that we can get the libraries necessary to develop the mod.
 repositories {
+    mavenLocal()
     maven("https://repo.polyfrost.org/releases")
 }
 
 // Configures the libraries/dependencies for your mod.
 dependencies {
     // Adds the OneConfig library, so we can develop with it.
-    modCompileOnly("cc.polyfrost:oneconfig-$platform:0.2.1-alpha+")
+    compileOnly("org.polyfrost.oneconfig:config-impl:1.0.0-alpha7")
+    compileOnly("org.polyfrost.oneconfig:commands:1.0.0-alpha7")
+    compileOnly("org.polyfrost.oneconfig:events:1.0.0-alpha7")
+    compileOnly("org.polyfrost.oneconfig:ui:1.0.0-alpha7")
+    modCompileOnly("org.polyfrost.oneconfig:$platform:1.0.0-alpha7")
 
     modRuntimeOnly("me.djtheredstoner:DevAuth-${if (platform.isFabric) "fabric" else if (platform.isLegacyForge) "forge-legacy" else "forge-latest"}:1.1.2")
 

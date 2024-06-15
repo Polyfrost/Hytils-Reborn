@@ -18,8 +18,8 @@
 
 package org.polyfrost.hytils.handlers.cache;
 
-import cc.polyfrost.oneconfig.utils.Multithreading;
-import cc.polyfrost.oneconfig.utils.NetworkUtils;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
+import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 

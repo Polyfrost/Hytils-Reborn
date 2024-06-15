@@ -18,8 +18,8 @@
 
 package org.polyfrost.hytils.handlers.cache;
 
-import cc.polyfrost.oneconfig.utils.Multithreading;
-import cc.polyfrost.oneconfig.utils.NetworkUtils;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
+import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;

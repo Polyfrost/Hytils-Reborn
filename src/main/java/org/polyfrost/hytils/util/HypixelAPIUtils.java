@@ -18,13 +18,13 @@
 
 package org.polyfrost.hytils.util;
 
-import cc.polyfrost.oneconfig.events.event.LocrawEvent;
-import cc.polyfrost.oneconfig.events.event.Stage;
-import cc.polyfrost.oneconfig.events.event.TickEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
-import cc.polyfrost.oneconfig.utils.JsonUtils;
-import cc.polyfrost.oneconfig.utils.NetworkUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import org.polyfrost.oneconfig.api.event.v1.events.event.LocrawEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.event.Stage;
+import org.polyfrost.oneconfig.api.event.v1.events.event.TickEvent;
+import org.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import org.polyfrost.oneconfig.utils.v1.JsonUtils;
+import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
+import org.polyfrost.oneconfig.api.hypixel.v1.LocrawInfo;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.handlers.cache.HeightHandler;
 import org.polyfrost.hytils.util.ranks.RankType;

@@ -18,13 +18,13 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 public class AdBlocker implements ChatReceiveModule {
 
@@ -53,7 +53,7 @@ public class AdBlocker implements ChatReceiveModule {
             event.setCanceled(true);
         }
 
-        if (LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.isInGame()) return;
+        if (HypixelAPI.getLocation().isGame()) return;
         if (getLanguage().chatRankBeggingRegex.matcher(message).find(0)) {
             event.setCanceled(true);
         }

@@ -18,13 +18,14 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.hytils.handlers.chat.ChatSendModule;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 import java.text.DecimalFormat;
 
@@ -57,22 +58,22 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
     }
 
     private long getCooldownLengthInSeconds() {
-        LocrawInfo locraw = getLocraw();
-        if (locraw != null && !"LOBBY".equals(locraw.getGameMode())) {
-            switch (locraw.getGameType()) {
+        HypixelAPI.Location location = HypixelAPI.getLocation();
+        if (!"LOBBY".equals(location.getMode()) && location.getGameType().isPresent()) {
+            switch (location.getGameType().get()) {
                 case BEDWARS: {
-                    if (!locraw.getGameMode().equals("BEDWARS_EIGHT_ONE")) return 60L;
+                    if (!"BEDWARS_EIGHT_ONE".equals(location.getMode())) return 60L;
                     break;
                 }
                 case SKYWARS: {
                     return 3L;
                 }
-                case ARCADE_GAMES: {
-                    if (locraw.getGameMode().equals("PVP_CTW")) return 10L;
+                case ARCADE: {
+                    if ("PVP_CTW".equals(location.getMode().orElse(null))) return 10L;
                     break;
                 }
-                case UHC_CHAMPIONS: {
-                    if (locraw.getGameMode().equals("TEAMS")) return 90L;
+                case UHC: {
+                    if ("TEAMS".equals(location.getMode().orElse(null))) return 90L;
                     break;
                 }
             }
@@ -82,13 +83,12 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        LocrawInfo locraw = getLocraw();
-        if (locraw != null && (
-            (locraw.getGameType() == LocrawInfo.GameType.SKYWARS && event.message.getFormattedText().equals(getLanguage().cannotShoutBeforeSkywars)) || // fun fact: there is no message when you shout after a skywars game
+        HypixelAPI.Location location = HypixelAPI.getLocation();
+        if (location.getGameType().orElse(null) == GameType.SKYWARS && event.message.getFormattedText().equals(getLanguage().cannotShoutBeforeSkywars) || // fun fact: there is no message when you shout after a skywars game
                 event.message.getFormattedText().equals(getLanguage().cannotShoutAfterGame) ||
                 event.message.getFormattedText().equals(getLanguage().cannotShoutBeforeGame) ||
                 event.message.getFormattedText().equals(getLanguage().noSpectatorCommands)
-        )) {
+        ) {
             shoutCooldown = 0L;
         }
     }

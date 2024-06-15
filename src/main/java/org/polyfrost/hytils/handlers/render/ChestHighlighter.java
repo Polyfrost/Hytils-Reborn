@@ -18,9 +18,9 @@
 
 package org.polyfrost.hytils.handlers.render;
 
-import cc.polyfrost.oneconfig.config.core.OneColor;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.polyui.color.PolyColor;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
 import net.minecraft.client.Minecraft;
@@ -108,7 +108,7 @@ public class ChestHighlighter {
      *
      * @author Moulberry
      */
-    private void drawFilledBoundingBox(AxisAlignedBB aabb, OneColor c) {
+    private void drawFilledBoundingBox(AxisAlignedBB aabb, PolyColor c) {
         GlStateManager.enableBlend();
         GlStateManager.disableLighting();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -117,7 +117,7 @@ public class ChestHighlighter {
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 
-        GlStateManager.color(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, c.getAlpha() / 255f * (float) 0.8);
+        GlStateManager.color(c.red() / 255f, c.green() / 255f, c.blue() / 255f, c.getAlpha() / 255f * (float) 0.8);
 
         //vertical
         worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
@@ -134,7 +134,7 @@ public class ChestHighlighter {
         tessellator.draw();
 
 
-        GlStateManager.color(c.getRed() / 255f * 0.8f, c.getGreen() / 255f * 0.8f, c.getBlue() / 255f * 0.8f, c.getAlpha() / 255f * (float) 0.8);
+        GlStateManager.color(c.red() / 255f * 0.8f, c.green() / 255f * 0.8f, c.blue() / 255f * 0.8f, c.getAlpha() / 255f * (float) 0.8);
 
         //x
         worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
@@ -151,7 +151,7 @@ public class ChestHighlighter {
         tessellator.draw();
 
 
-        GlStateManager.color(c.getRed() / 255f * 0.9f, c.getGreen() / 255f * 0.9f, c.getBlue() / 255f * 0.9f, c.getAlpha() / 255f * (float) 0.8);
+        GlStateManager.color(c.red() / 255f * 0.9f, c.green() / 255f * 0.9f, c.blue() / 255f * 0.9f, c.getAlpha() / 255f * (float) 0.8);
         //z
         worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
         worldrenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
@@ -170,6 +170,6 @@ public class ChestHighlighter {
     }
 
     private boolean isNotSupported() {
-        return LocrawUtil.INSTANCE.getLocrawInfo() == null || (LocrawUtil.INSTANCE.getLocrawInfo().getGameType() != LocrawInfo.GameType.SKYWARS && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() != LocrawInfo.GameType.BLITZ_SG && (LocrawUtil.INSTANCE.getLocrawInfo().getGameType() != LocrawInfo.GameType.DUELS || !LocrawUtil.INSTANCE.getLocrawInfo().getGameMode().contains("_SW_")));
+        return !HypixelAPI.getLocation().getGameType().isPresent() || (HypixelAPI.getLocation().getGameType().get() != GameType.SKYWARS && HypixelAPI.getLocation().getGameType().get() != GameType.SURVIVAL_GAMES && (HypixelAPI.getLocation().getGameType().get() != GameType.DUELS || !HypixelAPI.getLocation().getMode().orElse("").contains("_SW_")));
     }
 }

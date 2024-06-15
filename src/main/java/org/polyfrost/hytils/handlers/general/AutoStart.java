@@ -17,6 +17,8 @@
  */
 
 package org.polyfrost.hytils.handlers.general;
+import org.polyfrost.oneconfig.api.event.v1.EventDelay;
+
 
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;

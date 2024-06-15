@@ -18,10 +18,10 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
-import cc.polyfrost.oneconfig.utils.Multithreading;
-import cc.polyfrost.oneconfig.utils.Notifications;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
+import org.polyfrost.universal.wrappers.message.UTextComponent;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
@@ -118,7 +118,7 @@ public class AutoVictory implements ChatReceiveResetModule {
                     .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
             }
         }
-        if (isSupportedMode(getLocraw()) && HytilsConfig.autoGetWinstreak) {
+        if (isSupportedMode(HypixelAPI.getLocation()) && HytilsConfig.autoGetWinstreak) {
             try {
                 if (HypixelAPIUtils.getWinstreak()) {
                     Notifications.INSTANCE.send(
@@ -142,9 +142,9 @@ public class AutoVictory implements ChatReceiveResetModule {
         ((GuiIngameAccessor) Minecraft.getMinecraft().ingameGUI).setDisplayedSubTitle("");
     }
 
-    private boolean isSupportedMode(LocrawInfo locraw) {
-        if (locraw != null && locraw.getGameType() != null) {
-            switch (locraw.getGameType()) {
+    private boolean isSupportedMode(HypixelAPI.Location location) {
+        if (location.getGameType().isPresent()) {
+            switch (location.getGameType().get()) {
                 case BEDWARS:
                 case SKYWARS:
                 case DUELS:

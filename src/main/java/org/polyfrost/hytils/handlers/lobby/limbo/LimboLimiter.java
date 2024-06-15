@@ -18,9 +18,6 @@
 
 package org.polyfrost.hytils.handlers.lobby.limbo;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.DefaultChatRestyler;
 import net.minecraft.client.Minecraft;
@@ -28,6 +25,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.opengl.Display;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 public class LimboLimiter {
 
@@ -50,8 +48,8 @@ public class LimboLimiter {
     }
 
     public static boolean shouldLimitFramerate() {
-        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-        if (HypixelUtils.INSTANCE.isHypixel() && locraw != null && locraw.getServerId().equals("limbo")) limboStatus = true;
+        HypixelAPI.Location location = HypixelAPI.getLocation();
+        if (HypixelUtils.INSTANCE.isHypixel() && location.getServerId().equals("limbo")) limboStatus = true;
         return (!Display.isActive() || limboStatus) && HytilsConfig.limboLimiter && time * 20 >= 5
             && Minecraft.getMinecraft().gameSettings.limitFramerate > 15;
         // if the FPS limit is > 15, don't activate, as you would be increasing the fps limit

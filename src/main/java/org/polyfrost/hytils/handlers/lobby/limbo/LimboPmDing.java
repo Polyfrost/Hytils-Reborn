@@ -18,19 +18,17 @@
 
 package org.polyfrost.hytils.handlers.lobby.limbo;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 public class LimboPmDing {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-        if (HypixelUtils.INSTANCE.isHypixel() && locraw != null && locraw.getServerId().equals("limbo") && event.message.getFormattedText().startsWith("§dFrom §r") && HytilsConfig.limboDing) {
+        HypixelAPI.Location location = HypixelAPI.getLocation();
+        if (HypixelUtils.INSTANCE.isHypixel() && location.getServerId().equals("limbo") && event.message.getFormattedText().startsWith("§dFrom §r") && HytilsConfig.limboDing) {
             Minecraft.getMinecraft().thePlayer.playSound("random.orb", 1f, 1f);
         }
     }

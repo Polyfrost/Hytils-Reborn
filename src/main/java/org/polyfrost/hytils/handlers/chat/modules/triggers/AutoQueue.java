@@ -18,7 +18,8 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import cc.polyfrost.oneconfig.utils.Multithreading;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.LocrawGamesHandler;
@@ -52,13 +53,17 @@ public class AutoQueue implements ChatReceiveModule {
 
         final String message = getStrippedMessage(event.message);
         Matcher matcher = getLanguage().autoQueuePrefixGlobalRegex.matcher(message);
-        if (matcher.matches() && getLocraw() != null) {
-            String game = getLocraw().getGameMode();
-            String value = LocrawGamesHandler.locrawGames.get(getLocraw().getRawGameType().toLowerCase() + "_" + game.toLowerCase());
-            if (value != null) {
-                game = value;
+        HypixelAPI.Location location = HypixelAPI.getLocation();
+        if (matcher.matches()) {
+            if (location.getMode().isPresent() && location.getGameType().isPresent()) {
+                String game = location.getMode().get();
+                String gameType = location.getGameType().get().getDatabaseName();
+                String value = LocrawGamesHandler.locrawGames.get(gameType.toLowerCase() + "_" + game.toLowerCase());
+                if (value != null) {
+                    game = value;
+                }
+                this.command = "/play " + game.toLowerCase();
             }
-            this.command = "/play " + game.toLowerCase();
         }
     }
 

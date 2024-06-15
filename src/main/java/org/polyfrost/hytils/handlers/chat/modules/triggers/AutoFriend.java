@@ -18,12 +18,12 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import cc.polyfrost.oneconfig.utils.Notifications;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
 
 import java.util.regex.Matcher;
 

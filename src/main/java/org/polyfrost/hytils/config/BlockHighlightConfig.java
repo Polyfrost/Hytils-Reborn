@@ -18,9 +18,10 @@
 
 package org.polyfrost.hytils.config;
 
-import cc.polyfrost.oneconfig.config.annotations.Color;
-import cc.polyfrost.oneconfig.config.core.OneColor;
+import org.polyfrost.oneconfig.api.config.v1.annotations.Color;
+import org.polyfrost.polyui.color.PolyColor;
 import net.minecraft.block.material.MapColor;
+import org.polyfrost.polyui.utils.ColorUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,100 +30,100 @@ import java.util.function.Supplier;
 public class BlockHighlightConfig {
 
     @Color(
-        name = "White",
+        title = "White",
         category = "Colors"
     )
-    public static OneColor white = new OneColor(MapColor.snowColor.getMapColor(2));
+    public static PolyColor white = ColorUtils.rgba(MapColor.snowColor.getMapColor(2));
 
     @Color(
-        name = "Orange",
+        title = "Orange",
         category = "Colors"
     )
-    public static OneColor orange = new OneColor(MapColor.adobeColor.getMapColor(2));
+    public static PolyColor orange = ColorUtils.rgba(MapColor.adobeColor.getMapColor(2));
 
     @Color(
-        name = "Magenta",
+        title = "Magenta",
         category = "Colors"
     )
-    public static OneColor magenta = new OneColor(MapColor.magentaColor.getMapColor(2));
+    public static PolyColor magenta = ColorUtils.rgba(MapColor.magentaColor.getMapColor(2));
 
     @Color(
-        name = "Light Blue",
+        title = "Light Blue",
         category = "Colors"
     )
-    public static OneColor lightBlue = new OneColor(MapColor.lightBlueColor.getMapColor(2));
+    public static PolyColor lightBlue = ColorUtils.rgba(MapColor.lightBlueColor.getMapColor(2));
 
     @Color(
-        name = "Yellow",
+        title = "Yellow",
         category = "Colors"
     )
-    public static OneColor yellow = new OneColor(MapColor.yellowColor.getMapColor(2));
+    public static PolyColor yellow = ColorUtils.rgba(MapColor.yellowColor.getMapColor(2));
 
     @Color(
-        name = "Lime",
+        title = "Lime",
         category = "Colors"
     )
-    public static OneColor lime = new OneColor(MapColor.limeColor.getMapColor(2));
+    public static PolyColor lime = ColorUtils.rgba(MapColor.limeColor.getMapColor(2));
 
     @Color(
-        name = "Pink",
+        title = "Pink",
         category = "Colors"
     )
-    public static OneColor pink = new OneColor(MapColor.pinkColor.getMapColor(2));
+    public static PolyColor pink = ColorUtils.rgba(MapColor.pinkColor.getMapColor(2));
 
     @Color(
-        name = "Gray",
+        title = "Gray",
         category = "Colors"
     )
-    public static OneColor gray = new OneColor(MapColor.grayColor.getMapColor(2));
+    public static PolyColor gray = ColorUtils.rgba(MapColor.grayColor.getMapColor(2));
 
     @Color(
-        name = "Silver",
+        title = "Silver",
         category = "Colors"
     )
-    public static OneColor silver = new OneColor(MapColor.silverColor.getMapColor(2));
+    public static PolyColor silver = ColorUtils.rgba(MapColor.silverColor.getMapColor(2));
 
     @Color(
-        name = "Cyan",
+        title = "Cyan",
         category = "Colors"
     )
-    public static OneColor cyan = new OneColor(MapColor.cyanColor.getMapColor(2));
+    public static PolyColor cyan = ColorUtils.rgba(MapColor.cyanColor.getMapColor(2));
 
     @Color(
-        name = "Purple",
+        title = "Purple",
         category = "Colors"
     )
-    public static OneColor purple = new OneColor(MapColor.purpleColor.getMapColor(2));
+    public static PolyColor purple = ColorUtils.rgba(MapColor.purpleColor.getMapColor(2));
 
     @Color(
-        name = "Blue",
+        title = "Blue",
         category = "Colors"
     )
-    public static OneColor blue = new OneColor(MapColor.blueColor.getMapColor(2));
+    public static PolyColor blue = ColorUtils.rgba(MapColor.blueColor.getMapColor(2));
 
     @Color(
-        name = "Brown",
+        title = "Brown",
         category = "Colors"
     )
-    public static OneColor brown = new OneColor(MapColor.brownColor.getMapColor(2));
+    public static PolyColor brown = ColorUtils.rgba(MapColor.brownColor.getMapColor(2));
 
     @Color(
-        name = "Green",
+        title = "Green",
         category = "Colors"
     )
-    public static OneColor green = new OneColor(MapColor.greenColor.getMapColor(2));
+    public static PolyColor green = ColorUtils.rgba(MapColor.greenColor.getMapColor(2));
 
     @Color(
-        name = "Red",
+        title = "Red",
         category = "Colors"
     )
-    public static OneColor red = new OneColor(MapColor.redColor.getMapColor(2));
+    public static PolyColor red = ColorUtils.rgba(MapColor.redColor.getMapColor(2));
 
     @Color(
-        name = "Black",
+        title = "Black",
         category = "Colors"
     )
-    public static OneColor black = new OneColor(MapColor.blackColor.getMapColor(2));
+    public static PolyColor black = ColorUtils.rgba(MapColor.blackColor.getMapColor(2));
 
     public BlockHighlightConfig() {
         colorMap.putIfAbsent(MapColor.snowColor, () -> white);
@@ -143,5 +144,5 @@ public class BlockHighlightConfig {
         colorMap.putIfAbsent(MapColor.blackColor, () -> black);
     }
 
-    public static transient final Map<MapColor, Supplier<OneColor>> colorMap = new HashMap<>();
+    public static transient final Map<MapColor, Supplier<PolyColor>> colorMap = new HashMap<>();
 }

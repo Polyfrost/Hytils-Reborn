@@ -18,9 +18,7 @@
 
 package org.polyfrost.hytils.handlers.lobby.armorstands;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.ArmorStandHandler;
 import net.minecraft.entity.EntityLivingBase;
@@ -29,12 +27,13 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 public class ArmorStandHider {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onEntityRenderer(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        final LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-        if (HypixelUtils.INSTANCE.isHypixel() && ((!LocrawUtil.INSTANCE.isInGame() && HytilsConfig.hideUselessArmorStands) || (HytilsConfig.hideUselessArmorStandsGame && LocrawUtil.INSTANCE.isInGame() && locraw != null && (locraw.getGameType() == LocrawInfo.GameType.SKYBLOCK || locraw.getGameType() == LocrawInfo.GameType.BEDWARS || locraw.getGameType() == LocrawInfo.GameType.SKYWARS || locraw.getGameMode().contains("BRIDGE"))))) {
+        final HypixelAPI.Location location = HypixelAPI.getLocation();
+        if (HypixelUtils.INSTANCE.isHypixel() && ((!location.isGame() && HytilsConfig.hideUselessArmorStands) || (HytilsConfig.hideUselessArmorStandsGame && location.isGame() && location.getGameType().isPresent() && (location.getGameType().get() == GameType.SKYBLOCK || location.getGameType().get() == GameType.BEDWARS || location.getGameType().get() == GameType.SKYWARS || location.getMode().orElse("").contains("BRIDGE"))))) {
             if (event.entity instanceof EntityArmorStand) {
                 String unformattedArmorStandName = EnumChatFormatting.getTextWithoutFormattingCodes(event.entity.getCustomNameTag().toLowerCase());
                 for (String armorStands : ArmorStandHandler.INSTANCE.armorStandNames) {

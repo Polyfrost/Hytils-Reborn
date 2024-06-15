@@ -18,11 +18,9 @@
 
 package org.polyfrost.hytils.util;
 
-import cc.polyfrost.oneconfig.libs.caffeine.cache.Cache;
-import cc.polyfrost.oneconfig.libs.caffeine.cache.Caffeine;
-import cc.polyfrost.oneconfig.utils.color.ColorUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
+import org.polyfrost.polyui.utils.ColorUtils;
 
 import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;

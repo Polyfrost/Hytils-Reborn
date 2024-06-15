@@ -18,20 +18,20 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 public class TicketMachineRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        LocrawInfo locrawInformation = getLocraw();
+        HypixelAPI.Location location = HypixelAPI.getLocation();
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (locrawInformation != null && locrawInformation.getGameType() == LocrawInfo.GameType.BEDWARS && !LocrawUtil.INSTANCE.isInGame()
+        if (location.getGameType().orElse(null) == GameType.BEDWARS && !location.isGame()
             && getLanguage().chatCleanerTicketAnnouncerRegex.matcher(message).matches()) {
             event.setCanceled(true);
         }

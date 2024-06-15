@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.command.parser;
 
-import cc.polyfrost.oneconfig.utils.commands.arguments.ArgumentParser;
+import org.polyfrost.oneconfig.api.commands.v1.arguments.ArgumentParser;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,16 +29,20 @@ import java.util.List;
 import java.util.Locale;
 
 public class GEXPTypeParser extends ArgumentParser<GEXPType> {
-    @Nullable
     @Override
     public GEXPType parse(@NotNull String arg) {
         return GEXPType.valueOf(arg.toUpperCase(Locale.ROOT));
     }
 
     @Override
-    public @NotNull List<String> complete(String arg, Parameter parameter) {
+    public Class<GEXPType> getType() {
+        return GEXPType.class;
+    }
+
+    @Override
+    public @Nullable List<String> getAutoCompletions(String arg) {
         if (arg.isEmpty()) {
-            return Collections.emptyList();
+            return null;
         }
         List<String> completions = new ArrayList<>();
         for (GEXPType type : GEXPType.values()) {

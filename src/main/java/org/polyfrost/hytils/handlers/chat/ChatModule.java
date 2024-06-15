@@ -18,9 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat;
 
-import cc.polyfrost.oneconfig.libs.universal.ChatColor;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import org.polyfrost.universal.ChatColor;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.language.LanguageData;
@@ -28,7 +26,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * This interface handles shared methods between {@link ChatReceiveModule} and {@link ChatSendModule}.
@@ -89,14 +86,6 @@ interface ChatModule {
     @NotNull
     default LanguageData getLanguage() {
         return HytilsReborn.INSTANCE.getLanguageHandler().getCurrent();
-    }
-
-    /**
-     * Get the player's server location.
-     */
-    @Nullable
-    default LocrawInfo getLocraw() {
-        return LocrawUtil.INSTANCE.getLocrawInfo();
     }
 
     /**

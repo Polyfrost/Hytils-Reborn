@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.mixin.overlay;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.util.DarkColorUtils;
 import net.minecraft.block.BlockColored;
@@ -51,7 +51,7 @@ public class VertexLighterFlatMixin {
             boolean isClay = blockInfo.getBlock().getMaterial() == Material.rock;
             if (!isClay || check(mapColor.colorIndex)) {
                 args.set(5, 1.0F);
-                args.set(6, (HytilsConfig.manuallyEditHeightOverlay ? BlockHighlightConfig.colorMap.get(mapColor).get().getRGB() : DarkColorUtils.getCachedDarkColor(mapColor.colorValue)));
+                args.set(6, (HytilsConfig.manuallyEditHeightOverlay ? BlockHighlightConfig.colorMap.get(mapColor).get().getArgb() : DarkColorUtils.getCachedDarkColor(mapColor.colorValue)));
             }
         }
     }

@@ -18,9 +18,7 @@
 
 package org.polyfrost.hytils.handlers.lobby.npc;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
 import com.google.common.collect.Collections2;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -30,6 +28,7 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 import java.util.Collection;
 
@@ -40,25 +39,25 @@ public class NPCHandler {
         if (!HypixelUtils.INSTANCE.isHypixel()) {
             return;
         }
-        final LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
+        final HypixelAPI.Location location = HypixelAPI.getLocation();
 
         // hypixel marks npc uuids as version 2
         if (event.entity.getUniqueID().version() == 2 || (event.entity instanceof EntityVillager)) {
-            if (HytilsConfig.npcHider && LocrawUtil.INSTANCE.getLocrawInfo() != null && !LocrawUtil.INSTANCE.isInGame()) {
+            if (HytilsConfig.npcHider && !location.isGame()) {
                 event.setCanceled(true);
             }
-        } else if (HytilsConfig.hideNonNPCs && locraw != null && locraw.getGameType() == LocrawInfo.GameType.SKYBLOCK && !(event.entity instanceof EntityArmorStand && !event.entity.getCustomNameTag().toLowerCase().trim().isEmpty()) && event.entity instanceof EntityOtherPlayerMP) {
+        } else if (HytilsConfig.hideNonNPCs && location.getGameType().orElse(null) == GameType.SKYBLOCK && !(event.entity instanceof EntityArmorStand && !event.entity.getCustomNameTag().toLowerCase().trim().isEmpty()) && event.entity instanceof EntityOtherPlayerMP) {
             event.setCanceled(true);
         }
     }
 
     public static Collection<NetworkPlayerInfo> hideTabNpcs(Collection<NetworkPlayerInfo> playerInfoCollection) {
         if (playerInfoCollection == null) return null;
-        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
+        HypixelAPI.Location location = HypixelAPI.getLocation();
         if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.hideNpcsInTab) {
             return playerInfoCollection;
         } else {
-            if (HytilsConfig.keepImportantNpcsInTab && (locraw == null || locraw.getGameType() == LocrawInfo.GameType.SKYBLOCK || locraw.getGameType() == LocrawInfo.GameType.REPLAY)) {
+            if (HytilsConfig.keepImportantNpcsInTab && location.getGameType().isPresent() && (location.getGameType().get() == GameType.SKYBLOCK || location.getGameType().get() == GameType.REPLAY)) {
                 return playerInfoCollection;
             }
 

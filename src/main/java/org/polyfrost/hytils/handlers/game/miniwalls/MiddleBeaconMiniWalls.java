@@ -18,10 +18,6 @@
 
 package org.polyfrost.hytils.handlers.game.miniwalls;
 
-
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
 import org.polyfrost.hytils.util.WaypointUtil;
@@ -30,6 +26,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 public class MiddleBeaconMiniWalls {
     private boolean miniWitherDead;
@@ -47,13 +44,13 @@ public class MiddleBeaconMiniWalls {
     }
 
     public boolean shouldMakeBeacon() {
-        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-        return HypixelUtils.INSTANCE.isHypixel() && locraw != null && locraw.getGameMode().equalsIgnoreCase("mini_walls") && HytilsConfig.miniWallsMiddleBeacon && this.miniWitherDead;
+        HypixelAPI.Location location = HypixelAPI.getLocation();
+        return HypixelUtils.INSTANCE.isHypixel() && "mini_walls".equalsIgnoreCase(location.getMode().orElse(null)) && HytilsConfig.miniWallsMiddleBeacon && this.miniWitherDead;
     }
 
     @SubscribeEvent
     public void onRenderWorldLast(RenderWorldLastEvent event) {
         if (!shouldMakeBeacon()) return;
-        WaypointUtil.renderBeaconBeam(block, HytilsConfig.miniWallsMiddleBeaconColor.getRGB(), 1.0f, event.partialTicks);
+        WaypointUtil.renderBeaconBeam(block, HytilsConfig.miniWallsMiddleBeaconColor.getArgb(), 1.0f, event.partialTicks);
     }
 }

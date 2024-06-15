@@ -18,19 +18,17 @@
 
 package org.polyfrost.hytils.handlers.game.dropper;
 
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 public class DropperHurtSound {
 
     @SubscribeEvent
     public void onSound(PlaySoundEvent event) {
-        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-        if (HytilsConfig.muteDropperHurtSound && HypixelUtils.INSTANCE.isHypixel() && locraw != null && locraw.getGameMode().equalsIgnoreCase("dropper") && event.name.equals("game.player.hurt")) {
+        HypixelAPI.Location location = HypixelAPI.getLocation();
+        if (HytilsConfig.muteDropperHurtSound && HypixelUtils.INSTANCE.isHypixel() && "dropper".equalsIgnoreCase(location.getMode().orElse(null)) && event.name.equals("game.player.hurt")) {
             event.result = null;
         }
     }

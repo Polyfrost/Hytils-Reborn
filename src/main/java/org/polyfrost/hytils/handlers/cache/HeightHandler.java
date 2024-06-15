@@ -18,15 +18,15 @@
 
 package org.polyfrost.hytils.handlers.cache;
 
-import cc.polyfrost.oneconfig.events.event.LocrawEvent;
-import cc.polyfrost.oneconfig.events.event.WorldLoadEvent;
-import cc.polyfrost.oneconfig.libs.caffeine.cache.Cache;
-import cc.polyfrost.oneconfig.libs.caffeine.cache.Caffeine;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
-import cc.polyfrost.oneconfig.utils.Multithreading;
-import cc.polyfrost.oneconfig.utils.NetworkUtils;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
+import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.EventHandler;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.libs.caffeine.cache.Cache;
+import org.polyfrost.oneconfig.libs.caffeine.cache.Caffeine;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
+import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import com.google.gson.JsonObject;
 
@@ -58,13 +58,14 @@ public class HeightHandler {
 
     public int getHeight() {
         if (currentHeight != -2) return currentHeight;
-        if (LocrawUtil.INSTANCE.getLocrawInfo() == null || jsonObject == null || !LocrawUtil.INSTANCE.isInGame())
+        HypixelAPI.Location location = HypixelAPI.getLocation();
+        if (jsonObject == null || !location.isGame()) {
             return -1;
+        }
         try {
-            LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-            if (locraw != null && locraw.getGameType() == LocrawInfo.GameType.BEDWARS) {
-                if (locraw.getMapName() != null && !locraw.getMapName().trim().isEmpty()) {
-                    String map = locraw.getMapName().toLowerCase(Locale.ENGLISH).replace(" ", "_");
+            if (location.getGameType().orElse(null) == GameType.BEDWARS) {
+                if (location.getMapName().isPresent()) {
+                    String map = location.getMapName().get().toLowerCase(Locale.ENGLISH).replace(" ", "_");
                     if (jsonObject.getAsJsonObject("bedwars").has(map)) {
                         Integer cached = cache.getIfPresent(map);
                         if (cached == null) {
@@ -77,7 +78,7 @@ public class HeightHandler {
                         }
                     }
                 }
-            } else if (locraw != null && locraw.getGameMode().contains("BRIDGE")) {
+            } else if (location.getMode().orElse("null").contains("BRIDGE")) {
                 currentHeight = 100;
                 return currentHeight;
             }
@@ -101,18 +102,14 @@ public class HeightHandler {
                 ex.printStackTrace();
             }
         });
-    }
-
-    @Subscribe
-    public void onLocraw(LocrawEvent e) {
-        currentHeight = -2;
-        printException = true;
-        getHeight();
-    }
-
-    @Subscribe
-    public void onWorldLoad(WorldLoadEvent e) {
-        currentHeight = -2;
-        printException = true;
+        EventHandler.of(HypixelLocationEvent.class, () -> {
+            currentHeight = -2;
+            printException = true;
+            getHeight();
+        }).register();
+        EventHandler.of(WorldLoadEvent.class, () -> {
+            currentHeight = -2;
+            printException = true;
+        }).register();
     }
 }

@@ -18,22 +18,22 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
-import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 
 public class BedwarsAdvertisementsRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        LocrawInfo locrawInformation = getLocraw();
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().toLowerCase());
         if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase()))) return;
-        if (locrawInformation != null && locrawInformation.getGameType() == LocrawInfo.GameType.BEDWARS && !LocrawUtil.INSTANCE.isInGame()
+        HypixelAPI.Location location = HypixelAPI.getLocation();
+        if (location.getGameType().orElse(null) == GameType.BEDWARS && !location.isGame()
             && getLanguage().chatCleanerBedwarsPartyAdvertisementRegex.matcher(message).find()) {
             event.setCanceled(true);
         }
