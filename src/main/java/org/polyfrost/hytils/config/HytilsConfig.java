@@ -30,7 +30,6 @@ import net.minecraft.client.Minecraft;
 import org.apache.commons.io.FileUtils;
 import org.polyfrost.polyui.utils.ColorUtils;
 
-import java.awt.Color;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -46,7 +45,7 @@ public class HytilsConfig extends Config {
     @Switch(
         title = "Auto Start",
         description = "Join Hypixel immediately once the client has loaded to the main menu.",
-        category = "General", subcategory = "Automatic", size = 2
+        category = "General", subcategory = "Automatic"
     )
     public static boolean autoStart;
 
@@ -67,7 +66,7 @@ public class HytilsConfig extends Config {
     @Info(
         text = "Auto Queue will require you to interact with the game in a way to prevent abuse.",
         category = "General", subcategory = "Automatic",
-        type = InfoType.WARNING, size = 2
+        type = InfoType.WARNING
     )
     private static boolean autoQueueInfo;
 
@@ -563,8 +562,7 @@ public class HytilsConfig extends Config {
 
     @Text(
         title = "AutoWB Message",
-        category = "Chat", subcategory = "AutoWB",
-        size = 2
+        category = "Chat", subcategory = "AutoWB"
     )
     public static String autoWBMessage1 = "Welcome Back!";
 
@@ -576,64 +574,55 @@ public class HytilsConfig extends Config {
 
     @Text(
         title = "First Random Message",
-        category = "Chat", subcategory = "AutoWB",
-        size = 2
+        category = "Chat", subcategory = "AutoWB"
     )
     public static String autoWBMessage2 = "Welcome back... General %player%";
 
     @Text(
         title = "Second Random Message",
-        category = "Chat", subcategory = "AutoWB",
-        size = 2
+        category = "Chat", subcategory = "AutoWB"
     )
     public static String autoWBMessage3 = "WB!";
 
     @Text(
         title = "Third Random Message",
-        category = "Chat", subcategory = "AutoWB",
-        size = 2
+        category = "Chat", subcategory = "AutoWB"
     )
     public static String autoWBMessage4 = "Greetings! %player%";
 
     @Text(
         title = "Fourth Random Message",
-        category = "Chat", subcategory = "AutoWB",
-        size = 2
+        category = "Chat", subcategory = "AutoWB"
     )
     public static String autoWBMessage5 = "Thanks for coming back to hell >:)";
 
     @Text(
         title = "Fifth Random Message",
-        category = "Chat", subcategory = "AutoWB",
-        size = 2
+        category = "Chat", subcategory = "AutoWB"
     )
     public static String autoWBMessage6 = "Its nice having you here today %player%";
 
     @Text(
         title = "Sixth Random Message",
-        category = "Chat", subcategory = "AutoWB",
-        size = 2
+        category = "Chat", subcategory = "AutoWB"
     )
     public static String autoWBMessage7 = "Yooooooooo Mr. %player%";
 
     @Text(
         title = "Seventh Random Message",
-        category = "Chat", subcategory = "AutoWB",
-        size = 2
+        category = "Chat", subcategory = "AutoWB"
     )
     public static String autoWBMessage8 = "Welcome back Padawan %player%";
 
     @Text(
         title = "Eighth Random Message",
-        category = "Chat", subcategory = "AutoWB",
-        size = 2
+        category = "Chat", subcategory = "AutoWB"
     )
     public static String autoWBMessage9 = "Welcome Back! <3";
 
     @Text(
         title = "Ninth Random Message",
-        category = "Chat", subcategory = "AutoWB",
-        size = 2
+        category = "Chat", subcategory = "AutoWB"
     )
     public static String autoWBMessage10 = "Thanks for coming to my TED talk.";
 
@@ -808,7 +797,7 @@ public class HytilsConfig extends Config {
     @Switch(
         title = "Colored Beds",
         description = "Make beds a different color depending on the team they are on.",
-        category = "Game", subcategory = "BedWars", size = 2
+        category = "Game", subcategory = "BedWars"
     )
     public static boolean coloredBeds = true;
 

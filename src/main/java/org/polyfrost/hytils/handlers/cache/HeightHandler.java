@@ -18,13 +18,13 @@
 
 package org.polyfrost.hytils.handlers.cache;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import net.hypixel.data.type.GameType;
 import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.EventHandler;
 import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
-import org.polyfrost.oneconfig.libs.caffeine.cache.Cache;
-import org.polyfrost.oneconfig.libs.caffeine.cache.Caffeine;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import org.polyfrost.hytils.HytilsReborn;

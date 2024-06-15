@@ -108,6 +108,8 @@ dependencies {
 
     modRuntimeOnly("me.djtheredstoner:DevAuth-${if (platform.isFabric) "fabric" else if (platform.isLegacyForge) "forge-legacy" else "forge-latest"}:1.1.2")
 
+    shade("com.github.ben-manes.caffeine:caffeine:2.9.3")
+
     // If we are building for legacy forge, includes the launch wrapper with `shade` as we configured earlier.
     if (platform.isLegacyForge) {
         compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
@@ -182,6 +184,8 @@ tasks {
         archiveClassifier.set("dev") // TODO: machete gets confused by the `dev` prefix.
         configurations = listOf(shade)
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+        relocate("com.github.benmanes", "org.polyfrost.hytils.libs")
     }
 
     remapJar {

@@ -18,6 +18,8 @@
 
 package org.polyfrost.hytils.util;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.polyui.utils.ColorUtils;

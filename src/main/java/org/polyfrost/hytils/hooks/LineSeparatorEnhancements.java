@@ -18,8 +18,8 @@
 
 package org.polyfrost.hytils.hooks;
 
-import org.polyfrost.oneconfig.libs.caffeine.cache.Cache;
-import org.polyfrost.oneconfig.libs.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
