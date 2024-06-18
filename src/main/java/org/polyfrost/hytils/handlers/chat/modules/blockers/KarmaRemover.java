@@ -28,7 +28,7 @@ public class KarmaRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (getLanguage().cancelKarmaMessagesRegex.matcher(message).matches()) {
+        if (getLanguage().chatCleanerKarmaMessagesRegex.matcher(message).matches()) {
             event.setCanceled(true);
         }
     }
