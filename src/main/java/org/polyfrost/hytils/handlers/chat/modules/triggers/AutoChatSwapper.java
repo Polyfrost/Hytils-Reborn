@@ -40,12 +40,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 public class AutoChatSwapper implements ChatReceiveModule {
-
-    @Override
-    public int getPriority() {
-        return 3;
-    }
-
     @SuppressWarnings("all")
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
@@ -116,6 +110,11 @@ public class AutoChatSwapper implements ChatReceiveModule {
     @Override
     public boolean isEnabled() {
         return HytilsConfig.chatSwapper;
+    }
+
+    @Override
+    public int getPriority() {
+        return 3;
     }
 
     public static class ChatChannelMessagePreventer {

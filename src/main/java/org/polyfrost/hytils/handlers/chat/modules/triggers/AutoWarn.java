@@ -27,8 +27,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class AutoWarn implements ChatReceiveModule {
     @Override
-    public int getPriority() {
-        return 3;
+    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+        if (UTextComponent.Companion.stripFormatting(event.message.getUnformattedText()).startsWith("A kick")) {
+            UChat.say(HytilsConfig.putInCaps ? "/pc ---------REQUEUE, I'VE BEEN KICKED!---------" : "/pc ---------I've been kicked, please requeue!---------");
+        }
     }
 
     @Override
@@ -37,9 +39,7 @@ public class AutoWarn implements ChatReceiveModule {
     }
 
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        if (UTextComponent.Companion.stripFormatting(event.message.getUnformattedText()).startsWith("A kick")) {
-            UChat.say(HytilsConfig.putInCaps ? "/pc ---------REQUEUE, I'VE BEEN KICKED!---------" : "/pc ---------I've been kicked, please requeue!---------");
-        }
+    public int getPriority() {
+        return 3;
     }
 }

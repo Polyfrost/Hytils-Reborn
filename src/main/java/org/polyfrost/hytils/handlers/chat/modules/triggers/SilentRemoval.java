@@ -30,7 +30,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 
 public class SilentRemoval implements ChatReceiveModule {
-
     private static final Set<String> silentUsers = new HashSet<>();
 
     @Override

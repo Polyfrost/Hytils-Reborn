@@ -35,6 +35,7 @@ public class LanguageData {
     private String autoQueuePrefixGlobal = "^(?:You died! .+|YOU DIED! .+|You have been eliminated!|You won! .+|YOU WON! .+)$";
 
     private String autoFriendPattern = "Friend request from (?<name>.+)\\[ACCEPT] - \\[DENY] - \\[IGNORE].*";
+    private String autoAfkReplyPattern = "^From (\\[.+?] )?(.+?): .+$";
 
     private String chatCleanerJoin = "(?:sled into|slid into|joined|spooked into) the lobby";
     private String chatCleanerTicketAnnouncer = "^(?<player>(?!You )\\w{1,16} )has found an? .+$";
@@ -114,6 +115,7 @@ public class LanguageData {
     public Pattern autoQueuePrefixGlobalRegex;
 
     public Pattern autoFriendPatternRegex;
+    public Pattern autoAfkReplyPatternRegex;
 
     public Pattern chatCleanerJoinRegex;
     public Pattern chatCleanerTicketAnnouncerRegex;
@@ -176,6 +178,7 @@ public class LanguageData {
             autoQueuePrefixGlobalRegex = Pattern.compile(autoQueuePrefixGlobal);
 
             autoFriendPatternRegex = Pattern.compile(autoFriendPattern);
+            autoAfkReplyPatternRegex = Pattern.compile(autoAfkReplyPattern);
 
             chatCleanerJoinRegex = Pattern.compile(chatCleanerJoin);
             chatCleanerTicketAnnouncerRegex = Pattern.compile(chatCleanerTicketAnnouncer);

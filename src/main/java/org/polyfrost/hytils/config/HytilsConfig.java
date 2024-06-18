@@ -172,6 +172,13 @@ public class HytilsConfig extends Config {
     public static boolean autoPartyWarpConfirm;
 
     @Switch(
+        name = "Auto Reply When AFK",
+        description = "Automatically sends a reply to anyone who PMs you when you are AFK in Limbo.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean autoReplyAfk;
+
+    @Switch(
         name = "Game Status Restyle",
         description = "Replace common game status messages with a new style.\n§eExamples:\n§a§l+ §bSteve §e(§b1§e/§b12§e)\n§c§l- §bSteve§r\n§e§l* §aGame starts in §b§l5 §aseconds.",
         category = "Chat", subcategory = "Restyler"

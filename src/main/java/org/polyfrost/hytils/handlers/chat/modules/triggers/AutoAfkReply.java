@@ -18,31 +18,33 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import cc.polyfrost.oneconfig.utils.Multithreading;
-import org.polyfrost.hytils.config.HytilsConfig;
-import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.client.Minecraft;
+import cc.polyfrost.oneconfig.libs.universal.UChat;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import org.polyfrost.hytils.config.HytilsConfig;
+import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 
-import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
 
-public class AutoChatReportConfirm implements ChatReceiveModule {
+public class AutoAfkReply implements ChatReceiveModule {
+    // TODO: maybe write a general afk checker for skyblock afkers, as they won't be in limbo
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        if (event.message.getUnformattedText().equals(getLanguage().autoChatReportConfirm)) {
-            event.setCanceled(true);
-            Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage("/report confirm"), 1, TimeUnit.SECONDS);
+        if (getLocraw() != null && !getLocraw().getServerId().equals("limbo")) return;
+        String message = event.message.getUnformattedText();
+        Matcher matcher = getLanguage().autoAfkReplyPatternRegex.matcher(message);
+        if (matcher.matches()) {
+            UChat.say("/msg " + matcher.group(2) + " Hey "  + matcher.group(2) + ", I am currently AFK!");
         }
     }
 
     @Override
     public boolean isEnabled() {
-        return HytilsConfig.autoChatReportConfirm;
+        return HytilsConfig.autoReplyAfk;
     }
 
     @Override
     public int getPriority() {
-        return 3;
+        return -1;
     }
 }

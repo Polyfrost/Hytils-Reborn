@@ -27,12 +27,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.regex.Matcher;
 
 public class GuildWelcomer implements ChatReceiveModule {
-
-    @Override
-    public int getPriority() {
-        return 1;
-    }
-
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final String text = event.message.getUnformattedText();
@@ -45,5 +39,10 @@ public class GuildWelcomer implements ChatReceiveModule {
     @Override
     public boolean isEnabled() {
         return HytilsConfig.guildWelcomeMessage;
+    }
+
+    @Override
+    public int getPriority() {
+        return 1;
     }
 }
