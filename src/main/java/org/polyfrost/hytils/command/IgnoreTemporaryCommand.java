@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.command;
 
-import org.polyfrost.oneconfig.api.config.v1.core.ConfigUtils;
+import org.polyfrost.oneconfig.api.config.v1.ConfigManager;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.*;
@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
 public class IgnoreTemporaryCommand {
     private static JsonObject json;
     private static final JsonParser PARSER = new JsonParser();
-    private static final File ignoreFile = ConfigUtils.getProfileFile("tempignore.json");
+    private static final File ignoreFile = ConfigManager.active().getFolder().resolve("tempignore.json").toFile();
     private static final Pattern regex = Pattern.compile("(\\d+)( ?)((month|day|hour|minute|second|millisecond|y|m|d|h|s)s?)", Pattern.CASE_INSENSITIVE);
 
     static {
@@ -78,13 +78,8 @@ public class IgnoreTemporaryCommand {
         });
     }
 
-    @Main
-    private void handle() {
-        UChat.chat("Usage: /ignoretemp <player> <time>");
-    }
-
-    //@Main
-    private void handle(@Description("Player Name") GameProfile playerName, @Description("Time") @Greedy String time) {
+    @Command(greedy = true)
+    private void main(@Parameter("Player Name") GameProfile playerName, @Parameter("Time") String time) {
         Multithreading.runAsync(() -> {
             try {
                 long millis = addMillis(time.replace(",", "").replace(" ", ""));
@@ -103,13 +98,13 @@ public class IgnoreTemporaryCommand {
         });
     }
 
-    @SubCommand(description = "Adds a player to the ignore list for a specified amount of time.")
-    private void add(@Description("Player Name") GameProfile playerName, @Description("Time") @Greedy String time) {
-        handle(playerName, time);
+    @Command(description = "Adds a player to the ignore list for a specified amount of time.", greedy = true)
+    private void add(@Parameter("Player Name") GameProfile playerName, @Parameter("Time") String time) {
+        main(playerName, time);
     }
 
-    @SubCommand(description = "Removes a player from the ignore list.")
-    private void remove(@Description("Player Name") GameProfile playerName) {
+    @Command(description = "Removes a player from the ignore list.")
+    private void remove(@Parameter("Player Name") GameProfile playerName) {
         json.remove(playerName.getName());
         Multithreading.runAsync(() -> {
             try {

@@ -25,7 +25,6 @@ import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Main;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.command.parser.GameName;
@@ -59,19 +58,13 @@ public class PlayCommand {
             }
 
             Minecraft.getMinecraft().addScheduledTask(() -> {
-                CommandManager.INSTANCE.addParser(new GameNameParser(games));
-                CommandManager.INSTANCE.registerCommand(new PlayCommand());
+                CommandManager.INSTANCE.registerParser(new GameNameParser(games));
+                CommandManager.registerCommand(new PlayCommand());
             });
         });
     }
-
-    @Main
-    public void handle() {
-        UChat.chat(ChatColor.RED + "Usage: /play <game>");
-    }
-
-    @Main
-    private void play(GameName game) {
+    @Command
+    private void main(GameName game) {
         boolean autocompletePlayCommands = HytilsConfig.autocompletePlayCommands;
         if (!HypixelUtils.INSTANCE.isHypixel()) {
             HytilsReborn.INSTANCE.getCommandQueue().queue("/play " + game.name);

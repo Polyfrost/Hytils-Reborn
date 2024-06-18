@@ -18,13 +18,11 @@
 
 package org.polyfrost.hytils.command;
 
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
+import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
-import org.polyfrost.oneconfig.utils.v1.Notifications;
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Description;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Main;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.SubCommand;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.command.parser.GEXPType;
 import org.polyfrost.hytils.command.parser.GEXPTypeParser;
@@ -36,21 +34,21 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
-@Command(value = "hytils", aliases = {"hytilities", "hytilsreborn", "hytilitiesreborn", "hytil"})
+@Command({"hytils", "hytilities", "hytilsreborn", "hytilitiesreborn", "hytil"})
 public class HytilsCommand {
     static {
-        CommandManager.INSTANCE.addParser(new GEXPTypeParser());
-        CommandManager.INSTANCE.addParser(new WinstreakTypeParser());
+        CommandManager.INSTANCE.registerParser(new GEXPTypeParser());
+        CommandManager.INSTANCE.registerParser(new WinstreakTypeParser());
     }
 
-    @Main
-    private void handleDefault() {
+    @Command
+    private void main() {
         HytilsReborn.INSTANCE.getConfig().openGui();
     }
 
-    @SubCommand(description = "Shows your guild experience", aliases = {"guildexp", "guildexperience"})
+    @Command(value = {"guildexp", "guildexperience"}, description = "Shows your guild experience")
     @SuppressWarnings("SameParameterValue")
-    private void gexp(@Description("username") @Nullable GameProfile player, @Description("type") @Nullable GEXPType type) {
+    private void gexp(@Parameter("Username") @Nullable GameProfile player, @Parameter("GEXP Type") @Nullable GEXPType type) {
         Multithreading.runAsync(() -> {
             if (player != null) {
                 if (type == null) {
@@ -101,9 +99,9 @@ public class HytilsCommand {
         });
     }
 
-    @SubCommand(description = "Shows your winstreak", aliases = {"winstreak", "ws"})
+    @Command(value = {"winstreak", "ws"}, description = "Shows your winstreak")
     @SuppressWarnings("SameParameterValue")
-    private void winstreak(@Description("username") @Nullable GameProfile player, @Description("type") @Nullable WinstreakType gamemode) {
+    private void winstreak(@Parameter("Username") @Nullable GameProfile player, @Parameter("Winstreak Type") @Nullable WinstreakType gamemode) {
         Multithreading.runAsync(() -> {
             if (player != null) {
                 if (gamemode != null) {

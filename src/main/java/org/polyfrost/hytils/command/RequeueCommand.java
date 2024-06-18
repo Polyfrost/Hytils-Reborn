@@ -21,21 +21,17 @@ package org.polyfrost.hytils.command;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Main;
-import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
-import org.polyfrost.oneconfig.api.hypixel.v1.LocrawInfo;
-import org.polyfrost.oneconfig.api.hypixel.v1.LocrawUtil;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.LocrawGamesHandler;
 import org.polyfrost.hytils.handlers.lobby.limbo.LimboLimiter;
 
-@Command(value = "requeue", aliases = "rq")
+@Command({"requeue", "rq"})
 public class RequeueCommand {
 
     protected static String game = "";
 
-    @Main(description = "Requeues you into the last game you played.")
+    @Command(description = "Requeues you into the last game you played.")
     private void main() {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         LocrawInfo lastLocraw = LocrawUtil.INSTANCE.getLastLocrawInfo();

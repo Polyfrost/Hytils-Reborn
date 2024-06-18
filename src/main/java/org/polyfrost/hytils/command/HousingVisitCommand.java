@@ -18,6 +18,9 @@
 
 package org.polyfrost.hytils.command;
 
+import net.hypixel.data.type.GameType;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
@@ -28,13 +31,14 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 /**
  * Combination command & listener, since they are both small.
  */
-@Command(value = "housingvisit", aliases = "hvisit")
+@Command({"housingvisit", "hvisit"})
 public class HousingVisitCommand {
 
     /**
@@ -44,13 +48,13 @@ public class HousingVisitCommand {
 
     protected static String playerName = "";
 
-    @Main
-    private void handle() {
+    @Command
+    private void main() {
         UChat.chat(ChatColor.RED + "Usage: /housingvisit <username>");
     }
 
-    @Main(description = "Visits a player's house in Housing.")
-    private void main(@Description("Player Name") GameProfile player) {
+    @Command(description = "Visits a player's house in Housing.")
+    private void main(@Parameter("Player Name") GameProfile player) {
         if (!HypixelUtils.INSTANCE.isHypixel()) {
             UChat.chat(ChatColor.RED + "You must be on Hypixel to use this command!");
             return;
@@ -59,7 +63,9 @@ public class HousingVisitCommand {
             playerName = player.getName();
 
             // if we are in the housing lobby, just immediately run the /visit command
-            if (LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.HOUSING && !LocrawUtil.INSTANCE.isInGame()) {
+            HypixelAPI.Location location = HypixelAPI.getLocation();
+            Optional<GameType> gameType = location.getGameType();
+            if (gameType.isPresent() && gameType.get() == GameType.HOUSING && !location.isGame()) {
                 visit(0);
             } else {
                 HytilsReborn.INSTANCE.getCommandQueue().queue("/l housing");
@@ -70,6 +76,7 @@ public class HousingVisitCommand {
         }
     }
 
+    //TODO this probably wont get excluded as a command
     private void visit(final long time) {
         if (playerName != null) {
             Multithreading.schedule(() -> HytilsReborn.INSTANCE.getCommandQueue().queue("/visit " + playerName), time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null

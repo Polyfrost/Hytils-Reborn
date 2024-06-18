@@ -21,13 +21,11 @@ package org.polyfrost.hytils.command;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Main;
-import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import net.minecraft.client.Minecraft;
 
 @Command("limbo")
 public class LimboCommand {
-    @Main(description = "Sends you to limbo.")
+    @Command(description = "Sends you to limbo.")
     private void main() {
         if (HypixelUtils.INSTANCE.isHypixel()) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("§");
