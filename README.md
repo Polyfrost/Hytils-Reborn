@@ -27,6 +27,7 @@ you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Me
 - **Auto Friend** - Automatically accept friend requests.
 - **Auto Chat Report Confirm** - Automatically confirms chat reports.
 - **Auto Party Warp Confirm** - Automatically confirms party warps.
+- **Auto Reply When AFK** - Automatically sends a reply to anyone who PMs you when you are AFK in Limbo.
 - **Game Status Restyle** - Replace common game status messages with a new style.
 - **Player Count Before Player Name** - Put the player count before the player name in game join/leave messages.
 - **Player Count on Player Leave** - Include the player count when players leave.
