@@ -98,6 +98,8 @@ public class LanguageData {
 
     private String hypixelLevelUp = "You are now Hypixel Level (?<level>\\d+)!";
 
+    private String cancelGgMessages = "^(?:.* )?(?:\\\\[.+] )?\\\\w{1,16}(?: .+)?: (?:❤|gg|GG|gf|Good Game|Good Fight|Good Round! :D|Have a good day!|<3|AutoGG By Sk1er|AutoGG By Hytils|gf|Good Fight|Good Round|:D|Well Played!|wp)$";
+    private String cancelKarmaMessages = "^\\+(?<karma>\\d)+ Karma!$";
     private String cancelGlMessages = "(?!.+: )(gl|glhf|good luck|have a good game|autogl by sk1er)";
 
     public String autoChatReportConfirm = "Please type /report confirm to log your report for staff review.";
@@ -164,6 +166,8 @@ public class LanguageData {
 
     public Pattern hypixelLevelUpRegex;
 
+    public Pattern cancelGgMessagesRegex;
+    public Pattern cancelKarmaMessagesRegex;
     public Pattern cancelGlMessagesRegex;
 
     public Pattern gameBossbarAdvertisementRegex;
@@ -227,6 +231,8 @@ public class LanguageData {
 
             hypixelLevelUpRegex = Pattern.compile(hypixelLevelUp);
 
+            cancelGgMessagesRegex = Pattern.compile(cancelGgMessages);
+            cancelKarmaMessagesRegex = Pattern.compile(cancelKarmaMessages);
             cancelGlMessagesRegex = Pattern.compile(cancelGlMessages, Pattern.CASE_INSENSITIVE);
 
             gameBossbarAdvertisementRegex = Pattern.compile(gameBossbarAdvertisement);

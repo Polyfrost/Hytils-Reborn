@@ -129,6 +129,66 @@ public class HytilsConfig extends Config {
     // Chat
 
     @Switch(
+        name = "Auto GG",
+        description = "Send a \"gg\" message at the end of a game.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean autoGG;
+
+    @Switch(
+        name = "Auto GG Second Message",
+        description = "Enable a secondary message to send after your first GG.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean autoGGSecondMessage;
+
+    @Switch(
+        name = "Casual Auto GG",
+        description = "Send a \"gg\" message at the end of minigames/events that don't give out Karma, such as SkyBlock and The Pit events.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean casualAutoGG;
+
+    @Switch(
+        name = "Anti GG",
+        description = "Remove GG messages from chat.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean antiGG;
+
+    @Dropdown(
+        name = "Auto GG First Message",
+        description = "Choose what message is said on game completion.",
+        category = "Chat", subcategory = "Automatic",
+        options = {"gg", "GG", "gf", "Good Game", "Good Fight", "Good Round! :D"}
+    )
+    public static int autoGGMessage = 0;
+
+    @Slider(
+        name = "Auto GG First Phrase Delay",
+        description = "Delay after the game ends to say the first message in seconds.",
+        category = "Chat", subcategory = "Automatic",
+        min = 0, max = 5
+    )
+    public static int autoGGFirstPhraseDelay = 1;
+
+    @Dropdown(
+        name = "Auto GG Second Message",
+        description = "Send a secondary message sent after the first GG message.",
+        category = "Chat", subcategory = "Automatic",
+        options = {"Have a good day!", "<3", "AutoGG By Hytils!", "gf", "Good Fight", "Good Round", ":D", "Well played!", "wp"}
+    )
+    public static int autoGGMessage2 = 0;
+
+    @Slider(
+        name = "Auto GG Second Phrase Delay",
+        description = "Delay after the game ends to say the second message in seconds.",
+        category = "Chat", subcategory = "Automatic",
+        min = 0, max = 5
+    )
+    public static int autoGGSecondPhraseDelay = 1;
+
+    @Switch(
         name = "Auto GL",
         description = "Send a message 5 seconds before a Hypixel game starts.",
         category = "Chat", subcategory = "Automatic"
@@ -338,6 +398,13 @@ public class HytilsConfig extends Config {
         category = "Chat", subcategory = "Cooldown"
     )
     public static boolean preventShoutingOnCooldown = true;
+
+    @Switch(
+        name = "Hide Karma Messages",
+        description = "Remove Karma messages from the chat.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean hideKarmaMessages;
 
     @Switch(
         name = "Hide Locraw Messages",
@@ -1064,6 +1131,13 @@ public class HytilsConfig extends Config {
         addDependency("autoQueueDelay", "autoQueue");
 
         addDependency("gexpMode", "autoGetGEXP");
+
+        addDependency("autoGGSecondMessage", "autoGG");
+        addDependency("casualAutoGG", "autoGG");
+        addDependency("autoGGMessage", "autoGG");
+        addDependency("autoGGFirstPhraseDelay", "autoGG");
+        addDependency("autoGGMessage2", "autoGG");
+        addDependency("autoGGSecondPhraseDelay", "autoGG");
 
         addDependency("glPhrase", "autoGL");
 
