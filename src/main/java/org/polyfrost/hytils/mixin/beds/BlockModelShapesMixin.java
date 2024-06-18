@@ -33,7 +33,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BlockModelShapes.class)
 public class BlockModelShapesMixin {
     @Inject(method = "getTexture", at = @At("HEAD"), cancellable = true)
-    private void addBedTextures(IBlockState state, CallbackInfoReturnable<TextureAtlasSprite> cir) {
+    private void hytils$addBedTextures(IBlockState state, CallbackInfoReturnable<TextureAtlasSprite> cir) {
         IBakedModel model = BedModelHook.getBedModel(state, Minecraft.getMinecraft().thePlayer.getPosition(), null);
         if (model != null) {
             cir.setReturnValue(model.getParticleTexture());
@@ -41,7 +41,7 @@ public class BlockModelShapesMixin {
     }
 
     @Inject(method = "reloadModels", at = @At("HEAD"))
-    private void reloadModels(CallbackInfo ci) {
+    private void hytils$reloadModels(CallbackInfo ci) {
         BedModelHook.reloadModels();
     }
 }

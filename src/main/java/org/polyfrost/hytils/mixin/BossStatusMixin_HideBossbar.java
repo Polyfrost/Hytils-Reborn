@@ -30,9 +30,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BossStatus.class)
 public abstract class BossStatusMixin_HideBossbar {
-
     @Inject(method = "setBossStatus", at = @At("HEAD"), cancellable = true)
-    private static void cancelBossStatus(IBossDisplayData displayData, boolean hasColorModifierIn, CallbackInfo ci) {
+    private static void hytils$cancelBossStatus(IBossDisplayData displayData, boolean hasColorModifierIn, CallbackInfo ci) {
         if (displayData == null) return;
         if (HytilsConfig.lobbyBossbar && !LocrawUtil.INSTANCE.isInGame() || HytilsConfig.gameAdBossbar && displayData.getDisplayName().getFormattedText().matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().gameBossbarAdvertisementRegex.pattern()))
             ci.cancel();

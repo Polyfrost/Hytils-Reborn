@@ -35,7 +35,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(RenderEntityItem.class)
 public class RenderEntityItemMixin_UHCOverlay {
     @Inject(method = "func_177077_a(Lnet/minecraft/entity/item/EntityItem;DDDFLnet/minecraft/client/resources/model/IBakedModel;)I", at = @At(("TAIL")))
-    public void scaleSpecialItems(EntityItem entity, double f4, double f5, double flag, float i, IBakedModel f, CallbackInfoReturnable<Integer> cir) {
+    public void hytils$scaleSpecialItems(EntityItem entity, double f4, double f5, double flag, float i, IBakedModel f, CallbackInfoReturnable<Integer> cir) {
         Item item = entity.getEntityItem().getItem();
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HypixelUtils.INSTANCE.isHypixel() && locraw != null && (locraw.getGameType() == LocrawInfo.GameType.UHC_CHAMPIONS || locraw.getGameType() == LocrawInfo.GameType.SPEED_UHC) && HytilsConfig.uhcOverlay) {
