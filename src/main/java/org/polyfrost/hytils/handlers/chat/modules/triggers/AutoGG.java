@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 
 public class AutoGG implements ChatReceiveModule {
     private static final String[] ggMessagesOne = {"gg", "GG", "gf", "Good Game", "Good Fight", "Good Round! :D"};
-    private static final String[] ggMessagesTwo = {"Have a good day!", "<3", "AutoGG By Hytils!", "gf", "Good Fight", "Good Round", ":D", "Well played!", "wp"};
+    private static final String[] ggMessagesTwo = {"Have a good day!", "<3", "AutoGG By Hytils Reborn!", "gf", "Good Fight", "Good Round", ":D", "Well played!", "wp"};
 
     private static String getGGMessageOne() {
         return ggMessagesOne[HytilsConfig.autoGGMessage];
@@ -43,7 +43,7 @@ public class AutoGG implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()).trim();
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
         if (!hasGameEnded(message)) return;
         Multithreading.schedule(() -> UChat.say("/ac " + getGGMessageOne()), HytilsConfig.autoGGFirstPhraseDelay, TimeUnit.SECONDS);
         if (HytilsConfig.autoGGSecondMessage)
@@ -58,7 +58,9 @@ public class AutoGG implements ChatReceiveModule {
                 }
             }
         }
-        return false;
+
+        // TODO: UNTESTED!
+        return getLanguage().casualGameEndRegex.matcher(message).matches();
     }
 
     @Override

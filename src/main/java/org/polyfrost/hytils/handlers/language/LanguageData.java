@@ -34,6 +34,8 @@ public class LanguageData {
      */
     private String autoQueuePrefixGlobal = "^(?:You died! .+|YOU DIED! .+|You have been eliminated!|You won! .+|YOU WON! .+)$";
 
+    private String casualGameEnd = "^(?:MINOR EVENT! .+ in .+ ended|DRAGON EGG OVER! Earned [\\d,]+XP [\\d,]g clicking the egg \\d+ times|GIANT CAKE! Event ended! Cake's gone!|PIT EVENT ENDED: .+ \\[INFO\\])$";
+
     private String autoFriendPattern = "Friend request from (?<name>.+)\\[ACCEPT] - \\[DENY] - \\[IGNORE].*";
     private String autoAfkReplyPattern = "^From (\\[.+?] )?(.+?): .+$";
 
@@ -98,7 +100,7 @@ public class LanguageData {
 
     private String hypixelLevelUp = "You are now Hypixel Level (?<level>\\d+)!";
 
-    private String cancelGgMessages = "^(?:.* )?(?:\\\\[.+] )?\\\\w{1,16}(?: .+)?: (?:❤|gg|GG|gf|Good Game|Good Fight|Good Round! :D|Have a good day!|<3|AutoGG By Sk1er|AutoGG By Hytils|gf|Good Fight|Good Round|:D|Well Played!|wp)$";
+    private String cancelGgMessages = "^(?:.* )?(?:\\[.+] )?\\w{1,16}(?: .+)?: (?:❤|gg|GG|gf|Good Game|Good Fight|Good Round! :D|Have a good day!|<3|AutoGG By Sk1er!|AutoGG By Hytils Reborn!|gf|Good Fight|Good Round|:D|Well Played!|wp)$";
     private String cancelKarmaMessages = "^\\+(?<karma>\\d)+ Karma!$";
     private String cancelGlMessages = "(?!.+: )(gl|glhf|good luck|have a good game|autogl by sk1er)";
 
@@ -115,6 +117,8 @@ public class LanguageData {
      * Particularly Regexes.
      */
     public Pattern autoQueuePrefixGlobalRegex;
+
+    public Pattern casualGameEndRegex;
 
     public Pattern autoFriendPatternRegex;
     public Pattern autoAfkReplyPatternRegex;
@@ -180,6 +184,8 @@ public class LanguageData {
             hasInitialized = true;
 
             autoQueuePrefixGlobalRegex = Pattern.compile(autoQueuePrefixGlobal);
+
+            casualGameEndRegex = Pattern.compile(casualGameEnd);
 
             autoFriendPatternRegex = Pattern.compile(autoFriendPattern);
             autoAfkReplyPatternRegex = Pattern.compile(autoAfkReplyPattern);

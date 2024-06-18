@@ -176,7 +176,7 @@ public class HytilsConfig extends Config {
         name = "Auto GG Second Message",
         description = "Send a secondary message sent after the first GG message.",
         category = "Chat", subcategory = "Automatic",
-        options = {"Have a good day!", "<3", "AutoGG By Hytils!", "gf", "Good Fight", "Good Round", ":D", "Well played!", "wp"}
+        options = {"Have a good day!", "<3", "AutoGG By Hytils Reborn!", "gf", "Good Fight", "Good Round", ":D", "Well played!", "wp"}
     )
     public static int autoGGMessage2 = 0;
 
@@ -400,7 +400,7 @@ public class HytilsConfig extends Config {
     public static boolean preventShoutingOnCooldown = true;
 
     @Switch(
-        name = "Hide Karma Messages",
+        name = "Remove Karma Messages",
         description = "Remove Karma messages from the chat.",
         category = "Chat", subcategory = "Toggles"
     )
