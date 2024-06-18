@@ -25,12 +25,6 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class ThankWatchdog implements ChatReceiveModule {
-
-    @Override
-    public int getPriority() {
-        return 3;
-    }
-
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         if (event.message.getUnformattedText().equals("[WATCHDOG ANNOUNCEMENT]") || event.message.getUnformattedText().startsWith("A player has been removed from your")) {
@@ -41,5 +35,10 @@ public class ThankWatchdog implements ChatReceiveModule {
     @Override
     public boolean isEnabled() {
         return HytilsConfig.thankWatchdog;
+    }
+
+    @Override
+    public int getPriority() {
+        return 3;
     }
 }
