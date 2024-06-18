@@ -25,7 +25,6 @@ import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SilentLobby {
-
     @SubscribeEvent
     public void onSoundPlay(PlaySoundEvent event) {
         if (HypixelUtils.INSTANCE.isHypixel() && !LocrawUtil.INSTANCE.isInGame()) {
