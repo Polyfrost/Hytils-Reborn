@@ -38,6 +38,7 @@ import org.lwjgl.util.vector.Vector3f;
  */
 public class WaypointUtil {
     private static final ResourceLocation beaconBeam = new ResourceLocation("textures/entity/beacon_beam.png");
+    private static final OneColor nameColor = new OneColor(-1);
 
     private static void renderBeaconBeam(double x, double y, double z, OneColor color, float partialTicks, boolean disableDepth) {
         int height = 300;
@@ -352,9 +353,7 @@ public class WaypointUtil {
         GlStateManager.translate(x, y, z);
         GlStateManager.translate(0, viewer.getEyeHeight(), 0);
 
-        OneColor color = new OneColor(-1);
-
-        renderNametag(str, color);
+        renderNametag(str, nameColor);
 
         GlStateManager.rotate(-Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(Minecraft.getMinecraft().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
@@ -362,7 +361,7 @@ public class WaypointUtil {
         GlStateManager.rotate(-Minecraft.getMinecraft().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
         GlStateManager.rotate(Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
 
-        renderNametag(EnumChatFormatting.YELLOW.toString() + Math.round(dist) + "m", color);
+        renderNametag(EnumChatFormatting.YELLOW.toString() + Math.round(dist) + "m", nameColor);
 
         GlStateManager.popMatrix();
 
