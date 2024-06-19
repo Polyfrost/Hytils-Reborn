@@ -29,6 +29,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -39,13 +40,14 @@ public abstract class LayerArmorBaseMixin_HideIngameArmour {
     public abstract ItemStack getCurrentArmor(EntityLivingBase entitylivingbaseIn, int armorSlot);
 
     @Inject(method = "renderLayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/layers/LayerArmorBase;getArmorModel(I)Lnet/minecraft/client/model/ModelBase;"), cancellable = true)
-    private void cancelArmor(EntityLivingBase entitylivingbaseIn, float p_177182_2_, float p_177182_3_, float partialTicks, float p_177182_5_, float p_177182_6_, float p_177182_7_, float scale, int armorSlot, CallbackInfo ci) {
-        if (shouldCancel(getCurrentArmor(entitylivingbaseIn, armorSlot)) && !entitylivingbaseIn.isInvisible()) {
+    private void hytils$cancelArmor(EntityLivingBase entitylivingbaseIn, float p_177182_2_, float p_177182_3_, float partialTicks, float p_177182_5_, float p_177182_6_, float p_177182_7_, float scale, int armorSlot, CallbackInfo ci) {
+        if (hytils$shouldCancel(getCurrentArmor(entitylivingbaseIn, armorSlot)) && !entitylivingbaseIn.isInvisible()) {
             ci.cancel();
         }
     }
 
-    private static boolean shouldCancel(ItemStack itemStack) {
+    @Unique
+    private static boolean hytils$shouldCancel(ItemStack itemStack) {
         if (!HytilsConfig.hideArmor || itemStack == null || !HypixelUtils.INSTANCE.isHypixel()) return false;
         final LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         final Item item = itemStack.getItem();

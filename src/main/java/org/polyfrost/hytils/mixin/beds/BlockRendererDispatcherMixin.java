@@ -32,7 +32,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BlockRendererDispatcher.class)
 public class BlockRendererDispatcherMixin {
     @Inject(method = "getModelFromBlockState", at = @At("RETURN"), cancellable = true)
-    private void addBedModels(IBlockState state, IBlockAccess worldIn, BlockPos pos, CallbackInfoReturnable<IBakedModel> cir) {
+    private void hytils$addBedModels(IBlockState state, IBlockAccess worldIn, BlockPos pos, CallbackInfoReturnable<IBakedModel> cir) {
         IBakedModel model = BedModelHook.getBedModel(state, pos, cir.getReturnValue());
         if (model != null) {
             cir.setReturnValue(model);

@@ -31,7 +31,7 @@ import java.util.Collection;
 @Mixin(GuiPlayerTabOverlay.class)
 public class GuiPlayerTabOverlayMixin_HideNPCs {
     @Redirect(method = "renderPlayerlist", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/NetHandlerPlayClient;getPlayerInfoMap()Ljava/util/Collection;"))
-    private Collection<NetworkPlayerInfo> hideNPCs(NetHandlerPlayClient instance) {
+    private Collection<NetworkPlayerInfo> hytils$hideNPCs(NetHandlerPlayClient instance) {
         return NPCHandler.hideTabNpcs(instance.getPlayerInfoMap());
     }
 }

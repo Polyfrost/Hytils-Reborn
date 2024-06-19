@@ -27,10 +27,9 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 @Pseudo
 @Mixin(targets = "me.semx11.autotip.command.impl.CommandLimbo", remap = false)
 public class CommandLimboMixin_FixCommand {
-
     @Dynamic("AutoTip")
     @ModifyConstant(method = "onCommand", constant = @Constant(stringValue = "/achat \u00a7c"))
-    private String fixAutotipCommand(String value) {
+    private String hytils$fixAutotipCommand(String value) {
         return "§";
     }
 }

@@ -44,7 +44,7 @@ public class MinecraftMixin_LeftClickInteract {
     public EntityPlayerSP thePlayer;
 
     @Redirect(method = "clickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerControllerMP;clickBlock(Lnet/minecraft/util/BlockPos;Lnet/minecraft/util/EnumFacing;)Z"))
-    private boolean captureClickBlock(PlayerControllerMP instance, BlockPos itemstack, EnumFacing block1) {
+    private boolean hytils$captureClickBlock(PlayerControllerMP instance, BlockPos itemstack, EnumFacing block1) {
         ForgeEventFactory.onPlayerInteract(thePlayer, PlayerInteractEvent.Action.LEFT_CLICK_BLOCK, theWorld, itemstack, objectMouseOver.sideHit, objectMouseOver.hitVec);
         return instance.clickBlock(itemstack, block1);
     }

@@ -38,7 +38,7 @@ public class ModelLoaderMixin {
     private Set<ResourceLocation> textures;
 
     @Inject(method = "setupModelRegistry", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/texture/TextureMap;loadSprites(Lnet/minecraft/client/resources/IResourceManager;Lnet/minecraft/client/renderer/texture/IIconCreator;)V"), remap = true)
-    private void getVariantsTextureLocations(CallbackInfoReturnable<Set<ResourceLocation>> cir) {
+    private void hytils$getVariantsTextureLocations(CallbackInfoReturnable<Set<ResourceLocation>> cir) {
         for (String color : BedLocationHandler.COLORS_REVERSE.values()) {
             textures.add(new ResourceLocation(BedModelHook.COLORED_BED + color));
         }

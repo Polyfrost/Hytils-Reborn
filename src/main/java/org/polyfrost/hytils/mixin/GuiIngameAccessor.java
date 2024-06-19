@@ -24,7 +24,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(GuiIngame.class)
 public interface GuiIngameAccessor {
-
     @Accessor("displayedTitle")
     void setDisplayedTitle(String title);
 

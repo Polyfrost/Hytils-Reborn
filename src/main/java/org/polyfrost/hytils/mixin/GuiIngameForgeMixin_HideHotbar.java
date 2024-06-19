@@ -32,7 +32,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = GuiIngameForge.class, remap = false)
 public class GuiIngameForgeMixin_HideHotbar {
     @Inject(method = "renderHealth", at = @At("HEAD"), cancellable = true)
-    public void cancelHealthbar(int width, int height, CallbackInfo ci) {
+    public void hytils$cancelHealthbar(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
             if (!LocrawUtil.INSTANCE.isInGame()) {
@@ -80,7 +80,7 @@ public class GuiIngameForgeMixin_HideHotbar {
     }
 
     @Inject(method = "renderFood", at = @At("HEAD"), cancellable = true)
-    public void cancelFood(int width, int height, CallbackInfo ci) {
+    public void hytils$cancelFood(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
             if (!LocrawUtil.INSTANCE.isInGame()) {
@@ -135,7 +135,7 @@ public class GuiIngameForgeMixin_HideHotbar {
     }
 
     @Inject(method = "renderArmor", at = @At("HEAD"), cancellable = true)
-    public void cancelArmor(int width, int height, CallbackInfo ci) {
+    public void hytils$cancelArmor(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
             if (!LocrawUtil.INSTANCE.isInGame()) {
@@ -173,7 +173,7 @@ public class GuiIngameForgeMixin_HideHotbar {
     }
 
     @Inject(method = "renderAir", at = @At("HEAD"), cancellable = true)
-    public void cancelAir(int width, int height, CallbackInfo ci) {
+    public void hytils$cancelAir(int width, int height, CallbackInfo ci) {
         LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
             if (!LocrawUtil.INSTANCE.isInGame()) {

@@ -31,6 +31,7 @@ import org.polyfrost.hytils.handlers.cache.HeightHandler;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
@@ -42,21 +43,22 @@ public class VertexLighterFlatMixin {
     protected BlockInfo blockInfo;
 
     @ModifyArgs(method = "processQuad", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/client/model/pipeline/VertexLighterFlat;updateColor([F[FFFFFI)V"))
-    private void modifyArgs(Args args) {
+    private void hytils$modifyArgs(Args args) {
         if (HypixelUtils.INSTANCE.isHypixel() && HytilsConfig.heightOverlay && blockInfo.getBlock() instanceof BlockColored) {
             int height = HeightHandler.INSTANCE.getHeight();
             if (height == -1) return;
             if (blockInfo.getBlockPos().getY() != (height - 1)) return;
             MapColor mapColor = blockInfo.getBlock().getMapColor(blockInfo.getWorld().getBlockState(blockInfo.getBlockPos()));
             boolean isClay = blockInfo.getBlock().getMaterial() == Material.rock;
-            if (!isClay || check(mapColor.colorIndex)) {
+            if (!isClay || hytils$check(mapColor.colorIndex)) {
                 args.set(5, 1.0F);
                 args.set(6, (HytilsConfig.manuallyEditHeightOverlay ? BlockHighlightConfig.colorMap.get(mapColor).get().getRGB() : DarkColorUtils.getCachedDarkColor(mapColor.colorValue)));
             }
         }
     }
 
-    private boolean check(int color) {
+    @Unique
+    private boolean hytils$check(int color) {
         switch (color) {
             case 18:
             case 25:
