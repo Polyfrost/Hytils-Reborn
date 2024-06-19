@@ -25,12 +25,85 @@ import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SilentLobby {
-
     @SubscribeEvent
     public void onSoundPlay(PlaySoundEvent event) {
-        if (HypixelUtils.INSTANCE.isHypixel() && !LocrawUtil.INSTANCE.isInGame() && HytilsConfig.silentLobby) {
-            if (!event.name.startsWith("gui.")) {
+        if (HypixelUtils.INSTANCE.isHypixel() && !LocrawUtil.INSTANCE.isInGame()) {
+            String sound = event.name;
+            if (HytilsConfig.silentLobby && !sound.startsWith("gui.")) {
                 event.result = null;
+            } else {
+                /*
+                This code is taken from LobbySounds by Sk1er LLC under the GPL License:
+                https://github.com/Sk1erLLC/LobbySounds/blob/master/LICENSE
+                Only changes to adapt to this project have been made, as well as additions.
+                 */
+                if (sound.startsWith("step.") && HytilsConfig.lobbyDisableSteppingSounds) {
+                    event.result = null;
+                }
+
+                if (sound.startsWith("mob.slime") && HytilsConfig.lobbyDisableSlimeSounds) {
+                    event.result = null;
+                }
+
+                if (sound.startsWith("mob.enderdragon") && HytilsConfig.lobbyDisableDragonSounds) {
+                    event.result = null;
+                }
+
+                if ((sound.startsWith("mob.wither") || sound.startsWith("mob.skeleton")) && HytilsConfig.lobbyDisableWitherSounds) {
+                    event.result = null;
+                }
+
+                if (sound.equals("random.orb") && HytilsConfig.lobbyDisableExperienceOrbSounds) {
+                    event.result = null;
+                }
+
+                if (sound.equals("random.pop") && HytilsConfig.lobbyDisableItemPickupSounds) {
+                    event.result = null;
+                }
+
+                if (sound.equals("game.tnt.primed") && HytilsConfig.lobbyDisablePrimedTntSounds) {
+                    event.result = null;
+                }
+
+                if (sound.equals("random.explode") && HytilsConfig.lobbyDisableExplosionSounds) {
+                    event.result = null;
+                }
+
+                if (sound.equals("mob.chicken.plop") && HytilsConfig.lobbyDisableDeliveryManSounds) {
+                    event.result = null;
+                }
+
+                if ((sound.startsWith("note.") || sound.equals("random.click")) && HytilsConfig.lobbyDisableMysteryBoxSounds) {
+                    event.result = null;
+                }
+
+                if (sound.startsWith("fireworks") && HytilsConfig.lobbyDisableFireworkSounds) {
+                    event.result = null;
+                }
+
+                if (sound.equals("random.levelup") && HytilsConfig.lobbyDisableLevelupSounds) {
+                    event.result = null;
+                }
+
+                if (sound.startsWith("mob.bat") && HytilsConfig.lobbyDisableBatSounds) {
+                    event.result = null;
+                }
+
+                if (sound.equals("fire.fire") && HytilsConfig.lobbyDisableFireSounds) {
+                    event.result = null;
+                }
+
+                if (sound.startsWith("mob.endermen") && HytilsConfig.lobbyDisableEndermanSounds) {
+                    event.result = null;
+                }
+
+                if (sound.startsWith("random.bow") && HytilsConfig.lobbyDisableArrowSounds) {
+                    event.result = null;
+                }
+
+                if (sound.startsWith("random.door") && HytilsConfig.lobbyDisableDoorSounds) {
+                    event.result = null;
+                }
             }
         }
     }

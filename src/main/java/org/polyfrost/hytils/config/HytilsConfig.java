@@ -1002,6 +1002,125 @@ public class HytilsConfig extends Config {
     public static boolean silentLobby;
 
     @Switch(
+        name = "Disable Stepping Sounds",
+        description = "Remove sounds created by stepping.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableSteppingSounds;
+
+    @Switch(
+        name = "Disable Slime Sounds",
+        description = "Remove sounds created by slimes.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableSlimeSounds;
+
+    @Switch(
+        name = "Disable Dragon Sounds",
+        description = "Remove sounds created by dragons.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableDragonSounds;
+
+    @Switch(
+        name = "Disable Wither Sounds",
+        description = "Remove sounds created by withers & wither skeletons.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableWitherSounds;
+
+    @Switch(
+        name = "Disable Item Pickup Sounds",
+        description = "Remove sounds created by picking up an item.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableItemPickupSounds;
+
+    @Switch(
+        name = "Disable Experience Orb Sounds",
+        description = "Remove sounds created by experience orbs.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableExperienceOrbSounds;
+
+    @Switch(
+        name = "Disable Primed TNT Sounds",
+        description = "Remove sounds created by primed TNT.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisablePrimedTntSounds;
+
+    @Switch(
+        name = "Disable Explosion Sounds",
+        description = "Remove sounds created by explosions.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableExplosionSounds;
+
+    @Switch(
+        name = "Disable Delivery Man Sounds",
+        description = "Remove sounds created by delivery man events.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableDeliveryManSounds;
+
+    @Switch(
+        name = "Disable Mystery Box Sounds",
+        description = "Remove sounds created by mystery boxes.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableMysteryBoxSounds;
+
+    @Switch(
+        name = "Disable Firework Sounds",
+        description = "Remove sounds created by fireworks.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableFireworkSounds;
+
+    @Switch(
+        name = "Disable Levelup Sounds",
+        description = "Remove sounds created by someone leveling up.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableLevelupSounds;
+
+    @Switch(
+        name = "Disable Arrow Sounds",
+        description = "Remove sounds created by arrows.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableArrowSounds;
+
+    @Switch(
+        name = "Disable Bat Sounds",
+        description = "Remove sounds created by bats.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableBatSounds;
+
+    @Switch(
+        name = "Disable Fire Sounds",
+        description = "Remove sounds created by fire.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableFireSounds;
+
+    @Switch(
+        name = "Disable Enderman Sounds",
+        description = "Remove sounds created by endermen.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableEndermanSounds;
+
+    @Switch(
+        name = "Disable Door Sounds",
+        description = "Disable sounds caused by doors, trapdoors, and fence gates",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableDoorSounds;
+
+    @Switch(
         name = "Remove Limbo AFK Title",
         description = "Remove the AFK title when you get sent to limbo for being AFK.",
         category = "Lobby", subcategory = "Limbo"
@@ -1123,6 +1242,14 @@ public class HytilsConfig extends Config {
         //addDependency("editHeightOverlay", "heightOverlay");
         addDependency("manuallyEditHeightOverlay", "heightOverlay");
         //addDependency("editHeightOverlay", "manuallyEditHeightOverlay");
+
+        Arrays.asList(
+            "lobbyDisableSteppingSounds", "lobbyDisableSlimeSounds", "lobbyDisableDragonSounds", "lobbyDisableWitherSounds",
+            "lobbyDisableItemPickupSounds", "lobbyDisableExperienceOrbSounds", "lobbyDisablePrimedTntSounds",
+            "lobbyDisableExplosionSounds", "lobbyDisableDeliveryManSounds", "lobbyDisableMysteryBoxSounds",
+            "lobbyDisableFireworkSounds", "lobbyDisableLevelupSounds", "lobbyDisableArrowSounds", "lobbyDisableBatSounds",
+            "lobbyDisableFireSounds", "lobbyDisableEndermanSounds", "lobbyDisableDoorSounds"
+        ).forEach(property -> addDependency(property, "Silent Lobby", () -> !silentLobby));
     }
 
     public void hideTabulous() {
