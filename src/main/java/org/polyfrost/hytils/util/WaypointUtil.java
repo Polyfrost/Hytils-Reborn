@@ -32,14 +32,14 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 /**
- * Taken and adapted from NotEnoughUpdates under LGPL-3.0
- * https://github.com/NotEnoughUpdates/NotEnoughUpdates/blob/master/COPYING.LESSER
+ * Taken and adapted from NotEnoughUpdates under GPL-3.0
+ * https://github.com/NotEnoughUpdates/NotEnoughUpdates/blob/master/COPYING
  * @author Moulberry
  */
 public class WaypointUtil {
     private static final ResourceLocation beaconBeam = new ResourceLocation("textures/entity/beacon_beam.png");
 
-    private static void renderBeaconBeam(double x, double y, double z, OneColor color, float alphaMult, float partialTicks, boolean disableDepth) {
+    private static void renderBeaconBeam(double x, double y, double z, OneColor color, float partialTicks, boolean disableDepth) {
         int height = 300;
         int bottomOffset = 0;
         int topOffset = bottomOffset + height;
@@ -64,10 +64,10 @@ public class WaypointUtil {
         double time = Minecraft.getMinecraft().theWorld.getTotalWorldTime() + (double) partialTicks;
         double d1 = MathHelper.func_181162_h(-time * 0.2D - (double) MathHelper.floor_double(-time * 0.1D));
 
-        float r = color.getRed();
-        float g = color.getGreen();
-        float b = color.getBlue();
-        float a = color.getAlpha() * alphaMult;
+        float r = ((color.getRGB() >> 16) & 0xFF) / 255f;
+        float g = ((color.getRGB() >> 8) & 0xFF) / 255f;
+        float b = (color.getRGB() & 0xFF) / 255f;
+        float a = ((color.getRGB() >> 24) & 0xFF) / 255f;
         double d2 = time * 0.025D * -1.5D;
         double d4 = 0.5D + Math.cos(d2 + 2.356194490192345D) * 0.2D;
         double d5 = 0.5D + Math.sin(d2 + 2.356194490192345D) * 0.2D;
@@ -220,6 +220,7 @@ public class WaypointUtil {
         drawFilledBoundingBox(new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1).expand(0.01, 0.01, 0.01), color);
         GlStateManager.enableCull();
     }
+
     private static void drawFilledBoundingBox(AxisAlignedBB aabb, OneColor c) {
         GlStateManager.enableBlend();
         GlStateManager.disableLighting();
@@ -281,7 +282,7 @@ public class WaypointUtil {
         GlStateManager.disableBlend();
     }
 
-    public static void renderBeaconBeam(BlockPos block, OneColor color, float alphaMult, float partialTicks) {
+    public static void renderBeaconBeam(BlockPos block, OneColor color, float partialTicks) {
         double viewerX;
         double viewerY;
         double viewerZ;
@@ -297,7 +298,7 @@ public class WaypointUtil {
 
         double distSq = x * x + y * y + z * z;
 
-        WaypointUtil.renderBeaconBeam(x, y, z, color, alphaMult, partialTicks, distSq > 10 * 10);
+        WaypointUtil.renderBeaconBeam(x, y, z, color, partialTicks, distSq > 10 * 10);
     }
 
     public static void renderBeaconBeamOrBoundingBox(BlockPos block, OneColor color, float alphaMult, float partialTicks) {
@@ -317,7 +318,7 @@ public class WaypointUtil {
         double distSq = x * x + y * y + z * z;
 
         if (distSq > 10 * 10) {
-            WaypointUtil.renderBeaconBeam(x, y, z, color, alphaMult, partialTicks, true);
+            WaypointUtil.renderBeaconBeam(x, y, z, color, partialTicks, true);
         } else {
             WaypointUtil.renderBoundingBox(x, y, z, color, alphaMult);
         }
