@@ -54,6 +54,6 @@ public class MiddleBeaconMiniWalls {
     @SubscribeEvent
     public void onRenderWorldLast(RenderWorldLastEvent event) {
         if (!shouldMakeBeacon()) return;
-        WaypointUtil.renderBeaconBeam(block, HytilsConfig.miniWallsMiddleBeaconColor.getRGB(), 1.0f, event.partialTicks);
+        WaypointUtil.renderBeaconBeam(block, HytilsConfig.miniWallsMiddleBeaconColor, event.partialTicks);
     }
 }
