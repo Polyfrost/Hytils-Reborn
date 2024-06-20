@@ -1065,11 +1065,11 @@ public class HytilsConfig extends Config {
     public static boolean lobbyDisableDeliveryManSounds;
 
     @Switch(
-        name = "Disable Mystery Box Sounds",
-        description = "Remove sounds created by mystery boxes.",
+        name = "Disable Note Block Sounds",
+        description = "Remove sounds created by Note Blocks.",
         category = "Lobby", subcategory = "Sounds"
     )
-    public static boolean lobbyDisableMysteryBoxSounds;
+    public static boolean lobbyDisableNoteBlockSounds;
 
     @Switch(
         name = "Disable Firework Sounds",

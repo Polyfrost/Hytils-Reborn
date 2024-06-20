@@ -73,7 +73,7 @@ public class SilentLobby {
                     event.result = null;
                 }
 
-                if ((sound.startsWith("note.") || sound.equals("random.click")) && HytilsConfig.lobbyDisableMysteryBoxSounds) {
+                if ((sound.startsWith("note.") || sound.equals("random.click")) && HytilsConfig.lobbyDisableNoteBlockSounds) {
                     event.result = null;
                 }
 
