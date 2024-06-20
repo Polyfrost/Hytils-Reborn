@@ -1409,7 +1409,7 @@ public class HytilsConfig extends Config {
         addDependency("autoGGMessage2", "autoGG");
         addDependency("autoGGSecondPhraseDelay", "autoGG");
 
-        Supplier<Boolean> autoGGEnabled = () -> HytilsReborn.INSTANCE.isSk1erAutoGG && AutoGG.INSTANCE.getAutoGGConfig().isModEnabled();
+        Supplier<Boolean> autoGGEnabled = () -> !HytilsReborn.INSTANCE.isSk1erAutoGG || !AutoGG.INSTANCE.getAutoGGConfig().isModEnabled();
 
         addDependency("autoGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
         addDependency("autoGGSecondMessage", "Sk1er's AutoGG Enabled", autoGGEnabled);
