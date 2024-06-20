@@ -66,7 +66,7 @@ public class AutoGG implements ChatReceiveModule {
 
     @Override
     public boolean isEnabled() {
-        return HytilsConfig.autoGG && (!HytilsReborn.INSTANCE.isSk1erAutoGG || club.sk1er.mods.autogg.AutoGG.INSTANCE.getAutoGGConfig().isModEnabled()); // If Sk1er's AutoGG is enabled, we don't want to interfere with it.
+        return HytilsConfig.autoGG && (!HytilsReborn.INSTANCE.isSk1erAutoGG || !club.sk1er.mods.autogg.AutoGG.INSTANCE.getAutoGGConfig().isModEnabled()); // If Sk1er's AutoGG is enabled, we don't want to interfere with it.
     }
 
     @Override

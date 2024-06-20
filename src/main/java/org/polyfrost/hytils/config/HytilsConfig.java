@@ -1245,17 +1245,20 @@ public class HytilsConfig extends Config {
         }
 
         initialize();
+        Class<?> autoGGClass = null;
+        try {
+            autoGGClass = Class.forName("club.sk1er.mods.autogg.config.AutoGGConfig");
+
+            HytilsReborn.INSTANCE.isSk1erAutoGG = true;
+        } catch (ClassNotFoundException ignored) {
+        }
 
         if (configNumber != 3) { // Config version has not been set or is outdated
             if (configNumber == 1) {
                 overlayAmount = 300;
             }
             if (configNumber <= 2) {
-                try {
-                    Class<?> clazz = Class.forName("club.sk1er.mods.autogg.config.AutoGGConfig");
-
-                    HytilsReborn.INSTANCE.isSk1erAutoGG = true;
-
+                if (autoGGClass != null) {
                     if (AutoGG.INSTANCE.getAutoGGConfig().isModEnabled()) {
                         autoGG = true;
                     }
@@ -1285,7 +1288,7 @@ public class HytilsConfig extends Config {
                     }
 
                     try {
-                        Field sk1erEnabled = clazz.getDeclaredField("autoGGEnabled");
+                        Field sk1erEnabled = autoGGClass.getDeclaredField("autoGGEnabled");
                         sk1erEnabled.setAccessible(true);
                         sk1erEnabled.set(AutoGG.INSTANCE.getAutoGGConfig(), false);
 
@@ -1296,9 +1299,8 @@ public class HytilsConfig extends Config {
                     }
 
                     Notifications.INSTANCE.send("Hytils Reborn", "AutoGG settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings, and remove Sk1erLLC's AutoGG.", 5);
-                } catch (ClassNotFoundException ignored) {
-
                 }
+
                 try {
                     Class.forName("club.sk1er.lobbysounds.config.Sounds");
                     boolean modified = false;
@@ -1418,6 +1420,7 @@ public class HytilsConfig extends Config {
         addDependency("autoGGFirstPhraseDelay", "Sk1er's AutoGG Enabled", autoGGEnabled);
         addDependency("autoGGMessage2", "Sk1er's AutoGG Enabled", autoGGEnabled);
         addDependency("autoGGSecondPhraseDelay", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("antiGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
 
         addDependency("glPhrase", "autoGL");
 
