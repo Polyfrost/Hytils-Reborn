@@ -20,16 +20,15 @@ package club.sk1er.mods.autogg.config;
 
 public class AutoGGConfig {
 
-    // these arent the actual default values
     private boolean autoGGEnabled = true;
-    private boolean casualAutoGGEnabled = true;
-    private boolean antiGGEnabled = true;
-    private boolean antiKarmaEnabled = true;
-    private int autoGGDelay = 5;
+    private boolean casualAutoGGEnabled;
+    private boolean antiGGEnabled;
+    private boolean antiKarmaEnabled;
+    private int autoGGDelay = 1;
     private int autoGGPhrase = 0;
-    private boolean secondaryEnabled = true;
+    private boolean secondaryEnabled;
     private int autoGGPhrase2 = 0;
-    private int secondaryDelay = 5;
+    private int secondaryDelay = 1;
 
     public boolean isModEnabled() {
         return autoGGEnabled;
@@ -66,4 +65,8 @@ public class AutoGGConfig {
     public int getSecondaryDelay() {
         return secondaryDelay;
     }
+
+    public void markDirty() {}
+
+    public void writeData() {}
 }

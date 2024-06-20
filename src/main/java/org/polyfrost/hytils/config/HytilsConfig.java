@@ -19,6 +19,7 @@
 package org.polyfrost.hytils.config;
 
 import cc.polyfrost.oneconfig.config.Config;
+import cc.polyfrost.oneconfig.config.annotations.Checkbox;
 import cc.polyfrost.oneconfig.config.annotations.*;
 import cc.polyfrost.oneconfig.config.core.OneColor;
 import cc.polyfrost.oneconfig.config.data.InfoType;
@@ -27,13 +28,14 @@ import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.config.data.PageLocation;
 import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator;
 import cc.polyfrost.oneconfig.utils.Notifications;
+import club.sk1er.lobbysounds.config.Sounds;
 import club.sk1er.mods.autogg.AutoGG;
-import org.polyfrost.hytils.HytilsReborn;
-import org.polyfrost.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
-import org.polyfrost.hytils.util.DarkColorUtils;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.io.FileUtils;
+import org.polyfrost.hytils.HytilsReborn;
+import org.polyfrost.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
+import org.polyfrost.hytils.util.DarkColorUtils;
 
 import java.awt.Color;
 import java.io.File;
@@ -1254,23 +1256,140 @@ public class HytilsConfig extends Config {
 
                     HytilsReborn.INSTANCE.isSk1erAutoGG = true;
 
-                    autoGG = AutoGG.INSTANCE.getAutoGGConfig().isModEnabled();
-                    autoGGSecondMessage = AutoGG.INSTANCE.getAutoGGConfig().isSecondaryEnabled();
-                    casualAutoGG = AutoGG.INSTANCE.getAutoGGConfig().isCasualAutoGGEnabled();
-                    autoGGMessage = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase();
-                    autoGGFirstPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGDelay();
-                    autoGGMessage2 = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase2();
-                    autoGGSecondPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getSecondaryDelay();
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isModEnabled()) {
+                        autoGG = true;
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isSecondaryEnabled()) {
+                        autoGGSecondMessage = true;
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isCasualAutoGGEnabled()) {
+                        casualAutoGG = true;
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase() != 0) {
+                        autoGGMessage = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase();
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGDelay() != 1) {
+                        autoGGFirstPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGDelay();
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase2() != 0) {
+                        autoGGMessage2 = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase2();
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().getSecondaryDelay() != 1) {
+                        autoGGSecondPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getSecondaryDelay();
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isAntiGGEnabled()) {
+                        antiGG = true;
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isAntiKarmaEnabled()) {
+                        hideKarmaMessages = true;
+                    }
 
                     try {
                         Field sk1erEnabled = clazz.getDeclaredField("autoGGEnabled");
                         sk1erEnabled.setAccessible(true);
                         sk1erEnabled.set(AutoGG.INSTANCE.getAutoGGConfig(), false);
+
+                        AutoGG.INSTANCE.getAutoGGConfig().markDirty();
+                        AutoGG.INSTANCE.getAutoGGConfig().writeData();
                     } catch (NoSuchFieldException | IllegalAccessException e) {
                         e.printStackTrace();
                     }
 
-                    Notifications.INSTANCE.send("Hytils Reborn", "AutoGG settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings.", 5);
+                    Notifications.INSTANCE.send("Hytils Reborn", "AutoGG settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings, and remove Sk1erLLC's AutoGG.", 5);
+                } catch (ClassNotFoundException ignored) {
+
+                }
+                try {
+                    Class.forName("club.sk1er.lobbysounds.config.Sounds");
+                    boolean modified = false;
+                    if (Sounds.DISABLE_SLIME_SOUNDS) {
+                        lobbyDisableSlimeSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_DRAGON_SOUNDS) {
+                        lobbyDisableDragonSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_WITHER_SOUNDS) {
+                        lobbyDisableWitherSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_ITEM_PICKUP_SOUNDS) {
+                        lobbyDisableItemPickupSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_EXPERIENCE_SOUNDS) {
+                        lobbyDisableExperienceOrbSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_TNT_PRIME_SOUNDS) {
+                        lobbyDisablePrimedTntSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_EXPLOSION_SOUNDS) {
+                        lobbyDisableExplosionSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_DELIVERY_MAN_SOUNDS) {
+                        lobbyDisableDeliveryManSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_NOTE_SOUNDS) {
+                        lobbyDisableNoteBlockSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_FIREWORKS_SOUNDS) {
+                        lobbyDisableFireworkSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_LEVELUP_SOUNDS) {
+                        lobbyDisableLevelupSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_ARROW_SOUNDS) {
+                        lobbyDisableArrowSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_BAT_SOUNDS) {
+                        lobbyDisableBatSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_FIRE_SOUNDS) {
+                        lobbyDisableFireSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_ENDERMEN_SOUNDS) {
+                        lobbyDisableEndermanSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_STEP_SOUNDS) {
+                        lobbyDisableSteppingSounds = true;
+                        modified = true;
+                    }
+
+                    if (Sounds.DISABLE_SLIME_SOUNDS &&
+                        Sounds.DISABLE_DRAGON_SOUNDS &&
+                        Sounds.DISABLE_WITHER_SOUNDS &&
+                        Sounds.DISABLE_ITEM_PICKUP_SOUNDS &&
+                        Sounds.DISABLE_EXPERIENCE_SOUNDS &&
+                        Sounds.DISABLE_TNT_PRIME_SOUNDS &&
+                        Sounds.DISABLE_EXPLOSION_SOUNDS &&
+                        Sounds.DISABLE_DELIVERY_MAN_SOUNDS &&
+                        Sounds.DISABLE_NOTE_SOUNDS &&
+                        Sounds.DISABLE_FIREWORKS_SOUNDS &&
+                        Sounds.DISABLE_LEVELUP_SOUNDS &&
+                        Sounds.DISABLE_ARROW_SOUNDS &&
+                        Sounds.DISABLE_BAT_SOUNDS &&
+                        Sounds.DISABLE_FIRE_SOUNDS &&
+                        Sounds.DISABLE_ENDERMEN_SOUNDS &&
+                        Sounds.DISABLE_STEP_SOUNDS) {
+                        silentLobby = true;
+                        lobbyDisableDoorSounds = true;
+                    }
+
+                    if (modified) {
+                        Notifications.INSTANCE.send("Hytils Reborn", "Lobby Sounds settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings, and remove Sk1erLLC's Lobby Sounds.", 5);
+                    }
                 } catch (ClassNotFoundException ignored) {
 
                 }
