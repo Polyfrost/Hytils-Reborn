@@ -23,6 +23,7 @@ import cc.polyfrost.oneconfig.utils.Multithreading;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.PatternHandler;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
@@ -65,7 +66,7 @@ public class AutoGG implements ChatReceiveModule {
 
     @Override
     public boolean isEnabled() {
-        return HytilsConfig.autoGG;
+        return HytilsConfig.autoGG && (!HytilsReborn.INSTANCE.isSk1erAutoGG || club.sk1er.mods.autogg.AutoGG.INSTANCE.getAutoGGConfig().isModEnabled()); // If Sk1er's AutoGG is enabled, we don't want to interfere with it.
     }
 
     @Override

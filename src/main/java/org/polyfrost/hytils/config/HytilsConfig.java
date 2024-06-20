@@ -26,6 +26,8 @@ import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.config.data.PageLocation;
 import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator;
+import cc.polyfrost.oneconfig.utils.Notifications;
+import club.sk1er.mods.autogg.AutoGG;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
 import org.polyfrost.hytils.util.DarkColorUtils;
@@ -35,11 +37,13 @@ import org.apache.commons.io.FileUtils;
 
 import java.awt.Color;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
 public class HytilsConfig extends Config {
@@ -133,7 +137,7 @@ public class HytilsConfig extends Config {
         description = "Send a \"gg\" message at the end of a game.",
         category = "Chat", subcategory = "Automatic"
     )
-    public static boolean autoGG;
+    public static boolean autoGG = true;
 
     @Switch(
         name = "Auto GG Second Message",
@@ -147,7 +151,7 @@ public class HytilsConfig extends Config {
         description = "Send a \"gg\" message at the end of minigames/events that don't give out Karma, such as SkyBlock and The Pit events.",
         category = "Chat", subcategory = "Automatic"
     )
-    public static boolean casualAutoGG;
+    public static boolean casualAutoGG = true;
 
     @Switch(
         name = "Anti GG",
@@ -1224,7 +1228,6 @@ public class HytilsConfig extends Config {
 
     public HytilsConfig() {
         super(new Mod("Hytils Reborn", ModType.HYPIXEL, "/assets/hytils/hypixel.png", new VigilanceMigrator(new File(HytilsReborn.INSTANCE.oldModDir, "hytilsreborn.toml").getAbsolutePath())), "hytilsreborn.json");
-        initialize();
         try {
             File modDir = HytilsReborn.INSTANCE.oldModDir;
             File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");
@@ -1239,11 +1242,40 @@ public class HytilsConfig extends Config {
             e.printStackTrace();
         }
 
-        if (configNumber != 2) { // Config version has not been set or is outdated
+        initialize();
+
+        if (configNumber != 3) { // Config version has not been set or is outdated
             if (configNumber == 1) {
                 overlayAmount = 300;
             }
-            configNumber = 2; // set this to the current config version
+            if (configNumber <= 2) {
+                try {
+                    Class<?> clazz = Class.forName("club.sk1er.mods.autogg.config.AutoGGConfig");
+
+                    HytilsReborn.INSTANCE.isSk1erAutoGG = true;
+
+                    autoGG = AutoGG.INSTANCE.getAutoGGConfig().isModEnabled();
+                    autoGGSecondMessage = AutoGG.INSTANCE.getAutoGGConfig().isSecondaryEnabled();
+                    casualAutoGG = AutoGG.INSTANCE.getAutoGGConfig().isCasualAutoGGEnabled();
+                    autoGGMessage = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase();
+                    autoGGFirstPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGDelay();
+                    autoGGMessage2 = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase2();
+                    autoGGSecondPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getSecondaryDelay();
+
+                    try {
+                        Field sk1erEnabled = clazz.getDeclaredField("autoGGEnabled");
+                        sk1erEnabled.setAccessible(true);
+                        sk1erEnabled.set(AutoGG.INSTANCE.getAutoGGConfig(), false);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+
+                    Notifications.INSTANCE.send("Hytils Reborn", "AutoGG settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings.", 5);
+                } catch (ClassNotFoundException ignored) {
+
+                }
+            }
+            configNumber = 3; // set this to the current config version
             save();
         }
 
@@ -1257,6 +1289,16 @@ public class HytilsConfig extends Config {
         addDependency("autoGGFirstPhraseDelay", "autoGG");
         addDependency("autoGGMessage2", "autoGG");
         addDependency("autoGGSecondPhraseDelay", "autoGG");
+
+        Supplier<Boolean> autoGGEnabled = () -> HytilsReborn.INSTANCE.isSk1erAutoGG && AutoGG.INSTANCE.getAutoGGConfig().isModEnabled();
+
+        addDependency("autoGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGSecondMessage", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("casualAutoGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGMessage", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGFirstPhraseDelay", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGMessage2", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGSecondPhraseDelay", "Sk1er's AutoGG Enabled", autoGGEnabled);
 
         addDependency("glPhrase", "autoGL");
 
