@@ -48,7 +48,7 @@ public class AutoGG implements ChatReceiveModule {
         if (!hasGameEnded(message)) return;
         Multithreading.schedule(() -> UChat.say("/ac " + getGGMessageOne()), HytilsConfig.autoGGFirstPhraseDelay, TimeUnit.SECONDS);
         if (HytilsConfig.autoGGSecondMessage)
-            Multithreading.schedule(() -> UChat.say("/ac " + getGGMessageTwo()), HytilsConfig.autoGGSecondPhraseDelay, TimeUnit.SECONDS);
+            Multithreading.schedule(() -> UChat.say("/ac " + getGGMessageTwo()), HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay, TimeUnit.SECONDS);
     }
 
     private boolean hasGameEnded(String message) {

@@ -192,7 +192,7 @@ public class HytilsConfig extends Config {
         category = "Chat", subcategory = "Automatic",
         min = 0, max = 5
     )
-    public static int autoGGSecondPhraseDelay = 2;
+    public static int autoGGSecondPhraseDelay = 1;
 
     @Switch(
         name = "Auto GL",
