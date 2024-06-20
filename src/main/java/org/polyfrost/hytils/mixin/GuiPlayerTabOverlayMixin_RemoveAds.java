@@ -29,15 +29,14 @@ import java.util.List;
 
 @Mixin(GuiPlayerTabOverlay.class)
 public class GuiPlayerTabOverlayMixin_RemoveAds {
-
     @Redirect(method = "renderPlayerlist", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;listFormattedStringToWidth(Ljava/lang/String;I)Ljava/util/List;", ordinal = 1))
-    private List<String> hideAdvertisementsInTabFooter(FontRenderer instance, String formattedFooter, int wrapWidth) {
+    private List<String> hytils$hideAdvertisementsInTabFooter(FontRenderer instance, String formattedFooter, int wrapWidth) {
         return TabChanger.modifyFooter(instance, formattedFooter, wrapWidth);
 
     }
 
     @Redirect(method = "renderPlayerlist", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;listFormattedStringToWidth(Ljava/lang/String;I)Ljava/util/List;", ordinal = 0))
-    private List<String> hideAdvertisementsInTabHeader(FontRenderer instance, String formattedHeader, int wrapWidth) {
+    private List<String> hytils$hideAdvertisementsInTabHeader(FontRenderer instance, String formattedHeader, int wrapWidth) {
         return TabChanger.modifyHeader(instance, formattedHeader, wrapWidth);
 
     }
