@@ -37,6 +37,7 @@ public class LanguageData {
     private String autoFriendPattern = "Friend request from (?<name>.+)\\[ACCEPT] - \\[DENY] - \\[IGNORE].*";
     private String autoAfkReplyPattern = "^From (\\[.+?] )?(.+?): .+$";
 
+    private String chatCleanerKarmaMessages = "^\\+(?<karma>\\d)+ Karma!$";
     private String chatCleanerJoin = "(?:sled into|slid into|joined|spooked into) the lobby";
     private String chatCleanerTicketAnnouncer = "^(?<player>(?!You )\\w{1,16} )has found an? .+$";
     private String chatCleanerSoulWellFind = "^.+ has found .+ in the Soul Well!$";
@@ -98,6 +99,8 @@ public class LanguageData {
 
     private String hypixelLevelUp = "You are now Hypixel Level (?<level>\\d+)!";
 
+    private String casualGameEnd = "^(?:MINOR EVENT! .+ in .+ ended|DRAGON EGG OVER! Earned [\\d,]+XP [\\d,]g clicking the egg \\d+ times|GIANT CAKE! Event ended! Cake's gone!|PIT EVENT ENDED: .+ \\[INFO\\])$";
+    private String cancelGgMessages = "^(?:.* )?(?:\\[.+] )?\\w{1,16}(?: .+)?: (?:❤|gg|GG|gf|Good Game|Good Fight|Good Round! :D|Have a good day!|<3|AutoGG By Sk1er!|AutoGG By Hytils Reborn!|gf|Good Fight|Good Round|:D|Well Played!|wp)$";
     private String cancelGlMessages = "(?!.+: )(gl|glhf|good luck|have a good game|autogl by sk1er)";
 
     public String autoChatReportConfirm = "Please type /report confirm to log your report for staff review.";
@@ -117,6 +120,7 @@ public class LanguageData {
     public Pattern autoFriendPatternRegex;
     public Pattern autoAfkReplyPatternRegex;
 
+    public Pattern chatCleanerKarmaMessagesRegex;
     public Pattern chatCleanerJoinRegex;
     public Pattern chatCleanerTicketAnnouncerRegex;
     public Pattern chatCleanerSoulWellFindRegex;
@@ -164,6 +168,8 @@ public class LanguageData {
 
     public Pattern hypixelLevelUpRegex;
 
+    public Pattern casualGameEndRegex;
+    public Pattern cancelGgMessagesRegex;
     public Pattern cancelGlMessagesRegex;
 
     public Pattern gameBossbarAdvertisementRegex;
@@ -180,6 +186,7 @@ public class LanguageData {
             autoFriendPatternRegex = Pattern.compile(autoFriendPattern);
             autoAfkReplyPatternRegex = Pattern.compile(autoAfkReplyPattern);
 
+            chatCleanerKarmaMessagesRegex = Pattern.compile(chatCleanerKarmaMessages);
             chatCleanerJoinRegex = Pattern.compile(chatCleanerJoin);
             chatCleanerTicketAnnouncerRegex = Pattern.compile(chatCleanerTicketAnnouncer);
             chatCleanerSoulWellFindRegex = Pattern.compile(chatCleanerSoulWellFind);
@@ -227,6 +234,8 @@ public class LanguageData {
 
             hypixelLevelUpRegex = Pattern.compile(hypixelLevelUp);
 
+            casualGameEndRegex = Pattern.compile(casualGameEnd);
+            cancelGgMessagesRegex = Pattern.compile(cancelGgMessages);
             cancelGlMessagesRegex = Pattern.compile(cancelGlMessages, Pattern.CASE_INSENSITIVE);
 
             gameBossbarAdvertisementRegex = Pattern.compile(gameBossbarAdvertisement);

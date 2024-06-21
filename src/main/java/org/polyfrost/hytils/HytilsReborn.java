@@ -97,6 +97,7 @@ public class HytilsReborn {
 
     public boolean isPatcher;
     public boolean isChatting;
+    public boolean isSk1erAutoGG;
     private boolean loadedCall;
 
     private RankType rank;

@@ -19,6 +19,7 @@
 package org.polyfrost.hytils.config;
 
 import cc.polyfrost.oneconfig.config.Config;
+import cc.polyfrost.oneconfig.config.annotations.Checkbox;
 import cc.polyfrost.oneconfig.config.annotations.*;
 import cc.polyfrost.oneconfig.config.core.OneColor;
 import cc.polyfrost.oneconfig.config.data.InfoType;
@@ -26,20 +27,25 @@ import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.config.data.PageLocation;
 import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator;
-import org.polyfrost.hytils.HytilsReborn;
-import org.polyfrost.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
-import org.polyfrost.hytils.util.DarkColorUtils;
+import cc.polyfrost.oneconfig.utils.Notifications;
+import club.sk1er.lobbysounds.config.Sounds;
+import club.sk1er.mods.autogg.AutoGG;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.io.FileUtils;
+import org.polyfrost.hytils.HytilsReborn;
+import org.polyfrost.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
+import org.polyfrost.hytils.util.DarkColorUtils;
 
 import java.awt.Color;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
 public class HytilsConfig extends Config {
@@ -127,6 +133,66 @@ public class HytilsConfig extends Config {
     public static boolean disableNotifyMiningFatigueSkyblock = true;
 
     // Chat
+
+    @Switch(
+        name = "Auto GG",
+        description = "Send a \"gg\" message at the end of a game.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean autoGG = true;
+
+    @Switch(
+        name = "Auto GG Second Message",
+        description = "Enable a secondary message to send after your first GG.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean autoGGSecondMessage;
+
+    @Switch(
+        name = "Casual Auto GG",
+        description = "Send a \"gg\" message at the end of minigames/events that don't give out Karma, such as SkyBlock and The Pit events.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean casualAutoGG = true;
+
+    @Switch(
+        name = "Anti GG",
+        description = "Remove GG messages from chat.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean antiGG;
+
+    @Dropdown(
+        name = "Auto GG First Message",
+        description = "Choose what message is said on game completion.",
+        category = "Chat", subcategory = "Automatic",
+        options = {"gg", "GG", "gf", "Good Game", "Good Fight", "Good Round! :D"}
+    )
+    public static int autoGGMessage = 0;
+
+    @Slider(
+        name = "Auto GG First Phrase Delay",
+        description = "Delay after the game ends to say the first message in seconds.",
+        category = "Chat", subcategory = "Automatic",
+        min = 0, max = 5
+    )
+    public static int autoGGFirstPhraseDelay = 1;
+
+    @Dropdown(
+        name = "Auto GG Second Message",
+        description = "Send a secondary message sent after the first GG message.",
+        category = "Chat", subcategory = "Automatic",
+        options = {"Have a good day!", "<3", "AutoGG By Hytils Reborn!", "gf", "Good Fight", "Good Round", ":D", "Well played!", "wp"}
+    )
+    public static int autoGGMessage2 = 0;
+
+    @Slider(
+        name = "Auto GG Second Phrase Delay",
+        description = "Delay after the game ends to say the second message in seconds.",
+        category = "Chat", subcategory = "Automatic",
+        min = 0, max = 5
+    )
+    public static int autoGGSecondPhraseDelay = 1;
 
     @Switch(
         name = "Auto GL",
@@ -338,6 +404,13 @@ public class HytilsConfig extends Config {
         category = "Chat", subcategory = "Cooldown"
     )
     public static boolean preventShoutingOnCooldown = true;
+
+    @Switch(
+        name = "Remove Karma Messages",
+        description = "Remove Karma messages from the chat.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean hideKarmaMessages;
 
     @Switch(
         name = "Hide Locraw Messages",
@@ -1164,7 +1237,6 @@ public class HytilsConfig extends Config {
 
     public HytilsConfig() {
         super(new Mod("Hytils Reborn", ModType.HYPIXEL, "/assets/hytils/hypixel.png", new VigilanceMigrator(new File(HytilsReborn.INSTANCE.oldModDir, "hytilsreborn.toml").getAbsolutePath())), "hytilsreborn.json");
-        initialize();
         try {
             File modDir = HytilsReborn.INSTANCE.oldModDir;
             File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");
@@ -1179,17 +1251,183 @@ public class HytilsConfig extends Config {
             e.printStackTrace();
         }
 
-        if (configNumber != 2) { // Config version has not been set or is outdated
+        initialize();
+        Class<?> autoGGClass = null;
+        try {
+            autoGGClass = Class.forName("club.sk1er.mods.autogg.config.AutoGGConfig");
+
+            HytilsReborn.INSTANCE.isSk1erAutoGG = true;
+        } catch (ClassNotFoundException ignored) {
+        }
+
+        if (configNumber != 3) { // Config version has not been set or is outdated
             if (configNumber == 1) {
                 overlayAmount = 300;
             }
-            configNumber = 2; // set this to the current config version
+            if (configNumber <= 2) {
+                if (autoGGClass != null) {
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isModEnabled()) {
+                        autoGG = true;
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isSecondaryEnabled()) {
+                        autoGGSecondMessage = true;
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isCasualAutoGGEnabled()) {
+                        casualAutoGG = true;
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase() != 0) {
+                        autoGGMessage = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase();
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGDelay() != 1) {
+                        autoGGFirstPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGDelay();
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase2() != 0) {
+                        autoGGMessage2 = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase2();
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().getSecondaryDelay() != 1) {
+                        autoGGSecondPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getSecondaryDelay();
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isAntiGGEnabled()) {
+                        antiGG = true;
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isAntiKarmaEnabled()) {
+                        hideKarmaMessages = true;
+                    }
+
+                    try {
+                        Field sk1erEnabled = autoGGClass.getDeclaredField("autoGGEnabled");
+                        sk1erEnabled.setAccessible(true);
+                        sk1erEnabled.set(AutoGG.INSTANCE.getAutoGGConfig(), false);
+
+                        AutoGG.INSTANCE.getAutoGGConfig().markDirty();
+                        AutoGG.INSTANCE.getAutoGGConfig().writeData();
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+
+                    Notifications.INSTANCE.send("Hytils Reborn", "AutoGG settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings, and remove Sk1erLLC's AutoGG.", 5);
+                }
+
+                try {
+                    Class.forName("club.sk1er.lobbysounds.config.Sounds");
+                    boolean modified = false;
+                    if (Sounds.DISABLE_SLIME_SOUNDS) {
+                        lobbyDisableSlimeSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_DRAGON_SOUNDS) {
+                        lobbyDisableDragonSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_WITHER_SOUNDS) {
+                        lobbyDisableWitherSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_ITEM_PICKUP_SOUNDS) {
+                        lobbyDisableItemPickupSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_EXPERIENCE_SOUNDS) {
+                        lobbyDisableExperienceOrbSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_TNT_PRIME_SOUNDS) {
+                        lobbyDisablePrimedTntSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_EXPLOSION_SOUNDS) {
+                        lobbyDisableExplosionSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_DELIVERY_MAN_SOUNDS) {
+                        lobbyDisableDeliveryManSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_NOTE_SOUNDS) {
+                        lobbyDisableNoteBlockSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_FIREWORKS_SOUNDS) {
+                        lobbyDisableFireworkSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_LEVELUP_SOUNDS) {
+                        lobbyDisableLevelupSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_ARROW_SOUNDS) {
+                        lobbyDisableArrowSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_BAT_SOUNDS) {
+                        lobbyDisableBatSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_FIRE_SOUNDS) {
+                        lobbyDisableFireSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_ENDERMEN_SOUNDS) {
+                        lobbyDisableEndermanSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_STEP_SOUNDS) {
+                        lobbyDisableSteppingSounds = true;
+                        modified = true;
+                    }
+
+                    if (Sounds.DISABLE_SLIME_SOUNDS &&
+                        Sounds.DISABLE_DRAGON_SOUNDS &&
+                        Sounds.DISABLE_WITHER_SOUNDS &&
+                        Sounds.DISABLE_ITEM_PICKUP_SOUNDS &&
+                        Sounds.DISABLE_EXPERIENCE_SOUNDS &&
+                        Sounds.DISABLE_TNT_PRIME_SOUNDS &&
+                        Sounds.DISABLE_EXPLOSION_SOUNDS &&
+                        Sounds.DISABLE_DELIVERY_MAN_SOUNDS &&
+                        Sounds.DISABLE_NOTE_SOUNDS &&
+                        Sounds.DISABLE_FIREWORKS_SOUNDS &&
+                        Sounds.DISABLE_LEVELUP_SOUNDS &&
+                        Sounds.DISABLE_ARROW_SOUNDS &&
+                        Sounds.DISABLE_BAT_SOUNDS &&
+                        Sounds.DISABLE_FIRE_SOUNDS &&
+                        Sounds.DISABLE_ENDERMEN_SOUNDS &&
+                        Sounds.DISABLE_STEP_SOUNDS) {
+                        silentLobby = true;
+                        lobbyDisableDoorSounds = true;
+                    }
+
+                    if (modified) {
+                        Notifications.INSTANCE.send("Hytils Reborn", "Lobby Sounds settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings, and remove Sk1erLLC's Lobby Sounds.", 5);
+                    }
+                } catch (ClassNotFoundException ignored) {
+
+                }
+            }
+            configNumber = 3; // set this to the current config version
             save();
         }
 
         addDependency("autoQueueDelay", "autoQueue");
 
         addDependency("gexpMode", "autoGetGEXP");
+
+        addDependency("autoGGSecondMessage", "autoGG");
+        addDependency("casualAutoGG", "autoGG");
+        addDependency("autoGGMessage", "autoGG");
+        addDependency("autoGGFirstPhraseDelay", "autoGG");
+        addDependency("autoGGMessage2", "autoGG");
+        addDependency("autoGGSecondPhraseDelay", "autoGG");
+
+        Supplier<Boolean> autoGGEnabled = () -> !HytilsReborn.INSTANCE.isSk1erAutoGG || !AutoGG.INSTANCE.getAutoGGConfig().isModEnabled();
+
+        addDependency("autoGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGSecondMessage", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("casualAutoGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGMessage", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGFirstPhraseDelay", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGMessage2", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGSecondPhraseDelay", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("antiGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
 
         addDependency("glPhrase", "autoGL");
 
