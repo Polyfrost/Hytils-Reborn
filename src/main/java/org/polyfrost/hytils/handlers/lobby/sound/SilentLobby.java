@@ -104,6 +104,10 @@ public class SilentLobby {
                 if (sound.startsWith("random.door") && HytilsConfig.lobbyDisableDoorSounds) {
                     event.result = null;
                 }
+
+                if (sound.startsWith("portal.portal") && HytilsConfig.lobbyDisablePortalSounds) {
+                    event.result = null;
+                }
             }
         }
     }

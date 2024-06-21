@@ -1115,10 +1115,17 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Disable Door Sounds",
-        description = "Disable sounds caused by doors, trapdoors, and fence gates",
+        description = "Disable sounds caused by doors, trapdoors, and fence gates.",
         category = "Lobby", subcategory = "Sounds"
     )
     public static boolean lobbyDisableDoorSounds;
+
+    @Switch(
+        name = "Disable Portal Sounds",
+        description = "Disable sounds caused by nether portals.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisablePortalSounds;
 
     @Switch(
         name = "Remove Limbo AFK Title",
@@ -1248,7 +1255,7 @@ public class HytilsConfig extends Config {
             "lobbyDisableItemPickupSounds", "lobbyDisableExperienceOrbSounds", "lobbyDisablePrimedTntSounds",
             "lobbyDisableExplosionSounds", "lobbyDisableDeliveryManSounds", "lobbyDisableMysteryBoxSounds",
             "lobbyDisableFireworkSounds", "lobbyDisableLevelupSounds", "lobbyDisableArrowSounds", "lobbyDisableBatSounds",
-            "lobbyDisableFireSounds", "lobbyDisableEndermanSounds", "lobbyDisableDoorSounds"
+            "lobbyDisableFireSounds", "lobbyDisableEndermanSounds", "lobbyDisableDoorSounds", "lobbyDisablePortalSounds"
         ).forEach(property -> addDependency(property, "Silent Lobby", () -> !silentLobby));
     }
 
