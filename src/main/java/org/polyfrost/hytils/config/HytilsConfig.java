@@ -1394,6 +1394,7 @@ public class HytilsConfig extends Config {
                         Sounds.DISABLE_STEP_SOUNDS) {
                         silentLobby = true;
                         lobbyDisableDoorSounds = true;
+                        lobbyDisablePortalSounds = true;
                     }
 
                     if (modified) {
