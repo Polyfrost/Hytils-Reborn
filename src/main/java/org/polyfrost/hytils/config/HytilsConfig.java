@@ -176,7 +176,7 @@ public class HytilsConfig extends Config {
         category = "Chat", subcategory = "Automatic",
         min = 0, max = 5
     )
-    public static int autoGGFirstPhraseDelay = 1;
+    public static float autoGGFirstPhraseDelay = 1;
 
     @Dropdown(
         name = "Auto GG Second Message",
@@ -192,7 +192,7 @@ public class HytilsConfig extends Config {
         category = "Chat", subcategory = "Automatic",
         min = 0, max = 5
     )
-    public static int autoGGSecondPhraseDelay = 1;
+    public static float autoGGSecondPhraseDelay = 1;
 
     @Switch(
         name = "Auto GL",
