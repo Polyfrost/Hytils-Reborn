@@ -1139,7 +1139,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Disable Note Block Sounds",
-        description = "Remove sounds created by Note Blocks.",
+        description = "Remove sounds created by note blocks.",
         category = "Lobby", subcategory = "Sounds"
     )
     public static boolean lobbyDisableNoteBlockSounds;
