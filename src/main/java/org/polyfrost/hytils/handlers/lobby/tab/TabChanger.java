@@ -100,7 +100,7 @@ public class TabChanger {
             }
 
             LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && locraw != null && (locraw.getGameType() != LocrawInfo.GameType.HOUSING || !LocrawUtil.INSTANCE.isInGame())) {
+            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && locraw != null && (locraw.getGameType() != LocrawInfo.GameType.HOUSING && !LocrawUtil.INSTANCE.isInGame())) {
                 // trim off the guild tag
                 // e.g. Steve §6[GUILD]
                 name = name.substring(0, name.lastIndexOf("[") - 3);
