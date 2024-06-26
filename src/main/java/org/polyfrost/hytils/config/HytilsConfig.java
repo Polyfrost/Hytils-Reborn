@@ -176,7 +176,7 @@ public class HytilsConfig extends Config {
         category = "Chat", subcategory = "Automatic",
         min = 0, max = 5
     )
-    public static int autoGGFirstPhraseDelay = 1;
+    public static float autoGGFirstPhraseDelay = 1;
 
     @Dropdown(
         name = "Auto GG Second Message",
@@ -192,7 +192,7 @@ public class HytilsConfig extends Config {
         category = "Chat", subcategory = "Automatic",
         min = 0, max = 5
     )
-    public static int autoGGSecondPhraseDelay = 1;
+    public static float autoGGSecondPhraseDelay = 1;
 
     @Switch(
         name = "Auto GL",
@@ -1139,7 +1139,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Disable Note Block Sounds",
-        description = "Remove sounds created by Note Blocks.",
+        description = "Remove sounds created by note blocks.",
         category = "Lobby", subcategory = "Sounds"
     )
     public static boolean lobbyDisableNoteBlockSounds;
@@ -1394,6 +1394,7 @@ public class HytilsConfig extends Config {
                         Sounds.DISABLE_STEP_SOUNDS) {
                         silentLobby = true;
                         lobbyDisableDoorSounds = true;
+                        lobbyDisablePortalSounds = true;
                     }
 
                     if (modified) {

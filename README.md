@@ -10,8 +10,8 @@ you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Me
 
 ### General
 - **Auto Start** - Join Hypixel immediately once the client has loaded to the main menu.
-- **Auto Queue** - Automatically queues for another game once you win or die. (This will require you to interact with the game in a way to prevent abuse)
 - **Auto-Complete Play Commands** - Allows tab completion of /play commands.
+- **Auto Queue** - Automatically queues for another game once you win or die. (This will require you to interact with the game in a way to prevent abuse)
 - **Limbo Play Helper** - When a /play command is run in Limbo, this runs /l first and then the command.
 - **Automatically Check GEXP** - Automatically check your GEXP after you win a Hypixel game.
 - **Automatically Check Winstreak** - Automatically check your winstreak after you win a Hypixel game.
@@ -22,6 +22,10 @@ you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Me
   <summary>Chat</summary>
 
 ### Chat
+- **Auto GG** - Send a "gg" message at the end of a game.
+- **Auto GG Second Message** - Enable a secondary message to send after your first GG.
+- **Casual Auto GG** - Send a "gg" message at the end of minigames/events that don't give out Karma, such as SkyBlock and The Pit events.
+- **Anti GG** - Remove GG messages from chat.
 - **Auto GL** - Send a message 5 seconds before a Hypixel game starts.
 - **Anti GL** - Remove all GL messages from chat.
 - **Auto Friend** - Automatically accept friend requests.
@@ -49,6 +53,7 @@ you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Me
 - **Thank Watchdog** - Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.
 - **Shout Cooldown** - Show the amount of time remaining until /shout can be reused.
 - **Non Speech Cooldown** - Show the amount of time remaining until you can speak if you are a non.
+- **Remove Karma Messages** - Remove Karma messages from the chat.
 - **Hide Locraw Messages** - Hide locraw messages in chat.
 - **Remove Lobby Statuses** - Remove lobby join messages from chat.
 - **Remove Ticket Machine Rewards** - Remove ticket machine messages from chat and only show your own.
@@ -131,6 +136,24 @@ you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Me
 - **Hide Useless Lobby Nametags** - Hides unnecessary nametags such as those that say "RIGHT CLICK" or "CLICK TO PLAY" in a lobby, as well as other useless ones.
 - **Hide Lobby Bossbars** - Hide the bossbar in the lobby.
 - **Silent Lobby** - Prevent all sounds from playing when you are in a lobby.
+- **Disable Stepping Sounds** - Remove sounds created by stepping.
+- **Disable Slime Sounds** - Remove sounds created by slimes.
+- **Disable Dragon Sounds** - Remove sounds created by dragons.
+- **Disable Wither Sounds** - Remove sounds created by withers & wither skeletons.
+- **Disable Item Pickup Sounds** - Remove sounds created by picking up an item.
+- **Disable Experience Orb Sounds** - Remove sounds created by experience orbs.
+- **Disable Primed TNT Sounds** - Remove sounds created by primed TNT.
+- **Disable Explosion Sounds** - Remove sounds created by explosions.
+- **Disable Delivery Man Sounds** - Remove sounds created by delivery man events.
+- **Disable Note Block Sounds** - Remove sounds created by note blocks.
+- **Disable Firework Sounds** - Remove sounds created by fireworks.
+- **Disable Levelup Sounds** - Remove sounds created by someone leveling up.
+- **Disable Arrow Sounds** - Remove sounds created by arrows.
+- **Disable Bat Sounds** - Remove sounds created by bats.
+- **Disable Fire Sounds** - Remove sounds created by fire.
+- **Disable Enderman Sounds** - Remove sounds created by endermen.
+- **Disable Door Sounds** - Disable sounds caused by doors, trapdoors, and fence gates.
+- **Disable Portal Sounds** - Disable sounds caused by nether portals.
 - **Remove Limbo AFK Title** - Remove the AFK title when you get sent to limbo for being AFK.
 - **Limbo Limiter** - While in Limbo, limit your framerate to reduce the load of the game on your computer.
 - **Limbo PM Ding** - While in Limbo, play the ding sound if you get a PM. Currently, Hypixel's option does not work in Limbo.

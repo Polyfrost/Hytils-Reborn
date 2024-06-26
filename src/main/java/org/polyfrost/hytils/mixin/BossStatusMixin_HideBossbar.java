@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.mixin;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
@@ -33,7 +34,7 @@ public abstract class BossStatusMixin_HideBossbar {
     @Inject(method = "setBossStatus", at = @At("HEAD"), cancellable = true)
     private static void hytils$cancelBossStatus(IBossDisplayData displayData, boolean hasColorModifierIn, CallbackInfo ci) {
         if (displayData == null) return;
-        if (HytilsConfig.lobbyBossbar && !LocrawUtil.INSTANCE.isInGame() || HytilsConfig.gameAdBossbar && displayData.getDisplayName().getFormattedText().matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().gameBossbarAdvertisementRegex.pattern()))
+        if (HytilsConfig.lobbyBossbar && HypixelUtils.INSTANCE.isHypixel() && !LocrawUtil.INSTANCE.isInGame() || HytilsConfig.gameAdBossbar && displayData.getDisplayName().getFormattedText().matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().gameBossbarAdvertisementRegex.pattern()))
             ci.cancel();
     }
 }
