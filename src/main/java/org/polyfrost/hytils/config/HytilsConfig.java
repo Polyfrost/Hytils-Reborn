@@ -1478,7 +1478,7 @@ public class HytilsConfig extends Config {
         Arrays.asList(
             "lobbyDisableSteppingSounds", "lobbyDisableSlimeSounds", "lobbyDisableDragonSounds", "lobbyDisableWitherSounds",
             "lobbyDisableItemPickupSounds", "lobbyDisableExperienceOrbSounds", "lobbyDisablePrimedTntSounds",
-            "lobbyDisableExplosionSounds", "lobbyDisableDeliveryManSounds", "lobbyDisableMysteryBoxSounds",
+            "lobbyDisableExplosionSounds", "lobbyDisableDeliveryManSounds", "lobbyDisableNoteBlockSounds",
             "lobbyDisableFireworkSounds", "lobbyDisableLevelupSounds", "lobbyDisableArrowSounds", "lobbyDisableBatSounds",
             "lobbyDisableFireSounds", "lobbyDisableEndermanSounds", "lobbyDisableDoorSounds", "lobbyDisablePortalSounds"
         ).forEach(property -> addDependency(property, "Silent Lobby", () -> !silentLobby));
