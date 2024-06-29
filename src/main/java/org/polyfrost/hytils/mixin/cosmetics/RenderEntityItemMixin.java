@@ -25,7 +25,7 @@ import net.minecraft.block.BlockPumpkin;
 import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.*;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -39,8 +39,8 @@ public class RenderEntityItemMixin {
     private void removeItemCosmetics(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         ItemStack stack = entity.getEntityItem();
         if (stack == null) return;
-        if ((HytilsConfig.hideDuelsCosmetics && HypixelAPI.getLocation().getGameType().orElse(null) == GameType.DUELS) || (HytilsConfig.hideArcadeCosmetics &&
-            HypixelAPI.getLocation().getGameType().orElse(null) == GameType.ARCADE) && HypixelAPI.getLocation().isGame() &&
+        if ((HytilsConfig.hideDuelsCosmetics && HypixelUtils.getLocation().getGameType().orElse(null) == GameType.DUELS) || (HytilsConfig.hideArcadeCosmetics &&
+            HypixelUtils.getLocation().getGameType().orElse(null) == GameType.ARCADE) && HypixelUtils.getLocation().inGame() &&
             (stack.getItem() instanceof ItemDoublePlant || stack.getItem() instanceof ItemDye || stack.getItem() instanceof ItemRecord || shouldRemove(stack.getItem().getUnlocalizedName()) || (stack.getItem() instanceof ItemBlock && (shouldRemove(((ItemBlock) stack.getItem()).block.getUnlocalizedName()) || ((ItemBlock) stack.getItem()).block instanceof BlockPumpkin)))) ci.cancel();
     }
 

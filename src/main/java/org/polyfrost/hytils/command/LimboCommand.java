@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.command;
 
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
@@ -27,7 +28,7 @@ import net.minecraft.client.Minecraft;
 public class LimboCommand {
     @Command(description = "Sends you to limbo.")
     private void main() {
-        if (HypixelUtils.INSTANCE.isHypixel()) {
+        if (HypixelUtils.isHypixel()) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("§");
         } else {
             UChat.chat(ChatColor.RED + "You must be on Hypixel to use this command.");

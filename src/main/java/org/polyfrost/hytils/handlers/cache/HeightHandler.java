@@ -24,9 +24,9 @@ import net.hypixel.data.type.GameType;
 import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.EventHandler;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.utils.v1.JsonUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
-import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import com.google.gson.JsonObject;
 
@@ -58,8 +58,8 @@ public class HeightHandler {
 
     public int getHeight() {
         if (currentHeight != -2) return currentHeight;
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (jsonObject == null || !location.isGame()) {
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (jsonObject == null || !location.inGame()) {
             return -1;
         }
         try {
@@ -95,9 +95,9 @@ public class HeightHandler {
 
 
     public void initialize() {
-        Multithreading.runAsync(() -> {
+        Multithreading.submit(() -> {
             try {
-                jsonObject = NetworkUtils.getJsonElement("https://maps.pinkulu.com").getAsJsonObject();
+                jsonObject = Objects.requireNonNull(JsonUtils.parseFromUrl("https://maps.pinkulu.com")).getAsJsonObject();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

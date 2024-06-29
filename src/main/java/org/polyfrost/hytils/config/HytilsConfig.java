@@ -19,7 +19,6 @@
 package org.polyfrost.hytils.config;
 
 import org.polyfrost.oneconfig.api.config.v1.Config;
-import org.polyfrost.oneconfig.api.config.v1.ConfigManager;
 import org.polyfrost.oneconfig.api.config.v1.annotations.*;
 import org.polyfrost.polyui.color.PolyColor;
 import org.polyfrost.hytils.HytilsReborn;
@@ -63,12 +62,13 @@ public class HytilsConfig extends Config {
     )
     public static boolean limboPlayCommandHelper = true;
 
-    @Info(
-        text = "Auto Queue will require you to interact with the game in a way to prevent abuse.",
-        category = "General", subcategory = "Automatic",
-        type = InfoType.WARNING
-    )
-    private static boolean autoQueueInfo;
+    //TODO
+    //@Info(
+    //    text = "Auto Queue will require you to interact with the game in a way to prevent abuse.",
+    //    category = "General", subcategory = "Automatic",
+    //    type = InfoType.WARNING
+    //)
+    //private static boolean autoQueueInfo;
 
     @Switch(
         title = "Auto Queue",
@@ -96,8 +96,7 @@ public class HytilsConfig extends Config {
         title = "GEXP Mode",
         category = "General", subcategory = "Automatic",
         description = "Choose which GEXP to get.",
-        left = "Daily",
-        right = "Weekly"
+        options = {"Daily", "Weekly"}
     )
     public static boolean gexpMode = false;
 
@@ -801,19 +800,20 @@ public class HytilsConfig extends Config {
     )
     public static boolean coloredBeds = true;
 
-    @Info(
-        text = "Height Overlay requires Smooth Lightning to work.",
-        category = "Game", subcategory = "BedWars",
-        type = InfoType.ERROR
-    )
-    private static boolean heightOverlayInfo;
-
-    @Info(
-        text = "Height Overlay reloads chunks automatically when toggled.",
-        category = "Game", subcategory = "BedWars",
-        type = InfoType.WARNING
-    )
-    private static boolean heightOverlayInfo2;
+    //TODO
+    //@Info(
+    //    text = "Height Overlay requires Smooth Lightning to work.",
+    //    category = "Game", subcategory = "BedWars",
+    //    type = InfoType.ERROR
+    //)
+    //private static boolean heightOverlayInfo;
+//
+    //@Info(
+    //    text = "Height Overlay reloads chunks automatically when toggled.",
+    //    category = "Game", subcategory = "BedWars",
+    //    type = InfoType.WARNING
+    //)
+    //private static boolean heightOverlayInfo2;
 
     @Switch(
         title = "Height Overlay",
@@ -837,12 +837,13 @@ public class HytilsConfig extends Config {
     )
     public static boolean manuallyEditHeightOverlay;
 
-    @Page(
-        title = "Manual Height Overlay Editor",
-        location = PageLocation.BOTTOM,
-        category = "Game", subcategory = "BedWars"
-    )
-    public static BlockHighlightConfig blockHighlightConfig = new BlockHighlightConfig();
+    //TODO SHOULD I MOVE TO ACCORDION?
+    //@Page(
+    //    title = "Manual Height Overlay Editor",
+    //    location = PageLocation.BOTTOM,
+    //    category = "Game", subcategory = "BedWars"
+    //)
+    //public static BlockHighlightConfig blockHighlightConfig = new BlockHighlightConfig();
 
     @Switch(
         title = "Hide Actionbar in Dropper",
@@ -1009,7 +1010,7 @@ public class HytilsConfig extends Config {
     )
     public static boolean limboDing = true;
 
-    public static int configNumber = 0;
+    @Include public static int configNumber = 0;
 
     public static final ArrayList<String> wbMessages = new ArrayList<>();
 
@@ -1035,7 +1036,7 @@ public class HytilsConfig extends Config {
                 overlayAmount = 300;
             }
             configNumber = 2; // set this to the current config version
-            ConfigManager.active().save(this.tree);
+            save();
         }
 
         addDependency("autoQueueDelay", "autoQueue");
@@ -1110,7 +1111,7 @@ public class HytilsConfig extends Config {
         hidePingInTab = false;
         cleanerSkyblockTabInfo = false;
         hideAdsInTab = false;
-        ConfigManager.active().save(this.tree);
+        save();
         addDependency("hideNpcsInTab", "Tabulous", () -> false);
         addDependency("keepImportantNpcsInTab", "Tabulous", () -> false);
         addDependency("hideGuildTagsInTab", "Tabulous", () -> false);

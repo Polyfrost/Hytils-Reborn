@@ -18,13 +18,10 @@
 
 package org.polyfrost.hytils.util;
 
-import org.polyfrost.oneconfig.api.event.v1.events.event.LocrawEvent;
-import org.polyfrost.oneconfig.api.event.v1.events.event.Stage;
-import org.polyfrost.oneconfig.api.event.v1.events.event.TickEvent;
-import org.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.EventHandler;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.oneconfig.utils.v1.JsonUtils;
-import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
-import org.polyfrost.oneconfig.api.hypixel.v1.LocrawInfo;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.handlers.cache.HeightHandler;
 import org.polyfrost.hytils.util.ranks.RankType;
@@ -52,7 +49,6 @@ public class HypixelAPIUtils {
     private static final String[] rankValues = {"rank", "monthlyPackageRank", "newPackageRank", "packageRank"};
     public static String gexp;
     public static String winstreak;
-    public static LocrawInfo locraw;
     @Nullable
     private static String token;
     @Nullable
@@ -62,6 +58,18 @@ public class HypixelAPIUtils {
     @Nullable
     private static String serverId;
     private int ticks = 0;
+
+    public void initialize() {
+        EventHandler.of(TickEvent.Start.class, () -> {
+            if (ticks % 20 == 0) {
+                if (Minecraft.getMinecraft().thePlayer != null) {
+                    HeightHandler.INSTANCE.getHeight();
+                }
+                ticks = 0;
+            }
+            ticks++;
+        }).register();
+    }
 
     private static String getCurrentESTTime() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -88,7 +96,7 @@ public class HypixelAPIUtils {
         HttpURLConnection connection = setupConnection(url);
         if (connection == null) return null;
         try (InputStreamReader input = new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)) {
-            JsonElement element = JsonUtils.parseString(IOUtils.toString(input));
+            JsonElement element = JsonUtils.parse(IOUtils.toString(input));
             if (username != null && serverId != null) {
                 token = connection.getHeaderField("x-ursa-token");
                 expiry = calculateExpiry(connection.getHeaderField("x-ursa-expires"));
@@ -261,8 +269,8 @@ public class HypixelAPIUtils {
             return false;
         }
         JsonObject playerStats = jsonObject.getAsJsonObject("player").getAsJsonObject("stats");
-        if (locraw != null) {
-            switch (locraw.getGameType()) {
+        if (HypixelUtils.getLocation().getGameType().isPresent()) {
+            switch (HypixelUtils.getLocation().getGameType().get()) {
                 case BEDWARS:
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("Bedwars").get("winstreak").getAsInt());
@@ -305,8 +313,8 @@ public class HypixelAPIUtils {
             return false;
         }
         JsonObject playerStats = jsonObject.getAsJsonObject("player").getAsJsonObject("stats");
-        if (locraw != null) {
-            switch (locraw.getGameType()) {
+        if (HypixelUtils.getLocation().getGameType().isPresent()) {
+            switch (HypixelUtils.getLocation().getGameType().get()) {
                 case BEDWARS:
                     try {
                         winstreak = Integer.toString(playerStats.getAsJsonObject("Bedwars").get("winstreak").getAsInt());
@@ -414,34 +422,18 @@ public class HypixelAPIUtils {
      */
     public static String getUUID(String username) {
         try {
-            JsonObject uuidResponse = NetworkUtils.getJsonElement("https://api.mojang.com/users/profiles/minecraft/" + username).getAsJsonObject();
-            if (uuidResponse.has("error")) {
-                HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Failed with error: " + uuidResponse.get("reason").getAsString());
-                return null;
+            JsonElement maybeUuidResponse = JsonUtils.parseFromUrl("https://api.mojang.com/users/profiles/minecraft/" + username);
+            if (maybeUuidResponse != null) {
+                JsonObject uuidResponse = maybeUuidResponse.getAsJsonObject();
+                if (uuidResponse.has("error")) {
+                    HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Failed with error: " + uuidResponse.get("reason").getAsString());
+                    return null;
+                }
+                return uuidResponse.get("id").getAsString();
             }
-            return uuidResponse.get("id").getAsString();
         } catch (Exception e) {
             HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Failed to fetch " + username + "'s data. Please make sure this user exists.");
-            return null;
         }
-    }
-
-    @Subscribe
-    public void onTick(TickEvent event) {
-        if (event.stage == Stage.START) {
-            if (ticks % 20 == 0) {
-                if (Minecraft.getMinecraft().thePlayer != null) {
-                    HeightHandler.INSTANCE.getHeight();
-                }
-                ticks = 0;
-            }
-
-            ticks++;
-        }
-    }
-
-    @Subscribe
-    private void onLocraw(LocrawEvent event) {
-        locraw = event.info;
+        return null;
     }
 }

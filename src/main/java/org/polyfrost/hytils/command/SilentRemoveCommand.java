@@ -18,12 +18,10 @@
 
 package org.polyfrost.hytils.command;
 
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Description;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Main;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.SubCommand;
 import org.polyfrost.hytils.handlers.chat.modules.triggers.SilentRemoval;
 import com.mojang.authlib.GameProfile;
 
@@ -35,13 +33,12 @@ public class SilentRemoveCommand {
 
     protected static final Pattern usernameRegex = Pattern.compile("\\w{1,16}");
 
-    @Main
-    public void handle() {
+    public void main() {
         UChat.chat(ChatColor.RED + "Usage: /silentremove <player>");
     }
 
-    @Main(description = "Adds or removes a player from the silent list.")
-    private void main(@Description("Player Name") GameProfile player) {
+    @Command(description = "Adds or removes a player from the silent list.")
+    private void main(@Parameter("Player Name") GameProfile player) {
         String name = player.getName();
         if (!usernameRegex.matcher(name).matches()) {
             UChat.chat(ChatColor.RED + "Invalid username.");
@@ -58,7 +55,7 @@ public class SilentRemoveCommand {
         UChat.chat("&aAdded &e" + name + " &ato the removal queue.");
     }
 
-    @SubCommand(description = "Clears the silent removal queue.")
+    @Command(description = "Clears the silent removal queue.")
     private void clear() {
         final Set<String> silentUsers = SilentRemoval.getSilentUsers();
         if (silentUsers.isEmpty()) {

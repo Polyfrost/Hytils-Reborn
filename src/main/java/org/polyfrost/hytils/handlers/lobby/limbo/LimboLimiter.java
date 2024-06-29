@@ -25,7 +25,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.opengl.Display;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class LimboLimiter {
 
@@ -48,8 +48,8 @@ public class LimboLimiter {
     }
 
     public static boolean shouldLimitFramerate() {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (HypixelUtils.INSTANCE.isHypixel() && location.getServerId().equals("limbo")) limboStatus = true;
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (HypixelUtils.isHypixel() && "limbo".equals(location.getServerName().orElse(null))) limboStatus = true;
         return (!Display.isActive() || limboStatus) && HytilsConfig.limboLimiter && time * 20 >= 5
             && Minecraft.getMinecraft().gameSettings.limitFramerate > 15;
         // if the FPS limit is > 15, don't activate, as you would be increasing the fps limit

@@ -25,7 +25,7 @@ import org.polyfrost.hytils.handlers.chat.ChatSendModule;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 import java.text.DecimalFormat;
 
@@ -58,7 +58,7 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
     }
 
     private long getCooldownLengthInSeconds() {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
+        HypixelUtils.Location location = HypixelUtils.getLocation();
         if (!"LOBBY".equals(location.getMode()) && location.getGameType().isPresent()) {
             switch (location.getGameType().get()) {
                 case BEDWARS: {
@@ -83,7 +83,7 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
+        HypixelUtils.Location location = HypixelUtils.getLocation();
         if (location.getGameType().orElse(null) == GameType.SKYWARS && event.message.getFormattedText().equals(getLanguage().cannotShoutBeforeSkywars) || // fun fact: there is no message when you shout after a skywars game
                 event.message.getFormattedText().equals(getLanguage().cannotShoutAfterGame) ||
                 event.message.getFormattedText().equals(getLanguage().cannotShoutBeforeGame) ||

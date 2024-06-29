@@ -34,7 +34,7 @@ public class LocrawGamesHandler {
     public static Map<String, String> locrawGames = new HashMap<>();
 
     public void initialize() {
-        Multithreading.runAsync(() -> {
+        Multithreading.submit(() -> {
             try {
                 String url = "https://data.woverflow.cc/locraw_games.json";
                 String content = NetworkUtils.getString(url);

@@ -23,7 +23,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class SumoRenderDistance {
     final GameSettings gs = Minecraft.getMinecraft().gameSettings;
@@ -33,8 +33,8 @@ public class SumoRenderDistance {
 
     @SubscribeEvent
     public void onWorldLoad(RenderWorldLastEvent event) {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (HytilsConfig.sumoRenderDistance && HypixelUtils.INSTANCE.isHypixel() && location.getMode().orElse("null").contains("SUMO")) {
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (HytilsConfig.sumoRenderDistance && HypixelUtils.isHypixel() && location.getMode().orElse("null").contains("SUMO")) {
             if (isFirstRender) {
                 final int oldRd = gs.renderDistanceChunks;
                 wasSumo = true;

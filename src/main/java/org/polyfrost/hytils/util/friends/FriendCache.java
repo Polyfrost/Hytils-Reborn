@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.util.friends;
 
+import org.polyfrost.oneconfig.utils.v1.JsonUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import org.polyfrost.hytils.HytilsReborn;
@@ -58,7 +59,7 @@ public class FriendCache {
         try {
             // Convert output format into a list of names
             // TODO: Error handling if JSON data is in bad format
-            JsonObject json = NetworkUtils.getJsonElement(url, "OneConfig/1.0.0", 15000, false).getAsJsonObject();
+            JsonObject json = JsonUtils.parse(NetworkUtils.getString(url, "OneConfig/1.0.0", 15000, false)).getAsJsonObject();
             Set<UUID> friends = new HashSet<>();
             // Note that the keys are the UUIDs
             for (Map.Entry<String, JsonElement> key : json.entrySet()) {
@@ -98,7 +99,7 @@ public class FriendCache {
             return friends;
         } else if (!currentlyDownloadingFriendData && !hasRequestFailed) {
             // Start thread to download friend data
-            Multithreading.runAsync(() -> {
+            Multithreading.submit(() -> {
                 currentlyDownloadingFriendData = true;
                 Set<UUID> result = downloadFriendDataFromApi();
                 if (result != null) {

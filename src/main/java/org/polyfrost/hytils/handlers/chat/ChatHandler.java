@@ -33,6 +33,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -137,7 +138,7 @@ public class ChatHandler {
 
     @SubscribeEvent
     public void handleChat(ClientChatReceivedEvent event) {
-        if (!HypixelUtils.INSTANCE.isHypixel()) {
+        if (!HypixelUtils.isHypixel()) {
             return;
         }
 
@@ -169,7 +170,7 @@ public class ChatHandler {
     @SuppressWarnings({"unused", "RedundantSuppression"})
     @Nullable
     public String handleSentMessage(@NotNull String message) {
-        if (!HypixelUtils.INSTANCE.isHypixel()) {
+        if (!HypixelUtils.isHypixel()) {
             return message;
         }
 

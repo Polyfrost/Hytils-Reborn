@@ -21,13 +21,13 @@ package org.polyfrost.hytils.handlers.lobby.sound;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class SilentLobby {
 
     @SubscribeEvent
     public void onSoundPlay(PlaySoundEvent event) {
-        if (HypixelUtils.INSTANCE.isHypixel() && !HypixelAPI.getLocation().isGame() && HytilsConfig.silentLobby) {
+        if (HypixelUtils.isHypixel() && !HypixelUtils.getLocation().inGame() && HytilsConfig.silentLobby) {
             if (!event.name.startsWith("gui.")) {
                 event.result = null;
             }

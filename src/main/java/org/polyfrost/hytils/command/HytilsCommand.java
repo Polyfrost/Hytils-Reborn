@@ -43,13 +43,14 @@ public class HytilsCommand {
 
     @Command
     private void main() {
-        HytilsReborn.INSTANCE.getConfig().openGui();
+        //TODO
+        //HytilsReborn.INSTANCE.getConfig().openGui();
     }
 
     @Command(value = {"guildexp", "guildexperience"}, description = "Shows your guild experience")
     @SuppressWarnings("SameParameterValue")
     private void gexp(@Parameter("Username") @Nullable GameProfile player, @Parameter("GEXP Type") @Nullable GEXPType type) {
-        Multithreading.runAsync(() -> {
+        Multithreading.submit(() -> {
             if (player != null) {
                 if (type == null) {
                     if (HypixelAPIUtils.getGEXP(player.getName())) {
@@ -102,7 +103,7 @@ public class HytilsCommand {
     @Command(value = {"winstreak", "ws"}, description = "Shows your winstreak")
     @SuppressWarnings("SameParameterValue")
     private void winstreak(@Parameter("Username") @Nullable GameProfile player, @Parameter("Winstreak Type") @Nullable WinstreakType gamemode) {
-        Multithreading.runAsync(() -> {
+        Multithreading.submit(() -> {
             if (player != null) {
                 if (gamemode != null) {
                     if (HypixelAPIUtils.getWinstreak(player.getName(), gamemode.name())) {

@@ -25,15 +25,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class BedwarsAdvertisementsRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().toLowerCase());
         if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase()))) return;
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (location.getGameType().orElse(null) == GameType.BEDWARS && !location.isGame()
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (location.getGameType().orElse(null) == GameType.BEDWARS && !location.inGame()
             && getLanguage().chatCleanerBedwarsPartyAdvertisementRegex.matcher(message).find()) {
             event.setCanceled(true);
         }

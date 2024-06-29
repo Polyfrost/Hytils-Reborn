@@ -51,7 +51,7 @@ public class IgnoreTemporaryCommand {
 
     static {
         initialize();
-        Multithreading.runAsync(() -> {
+        Multithreading.submit(() -> {
             Timer timer = new Timer(1, ignored -> {
                 if (Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer != null) {
                     if (json != null) {
@@ -80,7 +80,7 @@ public class IgnoreTemporaryCommand {
 
     @Command(greedy = true)
     private void main(@Parameter("Player Name") GameProfile playerName, @Parameter("Time") String time) {
-        Multithreading.runAsync(() -> {
+        Multithreading.submit(() -> {
             try {
                 long millis = addMillis(time.replace(",", "").replace(" ", ""));
                 json.addProperty(playerName.getName(), millis + new Date().getTime());
@@ -106,7 +106,7 @@ public class IgnoreTemporaryCommand {
     @Command(description = "Removes a player from the ignore list.")
     private void remove(@Parameter("Player Name") GameProfile playerName) {
         json.remove(playerName.getName());
-        Multithreading.runAsync(() -> {
+        Multithreading.submit(() -> {
             try {
                 FileUtils.writeStringToFile(ignoreFile, json.toString(), StandardCharsets.UTF_8);
             } catch (IOException e) {

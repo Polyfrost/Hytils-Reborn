@@ -19,10 +19,10 @@
 package org.polyfrost.hytils.mixin;
 
 import net.hypixel.data.type.GameType;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.GuiIngameForge;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,9 +32,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GuiIngameForgeMixin_HideHotbar {
     @Inject(method = "renderHealth", at = @At("HEAD"), cancellable = true)
     public void cancelHealthbar(int width, int height, CallbackInfo ci) {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
-            if (!location.isGame() || !location.getGameType().isPresent()) {
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (HytilsConfig.hideHudElements && HypixelUtils.isHypixel()) {
+            if (!location.inGame() || !location.getGameType().isPresent() || "limbo".equals(location.getServerName().orElse(null))) {
                 // rudimentary check if player has engaged in pvp or something
                 if (Minecraft.getMinecraft().thePlayer.getHealth() < 20) return;
                 ci.cancel();
@@ -49,7 +49,6 @@ public class GuiIngameForgeMixin_HideHotbar {
                 case HOUSING:
                 case MURDER_MYSTERY:
                 case BUILD_BATTLE:
-                case LIMBO: // TODO have to test how to find limbo
                 case QUAKECRAFT:
                 case REPLAY:
                     // rudimentary check if player has engaged in pvp or something
@@ -79,9 +78,9 @@ public class GuiIngameForgeMixin_HideHotbar {
 
     @Inject(method = "renderFood", at = @At("HEAD"), cancellable = true)
     public void cancelFood(int width, int height, CallbackInfo ci) {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
-            if (!location.isGame() || !location.getGameType().isPresent()) {
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (HytilsConfig.hideHudElements && HypixelUtils.isHypixel()) {
+            if (!location.inGame() || !location.getGameType().isPresent() || "limbo".equals(location.getServerName().orElse(null))) {
                 ci.cancel();
                 return;
             }
@@ -96,7 +95,6 @@ public class GuiIngameForgeMixin_HideHotbar {
                 case BEDWARS:
                 case MURDER_MYSTERY:
                 case HOUSING:
-                case LIMBO:
                 case PAINTBALL:
                 case PIT:
                 case DUELS:
@@ -133,9 +131,9 @@ public class GuiIngameForgeMixin_HideHotbar {
 
     @Inject(method = "renderArmor", at = @At("HEAD"), cancellable = true)
     public void cancelArmor(int width, int height, CallbackInfo ci) {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
-            if (!location.isGame() || !location.getGameType().isPresent()) {
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (HytilsConfig.hideHudElements && HypixelUtils.isHypixel()) {
+            if (!location.inGame() || !location.getGameType().isPresent() || "limbo".equals(location.getServerName().orElse(null))) {
                 ci.cancel();
                 return;
             }
@@ -150,7 +148,6 @@ public class GuiIngameForgeMixin_HideHotbar {
                 case REPLAY:
                 case MURDER_MYSTERY:
                 case BUILD_BATTLE:
-                case LIMBO:
                 case QUAKECRAFT:
                 case TNTGAMES:
                 case SKYBLOCK:
@@ -170,9 +167,9 @@ public class GuiIngameForgeMixin_HideHotbar {
 
     @Inject(method = "renderAir", at = @At("HEAD"), cancellable = true)
     public void cancelAir(int width, int height, CallbackInfo ci) {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (HytilsConfig.hideHudElements && HypixelUtils.INSTANCE.isHypixel()) {
-            if (!location.isGame() || !location.getGameType().isPresent()) {
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (HytilsConfig.hideHudElements && HypixelUtils.isHypixel()) {
+            if (!location.inGame() || !location.getGameType().isPresent()) {
                 ci.cancel();
                 return;
             }

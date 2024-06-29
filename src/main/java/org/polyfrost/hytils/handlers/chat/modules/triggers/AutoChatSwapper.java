@@ -50,7 +50,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
     @SuppressWarnings("all")
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        Multithreading.runAsync(() -> {
+        Multithreading.submit(() -> {
             final Matcher statusMatcherLeave = getLanguage().autoChatSwapperPartyStatusRegex.matcher(UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())); // leaving party
             final Matcher statusMatcherJoin = getLanguage().autoChatSwapperPartyStatusRegex2.matcher(UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())); // joining party
             if (statusMatcherLeave.matches()) {

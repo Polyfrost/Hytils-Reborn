@@ -24,7 +24,7 @@ import org.polyfrost.hytils.util.WaypointUtil;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class MiddleWaypointUHC {
     // y 70 is a completely arbitrary height, being slightly above sea level. feel free to change as one may see fit
@@ -32,8 +32,8 @@ public class MiddleWaypointUHC {
 
     @SubscribeEvent
     public void onRenderWorldLast(RenderWorldLastEvent event) {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (HypixelUtils.INSTANCE.isHypixel() && location.isGame() && HytilsConfig.uhcMiddleWaypoint && location.getGameType().isPresent() && (location.getGameType().get() == GameType.UHC || location.getGameType().get() == GameType.SPEED_UHC)) {
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (HypixelUtils.isHypixel() && location.inGame() && HytilsConfig.uhcMiddleWaypoint && location.getGameType().isPresent() && (location.getGameType().get() == GameType.UHC || location.getGameType().get() == GameType.SPEED_UHC)) {
             WaypointUtil.renderWayPoint(HytilsConfig.uhcMiddleWaypointText, block, event.partialTicks);
         }
     }

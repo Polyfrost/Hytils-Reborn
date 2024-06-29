@@ -18,14 +18,13 @@
 
 package org.polyfrost.hytils.command;
 
-
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
-import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.command.parser.GameName;
 import org.polyfrost.hytils.command.parser.GameNameParser;
@@ -46,7 +45,7 @@ public class PlayCommand {
     private static Map<String, String> games = new HashMap<>();
 
     public static void init() {
-        Multithreading.runAsync(() -> {
+        Multithreading.submit(() -> {
             try {
                 String url = "https://data.woverflow.cc/games.json";
                 String content = NetworkUtils.getString(url);
@@ -66,7 +65,7 @@ public class PlayCommand {
     @Command
     private void main(GameName game) {
         boolean autocompletePlayCommands = HytilsConfig.autocompletePlayCommands;
-        if (!HypixelUtils.INSTANCE.isHypixel()) {
+        if (!HypixelUtils.isHypixel()) {
             HytilsReborn.INSTANCE.getCommandQueue().queue("/play " + game.name);
             return;
         }

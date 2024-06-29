@@ -21,7 +21,7 @@ package org.polyfrost.hytils.mixin;
 import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraftforge.client.GuiIngameForge;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,7 +31,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GuiIngameForgeMixin_HideActionbar {
     @Inject(method = "renderRecordOverlay", at = @At("HEAD"), cancellable = true)
     private void cancelActionBar(int width, int height, float partialTicks, CallbackInfo ci) {
-        if (HypixelUtils.INSTANCE.isHypixel() && ((HytilsConfig.hideHousingActionBar && HypixelAPI.getLocation().getGameType().orElse(null) == GameType.HOUSING) || (HytilsConfig.hideDropperActionBar && "DROPPER".equals(HypixelAPI.getLocation().getMode().orElse(null)))))
+        if (HypixelUtils.isHypixel() && ((HytilsConfig.hideHousingActionBar && HypixelUtils.getLocation().getGameType().orElse(null) == GameType.HOUSING) || (HytilsConfig.hideDropperActionBar && "DROPPER".equals(HypixelUtils.getLocation().getMode().orElse(null)))))
             ci.cancel();
     }
 }

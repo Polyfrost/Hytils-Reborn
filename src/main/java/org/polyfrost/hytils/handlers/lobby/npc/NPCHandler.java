@@ -28,7 +28,7 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 import java.util.Collection;
 
@@ -36,14 +36,14 @@ public class NPCHandler {
 
     @SubscribeEvent
     public void onEntityRender(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (!HypixelUtils.INSTANCE.isHypixel()) {
+        if (!HypixelUtils.isHypixel()) {
             return;
         }
-        final HypixelAPI.Location location = HypixelAPI.getLocation();
+        final HypixelUtils.Location location = HypixelUtils.getLocation();
 
         // hypixel marks npc uuids as version 2
         if (event.entity.getUniqueID().version() == 2 || (event.entity instanceof EntityVillager)) {
-            if (HytilsConfig.npcHider && !location.isGame()) {
+            if (HytilsConfig.npcHider && !location.inGame()) {
                 event.setCanceled(true);
             }
         } else if (HytilsConfig.hideNonNPCs && location.getGameType().orElse(null) == GameType.SKYBLOCK && !(event.entity instanceof EntityArmorStand && !event.entity.getCustomNameTag().toLowerCase().trim().isEmpty()) && event.entity instanceof EntityOtherPlayerMP) {
@@ -53,8 +53,8 @@ public class NPCHandler {
 
     public static Collection<NetworkPlayerInfo> hideTabNpcs(Collection<NetworkPlayerInfo> playerInfoCollection) {
         if (playerInfoCollection == null) return null;
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.hideNpcsInTab) {
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (!HypixelUtils.isHypixel() || !HytilsConfig.hideNpcsInTab) {
             return playerInfoCollection;
         } else {
             if (HytilsConfig.keepImportantNpcsInTab && location.getGameType().isPresent() && (location.getGameType().get() == GameType.SKYBLOCK || location.getGameType().get() == GameType.REPLAY)) {

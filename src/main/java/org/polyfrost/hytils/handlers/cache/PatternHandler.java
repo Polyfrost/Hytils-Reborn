@@ -34,7 +34,7 @@ public class PatternHandler {
     public List<Pattern> gameEnd = new ArrayList<>(); // OKAY DEFTU
 
     public void initialize() {
-        Multithreading.runAsync(() -> {
+        Multithreading.submit(() -> {
             try {
                 JsonObject cached = HytilsReborn.INSTANCE.getLanguageHandler().getRegexJson();
                 if (cached != null) {
@@ -43,7 +43,7 @@ public class PatternHandler {
                 }
                 final String gotten = NetworkUtils.getString("https://data.woverflow.cc/regex.json");
                 if (gotten != null) {
-                    processJson(JsonUtils.parseString(gotten).getAsJsonObject());
+                    processJson(JsonUtils.parse(gotten).getAsJsonObject());
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -24,7 +24,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class SoundHandler {
 
@@ -33,9 +33,9 @@ public class SoundHandler {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent e) {
         if (e.phase == TickEvent.Phase.START) {
-            if (HypixelUtils.INSTANCE.isHypixel() && Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null) {
-                HypixelAPI.Location location = HypixelAPI.getLocation();
-                if (HytilsConfig.blockNotify && location.isGame() && location.getGameType().isPresent()) {
+            if (HypixelUtils.isHypixel() && Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null) {
+                HypixelUtils.Location location = HypixelUtils.getLocation();
+                if (HytilsConfig.blockNotify && location.inGame() && location.getGameType().isPresent()) {
                     switch (location.getGameType().get()) {
                         case BUILD_BATTLE:
                         case HOUSING:

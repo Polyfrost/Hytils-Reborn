@@ -25,7 +25,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -45,8 +45,8 @@ public abstract class LayerArmorBaseMixin_HideIngameArmour {
     }
 
     private static boolean shouldCancel(ItemStack itemStack) {
-        if (!HytilsConfig.hideArmor || itemStack == null || !HypixelUtils.INSTANCE.isHypixel()) return false;
-        final HypixelAPI.Location location = HypixelAPI.getLocation();
+        if (!HytilsConfig.hideArmor || itemStack == null || !HypixelUtils.isHypixel()) return false;
+        final HypixelUtils.Location location = HypixelUtils.getLocation();
         final Item item = itemStack.getItem();
         if (location.getGameType().isPresent() && location.getMode().isPresent()) {
             if (item instanceof ItemArmor && ((ItemArmor) item).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {

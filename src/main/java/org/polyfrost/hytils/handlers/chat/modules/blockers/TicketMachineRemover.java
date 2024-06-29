@@ -24,14 +24,14 @@ import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class TicketMachineRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
+        HypixelUtils.Location location = HypixelUtils.getLocation();
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (location.getGameType().orElse(null) == GameType.BEDWARS && !location.isGame()
+        if (location.getGameType().orElse(null) == GameType.BEDWARS && !location.inGame()
             && getLanguage().chatCleanerTicketAnnouncerRegex.matcher(message).matches()) {
             event.setCanceled(true);
         }

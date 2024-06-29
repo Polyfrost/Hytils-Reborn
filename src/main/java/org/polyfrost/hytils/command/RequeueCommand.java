@@ -18,6 +18,8 @@
 
 package org.polyfrost.hytils.command;
 
+import net.hypixel.data.type.GameType;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
@@ -33,31 +35,42 @@ public class RequeueCommand {
 
     @Command(description = "Requeues you into the last game you played.")
     private void main() {
-        LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
-        LocrawInfo lastLocraw = LocrawUtil.INSTANCE.getLastLocrawInfo();
-        if (!HypixelUtils.INSTANCE.isHypixel() || locraw == null || lastLocraw == null) {
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (!HypixelUtils.isHypixel()) {
             return;
         }
 
-        if (LocrawUtil.INSTANCE.isInGame()) {
-            game = locraw.getGameMode();
-            switch (locraw.getGameType()) {
-                case SKYBLOCK:
-                case HOUSING:
-                case REPLAY:
-                    UChat.chat(ChatColor.RED + "You must be in a valid game to use this command.");
-                    return;
+        if (location.inGame()) {
+            game = location.getMode().orElse(null);
+            if (game == null) {
+                UChat.chat(ChatColor.RED + "You must be in a valid game to use this command.");
+                return;
             }
-        } else if (!LocrawUtil.INSTANCE.isInGame() && !lastLocraw.getGameMode().equals("lobby")) {
-            game = lastLocraw.getGameMode();
-            switch (lastLocraw.getGameType()) {
-                case SKYBLOCK:
-                    game = lastLocraw.getRawGameType(); // requeues you back into SkyBlock when you are in the lobby. Useful when you get kicked for being AFK.
-                    break;
-                case HOUSING:
-                case REPLAY:
-                    UChat.chat(ChatColor.RED + "The last round has to be a valid game to use this command.");
-                    return;
+            if (location.getGameType().isPresent()) {
+                switch (location.getGameType().get()) {
+                    case SKYBLOCK:
+                    case HOUSING:
+                    case REPLAY:
+                        UChat.chat(ChatColor.RED + "You must be in a valid game to use this command.");
+                        return;
+                }
+            }
+        } else if (!location.inGame() && location.wasInGame()) {
+            game = location.getLastMode().orElse(null);
+            if (game == null) {
+                UChat.chat(ChatColor.RED + "You must be in a valid game to use this command.");
+                return;
+            }
+            if (location.getLastGameType().isPresent()) {
+                switch (location.getLastGameType().get()) {
+                    case SKYBLOCK:
+                        game = GameType.SKYBLOCK.getDatabaseName(); // requeues you back into SkyBlock when you are in the lobby. Useful when you get kicked for being AFK.
+                        break;
+                    case HOUSING:
+                    case REPLAY:
+                        UChat.chat(ChatColor.RED + "The last round has to be a valid game to use this command.");
+                        return;
+                }
             }
         } else {
             UChat.chat(ChatColor.RED + "The last round has to be a game to use this command.");
@@ -65,9 +78,11 @@ public class RequeueCommand {
         }
 
         // tries to get the game name from the LocrawGamesHandler, if it doesn't exist, it will use the game name from the LocrawInfo.
-        String value = LocrawGamesHandler.locrawGames.get(locraw.getRawGameType().toLowerCase() + "_" + game.toLowerCase());
-        if (value != null) {
-            game = value;
+        if (location.getGameType().isPresent()) {
+            String value = LocrawGamesHandler.locrawGames.get(location.getGameType().get().getDatabaseName().toLowerCase() + "_" + game.toLowerCase());
+            if (value != null) {
+                game = value;
+            }
         }
 
         // if the limboPlayCommandHelper is enabled and the player is in limbo, it will queue the /lobby command before the /play command.

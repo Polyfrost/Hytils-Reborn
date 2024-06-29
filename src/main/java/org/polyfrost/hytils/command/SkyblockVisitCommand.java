@@ -18,15 +18,13 @@
 
 package org.polyfrost.hytils.command;
 
+import net.hypixel.data.type.GameType;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Description;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Main;
-import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
-import org.polyfrost.oneconfig.api.hypixel.v1.LocrawInfo;
-import org.polyfrost.oneconfig.api.hypixel.v1.LocrawUtil;
 import org.polyfrost.hytils.HytilsReborn;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.util.EnumChatFormatting;
@@ -37,7 +35,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-@Command(value = "skyblockvisit", aliases = "sbvisit")
+@Command({"skyblockvisit", "sbvisit"})
 public class SkyblockVisitCommand {
 
     /**
@@ -47,20 +45,20 @@ public class SkyblockVisitCommand {
 
     protected static String playerName = "";
 
-    @Main
-    private void handle() {
+    @Command
+    private void main() {
         UChat.chat(EnumChatFormatting.RED + "Usage: /skyblockvisit <username>");
     }
 
-    @Main(description = "Visit a player's SkyBlock island.")
-    private void main(@Description("Player Name") GameProfile player) {
-        if (!HypixelUtils.INSTANCE.isHypixel()) {
+    @Command(description = "Visit a player's SkyBlock island.")
+    private void main(@Parameter("Player Name") GameProfile player) {
+        if (!HypixelUtils.isHypixel()) {
             UChat.chat(ChatColor.RED + "You must be on Hypixel to use this command!");
             return;
         }
         if (usernameRegex.matcher(player.getName()).matches()) {
             playerName = player.getName();
-            if (LocrawUtil.INSTANCE.getLocrawInfo() != null && LocrawUtil.INSTANCE.getLocrawInfo().getGameType() == LocrawInfo.GameType.SKYBLOCK && LocrawUtil.INSTANCE.isInGame()) {
+            if (GameType.SKYBLOCK.equals(HypixelUtils.getLocation().getGameType().orElse(null)) && HypixelUtils.getLocation().inGame()) {
                 visit(0);
                 return;
             }

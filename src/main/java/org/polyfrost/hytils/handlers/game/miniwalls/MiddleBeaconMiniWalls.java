@@ -26,7 +26,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class MiddleBeaconMiniWalls {
     private boolean miniWitherDead;
@@ -44,8 +44,8 @@ public class MiddleBeaconMiniWalls {
     }
 
     public boolean shouldMakeBeacon() {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        return HypixelUtils.INSTANCE.isHypixel() && "mini_walls".equalsIgnoreCase(location.getMode().orElse(null)) && HytilsConfig.miniWallsMiddleBeacon && this.miniWitherDead;
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        return HypixelUtils.isHypixel() && "mini_walls".equalsIgnoreCase(location.getMode().orElse(null)) && HytilsConfig.miniWallsMiddleBeacon && this.miniWitherDead;
     }
 
     @SubscribeEvent

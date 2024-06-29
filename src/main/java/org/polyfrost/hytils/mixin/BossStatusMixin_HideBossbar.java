@@ -18,11 +18,11 @@
 
 package org.polyfrost.hytils.mixin;
 
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.entity.boss.BossStatus;
 import net.minecraft.entity.boss.IBossDisplayData;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -34,7 +34,7 @@ public abstract class BossStatusMixin_HideBossbar {
     @Inject(method = "setBossStatus", at = @At("HEAD"), cancellable = true)
     private static void cancelBossStatus(IBossDisplayData displayData, boolean hasColorModifierIn, CallbackInfo ci) {
         if (displayData == null) return;
-        if (HytilsConfig.lobbyBossbar && !HypixelAPI.getLocation().isGame() || HytilsConfig.gameAdBossbar && displayData.getDisplayName().getFormattedText().matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().gameBossbarAdvertisementRegex.pattern()))
+        if (HytilsConfig.lobbyBossbar && !HypixelUtils.getLocation().inGame() || HytilsConfig.gameAdBossbar && displayData.getDisplayName().getFormattedText().matches(HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().gameBossbarAdvertisementRegex.pattern()))
             ci.cancel();
     }
 }

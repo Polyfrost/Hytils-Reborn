@@ -18,8 +18,9 @@
 
 package org.polyfrost.hytils.handlers.language;
 
+import com.google.gson.JsonElement;
+import org.polyfrost.oneconfig.utils.v1.JsonUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
-import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -42,13 +43,16 @@ public class LanguageHandler {
     private LanguageData current = fallback;
 
     public LanguageHandler() {
-        Multithreading.runAsync(this::initialize);
+        Multithreading.submit(this::initialize);
     }
 
     private void initialize() {
         fallback.initialize();
-        regex = NetworkUtils.getJsonElement("https://data.woverflow.cc/regex.json").getAsJsonObject();
-        if (!regex.entrySet().isEmpty()) {
+        JsonElement maybeRegex = JsonUtils.parseFromUrl("https://data.woverflow.cc/regex.json");
+        if (maybeRegex != null) {
+            regex = maybeRegex.getAsJsonObject();
+        }
+        if (regex != null && !regex.entrySet().isEmpty()) {
             current = gson.fromJson(regex.getAsJsonObject("en").toString(), LanguageData.class);
         }
         current.initialize();

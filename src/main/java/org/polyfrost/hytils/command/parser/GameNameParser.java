@@ -19,13 +19,11 @@
 package org.polyfrost.hytils.command.parser;
 
 import org.polyfrost.oneconfig.api.commands.v1.arguments.ArgumentParser;
-import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Parameter;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,7 +49,7 @@ public class GameNameParser extends ArgumentParser<GameName> {
 
     @Override
     public @Nullable List<String> getAutoCompletions(String game) {
-        if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.autocompletePlayCommands) {
+        if (!HypixelUtils.isHypixel() || !HytilsConfig.autocompletePlayCommands) {
             return null;
         }
         return Stream.of(getListOfGames()).filter(s -> s.startsWith(game)).collect(Collectors.toList());

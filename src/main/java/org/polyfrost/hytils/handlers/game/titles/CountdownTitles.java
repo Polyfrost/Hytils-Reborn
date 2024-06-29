@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.game.titles;
 
-import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
 import net.minecraft.util.EnumChatFormatting;
@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class CountdownTitles {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onTitle(TitleEvent event) {
-        if (!HypixelUtils.INSTANCE.isHypixel() || !HytilsConfig.hideCountdownTitles) {
+        if (!HypixelUtils.isHypixel() || !HytilsConfig.hideCountdownTitles) {
             return;
         }
 

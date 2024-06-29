@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
@@ -53,7 +53,7 @@ public class AutoQueue implements ChatReceiveModule {
 
         final String message = getStrippedMessage(event.message);
         Matcher matcher = getLanguage().autoQueuePrefixGlobalRegex.matcher(message);
-        HypixelAPI.Location location = HypixelAPI.getLocation();
+        HypixelUtils.Location location = HypixelUtils.getLocation();
         if (matcher.matches()) {
             if (location.getMode().isPresent() && location.getGameType().isPresent()) {
                 String game = location.getMode().get();

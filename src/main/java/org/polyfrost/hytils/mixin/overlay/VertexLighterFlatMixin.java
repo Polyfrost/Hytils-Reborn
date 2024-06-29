@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.mixin.overlay;
 
-import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.util.DarkColorUtils;
 import net.minecraft.block.BlockColored;
@@ -43,7 +43,7 @@ public class VertexLighterFlatMixin {
 
     @ModifyArgs(method = "processQuad", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/client/model/pipeline/VertexLighterFlat;updateColor([F[FFFFFI)V"))
     private void modifyArgs(Args args) {
-        if (HypixelUtils.INSTANCE.isHypixel() && HytilsConfig.heightOverlay && blockInfo.getBlock() instanceof BlockColored) {
+        if (HypixelUtils.isHypixel() && HytilsConfig.heightOverlay && blockInfo.getBlock() instanceof BlockColored) {
             int height = HeightHandler.INSTANCE.getHeight();
             if (height == -1) return;
             if (blockInfo.getBlockPos().getY() != (height - 1)) return;

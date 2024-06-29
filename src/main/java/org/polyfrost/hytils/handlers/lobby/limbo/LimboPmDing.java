@@ -22,13 +22,13 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class LimboPmDing {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (HypixelUtils.INSTANCE.isHypixel() && location.getServerId().equals("limbo") && event.message.getFormattedText().startsWith("§dFrom §r") && HytilsConfig.limboDing) {
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (HypixelUtils.isHypixel() && "limbo".equals(location.getServerName().orElse(null)) && event.message.getFormattedText().startsWith("§dFrom §r") && HytilsConfig.limboDing) {
             Minecraft.getMinecraft().thePlayer.playSound("random.orb", 1f, 1f);
         }
     }

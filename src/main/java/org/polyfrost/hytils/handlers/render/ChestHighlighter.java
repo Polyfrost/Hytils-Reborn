@@ -19,7 +19,7 @@
 package org.polyfrost.hytils.handlers.render;
 
 import net.hypixel.data.type.GameType;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.polyui.color.PolyColor;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
@@ -170,6 +170,6 @@ public class ChestHighlighter {
     }
 
     private boolean isNotSupported() {
-        return !HypixelAPI.getLocation().getGameType().isPresent() || (HypixelAPI.getLocation().getGameType().get() != GameType.SKYWARS && HypixelAPI.getLocation().getGameType().get() != GameType.SURVIVAL_GAMES && (HypixelAPI.getLocation().getGameType().get() != GameType.DUELS || !HypixelAPI.getLocation().getMode().orElse("").contains("_SW_")));
+        return !HypixelUtils.getLocation().getGameType().isPresent() || (HypixelUtils.getLocation().getGameType().get() != GameType.SKYWARS && HypixelUtils.getLocation().getGameType().get() != GameType.SURVIVAL_GAMES && (HypixelUtils.getLocation().getGameType().get() != GameType.DUELS || !HypixelUtils.getLocation().getMode().orElse("").contains("_SW_")));
     }
 }

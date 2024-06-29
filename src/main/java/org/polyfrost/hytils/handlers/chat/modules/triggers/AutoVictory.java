@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
 import org.polyfrost.universal.wrappers.message.UTextComponent;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
@@ -61,7 +61,7 @@ public class AutoVictory implements ChatReceiveResetModule {
         String unformattedText = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText());
         if (PatternHandler.INSTANCE.gameEnd.size() != 0) {
             if (!victoryDetected) { // prevent victories being detected twice
-                Multithreading.runAsync(() -> { //run this async as getting from the API normally would freeze minecraft
+                Multithreading.submit(() -> { //run this async as getting from the API normally would freeze minecraft
                     for (Pattern triggers : PatternHandler.INSTANCE.gameEnd) {
                         if (triggers.matcher(unformattedText).matches()) {
                             doNotification();
@@ -78,7 +78,7 @@ public class AutoVictory implements ChatReceiveResetModule {
         if (!victoryDetected) {
             final String title = EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle().toLowerCase(Locale.ENGLISH));
             if (title.equals("victory!") || title.equals("game over") || title.equals("game over!") || title.endsWith(" wins!")) {
-                Multithreading.runAsync(this::doNotification);
+                Multithreading.submit(this::doNotification);
             }
         }
     }
@@ -118,7 +118,7 @@ public class AutoVictory implements ChatReceiveResetModule {
                     .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
             }
         }
-        if (isSupportedMode(HypixelAPI.getLocation()) && HytilsConfig.autoGetWinstreak) {
+        if (isSupportedMode(HypixelUtils.getLocation()) && HytilsConfig.autoGetWinstreak) {
             try {
                 if (HypixelAPIUtils.getWinstreak()) {
                     Notifications.INSTANCE.send(
@@ -142,7 +142,7 @@ public class AutoVictory implements ChatReceiveResetModule {
         ((GuiIngameAccessor) Minecraft.getMinecraft().ingameGUI).setDisplayedSubTitle("");
     }
 
-    private boolean isSupportedMode(HypixelAPI.Location location) {
+    private boolean isSupportedMode(HypixelUtils.Location location) {
         if (location.getGameType().isPresent()) {
             switch (location.getGameType().get()) {
                 case BEDWARS:

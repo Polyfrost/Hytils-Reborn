@@ -19,13 +19,13 @@
 package org.polyfrost.hytils.mixin;
 
 import net.hypixel.data.type.GameType;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -36,8 +36,8 @@ public class RenderEntityItemMixin_UHCOverlay {
     @Inject(method = "func_177077_a(Lnet/minecraft/entity/item/EntityItem;DDDFLnet/minecraft/client/resources/model/IBakedModel;)I", at = @At(("TAIL")))
     public void scaleSpecialItems(EntityItem entity, double f4, double f5, double flag, float i, IBakedModel f, CallbackInfoReturnable<Integer> cir) {
         Item item = entity.getEntityItem().getItem();
-        GameType gameType = HypixelAPI.getLocation().getGameType().orElse(null);
-        if (HypixelUtils.INSTANCE.isHypixel() && (gameType == GameType.UHC || gameType == GameType.SPEED_UHC) && HytilsConfig.uhcOverlay) {
+        GameType gameType = HypixelUtils.getLocation().getGameType().orElse(null);
+        if (HypixelUtils.isHypixel() && (gameType == GameType.UHC || gameType == GameType.SPEED_UHC) && HytilsConfig.uhcOverlay) {
             if (item.getRegistryName().equals("minecraft:apple") || item.getRegistryName().equals("minecraft:golden_apple") || item.getRegistryName().equals("minecraft:skull") || item.getRegistryName().equals("minecraft:gold_ingot") || item.getRegistryName().equals("minecraft:gold_nugget")) {
                 GlStateManager.scale(HytilsConfig.uhcOverlayMultiplier, HytilsConfig.uhcOverlayMultiplier, HytilsConfig.uhcOverlayMultiplier);
             }

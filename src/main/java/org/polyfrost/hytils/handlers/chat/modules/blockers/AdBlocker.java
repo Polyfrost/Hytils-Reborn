@@ -24,7 +24,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class AdBlocker implements ChatReceiveModule {
 
@@ -53,7 +53,7 @@ public class AdBlocker implements ChatReceiveModule {
             event.setCanceled(true);
         }
 
-        if (HypixelAPI.getLocation().isGame()) return;
+        if (HypixelUtils.getLocation().inGame()) return;
         if (getLanguage().chatRankBeggingRegex.matcher(message).find(0)) {
             event.setCanceled(true);
         }

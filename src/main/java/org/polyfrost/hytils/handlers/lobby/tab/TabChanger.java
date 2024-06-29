@@ -26,13 +26,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import org.polyfrost.hytils.forge.HytilsMixinPlugin;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 import java.util.*;
 import java.util.regex.Pattern;
 
 /**
- * Used in {@link HytilsMixinPlugin
+ * Used in {@link HytilsMixinPlugin}
  */
 @SuppressWarnings("unused")
 public class TabChanger {
@@ -86,10 +86,10 @@ public class TabChanger {
     }
 
     public static String modifyName(String name, NetworkPlayerInfo networkPlayerInfo) {
-        if (HypixelUtils.INSTANCE.isHypixel()) {
+        if (HypixelUtils.isHypixel()) {
             final UUID uuid = networkPlayerInfo.getGameProfile().getId();
 
-            if (HytilsConfig.hidePlayerRanksInTab && name.startsWith("[", 2) && !HypixelAPI.getLocation().isGame()) {
+            if (HytilsConfig.hidePlayerRanksInTab && name.startsWith("[", 2) && !HypixelUtils.getLocation().inGame()) {
                 // keep the name color if player rank is removed
                 // §b[MVP§c+§b] Steve
                 final String color = "\u00a7" + name.charAt(1);
@@ -98,8 +98,8 @@ public class TabChanger {
                 name = color + name.substring(name.indexOf("]") + 2);
             }
 
-            HypixelAPI.Location location = HypixelAPI.getLocation();
-            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && (location.getGameType().orElse(null) != GameType.HOUSING || !location.isGame())) {
+            HypixelUtils.Location location = HypixelUtils.getLocation();
+            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && (location.getGameType().orElse(null) != GameType.HOUSING || !location.inGame())) {
                 // trim off the guild tag
                 // e.g. Steve §6[GUILD]
                 name = name.substring(0, name.lastIndexOf("[") - 3);
@@ -124,7 +124,7 @@ public class TabChanger {
     }
 
     public static List<String> modifyFooter(FontRenderer instance, String formattedFooter, int wrapWidth) {
-        if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel() && formattedFooter.contains(language.tabFooterAdvertisement)) {
+        if (HytilsConfig.hideAdsInTab && HypixelUtils.isHypixel() && formattedFooter.contains(language.tabFooterAdvertisement)) {
             String trimmedFooter = formattedFooter.replaceAll((trimChatComponentTextRegex.pattern()), "");
             if (trimmedFooter.matches(language.tabFooterAdvertisement)) {
                 return new ArrayList<>();
@@ -140,7 +140,7 @@ public class TabChanger {
     }
 
     public static List<String> modifyHeader(FontRenderer instance, String formattedHeader, int wrapWidth) {
-        if (HytilsConfig.hideAdsInTab && HypixelUtils.INSTANCE.isHypixel() && formattedHeader.contains(language.tabHeaderAdvertisement)) {
+        if (HytilsConfig.hideAdsInTab && HypixelUtils.isHypixel() && formattedHeader.contains(language.tabHeaderAdvertisement)) {
             String trimmedHeader = formattedHeader.replaceAll((trimChatComponentTextRegex.pattern()), "");
             if (trimmedHeader.matches(language.tabHeaderAdvertisement)) {
                 return new ArrayList<>();
@@ -156,17 +156,18 @@ public class TabChanger {
     }
 
     public static boolean shouldRenderPlayerHead(NetworkPlayerInfo networkPlayerInfo) {
-        return !HypixelUtils.INSTANCE.isHypixel() || !isSkyblockTabInformationEntry(networkPlayerInfo);
+        return !HypixelUtils.isHypixel() || !isSkyblockTabInformationEntry(networkPlayerInfo);
     }
 
     public static boolean hidePing(NetworkPlayerInfo networkPlayerInfo) {
-        return HypixelUtils.INSTANCE.isHypixel() && ((HytilsConfig.hidePingInTab && HypixelAPI.getLocation().isGame()) || isSkyblockTabInformationEntry(networkPlayerInfo));
+
+        return HypixelUtils.isHypixel() && ((HytilsConfig.hidePingInTab && HypixelUtils.getLocation().inGame()) || isSkyblockTabInformationEntry(networkPlayerInfo));
     }
 
     private static boolean isSkyblockTabInformationEntry(NetworkPlayerInfo networkPlayerInfo) {
         if (!HytilsConfig.cleanerSkyblockTabInfo) return false;
         return
-            HypixelAPI.getLocation().getGameType().orElse(null) == GameType.SKYBLOCK &&
+            HypixelUtils.getLocation().getGameType().orElse(null) == GameType.SKYBLOCK &&
                 skyblockTabInformationEntryGameProfileNameRegex.matcher(networkPlayerInfo.getGameProfile().getName()).matches() &&
                 !validMinecraftUsername.matcher(networkPlayerInfo.getDisplayName().getUnformattedText()).matches();
     }

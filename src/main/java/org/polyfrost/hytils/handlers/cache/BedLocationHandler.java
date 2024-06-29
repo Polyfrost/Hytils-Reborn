@@ -21,9 +21,9 @@ package org.polyfrost.hytils.handlers.cache;
 import net.hypixel.data.type.GameType;
 import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.EventHandler;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.utils.v1.JsonUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
-import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -63,14 +63,14 @@ public class BedLocationHandler {
 
     private BedLocationHandler() {
         EventHandler.of(HypixelLocationEvent.class, (event) -> {
-            HypixelAPI.Location location = event.getLocation();
-            String serverId = location.getServerId();
+            HypixelUtils.Location location = event.getLocation();
+            String serverId = location.getServerName().orElse(null);
             if (Objects.equals(lastServer, serverId)) {
                 return;
             }
             lastServer = serverId;
 
-            if (!location.isGame() || location.getGameType().orElse(null) != GameType.BEDWARS) {
+            if (!location.inGame() || location.getGameType().orElse(null) != GameType.BEDWARS) {
                 return;
             }
 
@@ -82,7 +82,13 @@ public class BedLocationHandler {
     }
 
     public void initialize() {
-        Multithreading.runAsync(() -> locations = NetworkUtils.getJsonElement("https://data.woverflow.cc/bed_locations.json").getAsJsonObject());
+        Multithreading.submit(() -> {
+            JsonElement maybeBedLocations = JsonUtils.parseFromUrl("https://data.woverflow.cc/bed_locations.json");
+            if (maybeBedLocations == null) {
+                return;
+            }
+            locations = maybeBedLocations.getAsJsonObject();
+        });
     }
 
     private int[] processColors(JsonArray array) {
@@ -97,8 +103,8 @@ public class BedLocationHandler {
     }
 
     public int[] getBedLocations() {
-        HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (locations == null || !location.isGame() || location.getGameType().orElse(null) != GameType.BEDWARS || "BEDWARS_PRACTICE".equals(location.getMode().orElse(null))) {
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (locations == null || !location.inGame() || location.getGameType().orElse(null) != GameType.BEDWARS || "BEDWARS_PRACTICE".equals(location.getMode().orElse(null))) {
             return (this.bedLocations = null);
         }
 

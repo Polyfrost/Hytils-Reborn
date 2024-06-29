@@ -18,8 +18,8 @@
 
 package org.polyfrost.hytils.handlers.cache;
 
+import org.polyfrost.oneconfig.utils.v1.JsonUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
-import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -31,8 +31,8 @@ public class ArmorStandHandler {
     public List<String> armorStandNames = new ArrayList<>();
 
     public void initialize() {
-        Multithreading.runAsync(() -> {
-            final JsonElement gotten = NetworkUtils.getJsonElement("https://data.woverflow.cc/armorstands.json");
+        Multithreading.submit(() -> {
+            final JsonElement gotten = JsonUtils.parseFromUrl("https://data.woverflow.cc/armorstands.json");
             if (gotten != null) {
                 JsonObject jsonObject = gotten.getAsJsonObject();
                 for (JsonElement tag : jsonObject.getAsJsonArray("tags")) {

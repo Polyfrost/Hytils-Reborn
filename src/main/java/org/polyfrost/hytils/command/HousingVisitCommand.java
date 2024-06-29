@@ -20,7 +20,7 @@ package org.polyfrost.hytils.command;
 
 import net.hypixel.data.type.GameType;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
@@ -55,7 +55,7 @@ public class HousingVisitCommand {
 
     @Command(description = "Visits a player's house in Housing.")
     private void main(@Parameter("Player Name") GameProfile player) {
-        if (!HypixelUtils.INSTANCE.isHypixel()) {
+        if (!HypixelUtils.isHypixel()) {
             UChat.chat(ChatColor.RED + "You must be on Hypixel to use this command!");
             return;
         }
@@ -63,9 +63,9 @@ public class HousingVisitCommand {
             playerName = player.getName();
 
             // if we are in the housing lobby, just immediately run the /visit command
-            HypixelAPI.Location location = HypixelAPI.getLocation();
+            HypixelUtils.Location location = HypixelUtils.getLocation();
             Optional<GameType> gameType = location.getGameType();
-            if (gameType.isPresent() && gameType.get() == GameType.HOUSING && !location.isGame()) {
+            if (gameType.isPresent() && gameType.get() == GameType.HOUSING && !location.inGame()) {
                 visit(0);
             } else {
                 HytilsReborn.INSTANCE.getCommandQueue().queue("/l housing");

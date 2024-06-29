@@ -27,7 +27,7 @@ import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class PitLagReducer {
 
@@ -42,11 +42,11 @@ public class PitLagReducer {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onRenderLiving(RenderLivingEvent.Pre<EntityLiving> event) {
-        if (!HypixelUtils.INSTANCE.isHypixel()) {
+        if (!HypixelUtils.isHypixel()) {
             return;
         }
 
-        HypixelAPI.Location location = HypixelAPI.getLocation();
+        HypixelUtils.Location location = HypixelUtils.getLocation();
         if (location.getGameType().orElse(null) != GameType.PIT) {
             return;
         }

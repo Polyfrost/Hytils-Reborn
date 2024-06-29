@@ -27,13 +27,13 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class ArmorStandHider {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onEntityRenderer(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        final HypixelAPI.Location location = HypixelAPI.getLocation();
-        if (HypixelUtils.INSTANCE.isHypixel() && ((!location.isGame() && HytilsConfig.hideUselessArmorStands) || (HytilsConfig.hideUselessArmorStandsGame && location.isGame() && location.getGameType().isPresent() && (location.getGameType().get() == GameType.SKYBLOCK || location.getGameType().get() == GameType.BEDWARS || location.getGameType().get() == GameType.SKYWARS || location.getMode().orElse("").contains("BRIDGE"))))) {
+        final HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (HypixelUtils.isHypixel() && ((!location.inGame() && HytilsConfig.hideUselessArmorStands) || (HytilsConfig.hideUselessArmorStandsGame && location.inGame() && location.getGameType().isPresent() && (location.getGameType().get() == GameType.SKYBLOCK || location.getGameType().get() == GameType.BEDWARS || location.getGameType().get() == GameType.SKYWARS || location.getMode().orElse("").contains("BRIDGE"))))) {
             if (event.entity instanceof EntityArmorStand) {
                 String unformattedArmorStandName = EnumChatFormatting.getTextWithoutFormattingCodes(event.entity.getCustomNameTag().toLowerCase());
                 for (String armorStands : ArmorStandHandler.INSTANCE.armorStandNames) {

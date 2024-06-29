@@ -27,20 +27,21 @@ import net.minecraft.util.BlockPos;
 import org.polyfrost.hytils.config.BlockHighlightConfig;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.HeightHandler;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.polyui.utils.ColorUtils;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 public class BlockModelRendererHook {
 
     public static void handleHeightOverlay(Args args, IBlockState stateIn, BlockPos blockPosIn) {
-        if (HypixelUtils.INSTANCE.isHypixel() && HytilsConfig.heightOverlay && stateIn.getBlock() instanceof BlockColored) {
+        if (HypixelUtils.isHypixel() && HytilsConfig.heightOverlay && stateIn.getBlock() instanceof BlockColored) {
             int height = HeightHandler.INSTANCE.getHeight();
             if (height == -1) {
                 return;
             }
             MapColor mapColor = stateIn.getBlock().getMapColor(stateIn);
             if (blockPosIn.getY() == (height - 1) && mapColor != null && (!(stateIn.getBlock().getMaterial() == Material.rock) || check(mapColor.colorIndex))) {
-                int color = HytilsConfig.manuallyEditHeightOverlay ? BlockHighlightConfig.colorMap.get(mapColor).get().getRGB() : DarkColorUtils.getCachedDarkColor(mapColor.colorValue);
+                int color = HytilsConfig.manuallyEditHeightOverlay ? BlockHighlightConfig.colorMap.get(mapColor).get().getArgb() : DarkColorUtils.getCachedDarkColor(mapColor.colorValue);
                 args.set(0, (float) ColorUtils.getRed(color) / 255);
                 args.set(1, (float) ColorUtils.getGreen(color) / 255);
                 args.set(2, (float) ColorUtils.getBlue(color) / 255);

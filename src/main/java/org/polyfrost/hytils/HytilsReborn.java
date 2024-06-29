@@ -18,8 +18,6 @@
 
 package org.polyfrost.hytils;
 
-import org.polyfrost.oneconfig.api.config.v1.ConfigManager;
-import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
@@ -124,6 +122,7 @@ public class HytilsReborn {
         BedLocationHandler.INSTANCE.initialize();
         LocrawGamesHandler.INSTANCE.initialize();
         HeightHandler.INSTANCE.initialize();
+        new HypixelAPIUtils().initialize();
 
         registerHandlers();
     }
@@ -142,13 +141,13 @@ public class HytilsReborn {
                 isChatting = false;
                 if (HytilsConfig.chattingIntegration) {
                     HytilsConfig.chattingIntegration = false;
-                    ConfigManager.active().save(config.getTree());
+                    config.save();
                     Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has detected Chatting, but it is not the latest version. Please update Chatting to the latest version.");
                 }
             }
         }
 
-        Multithreading.runAsync(() -> rank = HypixelAPIUtils.getRank(Minecraft.getMinecraft().getSession().getUsername()));
+        Multithreading.submit(() -> rank = HypixelAPIUtils.getRank(Minecraft.getMinecraft().getSession().getUsername()));
     }
 
     @Mod.EventHandler
@@ -192,11 +191,6 @@ public class HytilsReborn {
         eventBus.register(new MiddleBeaconMiniWalls());
         eventBus.register(new MiddleWaypointUHC());
         eventBus.register(new DropperHurtSound());
-
-        // height overlay
-        EventManager.INSTANCE.register(HeightHandler.INSTANCE);
-
-        eventBus.register(new HypixelAPIUtils());
     }
 
     public void sendMessage(String message) {

@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.mixin;
 
-import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
@@ -56,7 +56,7 @@ public abstract class GuiNewChatMixin_LocrawHider {
     }
 
     private void handleHytilsMessage(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly, CallbackInfo ci) {
-        if (HytilsConfig.hideLocraw && HypixelUtils.INSTANCE.isHypixel() && chatComponent.getUnformattedTextForChat().startsWith("{") && chatComponent.getUnformattedTextForChat().endsWith("}")) {
+        if (HytilsConfig.hideLocraw && HypixelUtils.isHypixel() && chatComponent.getUnformattedTextForChat().startsWith("{") && chatComponent.getUnformattedTextForChat().endsWith("}")) {
             percentComplete = 1.0F;
             if (chatLineId != 0) {
                 deleteChatLine(chatLineId);

@@ -24,14 +24,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelAPI;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 
 public class AntiGL implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().toLowerCase());
         if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) ||
-            (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase())) || !(HypixelAPI.getLocation().isGame())) return;
+            (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase())) || !(HypixelUtils.getLocation().inGame())) return;
         if (getLanguage().cancelGlMessagesRegex.matcher(message).find(0)) {
             event.setCanceled(true);
         }

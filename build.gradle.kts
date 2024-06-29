@@ -93,18 +93,19 @@ sourceSets {
 
 // Adds the Polyfrost maven repository so that we can get the libraries necessary to develop the mod.
 repositories {
-    mavenLocal()
+    maven("https://repo.polyfrost.org/snapshots")
     maven("https://repo.polyfrost.org/releases")
 }
 
 // Configures the libraries/dependencies for your mod.
 dependencies {
     // Adds the OneConfig library, so we can develop with it.
-    compileOnly("org.polyfrost.oneconfig:config-impl:1.0.0-alpha7")
-    compileOnly("org.polyfrost.oneconfig:commands:1.0.0-alpha7")
-    compileOnly("org.polyfrost.oneconfig:events:1.0.0-alpha7")
-    compileOnly("org.polyfrost.oneconfig:ui:1.0.0-alpha7")
-    modCompileOnly("org.polyfrost.oneconfig:$platform:1.0.0-alpha7")
+    compileOnly("org.polyfrost.oneconfig:config-impl:1.0.0-alpha.14")
+    compileOnly("org.polyfrost.oneconfig:commands:1.0.0-alpha.14")
+    compileOnly("org.polyfrost.oneconfig:events:1.0.0-alpha.14")
+    compileOnly("org.polyfrost.oneconfig:ui:1.0.0-alpha.14")
+    modCompileOnly("org.polyfrost.oneconfig:$platform:1.0.0-alpha.14")
+
 
     modRuntimeOnly("me.djtheredstoner:DevAuth-${if (platform.isFabric) "fabric" else if (platform.isLegacyForge) "forge-legacy" else "forge-latest"}:1.1.2")
 
@@ -181,7 +182,7 @@ tasks {
     // Configures our shadow/shade configuration, so we can
     // include some dependencies within our mod jar file.
     named<ShadowJar>("shadowJar") {
-        archiveClassifier.set("dev") // TODO: machete gets confused by the `dev` prefix.
+        archiveClassifier.set("dev")
         configurations = listOf(shade)
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
