@@ -113,7 +113,7 @@ dependencies {
     // If we are building for legacy forge, includes the launch wrapper with `shade` as we configured earlier.
     if (platform.isLegacyForge) {
         compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
-        shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta17")
+        //shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta17")
     }
 }
 
@@ -201,7 +201,7 @@ tasks {
                     "ForceLoadAsMod" to true, // We want to load this jar as a mod, so we force Forge to do so.
                     "TweakOrder" to "0", // Makes sure that the OneConfig launch wrapper is loaded as soon as possible.
                     "MixinConfigs" to "mixins.hytils.json", // We want to use our mixin configuration, so we specify it here.
-                    //"TweakClass" to "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker" // Loads the OneConfig launch wrapper.
+                    "TweakClass" to "org.spongepowered.asm.launch.MixinTweaker"
             )
         }
         dependsOn(shadowJar)

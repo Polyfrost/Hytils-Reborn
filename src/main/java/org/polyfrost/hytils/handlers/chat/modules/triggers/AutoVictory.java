@@ -76,7 +76,7 @@ public class AutoVictory implements ChatReceiveResetModule {
     private void doNotification() {
         victoryDetected = true;
         if (HytilsConfig.autoGetGEXP) {
-            if (!HytilsConfig.gexpMode) {
+            if (HytilsConfig.gexpMode == 0) {
                 try {
                     if (HypixelAPIUtils.getGEXP()) {
                         Notifications.INSTANCE
