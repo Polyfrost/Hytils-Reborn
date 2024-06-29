@@ -28,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EntityPlayerSP.class)
 public class EntityPlayerSPMixin_MessageHandling {
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
-    private void handleSentMessages(String message, CallbackInfo ci) {
+    private void hytils$handleSentMessages(String message, CallbackInfo ci) {
         if (HytilsReborn.INSTANCE.getChatHandler().handleSentMessage(message) == null) ci.cancel();
     }
 }

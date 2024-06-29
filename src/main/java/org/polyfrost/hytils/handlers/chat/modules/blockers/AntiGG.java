@@ -16,33 +16,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.polyfrost.hytils.handlers.chat.modules.triggers;
+package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
-import org.polyfrost.hytils.config.HytilsConfig;
-import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import org.polyfrost.hytils.config.HytilsConfig;
+import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 
-import java.util.regex.Matcher;
-
-public class GuildWelcomer implements ChatReceiveModule {
+public class AntiGG implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final String text = event.message.getUnformattedText();
-        final Matcher matcher = getLanguage().guildPlayerJoinRegex.matcher(text);
-        if (matcher.matches()) {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/gc Welcome to the guild " + matcher.group("player") + "!");
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        if (getLanguage().cancelGgMessagesRegex.matcher(message).matches()) {
+            event.setCanceled(true);
         }
     }
 
     @Override
     public boolean isEnabled() {
-        return HytilsConfig.guildWelcomeMessage;
+        return HytilsConfig.antiGG;
     }
 
     @Override
     public int getPriority() {
-        return 1;
+        return -3;
     }
 }

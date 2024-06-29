@@ -20,6 +20,7 @@ package org.polyfrost.hytils.config;
 
 import org.polyfrost.oneconfig.api.config.v1.Config;
 import org.polyfrost.oneconfig.api.config.v1.annotations.*;
+import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
 import org.polyfrost.polyui.color.PolyColor;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
@@ -27,14 +28,20 @@ import org.polyfrost.hytils.util.DarkColorUtils;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.io.FileUtils;
+import org.polyfrost.polyui.unit.Units;
 import org.polyfrost.polyui.utils.ColorUtils;
+import club.sk1er.lobbysounds.config.Sounds;
+import club.sk1er.mods.autogg.AutoGG;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
 public class HytilsConfig extends Config {
@@ -124,6 +131,66 @@ public class HytilsConfig extends Config {
     // Chat
 
     @Switch(
+        title = "Auto GG",
+        description = "Send a \"gg\" message at the end of a game.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean autoGG = true;
+
+    @Switch(
+        title = "Auto GG Second Message",
+        description = "Enable a secondary message to send after your first GG.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean autoGGSecondMessage;
+
+    @Switch(
+        title = "Casual Auto GG",
+        description = "Send a \"gg\" message at the end of minigames/events that don't give out Karma, such as SkyBlock and The Pit events.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean casualAutoGG = true;
+
+    @Switch(
+        title = "Anti GG",
+        description = "Remove GG messages from chat.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean antiGG;
+
+    @Dropdown(
+        title = "Auto GG First Message",
+        description = "Choose what message is said on game completion.",
+        category = "Chat", subcategory = "Automatic",
+        options = {"gg", "GG", "gf", "Good Game", "Good Fight", "Good Round! :D"}
+    )
+    public static int autoGGMessage = 0;
+
+    @Slider(
+        title = "Auto GG First Phrase Delay",
+        description = "Delay after the game ends to say the first message in seconds.",
+        category = "Chat", subcategory = "Automatic",
+        min = 0, max = 5
+    )
+    public static float autoGGFirstPhraseDelay = 1;
+
+    @Dropdown(
+        title = "Auto GG Second Message",
+        description = "Send a secondary message sent after the first GG message.",
+        category = "Chat", subcategory = "Automatic",
+        options = {"Have a good day!", "<3", "AutoGG By Hytils Reborn!", "gf", "Good Fight", "Good Round", ":D", "Well played!", "wp"}
+    )
+    public static int autoGGMessage2 = 0;
+
+    @Slider(
+        title = "Auto GG Second Phrase Delay",
+        description = "Delay after the game ends to say the second message in seconds.",
+        category = "Chat", subcategory = "Automatic",
+        min = 0, max = 5
+    )
+    public static float autoGGSecondPhraseDelay = 1;
+
+    @Switch(
         title = "Auto GL",
         description = "Send a message 5 seconds before a Hypixel game starts.",
         category = "Chat", subcategory = "Automatic"
@@ -165,6 +232,13 @@ public class HytilsConfig extends Config {
         category = "Chat", subcategory = "Automatic"
     )
     public static boolean autoPartyWarpConfirm;
+
+    @Switch(
+        title = "Auto Reply When AFK",
+        description = "Automatically sends a reply to anyone who PMs you when you are AFK in Limbo.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    public static boolean autoReplyAfk;
 
     @Switch(
         title = "Game Status Restyle",
@@ -326,6 +400,13 @@ public class HytilsConfig extends Config {
         category = "Chat", subcategory = "Cooldown"
     )
     public static boolean preventShoutingOnCooldown = true;
+
+    @Switch(
+        title = "Remove Karma Messages",
+        description = "Remove Karma messages from the chat.",
+        category = "Chat", subcategory = "Toggles"
+    )
+    public static boolean hideKarmaMessages;
 
     @Switch(
         title = "Hide Locraw Messages",
@@ -982,6 +1063,132 @@ public class HytilsConfig extends Config {
     public static boolean silentLobby;
 
     @Switch(
+        title = "Disable Stepping Sounds",
+        description = "Remove sounds created by stepping.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableSteppingSounds;
+
+    @Switch(
+        title = "Disable Slime Sounds",
+        description = "Remove sounds created by slimes.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableSlimeSounds;
+
+    @Switch(
+        title = "Disable Dragon Sounds",
+        description = "Remove sounds created by dragons.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableDragonSounds;
+
+    @Switch(
+        title = "Disable Wither Sounds",
+        description = "Remove sounds created by withers & wither skeletons.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableWitherSounds;
+
+    @Switch(
+        title = "Disable Item Pickup Sounds",
+        description = "Remove sounds created by picking up an item.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableItemPickupSounds;
+
+    @Switch(
+        title = "Disable Experience Orb Sounds",
+        description = "Remove sounds created by experience orbs.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableExperienceOrbSounds;
+
+    @Switch(
+        title = "Disable Primed TNT Sounds",
+        description = "Remove sounds created by primed TNT.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisablePrimedTntSounds;
+
+    @Switch(
+        title = "Disable Explosion Sounds",
+        description = "Remove sounds created by explosions.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableExplosionSounds;
+
+    @Switch(
+        title = "Disable Delivery Man Sounds",
+        description = "Remove sounds created by delivery man events.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableDeliveryManSounds;
+
+    @Switch(
+        title = "Disable Note Block Sounds",
+        description = "Remove sounds created by note blocks.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableNoteBlockSounds;
+
+    @Switch(
+        title = "Disable Firework Sounds",
+        description = "Remove sounds created by fireworks.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableFireworkSounds;
+
+    @Switch(
+        title = "Disable Levelup Sounds",
+        description = "Remove sounds created by someone leveling up.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableLevelupSounds;
+
+    @Switch(
+        title = "Disable Arrow Sounds",
+        description = "Remove sounds created by arrows.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableArrowSounds;
+
+    @Switch(
+        title = "Disable Bat Sounds",
+        description = "Remove sounds created by bats.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableBatSounds;
+
+    @Switch(
+        title = "Disable Fire Sounds",
+        description = "Remove sounds created by fire.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableFireSounds;
+
+    @Switch(
+        title = "Disable Enderman Sounds",
+        description = "Remove sounds created by endermen.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableEndermanSounds;
+
+    @Switch(
+        title = "Disable Door Sounds",
+        description = "Disable sounds caused by doors, trapdoors, and fence gates.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisableDoorSounds;
+
+    @Switch(
+        title = "Disable Portal Sounds",
+        description = "Disable sounds caused by nether portals.",
+        category = "Lobby", subcategory = "Sounds"
+    )
+    public static boolean lobbyDisablePortalSounds;
+
+    @Switch(
         title = "Remove Limbo AFK Title",
         description = "Remove the AFK title when you get sent to limbo for being AFK.",
         category = "Lobby", subcategory = "Limbo"
@@ -1031,17 +1238,183 @@ public class HytilsConfig extends Config {
             e.printStackTrace();
         }
 
-        if (configNumber != 2) { // Config version has not been set or is outdated
+        Class<?> autoGGClass = null;
+        try {
+            autoGGClass = Class.forName("club.sk1er.mods.autogg.config.AutoGGConfig");
+
+            HytilsReborn.INSTANCE.isSk1erAutoGG = true;
+        } catch (ClassNotFoundException ignored) {
+        }
+
+        if (configNumber != 3) { // Config version has not been set or is outdated
             if (configNumber == 1) {
                 overlayAmount = 300;
             }
-            configNumber = 2; // set this to the current config version
+            if (configNumber <= 2) {
+                if (autoGGClass != null) {
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isModEnabled()) {
+                        autoGG = true;
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isSecondaryEnabled()) {
+                        autoGGSecondMessage = true;
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isCasualAutoGGEnabled()) {
+                        casualAutoGG = true;
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase() != 0) {
+                        autoGGMessage = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase();
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGDelay() != 1) {
+                        autoGGFirstPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGDelay();
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase2() != 0) {
+                        autoGGMessage2 = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase2();
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().getSecondaryDelay() != 1) {
+                        autoGGSecondPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getSecondaryDelay();
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isAntiGGEnabled()) {
+                        antiGG = true;
+                    }
+                    if (AutoGG.INSTANCE.getAutoGGConfig().isAntiKarmaEnabled()) {
+                        hideKarmaMessages = true;
+                    }
+
+                    try {
+                        Field sk1erEnabled = autoGGClass.getDeclaredField("autoGGEnabled");
+                        sk1erEnabled.setAccessible(true);
+                        sk1erEnabled.set(AutoGG.INSTANCE.getAutoGGConfig(), false);
+
+                        AutoGG.INSTANCE.getAutoGGConfig().markDirty();
+                        AutoGG.INSTANCE.getAutoGGConfig().writeData();
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+
+                    Notifications.INSTANCE.send("Hytils Reborn", "AutoGG settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings, and remove Sk1erLLC's AutoGG.", null, Units.seconds(5));
+                }
+
+                try {
+                    Class.forName("club.sk1er.lobbysounds.config.Sounds");
+                    boolean modified = false;
+                    if (Sounds.DISABLE_SLIME_SOUNDS) {
+                        lobbyDisableSlimeSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_DRAGON_SOUNDS) {
+                        lobbyDisableDragonSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_WITHER_SOUNDS) {
+                        lobbyDisableWitherSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_ITEM_PICKUP_SOUNDS) {
+                        lobbyDisableItemPickupSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_EXPERIENCE_SOUNDS) {
+                        lobbyDisableExperienceOrbSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_TNT_PRIME_SOUNDS) {
+                        lobbyDisablePrimedTntSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_EXPLOSION_SOUNDS) {
+                        lobbyDisableExplosionSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_DELIVERY_MAN_SOUNDS) {
+                        lobbyDisableDeliveryManSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_NOTE_SOUNDS) {
+                        lobbyDisableNoteBlockSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_FIREWORKS_SOUNDS) {
+                        lobbyDisableFireworkSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_LEVELUP_SOUNDS) {
+                        lobbyDisableLevelupSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_ARROW_SOUNDS) {
+                        lobbyDisableArrowSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_BAT_SOUNDS) {
+                        lobbyDisableBatSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_FIRE_SOUNDS) {
+                        lobbyDisableFireSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_ENDERMEN_SOUNDS) {
+                        lobbyDisableEndermanSounds = true;
+                        modified = true;
+                    }
+                    if (Sounds.DISABLE_STEP_SOUNDS) {
+                        lobbyDisableSteppingSounds = true;
+                        modified = true;
+                    }
+
+                    if (Sounds.DISABLE_SLIME_SOUNDS &&
+                        Sounds.DISABLE_DRAGON_SOUNDS &&
+                        Sounds.DISABLE_WITHER_SOUNDS &&
+                        Sounds.DISABLE_ITEM_PICKUP_SOUNDS &&
+                        Sounds.DISABLE_EXPERIENCE_SOUNDS &&
+                        Sounds.DISABLE_TNT_PRIME_SOUNDS &&
+                        Sounds.DISABLE_EXPLOSION_SOUNDS &&
+                        Sounds.DISABLE_DELIVERY_MAN_SOUNDS &&
+                        Sounds.DISABLE_NOTE_SOUNDS &&
+                        Sounds.DISABLE_FIREWORKS_SOUNDS &&
+                        Sounds.DISABLE_LEVELUP_SOUNDS &&
+                        Sounds.DISABLE_ARROW_SOUNDS &&
+                        Sounds.DISABLE_BAT_SOUNDS &&
+                        Sounds.DISABLE_FIRE_SOUNDS &&
+                        Sounds.DISABLE_ENDERMEN_SOUNDS &&
+                        Sounds.DISABLE_STEP_SOUNDS) {
+                        silentLobby = true;
+                        lobbyDisableDoorSounds = true;
+                        lobbyDisablePortalSounds = true;
+                    }
+
+                    if (modified) {
+                        Notifications.INSTANCE.send("Hytils Reborn", "Lobby Sounds settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings, and remove Sk1erLLC's Lobby Sounds.", null, Units.seconds(5));
+                    }
+                } catch (ClassNotFoundException ignored) {
+
+                }
+            }
+            configNumber = 3; // set this to the current config version
             save();
         }
 
         addDependency("autoQueueDelay", "autoQueue");
 
         addDependency("gexpMode", "autoGetGEXP");
+
+        addDependency("autoGGSecondMessage", "autoGG");
+        addDependency("casualAutoGG", "autoGG");
+        addDependency("autoGGMessage", "autoGG");
+        addDependency("autoGGFirstPhraseDelay", "autoGG");
+        addDependency("autoGGMessage2", "autoGG");
+        addDependency("autoGGSecondPhraseDelay", "autoGG");
+
+        BooleanSupplier autoGGEnabled = () -> !HytilsReborn.INSTANCE.isSk1erAutoGG || !AutoGG.INSTANCE.getAutoGGConfig().isModEnabled();
+
+        addDependency("autoGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGSecondMessage", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("casualAutoGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGMessage", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGFirstPhraseDelay", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGMessage2", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("autoGGSecondPhraseDelay", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("antiGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
 
         addDependency("glPhrase", "autoGL");
 
@@ -1101,6 +1474,14 @@ public class HytilsConfig extends Config {
         //addDependency("editHeightOverlay", "heightOverlay");
         addDependency("manuallyEditHeightOverlay", "heightOverlay");
         //addDependency("editHeightOverlay", "manuallyEditHeightOverlay");
+
+        Arrays.asList(
+            "lobbyDisableSteppingSounds", "lobbyDisableSlimeSounds", "lobbyDisableDragonSounds", "lobbyDisableWitherSounds",
+            "lobbyDisableItemPickupSounds", "lobbyDisableExperienceOrbSounds", "lobbyDisablePrimedTntSounds",
+            "lobbyDisableExplosionSounds", "lobbyDisableDeliveryManSounds", "lobbyDisableMysteryBoxSounds",
+            "lobbyDisableFireworkSounds", "lobbyDisableLevelupSounds", "lobbyDisableArrowSounds", "lobbyDisableBatSounds",
+            "lobbyDisableFireSounds", "lobbyDisableEndermanSounds", "lobbyDisableDoorSounds", "lobbyDisablePortalSounds"
+        ).forEach(property -> addDependency(property, "Silent Lobby", () -> !silentLobby));
     }
 
     public void hideTabulous() {

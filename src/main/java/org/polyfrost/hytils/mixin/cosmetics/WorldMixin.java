@@ -31,9 +31,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(World.class)
 public class WorldMixin {
-
     @Inject(method = "spawnParticle(IZDDDDDD[I)V", at = @At("HEAD"), cancellable = true)
-    private void removeParticles(int particleID, boolean p_175720_2_, double xCood, double yCoord, double zCoord, double xOffset, double yOffset, double zOffset, int[] p_175720_15_, CallbackInfo ci) {
+    private void hytils$removeParticles(int particleID, boolean p_175720_2_, double xCood, double yCoord, double zCoord, double xOffset, double yOffset, double zOffset, int[] p_175720_15_, CallbackInfo ci) {
         if ((HytilsConfig.hideDuelsCosmetics && HypixelUtils.getLocation().getGameType().orElse(null) == GameType.DUELS) ||
             (HytilsConfig.hideArcadeCosmetics && HypixelUtils.getLocation().getGameType().orElse(null) == GameType.ARCADE) && HypixelUtils.getLocation().inGame()) {
             String particleName = EnumParticleTypes.getParticleFromId(particleID).getParticleName();

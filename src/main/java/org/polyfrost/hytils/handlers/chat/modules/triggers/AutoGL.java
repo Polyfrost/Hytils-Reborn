@@ -33,8 +33,12 @@ public class AutoGL implements ChatReceiveModule {
     }
 
     @Override
-    public int getPriority() {
-        return 3;
+    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()).trim();
+        if (message.contains(": ")) return;
+        if (message.endsWith("The game starts in 5 seconds!")) {
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/ac " + getGLMessage());
+        }
     }
 
     @Override
@@ -43,11 +47,7 @@ public class AutoGL implements ChatReceiveModule {
     }
 
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()).trim();
-        if (message.contains(": ")) return;
-        if (message.endsWith("The game starts in 5 seconds!")) {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/ac " + getGLMessage());
-        }
+    public int getPriority() {
+        return 3;
     }
 }

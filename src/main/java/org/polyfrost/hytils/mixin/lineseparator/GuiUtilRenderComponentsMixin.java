@@ -30,10 +30,9 @@ import java.util.List;
 
 @Mixin(GuiUtilRenderComponents.class)
 public class GuiUtilRenderComponentsMixin {
-
     @Dynamic
     @Redirect(method = "splitText", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 1))
-    private static boolean trimLineSeparator(List<IChatComponent> list, Object obj) {
+    private static boolean hytils$trimLineSeparator(List<IChatComponent> list, Object obj) {
         boolean value = false;
         if (obj instanceof IChatComponent) {
             value = list.add((IChatComponent) obj);

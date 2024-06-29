@@ -39,12 +39,12 @@ public class GuiIngameForgeMixin_TitleEvent extends GuiIngame {
     }
 
     @Redirect(method = "renderHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/storage/WorldInfo;isHardcoreModeEnabled()Z", remap = true))
-    private boolean isHardcore(WorldInfo instance) {
+    private boolean hytils$isHardcore(WorldInfo instance) {
         return instance.isHardcoreModeEnabled() || HytilsReborn.INSTANCE.getHardcoreStatus().shouldChangeStyle();
     }
 
     @Inject(method = "renderTitle", at = @At("HEAD"), cancellable = true)
-    private void postTitleEvent(int l, int age, float opacity, CallbackInfo ci) {
+    private void hytils$postTitleEvent(int l, int age, float opacity, CallbackInfo ci) {
         if (HypixelUtils.isHypixel()) {
             TitleEvent event = new TitleEvent(displayedTitle, displayedSubTitle);
             MinecraftForge.EVENT_BUS.post(event);

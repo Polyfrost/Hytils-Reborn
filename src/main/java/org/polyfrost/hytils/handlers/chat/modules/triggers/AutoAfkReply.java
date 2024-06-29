@@ -18,42 +18,34 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import org.polyfrost.hytils.HytilsReborn;
-import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
+import org.polyfrost.hytils.config.HytilsConfig;
+import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
+import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.universal.UChat;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 
-public class SilentRemoval implements ChatReceiveModule {
-    private static final Set<String> silentUsers = new HashSet<>();
-
+public class AutoAfkReply implements ChatReceiveModule {
+    // TODO: maybe write a general afk checker for skyblock afkers, as they won't be in limbo
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final Matcher matcher = getLanguage().silentRemovalLeaveMessageRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
-
+        if (!"limbo".equals(HypixelUtils.getLocation().getServerName().orElse(null))) return;
+        String message = event.message.getUnformattedText();
+        Matcher matcher = getLanguage().autoAfkReplyPatternRegex.matcher(message);
         if (matcher.matches()) {
-            // not a friend anymore :(
-            for (String friend : silentUsers) {
-                if (matcher.group("player").equalsIgnoreCase(friend)) {
-                    HytilsReborn.INSTANCE.getCommandQueue().queue("/f remove " + friend);
-                    silentUsers.remove(friend);
-                    Notifications.INSTANCE.send("Hytils Reborn", "Silently removed " + friend + " from your friends list.");
-                }
-            }
+            UChat.say("/msg " + matcher.group(2) + " Hey "  + matcher.group(2) + ", I am currently AFK!");
         }
     }
 
-    public static Set<String> getSilentUsers() {
-        return silentUsers;
+    @Override
+    public boolean isEnabled() {
+        return HytilsConfig.autoReplyAfk;
     }
 
     @Override
     public int getPriority() {
-        return -10;
+        return -1;
     }
 }

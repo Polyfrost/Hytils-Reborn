@@ -29,7 +29,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.TimeUnit;
 
 public class AutoPartyWarpConfirm implements ChatReceiveModule {
-
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
@@ -40,12 +39,12 @@ public class AutoPartyWarpConfirm implements ChatReceiveModule {
     }
 
     @Override
-    public int getPriority() {
-        return 3;
+    public boolean isEnabled() {
+        return HytilsConfig.autoPartyWarpConfirm;
     }
 
     @Override
-    public boolean isEnabled() {
-        return HytilsConfig.autoPartyWarpConfirm;
+    public int getPriority() {
+        return 3;
     }
 }

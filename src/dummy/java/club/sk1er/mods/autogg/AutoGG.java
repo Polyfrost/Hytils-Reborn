@@ -16,17 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.polyfrost.hytils.mixin;
+package club.sk1er.mods.autogg;
 
-import net.minecraft.client.gui.GuiIngame;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
+import club.sk1er.mods.autogg.config.AutoGGConfig;
 
-@Mixin(GuiIngame.class)
-public interface GuiIngameAccessor {
-    @Accessor("displayedTitle")
-    void setDisplayedTitle(String title);
+public class AutoGG {
+    public static AutoGG INSTANCE = new AutoGG();
 
-    @Accessor("displayedSubTitle")
-    void setDisplayedSubTitle(String subtitle);
+    public AutoGGConfig getAutoGGConfig() {
+        return new AutoGGConfig();
+    }
 }

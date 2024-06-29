@@ -28,9 +28,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
 public class MinecraftMixin_LimboLimiter {
-
     @Inject(method = "getLimitFramerate", at = @At("HEAD"), cancellable = true)
-    private void limitFramerate(CallbackInfoReturnable<Integer> cir) {
+    private void hytils$limitFramerate(CallbackInfoReturnable<Integer> cir) {
         if (LimboLimiter.shouldLimitFramerate()) cir.setReturnValue(HytilsConfig.limboFPS);
     }
 }

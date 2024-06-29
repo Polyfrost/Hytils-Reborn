@@ -47,19 +47,9 @@ public class AutoVictory implements ChatReceiveResetModule {
     }
 
     @Override
-    public int getPriority() {
-        return 3;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return HytilsConfig.autoGetWinstreak || HytilsConfig.autoGetGEXP;
-    }
-
-    @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String unformattedText = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText());
-        if (PatternHandler.INSTANCE.gameEnd.size() != 0) {
+        if (!PatternHandler.INSTANCE.gameEnd.isEmpty()) {
             if (!victoryDetected) { // prevent victories being detected twice
                 Multithreading.submit(() -> { //run this async as getting from the API normally would freeze minecraft
                     for (Pattern triggers : PatternHandler.INSTANCE.gameEnd) {
@@ -153,4 +143,15 @@ public class AutoVictory implements ChatReceiveResetModule {
         }
         return false;
     }
+
+    @Override
+    public boolean isEnabled() {
+        return HytilsConfig.autoGetWinstreak || HytilsConfig.autoGetGEXP;
+    }
+
+    @Override
+    public int getPriority() {
+        return 3;
+    }
+
 }

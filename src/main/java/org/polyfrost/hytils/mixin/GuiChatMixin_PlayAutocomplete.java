@@ -34,7 +34,7 @@ public class GuiChatMixin_PlayAutocomplete extends GuiScreen {
     protected GuiTextField inputField;
 
     @Redirect(method = "autocompletePlayerNames", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiNewChat;printChatMessageWithOptionalDeletion(Lnet/minecraft/util/IChatComponent;I)V"))
-    private void redirectAutocomplete(GuiNewChat instance, IChatComponent chatComponent, int chatLineId) {
+    private void hytils$redirectAutocomplete(GuiNewChat instance, IChatComponent chatComponent, int chatLineId) {
         if (!this.inputField.getText().startsWith("/play ")) {
             instance.printChatMessageWithOptionalDeletion(chatComponent, 1);
         }

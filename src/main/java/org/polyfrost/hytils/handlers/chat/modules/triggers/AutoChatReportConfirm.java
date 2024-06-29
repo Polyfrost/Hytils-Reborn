@@ -28,12 +28,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.TimeUnit;
 
 public class AutoChatReportConfirm implements ChatReceiveModule {
-
-    @Override
-    public int getPriority() {
-        return 3;
-    }
-
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         if (event.message.getUnformattedText().equals(getLanguage().autoChatReportConfirm)) {
@@ -45,5 +39,10 @@ public class AutoChatReportConfirm implements ChatReceiveModule {
     @Override
     public boolean isEnabled() {
         return HytilsConfig.autoChatReportConfirm;
+    }
+
+    @Override
+    public int getPriority() {
+        return 3;
     }
 }

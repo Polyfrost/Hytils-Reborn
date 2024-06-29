@@ -33,17 +33,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 public class AutoWB implements ChatReceiveModule {
-
-    @Override
-    public int getPriority() {
-        return -6;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return HytilsConfig.autoWB;
-    }
-
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String msg = event.message.getFormattedText().trim();
@@ -94,5 +83,15 @@ public class AutoWB implements ChatReceiveModule {
         } else {
             return newMessage.replace("%player%", name);
         }
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return HytilsConfig.autoWB;
+    }
+
+    @Override
+    public int getPriority() {
+        return -6;
     }
 }

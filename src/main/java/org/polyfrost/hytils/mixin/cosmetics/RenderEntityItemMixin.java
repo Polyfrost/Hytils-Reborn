@@ -27,6 +27,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.*;
 import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -36,15 +37,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Mixin(RenderEntityItem.class)
 public class RenderEntityItemMixin {
     @Inject(method = "doRender(Lnet/minecraft/entity/item/EntityItem;DDDFF)V", at = @At("HEAD"), cancellable = true)
-    private void removeItemCosmetics(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
+    private void hytils$removeItemCosmetics(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         ItemStack stack = entity.getEntityItem();
         if (stack == null) return;
-        if ((HytilsConfig.hideDuelsCosmetics && HypixelUtils.getLocation().getGameType().orElse(null) == GameType.DUELS) || (HytilsConfig.hideArcadeCosmetics &&
+        if ((HytilsConfig.hideDuelsCosmetics &&
+            HypixelUtils.getLocation().getGameType().orElse(null) == GameType.DUELS) || (HytilsConfig.hideArcadeCosmetics &&
             HypixelUtils.getLocation().getGameType().orElse(null) == GameType.ARCADE) && HypixelUtils.getLocation().inGame() &&
-            (stack.getItem() instanceof ItemDoublePlant || stack.getItem() instanceof ItemDye || stack.getItem() instanceof ItemRecord || shouldRemove(stack.getItem().getUnlocalizedName()) || (stack.getItem() instanceof ItemBlock && (shouldRemove(((ItemBlock) stack.getItem()).block.getUnlocalizedName()) || ((ItemBlock) stack.getItem()).block instanceof BlockPumpkin)))) ci.cancel();
+            (stack.getItem() instanceof ItemDoublePlant || stack.getItem() instanceof ItemDye || stack.getItem() instanceof ItemRecord || hytils$shouldRemove(stack.getItem().getUnlocalizedName()) || (stack.getItem() instanceof ItemBlock && (hytils$shouldRemove(((ItemBlock) stack.getItem()).block.getUnlocalizedName()) || ((ItemBlock) stack.getItem()).block instanceof BlockPumpkin)))) ci.cancel();
     }
 
-    private boolean shouldRemove(String name) {
+    @Unique
+    private boolean hytils$shouldRemove(String name) {
         AtomicBoolean yes = new AtomicBoolean();
         CosmeticsHandler.INSTANCE.itemCosmetics.forEach((itemName) -> {
             if (name.equals(itemName)) yes.set(true);

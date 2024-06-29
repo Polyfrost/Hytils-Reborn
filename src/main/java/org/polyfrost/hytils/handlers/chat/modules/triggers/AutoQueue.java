@@ -37,14 +37,6 @@ public class AutoQueue implements ChatReceiveModule {
     private String command = null;
     private boolean sentCommand;
 
-    /**
-     * We want this to activate early so that it catches the queue message.
-     */
-    @Override
-    public int getPriority() {
-        return -11;
-    }
-
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         if (!HytilsConfig.autoQueue) {
@@ -65,11 +57,6 @@ public class AutoQueue implements ChatReceiveModule {
                 this.command = "/play " + game.toLowerCase();
             }
         }
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return HytilsConfig.autoQueue;
     }
 
     @SubscribeEvent
@@ -103,5 +90,18 @@ public class AutoQueue implements ChatReceiveModule {
             }
 
         }, HytilsConfig.autoQueueDelay, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return HytilsConfig.autoQueue;
+    }
+
+    /**
+     * We want this to activate early so that it catches the queue message.
+     */
+    @Override
+    public int getPriority() {
+        return -11;
     }
 }

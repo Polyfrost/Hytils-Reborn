@@ -106,15 +106,14 @@ dependencies {
     compileOnly("org.polyfrost.oneconfig:ui:1.0.0-alpha.14")
     modCompileOnly("org.polyfrost.oneconfig:$platform:1.0.0-alpha.14")
 
-
-    modRuntimeOnly("me.djtheredstoner:DevAuth-${if (platform.isFabric) "fabric" else if (platform.isLegacyForge) "forge-legacy" else "forge-latest"}:1.1.2")
+    modRuntimeOnly("me.djtheredstoner:DevAuth-${if (platform.isFabric) "fabric" else if (platform.isLegacyForge) "forge-legacy" else "forge-latest"}:1.2.0")
 
     shade("com.github.ben-manes.caffeine:caffeine:2.9.3")
 
     // If we are building for legacy forge, includes the launch wrapper with `shade` as we configured earlier.
     if (platform.isLegacyForge) {
         compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
-        shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta+")
+        shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta17")
     }
 }
 

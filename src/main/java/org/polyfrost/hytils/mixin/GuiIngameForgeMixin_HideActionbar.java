@@ -30,7 +30,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = GuiIngameForge.class, remap = false, priority = 990)
 public class GuiIngameForgeMixin_HideActionbar {
     @Inject(method = "renderRecordOverlay", at = @At("HEAD"), cancellable = true)
-    private void cancelActionBar(int width, int height, float partialTicks, CallbackInfo ci) {
+    private void hytils$cancelActionBar(int width, int height, float partialTicks, CallbackInfo ci) {
         if (HypixelUtils.isHypixel() && ((HytilsConfig.hideHousingActionBar && HypixelUtils.getLocation().getGameType().orElse(null) == GameType.HOUSING) || (HytilsConfig.hideDropperActionBar && "DROPPER".equals(HypixelUtils.getLocation().getMode().orElse(null)))))
             ci.cancel();
     }

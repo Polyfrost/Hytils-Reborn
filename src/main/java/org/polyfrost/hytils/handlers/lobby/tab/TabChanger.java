@@ -99,7 +99,7 @@ public class TabChanger {
             }
 
             HypixelUtils.Location location = HypixelUtils.getLocation();
-            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && (location.getGameType().orElse(null) != GameType.HOUSING || !location.inGame())) {
+            if (HytilsConfig.hideGuildTagsInTab && name.endsWith("]") && (location.getGameType().orElse(null) != GameType.HOUSING && !location.inGame())) {
                 // trim off the guild tag
                 // e.g. Steve §6[GUILD]
                 name = name.substring(0, name.lastIndexOf("[") - 3);

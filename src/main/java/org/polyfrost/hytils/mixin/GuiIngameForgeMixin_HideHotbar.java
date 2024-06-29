@@ -31,7 +31,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = GuiIngameForge.class, remap = false)
 public class GuiIngameForgeMixin_HideHotbar {
     @Inject(method = "renderHealth", at = @At("HEAD"), cancellable = true)
-    public void cancelHealthbar(int width, int height, CallbackInfo ci) {
+    public void hytils$cancelHealthbar(int width, int height, CallbackInfo ci) {
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (HytilsConfig.hideHudElements && HypixelUtils.isHypixel()) {
             if (!location.inGame() || !location.getGameType().isPresent() || "limbo".equals(location.getServerName().orElse(null))) {
@@ -77,7 +77,7 @@ public class GuiIngameForgeMixin_HideHotbar {
     }
 
     @Inject(method = "renderFood", at = @At("HEAD"), cancellable = true)
-    public void cancelFood(int width, int height, CallbackInfo ci) {
+    public void hytils$cancelFood(int width, int height, CallbackInfo ci) {
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (HytilsConfig.hideHudElements && HypixelUtils.isHypixel()) {
             if (!location.inGame() || !location.getGameType().isPresent() || "limbo".equals(location.getServerName().orElse(null))) {
@@ -130,7 +130,7 @@ public class GuiIngameForgeMixin_HideHotbar {
     }
 
     @Inject(method = "renderArmor", at = @At("HEAD"), cancellable = true)
-    public void cancelArmor(int width, int height, CallbackInfo ci) {
+    public void hytils$cancelArmor(int width, int height, CallbackInfo ci) {
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (HytilsConfig.hideHudElements && HypixelUtils.isHypixel()) {
             if (!location.inGame() || !location.getGameType().isPresent() || "limbo".equals(location.getServerName().orElse(null))) {
@@ -166,7 +166,7 @@ public class GuiIngameForgeMixin_HideHotbar {
     }
 
     @Inject(method = "renderAir", at = @At("HEAD"), cancellable = true)
-    public void cancelAir(int width, int height, CallbackInfo ci) {
+    public void hytils$cancelAir(int width, int height, CallbackInfo ci) {
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (HytilsConfig.hideHudElements && HypixelUtils.isHypixel()) {
             if (!location.inGame() || !location.getGameType().isPresent()) {

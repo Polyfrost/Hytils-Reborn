@@ -49,6 +49,7 @@ public class ChatHandler {
         // Blockers
 
         this.registerModule(new AdBlocker());
+        this.registerModule(new AntiGG());
         this.registerModule(new AntiGL());
         this.registerModule(new AutoWB());
         this.registerModule(new BedwarsAdvertisementsRemover());
@@ -66,6 +67,7 @@ public class ChatHandler {
         this.registerModule(new GuildMOTD());
         this.registerModule(new HotPotatoRemover());
         this.registerModule(new HypeLimitReminderRemover());
+        this.registerModule(new KarmaRemover());
         this.registerModule(new LobbyFishingAnnouncementRemover());
         this.registerModule(new LobbyStatusRemover());
         this.registerModule(new MvpEmotesRemover());
@@ -94,10 +96,12 @@ public class ChatHandler {
         this.registerModule(new WhitePrivateMessages());
 
         // Triggers
+        this.registerModule(new AutoAfkReply());
         this.registerModule(new AutoChatReportConfirm());
         this.registerModule(new AutoChatReportConfirm());
         this.registerModule(new AutoChatSwapper());
         this.registerModule(new AutoFriend());
+        this.registerModule(new AutoGG());
         this.registerModule(new AutoGL());
         this.registerModule(new AutoPartyWarpConfirm());
         this.registerModule(new AutoVictory());
