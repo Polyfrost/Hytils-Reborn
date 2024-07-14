@@ -43,7 +43,6 @@ public class HytilsCommand {
 
     @Command
     private void main() {
-        //TODO
         //HytilsReborn.INSTANCE.getConfig().openGui();
     }
 

@@ -61,7 +61,8 @@ loom {
     if (project.platform.isLegacyForge) {
         runConfigs {
             "client" {
-                programArgs("--tweakClass", "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
+                programArgs("--tweakClass", "org.polyfrost.oneconfig.internal.legacy.OneConfigTweaker")
+                programArgs("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
                 property("mixin.debug.export", "true")
             }
         }
@@ -100,11 +101,13 @@ repositories {
 // Configures the libraries/dependencies for your mod.
 dependencies {
     // Adds the OneConfig library, so we can develop with it.
-    compileOnly("org.polyfrost.oneconfig:config-impl:1.0.0-alpha.14")
-    compileOnly("org.polyfrost.oneconfig:commands:1.0.0-alpha.14")
-    compileOnly("org.polyfrost.oneconfig:events:1.0.0-alpha.14")
-    compileOnly("org.polyfrost.oneconfig:ui:1.0.0-alpha.14")
-    modCompileOnly("org.polyfrost.oneconfig:$platform:1.0.0-alpha.14")
+    val oneconfig = "1.0.0-alpha.16"
+    implementation("org.polyfrost.oneconfig:config-impl:$oneconfig")
+    implementation("org.polyfrost.oneconfig:commands:$oneconfig")
+    implementation("org.polyfrost.oneconfig:events:$oneconfig")
+    implementation("org.polyfrost.oneconfig:ui:$oneconfig")
+    implementation("org.polyfrost.oneconfig:internal:$oneconfig")
+    modImplementation("org.polyfrost.oneconfig:$platform:$oneconfig")
 
     modRuntimeOnly("me.djtheredstoner:DevAuth-${if (platform.isFabric) "fabric" else if (platform.isLegacyForge) "forge-legacy" else "forge-latest"}:1.2.0")
 

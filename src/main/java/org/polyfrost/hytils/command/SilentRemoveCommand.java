@@ -33,6 +33,7 @@ public class SilentRemoveCommand {
 
     protected static final Pattern usernameRegex = Pattern.compile("\\w{1,16}");
 
+    @Command
     public void main() {
         UChat.chat(ChatColor.RED + "Usage: /silentremove <player>");
     }

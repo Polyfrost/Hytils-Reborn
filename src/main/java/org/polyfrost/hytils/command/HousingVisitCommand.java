@@ -76,7 +76,6 @@ public class HousingVisitCommand {
         }
     }
 
-    //TODO this probably wont get excluded as a command
     private void visit(final long time) {
         if (playerName != null) {
             Multithreading.schedule(() -> HytilsReborn.INSTANCE.getCommandQueue().queue("/visit " + playerName), time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
