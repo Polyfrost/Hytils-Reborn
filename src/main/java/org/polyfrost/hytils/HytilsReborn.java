@@ -109,7 +109,6 @@ public class HytilsReborn {
         CommandManager.INSTANCE.registerCommand(new HousingVisitCommand());
         CommandManager.INSTANCE.registerCommand(new HytilsCommand());
         CommandManager.INSTANCE.registerCommand(new IgnoreTemporaryCommand());
-        CommandManager.INSTANCE.registerCommand(new LimboCommand());
         CommandManager.INSTANCE.registerCommand(new RequeueCommand());
         CommandManager.INSTANCE.registerCommand(new SilentRemoveCommand());
         CommandManager.INSTANCE.registerCommand(new SkyblockVisitCommand());
