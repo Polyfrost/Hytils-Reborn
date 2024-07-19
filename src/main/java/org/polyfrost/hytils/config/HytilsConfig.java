@@ -1453,10 +1453,6 @@ public class HytilsConfig extends Config {
             if (!cleanerGameStartAnnouncements) GameStartCompactor.lastMessage = null;
         });
 
-        addDependency("playerCountBeforePlayerName", "gameStatusRestyle");
-        addDependency("playerCountOnPlayerLeave", "gameStatusRestyle");
-        addDependency("padPlayerCount", "gameStatusRestyle");
-
         addDependency("blockNumber", "blockNotify");
         addDependency("blockNotifySound", "blockNotify");
         addDependency("blockNotifySound", "blockNotify");
