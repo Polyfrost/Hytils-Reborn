@@ -323,7 +323,7 @@ public class HytilsConfig extends Config {
 
     @Switch(
         name = "Short Private Message Channel Names",
-        description = "Abbreviate private message channel names\n§eExample: §dTo and §dFrom §e-> PM",
+        description = "Abbreviate private message channel names.\n§eExample: §dTo and §dFrom §e-> PM",
         category = "Chat", subcategory = "Visual"
     )
     public static boolean pmShortChannelNames;
