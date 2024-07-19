@@ -318,6 +318,13 @@ public class HytilsConfig extends Config {
     public static boolean shortChannelNames;
 
     @Switch(
+        title = "Short Private Message Channel Names",
+        description = "Abbreviate private message channel names.\n§eExample: §dTo and §dFrom §e-> PM",
+        category = "Chat", subcategory = "Visual"
+    )
+    public static boolean pmShortChannelNames;
+
+    @Switch(
         title = "Party Chat Swapper",
         description = "Automatically change to and out of a party channel when joining/leaving a party.",
         category = "Chat", subcategory = "Parties"
@@ -1438,10 +1445,6 @@ public class HytilsConfig extends Config {
         addCallback("cleanerGameStartAnnouncements", () -> {
             if (!cleanerGameStartAnnouncements) GameStartCompactor.lastMessage = null;
         });
-
-        addDependency("playerCountBeforePlayerName", "gameStatusRestyle");
-        addDependency("playerCountOnPlayerLeave", "gameStatusRestyle");
-        addDependency("padPlayerCount", "gameStatusRestyle");
 
         addDependency("blockNumber", "blockNotify");
         addDependency("blockNotifySound", "blockNotify");
