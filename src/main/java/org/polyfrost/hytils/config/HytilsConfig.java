@@ -322,6 +322,13 @@ public class HytilsConfig extends Config {
     public static boolean shortChannelNames;
 
     @Switch(
+        name = "Short Private Message Channel Names",
+        description = "Abbreviate private message channel names.\n§eExample: §dTo and §dFrom §e-> PM",
+        category = "Chat", subcategory = "Visual"
+    )
+    public static boolean pmShortChannelNames;
+
+    @Switch(
         name = "Party Chat Swapper",
         description = "Automatically change to and out of a party channel when joining/leaving a party.",
         category = "Chat", subcategory = "Parties"

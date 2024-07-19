@@ -97,6 +97,18 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             }
         }
 
+        if (HytilsConfig.pmShortChannelNames) {
+            Matcher privateMessageToMatcher = language.chatRestylerPrivateMessageToPatternRegex.matcher(message);
+            Matcher privateMessageFromMatcher = language.chatRestylerPrivateMessageFromPatternRegex.matcher(message);
+            if (privateMessageToMatcher.find()) {
+                event.message = shortenChannelName(event.message, language.chatRestylerPrivateMessageToPatternRegex.pattern(),
+                    "§d" + "PM >", true);
+            } else if (privateMessageFromMatcher.find()) {
+                event.message = shortenChannelName(event.message, language.chatRestylerPrivateMessageFromPatternRegex.pattern(),
+                    "§5" + "PM <", true);
+            }
+        }
+
         if (HytilsConfig.coloredStatuses) {
             Matcher statusMatcher = getLanguage().chatRestylerStatusPatternRegex.matcher(event.message.getFormattedText().trim());
             if (statusMatcher.matches()) {
