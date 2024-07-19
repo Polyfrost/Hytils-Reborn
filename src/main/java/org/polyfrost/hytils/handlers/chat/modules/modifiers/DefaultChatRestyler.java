@@ -82,8 +82,6 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             Matcher guildMatcher = language.chatRestylerGuildPatternRegex.matcher(message);
             Matcher friendMatcher = language.chatRestylerFriendPatternRegex.matcher(message);
             Matcher officerMatcher = language.chatRestylerOfficerPatternRegex.matcher(message);
-            Matcher privateMessageToMatcher = language.chatRestylerPrivateMessageToPatternRegex.matcher(message);
-            Matcher privateMessageFromMatcher = language.chatRestylerPrivateMessageFromPatternRegex.matcher(message);
             if (partyMatcher.find()) {
                 event.message = shortenChannelName(event.message, language.chatRestylerPartyPatternRegex.pattern(),
                     partyMatcher.group(1) + "P " + partyMatcher.group(3), false);
@@ -96,7 +94,13 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             } else if (officerMatcher.find()) {
                 event.message = shortenChannelName(event.message, language.chatRestylerOfficerPatternRegex.pattern(),
                     officerMatcher.group(1) + "O >", false);
-            } else if (privateMessageToMatcher.find()) {
+            }
+        }
+
+        if (HytilsConfig.pmShortChannelNames) {
+            Matcher privateMessageToMatcher = language.chatRestylerPrivateMessageToPatternRegex.matcher(message);
+            Matcher privateMessageFromMatcher = language.chatRestylerPrivateMessageFromPatternRegex.matcher(message);
+            if (privateMessageToMatcher.find()) {
                 event.message = shortenChannelName(event.message, language.chatRestylerPrivateMessageToPatternRegex.pattern(),
                     "§d" + "PM >", true);
             } else if (privateMessageFromMatcher.find()) {
