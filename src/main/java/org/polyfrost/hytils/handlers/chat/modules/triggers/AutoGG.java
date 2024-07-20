@@ -32,23 +32,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 public class AutoGG implements ChatReceiveModule {
-    private static final String[] ggMessagesOne = {"gg", "GG", "gf", "Good Game", "Good Fight", "Good Round! :D"};
-    private static final String[] ggMessagesTwo = {"Have a good day!", "<3", "AutoGG By Hytils Reborn!", "gf", "Good Fight", "Good Round", ":D", "Well played!", "wp"};
-
-    private static String getGGMessageOne() {
-        return ggMessagesOne[HytilsConfig.autoGGMessage];
-    }
-    private static String getGGMessageTwo() {
-        return ggMessagesTwo[HytilsConfig.autoGGMessage2];
-    }
-
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
         if (!hasGameEnded(message)) return;
-        Multithreading.schedule(() -> UChat.say("/ac " + getGGMessageOne()), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
+        Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.autoGGMessage), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
         if (HytilsConfig.autoGGSecondMessage)
-            Multithreading.schedule(() -> UChat.say("/ac " + getGGMessageTwo()), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
+            Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.autoGGMessage2), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
     }
 
     private boolean hasGameEnded(String message) {

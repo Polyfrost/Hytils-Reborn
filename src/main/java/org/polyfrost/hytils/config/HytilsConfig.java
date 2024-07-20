@@ -162,13 +162,12 @@ public class HytilsConfig extends Config {
     )
     public static boolean antiGG;
 
-    @Dropdown(
+    @Text(
         name = "Auto GG First Message",
         description = "Choose what message is said on game completion.",
-        category = "Chat", subcategory = "Automatic",
-        options = {"gg", "GG", "gf", "Good Game", "Good Fight", "Good Round! :D"}
+        category = "Chat", subcategory = "Automatic"
     )
-    public static int autoGGMessage = 0;
+    public static String autoGGMessage = "gg";
 
     @Slider(
         name = "Auto GG First Phrase Delay",
@@ -178,13 +177,12 @@ public class HytilsConfig extends Config {
     )
     public static float autoGGFirstPhraseDelay = 1;
 
-    @Dropdown(
+    @Text(
         name = "Auto GG Second Message",
         description = "Send a secondary message sent after the first GG message.",
-        category = "Chat", subcategory = "Automatic",
-        options = {"Have a good day!", "<3", "AutoGG By Hytils Reborn!", "gf", "Good Fight", "Good Round", ":D", "Well played!", "wp"}
+        category = "Chat", subcategory = "Automatic"
     )
-    public static int autoGGMessage2 = 0;
+    public static String autoGGMessage2 = "Have a good day!";
 
     @Slider(
         name = "Auto GG Second Phrase Delay",
@@ -1282,14 +1280,8 @@ public class HytilsConfig extends Config {
                     if (AutoGG.INSTANCE.getAutoGGConfig().isCasualAutoGGEnabled()) {
                         casualAutoGG = true;
                     }
-                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase() != 0) {
-                        autoGGMessage = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase();
-                    }
                     if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGDelay() != 1) {
                         autoGGFirstPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGDelay();
-                    }
-                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase2() != 0) {
-                        autoGGMessage2 = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase2();
                     }
                     if (AutoGG.INSTANCE.getAutoGGConfig().getSecondaryDelay() != 1) {
                         autoGGSecondPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getSecondaryDelay();
