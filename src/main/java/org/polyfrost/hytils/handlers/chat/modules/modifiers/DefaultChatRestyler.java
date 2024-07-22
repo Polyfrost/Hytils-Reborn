@@ -102,10 +102,10 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             Matcher privateMessageFromMatcher = language.chatRestylerPrivateMessageFromPatternRegex.matcher(message);
             if (privateMessageToMatcher.find()) {
                 event.message = shortenChannelName(event.message, language.chatRestylerPrivateMessageToPatternRegex.pattern(),
-                    "§d" + "PM >", true);
+                    "§d" + "PM >" + privateMessageToMatcher.group(3) + ":" + privateMessageToMatcher.group(4), true);
             } else if (privateMessageFromMatcher.find()) {
                 event.message = shortenChannelName(event.message, language.chatRestylerPrivateMessageFromPatternRegex.pattern(),
-                    "§5" + "PM <", true);
+                    "§5" + "PM <" + privateMessageFromMatcher.group(3) + ":" + privateMessageFromMatcher.group(4), true);
             }
         }
 

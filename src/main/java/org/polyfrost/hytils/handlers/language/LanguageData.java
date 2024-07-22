@@ -80,8 +80,8 @@ public class LanguageData {
     private String chatRestylerFriendPattern = "^((?:\u00a7r)?\u00a7\\w)(Friend >)";
     private String chatRestylerOfficerPattern = "^((?:\u00a7r)?\u00a7\\w)(Officer >)";
     private String chatRestylerStatusPattern = "^(?<type>(?:\u00a7aFriend|\u00a7a\u00a7aF|\u00a72Guild|\u00a72\u00a72G)) > (\u00a7r|\u00a7r\u00a7r){1,2}(?<player>\u00a7[\\da-f]\\w{1,16}) \u00a7r\u00a7e(?<status>(?:joined|left))\\.\u00a7r$";
-    private String chatRestylerPrivateMessageToPattern = "^((?:\u00a7r)?\u00a7\\w)(To)";
-    private String chatRestylerPrivateMessageFromPattern = "^((?:\u00a7r)?\u00a7\\w)(From)";
+    private String chatRestylerPrivateMessageToPattern = "^((?:\u00a7r)?\u00a7\\w)(To)([^:]*):(.*)";
+    private String chatRestylerPrivateMessageFromPattern = "^((?:\u00a7r)?\u00a7\\w)(From)([^:]*):(.*)";
 
     private String autoChatSwapperPartyStatus = "^(?:You have been kicked from the party by (?:\\[.+] )?\\w{1,16}|(?:\\[.+] )?\\w{1,16} has disbanded the party!|You left the party.)$";
     private String autoChatSwapperPartyStatus2 = "^(?:You have joined (?:\\[.+] )?(?:.*)|Party Members(?:\\[.+] )?\\w{1,100}|(?:\\[.+] )?\\w{1,100} joined the(?:.*) party(?:.*))$";
