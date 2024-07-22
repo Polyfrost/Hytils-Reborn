@@ -209,7 +209,6 @@ public class DefaultChatRestyler implements ChatReceiveModule {
         String originalText = message.getUnformattedTextForChat();
         if (checkParentComponent && !originalText.contains("\u00a7")) {
             originalText = (message.getChatStyle().getFormattingCode() + originalText + EnumChatFormatting.RESET).replaceAll(pattern, replacement);
-            System.out.println(originalText);
         }
         ChatComponentText copy = (ChatComponentText) new ChatComponentText(originalText).setChatStyle(message.getChatStyle());
         for (IChatComponent sibling : message.getSiblings()) {
