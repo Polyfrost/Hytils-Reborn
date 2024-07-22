@@ -167,7 +167,7 @@ public class HytilsConfig extends Config {
         description = "Choose what message is said on game completion.",
         category = "Chat", subcategory = "Automatic"
     )
-    public static String autoGGMessage = "gg";
+    public static String ggMessage = "gg";
 
     @Slider(
         name = "Auto GG First Phrase Delay",
@@ -182,7 +182,7 @@ public class HytilsConfig extends Config {
         description = "Send a secondary message sent after the first GG message.",
         category = "Chat", subcategory = "Automatic"
     )
-    public static String autoGGMessage2 = "Have a good day!";
+    public static String ggMessage2 = "Have a good day!";
 
     @Slider(
         name = "Auto GG Second Phrase Delay",
