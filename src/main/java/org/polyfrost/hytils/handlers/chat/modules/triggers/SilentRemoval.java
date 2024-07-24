@@ -23,7 +23,7 @@ import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
+import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +42,7 @@ public class SilentRemoval implements ChatReceiveModule {
                 if (matcher.group("player").equalsIgnoreCase(friend)) {
                     HytilsReborn.INSTANCE.getCommandQueue().queue("/f remove " + friend);
                     silentUsers.remove(friend);
-                    Notifications.INSTANCE.send("Hytils Reborn", "Silently removed " + friend + " from your friends list.");
+                    Notifications.INSTANCE.enqueue(Notifications.Type.Warning, "Hytils Reborn", "Silently removed " + friend + " from your friends list.");
                 }
             }
         }

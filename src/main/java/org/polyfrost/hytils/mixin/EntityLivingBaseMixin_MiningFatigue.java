@@ -25,7 +25,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
-import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
+import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -40,7 +40,7 @@ public class EntityLivingBaseMixin_MiningFatigue {
     @Inject(method = "addPotionEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;onNewPotionEffect(Lnet/minecraft/potion/PotionEffect;)V"))
     private void hytils$onPotionEffect(PotionEffect potioneffectIn, CallbackInfo ci) {
         if (HytilsConfig.notifyMiningFatigue && potioneffectIn.getPotionID() == Potion.digSlowdown.getId() && (hytils$this instanceof EntityPlayerSP) && (!HytilsConfig.disableNotifyMiningFatigueSkyblock || !(HypixelUtils.getLocation().getGameType().orElse(null) == GameType.SKYBLOCK))) {
-            Notifications.INSTANCE.send("Hytils Reborn", "You have mining fatigue!");
+            Notifications.INSTANCE.enqueue(Notifications.Type.Warning, "Hytils Reborn", "You have mining fatigue!");
         }
     }
 }

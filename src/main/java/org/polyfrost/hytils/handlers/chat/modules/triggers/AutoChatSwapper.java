@@ -18,8 +18,6 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
-import org.polyfrost.polyui.unit.Units;
 import org.polyfrost.universal.wrappers.message.UTextComponent;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.chatting.chat.ChatTab;
@@ -58,9 +56,10 @@ public class AutoChatSwapper implements ChatReceiveModule {
                             Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> (StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/ac") || ((ChatTab) tab).getPrefix().isEmpty())).findFirst();
                             if (optional.isPresent()) {
                                 ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
-                                Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", null, Units.seconds(4), null, () -> {
-                                    ChatTabs.INSTANCE.setCurrentTab(currentTab);
-                                });
+                                //Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", null, Units.seconds(4), null, () -> {
+                                //    ChatTabs.INSTANCE.setCurrentTab(currentTab);
+                                //});
+                                //todo
                             }
                         }
                         break;
@@ -71,9 +70,10 @@ public class AutoChatSwapper implements ChatReceiveModule {
                             Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/gc")).findFirst();
                             if (optional.isPresent()) {
                                 ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
-                                Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", null, Units.seconds(4), null, () -> {
-                                    ChatTabs.INSTANCE.setCurrentTab(currentTab);
-                                });
+                                //Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", null, Units.seconds(4), null, () -> {
+                                //    ChatTabs.INSTANCE.setCurrentTab(currentTab);
+                                //});
+                                //todo
                             }
                         }
                         break;
@@ -84,9 +84,10 @@ public class AutoChatSwapper implements ChatReceiveModule {
                             Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/oc")).findFirst();
                             if (optional.isPresent()) {
                                 ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
-                                Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", null, Units.seconds(4), null, () -> {
-                                    ChatTabs.INSTANCE.setCurrentTab(currentTab);
-                                });
+                                //Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", null, Units.seconds(4), null, () -> {
+                                //    ChatTabs.INSTANCE.setCurrentTab(currentTab);
+                                //});
+                                //todo
                             }
                         }
                         break;
@@ -99,9 +100,10 @@ public class AutoChatSwapper implements ChatReceiveModule {
                     Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/pc")).findFirst();
                     if (optional.isPresent()) {
                         ChatTabs.INSTANCE.setCurrentTab(((ChatTab) optional.get()));
-                        Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", null, Units.seconds(4), null, () -> {
-                            ChatTabs.INSTANCE.setCurrentTab(currentTab);
-                        });
+                        //Notifications.INSTANCE.enqueue(Notifications.Type.Info, "Hytils Reborn", "Hytils Reborn has automatically switched to the " + ChatTabs.INSTANCE.getCurrentTab().getName() + " chat tab. Click to revert.", null, Units.seconds(4), null, () -> {
+                        //    ChatTabs.INSTANCE.setCurrentTab(currentTab);
+                        //});
+                        //todo
                     }
                 }
             }

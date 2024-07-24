@@ -20,7 +20,7 @@ package org.polyfrost.hytils.config;
 
 import org.polyfrost.oneconfig.api.config.v1.Config;
 import org.polyfrost.oneconfig.api.config.v1.annotations.*;
-import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
+import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 import org.polyfrost.polyui.color.PolyColor;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
@@ -1298,7 +1298,7 @@ public class HytilsConfig extends Config {
                         e.printStackTrace();
                     }
 
-                    Notifications.INSTANCE.send("Hytils Reborn", "AutoGG settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings, and remove Sk1erLLC's AutoGG.", null, Units.seconds(5));
+                    Notifications.INSTANCE.enqueue(Notifications.Type.Warning, "Hytils Reborn", "AutoGG settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings, and remove Sk1erLLC's AutoGG.", Units.seconds(5));
                 }
 
                 try {
@@ -1391,7 +1391,7 @@ public class HytilsConfig extends Config {
                     }
 
                     if (modified) {
-                        Notifications.INSTANCE.send("Hytils Reborn", "Lobby Sounds settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings, and remove Sk1erLLC's Lobby Sounds.", null, Units.seconds(5));
+                        Notifications.INSTANCE.enqueue(Notifications.Type.Warning, "Hytils Reborn", "Lobby Sounds settings have been migrated to Hytils Reborn. You can now configure them in the Hytils Reborn settings, and remove Sk1erLLC's Lobby Sounds.", Units.seconds(5));
                     }
                 } catch (ClassNotFoundException ignored) {
 

@@ -23,7 +23,7 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
+import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 
 import java.util.regex.Matcher;
 
@@ -46,7 +46,7 @@ public class AutoFriend implements ChatReceiveModule {
             }
             event.setCanceled(true);
             HytilsReborn.INSTANCE.getCommandQueue().queue("/friend " + name);
-            Notifications.INSTANCE.send(HytilsReborn.MOD_NAME, "Automatically added " + name + " to your friend list.");
+            Notifications.INSTANCE.enqueue(Notifications.Type.Info, HytilsReborn.MOD_NAME, "Automatically added " + name + " to your friend list.");
         }
     }
 

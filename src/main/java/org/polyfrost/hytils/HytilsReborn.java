@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils;
 
-import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
+import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
@@ -142,7 +142,7 @@ public class HytilsReborn {
                 if (HytilsConfig.chattingIntegration) {
                     HytilsConfig.chattingIntegration = false;
                     config.save();
-                    Notifications.INSTANCE.send("Hytils Reborn", "Hytils Reborn has detected Chatting, but it is not the latest version. Please update Chatting to the latest version.");
+                    Notifications.INSTANCE.enqueue(Notifications.Type.Warning, "Hytils Reborn", "Hytils Reborn has detected Chatting, but it is not the latest version. Please update Chatting to the latest version.");
                 }
             }
         }

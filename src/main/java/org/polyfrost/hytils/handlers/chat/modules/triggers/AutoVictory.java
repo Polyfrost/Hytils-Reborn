@@ -19,7 +19,7 @@
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
 import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
-import org.polyfrost.oneconfig.api.ui.v1.notifications.Notifications;
+import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 import org.polyfrost.universal.wrappers.message.UTextComponent;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.HytilsReborn;
@@ -80,7 +80,7 @@ public class AutoVictory implements ChatReceiveResetModule {
                 try {
                     if (HypixelAPIUtils.getGEXP()) {
                         Notifications.INSTANCE
-                            .send(
+                            .enqueue(Notifications.Type.Info,
                                 HytilsReborn.MOD_NAME,
                                 "You currently have " + HypixelAPIUtils.gexp + " daily guild EXP."
                             );
@@ -90,12 +90,12 @@ public class AutoVictory implements ChatReceiveResetModule {
 
                 }
                 Notifications.INSTANCE
-                    .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
+                    .enqueue(Notifications.Type.Error, HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
             } else {
                 try {
                     if (HypixelAPIUtils.getWeeklyGEXP()) {
                         Notifications.INSTANCE
-                            .send(
+                            .enqueue(Notifications.Type.Info,
                                 HytilsReborn.MOD_NAME,
                                 "You currently have " + HypixelAPIUtils.gexp + " weekly guild EXP."
                             );
@@ -105,13 +105,14 @@ public class AutoVictory implements ChatReceiveResetModule {
 
                 }
                 Notifications.INSTANCE
-                    .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
+                    .enqueue(Notifications.Type.Error, HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
             }
         }
         if (isSupportedMode(HypixelUtils.getLocation()) && HytilsConfig.autoGetWinstreak) {
             try {
                 if (HypixelAPIUtils.getWinstreak()) {
-                    Notifications.INSTANCE.send(
+                    Notifications.INSTANCE
+                        .enqueue(Notifications.Type.Info,
                         HytilsReborn.MOD_NAME,
                         "You currently have a " + HypixelAPIUtils.winstreak + " winstreak."
                     );
@@ -121,7 +122,7 @@ public class AutoVictory implements ChatReceiveResetModule {
 
             }
             Notifications.INSTANCE
-                .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your winstreak.");
+                .enqueue(Notifications.Type.Error, HytilsReborn.MOD_NAME, "There was a problem trying to get your winstreak.");
         }
     }
 
