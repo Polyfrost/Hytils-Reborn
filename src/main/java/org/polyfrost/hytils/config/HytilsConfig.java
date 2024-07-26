@@ -1063,7 +1063,7 @@ public class HytilsConfig extends Config {
         description = "Hides unnecessary nametags such as those that say \"RIGHT CLICK\" or \"CLICK TO PLAY\" in a lobby, as well as other useless ones.",
         category = "Lobby", subcategory = "NPCs"
     )
-    public static boolean hideUselessArmorStands = true;
+    public static boolean hideUselessArmorStands;
 
     @Switch(
         name = "Hide Lobby Bossbars",
