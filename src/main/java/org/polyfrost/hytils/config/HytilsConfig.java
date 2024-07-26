@@ -848,7 +848,7 @@ public class HytilsConfig extends Config {
         description = "Hides unnecessary nametags such as those that say \"RIGHT CLICK\" or \"CLICK\" in SkyBlock, BedWars, SkyWars, and Duels, as well as other useless ones.",
         category = "Game", subcategory = "Entities"
     )
-    public static boolean hideUselessArmorStandsGame = true;
+    public static boolean hideUselessArmorStandsGame;
 
     @Switch(
         name = "Notify When Blocks Run Out",
