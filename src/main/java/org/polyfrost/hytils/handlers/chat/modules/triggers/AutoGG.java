@@ -18,6 +18,8 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import cc.polyfrost.oneconfig.events.event.WorldLoadEvent;
+import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import net.minecraft.util.EnumChatFormatting;
@@ -32,10 +34,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 public class AutoGG implements ChatReceiveModule {
+    public static AutoGG INSTANCE = new AutoGG();
+    private int matchesFound = 0;
+
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (!hasGameEnded(message)) return;
+        if (!hasGameEnded(message) || matchesFound > 1) return;
         Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.ggMessage), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
         if (HytilsConfig.autoGGSecondMessage)
             Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.ggMessage2), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
@@ -45,6 +50,7 @@ public class AutoGG implements ChatReceiveModule {
         if (!PatternHandler.INSTANCE.gameEnd.isEmpty()) {
             for (Pattern triggers : PatternHandler.INSTANCE.gameEnd) {
                 if (triggers.matcher(message).matches()) {
+                    matchesFound++;
                     return true;
                 }
             }
@@ -52,6 +58,11 @@ public class AutoGG implements ChatReceiveModule {
 
         // TODO: UNTESTED!
         return getLanguage().casualGameEndRegex.matcher(message).matches();
+    }
+
+    @Subscribe
+    public void onWorldLoad(WorldLoadEvent event) {
+        matchesFound = 0;
     }
 
     @Override

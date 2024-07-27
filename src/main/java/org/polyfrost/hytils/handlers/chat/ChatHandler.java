@@ -96,8 +96,6 @@ public class ChatHandler {
         this.registerModule(new WhitePrivateMessages());
 
         // Triggers
-        this.registerModule(new AutoChatReportConfirm());
-        this.registerModule(new AutoChatReportConfirm());
         this.registerModule(new AutoChatSwapper());
         this.registerModule(new AutoFriend());
         this.registerModule(new AutoGG());
