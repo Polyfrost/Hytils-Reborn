@@ -35,22 +35,22 @@ import java.util.regex.Pattern;
 
 public class AutoGG implements ChatReceiveModule {
     public static AutoGG INSTANCE = new AutoGG();
-    private int matchesFound = 0;
+    private boolean matchFound = false;
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (!hasGameEnded(message) || matchesFound > 1) return;
+        if (!hasGameEnded(message)) return;
         Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.ggMessage), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
         if (HytilsConfig.autoGGSecondMessage)
             Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.ggMessage2), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
     }
 
     private boolean hasGameEnded(String message) {
-        if (!PatternHandler.INSTANCE.gameEnd.isEmpty()) {
+        if (!matchFound && !PatternHandler.INSTANCE.gameEnd.isEmpty()) {
             for (Pattern triggers : PatternHandler.INSTANCE.gameEnd) {
                 if (triggers.matcher(message).matches()) {
-                    matchesFound++;
+                    matchFound = true;
                     return true;
                 }
             }
@@ -62,7 +62,7 @@ public class AutoGG implements ChatReceiveModule {
 
     @Subscribe
     public void onWorldLoad(WorldLoadEvent event) {
-        matchesFound = 0;
+        matchFound = false;
     }
 
     @Override
