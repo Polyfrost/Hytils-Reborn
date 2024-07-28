@@ -222,13 +222,6 @@ public class HytilsConfig extends Config {
     public static boolean autoFriend;
 
     @Switch(
-        name = "Auto Chat Report Confirm",
-        description = "Automatically confirms chat reports.",
-        category = "Chat", subcategory = "Automatic"
-    )
-    public static boolean autoChatReportConfirm;
-
-    @Switch(
         name = "Auto Party Warp Confirm",
         description = "Automatically confirms party warps.",
         category = "Chat", subcategory = "Automatic"

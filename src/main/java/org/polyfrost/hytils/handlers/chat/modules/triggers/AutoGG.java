@@ -18,6 +18,8 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import cc.polyfrost.oneconfig.events.event.WorldLoadEvent;
+import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import net.minecraft.util.EnumChatFormatting;
@@ -32,6 +34,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 public class AutoGG implements ChatReceiveModule {
+    public static AutoGG INSTANCE = new AutoGG();
+    private boolean matchFound = false;
+
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
@@ -42,9 +47,10 @@ public class AutoGG implements ChatReceiveModule {
     }
 
     private boolean hasGameEnded(String message) {
-        if (!PatternHandler.INSTANCE.gameEnd.isEmpty()) {
+        if (!matchFound && !PatternHandler.INSTANCE.gameEnd.isEmpty()) {
             for (Pattern triggers : PatternHandler.INSTANCE.gameEnd) {
                 if (triggers.matcher(message).matches()) {
+                    matchFound = true;
                     return true;
                 }
             }
@@ -52,6 +58,11 @@ public class AutoGG implements ChatReceiveModule {
 
         // TODO: UNTESTED!
         return getLanguage().casualGameEndRegex.matcher(message).matches();
+    }
+
+    @Subscribe
+    public void onWorldLoad(WorldLoadEvent event) {
+        matchFound = false;
     }
 
     @Override
