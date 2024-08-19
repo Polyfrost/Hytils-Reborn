@@ -34,7 +34,7 @@ public class LanguageData {
      */
     private String autoQueuePrefixGlobal = "^(?:You died! .+|YOU DIED! .+|You have been eliminated!|You won! .+|YOU WON! .+)$";
 
-    private String autoFriendPattern = "Friend request from (?<name>.+)\\[ACCEPT] - \\[DENY] - \\[IGNORE].*";
+    private String autoFriendPattern = "Friend request from (?<name>.+)\\[ACCEPT] - \\[DENY] - \\[BLOCK].*";
     private String autoAfkReplyPattern = "^From (\\[.+?] )?(.+?): .+$";
 
     private String chatCleanerKarmaMessages = "^\\+(?<karma>\\d)+ Karma!$";
