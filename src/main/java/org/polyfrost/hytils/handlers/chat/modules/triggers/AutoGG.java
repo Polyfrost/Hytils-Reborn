@@ -44,6 +44,7 @@ public class AutoGG implements ChatReceiveModule {
         Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.ggMessage), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
         if (HytilsConfig.autoGGSecondMessage)
             Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.ggMessage2), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
+        matchFound = false;
     }
 
     private boolean hasGameEnded(String message) {
