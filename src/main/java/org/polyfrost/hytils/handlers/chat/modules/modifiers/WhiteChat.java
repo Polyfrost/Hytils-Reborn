@@ -32,7 +32,7 @@ public class WhiteChat implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         final Matcher matcher = getLanguage().whiteChatNonMessageRegex.matcher(event.message.getFormattedText());
-        if (matcher.find(0)) {
+        if (matcher.find(0) && !getLanguage().privateMessageWhiteChatRegex.matcher(event.message.getFormattedText()).find()) {
             boolean foundStart = false;
             for (IChatComponent sibling : event.message.getSiblings()) {
                 if (sibling.getFormattedText().startsWith("§7: ")) foundStart = true;
