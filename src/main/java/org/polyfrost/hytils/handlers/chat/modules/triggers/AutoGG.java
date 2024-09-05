@@ -40,17 +40,25 @@ public class AutoGG implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
-        if (!hasGameEnded(message)) return;
-        Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.ggMessage), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
-        if (HytilsConfig.autoGGSecondMessage)
-            Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.ggMessage2), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
+        if (!hasGameEnded(message)) {
+            return;
+        }
+
+        if (!matchFound) {
+            matchFound = true;
+            Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.ggMessage), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
+            if (HytilsConfig.autoGGSecondMessage) {
+                Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.ggMessage2), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
+            }
+            // Schedule the reset of matchFound after the second message has been sent
+            Multithreading.schedule(() -> matchFound = false, (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000) + 5000, TimeUnit.MILLISECONDS);
+        }
     }
 
     private boolean hasGameEnded(String message) {
         if (!matchFound && !PatternHandler.INSTANCE.gameEnd.isEmpty()) {
             for (Pattern triggers : PatternHandler.INSTANCE.gameEnd) {
                 if (triggers.matcher(message).matches()) {
-                    matchFound = true;
                     return true;
                 }
             }
@@ -75,3 +83,4 @@ public class AutoGG implements ChatReceiveModule {
         return 3;
     }
 }
+
