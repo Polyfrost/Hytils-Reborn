@@ -19,6 +19,7 @@
 package org.polyfrost.hytils.handlers.chat;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.handlers.chat.modules.blockers.*;
 import org.polyfrost.hytils.handlers.chat.modules.events.AchievementEvent;
@@ -137,7 +138,7 @@ public class ChatHandler {
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public void handleChat(ClientChatReceivedEvent event) {
         if (!HypixelUtils.INSTANCE.isHypixel()) {
             return;
