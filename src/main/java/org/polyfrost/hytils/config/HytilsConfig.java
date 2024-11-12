@@ -1258,6 +1258,15 @@ public class HytilsConfig extends Config {
         } catch (ClassNotFoundException ignored) {
         }
 
+        if (ggMessage == null || ggMessage.isEmpty()) {
+            ggMessage = "gg";
+            save();
+        }
+        if (ggMessage2 == null || ggMessage2.isEmpty()) {
+            ggMessage2 = "Have a good day!";
+            save();
+        }
+
         if (configNumber != 3) { // Config version has not been set or is outdated
             if (configNumber == 1) {
                 overlayAmount = 300;
