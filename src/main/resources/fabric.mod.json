@@ -1,0 +1,30 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${mod_version}",
+    "name": "${mod_name}",
+    "authors": [
+        "Polyfrost"
+    ],
+    "contact": {
+        "issues": "https://github.com/Polyfrost/${mod_name}/issues",
+        "sources": "https://github.com/Polyfrost/${mod_name}"
+    },
+    "license": "GPL-3.0-or-later",
+    "environment": "*",
+    "entrypoints": {
+        "client": [
+            {
+                "adapter": "kotlin",
+                "value": "org.polyfrost.hytils.HytilsReborn"
+            }
+        ]
+    },
+    "mixins": [
+        "mixins.${mod_id}.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.15.11",
+        "fabric-language-kotlin": "*"
+    }
+}

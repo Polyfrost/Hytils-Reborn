@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.mixin;
 
+//#if FORGE
 import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraftforge.client.GuiIngameForge;
@@ -35,3 +36,4 @@ public class GuiIngameForgeMixin_HideActionbar {
             ci.cancel();
     }
 }
+//#endif

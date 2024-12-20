@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.mixin;
 
+//#if FORGE
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.events.TitleEvent;
@@ -57,3 +58,4 @@ public class GuiIngameForgeMixin_TitleEvent extends GuiIngame {
         }
     }
 }
+//#endif

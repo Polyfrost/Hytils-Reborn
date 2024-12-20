@@ -18,6 +18,12 @@
 
 package org.polyfrost.hytils.util;
 
+//#if FABRIC
+//$$ import net.minecraft.util.math.BlockPos;
+//$$ import net.minecraft.util.math.Box;
+//$$ import net.minecraft.util.math.MathHelper;
+//#endif
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;

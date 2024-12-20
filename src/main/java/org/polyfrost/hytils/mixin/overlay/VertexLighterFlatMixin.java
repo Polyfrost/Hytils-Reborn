@@ -38,6 +38,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(value = VertexLighterFlat.class, remap = false)
 public class VertexLighterFlatMixin {
+
     @Shadow
     @Final
     protected BlockInfo blockInfo;
@@ -69,4 +70,5 @@ public class VertexLighterFlatMixin {
                 return false;
         }
     }
+
 }

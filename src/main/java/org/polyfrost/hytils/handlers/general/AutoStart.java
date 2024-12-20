@@ -18,8 +18,6 @@
 
 package org.polyfrost.hytils.handlers.general;
 
-
-import net.minecraftforge.fml.client.ExtendedServerListData;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;

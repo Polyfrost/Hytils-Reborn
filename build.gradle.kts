@@ -39,11 +39,13 @@ toolkitLoomHelper {
     }
 }
 
-if (mcData.isForge) {
-    loom {
+loom {
+    if (mcData.isLegacyForge) {
         forge {
             accessTransformer(rootProject.file("src/main/resources/hytils_at.cfg"))
         }
+    } else if (mcData.isLegacyFabric) {
+        accessWidenerPath.set(rootProject.file("src/main/resources/hytils_aw.accesswidener"))
     }
 }
 

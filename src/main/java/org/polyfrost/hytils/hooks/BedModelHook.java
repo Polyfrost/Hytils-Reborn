@@ -18,6 +18,10 @@
 
 package org.polyfrost.hytils.hooks;
 
+//#if FORGE
+import net.minecraft.client.resources.model.ModelRotation;
+//#endif
+
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockPartFace;
 import net.minecraft.client.renderer.block.model.BreakingFour;
@@ -32,7 +36,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.client.resources.model.ModelRotation;
 import net.minecraft.client.resources.model.SimpleBakedModel;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -94,7 +97,11 @@ public class BedModelHook {
         for (BakedQuad quad : model.getFaceQuads(facing)) {
             faceQuads.get(quad.getFace().ordinal()).add(new BreakingFour(quad, particles));
         }
+        //#if FORGE
         ModelRotation rotation = ModelRotation.getModelRotation(0, facing.getHorizontalIndex() * 90 - 180);
+        //#else
+        //$$ net.minecraft.client.render.model.ModelRotation rotation = net.minecraft.client.render.model.ModelRotation.get(0, facing.getHorizontal() * 90 - 180);
+        //#endif
         int footPadding = (bedPart == BlockBed.EnumPartType.FOOT) ? 16 : 0;
         float funnyMultipler = 0.25f;
         quads.add(faceBakery.makeBakedQuad(new Vector3f(0.0f, 3.0f, 0.0f), new Vector3f(16.0f, 3.0f, 16.0f), new BlockPartFace(EnumFacing.DOWN, -1, OAK, new BlockFaceUV(new float[]{0.0f, 0.0f, 16.0f, 16.0f}, 0)), Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(OAK), EnumFacing.DOWN, rotation, new BlockPartRotation(new Vector3f(8.0f, 0.0f, 8.0f), EnumFacing.Axis.Y, 0.0f, false), false, true));
