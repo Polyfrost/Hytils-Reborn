@@ -18,9 +18,10 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.api.ui.v1.Notifications;
-import org.polyfrost.universal.wrappers.message.UTextComponent;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
@@ -31,9 +32,7 @@ import org.polyfrost.hytils.mixin.GuiIngameAccessor;
 import org.polyfrost.hytils.util.HypixelAPIUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
@@ -43,12 +42,12 @@ public class AutoVictory implements ChatReceiveResetModule {
     private boolean victoryDetected = false;
 
     public AutoVictory() {
-        MinecraftForge.EVENT_BUS.register(this);
+        EventManager.INSTANCE.register(this);
     }
 
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String unformattedText = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText());
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+        String unformattedText = event.getFullyUnformattedMessage();
         if (!PatternHandler.INSTANCE.gameEnd.isEmpty()) {
             if (!victoryDetected) { // prevent victories being detected twice
                 Multithreading.submit(() -> { //run this async as getting from the API normally would freeze minecraft
@@ -63,7 +62,7 @@ public class AutoVictory implements ChatReceiveResetModule {
         }
     }
 
-    @SubscribeEvent
+    @Subscribe
     public void onTitle(TitleEvent event) {
         if (!victoryDetected) {
             final String title = EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle().toLowerCase(Locale.ENGLISH));
@@ -81,7 +80,7 @@ public class AutoVictory implements ChatReceiveResetModule {
                     if (HypixelAPIUtils.getGEXP()) {
                         Notifications.INSTANCE
                             .enqueue(Notifications.Type.Info,
-                                HytilsReborn.MOD_NAME,
+                                HytilsReborn.NAME,
                                 "You currently have " + HypixelAPIUtils.gexp + " daily guild EXP."
                             );
                         return;
@@ -90,13 +89,13 @@ public class AutoVictory implements ChatReceiveResetModule {
 
                 }
                 Notifications.INSTANCE
-                    .enqueue(Notifications.Type.Error, HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
+                    .enqueue(Notifications.Type.Error, HytilsReborn.NAME, "There was a problem trying to get your GEXP.");
             } else {
                 try {
                     if (HypixelAPIUtils.getWeeklyGEXP()) {
                         Notifications.INSTANCE
                             .enqueue(Notifications.Type.Info,
-                                HytilsReborn.MOD_NAME,
+                                HytilsReborn.NAME,
                                 "You currently have " + HypixelAPIUtils.gexp + " weekly guild EXP."
                             );
                         return;
@@ -105,7 +104,7 @@ public class AutoVictory implements ChatReceiveResetModule {
 
                 }
                 Notifications.INSTANCE
-                    .enqueue(Notifications.Type.Error, HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
+                    .enqueue(Notifications.Type.Error, HytilsReborn.NAME, "There was a problem trying to get your GEXP.");
             }
         }
         if (isSupportedMode(HypixelUtils.getLocation()) && HytilsConfig.autoGetWinstreak) {
@@ -113,7 +112,7 @@ public class AutoVictory implements ChatReceiveResetModule {
                 if (HypixelAPIUtils.getWinstreak()) {
                     Notifications.INSTANCE
                         .enqueue(Notifications.Type.Info,
-                        HytilsReborn.MOD_NAME,
+                        HytilsReborn.NAME,
                         "You currently have a " + HypixelAPIUtils.winstreak + " winstreak."
                     );
                     return;
@@ -122,7 +121,7 @@ public class AutoVictory implements ChatReceiveResetModule {
 
             }
             Notifications.INSTANCE
-                .enqueue(Notifications.Type.Error, HytilsReborn.MOD_NAME, "There was a problem trying to get your winstreak.");
+                .enqueue(Notifications.Type.Error, HytilsReborn.NAME, "There was a problem trying to get your winstreak.");
         }
     }
 

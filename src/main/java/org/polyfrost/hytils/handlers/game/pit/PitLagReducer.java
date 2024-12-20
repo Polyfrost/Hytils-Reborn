@@ -19,29 +19,27 @@
 package org.polyfrost.hytils.handlers.game.pit;
 
 import net.hypixel.data.type.GameType;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class PitLagReducer {
 
     /** The y-position of the spawn platform in The Pit. */
     private double pitSpawnPos;
 
-    @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event) {
+    @Subscribe
+    public void onWorldLoad(WorldLoadEvent event) {
         // Allow the spawn position to be updated.
         pitSpawnPos = -1;
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onRenderLiving(RenderLivingEvent.Pre<EntityLiving> event) {
+    @Subscribe(priority = 5)
+    public void onRenderLiving(RenderLivingEvent.Pre<EntityLiving> event) { // TODO
         if (!HypixelUtils.isHypixel()) {
             return;
         }
@@ -59,7 +57,7 @@ public class PitLagReducer {
         } else if (HytilsConfig.pitLagReducer) {
             // If the entity being rendered is at spawn, and you are below spawn, cancel the rendering.
             if (event.entity.posY > pitSpawnPos && Minecraft.getMinecraft().thePlayer.posY < pitSpawnPos) {
-                event.setCanceled(true);
+                event.cancelled = true;
             }
         }
     }

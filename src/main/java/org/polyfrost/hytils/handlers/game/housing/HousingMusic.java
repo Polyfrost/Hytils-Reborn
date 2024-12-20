@@ -20,14 +20,13 @@ package org.polyfrost.hytils.handlers.game.housing;
 
 import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class HousingMusic {
 
-    @SubscribeEvent
-    public void onPlaySound(PlaySoundEvent event) {
+    @Subscribe
+    public void onPlaySound(PlaySoundEvent event) { // TODO
         if (HypixelUtils.isHypixel() && HytilsConfig.muteHousingMusic) {
             HypixelUtils.Location location = HypixelUtils.getLocation();
             if (location.getGameType().orElse(null) == GameType.HOUSING && event.name.startsWith("note.")) {

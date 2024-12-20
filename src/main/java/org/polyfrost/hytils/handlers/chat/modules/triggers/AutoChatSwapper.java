@@ -18,7 +18,8 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import org.polyfrost.universal.wrappers.message.UTextComponent;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.chatting.chat.ChatTab;
 import org.polyfrost.chatting.chat.ChatTabs;
@@ -27,9 +28,7 @@ import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.hytils.handlers.language.LanguageData;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,12 +40,12 @@ import java.util.regex.Matcher;
 public class AutoChatSwapper implements ChatReceiveModule {
     @SuppressWarnings("all")
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
         Multithreading.submit(() -> {
-            final Matcher statusMatcherLeave = getLanguage().autoChatSwapperPartyStatusRegex.matcher(UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())); // leaving party
-            final Matcher statusMatcherJoin = getLanguage().autoChatSwapperPartyStatusRegex2.matcher(UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())); // joining party
+            final Matcher statusMatcherLeave = getLanguage().autoChatSwapperPartyStatusRegex.matcher(event.getFullyUnformattedMessage()); // leaving party
+            final Matcher statusMatcherJoin = getLanguage().autoChatSwapperPartyStatusRegex2.matcher(event.getFullyUnformattedMessage()); // joining party
             if (statusMatcherLeave.matches()) {
-                MinecraftForge.EVENT_BUS.register(new ChatChannelMessagePreventer());
+                EventManager.INSTANCE.register(new ChatChannelMessagePreventer());
                 switch (HytilsConfig.chatSwapperReturnChannel) {
                     case 0:
                     default:
@@ -93,7 +92,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
                         break;
                 }
             } else if (statusMatcherJoin.matches() && HytilsConfig.chatSwapper) {
-                MinecraftForge.EVENT_BUS.register(new ChatChannelMessagePreventer());
+                EventManager.INSTANCE.register(new ChatChannelMessagePreventer());
                 HytilsReborn.INSTANCE.getCommandQueue().queue("/chat p");
                 if (HytilsReborn.INSTANCE.isChatting && ChattingConfig.INSTANCE.getChatTabs() && HytilsConfig.chattingIntegration) {
                     ChatTab currentTab = ChatTabs.INSTANCE.getCurrentTab();
@@ -128,22 +127,22 @@ public class AutoChatSwapper implements ChatReceiveModule {
         ChatChannelMessagePreventer() { // if the message somehow doesn't send, we unregister after 20 seconds
             this.unregisterTimer = Multithreading.submitScheduled(() -> { // to prevent blocking the next time it's used
                 if (!this.hasDetected) {
-                    MinecraftForge.EVENT_BUS.unregister(this);
+                    EventManager.INSTANCE.unregister(this);
                 }
             }, 20, TimeUnit.SECONDS);
         }
 
 
-        @SubscribeEvent
-        public void checkForAlreadyInThisChannelThing(ClientChatReceivedEvent event) {
+        @Subscribe
+        public void checkForAlreadyInThisChannelThing(ChatReceiveEvent event) {
             final LanguageData language = HytilsReborn.INSTANCE.getLanguageHandler().getCurrent();
-            final String message = event.message.getUnformattedText();
+            final String message = event.getFullyUnformattedMessage();
             if (language.autoChatSwapperAlreadyInChannel.equals(message)
                 || (HytilsConfig.hideAllChatMessage && language.autoChatSwapperChannelSwapRegex.matcher(message).matches())) {
                 this.unregisterTimer.cancel(false);
                 this.hasDetected = true;
-                event.setCanceled(true);
-                MinecraftForge.EVENT_BUS.unregister(this);
+                event.cancelled = true;
+                EventManager.INSTANCE.unregister(this);
             }
         }
     }

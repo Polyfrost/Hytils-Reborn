@@ -54,33 +54,33 @@ public class HytilsCommand {
                 if (type == null) {
                     if (HypixelAPIUtils.getGEXP(player.getName())) {
                         Notifications.INSTANCE.enqueue(Notifications.Type.Info,
-                            HytilsReborn.MOD_NAME, player.getName() + " currently has " + HypixelAPIUtils.gexp + " guild EXP.");
+                            HytilsReborn.NAME, player.getName() + " currently has " + HypixelAPIUtils.gexp + " guild EXP.");
                     } else {
                         Notifications.INSTANCE.enqueue(Notifications.Type.Error,
-                            HytilsReborn.MOD_NAME, "There was a problem trying to get " + player.getName() + "'s GEXP.");
+                            HytilsReborn.NAME, "There was a problem trying to get " + player.getName() + "'s GEXP.");
                     }
                 } else {
                     switch (type) {
                         case DAILY:
                             if (HypixelAPIUtils.getGEXP(player.getName())) {
                                 Notifications.INSTANCE.enqueue(Notifications.Type.Info,
-                                    HytilsReborn.MOD_NAME,
+                                    HytilsReborn.NAME,
                                         player.getName() + " currently has " + HypixelAPIUtils.gexp + " daily guild EXP."
                                     );
                             } else {
                                 Notifications.INSTANCE.enqueue(Notifications.Type.Error,
-                                    HytilsReborn.MOD_NAME, "There was a problem trying to get " + player.getName() + "'s daily GEXP.");
+                                    HytilsReborn.NAME, "There was a problem trying to get " + player.getName() + "'s daily GEXP.");
                             }
                             break;
                         case WEEKLY:
                             if (HypixelAPIUtils.getWeeklyGEXP(player.getName())) {
                                 Notifications.INSTANCE.enqueue(Notifications.Type.Info,
-                                    HytilsReborn.MOD_NAME,
+                                    HytilsReborn.NAME,
                                         player.getName() + " currently has " + HypixelAPIUtils.gexp + " weekly guild EXP."
                                     );
                             } else {
                                 Notifications.INSTANCE.enqueue(Notifications.Type.Error,
-                                    HytilsReborn.MOD_NAME, "There was a problem trying to get " + player.getName() + "'s weekly GEXP.");
+                                    HytilsReborn.NAME, "There was a problem trying to get " + player.getName() + "'s weekly GEXP.");
                             }
                             break;
                     }
@@ -88,10 +88,10 @@ public class HytilsCommand {
             } else {
                 if (HypixelAPIUtils.getGEXP()) {
                     Notifications.INSTANCE.enqueue(Notifications.Type.Info,
-                        HytilsReborn.MOD_NAME, "You currently have " + HypixelAPIUtils.gexp + " guild EXP.");
+                        HytilsReborn.NAME, "You currently have " + HypixelAPIUtils.gexp + " guild EXP.");
                 } else {
                     Notifications.INSTANCE.enqueue(Notifications.Type.Error,
-                        HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
+                        HytilsReborn.NAME, "There was a problem trying to get your GEXP.");
                 }
             }
         });
@@ -105,33 +105,33 @@ public class HytilsCommand {
                 if (gamemode != null) {
                     if (HypixelAPIUtils.getWinstreak(player.getName(), gamemode.name())) {
                         Notifications.INSTANCE.enqueue(Notifications.Type.Info,
-                            HytilsReborn.MOD_NAME,
+                            HytilsReborn.NAME,
                                 player.getName() + " currently has a " + HypixelAPIUtils.winstreak + " winstreak in " + gamemode.name().toLowerCase(Locale.ENGLISH) + "."
                             );
                     } else {
                         Notifications.INSTANCE.enqueue(Notifications.Type.Error,
-                            HytilsReborn.MOD_NAME,
+                            HytilsReborn.NAME,
                                 "There was a problem trying to get " + player.getName() + "'s winstreak in " + gamemode + "."
                             );
                     }
                 } else {
                     if (HypixelAPIUtils.getWinstreak(player.getName())) {
                         Notifications.INSTANCE.enqueue(Notifications.Type.Info,
-                            HytilsReborn.MOD_NAME,
+                            HytilsReborn.NAME,
                                 player.getName() + " currently has a " + HypixelAPIUtils.winstreak + " winstreak."
                             );
                     } else {
                         Notifications.INSTANCE.enqueue(Notifications.Type.Error,
-                            HytilsReborn.MOD_NAME, "There was a problem trying to get " + player.getName() + "'s winstreak.");
+                            HytilsReborn.NAME, "There was a problem trying to get " + player.getName() + "'s winstreak.");
                     }
                 }
             } else {
                 if (HypixelAPIUtils.getWinstreak()) {
                     Notifications.INSTANCE.enqueue(Notifications.Type.Info,
-                        HytilsReborn.MOD_NAME, "You currently have a " + HypixelAPIUtils.winstreak + " winstreak.");
+                        HytilsReborn.NAME, "You currently have a " + HypixelAPIUtils.winstreak + " winstreak.");
                 } else {
                     Notifications.INSTANCE.enqueue(Notifications.Type.Error,
-                        HytilsReborn.MOD_NAME, "There was a problem trying to get your winstreak.");
+                        HytilsReborn.NAME, "There was a problem trying to get your winstreak.");
                 }
             }
         });

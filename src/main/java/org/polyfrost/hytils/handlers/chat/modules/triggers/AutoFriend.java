@@ -21,7 +21,7 @@ package org.polyfrost.hytils.handlers.chat.modules.triggers;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 
@@ -35,7 +35,7 @@ import java.util.regex.Matcher;
  */
 public class AutoFriend implements ChatReceiveModule {
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
         String message = event.message.getUnformattedText().replace("\n", "");
         Matcher matcher = getLanguage().autoFriendPatternRegex.matcher(message);
         if (message.contains(": ")) return;
@@ -44,9 +44,9 @@ public class AutoFriend implements ChatReceiveModule {
             if (name.startsWith("[")) {
                 name = name.substring(name.indexOf("] ") + 2);
             }
-            event.setCanceled(true);
+            event.cancelled = true;
             HytilsReborn.INSTANCE.getCommandQueue().queue("/friend " + name);
-            Notifications.INSTANCE.enqueue(Notifications.Type.Info, HytilsReborn.MOD_NAME, "Automatically added " + name + " to your friend list.");
+            Notifications.INSTANCE.enqueue(Notifications.Type.Info, HytilsReborn.NAME, "Automatically added " + name + " to your friend list.");
         }
     }
 

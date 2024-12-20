@@ -18,16 +18,18 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import net.minecraft.world.World;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.KeyInputEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.MouseInputEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.LocrawGamesHandler;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
@@ -38,12 +40,12 @@ public class AutoQueue implements ChatReceiveModule {
     private boolean sentCommand;
 
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
         if (!HytilsConfig.autoQueue) {
             return;
         }
 
-        final String message = getStrippedMessage(event.message);
+        final String message = getStrippedMessage(event.getMessage());
         Matcher matcher = getLanguage().autoQueuePrefixGlobalRegex.matcher(message);
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (matcher.matches()) {
@@ -59,24 +61,26 @@ public class AutoQueue implements ChatReceiveModule {
         }
     }
 
-    @SubscribeEvent
-    public void onKeyInput(InputEvent.KeyInputEvent event) {
+    @Subscribe
+    public void onKeyInput(KeyInputEvent event) {
         if (this.command != null) {
             this.switchGame();
         }
     }
 
-    @SubscribeEvent
-    public void onMouseEvent(InputEvent.MouseInputEvent event) {
+    @Subscribe
+    public void onMouseEvent(MouseInputEvent event) {
         if (this.command != null) {
             this.switchGame();
         }
     }
 
-    @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event) {
+    @Subscribe
+    public void onWorldLoad(WorldLoadEvent event) {
+        World world = event.getWorld();
+
         // stop the command from being spammed, to prevent chat from filling with "please do not spam commands"
-        if (event.world.provider.getDimensionId() == 0 && this.sentCommand) {
+        if (world.provider.getDimensionId() == 0 && this.sentCommand) {
             this.sentCommand = false;
         }
     }

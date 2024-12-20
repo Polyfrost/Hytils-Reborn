@@ -26,16 +26,15 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 import java.util.Collection;
 
 public class NPCHandler {
 
-    @SubscribeEvent
-    public void onEntityRender(RenderLivingEvent.Pre<EntityLivingBase> event) {
+    @Subscribe
+    public void onEntityRender(RenderLivingEvent.Pre<EntityLivingBase> event) { // TODO
         if (!HypixelUtils.isHypixel()) {
             return;
         }
@@ -44,10 +43,10 @@ public class NPCHandler {
         // hypixel marks npc uuids as version 2
         if (event.entity.getUniqueID().version() == 2 || (event.entity instanceof EntityVillager)) {
             if (HytilsConfig.npcHider && !location.inGame()) {
-                event.setCanceled(true);
+                event.cancelled = true;
             }
         } else if (HytilsConfig.hideNonNPCs && location.getGameType().orElse(null) == GameType.SKYBLOCK && !(event.entity instanceof EntityArmorStand && !event.entity.getCustomNameTag().toLowerCase().trim().isEmpty()) && event.entity instanceof EntityOtherPlayerMP) {
-            event.setCanceled(true);
+            event.cancelled = true;
         }
     }
 

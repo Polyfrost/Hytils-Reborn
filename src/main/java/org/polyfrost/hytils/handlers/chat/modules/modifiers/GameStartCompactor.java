@@ -28,7 +28,7 @@ import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
@@ -45,7 +45,7 @@ public class GameStartCompactor implements ChatReceiveModule {
     public static IChatComponent lastMessage = null;
 
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
         final Matcher gameStartMatcher = getLanguage().chatRestylerGameStartCounterStyleRegex.matcher(event.message.getUnformattedText());
         final Matcher chatRestylerMatcher = getLanguage().chatRestylerGameStartCounterOutputStyleRegex.matcher(event.message.getFormattedText());
         if (gameStartMatcher.matches() || (HytilsConfig.gameStatusRestyle && chatRestylerMatcher.matches())) {

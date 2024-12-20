@@ -18,6 +18,18 @@
 
 package org.polyfrost.hytils;
 
+//#if FORGE
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+//#else
+//$$ import net.fabricmc.api.ClientModInitializer;
+//#endif
+
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.platform.v1.LoaderPlatform;
+import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
@@ -56,32 +68,29 @@ import org.polyfrost.hytils.util.HypixelAPIUtils;
 import org.polyfrost.hytils.util.friends.FriendCache;
 import org.polyfrost.hytils.util.ranks.RankType;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-@Mod(
-    modid = HytilsReborn.MOD_ID,
-    name = HytilsReborn.MOD_NAME,
-    version = HytilsReborn.VERSION
-)
-public class HytilsReborn {
-    public static final String MOD_ID = "@ID@";
-    public static final String MOD_NAME = "@NAME@";
+//#if FORGE
+@Mod(modid = HytilsReborn.ID, version = HytilsReborn.VERSION, name = HytilsReborn.NAME)
+//#endif
+public class HytilsReborn
+    //#if FABRIC
+    //$$ implements ClientModInitializer
+    //#endif
+{
+    public static final String ID = "@ID@";
+    public static final String NAME = "@NAME@";
     public static final String VERSION = "@VER@";
 
-    @Mod.Instance(MOD_ID)
+    //#if FORGE
+    @Mod.Instance(ID)
+    //#endif
     public static HytilsReborn INSTANCE;
 
-    public File oldModDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), MOD_NAME);
+    public File oldModDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), NAME);
 
     private HytilsConfig config;
     private final Logger logger = LogManager.getLogger("Hytils Reborn");
@@ -101,8 +110,7 @@ public class HytilsReborn {
 
     private RankType rank;
 
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
+    private void initialize() {
         config = new HytilsConfig();
 
         CommandManager.registerCommand(new HousingVisitCommand());
@@ -127,13 +135,14 @@ public class HytilsReborn {
         registerHandlers();
     }
 
-    @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        if (Loader.isModLoaded("tabulous")) {
+    private void postInitialize() {
+        LoaderPlatform loaderPlatform = Platform.loader();
+        if (loaderPlatform.isModLoaded("tabulous")) {
             config.hideTabulous();
         }
-        isPatcher = Loader.isModLoaded("patcher");
-        isChatting = Loader.isModLoaded("chatting");
+
+        isPatcher = loaderPlatform.isModLoaded("patcher");
+        isChatting = loaderPlatform.isModLoaded("chatting");
         if (isChatting) {
             try {
                 Class.forName("org.polyfrost.chatting.chat.ChatTabs");
@@ -150,13 +159,31 @@ public class HytilsReborn {
         Multithreading.submit(() -> rank = HypixelAPIUtils.getRank(Minecraft.getMinecraft().getSession().getUsername()));
     }
 
+    //#if FORGE
+    @Mod.EventHandler
+    public void fmlInit(FMLInitializationEvent event) {
+        initialize();
+    }
+
+    @Mod.EventHandler
+    public void fmlPostInit(FMLPostInitializationEvent event) {
+        postInitialize();
+    }
+
     @Mod.EventHandler
     public void finishedStarting(FMLLoadCompleteEvent event) {
         this.loadedCall = true;
     }
+    //#else
+    //$$ @Override
+    //$$ public void onInitializeClient() {
+    //$$      initialize();
+    //$$      postInitialize();
+    //$$ }
+    //#endif
 
     private void registerHandlers() {
-        final EventBus eventBus = MinecraftForge.EVENT_BUS;
+        final EventManager eventBus = EventManager.INSTANCE;
 
         // general stuff
         eventBus.register(autoQueue);
@@ -194,7 +221,7 @@ public class HytilsReborn {
     }
 
     public void sendMessage(String message) {
-        UChat.chat(ChatColor.GOLD + "[" + MOD_NAME + "] " + ChatColor.Companion.translateAlternateColorCodes('&', message));
+        UChat.chat(ChatColor.GOLD + "[" + NAME + "] " + ChatColor.Companion.translateAlternateColorCodes('&', message));
     }
 
     public HytilsConfig getConfig() {

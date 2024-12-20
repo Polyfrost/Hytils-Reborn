@@ -21,21 +21,21 @@ package org.polyfrost.hytils.handlers.game.hardcore;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 public class HardcoreStatus {
     private boolean danger;
 
-    @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event) {
+    @Subscribe
+    public void onWorldLoad(WorldLoadEvent event) {
         if (this.danger) {
             this.danger = false;
         }
     }
 
-    @SubscribeEvent
+    @Subscribe
     public void onTitle(TitleEvent event) {
         final String unformattedTitle = EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle());
         final String unformattedSubTitle = EnumChatFormatting.getTextWithoutFormattingCodes(event.getSubtitle());
@@ -48,9 +48,9 @@ public class HardcoreStatus {
         }
     }
 
-    @SubscribeEvent
-    public void onActionbar(ClientChatReceivedEvent event) { // The forge chat event gets stuff from the action bar as well
-        String msg = event.message.getUnformattedText();
+    @Subscribe
+    public void onActionbar(ChatReceiveEvent event) { // The forge chat event gets stuff from the action bar as well
+        String msg = event.getFullyUnformattedMessage();
         if ((msg.equals("YOUR WITHER IS DEAD") || msg.startsWith("BED DESTRUCTION > Your Bed was") || msg.equals("All beds have been destroyed!")) &&
             HytilsConfig.hardcoreHearts) {
             danger = true;

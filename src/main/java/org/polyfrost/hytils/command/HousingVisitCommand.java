@@ -20,16 +20,16 @@ package org.polyfrost.hytils.command;
 
 import net.hypixel.data.type.GameType;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.hytils.HytilsReborn;
 import com.mojang.authlib.GameProfile;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -69,7 +69,7 @@ public class HousingVisitCommand {
                 visit(0);
             } else {
                 HytilsReborn.INSTANCE.getCommandQueue().queue("/l housing");
-                MinecraftForge.EVENT_BUS.register(new HousingVisitHook());
+                EventManager.INSTANCE.register(new HousingVisitHook());
             }
         } else {
             UChat.chat(ChatColor.RED + "Invalid username!");
@@ -83,10 +83,12 @@ public class HousingVisitCommand {
     }
 
     private class HousingVisitHook {
-        @SubscribeEvent
-        public void onHousingLobbyJoin(final WorldEvent.Load event) {
-            MinecraftForge.EVENT_BUS.unregister(this);
+
+        @Subscribe
+        public void onHousingLobbyJoin(final WorldLoadEvent event) {
+            EventManager.INSTANCE.unregister(this);
             visit(300);
         }
+
     }
 }

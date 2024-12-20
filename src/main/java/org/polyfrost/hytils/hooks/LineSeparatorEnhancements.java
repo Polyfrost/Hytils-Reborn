@@ -40,7 +40,7 @@ public class LineSeparatorEnhancements {
         0L, TimeUnit.SECONDS,
         new LinkedBlockingQueue<>(), (r) -> new Thread(
         r,
-        String.format("%s Cache Thread (Handler %s) %s", HytilsReborn.MOD_NAME, LineSeparatorEnhancements.class.getSimpleName(), counter.incrementAndGet())
+        String.format("%s Cache Thread (Handler %s) %s", HytilsReborn.NAME, LineSeparatorEnhancements.class.getSimpleName(), counter.incrementAndGet())
     )
     );
 

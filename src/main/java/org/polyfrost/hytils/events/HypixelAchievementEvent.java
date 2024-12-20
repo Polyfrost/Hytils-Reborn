@@ -18,9 +18,9 @@
 
 package org.polyfrost.hytils.events;
 
-import net.minecraftforge.fml.common.eventhandler.Event;
+import org.polyfrost.oneconfig.api.event.v1.events.Event;
 
-public class HypixelAchievementEvent extends Event {
+public class HypixelAchievementEvent implements Event {
 
     private final String achievement;
 

@@ -26,8 +26,7 @@ import org.polyfrost.hytils.handlers.lobby.limbo.LimboLimiter;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.event.world.WorldEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -62,10 +61,11 @@ public class DefaultChatRestyler implements ChatReceiveModule {
     }
 
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        String message = event.message.getFormattedText().trim();
-        final String unformattedMessage = event.message.getUnformattedText().trim();
-        final List<IChatComponent> siblings = event.message.getSiblings();
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+        IChatComponent component = event.getMessage();
+        String message = component.getFormattedText().trim();
+        final String unformattedMessage = event.getFullyUnformattedMessage().trim();
+        final List<IChatComponent> siblings = component.getSiblings();
 
         final LanguageData language = getLanguage();
         Matcher joinMatcher = language.chatRestylerGameJoinStyleRegex.matcher(message);
@@ -83,17 +83,17 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             Matcher friendMatcher = language.chatRestylerFriendPatternRegex.matcher(message);
             Matcher officerMatcher = language.chatRestylerOfficerPatternRegex.matcher(message);
             if (partyMatcher.find()) {
-                event.message = shortenChannelName(event.message, language.chatRestylerPartyPatternRegex.pattern(),
-                    partyMatcher.group(1) + "P " + partyMatcher.group(3), false);
+                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerPartyPatternRegex.pattern(),
+                    partyMatcher.group(1) + "P " + partyMatcher.group(3), false));
             } else if (guildMatcher.find()) {
-                event.message = shortenChannelName(event.message, language.chatRestylerGuildPatternRegex.pattern(),
-                    guildMatcher.group(1) + "G >", true);
+                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerGuildPatternRegex.pattern(),
+                    guildMatcher.group(1) + "G >", true));
             } else if (friendMatcher.find()) {
-                event.message = shortenChannelName(event.message, language.chatRestylerFriendPatternRegex.pattern(),
-                    friendMatcher.group(1) + "F >", true);
+                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerFriendPatternRegex.pattern(),
+                    friendMatcher.group(1) + "F >", true));
             } else if (officerMatcher.find()) {
-                event.message = shortenChannelName(event.message, language.chatRestylerOfficerPatternRegex.pattern(),
-                    officerMatcher.group(1) + "O >", false);
+                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerOfficerPatternRegex.pattern(),
+                    officerMatcher.group(1) + "O >", false));
             }
         }
 
@@ -101,22 +101,22 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             Matcher privateMessageToMatcher = language.chatRestylerPrivateMessageToPatternRegex.matcher(message);
             Matcher privateMessageFromMatcher = language.chatRestylerPrivateMessageFromPatternRegex.matcher(message);
             if (privateMessageToMatcher.find()) {
-                event.message = shortenChannelName(event.message, language.chatRestylerPrivateMessageToPatternRegex.pattern(),
-                    "§d" + "PM >", true);
+                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerPrivateMessageToPatternRegex.pattern(),
+                    "§d" + "PM >", true));
             } else if (privateMessageFromMatcher.find()) {
-                event.message = shortenChannelName(event.message, language.chatRestylerPrivateMessageFromPatternRegex.pattern(),
-                    "§5" + "PM <", true);
+                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerPrivateMessageFromPatternRegex.pattern(),
+                    "§5" + "PM <", true));
             }
         }
 
         if (HytilsConfig.coloredStatuses) {
-            Matcher statusMatcher = getLanguage().chatRestylerStatusPatternRegex.matcher(event.message.getFormattedText().trim());
+            Matcher statusMatcher = getLanguage().chatRestylerStatusPatternRegex.matcher(component.getFormattedText().trim());
             if (statusMatcher.matches()) {
                 final String status = statusMatcher.group("status");
                 if (status.equalsIgnoreCase("joined")) {
-                    event.message = colorMessage(statusMatcher.group("type") + " > &r" + statusMatcher.group("player") + " &r&ajoined&e.");
+                    event.setMessage(colorMessage(statusMatcher.group("type") + " > &r" + statusMatcher.group("player") + " &r&ajoined&e."));
                 } else if (status.equalsIgnoreCase("left")) {
-                    event.message = colorMessage(statusMatcher.group("type") + " > &r" + statusMatcher.group("player") + " &r&cleft&e.");
+                    event.setMessage(colorMessage(statusMatcher.group("type") + " > &r" + statusMatcher.group("player") + " &r&cleft&e."));
                 }
             }
         }
@@ -132,44 +132,44 @@ public class DefaultChatRestyler implements ChatReceiveModule {
                 // message = message.replaceAll(unformattedPaddingPattern.toString(), "(" + pad(mu.group(1)) + "/" + mu.group(2) + ")");
 
                 joinMatcher = language.chatRestylerGameJoinStyleRegex.matcher(message); // recalculate since we padded
-                event.message = new ChatComponentText(message);
+                event.setMessage(new ChatComponentText(message));
             }
         }
 
         if (HytilsConfig.gameStatusRestyle) { // TODO: all the code following this might have room for optimization, should be looked into
             if (joinMatcher.matches()) {
                 if (HytilsConfig.playerCountBeforePlayerName) {
-                    event.message = colorMessage("&a&l+ &e" + joinMatcher.group("amount")
-                        + " &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : "") + joinMatcher.group("player"));
+                    event.setMessage(colorMessage("&a&l+ &e" + joinMatcher.group("amount")
+                        + " &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : "") + joinMatcher.group("player")));
                 } else {
-                    event.message = colorMessage("&a&l+ &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : "") + joinMatcher.group("player") + " &r&e" +
-                        joinMatcher.group("amount"));
+                    event.setMessage(colorMessage("&a&l+ &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : "") + joinMatcher.group("player") + " &r&e" +
+                        joinMatcher.group("amount")));
                 }
             } else {
                 Matcher leaveMatcher = language.chatRestylerGameLeaveStyleRegex.matcher(message);
                 if (leaveMatcher.matches()) {
                     if (HytilsConfig.playerCountOnPlayerLeave) {
                         if (HytilsConfig.playerCountBeforePlayerName) {
-                            event.message = colorMessage("&c&l- &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount +
-                                "&e) &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") + leaveMatcher.group("player"));
+                            event.setMessage(colorMessage("&c&l- &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount +
+                                "&e) &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") + leaveMatcher.group("player")));
                         } else {
-                            event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") +
-                                leaveMatcher.group("player") + " &r&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)");
+                            event.setMessage(colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") +
+                                leaveMatcher.group("player") + " &r&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)"));
                         }
                     } else {
-                        event.message = colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") + leaveMatcher.group("player"));
+                        event.setMessage(colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") + leaveMatcher.group("player")));
                     }
                 } else {
                     Matcher startCounterMatcher = language.chatRestylerGameStartCounterStyleRegex.matcher(unformattedMessage);
 
                     if (startCounterMatcher.matches()) {
                         // if the format (below) is changed, remember to update the regex for it (chatRestylerGameStartCounterOutputStyle)
-                        event.message = colorMessage("&e&l* &a" + (startCounterMatcher.group("title")) + " &b&l" + startCounterMatcher.group("time") + " &a" + startCounterMatcher.group("unit"));
+                        event.setMessage(colorMessage("&e&l* &a" + (startCounterMatcher.group("title")) + " &b&l" + startCounterMatcher.group("time") + " &a" + startCounterMatcher.group("unit")));
                     } else {
                         if ("We don't have enough players! Start cancelled.".equals(unformattedMessage)) {
-                            event.message = colorMessage("&e&l* &cStart cancelled.");
+                            event.setMessage(colorMessage("&e&l* &cStart cancelled."));
                         } else if ("We don't have enough players! Start delayed.".equals(unformattedMessage)) {
-                            event.message = colorMessage("&e&l* &cStart delayed.");
+                            event.setMessage(colorMessage("&e&l* &cStart delayed."));
                         }
                     }
                 }
@@ -179,21 +179,21 @@ public class DefaultChatRestyler implements ChatReceiveModule {
                 Matcher leaveMater = language.chatRestylerGameLeaveStyleRegex.matcher(message);
                 if (leaveMater.matches()) {
                     if (HytilsConfig.playerCountBeforePlayerName) {
-                        event.message = colorMessage("&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e) " + message);
+                        event.setMessage(colorMessage("&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e) " + message));
                     } else {
-                        event.message = colorMessage(message.substring(0, message.length() - 3) + " &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)!");
+                        event.setMessage(colorMessage(message.substring(0, message.length() - 3) + " &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)!"));
                     }
                     return;
                 }
             }
             if (HytilsConfig.playerCountBeforePlayerName) {
                 if (joinMatcher.matches()) {
-                    event.message = colorMessage("&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e) " + message.split(" \\(")[0] + "!");
+                    event.setMessage(colorMessage("&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e) " + message.split(" \\(")[0] + "!"));
                 }
             }
         }
 
-        HytilsReborn.INSTANCE.getChatHandler().fixStyling(event.message, siblings);
+        HytilsReborn.INSTANCE.getChatHandler().fixStyling(event.getMessage(), siblings);
     }
 
     /**

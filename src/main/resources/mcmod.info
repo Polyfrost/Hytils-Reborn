@@ -1,9 +1,9 @@
 [
   {
-    "modid": "${id}",
-    "name": "${name}",
+    "modid": "${mod_id}",
+    "name": "${mod_name}",
     "description": "Hypixel-focused Quality of Life mod.",
-    "version": "${version}",
+    "version": "${mod_version}",
     "mcversion": "1.8.9",
     "url": "https://github.com/Polyfrost/Hytils-Reborn",
     "updateUrl": "https://github.com/Polyfrost/Hytils-Reborn",

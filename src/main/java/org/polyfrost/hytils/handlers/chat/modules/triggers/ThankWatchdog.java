@@ -21,12 +21,12 @@ package org.polyfrost.hytils.handlers.chat.modules.triggers;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class ThankWatchdog implements ChatReceiveModule {
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
         if (event.message.getUnformattedText().equals("[WATCHDOG ANNOUNCEMENT]") || event.message.getUnformattedText().startsWith("A player has been removed from your")) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/achat Thanks Watchdog!");
         }

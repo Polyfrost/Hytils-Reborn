@@ -21,19 +21,18 @@ package org.polyfrost.hytils.handlers.lobby.limbo;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.DefaultChatRestyler;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.opengl.Display;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class LimboLimiter {
 
     private static boolean limboStatus;
     private static long time;
 
-    @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
+    @Subscribe
+    public void onTick(TickEvent event) {
         if (limboStatus) {
             ++time;
         } else {
@@ -41,8 +40,8 @@ public class LimboLimiter {
         }
     }
 
-    @SubscribeEvent
-    public void onWorldChange(WorldEvent.Unload event) {
+    @Subscribe
+    public void onWorldChange(WorldEvent.Unload event) { // TODO
         limboStatus = false;
         DefaultChatRestyler.reset(); // putting this here so we don't have to make a new event class just to do this
     }

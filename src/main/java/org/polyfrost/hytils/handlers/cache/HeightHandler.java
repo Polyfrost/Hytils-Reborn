@@ -24,7 +24,7 @@ import net.hypixel.data.type.GameType;
 import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.EventHandler;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.utils.v1.JsonUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.HytilsReborn;
@@ -48,7 +48,7 @@ public class HeightHandler {
         0L, TimeUnit.SECONDS,
         new LinkedBlockingQueue<>(), (r) -> new Thread(
         r,
-        String.format("%s Cache Thread (Handler %s) %s", HytilsReborn.MOD_NAME, getClass().getSimpleName(), counter.incrementAndGet())
+        String.format("%s Cache Thread (Handler %s) %s", HytilsReborn.NAME, getClass().getSimpleName(), counter.incrementAndGet())
     )
     );
 
@@ -62,6 +62,7 @@ public class HeightHandler {
         if (jsonObject == null || !location.inGame()) {
             return -1;
         }
+
         try {
             if (location.getGameType().orElse(null) == GameType.BEDWARS) {
                 if (location.getMapName().isPresent()) {

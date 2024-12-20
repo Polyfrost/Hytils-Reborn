@@ -17,34 +17,34 @@
  */
 
 package org.polyfrost.hytils.handlers.general;
-import org.polyfrost.oneconfig.api.event.v1.EventDelay;
 
 
+import net.minecraftforge.fml.client.ExtendedServerListData;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.multiplayer.ServerData;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 public class AutoStart {
 
-    @SubscribeEvent
-    public void tick(TickEvent.ClientTickEvent event) {
+    @Subscribe
+    public void tick(TickEvent event) {
         if (Minecraft.getMinecraft().currentScreen instanceof GuiMainMenu && HytilsReborn.INSTANCE.isLoadedCall()) {
             if (HytilsConfig.autoStart) {
                 FMLClientHandler.instance().connectToServer(
                     new GuiMultiplayer(Minecraft.getMinecraft().currentScreen),
                     new ServerData("hypixel", "hypixel.net", false)
-                );
+                ); // TODO
             }
 
             HytilsReborn.INSTANCE.setLoadedCall(false);
-            MinecraftForge.EVENT_BUS.unregister(this);
+            EventManager.INSTANCE.unregister(this);
         }
     }
+
 }

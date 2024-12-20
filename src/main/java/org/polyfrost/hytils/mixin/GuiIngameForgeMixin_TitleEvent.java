@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.mixin;
 
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.events.TitleEvent;
 import net.minecraft.client.Minecraft;
@@ -46,7 +46,7 @@ public class GuiIngameForgeMixin_TitleEvent extends GuiIngame {
     @Inject(method = "renderTitle", at = @At("HEAD"), cancellable = true)
     private void hytils$postTitleEvent(int l, int age, float opacity, CallbackInfo ci) {
         if (HypixelUtils.isHypixel()) {
-            TitleEvent event = new TitleEvent(displayedTitle, displayedSubTitle);
+            TitleEvent event = new TitleEvent(this.displayedTitle, this.displayedSubTitle);
             MinecraftForge.EVENT_BUS.post(event);
 
             // Set the title and subtitle to empty strings.

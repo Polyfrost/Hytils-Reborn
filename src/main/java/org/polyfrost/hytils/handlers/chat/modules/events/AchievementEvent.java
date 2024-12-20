@@ -22,11 +22,10 @@ import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.HypixelAchievementEvent;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.jetbrains.annotations.NotNull;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,13 +36,13 @@ public class AchievementEvent implements ChatReceiveModule {
     private final Set<String> achievementsGotten = new HashSet<>();
 
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final String unformattedText = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+        final String unformattedText = event.getFullyUnformattedMessage();
         final Matcher matcher = getLanguage().achievementRegex.matcher(unformattedText);
         if (matcher.matches()) {
             final String achievement = matcher.group("achievement");
             if (!achievementsGotten.contains(achievement)) {
-                MinecraftForge.EVENT_BUS.post(new HypixelAchievementEvent(achievement));
+                EventManager.INSTANCE.post(new HypixelAchievementEvent(achievement));
 
                 // check to stop spamming of guild chat if achievement is broken and you get it many times
                 achievementsGotten.add(achievement);
@@ -61,7 +60,7 @@ public class AchievementEvent implements ChatReceiveModule {
         return -3;
     }
 
-    @SubscribeEvent
+    @Subscribe
     public void onAchievementGet(HypixelAchievementEvent event) {
         HytilsReborn.INSTANCE.getCommandQueue().queue("/gchat Achievement unlocked! I unlocked the " + event.getAchievement() + " achievement!");
     }

@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.mixin;
 
+//#if FORGE
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
@@ -45,7 +46,8 @@ public class MinecraftMixin_LeftClickInteract {
 
     @Redirect(method = "clickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerControllerMP;clickBlock(Lnet/minecraft/util/BlockPos;Lnet/minecraft/util/EnumFacing;)Z"))
     private boolean hytils$captureClickBlock(PlayerControllerMP instance, BlockPos itemstack, EnumFacing block1) {
-        ForgeEventFactory.onPlayerInteract(thePlayer, PlayerInteractEvent.Action.LEFT_CLICK_BLOCK, theWorld, itemstack, objectMouseOver.sideHit, objectMouseOver.hitVec);
+        ForgeEventFactory.onPlayerInteract(this.thePlayer, PlayerInteractEvent.Action.LEFT_CLICK_BLOCK, this.theWorld, itemstack, this.objectMouseOver.sideHit, this.objectMouseOver.hitVec);
         return instance.clickBlock(itemstack, block1);
     }
 }
+//#endif

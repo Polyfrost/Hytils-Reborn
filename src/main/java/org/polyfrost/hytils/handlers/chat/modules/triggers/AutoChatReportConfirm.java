@@ -22,16 +22,16 @@ import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
 public class AutoChatReportConfirm implements ChatReceiveModule {
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
         if (event.message.getUnformattedText().equals(getLanguage().autoChatReportConfirm)) {
-            event.setCanceled(true);
+            event.cancelled = true;
             Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage("/report confirm"), 1, TimeUnit.SECONDS);
         }
     }

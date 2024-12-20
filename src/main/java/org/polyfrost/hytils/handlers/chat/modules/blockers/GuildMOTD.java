@@ -18,14 +18,12 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
@@ -44,11 +42,11 @@ public class GuildMOTD implements ChatReceiveModule {
 
     public GuildMOTD() {
         // Necessary to check for ClientConnectedToServerEvent.
-        MinecraftForge.EVENT_BUS.register(this);
+        EventManager.INSTANCE.register(this);
     }
 
-    @SubscribeEvent
-    public void onConnectedToServer(FMLNetworkEvent.ClientConnectedToServerEvent event) {
+    @Subscribe
+    public void onConnectedToServer(FMLNetworkEvent.ClientConnectedToServerEvent event) { // TODO
         // Allow checking of MOTD immediately after joining Hypixel.
         canCheckMOTD = true;
         isMOTD = false;
@@ -58,17 +56,17 @@ public class GuildMOTD implements ChatReceiveModule {
     }
 
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
         if (canCheckMOTD) {
             // MOTD line breaker is already trimmed to chat width.
-            if (EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedTextForChat()).startsWith("------")) {
+            if (event.getFullyUnformattedMessage().startsWith("------")) {
                 // Received the first or last line of MOTD.
                 isMOTD = !isMOTD;
                 // Hide the MOTD line breaker.
-                event.setCanceled(true);
+                event.cancelled = true;
             } else if (isMOTD) {
                 // After reading the first line, cancel any subsequent chat lines until the last line is read.
-                event.setCanceled(true);
+                event.cancelled = true;
             }
         }
     }

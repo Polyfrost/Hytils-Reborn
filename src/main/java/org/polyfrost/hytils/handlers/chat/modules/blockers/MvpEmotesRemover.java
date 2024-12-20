@@ -22,14 +22,14 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.hytils.handlers.language.LanguageData;
 import net.minecraft.util.ChatComponentText;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 
 public class MvpEmotesRemover implements ChatReceiveModule {
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
         final LanguageData language = getLanguage();
         Matcher matcher = language.chatCleanerMvpEmotesRegex.matcher(event.message.getFormattedText());
         if (matcher.find(0)) {

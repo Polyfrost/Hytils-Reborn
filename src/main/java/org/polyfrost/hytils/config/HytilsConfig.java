@@ -19,8 +19,10 @@
 package org.polyfrost.hytils.config;
 
 import org.polyfrost.oneconfig.api.config.v1.Config;
+import org.polyfrost.oneconfig.api.config.v1.Property;
 import org.polyfrost.oneconfig.api.config.v1.annotations.*;
 import org.polyfrost.oneconfig.api.ui.v1.Notifications;
+import org.polyfrost.polyui.color.ColorUtils;
 import org.polyfrost.polyui.color.PolyColor;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
@@ -29,7 +31,6 @@ import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.io.FileUtils;
 import org.polyfrost.polyui.unit.Units;
-import org.polyfrost.polyui.utils.ColorUtils;
 import club.sk1er.lobbysounds.config.Sounds;
 import club.sk1er.mods.autogg.AutoGG;
 
@@ -1412,7 +1413,7 @@ public class HytilsConfig extends Config {
         addDependency("autoGGMessage2", "autoGG");
         addDependency("autoGGSecondPhraseDelay", "autoGG");
 
-        BooleanSupplier autoGGEnabled = () -> !HytilsReborn.INSTANCE.isSk1erAutoGG || !AutoGG.INSTANCE.getAutoGGConfig().isModEnabled();
+        Supplier<Property.Display> autoGGEnabled = () -> (!HytilsReborn.INSTANCE.isSk1erAutoGG || !AutoGG.INSTANCE.getAutoGGConfig().isModEnabled()) ? Property.Display.HIDDEN : Property.Display.SHOWN;
 
         addDependency("autoGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
         addDependency("autoGGSecondMessage", "Sk1er's AutoGG Enabled", autoGGEnabled);
@@ -1484,7 +1485,7 @@ public class HytilsConfig extends Config {
             "lobbyDisableExplosionSounds", "lobbyDisableDeliveryManSounds", "lobbyDisableNoteBlockSounds",
             "lobbyDisableFireworkSounds", "lobbyDisableLevelupSounds", "lobbyDisableArrowSounds", "lobbyDisableBatSounds",
             "lobbyDisableFireSounds", "lobbyDisableEndermanSounds", "lobbyDisableDoorSounds", "lobbyDisablePortalSounds"
-        ).forEach(property -> addDependency(property, "Silent Lobby", () -> !silentLobby));
+        ).forEach(property -> addDependency(property, "silentLobby", true));
     }
 
     public void hideTabulous() {
@@ -1496,13 +1497,13 @@ public class HytilsConfig extends Config {
         cleanerSkyblockTabInfo = false;
         hideAdsInTab = false;
         save();
-        addDependency("hideNpcsInTab", "Tabulous", () -> false);
-        addDependency("keepImportantNpcsInTab", "Tabulous", () -> false);
-        addDependency("hideGuildTagsInTab", "Tabulous", () -> false);
-        addDependency("hidePlayerRanksInTab", "Tabulous", () -> false);
-        addDependency("hidePingInTab", "Tabulous", () -> false);
-        addDependency("cleanerSkyblockTabInfo", "Tabulous", () -> false);
-        addDependency("hideAdsInTab", "Tabulous", () -> false);
+        addDependency("hideNpcsInTab", "Tabulous", () -> Property.Display.DISABLED);
+        addDependency("keepImportantNpcsInTab", "Tabulous", () -> Property.Display.DISABLED);
+        addDependency("hideGuildTagsInTab", "Tabulous", () -> Property.Display.DISABLED);
+        addDependency("hidePlayerRanksInTab", "Tabulous", () -> Property.Display.DISABLED);
+        addDependency("hidePingInTab", "Tabulous", () -> Property.Display.DISABLED);
+        addDependency("cleanerSkyblockTabInfo", "Tabulous", () -> Property.Display.DISABLED);
+        addDependency("hideAdsInTab", "Tabulous", () -> Property.Display.DISABLED);
     }
 
     private void setWBMessages() {

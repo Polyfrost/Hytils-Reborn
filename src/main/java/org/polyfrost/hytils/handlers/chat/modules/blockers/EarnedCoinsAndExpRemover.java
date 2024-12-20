@@ -21,15 +21,15 @@ package org.polyfrost.hytils.handlers.chat.modules.blockers;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class EarnedCoinsAndExpRemover implements ChatReceiveModule {
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().replace("\n", "")); // Support doubled coins (guild rewards) message
         if (getLanguage().chatCleanerEarnedCoinsAndExpRegex.matcher(message).matches()) {
-            event.setCanceled(true);
+            event.cancelled = true;
         }
     }
 

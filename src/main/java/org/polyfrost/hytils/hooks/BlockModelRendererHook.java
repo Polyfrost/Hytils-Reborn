@@ -27,8 +27,8 @@ import net.minecraft.util.BlockPos;
 import org.polyfrost.hytils.config.BlockHighlightConfig;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.HeightHandler;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
-import org.polyfrost.polyui.utils.ColorUtils;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
+import org.polyfrost.polyui.color.ColorUtils;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 public class BlockModelRendererHook {

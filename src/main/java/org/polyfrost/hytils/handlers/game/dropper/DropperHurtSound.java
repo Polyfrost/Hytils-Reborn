@@ -19,14 +19,13 @@
 package org.polyfrost.hytils.handlers.game.dropper;
 
 import org.polyfrost.hytils.config.HytilsConfig;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class DropperHurtSound {
 
-    @SubscribeEvent
-    public void onSound(PlaySoundEvent event) {
+    @Subscribe
+    public void onSound(PlaySoundEvent event) { // TODO
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (HytilsConfig.muteDropperHurtSound && HypixelUtils.isHypixel() && "dropper".equalsIgnoreCase(location.getMode().orElse(null)) && event.name.equals("game.player.hurt")) {
             event.result = null;

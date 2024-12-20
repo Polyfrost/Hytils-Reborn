@@ -22,7 +22,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
-import org.polyfrost.polyui.utils.ColorUtils;
+import org.polyfrost.polyui.color.ColorUtils;
 
 import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -37,7 +37,7 @@ public class DarkColorUtils {
         0L, TimeUnit.SECONDS,
         new LinkedBlockingQueue<>(), (r) -> new Thread(
         r,
-        String.format("%s Cache Thread %s", HytilsReborn.MOD_NAME, counter.incrementAndGet())
+        String.format("%s Cache Thread %s", HytilsReborn.NAME, counter.incrementAndGet())
     )
     );
 

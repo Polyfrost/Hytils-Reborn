@@ -19,7 +19,8 @@
 package org.polyfrost.hytils.handlers.render;
 
 import net.hypixel.data.type.GameType;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
 import net.minecraft.client.Minecraft;
@@ -27,10 +28,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.polyfrost.hytils.util.WaypointUtil;
 
 import java.util.List;
@@ -39,8 +36,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ChestHighlighter {
     private final List<BlockPos> highlightedChestPositions = new CopyOnWriteArrayList<>();
 
-    @SubscribeEvent
-    public void onInteract(PlayerInteractEvent event) {
+    @Subscribe
+    public void onInteract(PlayerInteractEvent event) { // TODO
         if (!HytilsConfig.highlightChests) return;
         if (isNotSupported()) return;
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
@@ -54,20 +51,20 @@ public class ChestHighlighter {
         }
     }
 
-    @SubscribeEvent
-    public void onWorldChange(WorldEvent.Unload event) {
+    @Subscribe
+    public void onWorldChange(WorldEvent.Unload event) { // TODO
         highlightedChestPositions.clear();
     }
 
-    @SubscribeEvent
+    @Subscribe
     public void onTitle(TitleEvent event) {
         if (EnumChatFormatting.getTextWithoutFormattingCodes(event.getSubtitle()).equals("All chests have been refilled!")) {
             highlightedChestPositions.clear();
         }
     }
 
-    @SubscribeEvent
-    public void onWorldRendered(RenderWorldLastEvent event) {
+    @Subscribe
+    public void onWorldRendered(RenderWorldLastEvent event) { // TODO
         if (!HytilsConfig.highlightChests) return;
         if (isNotSupported()) return;
         if (highlightedChestPositions.isEmpty())

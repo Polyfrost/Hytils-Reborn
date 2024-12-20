@@ -24,21 +24,19 @@ import org.polyfrost.hytils.handlers.cache.ArmorStandHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class ArmorStandHider {
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onEntityRenderer(RenderLivingEvent.Pre<EntityLivingBase> event) {
+    @Subscribe
+    public void onEntityRenderer(RenderLivingEvent.Pre<EntityLivingBase> event) { // TODO
         final HypixelUtils.Location location = HypixelUtils.getLocation();
         if (HypixelUtils.isHypixel() && ((!location.inGame() && HytilsConfig.hideUselessArmorStands) || (HytilsConfig.hideUselessArmorStandsGame && location.inGame() && location.getGameType().isPresent() && (location.getGameType().get() == GameType.SKYBLOCK || location.getGameType().get() == GameType.BEDWARS || location.getGameType().get() == GameType.SKYWARS || location.getMode().orElse("").contains("BRIDGE"))))) {
             if (event.entity instanceof EntityArmorStand) {
                 String unformattedArmorStandName = EnumChatFormatting.getTextWithoutFormattingCodes(event.entity.getCustomNameTag().toLowerCase());
                 for (String armorStands : ArmorStandHandler.INSTANCE.armorStandNames) {
                     if (unformattedArmorStandName.contains(armorStands)) {
-                        event.setCanceled(true);
+                        event.cancelled = true;
                         break;
                     }
                 }

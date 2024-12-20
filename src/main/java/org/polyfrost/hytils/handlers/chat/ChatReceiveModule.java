@@ -18,13 +18,12 @@
 
 package org.polyfrost.hytils.handlers.chat;
 
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.NotNull;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 
 /**
- * This interface is used to handle many different {@link ClientChatReceivedEvent}-consuming methods
- * without having to add them all to the {@link MinecraftForge#EVENT_BUS}.
+ * This interface is used to handle many different {@link ChatReceiveEvent}-consuming methods
+ * without having to add them all to the {@link org.polyfrost.oneconfig.api.event.v1.EventManager}.
  * <p>
  * ChatModules essentially behave like small listener classes, except instead of going directly to Forge,
  * the {@link ChatHandler} handles them and passes them to Forge, taking account of things like priority and cancelled events.
@@ -37,13 +36,13 @@ import org.jetbrains.annotations.NotNull;
 public interface ChatReceiveModule extends ChatModule {
 
     /**
-     * Place your code here. Called when a Forge {@link ClientChatReceivedEvent} is received.
+     * Place your code here. Called when a OneConfig {@link ChatReceiveEvent} is received.
      * <p>
      * If the event is cancelled, {@link ChatModule}s after that event will not execute. Therefore,
-     * {@link ClientChatReceivedEvent#isCanceled()}} checks are unnecessary.
+     * {@link ChatReceiveEvent#cancelled}} checks are unnecessary.
      *
-     * @param event a {@link ClientChatReceivedEvent}
+     * @param event a {@link ChatReceiveEvent}
      */
-    void onMessageReceived(@NotNull ClientChatReceivedEvent event);
+    void onMessageReceived(@NotNull ChatReceiveEvent event);
 
 }

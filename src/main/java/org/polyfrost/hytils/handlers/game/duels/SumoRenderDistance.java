@@ -21,9 +21,8 @@ package org.polyfrost.hytils.handlers.game.duels;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class SumoRenderDistance {
     final GameSettings gs = Minecraft.getMinecraft().gameSettings;
@@ -31,8 +30,8 @@ public class SumoRenderDistance {
     boolean wasSumo = false;
     boolean isFirstRender = true;
 
-    @SubscribeEvent
-    public void onWorldLoad(RenderWorldLastEvent event) {
+    @Subscribe
+    public void onWorldLoad(RenderWorldLastEvent event) { // TODO
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (HytilsConfig.sumoRenderDistance && HypixelUtils.isHypixel() && location.getMode().orElse("null").contains("SUMO")) {
             if (isFirstRender) {

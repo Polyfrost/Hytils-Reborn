@@ -20,7 +20,10 @@ package org.polyfrost.hytils.command;
 
 import net.hypixel.data.type.GameType;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
@@ -28,9 +31,6 @@ import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.hytils.HytilsReborn;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -63,7 +63,7 @@ public class SkyblockVisitCommand {
                 return;
             }
             HytilsReborn.INSTANCE.getCommandQueue().queue("/play skyblock");
-            MinecraftForge.EVENT_BUS.register(new SkyblockVisitHook());
+            EventManager.INSTANCE.register(new SkyblockVisitHook());
         } else {
             UChat.chat(ChatColor.RED + "Invalid username!");
         }
@@ -78,10 +78,12 @@ public class SkyblockVisitCommand {
     }
 
     private class SkyblockVisitHook {
-        @SubscribeEvent
-        public void onSkyblockLobbyJoin(final WorldEvent.Load event) {
-            MinecraftForge.EVENT_BUS.unregister(this);
+
+        @Subscribe
+        public void onSkyblockLobbyJoin(final WorldLoadEvent event) {
+            EventManager.INSTANCE.unregister(this);
             visit(300);
         }
+
     }
 }

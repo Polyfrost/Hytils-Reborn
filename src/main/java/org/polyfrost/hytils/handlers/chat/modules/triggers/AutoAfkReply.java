@@ -18,11 +18,11 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.universal.UChat;
 
 import java.util.regex.Matcher;
@@ -30,7 +30,7 @@ import java.util.regex.Matcher;
 public class AutoAfkReply implements ChatReceiveModule {
     // TODO: maybe write a general afk checker for skyblock afkers, as they won't be in limbo
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
         if (!"limbo".equals(HypixelUtils.getLocation().getServerName().orElse(null))) return;
         String message = event.message.getUnformattedText();
         Matcher matcher = getLanguage().autoAfkReplyPatternRegex.matcher(message);

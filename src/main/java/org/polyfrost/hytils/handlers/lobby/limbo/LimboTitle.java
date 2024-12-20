@@ -21,18 +21,18 @@ package org.polyfrost.hytils.handlers.lobby.limbo;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 public class LimboTitle {
     // Prevent the Limbo AFK text from being stuck on the player's screen indefinitely.
-    @SubscribeEvent
+    @Subscribe
     public void onTitle(TitleEvent event) {
         // The player has the AFK title text shown.
         if (event.getTitle().equals("§cYou are AFK§r") && event.getSubtitle().equals("§eMove around to return to the lobby.§r")) {
             // The player moved. Also check if the user has the Remove Limbo AFK Title feature on.
             if (Minecraft.getMinecraft().thePlayer.moveStrafing > 0 || HytilsConfig.hideLimboTitle) {
                 // Forcefully remove the title text.
-                event.setCanceled(true);
+                event.cancelled = true;
             }
         }
     }

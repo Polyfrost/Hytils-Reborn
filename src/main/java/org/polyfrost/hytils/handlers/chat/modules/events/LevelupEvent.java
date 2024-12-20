@@ -22,26 +22,25 @@ import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.HypixelLevelupEvent;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 import java.util.regex.Matcher;
 
 public class LevelupEvent implements ChatReceiveModule {
 
     @Override
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        final String unformattedText = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+        final String unformattedText = event.getFullyUnformattedMessage();
         final Matcher matcher = getLanguage().hypixelLevelUpRegex.matcher(unformattedText.trim());
         if (matcher.find()) {
             if (unformattedText.contains(": ")) return; // TODO: This is a temporary solution to prevent regular player messages from triggering it. Fix the regex!
             final String level = matcher.group("level");
             if (StringUtils.isNumeric(level)) {
-                MinecraftForge.EVENT_BUS.post(new HypixelLevelupEvent(Integer.parseInt(level)));
+                EventManager.INSTANCE.post(new HypixelLevelupEvent(Integer.parseInt(level)));
             }
         }
     }
@@ -56,7 +55,7 @@ public class LevelupEvent implements ChatReceiveModule {
         return -3;
     }
 
-    @SubscribeEvent
+    @Subscribe
     public void levelUpEvent(HypixelLevelupEvent event) {
         HytilsReborn.INSTANCE.getCommandQueue().queue("/gchat Levelup! I am now Hypixel Level: " + event.getLevel() + "!");
     }

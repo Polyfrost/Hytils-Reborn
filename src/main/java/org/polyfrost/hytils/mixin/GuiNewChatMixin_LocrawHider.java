@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.mixin;
 
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
@@ -48,7 +48,7 @@ public abstract class GuiNewChatMixin_LocrawHider {
 
     @Inject(method = "printChatMessageWithOptionalDeletion", at = @At("HEAD"), cancellable = true)
     private void hytils$handlePrintChatMessage(IChatComponent chatComponent, int chatLineId, CallbackInfo ci) {
-        hytils$handleHytilsMessage(chatComponent, chatLineId, mc.ingameGUI.getUpdateCounter(), false, ci);
+        hytils$handleHytilsMessage(chatComponent, chatLineId, this.mc.ingameGUI.getUpdateCounter(), false, ci);
     }
 
     @Inject(method = "setChatLine", at = @At("HEAD"), cancellable = true)
@@ -62,13 +62,14 @@ public abstract class GuiNewChatMixin_LocrawHider {
             if (chatLineId != 0) {
                 deleteChatLine(chatLineId);
             }
+
             if (!displayOnly) {
-                chatLines.add(0, new ChatLine(updateCounter, chatComponent, chatLineId));
-                while (this.chatLines.size() > (100 + (HytilsReborn.INSTANCE.isPatcher ? 32667 : 0)))
-                {
+                this.chatLines.add(0, new ChatLine(updateCounter, chatComponent, chatLineId));
+                while (this.chatLines.size() > (100 + (HytilsReborn.INSTANCE.isPatcher ? 32667 : 0))) {
                     this.chatLines.remove(this.chatLines.size() - 1);
                 }
             }
+
             ci.cancel();
         }
     }

@@ -20,7 +20,7 @@ package org.polyfrost.hytils.util;
 
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.EventHandler;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.utils.v1.JsonUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.handlers.cache.HeightHandler;

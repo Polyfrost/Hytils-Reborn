@@ -22,39 +22,35 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemBlock;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class SoundHandler {
 
     private int ticks = -1;
 
-    @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent e) {
-        if (e.phase == TickEvent.Phase.START) {
-            if (HypixelUtils.isHypixel() && Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null) {
-                HypixelUtils.Location location = HypixelUtils.getLocation();
-                if (HytilsConfig.blockNotify && location.inGame() && location.getGameType().isPresent()) {
-                    switch (location.getGameType().get()) {
-                        case BUILD_BATTLE:
-                        case HOUSING:
-                        case SKYBLOCK:
-                            return;
+    @Subscribe
+    public void onTick(TickEvent.Start e) {
+        if (HypixelUtils.isHypixel() && Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null) {
+            HypixelUtils.Location location = HypixelUtils.getLocation();
+            if (HytilsConfig.blockNotify && location.inGame() && location.getGameType().isPresent()) {
+                switch (location.getGameType().get()) {
+                    case BUILD_BATTLE: case HOUSING: case SKYBLOCK:
+                        return;
+                }
+                if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && !(((ItemBlock) Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem()).block instanceof BlockTNT) && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize <= HytilsConfig.blockNumber && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize > 4) {
+                    ticks++;
+                    if (ticks == 0) {
+                        playSound();
+                        return;
+                    } else if (ticks == 20) {
+                        playSound();
+                        return;
                     }
-                    if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && !(((ItemBlock) Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem()).block instanceof BlockTNT) && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize <= HytilsConfig.blockNumber && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize > 4) {
-                        ticks++;
-                        if (ticks == 0) {
-                            playSound();
-                            return;
-                        } else if (ticks == 20) {
-                            playSound();
-                            return;
-                        }
-                        if (ticks > 40) ticks = -1;
-                    } else if (ticks != -1) {
-                        ticks = -1;
-                    }
+                    if (ticks > 40) ticks = -1;
+                } else if (ticks != -1) {
+                    ticks = -1;
                 }
             }
         }

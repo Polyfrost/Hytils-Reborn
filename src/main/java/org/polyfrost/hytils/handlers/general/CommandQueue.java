@@ -19,8 +19,8 @@
 package org.polyfrost.hytils.handlers.general;
 
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -40,12 +40,8 @@ public class CommandQueue {
         commands.add(new QueueObject(chat, task));
     }
 
-    @SubscribeEvent
-    public void ticks(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.START) {
-            return;
-        }
-
+    @Subscribe
+    public void ticks(TickEvent.Start event) {
         if (tick < delay) {
             tick++;
         }

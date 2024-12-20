@@ -23,21 +23,20 @@ import org.polyfrost.hytils.events.TitleEvent;
 import org.polyfrost.hytils.util.WaypointUtil;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class MiddleBeaconMiniWalls {
     private boolean miniWitherDead;
     private final BlockPos block = new BlockPos(0, 0, 0);
 
-    @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event) {
+    @Subscribe
+    public void onWorldLoad(WorldLoadEvent event) {
         if (this.miniWitherDead) this.miniWitherDead = false;
     }
 
-    @SubscribeEvent
+    @Subscribe
     public void onTitle(TitleEvent event) {
         final String unformattedTitle = EnumChatFormatting.getTextWithoutFormattingCodes(event.getTitle());
         if (unformattedTitle != null && (unformattedTitle.equals("Your Mini Wither died!") || unformattedTitle.equals("DEATHMATCH"))) miniWitherDead = true;
@@ -48,8 +47,8 @@ public class MiddleBeaconMiniWalls {
         return HypixelUtils.isHypixel() && "mini_walls".equalsIgnoreCase(location.getMode().orElse(null)) && HytilsConfig.miniWallsMiddleBeacon && this.miniWitherDead;
     }
 
-    @SubscribeEvent
-    public void onRenderWorldLast(RenderWorldLastEvent event) {
+    @Subscribe
+    public void onRenderWorldLast(RenderWorldLastEvent event) { // TODO
         if (!shouldMakeBeacon()) return;
         WaypointUtil.renderBeaconBeam(block, HytilsConfig.miniWallsMiddleBeaconColor, event.partialTicks);
     }

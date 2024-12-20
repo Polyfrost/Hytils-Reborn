@@ -28,12 +28,11 @@ import org.polyfrost.hytils.handlers.chat.modules.modifiers.WhiteChat;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.WhitePrivateMessages;
 import org.polyfrost.hytils.handlers.chat.modules.triggers.*;
 import net.minecraft.util.IChatComponent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.polyfrost.oneconfig.api.hypixel.v0.HypixelUtils;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -133,15 +132,15 @@ public class ChatHandler {
         this.registerModule((ChatSendModule) chatModule);
     }
 
-    @SubscribeEvent
-    public void handleWorldLeave(WorldEvent.Unload e) {
+    @Subscribe
+    public void handleWorldLeave(WorldEvent.Unload e) { // TODO
         for (ChatReceiveResetModule module : this.resetModules) {
             module.reset();
         }
     }
 
-    @SubscribeEvent
-    public void handleChat(ClientChatReceivedEvent event) {
+    @Subscribe
+    public void handleChat(ChatReceiveEvent event) {
         if (!HypixelUtils.isHypixel()) {
             return;
         }
@@ -154,7 +153,7 @@ public class ChatHandler {
             try {
                 if (module.isEnabled()) {
                     module.onMessageReceived(event);
-                    if (event.isCanceled()) {
+                    if (event.cancelled) {
                         return;
                     }
                 }

@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.mixin.beds;
 
+//#if FORGE
 import org.polyfrost.hytils.handlers.cache.BedLocationHandler;
 import org.polyfrost.hytils.hooks.BedModelHook;
 import net.minecraft.util.ResourceLocation;
@@ -44,3 +45,4 @@ public class ModelLoaderMixin {
         }
     }
 }
+//#endif
