@@ -34,6 +34,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
+import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent;
 import org.polyfrost.polyui.color.PolyColor;
 
 /**
@@ -213,11 +214,11 @@ public class WaypointUtil {
         tessellator.draw();
     }
 
-    public static void drawBoundingBox(RenderWorldLastEvent event, BlockPos pos, PolyColor color) { // TODO
+    public static void drawBoundingBox(PostWorldRenderEvent event, BlockPos pos, PolyColor color) {
         Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
-        double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * event.partialTicks;
-        double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * event.partialTicks;
-        double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * event.partialTicks;
+        double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * event.getPartialTicks();
+        double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * event.getPartialTicks();
+        double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * event.getPartialTicks();
 
         double x = pos.getX() - viewerX;
         double y = pos.getY() - viewerY;

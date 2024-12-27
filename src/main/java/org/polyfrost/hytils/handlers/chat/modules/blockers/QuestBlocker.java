@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 public class QuestBlocker implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull final ChatReceiveEvent event) {
-        final String message = event.message.getUnformattedText();
+        final String message = event.getFullyUnformattedMessage();
         if (message.startsWith("§aAutomatically activated:")) {
             event.cancelled = true;
         }

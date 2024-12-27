@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 public class AutoChatReportConfirm implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        if (event.message.getUnformattedText().equals(getLanguage().autoChatReportConfirm)) {
+        if (event.getFullyUnformattedMessage().equals(getLanguage().autoChatReportConfirm)) {
             event.cancelled = true;
             Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage("/report confirm"), 1, TimeUnit.SECONDS);
         }

@@ -29,7 +29,7 @@ import java.util.regex.Matcher;
 public class GuildWelcomer implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        final String text = event.message.getUnformattedText();
+        final String text = event.getFullyUnformattedMessage();
         final Matcher matcher = getLanguage().guildPlayerJoinRegex.matcher(text);
         if (matcher.matches()) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/gc Welcome to the guild " + matcher.group("player") + "!");

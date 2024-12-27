@@ -19,6 +19,10 @@
 package org.polyfrost.hytils.handlers.render;
 
 import net.hypixel.data.type.GameType;
+import net.minecraft.world.World;
+import org.polyfrost.oneconfig.api.event.v1.events.PlayerInteractEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldUnloadEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.config.HytilsConfig;
@@ -29,6 +33,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.hytils.util.WaypointUtil;
+import org.polyfrost.universal.UMinecraft;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -37,22 +42,37 @@ public class ChestHighlighter {
     private final List<BlockPos> highlightedChestPositions = new CopyOnWriteArrayList<>();
 
     @Subscribe
-    public void onInteract(PlayerInteractEvent event) { // TODO
-        if (!HytilsConfig.highlightChests) return;
-        if (isNotSupported()) return;
-        if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
-            TileEntity tile = event.world.getTileEntity(event.pos);
-            if (tile instanceof TileEntityChest && !highlightedChestPositions.contains(event.pos))
-                highlightedChestPositions.add(event.pos);
-        } else if (event.action == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK) {
-            TileEntity tile = event.world.getTileEntity(event.pos);
-            if (tile instanceof TileEntityChest)
-                highlightedChestPositions.remove(event.pos);
+    public void onInteract(PlayerInteractEvent event) {
+        if (!HytilsConfig.highlightChests || event.getType() != PlayerInteractEvent.Type.BLOCK || isNotSupported()) {
+            return;
+        }
+
+        World world = UMinecraft.getWorld();
+        if (world == null) {
+            return; // Should never happen
+        }
+
+        BlockPos pos = UMinecraft.getMinecraft().objectMouseOver.getBlockPos();
+        TileEntity tile = world.getTileEntity(pos);
+        if (!(tile instanceof TileEntityChest)) {
+            return;
+        }
+
+        switch (event.getAction()) {
+            case RIGHT:
+                if (!highlightedChestPositions.contains(pos)) {
+                    highlightedChestPositions.add(pos);
+                }
+
+                break;
+            case LEFT:
+                highlightedChestPositions.remove(pos);
+                break;
         }
     }
 
     @Subscribe
-    public void onWorldChange(WorldEvent.Unload event) { // TODO
+    public void onWorldChange(WorldUnloadEvent event) {
         highlightedChestPositions.clear();
     }
 
@@ -64,7 +84,7 @@ public class ChestHighlighter {
     }
 
     @Subscribe
-    public void onWorldRendered(RenderWorldLastEvent event) { // TODO
+    public void onWorldRendered(PostWorldRenderEvent event) {
         if (!HytilsConfig.highlightChests) return;
         if (isNotSupported()) return;
         if (highlightedChestPositions.isEmpty())

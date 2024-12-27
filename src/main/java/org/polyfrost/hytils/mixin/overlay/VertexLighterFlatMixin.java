@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.mixin.overlay;
 
+//#if FORGE
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.util.DarkColorUtils;
@@ -72,3 +73,4 @@ public class VertexLighterFlatMixin {
     }
 
 }
+//#endif

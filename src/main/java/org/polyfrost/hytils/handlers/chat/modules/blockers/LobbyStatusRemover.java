@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class LobbyStatusRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        final String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        final String message = event.getFullyUnformattedMessage();
         if (message.contains(": ")) return;
         if (getLanguage().chatCleanerJoinRegex.matcher(message).find()) {
             event.cancelled = true;

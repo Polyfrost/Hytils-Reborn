@@ -24,16 +24,24 @@ import org.polyfrost.hytils.handlers.cache.ArmorStandHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.util.EnumChatFormatting;
+import org.polyfrost.oneconfig.api.event.v1.events.RenderLivingEntityEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class ArmorStandHider {
+
     @Subscribe
-    public void onEntityRenderer(RenderLivingEvent.Pre<EntityLivingBase> event) { // TODO
+    public void onEntityRenderer(RenderLivingEntityEvent.Pre event) {
+        Object entityRaw = event.getEntity();
+        if (!(entityRaw instanceof EntityLivingBase)) {
+            return;
+        }
+
+        EntityLivingBase entity = (EntityLivingBase) entityRaw;
         final HypixelUtils.Location location = HypixelUtils.getLocation();
         if (HypixelUtils.isHypixel() && ((!location.inGame() && HytilsConfig.hideUselessArmorStands) || (HytilsConfig.hideUselessArmorStandsGame && location.inGame() && location.getGameType().isPresent() && (location.getGameType().get() == GameType.SKYBLOCK || location.getGameType().get() == GameType.BEDWARS || location.getGameType().get() == GameType.SKYWARS || location.getMode().orElse("").contains("BRIDGE"))))) {
-            if (event.entity instanceof EntityArmorStand) {
-                String unformattedArmorStandName = EnumChatFormatting.getTextWithoutFormattingCodes(event.entity.getCustomNameTag().toLowerCase());
+            if (entity instanceof EntityArmorStand) {
+                String unformattedArmorStandName = EnumChatFormatting.getTextWithoutFormattingCodes(entity.getCustomNameTag().toLowerCase());
                 for (String armorStands : ArmorStandHandler.INSTANCE.armorStandNames) {
                     if (unformattedArmorStandName.contains(armorStands)) {
                         event.cancelled = true;
@@ -43,4 +51,5 @@ public class ArmorStandHider {
             }
         }
     }
+
 }

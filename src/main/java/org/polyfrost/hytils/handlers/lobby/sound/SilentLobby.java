@@ -19,16 +19,17 @@
 package org.polyfrost.hytils.handlers.lobby.sound;
 
 import org.polyfrost.hytils.config.HytilsConfig;
+import org.polyfrost.oneconfig.api.event.v1.events.SoundPlayedEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class SilentLobby {
     @Subscribe
-    public void onSoundPlay(PlaySoundEvent event) { // TODO
+    public void onSoundPlay(SoundPlayedEvent event) { // TODO
         if (HypixelUtils.isHypixel() && !HypixelUtils.getLocation().inGame()) {
-            String sound = event.name;
+            String sound = event.getName();
             if (HytilsConfig.silentLobby && !sound.startsWith("gui.")) {
-                event.result = null;
+                event.setSound(null);
             } else {
                 /*
                 This code is taken from LobbySounds by Sk1er LLC under the GPL License:
@@ -36,75 +37,75 @@ public class SilentLobby {
                 Only changes to adapt to this project have been made, as well as additions.
                  */
                 if (sound.startsWith("step.") && HytilsConfig.lobbyDisableSteppingSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.startsWith("mob.slime") && HytilsConfig.lobbyDisableSlimeSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.startsWith("mob.enderdragon") && HytilsConfig.lobbyDisableDragonSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if ((sound.startsWith("mob.wither") || sound.startsWith("mob.skeleton")) && HytilsConfig.lobbyDisableWitherSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.equals("random.orb") && HytilsConfig.lobbyDisableExperienceOrbSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.equals("random.pop") && HytilsConfig.lobbyDisableItemPickupSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.equals("game.tnt.primed") && HytilsConfig.lobbyDisablePrimedTntSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.equals("random.explode") && HytilsConfig.lobbyDisableExplosionSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.equals("mob.chicken.plop") && HytilsConfig.lobbyDisableDeliveryManSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if ((sound.startsWith("note.") || sound.equals("random.click")) && HytilsConfig.lobbyDisableNoteBlockSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.startsWith("fireworks") && HytilsConfig.lobbyDisableFireworkSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.equals("random.levelup") && HytilsConfig.lobbyDisableLevelupSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.startsWith("mob.bat") && HytilsConfig.lobbyDisableBatSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.equals("fire.fire") && HytilsConfig.lobbyDisableFireSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.startsWith("mob.endermen") && HytilsConfig.lobbyDisableEndermanSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.startsWith("random.bow") && HytilsConfig.lobbyDisableArrowSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.startsWith("random.door") && HytilsConfig.lobbyDisableDoorSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
 
                 if (sound.startsWith("portal.portal") && HytilsConfig.lobbyDisablePortalSounds) {
-                    event.result = null;
+                    event.setSound(null);
                 }
             }
         }

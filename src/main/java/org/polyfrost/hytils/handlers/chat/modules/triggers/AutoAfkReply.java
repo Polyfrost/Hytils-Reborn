@@ -32,7 +32,7 @@ public class AutoAfkReply implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
         if (!"limbo".equals(HypixelUtils.getLocation().getServerName().orElse(null))) return;
-        String message = event.message.getUnformattedText();
+        String message = event.getFullyUnformattedMessage();
         Matcher matcher = getLanguage().autoAfkReplyPatternRegex.matcher(message);
         if (matcher.matches()) {
             UChat.say("/msg " + matcher.group(2) + " Hey "  + matcher.group(2) + ", I am currently AFK!");

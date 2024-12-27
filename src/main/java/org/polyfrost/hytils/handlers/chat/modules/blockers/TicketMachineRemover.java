@@ -30,7 +30,7 @@ public class TicketMachineRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
         HypixelUtils.Location location = HypixelUtils.getLocation();
-        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        String message = event.getFullyUnformattedMessage();
         if (location.getGameType().orElse(null) == GameType.BEDWARS && !location.inGame()
             && getLanguage().chatCleanerTicketAnnouncerRegex.matcher(message).matches()) {
             event.cancelled = true;

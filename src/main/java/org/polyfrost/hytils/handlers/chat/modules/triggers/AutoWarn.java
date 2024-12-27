@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 public class AutoWarn implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        if (UTextComponent.Companion.stripFormatting(event.message.getUnformattedText()).startsWith("A kick")) {
+        if (UTextComponent.Companion.stripFormatting(event.getFullyUnformattedMessage()).startsWith("A kick")) {
             UChat.say(HytilsConfig.putInCaps ? "/pc ---------REQUEUE, I'VE BEEN KICKED!---------" : "/pc ---------I've been kicked, please requeue!---------");
         }
     }

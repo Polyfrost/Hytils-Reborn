@@ -46,8 +46,9 @@ public class GameStartCompactor implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        final Matcher gameStartMatcher = getLanguage().chatRestylerGameStartCounterStyleRegex.matcher(event.message.getUnformattedText());
-        final Matcher chatRestylerMatcher = getLanguage().chatRestylerGameStartCounterOutputStyleRegex.matcher(event.message.getFormattedText());
+        IChatComponent message = event.getMessage();
+        final Matcher gameStartMatcher = getLanguage().chatRestylerGameStartCounterStyleRegex.matcher(event.getFullyUnformattedMessage());
+        final Matcher chatRestylerMatcher = getLanguage().chatRestylerGameStartCounterOutputStyleRegex.matcher(message.getFormattedText());
         if (gameStartMatcher.matches() || (HytilsConfig.gameStatusRestyle && chatRestylerMatcher.matches())) {
             if (lastMessage != null) {
                 final GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
@@ -57,7 +58,7 @@ public class GameStartCompactor implements ChatReceiveModule {
                 removeChatLines(accessor.getDrawnChatLines(), oldTimerLines);
             }
 
-            lastMessage = event.message.createCopy();
+            lastMessage = message.createCopy();
         }
     }
 

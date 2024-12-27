@@ -22,6 +22,7 @@ import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.util.WaypointUtil;
 import net.minecraft.util.BlockPos;
+import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
@@ -30,10 +31,10 @@ public class MiddleWaypointUHC {
     private final BlockPos block = new BlockPos(0,70,0);
 
     @Subscribe
-    public void onRenderWorldLast(RenderWorldLastEvent event) { // TODO
+    public void onRenderWorldLast(PostWorldRenderEvent event) { // TODO
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (HypixelUtils.isHypixel() && location.inGame() && HytilsConfig.uhcMiddleWaypoint && location.getGameType().isPresent() && (location.getGameType().get() == GameType.UHC || location.getGameType().get() == GameType.SPEED_UHC)) {
-            WaypointUtil.renderWayPoint(HytilsConfig.uhcMiddleWaypointText, block, event.partialTicks);
+            WaypointUtil.renderWayPoint(HytilsConfig.uhcMiddleWaypointText, block, event.getPartialTicks());
         }
     }
 }

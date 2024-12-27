@@ -23,6 +23,7 @@ import org.polyfrost.hytils.events.TitleEvent;
 import org.polyfrost.hytils.util.WaypointUtil;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
+import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
@@ -48,8 +49,8 @@ public class MiddleBeaconMiniWalls {
     }
 
     @Subscribe
-    public void onRenderWorldLast(RenderWorldLastEvent event) { // TODO
+    public void onRenderWorldLast(PostWorldRenderEvent event) { // TODO
         if (!shouldMakeBeacon()) return;
-        WaypointUtil.renderBeaconBeam(block, HytilsConfig.miniWallsMiddleBeaconColor, event.partialTicks);
+        WaypointUtil.renderBeaconBeam(block, HytilsConfig.miniWallsMiddleBeaconColor, event.getPartialTicks());
     }
 }

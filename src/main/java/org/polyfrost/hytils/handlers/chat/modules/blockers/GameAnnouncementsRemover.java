@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class GameAnnouncementsRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        String message = event.getFullyUnformattedMessage();
         if (getLanguage().chatCleanerGameAnnouncementRegex.matcher(message).matches()) {
             event.cancelled = true;
         }

@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 public class AutoPartyWarpConfirm implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        final String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        final String message = event.getFullyUnformattedMessage();
         if (message.equals(getLanguage().autoPartyWarpConfirm)) {
             event.cancelled = true;
             Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage("/p warp"), 1500, TimeUnit.MILLISECONDS);

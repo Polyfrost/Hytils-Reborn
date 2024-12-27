@@ -19,6 +19,7 @@
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.event.v1.events.ServerJoinEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.config.HytilsConfig;
@@ -46,7 +47,7 @@ public class GuildMOTD implements ChatReceiveModule {
     }
 
     @Subscribe
-    public void onConnectedToServer(FMLNetworkEvent.ClientConnectedToServerEvent event) { // TODO
+    public void onConnectedToServer(ServerJoinEvent event) {
         // Allow checking of MOTD immediately after joining Hypixel.
         canCheckMOTD = true;
         isMOTD = false;

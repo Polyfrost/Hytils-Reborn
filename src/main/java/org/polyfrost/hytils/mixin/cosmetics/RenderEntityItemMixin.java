@@ -43,7 +43,7 @@ public class RenderEntityItemMixin {
         if ((HytilsConfig.hideDuelsCosmetics &&
             HypixelUtils.getLocation().getGameType().orElse(null) == GameType.DUELS) || (HytilsConfig.hideArcadeCosmetics &&
             HypixelUtils.getLocation().getGameType().orElse(null) == GameType.ARCADE) && HypixelUtils.getLocation().inGame() &&
-            (stack.getItem() instanceof ItemDoublePlant || stack.getItem() instanceof ItemDye || stack.getItem() instanceof ItemRecord || hytils$shouldRemove(stack.getItem().getUnlocalizedName()) || (stack.getItem() instanceof ItemBlock && (hytils$shouldRemove(((ItemBlock) stack.getItem()).block.getUnlocalizedName()) || ((ItemBlock) stack.getItem()).block instanceof BlockPumpkin)))) ci.cancel();
+            (stack.getItem() instanceof ItemDoublePlant || stack.getItem() instanceof ItemDye || stack.getItem() instanceof ItemRecord || hytils$shouldRemove(stack.getItem().getUnlocalizedName()) || (stack.getItem() instanceof ItemBlock && (hytils$shouldRemove(((ItemBlock) stack.getItem()).getBlock().getUnlocalizedName()) || ((ItemBlock) stack.getItem()).getBlock() instanceof BlockPumpkin)))) ci.cancel();
     }
 
     @Unique

@@ -31,10 +31,11 @@ public class WhiteChat implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        final Matcher matcher = getLanguage().whiteChatNonMessageRegex.matcher(event.message.getFormattedText());
+        IChatComponent message = event.getMessage();
+        final Matcher matcher = getLanguage().whiteChatNonMessageRegex.matcher(message.getFormattedText());
         if (matcher.find(0)) {
             boolean foundStart = false;
-            for (IChatComponent sibling : event.message.getSiblings()) {
+            for (IChatComponent sibling : message.getSiblings()) {
                 if (sibling.getFormattedText().startsWith("§7: ")) foundStart = true;
                 if (foundStart && sibling.getChatStyle().getColor() == EnumChatFormatting.GRAY) {
                     sibling.getChatStyle().setColor(EnumChatFormatting.WHITE);

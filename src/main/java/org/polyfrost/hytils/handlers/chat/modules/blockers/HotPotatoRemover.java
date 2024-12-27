@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class HotPotatoRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        String message = event.getFullyUnformattedMessage();
         if (getLanguage().chatCleanerHotPotatoRegex.matcher(message).matches()) {
             event.cancelled = true;
         }

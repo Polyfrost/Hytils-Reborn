@@ -34,7 +34,7 @@ public class SilentRemoval implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        final Matcher matcher = getLanguage().silentRemovalLeaveMessageRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText()));
+        final Matcher matcher = getLanguage().silentRemovalLeaveMessageRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.getFullyUnformattedMessage()));
 
         if (matcher.matches()) {
             // not a friend anymore :(

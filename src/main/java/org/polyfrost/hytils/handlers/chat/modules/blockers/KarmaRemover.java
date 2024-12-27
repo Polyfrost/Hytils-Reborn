@@ -27,7 +27,7 @@ import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 public class KarmaRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText());
+        String message = event.getFullyUnformattedMessage();
         if (getLanguage().chatCleanerKarmaMessagesRegex.matcher(message).matches()) {
             event.cancelled = true;
         }

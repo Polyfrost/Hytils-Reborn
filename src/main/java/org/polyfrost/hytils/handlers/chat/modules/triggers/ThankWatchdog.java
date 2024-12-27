@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class ThankWatchdog implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        if (event.message.getUnformattedText().equals("[WATCHDOG ANNOUNCEMENT]") || event.message.getUnformattedText().startsWith("A player has been removed from your")) {
+        if (event.getFullyUnformattedMessage().equals("[WATCHDOG ANNOUNCEMENT]") || event.getFullyUnformattedMessage().startsWith("A player has been removed from your")) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/achat Thanks Watchdog!");
         }
     }

@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import net.minecraft.util.IChatComponent;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
@@ -35,7 +36,8 @@ import java.util.regex.Matcher;
 public class AutoWB implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        String msg = event.message.getFormattedText().trim();
+        IChatComponent message = event.getMessage();
+        String msg = message.getFormattedText().trim();
         Matcher matcher = HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().chatRestylerStatusPatternRegex.matcher(msg);
         if (matcher.matches()) {
             final String chatType;
@@ -61,7 +63,8 @@ public class AutoWB implements ChatReceiveModule {
             } else {
                 return;
             }
-            String message = HytilsConfig.autoWBMessage1.replace("%player%", name);
+
+            String sentMessage = HytilsConfig.autoWBMessage1.replace("%player%", name);
             if (HytilsConfig.randomAutoWB) {
                 try {
                     Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage(chatType + getNextMessage(name)), HytilsConfig.autoWBCooldown, TimeUnit.SECONDS);
@@ -69,7 +72,7 @@ public class AutoWB implements ChatReceiveModule {
                     e.printStackTrace();
                 }
             } else {
-                Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage(chatType + message), HytilsConfig.autoWBCooldown, TimeUnit.SECONDS);
+                Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage(chatType + sentMessage), HytilsConfig.autoWBCooldown, TimeUnit.SECONDS);
             }
         }
     }

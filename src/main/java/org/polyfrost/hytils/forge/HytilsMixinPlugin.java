@@ -20,12 +20,11 @@ package org.polyfrost.hytils.forge;
 
 //#if FORGE
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
-import org.spongepowered.asm.lib.tree.*;
-//#else
-//$$ import org.objectweb.asm.tree.*;
 //#endif
 
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.tree.*;
+import org.polyfrost.oneconfig.api.platform.v1.DeobfuscationRemapper;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
@@ -79,11 +78,7 @@ public class HytilsMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void preApply(
         String targetClassName,
-        //#if FORGE && MC <= 1.12.2
-        org.spongepowered.asm.lib.tree.ClassNode targetClass,
-        //#else
-        //$$ org.objectweb.asm.tree.ClassNode targetClass,
-        //#endif
+        ClassNode targetClass,
         String mixinClassName,
         IMixinInfo mixinInfo
     ) {
@@ -93,17 +88,13 @@ public class HytilsMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void postApply(
         String targetClassName,
-        //#if FORGE && MC <= 1.12.2
-        org.spongepowered.asm.lib.tree.ClassNode targetClass,
-        //#else
-        //$$ org.objectweb.asm.tree.ClassNode targetClass,
-        //#endif
+        ClassNode targetClass,
         String mixinClassName,
         IMixinInfo mixinInfo
     ) {
         if (!hasAppliedModifyName && !hasAppliedRenderHeads && targetClass != null && Objects.equals(targetClassName, "net.minecraft.client.gui.GuiPlayerTabOverlay")) {
             for (MethodNode method : targetClass.methods) {
-                final String methodName = FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(targetClass.name, method.name, method.desc);
+                final String methodName = DeobfuscationRemapper.INSTANCE.mapMethodName(targetClass.name, method.name, method.desc);
                 final ListIterator<AbstractInsnNode> iterator = method.instructions.iterator();
                 switch (methodName) {
                     case "renderPlayerlist":

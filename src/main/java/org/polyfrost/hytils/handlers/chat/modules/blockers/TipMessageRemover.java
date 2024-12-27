@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class TipMessageRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.message.getUnformattedText().replace("\n", ""));
+        String message = event.getFullyUnformattedMessage().replace("\n", "");
         if (getLanguage().chatCleanerTipRegex.matcher(message).matches()) {
             event.cancelled = true;
         }

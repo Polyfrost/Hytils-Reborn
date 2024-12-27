@@ -19,10 +19,12 @@
 package org.polyfrost.hytils.handlers.game.pit;
 
 import net.hypixel.data.type.GameType;
+import net.minecraft.entity.Entity;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityArmorStand;
+import org.polyfrost.oneconfig.api.event.v1.events.RenderLivingEntityEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
@@ -39,7 +41,7 @@ public class PitLagReducer {
     }
 
     @Subscribe(priority = 5)
-    public void onRenderLiving(RenderLivingEvent.Pre<EntityLiving> event) { // TODO
+    public void onRenderLiving(RenderLivingEntityEvent.Pre event) { // TODO
         if (!HypixelUtils.isHypixel()) {
             return;
         }
@@ -49,14 +51,19 @@ public class PitLagReducer {
             return;
         }
 
+        Entity entity = (Entity) event.getEntity();
+        if (!(entity instanceof EntityLiving)) {
+            return;
+        }
+
         if (pitSpawnPos == -1) {
             // Update the spawn position by finding an armor stand in spawn.
-            if (event.entity instanceof EntityArmorStand && event.entity.getName().equals("§a§lJUMP! §c§lFIGHT!")) {
-                pitSpawnPos = event.entity.posY - 5;
+            if (entity instanceof EntityArmorStand && entity.getName().equals("§a§lJUMP! §c§lFIGHT!")) {
+                pitSpawnPos = entity.posY - 5;
             }
         } else if (HytilsConfig.pitLagReducer) {
             // If the entity being rendered is at spawn, and you are below spawn, cancel the rendering.
-            if (event.entity.posY > pitSpawnPos && Minecraft.getMinecraft().thePlayer.posY < pitSpawnPos) {
+            if (entity.posY > pitSpawnPos && Minecraft.getMinecraft().thePlayer.posY < pitSpawnPos) {
                 event.cancelled = true;
             }
         }
