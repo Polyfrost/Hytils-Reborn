@@ -21,7 +21,7 @@
         ]
     },
     "mixins": [
-        "mixins.${mod_id}.json"
+        "mixins.hytils.json"
     ],
     "depends": {
         "fabricloader": ">=0.15.11",

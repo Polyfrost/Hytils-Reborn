@@ -20,7 +20,7 @@ preprocess {
 
 toolkitLoomHelper {
     // Adds OneConfig to our project
-    useOneConfig("1.1.0-alpha.34", "1.0.0-alpha.46", mcData, "commands", "config-impl", "events", "hud", "internal", "ui")
+    useOneConfig("1.1.0-alpha.34", "1.0.0-alpha.47", mcData, "commands", "config-impl", "events", "hud", "internal", "ui")
     useDevAuth()
 
     // Removes the server configs from IntelliJ IDEA, leaving only client runs.

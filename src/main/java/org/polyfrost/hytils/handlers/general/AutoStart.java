@@ -22,11 +22,11 @@ import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.multiplayer.ServerData;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.platform.v1.Platform;
+import org.polyfrost.oneconfig.api.platform.v1.PlayerPlatform;
 
 public class AutoStart {
 
@@ -34,10 +34,7 @@ public class AutoStart {
     public void tick(TickEvent event) {
         if (Minecraft.getMinecraft().currentScreen instanceof GuiMainMenu && HytilsReborn.INSTANCE.isLoadedCall()) {
             if (HytilsConfig.autoStart) {
-                FMLClientHandler.instance().connectToServer(
-                    new GuiMultiplayer(Minecraft.getMinecraft().currentScreen),
-                    new ServerData("hypixel", "hypixel.net", false)
-                ); // TODO
+                Platform.player().joinServer(new PlayerPlatform.Server("hypixel", "hypixel.net"));
             }
 
             HytilsReborn.INSTANCE.setLoadedCall(false);

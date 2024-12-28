@@ -132,7 +132,7 @@ public class HytilsMixinPlugin implements IMixinConfigPlugin {
 
     private String mapMethodNameFromNode(AbstractInsnNode node) {
         MethodInsnNode methodInsnNode = (MethodInsnNode) node;
-        return FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(methodInsnNode.owner, methodInsnNode.name, methodInsnNode.desc);
+        return DeobfuscationRemapper.INSTANCE.mapMethodName(methodInsnNode.owner, methodInsnNode.name, methodInsnNode.desc);
     }
 
     private InsnList modifyName() {

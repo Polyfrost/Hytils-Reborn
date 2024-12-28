@@ -25,6 +25,8 @@ import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 //#else
 //$$ import net.fabricmc.api.ClientModInitializer;
+//$$ import net.fabricmc.loader.api.FabricLoader;
+//$$ import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 //#endif
 
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
@@ -111,6 +113,17 @@ public class HytilsReborn
     private RankType rank;
 
     private void initialize() {
+        //#if FABRIC
+        //$$ INSTANCE = FabricLoader.getInstance()
+        //$$     .getEntrypointContainers("client", ClientModInitializer.class)
+        //$$     .stream()
+        //$$     .map(EntrypointContainer::getEntrypoint)
+        //$$     .filter(HytilsReborn.class::isInstance)
+        //$$     .map(HytilsReborn.class::cast)
+        //$$     .findFirst()
+        //$$     .orElseThrow(() -> new IllegalStateException("Could not find HytilsReborn entrypoint"));
+        //#endif
+
         config = new HytilsConfig();
 
         CommandManager.registerCommand(new HousingVisitCommand());
