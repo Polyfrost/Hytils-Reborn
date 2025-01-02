@@ -1,41 +1,47 @@
 @file:Suppress("UnstableApiUsage", "PropertyName")
 
 import dev.deftu.gradle.utils.GameSide
+import dev.deftu.gradle.utils.MinecraftVersion
 
 plugins {
     java
     kotlin("jvm")
-    id("dev.deftu.gradle.multiversion")
-    id("dev.deftu.gradle.tools")
-    id("dev.deftu.gradle.tools.resources")
-    id("dev.deftu.gradle.tools.bloom")
-    id("dev.deftu.gradle.tools.shadow")
-    id("dev.deftu.gradle.tools.minecraft.loom")
-}
-
-// Sets up the variables for when we preprocess to other Minecraft versions.
-preprocess {
-    vars.put("MODERN", if (mcData.version.minor >= 16) 1 else 0)
+    id("dev.deftu.gradle.multiversion") // Applies preprocessing for multiple versions of Minecraft and/or multiple mod loaders.
+    id("dev.deftu.gradle.tools") // Applies several configurations to things such as the Java version, project name/version, etc.
+    id("dev.deftu.gradle.tools.resources") // Applies resource processing so that we can replace tokens, such as our mod name/version, in our resources.
+    id("dev.deftu.gradle.tools.bloom") // Applies the Bloom plugin, which allows us to replace tokens in our source files, such as being able to use `@MOD_VERSION` in our source files.
+    id("dev.deftu.gradle.tools.shadow") // Applies the Shadow plugin, which allows us to shade our dependencies into our mod JAR. This is NOT recommended for Fabric mods, but we have an *additional* configuration for those!
+    id("dev.deftu.gradle.tools.ducks") // Creates a ducks source set, which allows us to use theoretical classes which may not exist at runtime (such as things which are in other mods).
+    id("dev.deftu.gradle.tools.minecraft.loom") // Applies the Loom plugin, which automagically configures Essential's Architectury Loom plugin for you.
+    id("dev.deftu.gradle.tools.minecraft.releases") // Applies the Minecraft auto-releasing plugin, which allows you to automatically release your mod to CurseForge and Modrinth.
 }
 
 toolkitLoomHelper {
-    // Adds OneConfig to our project
-    useOneConfig("1.1.0-alpha.34", "1.0.0-alpha.47", mcData, "commands", "config-impl", "events", "hud", "internal", "ui")
-    useDevAuth()
+    useOneConfig {
+        version = "1.0.0-alpha.47"
+        loaderVersion = "1.1.0-alpha.34"
 
-    // Removes the server configs from IntelliJ IDEA, leaving only client runs.
-    // If you're developing a server-side mod, you can remove this line.
+        usePolyMixin = true
+        polyMixinVersion = "0.8.4+build.2"
+
+        applyLoaderTweaker = true
+
+        for (module in arrayOf("commands", "config", "config-impl", "events", "internal", "ui", "utils")) {
+            +module
+        }
+    }
+
+    // Turns off the server-side run configs, as we're building a client-sided mod.
     disableRunConfigs(GameSide.SERVER)
 
-    // Sets up our Mixin refmap naming
+    // Defines the name of the Mixin refmap, which is used to map the Mixin classes to the obfuscated Minecraft classes.
     if (!mcData.isNeoForge) {
         useMixinRefMap("hytils")
     }
 
-    // Adds the tweak class if we are building legacy version of forge as per the documentation (https://docs.polyfrost.org)
-    if (mcData.isLegacyForge) {
-        useTweaker("org.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker", GameSide.CLIENT)
-        useForgeMixin("hytils") // Configures the mixins if we are building for forge, useful for when we are dealing with cross-platform projects.
+    if (mcData.isForge) {
+        // Configures the Mixin tweaker if we are building for Forge.
+        useForgeMixin("hytils")
     }
 }
 
@@ -49,33 +55,18 @@ loom {
     }
 }
 
-// Configures the output directory for when building from the `src/resources` directory.
-sourceSets {
-    val dummy by creating
-    main {
-        compileClasspath += dummy.output
-        output.setResourcesDir(java.classesDirectory)
-    }
-}
-
-// Adds the Polyfrost maven repository so that we can get the libraries necessary to develop the mod.
-repositories {
-    maven("https://repo.polyfrost.org/releases")
-}
-
-// Configures the libraries/dependencies for your mod.
 dependencies {
     implementation(shade("com.github.ben-manes.caffeine:caffeine:2.9.3")!!)
 
-    // If we are building for legacy forge, includes the launch wrapper with `shade` as we configured earlier.
-    if (mcData.isLegacyForge) {
-        compileOnly("org.polyfrost:polymixin:0.8.4+build.2")
-    } else if (mcData.isFabric) {
+    // Add Fabric Language Kotlin and (Legacy) Fabric API as dependencies (these are both optional but are particularly useful).
+    if (mcData.isFabric) {
         if (mcData.isLegacyFabric) {
+            // 1.8.9 - 1.13
             modImplementation("net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${mcData.dependencies.legacyFabric.legacyFabricApiVersion}")
+        } else {
+            // 1.16.5+
+            modImplementation("net.fabricmc.fabric-api:fabric-api:${mcData.dependencies.fabric.fabricApiVersion}")
         }
-
-        modImplementation("net.fabricmc:fabric-language-kotlin:${mcData.dependencies.fabric.fabricLanguageKotlinVersion}")
     }
 }
 
