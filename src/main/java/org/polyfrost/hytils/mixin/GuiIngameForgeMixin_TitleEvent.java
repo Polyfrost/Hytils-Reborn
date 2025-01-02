@@ -19,6 +19,7 @@
 package org.polyfrost.hytils.mixin;
 
 //#if FORGE
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.events.TitleEvent;
@@ -26,7 +27,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.world.storage.WorldInfo;
 import net.minecraftforge.client.GuiIngameForge;
-import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -48,10 +48,10 @@ public class GuiIngameForgeMixin_TitleEvent extends GuiIngame {
     private void hytils$postTitleEvent(int l, int age, float opacity, CallbackInfo ci) {
         if (HypixelUtils.isHypixel()) {
             TitleEvent event = new TitleEvent(this.displayedTitle, this.displayedSubTitle);
-            MinecraftForge.EVENT_BUS.post(event);
+            EventManager.INSTANCE.post(event);
 
             // Set the title and subtitle to empty strings.
-            if (event.isCanceled()) {
+            if (event.cancelled) {
                 displayTitle(null, null, -1, -1, -1);
                 ci.cancel();
             }
