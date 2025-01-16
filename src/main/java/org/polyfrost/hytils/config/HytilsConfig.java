@@ -834,7 +834,7 @@ public class HytilsConfig extends Config {
         description = "Hide armor in games where armor is always the same.",
         category = "Game", subcategory = "Entities"
     )
-    public static boolean hideArmor = true;
+    public static boolean hideArmor = false;
 
     @Switch(
         name = "Hide Useless Game Nametags",
