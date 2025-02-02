@@ -83,9 +83,9 @@ public class HytilsReborn
     //$$ implements ClientModInitializer
     //#endif
 {
-    public static final String ID = "@ID@";
-    public static final String NAME = "@NAME@";
-    public static final String VERSION = "@VER@";
+    public static final String ID = "@MOD_ID@";
+    public static final String NAME = "@MOD_NAME@";
+    public static final String VERSION = "@MOD_VERSION@";
 
     //#if FORGE
     @Mod.Instance(ID)
