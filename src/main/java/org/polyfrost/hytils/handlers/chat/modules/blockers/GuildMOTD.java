@@ -24,7 +24,7 @@ import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
@@ -57,7 +57,7 @@ public class GuildMOTD implements ChatReceiveModule {
     }
 
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         if (canCheckMOTD) {
             // MOTD line breaker is already trimmed to chat width.
             if (event.getFullyUnformattedMessage().startsWith("------")) {

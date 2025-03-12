@@ -30,7 +30,7 @@ import org.polyfrost.hytils.handlers.chat.modules.triggers.*;
 import net.minecraft.util.IChatComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldUnloadEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
@@ -141,7 +141,7 @@ public class ChatHandler {
     }
 
     @Subscribe
-    public void handleChat(ChatReceiveEvent event) {
+    public void handleChat(ChatEvent.Receive event) {
         if (!HypixelUtils.isHypixel()) {
             return;
         }

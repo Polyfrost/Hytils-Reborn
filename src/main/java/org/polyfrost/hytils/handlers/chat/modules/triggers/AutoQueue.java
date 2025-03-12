@@ -19,7 +19,7 @@
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
 import net.minecraft.world.World;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.KeyInputEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.MouseInputEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
@@ -40,7 +40,7 @@ public class AutoQueue implements ChatReceiveModule {
     private boolean sentCommand;
 
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         if (!HytilsConfig.autoQueue) {
             return;
         }

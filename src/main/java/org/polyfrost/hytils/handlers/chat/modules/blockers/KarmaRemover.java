@@ -19,14 +19,14 @@
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
 import net.minecraft.util.EnumChatFormatting;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 
 public class KarmaRemover implements ChatReceiveModule {
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         String message = event.getFullyUnformattedMessage();
         if (getLanguage().chatCleanerKarmaMessagesRegex.matcher(message).matches()) {
             event.cancelled = true;

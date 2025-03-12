@@ -23,7 +23,7 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.HypixelAchievementEvent;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
@@ -36,7 +36,7 @@ public class AchievementEvent implements ChatReceiveModule {
     private final Set<String> achievementsGotten = new HashSet<>();
 
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         final String unformattedText = event.getFullyUnformattedMessage();
         final Matcher matcher = getLanguage().achievementRegex.matcher(unformattedText);
         if (matcher.matches()) {

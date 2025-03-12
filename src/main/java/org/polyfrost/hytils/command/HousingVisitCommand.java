@@ -18,14 +18,12 @@
 
 package org.polyfrost.hytils.command;
 
+import dev.deftu.omnicore.client.OmniChat;
 import net.hypixel.data.type.GameType;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
-import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
-import org.polyfrost.universal.ChatColor;
-import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.hytils.HytilsReborn;
@@ -50,13 +48,13 @@ public class HousingVisitCommand {
 
     @Command
     private void main() {
-        UChat.chat(ChatColor.RED + "Usage: /housingvisit <username>");
+        OmniChat.showChatMessage(ChatColor.RED + "Usage: /housingvisit <username>");
     }
 
     @Command(description = "Visits a player's house in Housing.")
-    private void main(@Parameter("Player Name") GameProfile player) {
+    private void main(GameProfile player) {
         if (!HypixelUtils.isHypixel()) {
-            UChat.chat(ChatColor.RED + "You must be on Hypixel to use this command!");
+            OmniChat.showChatMessage(ChatColor.RED + "You must be on Hypixel to use this command!");
             return;
         }
         if (usernameRegex.matcher(player.getName()).matches()) {
@@ -72,7 +70,7 @@ public class HousingVisitCommand {
                 EventManager.INSTANCE.register(new HousingVisitHook());
             }
         } else {
-            UChat.chat(ChatColor.RED + "Invalid username!");
+            OmniChat.showChatMessage(ChatColor.RED + "Invalid username!");
         }
     }
 
@@ -85,7 +83,7 @@ public class HousingVisitCommand {
     private class HousingVisitHook {
 
         @Subscribe
-        public void onHousingLobbyJoin(final WorldLoadEvent event) {
+        public void onHousingLobbyJoin(final WorldEvent.Load event) {
             EventManager.INSTANCE.unregister(this);
             visit(300);
         }

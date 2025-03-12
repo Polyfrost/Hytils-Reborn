@@ -19,10 +19,10 @@
 package org.polyfrost.hytils.handlers.chat;
 
 import org.jetbrains.annotations.NotNull;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 
 /**
- * This interface is used to handle many different {@link ChatReceiveEvent}-consuming methods
+ * This interface is used to handle many different {@link ChatEvent.Receive}-consuming methods
  * without having to add them all to the {@link org.polyfrost.oneconfig.api.event.v1.EventManager}.
  * <p>
  * ChatModules essentially behave like small listener classes, except instead of going directly to Forge,
@@ -36,13 +36,13 @@ import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
 public interface ChatReceiveModule extends ChatModule {
 
     /**
-     * Place your code here. Called when a OneConfig {@link ChatReceiveEvent} is received.
+     * Place your code here. Called when a OneConfig {@link ChatEvent.Receive} is received.
      * <p>
      * If the event is cancelled, {@link ChatModule}s after that event will not execute. Therefore,
-     * {@link ChatReceiveEvent#cancelled}} checks are unnecessary.
+     * {@link ChatEvent.Receive#cancelled}} checks are unnecessary.
      *
-     * @param event a {@link ChatReceiveEvent}
+     * @param event a {@link ChatEvent.Receive}
      */
-    void onMessageReceived(@NotNull ChatReceiveEvent event);
+    void onMessageReceived(@NotNull ChatEvent.Receive event);
 
 }

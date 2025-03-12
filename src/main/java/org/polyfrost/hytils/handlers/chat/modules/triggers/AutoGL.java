@@ -22,7 +22,7 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class AutoGL implements ChatReceiveModule {
@@ -33,7 +33,7 @@ public class AutoGL implements ChatReceiveModule {
     }
 
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.getFullyUnformattedMessage()).trim();
         if (message.contains(": ")) return;
         if (message.endsWith("The game starts in 5 seconds!")) {

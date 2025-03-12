@@ -22,7 +22,7 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
@@ -30,8 +30,8 @@ import java.util.regex.Matcher;
 public class WhitePrivateMessages implements ChatReceiveModule {
 
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        IChatComponent message = event.getMessage();
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
+        IChatComponent message = VanillaConverter.toVanillaText(event.getMessage());
         final Matcher matcher = getLanguage().privateMessageWhiteChatRegex.matcher(message.getFormattedText());
         if (matcher.find(0)) {
             boolean foundStart = false;

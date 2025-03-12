@@ -21,7 +21,7 @@ package org.polyfrost.hytils.handlers.chat.modules.triggers;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.EnumChatFormatting;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 
@@ -33,7 +33,7 @@ public class SilentRemoval implements ChatReceiveModule {
     private static final Set<String> silentUsers = new HashSet<>();
 
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         final Matcher matcher = getLanguage().silentRemovalLeaveMessageRegex.matcher(EnumChatFormatting.getTextWithoutFormattingCodes(event.getFullyUnformattedMessage()));
 
         if (matcher.matches()) {

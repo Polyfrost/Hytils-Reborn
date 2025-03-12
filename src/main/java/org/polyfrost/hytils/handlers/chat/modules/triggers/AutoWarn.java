@@ -22,12 +22,12 @@ import org.polyfrost.universal.UChat;
 import org.polyfrost.universal.wrappers.message.UTextComponent;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class AutoWarn implements ChatReceiveModule {
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         if (UTextComponent.Companion.stripFormatting(event.getFullyUnformattedMessage()).startsWith("A kick")) {
             UChat.say(HytilsConfig.putInCaps ? "/pc ---------REQUEUE, I'VE BEEN KICKED!---------" : "/pc ---------I've been kicked, please requeue!---------");
         }

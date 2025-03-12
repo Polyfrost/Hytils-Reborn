@@ -25,7 +25,7 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,8 +35,8 @@ import java.util.regex.Matcher;
 
 public class AutoWB implements ChatReceiveModule {
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
-        IChatComponent message = event.getMessage();
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
+        IChatComponent message = VanillaConverter.toVanillaText(event.getMessage());
         String msg = message.getFormattedText().trim();
         Matcher matcher = HytilsReborn.INSTANCE.getLanguageHandler().getCurrent().chatRestylerStatusPatternRegex.matcher(msg);
         if (matcher.matches()) {

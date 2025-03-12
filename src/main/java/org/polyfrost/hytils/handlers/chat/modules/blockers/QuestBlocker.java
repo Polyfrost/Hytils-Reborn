@@ -20,12 +20,12 @@ package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class QuestBlocker implements ChatReceiveModule {
     @Override
-    public void onMessageReceived(@NotNull final ChatReceiveEvent event) {
+    public void onMessageReceived(@NotNull final ChatEvent.Receive event) {
         final String message = event.getFullyUnformattedMessage();
         if (message.startsWith("§aAutomatically activated:")) {
             event.cancelled = true;

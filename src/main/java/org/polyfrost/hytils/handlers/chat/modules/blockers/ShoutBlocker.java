@@ -18,13 +18,14 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
+import dev.deftu.textile.minecraft.VanillaConverter;
 import net.hypixel.data.type.GameType;
 import net.minecraft.util.IChatComponent;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.hytils.handlers.chat.ChatSendModule;
 import net.minecraft.client.Minecraft;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
@@ -83,9 +84,9 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
     }
 
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         HypixelUtils.Location location = HypixelUtils.getLocation();
-        IChatComponent message = event.getMessage();
+        IChatComponent message = VanillaConverter.toVanillaText(event.getMessage());
         if (location.getGameType().orElse(null) == GameType.SKYWARS && message.getFormattedText().equals(getLanguage().cannotShoutBeforeSkywars) || // fun fact: there is no message when you shout after a skywars game
                 message.getFormattedText().equals(getLanguage().cannotShoutAfterGame) ||
                 message.getFormattedText().equals(getLanguage().cannotShoutBeforeGame) ||

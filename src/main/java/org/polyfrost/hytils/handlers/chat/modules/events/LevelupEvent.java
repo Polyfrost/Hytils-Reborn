@@ -23,7 +23,7 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.HypixelLevelupEvent;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
@@ -33,7 +33,7 @@ import java.util.regex.Matcher;
 public class LevelupEvent implements ChatReceiveModule {
 
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         final String unformattedText = event.getFullyUnformattedMessage();
         final Matcher matcher = getLanguage().hypixelLevelUpRegex.matcher(unformattedText.trim());
         if (matcher.find()) {

@@ -19,6 +19,8 @@
 package org.polyfrost.hytils;
 
 //#if FORGE
+import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.common.OmniLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
@@ -33,8 +35,6 @@ import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.platform.v1.LoaderPlatform;
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import org.polyfrost.oneconfig.api.ui.v1.Notifications;
-import org.polyfrost.universal.ChatColor;
-import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
 import org.polyfrost.hytils.command.*;
@@ -126,12 +126,12 @@ public class HytilsReborn
 
         config = new HytilsConfig();
 
-        CommandManager.registerCommand(new HousingVisitCommand());
-        CommandManager.registerCommand(new HytilsCommand());
-        CommandManager.registerCommand(new IgnoreTemporaryCommand());
-        CommandManager.registerCommand(new RequeueCommand());
-        CommandManager.registerCommand(new SilentRemoveCommand());
-        CommandManager.registerCommand(new SkyblockVisitCommand());
+        CommandManager.register(new HousingVisitCommand());
+        CommandManager.register(new HytilsCommand());
+        CommandManager.register(new IgnoreTemporaryCommand());
+        CommandManager.register(new RequeueCommand());
+        CommandManager.register(new SilentRemoveCommand());
+        CommandManager.register(new SkyblockVisitCommand());
 
         // We initialize it a different way because it requires the
         // GameNameParser to be initialized, and that depends on networking.
@@ -149,13 +149,12 @@ public class HytilsReborn
     }
 
     private void postInitialize() {
-        LoaderPlatform loaderPlatform = Platform.loader();
-        if (loaderPlatform.isModLoaded("tabulous")) {
+        if (OmniLoader.isModLoaded("tabulous")) {
             config.hideTabulous();
         }
 
-        isPatcher = loaderPlatform.isModLoaded("patcher");
-        isChatting = loaderPlatform.isModLoaded("chatting");
+        isPatcher = OmniLoader.isModLoaded("patcher");
+        isChatting = OmniLoader.isModLoaded("chatting");
         if (isChatting) {
             try {
                 Class.forName("org.polyfrost.chatting.chat.ChatTabs");
@@ -164,7 +163,7 @@ public class HytilsReborn
                 if (HytilsConfig.chattingIntegration) {
                     HytilsConfig.chattingIntegration = false;
                     config.save();
-                    Notifications.INSTANCE.enqueue(Notifications.Type.Warning, "Hytils Reborn", "Hytils Reborn has detected Chatting, but it is not the latest version. Please update Chatting to the latest version.");
+                    Notifications.enqueue(Notifications.Type.Warning, "Hytils Reborn", "Hytils Reborn has detected Chatting, but it is not the latest version. Please update Chatting to the latest version.");
                 }
             }
         }
@@ -234,7 +233,7 @@ public class HytilsReborn
     }
 
     public void sendMessage(String message) {
-        UChat.chat(ChatColor.GOLD + "[" + NAME + "] " + ChatColor.Companion.translateAlternateColorCodes('&', message));
+        OmniChat.showChatMessage(ChatColor.GOLD + "[" + NAME + "] " + ChatColor.Companion.translateAlternateColorCodes('&', message));
     }
 
     public HytilsConfig getConfig() {

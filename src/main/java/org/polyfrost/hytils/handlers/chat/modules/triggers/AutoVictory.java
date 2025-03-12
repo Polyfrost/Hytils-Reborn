@@ -32,7 +32,7 @@ import org.polyfrost.hytils.mixin.GuiIngameAccessor;
 import org.polyfrost.hytils.util.HypixelAPIUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
@@ -46,7 +46,7 @@ public class AutoVictory implements ChatReceiveResetModule {
     }
 
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         String unformattedText = event.getFullyUnformattedMessage();
         if (!PatternHandler.INSTANCE.gameEnd.isEmpty()) {
             if (!victoryDetected) { // prevent victories being detected twice

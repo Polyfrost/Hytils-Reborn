@@ -28,7 +28,7 @@ import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.hytils.handlers.language.LanguageData;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,7 +40,7 @@ import java.util.regex.Matcher;
 public class AutoChatSwapper implements ChatReceiveModule {
     @SuppressWarnings("all")
     @Override
-    public void onMessageReceived(@NotNull ChatReceiveEvent event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         Multithreading.submit(() -> {
             final Matcher statusMatcherLeave = getLanguage().autoChatSwapperPartyStatusRegex.matcher(event.getFullyUnformattedMessage()); // leaving party
             final Matcher statusMatcherJoin = getLanguage().autoChatSwapperPartyStatusRegex2.matcher(event.getFullyUnformattedMessage()); // joining party
@@ -134,7 +134,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
 
 
         @Subscribe
-        public void checkForAlreadyInThisChannelThing(ChatReceiveEvent event) {
+        public void checkForAlreadyInThisChannelThing(ChatEvent.Receive event) {
             final LanguageData language = HytilsReborn.INSTANCE.getLanguageHandler().getCurrent();
             final String message = event.getFullyUnformattedMessage();
             if (language.autoChatSwapperAlreadyInChannel.equals(message)

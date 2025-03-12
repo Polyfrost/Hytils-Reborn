@@ -21,7 +21,7 @@ package org.polyfrost.hytils.handlers.game.hardcore;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
 import net.minecraft.util.EnumChatFormatting;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatReceiveEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
@@ -49,7 +49,7 @@ public class HardcoreStatus {
     }
 
     @Subscribe
-    public void onActionbar(ChatReceiveEvent event) { // The forge chat event gets stuff from the action bar as well
+    public void onActionbar(ChatEvent.Receive event) { // The forge chat event gets stuff from the action bar as well
         String msg = event.getFullyUnformattedMessage();
         if ((msg.equals("YOUR WITHER IS DEAD") || msg.startsWith("BED DESTRUCTION > Your Bed was") || msg.equals("All beds have been destroyed!")) &&
             HytilsConfig.hardcoreHearts) {
