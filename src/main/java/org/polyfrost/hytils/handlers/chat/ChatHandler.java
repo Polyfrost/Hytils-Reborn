@@ -31,7 +31,7 @@ import net.minecraft.util.IChatComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
-import org.polyfrost.oneconfig.api.event.v1.events.WorldUnloadEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
@@ -134,7 +134,7 @@ public class ChatHandler {
     }
 
     @Subscribe
-    public void handleWorldLeave(WorldUnloadEvent e) {
+    public void handleWorldLeave(WorldEvent.Unload e) {
         for (ChatReceiveResetModule module : this.resetModules) {
             module.reset();
         }

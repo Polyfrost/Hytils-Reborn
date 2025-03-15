@@ -21,6 +21,7 @@ package org.polyfrost.hytils;
 //#if FORGE
 import dev.deftu.omnicore.client.OmniChat;
 import dev.deftu.omnicore.common.OmniLoader;
+import dev.deftu.textile.minecraft.MinecraftTextFormat;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
@@ -32,8 +33,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 //#endif
 
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
-import org.polyfrost.oneconfig.api.platform.v1.LoaderPlatform;
-import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
@@ -233,7 +232,7 @@ public class HytilsReborn
     }
 
     public void sendMessage(String message) {
-        OmniChat.showChatMessage(ChatColor.GOLD + "[" + NAME + "] " + ChatColor.Companion.translateAlternateColorCodes('&', message));
+        OmniChat.showChatMessage(MinecraftTextFormat.GOLD + "[" + NAME + "] " + MinecraftTextFormat.translateAlternateColorCodes('&', message));
     }
 
     public HytilsConfig getConfig() {

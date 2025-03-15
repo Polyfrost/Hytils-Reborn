@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import net.minecraft.util.EnumChatFormatting;
+import dev.deftu.omnicore.client.OmniChat;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.hytils.HytilsReborn;
@@ -26,7 +26,6 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.PatternHandler;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
-import org.polyfrost.universal.UChat;
 
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -46,9 +45,9 @@ public class AutoGG implements ChatReceiveModule {
     public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         String message = event.getFullyUnformattedMessage();
         if (!hasGameEnded(message)) return;
-        Multithreading.schedule(() -> UChat.say("/ac " + getGGMessageOne()), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
+        Multithreading.schedule(() -> OmniChat.sendChatMessage("/ac " + getGGMessageOne()), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
         if (HytilsConfig.autoGGSecondMessage)
-            Multithreading.schedule(() -> UChat.say("/ac " + getGGMessageTwo()), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
+            Multithreading.schedule(() -> OmniChat.sendChatMessage("/ac " + getGGMessageTwo()), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
     }
 
     private boolean hasGameEnded(String message) {

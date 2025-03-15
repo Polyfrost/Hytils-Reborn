@@ -18,10 +18,10 @@
 
 package org.polyfrost.hytils.command;
 
+import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.textile.minecraft.MinecraftTextFormat;
 import net.hypixel.data.type.GameType;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
-import org.polyfrost.universal.ChatColor;
-import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
@@ -43,7 +43,7 @@ public class RequeueCommand {
         if (location.inGame()) {
             game = location.getMode().orElse(null);
             if (game == null) {
-                UChat.chat(ChatColor.RED + "You must be in a valid game to use this command.");
+                OmniChat.showChatMessage(MinecraftTextFormat.RED + "You must be in a valid game to use this command.");
                 return;
             }
             if (location.getGameType().isPresent()) {
@@ -51,14 +51,14 @@ public class RequeueCommand {
                     case SKYBLOCK:
                     case HOUSING:
                     case REPLAY:
-                        UChat.chat(ChatColor.RED + "You must be in a valid game to use this command.");
+                        OmniChat.showChatMessage(MinecraftTextFormat.RED + "You must be in a valid game to use this command.");
                         return;
                 }
             }
         } else if (!location.inGame() && location.wasInGame()) {
             game = location.getLastMode().orElse(null);
             if (game == null) {
-                UChat.chat(ChatColor.RED + "You must be in a valid game to use this command.");
+                OmniChat.showChatMessage(MinecraftTextFormat.RED + "You must be in a valid game to use this command.");
                 return;
             }
             if (location.getLastGameType().isPresent()) {
@@ -68,12 +68,12 @@ public class RequeueCommand {
                         break;
                     case HOUSING:
                     case REPLAY:
-                        UChat.chat(ChatColor.RED + "The last round has to be a valid game to use this command.");
+                        OmniChat.showChatMessage(MinecraftTextFormat.RED + "The last round has to be a valid game to use this command.");
                         return;
                 }
             }
         } else {
-            UChat.chat(ChatColor.RED + "The last round has to be a game to use this command.");
+            OmniChat.showChatMessage(MinecraftTextFormat.RED + "The last round has to be a game to use this command.");
             return;
         }
 

@@ -18,6 +18,8 @@
 
 package org.polyfrost.hytils.command;
 
+import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.textile.minecraft.MinecraftTextFormat;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
@@ -35,35 +37,35 @@ public class SilentRemoveCommand {
 
     @Command
     public void main() {
-        UChat.chat(ChatColor.RED + "Usage: /silentremove <player>");
+        OmniChat.showChatMessage(MinecraftTextFormat.RED + "Usage: /silentremove <player>");
     }
 
     @Command(description = "Adds or removes a player from the silent list.")
     private void main(@Parameter("Player Name") GameProfile player) {
         String name = player.getName();
         if (!usernameRegex.matcher(name).matches()) {
-            UChat.chat(ChatColor.RED + "Invalid username.");
+            OmniChat.showChatMessage(MinecraftTextFormat.RED + "Invalid username.");
             return;
         }
         final Set<String> silentUsers = SilentRemoval.getSilentUsers();
         if (silentUsers.contains(name)) {
             silentUsers.remove(name);
-            UChat.chat("&aRemoved &e" + name + " &afrom the removal queue.");
+            OmniChat.showChatMessage("&aRemoved &e" + name + " &afrom the removal queue.");
             return;
         }
 
         silentUsers.add(name);
-        UChat.chat("&aAdded &e" + name + " &ato the removal queue.");
+        OmniChat.showChatMessage("&aAdded &e" + name + " &ato the removal queue.");
     }
 
     @Command(description = "Clears the silent removal queue.")
     private void clear() {
         final Set<String> silentUsers = SilentRemoval.getSilentUsers();
         if (silentUsers.isEmpty()) {
-            UChat.chat(ChatColor.RED + "Silent removal list is already empty.");
+            OmniChat.showChatMessage(MinecraftTextFormat.RED + "Silent removal list is already empty.");
             return;
         }
         silentUsers.clear();
-        UChat.chat(ChatColor.GREEN + "Cleared the silent removal list.");
+        OmniChat.showChatMessage(MinecraftTextFormat.GREEN + "Cleared the silent removal list.");
     }
 }

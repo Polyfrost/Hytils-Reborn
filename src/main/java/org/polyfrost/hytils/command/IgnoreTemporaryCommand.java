@@ -78,7 +78,7 @@ public class IgnoreTemporaryCommand {
         });
     }
 
-    @Command(greedy = true)
+    @Command
     private void main(GameProfile playerName, String time) {
         Multithreading.submit(() -> {
             try {
@@ -98,7 +98,7 @@ public class IgnoreTemporaryCommand {
         });
     }
 
-    @Command(greedy = true)
+    @Command
     private void add(GameProfile playerName, String time) {
         main(playerName, time);
     }

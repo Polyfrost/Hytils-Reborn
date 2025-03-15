@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.lobby.limbo;
 
+import dev.deftu.textile.minecraft.VanillaConverter;
 import net.minecraft.util.IChatComponent;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;

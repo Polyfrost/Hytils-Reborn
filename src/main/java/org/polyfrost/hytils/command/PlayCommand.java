@@ -18,6 +18,8 @@
 
 package org.polyfrost.hytils.command;
 
+import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.textile.minecraft.MinecraftTextFormat;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.universal.ChatColor;
 import org.polyfrost.universal.UChat;
@@ -78,7 +80,7 @@ public class PlayCommand {
             } else if (games.containsValue(game.name.toLowerCase(Locale.ENGLISH))) {
                 command = game.name;
             } else {
-                UChat.chat(ChatColor.RED + "Invalid game: \"" + game.name + "\"");
+                OmniChat.showChatMessage(MinecraftTextFormat.RED + "Invalid game: \"" + game.name + "\"");
                 return;
             }
         }

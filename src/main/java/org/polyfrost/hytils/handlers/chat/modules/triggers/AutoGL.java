@@ -18,9 +18,9 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import dev.deftu.omnicore.client.OmniChat;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
@@ -37,7 +37,7 @@ public class AutoGL implements ChatReceiveModule {
         String message = EnumChatFormatting.getTextWithoutFormattingCodes(event.getFullyUnformattedMessage()).trim();
         if (message.contains(": ")) return;
         if (message.endsWith("The game starts in 5 seconds!")) {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/ac " + getGLMessage());
+            OmniChat.sendChatMessage("/ac " + getGLMessage());
         }
     }
 

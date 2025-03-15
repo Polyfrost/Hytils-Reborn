@@ -23,7 +23,7 @@ import org.polyfrost.hytils.handlers.chat.modules.modifiers.DefaultChatRestyler;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.Display;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
-import org.polyfrost.oneconfig.api.event.v1.events.WorldUnloadEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
@@ -42,7 +42,7 @@ public class LimboLimiter {
     }
 
     @Subscribe
-    public void onWorldChange(WorldUnloadEvent event) { // TODO
+    public void onWorldChange(WorldEvent.Unload event) { // TODO
         limboStatus = false;
         DefaultChatRestyler.reset(); // putting this here so we don't have to make a new event class just to do this
     }

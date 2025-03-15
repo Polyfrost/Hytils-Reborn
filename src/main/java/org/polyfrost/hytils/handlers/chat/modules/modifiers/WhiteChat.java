@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.modifiers;
 
+import dev.deftu.textile.minecraft.VanillaConverter;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.EnumChatFormatting;

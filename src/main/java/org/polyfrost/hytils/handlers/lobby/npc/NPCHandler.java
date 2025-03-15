@@ -26,7 +26,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
-import org.polyfrost.oneconfig.api.event.v1.events.RenderLivingEntityEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.RenderLivingEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
@@ -35,7 +35,7 @@ import java.util.Collection;
 public class NPCHandler {
 
     @Subscribe
-    public void onEntityRender(RenderLivingEntityEvent.Pre event) {
+    public void onEntityRender(RenderLivingEvent.Pre event) {
         Object entityRaw = event.getEntity();
         if (!(entityRaw instanceof EntityLivingBase)) {
             return;

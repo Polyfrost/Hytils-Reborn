@@ -18,19 +18,19 @@
 
 package org.polyfrost.hytils.command;
 
+import com.mojang.authlib.GameProfile;
+import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.textile.minecraft.MinecraftTextFormat;
 import net.hypixel.data.type.GameType;
+import net.minecraft.util.EnumChatFormatting;
+import org.polyfrost.hytils.HytilsReborn;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
-import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
-import org.polyfrost.universal.ChatColor;
-import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
-import org.polyfrost.hytils.HytilsReborn;
-import com.mojang.authlib.GameProfile;
-import net.minecraft.util.EnumChatFormatting;
 
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -47,13 +47,13 @@ public class SkyblockVisitCommand {
 
     @Command
     private void main() {
-        UChat.chat(EnumChatFormatting.RED + "Usage: /skyblockvisit <username>");
+        OmniChat.showChatMessage(EnumChatFormatting.RED + "Usage: /skyblockvisit <username>");
     }
 
     @Command(description = "Visit a player's SkyBlock island.")
     private void main(@Parameter("Player Name") GameProfile player) {
         if (!HypixelUtils.isHypixel()) {
-            UChat.chat(ChatColor.RED + "You must be on Hypixel to use this command!");
+            OmniChat.showChatMessage(MinecraftTextFormat.RED + "You must be on Hypixel to use this command!");
             return;
         }
         if (usernameRegex.matcher(player.getName()).matches()) {
@@ -65,7 +65,7 @@ public class SkyblockVisitCommand {
             HytilsReborn.INSTANCE.getCommandQueue().queue("/play skyblock");
             EventManager.INSTANCE.register(new SkyblockVisitHook());
         } else {
-            UChat.chat(ChatColor.RED + "Invalid username!");
+            OmniChat.showChatMessage(MinecraftTextFormat.RED + "Invalid username!");
         }
     }
 
@@ -80,7 +80,7 @@ public class SkyblockVisitCommand {
     private class SkyblockVisitHook {
 
         @Subscribe
-        public void onSkyblockLobbyJoin(final WorldLoadEvent event) {
+        public void onSkyblockLobbyJoin(final WorldEvent.Load event) {
             EventManager.INSTANCE.unregister(this);
             visit(300);
         }

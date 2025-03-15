@@ -22,14 +22,14 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
 import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
-import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 public class HardcoreStatus {
     private boolean danger;
 
     @Subscribe
-    public void onWorldLoad(WorldLoadEvent event) {
+    public void onWorldLoad(WorldEvent.Load event) {
         if (this.danger) {
             this.danger = false;
         }

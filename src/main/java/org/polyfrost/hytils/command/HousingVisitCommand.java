@@ -19,6 +19,7 @@
 package org.polyfrost.hytils.command;
 
 import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.textile.minecraft.MinecraftTextFormat;
 import net.hypixel.data.type.GameType;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
@@ -48,13 +49,13 @@ public class HousingVisitCommand {
 
     @Command
     private void main() {
-        OmniChat.showChatMessage(ChatColor.RED + "Usage: /housingvisit <username>");
+        OmniChat.showChatMessage(MinecraftTextFormat.RED + "Usage: /housingvisit <username>");
     }
 
     @Command(description = "Visits a player's house in Housing.")
     private void main(GameProfile player) {
         if (!HypixelUtils.isHypixel()) {
-            OmniChat.showChatMessage(ChatColor.RED + "You must be on Hypixel to use this command!");
+            OmniChat.showChatMessage(MinecraftTextFormat.RED + "You must be on Hypixel to use this command!");
             return;
         }
         if (usernameRegex.matcher(player.getName()).matches()) {
@@ -70,7 +71,7 @@ public class HousingVisitCommand {
                 EventManager.INSTANCE.register(new HousingVisitHook());
             }
         } else {
-            OmniChat.showChatMessage(ChatColor.RED + "Invalid username!");
+            OmniChat.showChatMessage(MinecraftTextFormat.RED + "Invalid username!");
         }
     }
 

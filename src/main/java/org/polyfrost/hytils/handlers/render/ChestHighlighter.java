@@ -18,11 +18,12 @@
 
 package org.polyfrost.hytils.handlers.render;
 
+import dev.deftu.omnicore.client.OmniClient;
 import net.hypixel.data.type.GameType;
 import net.minecraft.world.World;
 import org.polyfrost.oneconfig.api.event.v1.events.PlayerInteractEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent;
-import org.polyfrost.oneconfig.api.event.v1.events.WorldUnloadEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.config.HytilsConfig;
@@ -33,7 +34,6 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.hytils.util.WaypointUtil;
-import org.polyfrost.universal.UMinecraft;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -47,12 +47,12 @@ public class ChestHighlighter {
             return;
         }
 
-        World world = UMinecraft.getWorld();
+        World world = OmniClient.getWorld();
         if (world == null) {
             return; // Should never happen
         }
 
-        BlockPos pos = UMinecraft.getMinecraft().objectMouseOver.getBlockPos();
+        BlockPos pos = Minecraft.getMinecraft().objectMouseOver.getBlockPos();
         TileEntity tile = world.getTileEntity(pos);
         if (!(tile instanceof TileEntityChest)) {
             return;
@@ -72,7 +72,7 @@ public class ChestHighlighter {
     }
 
     @Subscribe
-    public void onWorldChange(WorldUnloadEvent event) {
+    public void onWorldChange(WorldEvent.Unload event) {
         highlightedChestPositions.clear();
     }
 

@@ -19,13 +19,13 @@
 package org.polyfrost.hytils.handlers.game.pit;
 
 import net.hypixel.data.type.GameType;
-import net.minecraft.entity.Entity;
-import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityArmorStand;
-import org.polyfrost.oneconfig.api.event.v1.events.RenderLivingEntityEvent;
-import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.hytils.config.HytilsConfig;
+import org.polyfrost.oneconfig.api.event.v1.events.RenderLivingEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
@@ -35,13 +35,13 @@ public class PitLagReducer {
     private double pitSpawnPos;
 
     @Subscribe
-    public void onWorldLoad(WorldLoadEvent event) {
+    public void onWorldLoad(WorldEvent.Load event) {
         // Allow the spawn position to be updated.
         pitSpawnPos = -1;
     }
 
     @Subscribe(priority = 5)
-    public void onRenderLiving(RenderLivingEntityEvent.Pre event) { // TODO
+    public void onRenderLiving(RenderLivingEvent.Pre event) { // TODO
         if (!HypixelUtils.isHypixel()) {
             return;
         }

@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat;
 
-import org.polyfrost.universal.ChatColor;
+import dev.deftu.textile.minecraft.MinecraftTextFormat;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.language.LanguageData;
@@ -77,7 +77,7 @@ interface ChatModule {
      */
     @NotNull
     default IChatComponent colorMessage(@NotNull String message) {
-        return new ChatComponentText(ChatColor.Companion.translateAlternateColorCodes('&', message));
+        return new ChatComponentText(MinecraftTextFormat.translateAlternateColorCodes('&', message));
     }
 
     /**
@@ -86,18 +86,6 @@ interface ChatModule {
     @NotNull
     default LanguageData getLanguage() {
         return HytilsReborn.INSTANCE.getLanguageHandler().getCurrent();
-    }
-
-    /**
-     * Calling {@link IChatComponent#getUnformattedText()} will only remove § symbols, but not the ones that are
-     * translated through Bukkit's ChatColor.translateAlternateColorCodes(String) method,
-     * so {@link EnumChatFormatting#getTextWithoutFormattingCodes(String)} must be used to fully strip any color code
-     * after they're translated.
-     *
-     * @return a completely stripped string
-     */
-    default String getStrippedMessage(IChatComponent component) {
-        return EnumChatFormatting.getTextWithoutFormattingCodes(component.getUnformattedText());
     }
 
 }

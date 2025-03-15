@@ -18,12 +18,12 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import dev.deftu.omnicore.client.OmniChat;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
-import org.polyfrost.universal.UChat;
 
 import java.util.regex.Matcher;
 
@@ -35,7 +35,7 @@ public class AutoAfkReply implements ChatReceiveModule {
         String message = event.getFullyUnformattedMessage();
         Matcher matcher = getLanguage().autoAfkReplyPatternRegex.matcher(message);
         if (matcher.matches()) {
-            UChat.say("/msg " + matcher.group(2) + " Hey "  + matcher.group(2) + ", I am currently AFK!");
+            OmniChat.sendChatMessage("/msg " + matcher.group(2) + " Hey "  + matcher.group(2) + ", I am currently AFK!");
         }
     }
 

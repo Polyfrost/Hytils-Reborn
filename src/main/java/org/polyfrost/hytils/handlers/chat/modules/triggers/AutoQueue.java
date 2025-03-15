@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.KeyInputEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.MouseInputEvent;
-import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
@@ -45,7 +45,7 @@ public class AutoQueue implements ChatReceiveModule {
             return;
         }
 
-        final String message = getStrippedMessage(event.getMessage());
+        final String message = event.getMessage().asUnformattedString();
         Matcher matcher = getLanguage().autoQueuePrefixGlobalRegex.matcher(message);
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (matcher.matches()) {
@@ -76,7 +76,7 @@ public class AutoQueue implements ChatReceiveModule {
     }
 
     @Subscribe
-    public void onWorldLoad(WorldLoadEvent event) {
+    public void onWorldLoad(WorldEvent.Load event) {
         World world = event.getWorld();
 
         // stop the command from being spammed, to prevent chat from filling with "please do not spam commands"

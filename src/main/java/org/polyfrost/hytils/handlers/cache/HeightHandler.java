@@ -22,7 +22,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import net.hypixel.data.type.GameType;
 import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent;
-import org.polyfrost.oneconfig.api.event.v1.events.WorldLoadEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.EventHandler;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.utils.v1.JsonUtils;
@@ -108,7 +108,7 @@ public class HeightHandler {
             printException = true;
             getHeight();
         }).register();
-        EventHandler.of(WorldLoadEvent.class, () -> {
+        EventHandler.of(WorldEvent.Load.class, () -> {
             currentHeight = -2;
             printException = true;
         }).register();

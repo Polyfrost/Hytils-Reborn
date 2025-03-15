@@ -24,14 +24,14 @@ import org.polyfrost.hytils.handlers.cache.ArmorStandHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.util.EnumChatFormatting;
-import org.polyfrost.oneconfig.api.event.v1.events.RenderLivingEntityEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.RenderLivingEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class ArmorStandHider {
 
     @Subscribe
-    public void onEntityRenderer(RenderLivingEntityEvent.Pre event) {
+    public void onEntityRenderer(RenderLivingEvent.Pre event) {
         Object entityRaw = event.getEntity();
         if (!(entityRaw instanceof EntityLivingBase)) {
             return;
