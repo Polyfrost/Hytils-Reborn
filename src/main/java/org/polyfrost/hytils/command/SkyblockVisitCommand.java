@@ -20,9 +20,9 @@ package org.polyfrost.hytils.command;
 
 import com.mojang.authlib.GameProfile;
 import dev.deftu.omnicore.client.OmniChat;
-import dev.deftu.textile.minecraft.MinecraftTextFormat;
+import dev.deftu.textile.minecraft.MCSimpleTextHolder;
+import dev.deftu.textile.minecraft.MCTextFormat;
 import net.hypixel.data.type.GameType;
-import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
@@ -47,13 +47,13 @@ public class SkyblockVisitCommand {
 
     @Command
     private void main() {
-        OmniChat.showChatMessage(EnumChatFormatting.RED + "Usage: /skyblockvisit <username>");
+        OmniChat.displayClientMessage(new MCSimpleTextHolder("Usage: /skyblockvisit <username>").withFormatting(MCTextFormat.RED));
     }
 
     @Command(description = "Visit a player's SkyBlock island.")
     private void main(@Parameter("Player Name") GameProfile player) {
         if (!HypixelUtils.isHypixel()) {
-            OmniChat.showChatMessage(MinecraftTextFormat.RED + "You must be on Hypixel to use this command!");
+            OmniChat.displayClientMessage(new MCSimpleTextHolder("You must be on Hypixel to use this command!").withFormatting(MCTextFormat.RED));
             return;
         }
         if (usernameRegex.matcher(player.getName()).matches()) {
@@ -65,7 +65,7 @@ public class SkyblockVisitCommand {
             HytilsReborn.INSTANCE.getCommandQueue().queue("/play skyblock");
             EventManager.INSTANCE.register(new SkyblockVisitHook());
         } else {
-            OmniChat.showChatMessage(MinecraftTextFormat.RED + "Invalid username!");
+            OmniChat.displayClientMessage(new MCSimpleTextHolder("Invalid username!").withFormatting(MCTextFormat.RED));
         }
     }
 

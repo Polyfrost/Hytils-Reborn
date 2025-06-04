@@ -19,9 +19,6 @@
 package org.polyfrost.hytils;
 
 //#if FORGE
-import dev.deftu.omnicore.client.OmniChat;
-import dev.deftu.omnicore.common.OmniLoader;
-import dev.deftu.textile.minecraft.MinecraftTextFormat;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
@@ -32,6 +29,12 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 //$$ import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 //#endif
 
+import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.common.OmniLoader;
+import dev.deftu.textile.minecraft.MCSimpleMutableTextHolder;
+import dev.deftu.textile.minecraft.MCSimpleTextHolder;
+import dev.deftu.textile.minecraft.MCTextFormat;
+import dev.deftu.textile.minecraft.MCTextHolder;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
@@ -90,6 +93,8 @@ public class HytilsReborn
     @Mod.Instance(ID)
     //#endif
     public static HytilsReborn INSTANCE;
+
+    private static MCTextHolder<?> prefix;
 
     public File oldModDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), NAME);
 
@@ -231,8 +236,17 @@ public class HytilsReborn
         eventBus.register(new DropperHurtSound());
     }
 
-    public void sendMessage(String message) {
-        OmniChat.showChatMessage(MinecraftTextFormat.GOLD + "[" + NAME + "] " + MinecraftTextFormat.translateAlternateColorCodes('&', message));
+    public void sendMessage(MCTextHolder<?> text) {
+        if (prefix == null) {
+            prefix = new MCSimpleTextHolder("[" + NAME + "] ").withFormatting(MCTextFormat.GOLD);
+        }
+
+        MCSimpleMutableTextHolder newText = new MCSimpleMutableTextHolder("");
+        newText.append(prefix);
+        newText.append(text);
+        text = newText;
+
+        OmniChat.displayClientMessage(text);
     }
 
     public HytilsConfig getConfig() {

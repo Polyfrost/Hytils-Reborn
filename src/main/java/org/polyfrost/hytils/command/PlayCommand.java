@@ -19,10 +19,9 @@
 package org.polyfrost.hytils.command;
 
 import dev.deftu.omnicore.client.OmniChat;
-import dev.deftu.textile.minecraft.MinecraftTextFormat;
+import dev.deftu.textile.minecraft.MCSimpleTextHolder;
+import dev.deftu.textile.minecraft.MCTextFormat;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
-import org.polyfrost.universal.ChatColor;
-import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
@@ -59,8 +58,8 @@ public class PlayCommand {
             }
 
             Minecraft.getMinecraft().addScheduledTask(() -> {
-                CommandManager.INSTANCE.registerParser(new GameNameParser(games));
-                CommandManager.registerCommand(new PlayCommand());
+                // TODO nextday?!: CommandManager.INSTANCE.registerParser(new GameNameParser(games));
+                CommandManager.register(new PlayCommand());
             });
         });
     }
@@ -80,7 +79,7 @@ public class PlayCommand {
             } else if (games.containsValue(game.name.toLowerCase(Locale.ENGLISH))) {
                 command = game.name;
             } else {
-                OmniChat.showChatMessage(MinecraftTextFormat.RED + "Invalid game: \"" + game.name + "\"");
+                OmniChat.displayClientMessage(new MCSimpleTextHolder("Invalid game: \"" + game.name + "\"").withFormatting(MCTextFormat.RED));
                 return;
             }
         }

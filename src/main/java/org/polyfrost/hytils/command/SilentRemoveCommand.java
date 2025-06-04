@@ -19,10 +19,10 @@
 package org.polyfrost.hytils.command;
 
 import dev.deftu.omnicore.client.OmniChat;
-import dev.deftu.textile.minecraft.MinecraftTextFormat;
+import dev.deftu.textile.minecraft.MCSimpleMutableTextHolder;
+import dev.deftu.textile.minecraft.MCSimpleTextHolder;
+import dev.deftu.textile.minecraft.MCTextFormat;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
-import org.polyfrost.universal.ChatColor;
-import org.polyfrost.universal.UChat;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.hytils.handlers.chat.modules.triggers.SilentRemoval;
 import com.mojang.authlib.GameProfile;
@@ -37,35 +37,35 @@ public class SilentRemoveCommand {
 
     @Command
     public void main() {
-        OmniChat.showChatMessage(MinecraftTextFormat.RED + "Usage: /silentremove <player>");
+        OmniChat.displayClientMessage(new MCSimpleTextHolder("Usage: /silentremove <player>").withFormatting(MCTextFormat.RED));
     }
 
     @Command(description = "Adds or removes a player from the silent list.")
     private void main(@Parameter("Player Name") GameProfile player) {
         String name = player.getName();
         if (!usernameRegex.matcher(name).matches()) {
-            OmniChat.showChatMessage(MinecraftTextFormat.RED + "Invalid username.");
+            OmniChat.displayClientMessage(new MCSimpleTextHolder("Invalid username.").withFormatting(MCTextFormat.RED));
             return;
         }
         final Set<String> silentUsers = SilentRemoval.getSilentUsers();
         if (silentUsers.contains(name)) {
             silentUsers.remove(name);
-            OmniChat.showChatMessage("&aRemoved &e" + name + " &afrom the removal queue.");
+            OmniChat.displayClientMessage(new MCSimpleMutableTextHolder("Removed ").withFormatting(MCTextFormat.GREEN).append(new MCSimpleTextHolder(name).withFormatting(MCTextFormat.YELLOW)).append(new MCSimpleTextHolder(" from the silent removal list.").withFormatting(MCTextFormat.GREEN)));
             return;
         }
 
         silentUsers.add(name);
-        OmniChat.showChatMessage("&aAdded &e" + name + " &ato the removal queue.");
+        OmniChat.displayClientMessage("&aAdded &e" + name + " &ato the removal queue.");
     }
 
     @Command(description = "Clears the silent removal queue.")
     private void clear() {
         final Set<String> silentUsers = SilentRemoval.getSilentUsers();
         if (silentUsers.isEmpty()) {
-            OmniChat.showChatMessage(MinecraftTextFormat.RED + "Silent removal list is already empty.");
+            OmniChat.displayClientMessage(new MCSimpleTextHolder("Silent removal list is already empty.").withFormatting(MCTextFormat.RED));
             return;
         }
         silentUsers.clear();
-        OmniChat.showChatMessage(MinecraftTextFormat.GREEN + "Cleared the silent removal list.");
+        OmniChat.displayClientMessage(new MCSimpleTextHolder("Cleared the silent removal list.").withFormatting(MCTextFormat.GREEN));
     }
 }

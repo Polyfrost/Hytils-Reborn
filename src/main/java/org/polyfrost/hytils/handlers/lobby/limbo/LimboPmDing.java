@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.lobby.limbo;
 
-import dev.deftu.textile.minecraft.VanillaConverter;
+import dev.deftu.textile.minecraft.MCTextHolder;
 import net.minecraft.util.IChatComponent;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
@@ -30,7 +30,7 @@ public class LimboPmDing {
     @Subscribe
     public void onChat(ChatEvent.Receive event) {
         HypixelUtils.Location location = HypixelUtils.getLocation();
-        IChatComponent message = VanillaConverter.toVanillaText(event.getMessage());
+        IChatComponent message = MCTextHolder.convertToVanilla(event.getMessage());
         if (HypixelUtils.isHypixel() && "limbo".equals(location.getServerName().orElse(null)) && message.getFormattedText().startsWith("§dFrom §r") && HytilsConfig.limboDing) {
             Minecraft.getMinecraft().thePlayer.playSound("random.orb", 1f, 1f);
         }

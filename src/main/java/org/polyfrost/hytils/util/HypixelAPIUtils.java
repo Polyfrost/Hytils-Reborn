@@ -18,6 +18,8 @@
 
 package org.polyfrost.hytils.util;
 
+import dev.deftu.textile.minecraft.MCSimpleTextHolder;
+import dev.deftu.textile.minecraft.MCTextFormat;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.EventHandler;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
@@ -426,13 +428,13 @@ public class HypixelAPIUtils {
             if (maybeUuidResponse != null) {
                 JsonObject uuidResponse = maybeUuidResponse.getAsJsonObject();
                 if (uuidResponse.has("error")) {
-                    HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Failed with error: " + uuidResponse.get("reason").getAsString());
+                    HytilsReborn.INSTANCE.sendMessage(new MCSimpleTextHolder("Failed with error: " + uuidResponse.get("reason").getAsString()).withFormatting(MCTextFormat.RED));
                     return null;
                 }
                 return uuidResponse.get("id").getAsString();
             }
         } catch (Exception e) {
-            HytilsReborn.INSTANCE.sendMessage(EnumChatFormatting.RED + "Failed to fetch " + username + "'s data. Please make sure this user exists.");
+            HytilsReborn.INSTANCE.sendMessage(new MCSimpleTextHolder("Failed to fetch " + username + "'s data. Please make sure this user exists.").withFormatting(MCTextFormat.RED));
         }
         return null;
     }
