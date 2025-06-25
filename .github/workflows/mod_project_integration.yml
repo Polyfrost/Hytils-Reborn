@@ -1,0 +1,17 @@
+name: Mod-Project Integration
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+
+jobs:
+  add-to-project:
+    name: Add issue/PR to project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/orgs/Polyfrost/projects/9
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
