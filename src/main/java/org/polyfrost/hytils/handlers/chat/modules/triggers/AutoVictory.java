@@ -49,17 +49,15 @@ public class AutoVictory implements ChatReceiveResetModule {
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
         String unformattedText = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText());
-        if (!PatternHandler.INSTANCE.gameEnd.isEmpty()) {
-            if (!victoryDetected) { // prevent victories being detected twice
-                Multithreading.runAsync(() -> { //run this async as getting from the API normally would freeze minecraft
-                    for (Pattern triggers : PatternHandler.INSTANCE.gameEnd) {
-                        if (triggers.matcher(unformattedText).matches()) {
-                            doNotification();
-                            return;
-                        }
+        if (!PatternHandler.INSTANCE.gameEnd.isEmpty() && !victoryDetected) { // prevent victories being detected twice
+            Multithreading.runAsync(() -> { //run this async as getting from the API normally would freeze minecraft
+                for (Pattern triggers : PatternHandler.INSTANCE.gameEnd) {
+                    if (triggers.matcher(unformattedText).matches()) {
+                        doNotification();
+                        return;
                     }
-                });
-            }
+                }
+            });
         }
     }
 
@@ -75,53 +73,55 @@ public class AutoVictory implements ChatReceiveResetModule {
 
     private void doNotification() {
         victoryDetected = true;
-        if (HytilsConfig.autoGetGEXP) {
-            if (!HytilsConfig.gexpMode) {
+        if (HytilsReborn.INSTANCE.getConfig().enabled) {
+            if (HytilsConfig.autoGetGEXP) {
+                if (!HytilsConfig.gexpMode) {
+                    try {
+                        if (HypixelAPIUtils.getGEXP()) {
+                            Notifications.INSTANCE
+                                .send(
+                                    HytilsReborn.MOD_NAME,
+                                    "You currently have " + HypixelAPIUtils.gexp + " daily guild EXP."
+                                );
+                            return;
+                        }
+                    } catch (Exception ignored) {
+
+                    }
+                    Notifications.INSTANCE
+                        .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
+                } else {
+                    try {
+                        if (HypixelAPIUtils.getWeeklyGEXP()) {
+                            Notifications.INSTANCE
+                                .send(
+                                    HytilsReborn.MOD_NAME,
+                                    "You currently have " + HypixelAPIUtils.gexp + " weekly guild EXP."
+                                );
+                            return;
+                        }
+                    } catch (Exception ignored) {
+
+                    }
+                    Notifications.INSTANCE
+                        .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
+                }
+            }
+            if (isSupportedMode(getLocraw()) && HytilsConfig.autoGetWinstreak) {
                 try {
-                    if (HypixelAPIUtils.getGEXP()) {
-                        Notifications.INSTANCE
-                            .send(
-                                HytilsReborn.MOD_NAME,
-                                "You currently have " + HypixelAPIUtils.gexp + " daily guild EXP."
-                            );
+                    if (HypixelAPIUtils.getWinstreak()) {
+                        Notifications.INSTANCE.send(
+                            HytilsReborn.MOD_NAME,
+                            "You currently have a " + HypixelAPIUtils.winstreak + " winstreak."
+                        );
                         return;
                     }
                 } catch (Exception ignored) {
 
                 }
                 Notifications.INSTANCE
-                    .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
-            } else {
-                try {
-                    if (HypixelAPIUtils.getWeeklyGEXP()) {
-                        Notifications.INSTANCE
-                            .send(
-                                HytilsReborn.MOD_NAME,
-                                "You currently have " + HypixelAPIUtils.gexp + " weekly guild EXP."
-                            );
-                        return;
-                    }
-                } catch (Exception ignored) {
-
-                }
-                Notifications.INSTANCE
-                    .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your GEXP.");
+                    .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your winstreak.");
             }
-        }
-        if (isSupportedMode(getLocraw()) && HytilsConfig.autoGetWinstreak) {
-            try {
-                if (HypixelAPIUtils.getWinstreak()) {
-                    Notifications.INSTANCE.send(
-                        HytilsReborn.MOD_NAME,
-                        "You currently have a " + HypixelAPIUtils.winstreak + " winstreak."
-                    );
-                    return;
-                }
-            } catch (Exception ignored) {
-
-            }
-            Notifications.INSTANCE
-                .send(HytilsReborn.MOD_NAME, "There was a problem trying to get your winstreak.");
         }
     }
 

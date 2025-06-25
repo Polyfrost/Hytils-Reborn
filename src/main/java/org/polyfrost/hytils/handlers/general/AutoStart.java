@@ -34,7 +34,7 @@ public class AutoStart {
     @SubscribeEvent
     public void tick(TickEvent.ClientTickEvent event) {
         if (Minecraft.getMinecraft().currentScreen instanceof GuiMainMenu && HytilsReborn.INSTANCE.isLoadedCall()) {
-            if (HytilsConfig.autoStart) {
+            if (HytilsConfig.autoStart && HytilsReborn.INSTANCE.getConfig().enabled) {
                 FMLClientHandler.instance().connectToServer(
                     new GuiMultiplayer(Minecraft.getMinecraft().currentScreen),
                     new ServerData("hypixel", "hypixel.net", false)
