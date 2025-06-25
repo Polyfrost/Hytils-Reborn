@@ -21,6 +21,7 @@ package org.polyfrost.hytils.mixin;
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo;
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
+import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;
@@ -48,7 +49,7 @@ public abstract class LayerArmorBaseMixin_HideIngameArmour {
 
     @Unique
     private static boolean hytils$shouldCancel(ItemStack itemStack) {
-        if (!HytilsConfig.hideArmor || itemStack == null || !HypixelUtils.INSTANCE.isHypixel()) return false;
+        if (!HytilsConfig.hideArmor || itemStack == null || !HypixelUtils.INSTANCE.isHypixel() || !HytilsReborn.INSTANCE.getConfig().enabled) return false;
         final LocrawInfo locraw = LocrawUtil.INSTANCE.getLocrawInfo();
         final Item item = itemStack.getItem();
         if (locraw != null) {
