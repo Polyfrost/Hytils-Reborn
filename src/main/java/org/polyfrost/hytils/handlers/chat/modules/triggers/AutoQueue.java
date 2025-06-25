@@ -38,7 +38,7 @@ public class AutoQueue implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
-        if (!HytilsConfig.autoQueue) {
+        if (!HytilsConfig.autoQueue || !HytilsReborn.INSTANCE.getConfig().enabled) {
             return;
         }
 
