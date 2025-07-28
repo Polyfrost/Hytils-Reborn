@@ -70,8 +70,8 @@ public class LanguageData {
     private String levelUpPattern = "You are now Hypixel Level (?<level>\\d+)!";
     private String guildPlayerJoinPattern = "^(?:\\[.*] )?(?<player>\\S{1,16}) joined the guild!$";
 
-    private String chatRestylerGameJoinStyle = "^\u00a7r\u00a7e\u00a7r\u00a7(?<color>[\\da-f])(?:\u00a7k)?(?<player>\\w{1,16})\u00a7r\u00a7r\u00a7r\u00a7e has joined (?<amount>.+)!\u00a7r\u00a7e\u00a7r$";
-    private String chatRestylerGameLeaveStyle = "^\u00a7r\u00a7e\u00a7r\u00a7(?<color>[\\da-f])(?:\u00a7k)?(?<player>\\w{1,16})\u00a7r\u00a7r\u00a7r\u00a7e has quit!\u00a7r\u00a7e\u00a7r$";
+    private String chatRestylerGameJoinStyle = "^\u00a7r\u00a7e\u00a7r\u00a7(?<color>[\\da-f])(?:\u00a7[kr])*(?<player>\\w{1,16})\u00a7r\u00a7r\u00a7r\u00a7e has joined (?<amount>.+)!\u00a7r\u00a7e\u00a7r$";
+    private String chatRestylerGameLeaveStyle = "^\u00a7r\u00a7e\u00a7r\u00a7(?<color>[\\da-f])(?:\u00a7[kr])*(?<player>\\w{1,16})\u00a7r\u00a7r\u00a7r\u00a7e has quit!\u00a7r\u00a7e\u00a7r$";
     private String chatRestylerGameStartCounterStyle = "^(?<title>(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in|The alpha infected will be chosen in|Kill contracts will be issued in|The Murderers get their swords in|You can start shooting in|The door opens in)) (?<time>\\d{1,3}) (?<unit>(seconds?!))(?: .\\d+.|)$";
     private String chatRestylerGameStartCounterOutputStyle = "^\u00a7e\u00a7l\\* \u00a7a(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in|The alpha infected will be chosen in|Kill contracts will be issued in|The Murderers get their swords in|You can start shooting in|The door opens in) \u00a7b\u00a7l\\d{1,3} \u00a7aseconds?!\u00a7r$";
     private String chatRestylerFormattedPaddingPattern = "\\(\u00a7r\u00a7b(\\d{1,2})\u00a7r\u00a7r\u00a7r\u00a7e/\u00a7r\u00a7b(\\d{1,3})\u00a7r\u00a7r\u00a7r\u00a7e\\)";
