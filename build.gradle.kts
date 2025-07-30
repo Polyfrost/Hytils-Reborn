@@ -30,6 +30,8 @@ toolkitLoomHelper {
         }
     }
 
+    useMixinExtras("0.5.0") //todo hopefully remove when oneconfig updates?
+
     // Turns off the server-side run configs, as we're building a client-sided mod.
     disableRunConfigs(GameSide.SERVER)
 

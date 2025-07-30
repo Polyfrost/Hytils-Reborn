@@ -5,6 +5,9 @@
   "plugin": "org.polyfrost.hytils.forge.HytilsMixinPlugin",
   "refmap": "mixins.hytils.refmap.json",
   "verbose": true,
+  "mixinextras": {
+    "minVersion": "0.5.0"
+  },
   "client": [
     "BossStatusMixin_HideBossbar",
     "EntityLivingBaseMixin_MiningFatigue",
@@ -16,8 +19,10 @@
     "GuiIngameForgeMixin_TitleEvent",
     "GuiNewChatAccessor",
     "GuiNewChatMixin_LocrawHider",
+    "GuiPlayerTabOverlayMixin_HideHeads",
     "GuiPlayerTabOverlayMixin_HideNPCs",
     "GuiPlayerTabOverlayMixin_HidePing",
+    "GuiPlayerTabOverlayMixin_ModifyNames",
     "GuiPlayerTabOverlayMixin_RemoveAds",
     "LayerArmorBaseMixin_HideIngameArmour",
     "MinecraftMixin_LeftClickInteract",
