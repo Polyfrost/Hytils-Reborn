@@ -1,0 +1,7 @@
+{
+	"parent": "hytils:block/template_bed_foot",
+	"textures": {
+		"bed": "hytils:entity/bed/gray",
+		"particle": "minecraft:blocks/planks_oak"
+	}
+}
