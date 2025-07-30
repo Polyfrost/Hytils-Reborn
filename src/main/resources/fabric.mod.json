@@ -24,7 +24,6 @@
         "mixins.hytils.json"
     ],
     "depends": {
-        "fabricloader": ">=0.15.11",
-        "fabric-language-kotlin": "*"
+        "fabricloader": ">=0.15.11"
     }
 }

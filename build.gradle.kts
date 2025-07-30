@@ -17,11 +17,11 @@ plugins {
 
 toolkitLoomHelper {
     useOneConfig {
-        version = "1.0.0-alpha.77"
-        loaderVersion = "1.1.0-alpha.44"
+        version = "1.0.0-alpha.118"
+        loaderVersion = "1.1.0-alpha.48"
 
         usePolyMixin = true
-        polyMixinVersion = "0.8.4+build.2"
+        polyMixinVersion = "0.8.4+build.6"
 
         applyLoaderTweaker = true
 
@@ -56,17 +56,6 @@ loom {
 
 dependencies {
     implementation(shade("com.github.ben-manes.caffeine:caffeine:2.9.3")!!)
-
-    // Add Fabric Language Kotlin and (Legacy) Fabric API as dependencies (these are both optional but are particularly useful).
-    if (mcData.isFabric) {
-        if (mcData.isLegacyFabric) {
-            // 1.8.9 - 1.13
-            modImplementation("net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${mcData.dependencies.legacyFabric.legacyFabricApiVersion}")
-        } else {
-            // 1.16.5+
-            modImplementation("net.fabricmc.fabric-api:fabric-api:${mcData.dependencies.fabric.fabricApiVersion}")
-        }
-    }
 }
 
 tasks {
