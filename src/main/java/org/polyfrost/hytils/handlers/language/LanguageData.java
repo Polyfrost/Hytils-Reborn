@@ -34,7 +34,7 @@ public class LanguageData {
      */
     private String autoQueuePrefixGlobal = "^(?:You died! .+|YOU DIED! .+|You have been eliminated!|You won! .+|YOU WON! .+)$";
 
-    private String autoFriendPattern = "Friend request from (?<name>.+)\\[ACCEPT] - \\[DENY] - \\[IGNORE].*";
+    private String autoFriendPattern = "Friend request from (?<name>.+)\\[ACCEPT] - \\[DENY] - \\[BLOCK].*";
     private String autoAfkReplyPattern = "^From (\\[.+?] )?(.+?): .+$";
 
     private String chatCleanerKarmaMessages = "^\\+(?<karma>\\d)+ Karma!$";
@@ -70,8 +70,8 @@ public class LanguageData {
     private String levelUpPattern = "You are now Hypixel Level (?<level>\\d+)!";
     private String guildPlayerJoinPattern = "^(?:\\[.*] )?(?<player>\\S{1,16}) joined the guild!$";
 
-    private String chatRestylerGameJoinStyle = "^\u00a7r\u00a7e\u00a7r\u00a7(?<color>[\\da-f])(?:\u00a7k)?(?<player>\\w{1,16})\u00a7r\u00a7r\u00a7r\u00a7e has joined (?<amount>.+)!\u00a7r\u00a7e\u00a7r$";
-    private String chatRestylerGameLeaveStyle = "^\u00a7r\u00a7e\u00a7r\u00a7(?<color>[\\da-f])(?:\u00a7k)?(?<player>\\w{1,16})\u00a7r\u00a7r\u00a7r\u00a7e has quit!\u00a7r\u00a7e\u00a7r$";
+    private String chatRestylerGameJoinStyle = "^\u00a7r\u00a7e\u00a7r\u00a7(?<color>[\\da-f])(?:\u00a7[kr])*(?<player>\\w{1,16})\u00a7r\u00a7r\u00a7r\u00a7e has joined (?<amount>.+)!\u00a7r\u00a7e\u00a7r$";
+    private String chatRestylerGameLeaveStyle = "^\u00a7r\u00a7e\u00a7r\u00a7(?<color>[\\da-f])(?:\u00a7[kr])*(?<player>\\w{1,16})\u00a7r\u00a7r\u00a7r\u00a7e has quit!\u00a7r\u00a7e\u00a7r$";
     private String chatRestylerGameStartCounterStyle = "^(?<title>(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in|The alpha infected will be chosen in|Kill contracts will be issued in|The Murderers get their swords in|You can start shooting in|The door opens in)) (?<time>\\d{1,3}) (?<unit>(seconds?!))(?: .\\d+.|)$";
     private String chatRestylerGameStartCounterOutputStyle = "^\u00a7e\u00a7l\\* \u00a7a(The game starts in|Cages open in:|You will respawn in|The Murderer gets their sword in|You get your sword in|The alpha infected will be chosen in|Kill contracts will be issued in|The Murderers get their swords in|You can start shooting in|The door opens in) \u00a7b\u00a7l\\d{1,3} \u00a7aseconds?!\u00a7r$";
     private String chatRestylerFormattedPaddingPattern = "\\(\u00a7r\u00a7b(\\d{1,2})\u00a7r\u00a7r\u00a7r\u00a7e/\u00a7r\u00a7b(\\d{1,3})\u00a7r\u00a7r\u00a7r\u00a7e\\)";
@@ -80,8 +80,8 @@ public class LanguageData {
     private String chatRestylerFriendPattern = "^((?:\u00a7r)?\u00a7\\w)(Friend >)";
     private String chatRestylerOfficerPattern = "^((?:\u00a7r)?\u00a7\\w)(Officer >)";
     private String chatRestylerStatusPattern = "^(?<type>(?:\u00a7aFriend|\u00a7a\u00a7aF|\u00a72Guild|\u00a72\u00a72G)) > (\u00a7r|\u00a7r\u00a7r){1,2}(?<player>\u00a7[\\da-f]\\w{1,16}) \u00a7r\u00a7e(?<status>(?:joined|left))\\.\u00a7r$";
-    private String chatRestylerPrivateMessageToPattern = "^((?:\u00a7r)?\u00a7\\w)(To)";
-    private String chatRestylerPrivateMessageFromPattern = "^((?:\u00a7r)?\u00a7\\w)(From)";
+    private String chatRestylerPrivateMessageToPattern = "^((?:\u00a7r)?\u00a7\\w)(To)([^:]*):(.*)";
+    private String chatRestylerPrivateMessageFromPattern = "^((?:\u00a7r)?\u00a7\\w)(From)([^:]*):(.*)";
 
     private String autoChatSwapperPartyStatus = "^(?:You have been kicked from the party by (?:\\[.+] )?\\w{1,16}|(?:\\[.+] )?\\w{1,16} has disbanded the party!|You left the party.)$";
     private String autoChatSwapperPartyStatus2 = "^(?:You have joined (?:\\[.+] )?(?:.*)|Party Members(?:\\[.+] )?\\w{1,100}|(?:\\[.+] )?\\w{1,100} joined the(?:.*) party(?:.*))$";

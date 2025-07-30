@@ -93,6 +93,10 @@ public class GuiIngameForgeMixin_HideHotbar {
                     if (gameMode.contains("CAPTURE")) {
                         break;
                     }
+                case PROTOTYPE:
+                    if (!gameMode.contains("DISASTERS")) {
+                        break;
+                    }
                 case BEDWARS:
                 case MURDER_MYSTERY:
                 case HOUSING:

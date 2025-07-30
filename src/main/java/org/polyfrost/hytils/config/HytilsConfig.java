@@ -159,13 +159,12 @@ public class HytilsConfig extends Config {
     )
     public static boolean antiGG;
 
-    @Dropdown(
+    @Text(
         title = "Auto GG First Message",
         description = "Choose what message is said on game completion.",
-        category = "Chat", subcategory = "Automatic",
-        options = {"gg", "GG", "gf", "Good Game", "Good Fight", "Good Round! :D"}
+        category = "Chat", subcategory = "Automatic"
     )
-    public static int autoGGMessage = 0;
+    public static String ggMessage = "gg";
 
     @Slider(
         title = "Auto GG First Phrase Delay",
@@ -175,13 +174,12 @@ public class HytilsConfig extends Config {
     )
     public static float autoGGFirstPhraseDelay = 1;
 
-    @Dropdown(
+    @Text(
         title = "Auto GG Second Message",
         description = "Send a secondary message sent after the first GG message.",
-        category = "Chat", subcategory = "Automatic",
-        options = {"Have a good day!", "<3", "AutoGG By Hytils Reborn!", "gf", "Good Fight", "Good Round", ":D", "Well played!", "wp"}
+        category = "Chat", subcategory = "Automatic"
     )
-    public static int autoGGMessage2 = 0;
+    public static String ggMessage2 = "Have a good day!";
 
     @Slider(
         title = "Auto GG Second Phrase Delay",
@@ -219,13 +217,6 @@ public class HytilsConfig extends Config {
         category = "Chat", subcategory = "Automatic"
     )
     public static boolean autoFriend;
-
-    @Switch(
-        title = "Auto Chat Report Confirm",
-        description = "Automatically confirms chat reports.",
-        category = "Chat", subcategory = "Automatic"
-    )
-    public static boolean autoChatReportConfirm;
 
     @Switch(
         title = "Auto Party Warp Confirm",
@@ -830,14 +821,14 @@ public class HytilsConfig extends Config {
         description = "Hide armor in games where armor is always the same.",
         category = "Game", subcategory = "Entities"
     )
-    public static boolean hideArmor = true;
+    public static boolean hideArmor = false;
 
     @Switch(
         title = "Hide Useless Game Nametags",
         description = "Hides unnecessary nametags such as those that say \"RIGHT CLICK\" or \"CLICK\" in SkyBlock, BedWars, SkyWars, and Duels, as well as other useless ones.",
         category = "Game", subcategory = "Entities"
     )
-    public static boolean hideUselessArmorStandsGame = true;
+    public static boolean hideUselessArmorStandsGame;
 
     @Switch(
         title = "Notify When Blocks Run Out",
@@ -1054,7 +1045,7 @@ public class HytilsConfig extends Config {
         description = "Hides unnecessary nametags such as those that say \"RIGHT CLICK\" or \"CLICK TO PLAY\" in a lobby, as well as other useless ones.",
         category = "Lobby", subcategory = "NPCs"
     )
-    public static boolean hideUselessArmorStands = true;
+    public static boolean hideUselessArmorStands;
 
     @Switch(
         title = "Hide Lobby Bossbars",
@@ -1254,6 +1245,15 @@ public class HytilsConfig extends Config {
         } catch (ClassNotFoundException ignored) {
         }
 
+        if (ggMessage == null || ggMessage.isEmpty()) {
+            ggMessage = "gg";
+            save();
+        }
+        if (ggMessage2 == null || ggMessage2.isEmpty()) {
+            ggMessage2 = "Have a good day!";
+            save();
+        }
+
         if (configNumber != 3) { // Config version has not been set or is outdated
             if (configNumber == 1) {
                 overlayAmount = 300;
@@ -1269,14 +1269,8 @@ public class HytilsConfig extends Config {
                     if (AutoGG.INSTANCE.getAutoGGConfig().isCasualAutoGGEnabled()) {
                         casualAutoGG = true;
                     }
-                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase() != 0) {
-                        autoGGMessage = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase();
-                    }
                     if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGDelay() != 1) {
                         autoGGFirstPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGDelay();
-                    }
-                    if (AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase2() != 0) {
-                        autoGGMessage2 = AutoGG.INSTANCE.getAutoGGConfig().getAutoGGPhrase2();
                     }
                     if (AutoGG.INSTANCE.getAutoGGConfig().getSecondaryDelay() != 1) {
                         autoGGSecondPhraseDelay = AutoGG.INSTANCE.getAutoGGConfig().getSecondaryDelay();

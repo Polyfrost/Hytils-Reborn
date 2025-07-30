@@ -97,8 +97,6 @@ public class ChatHandler {
 
         // Triggers
         this.registerModule(new AutoAfkReply());
-        this.registerModule(new AutoChatReportConfirm());
-        this.registerModule(new AutoChatReportConfirm());
         this.registerModule(new AutoChatSwapper());
         this.registerModule(new AutoFriend());
         this.registerModule(new AutoGG());

@@ -45,6 +45,7 @@ import org.polyfrost.hytils.handlers.cache.*;
 import org.polyfrost.hytils.handlers.chat.ChatHandler;
 import org.polyfrost.hytils.handlers.chat.modules.events.AchievementEvent;
 import org.polyfrost.hytils.handlers.chat.modules.events.LevelupEvent;
+import org.polyfrost.hytils.handlers.chat.modules.triggers.AutoGG;
 import org.polyfrost.hytils.handlers.chat.modules.triggers.AutoQueue;
 import org.polyfrost.hytils.handlers.chat.modules.triggers.SilentRemoval;
 import org.polyfrost.hytils.handlers.game.dropper.DropperHurtSound;
@@ -215,6 +216,7 @@ public class HytilsReborn
         eventBus.register(hardcoreStatus);
         eventBus.register(new AchievementEvent());
         eventBus.register(new LevelupEvent());
+        EventManager.INSTANCE.register(AutoGG.INSTANCE);
 
         // lobby
         eventBus.register(new ArmorStandHider());

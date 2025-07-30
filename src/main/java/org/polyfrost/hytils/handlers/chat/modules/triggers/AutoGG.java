@@ -25,33 +25,37 @@ import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.PatternHandler;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 public class AutoGG implements ChatReceiveModule {
-    private static final String[] ggMessagesOne = {"gg", "GG", "gf", "Good Game", "Good Fight", "Good Round! :D"};
-    private static final String[] ggMessagesTwo = {"Have a good day!", "<3", "AutoGG By Hytils Reborn!", "gf", "Good Fight", "Good Round", ":D", "Well played!", "wp"};
-
-    private static String getGGMessageOne() {
-        return ggMessagesOne[HytilsConfig.autoGGMessage];
-    }
-    private static String getGGMessageTwo() {
-        return ggMessagesTwo[HytilsConfig.autoGGMessage2];
-    }
+    public static AutoGG INSTANCE = new AutoGG();
+    private boolean matchFound = false;
 
     @Override
     public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         String message = event.getFullyUnformattedMessage();
-        if (!hasGameEnded(message)) return;
-        Multithreading.schedule(() -> OmniChat.sendChatMessage("/ac " + getGGMessageOne()), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
-        if (HytilsConfig.autoGGSecondMessage)
-            Multithreading.schedule(() -> OmniChat.sendChatMessage("/ac " + getGGMessageTwo()), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
+        if (!hasGameEnded(message)) {
+            return;
+        }
+
+        if (!matchFound) {
+            matchFound = true;
+            Multithreading.schedule(() -> OmniChat.sendPlayerMessage("/ac " + HytilsConfig.ggMessage), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
+            if (HytilsConfig.autoGGSecondMessage) {
+                Multithreading.schedule(() -> OmniChat.sendPlayerMessage("/ac " + HytilsConfig.ggMessage2), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
+            }
+            // Schedule the reset of matchFound after the second message has been sent
+            Multithreading.schedule(() -> matchFound = false, (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000) + 5000, TimeUnit.MILLISECONDS);
+        }
     }
 
     private boolean hasGameEnded(String message) {
-        if (!PatternHandler.INSTANCE.gameEnd.isEmpty()) {
+        if (!matchFound && !PatternHandler.INSTANCE.gameEnd.isEmpty()) {
             for (Pattern triggers : PatternHandler.INSTANCE.gameEnd) {
                 if (triggers.matcher(message).matches()) {
                     return true;
@@ -61,6 +65,11 @@ public class AutoGG implements ChatReceiveModule {
 
         // TODO: UNTESTED!
         return getLanguage().casualGameEndRegex.matcher(message).matches();
+    }
+
+    @Subscribe
+    public void onWorldLoad(WorldEvent.Load event) {
+        matchFound = false;
     }
 
     @Override
@@ -73,3 +82,4 @@ public class AutoGG implements ChatReceiveModule {
         return 3;
     }
 }
+
