@@ -19,11 +19,11 @@
 package org.polyfrost.hytils.command;
 
 import com.mojang.authlib.GameProfile;
-import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
 import net.hypixel.data.type.GameType;
-import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
@@ -47,13 +47,13 @@ public class SkyblockVisitCommand {
 
     @Command
     private void main() {
-        OmniChat.displayClientMessage(new MCSimpleTextHolder("Usage: /skyblockvisit <username>").withFormatting(MCTextFormat.RED));
+        OmniClientChat.displayChatMessage(new MCSimpleTextHolder("Usage: /skyblockvisit <username>").withFormatting(MCTextFormat.RED));
     }
 
     @Command(description = "Visit a player's SkyBlock island.")
     private void main(@Parameter("Player Name") GameProfile player) {
         if (!HypixelUtils.isHypixel()) {
-            OmniChat.displayClientMessage(new MCSimpleTextHolder("You must be on Hypixel to use this command!").withFormatting(MCTextFormat.RED));
+            OmniClientChat.displayChatMessage(new MCSimpleTextHolder("You must be on Hypixel to use this command!").withFormatting(MCTextFormat.RED));
             return;
         }
         if (usernameRegex.matcher(player.getName()).matches()) {
@@ -62,17 +62,18 @@ public class SkyblockVisitCommand {
                 visit(0);
                 return;
             }
-            HytilsReborn.INSTANCE.getCommandQueue().queue("/play skyblock");
+            OmniClientChatSender.queue("/play skyblock");
             EventManager.INSTANCE.register(new SkyblockVisitHook());
         } else {
-            OmniChat.displayClientMessage(new MCSimpleTextHolder("Invalid username!").withFormatting(MCTextFormat.RED));
+            OmniClientChat.displayChatMessage(new MCSimpleTextHolder("Invalid username!").withFormatting(MCTextFormat.RED));
         }
     }
 
     private void visit(final long time) {
         if (playerName != null) {
+            //TODO: OmniClientChatSender should really have a delayed send method
             Multithreading.schedule(
-                () -> HytilsReborn.INSTANCE.getCommandQueue().queue("/visit " + playerName),
+                () -> OmniClientChatSender.queue("/visit " + playerName),
                 time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
         }
     }

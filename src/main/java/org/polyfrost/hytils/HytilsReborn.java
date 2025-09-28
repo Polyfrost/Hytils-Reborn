@@ -104,7 +104,6 @@ public class HytilsReborn
     private final FriendCache friendCache = new FriendCache();
     private final HardcoreStatus hardcoreStatus = new HardcoreStatus();
     private final SilentRemoval silentRemoval = new SilentRemoval();
-    private final CommandQueue commandQueue = new CommandQueue();
     private final ChatHandler chatHandler = new ChatHandler();
     private final AutoQueue autoQueue = new AutoQueue();
 
@@ -202,7 +201,6 @@ public class HytilsReborn
 
         // general stuff
         eventBus.register(autoQueue);
-        eventBus.register(commandQueue);
         eventBus.register(languageHandler);
         eventBus.register(new AutoStart());
         eventBus.register(new SoundHandler());
@@ -267,10 +265,6 @@ public class HytilsReborn
 
     public void setLoadedCall(boolean loadedCall) {
         this.loadedCall = loadedCall;
-    }
-
-    public CommandQueue getCommandQueue() {
-        return commandQueue;
     }
 
     public LanguageHandler getLanguageHandler() {

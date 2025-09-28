@@ -19,6 +19,7 @@
 package org.polyfrost.hytils.command;
 
 import dev.deftu.omnicore.api.client.chat.OmniClientChat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import dev.deftu.textile.minecraft.MCSimpleMutableTextHolder;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
@@ -69,7 +70,7 @@ public class HousingVisitCommand {
             if (gameType.isPresent() && gameType.get() == GameType.HOUSING && !location.inGame()) {
                 visit(0);
             } else {
-                HytilsReborn.INSTANCE.getCommandQueue().queue("/l housing");
+                OmniClientChatSender.queue("/l housing");
                 EventManager.INSTANCE.register(new HousingVisitHook());
             }
         } else {
@@ -79,7 +80,8 @@ public class HousingVisitCommand {
 
     private void visit(final long time) {
         if (playerName != null) {
-            Multithreading.schedule(() -> HytilsReborn.INSTANCE.getCommandQueue().queue("/visit " + playerName), time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
+            //TODO: OmniClientChatSender should have a delayed send method
+            Multithreading.schedule(() -> OmniClientChatSender.queue("/visit " + playerName), time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
         }
     }
 
