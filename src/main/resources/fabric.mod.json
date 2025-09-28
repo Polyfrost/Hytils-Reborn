@@ -11,7 +11,7 @@
         "sources": "https://github.com/Polyfrost/${mod_name}"
     },
     "license": "GPL-3.0-or-later",
-    "environment": "*",
+    "environment": "client",
     "entrypoints": {
         "client": [
             {

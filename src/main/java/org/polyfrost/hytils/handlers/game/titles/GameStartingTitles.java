@@ -22,7 +22,6 @@ import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
-import net.minecraft.util.EnumChatFormatting;
 
 public class GameStartingTitles {
     // Hides the countdown timer title text that is displayed before a game is about to start and other titles

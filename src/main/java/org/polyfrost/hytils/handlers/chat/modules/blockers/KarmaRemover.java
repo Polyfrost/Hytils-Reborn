@@ -18,7 +18,6 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
-import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.hytils.config.HytilsConfig;

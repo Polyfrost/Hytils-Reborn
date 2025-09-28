@@ -18,9 +18,9 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.client.Minecraft;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +32,7 @@ public class GuildWelcomer implements ChatReceiveModule {
         final String text = event.getFullyUnformattedMessage();
         final Matcher matcher = getLanguage().guildPlayerJoinRegex.matcher(text);
         if (matcher.matches()) {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/gc Welcome to the guild " + matcher.group("player") + "!");
+            OmniClientChatSender.queue("/gc Welcome to the guild " + matcher.group("player") + "!");
         }
     }
 

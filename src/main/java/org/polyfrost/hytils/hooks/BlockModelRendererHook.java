@@ -19,11 +19,6 @@
 package org.polyfrost.hytils.hooks;
 
 import org.polyfrost.hytils.util.DarkColorUtils;
-import net.minecraft.block.BlockColored;
-import net.minecraft.block.material.MapColor;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockPos;
 import org.polyfrost.hytils.config.BlockHighlightConfig;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.HeightHandler;

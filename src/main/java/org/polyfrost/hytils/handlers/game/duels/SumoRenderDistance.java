@@ -19,8 +19,6 @@
 package org.polyfrost.hytils.handlers.game.duels;
 
 import org.polyfrost.hytils.config.HytilsConfig;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.GameSettings;
 import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;

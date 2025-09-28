@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.command;
 
-import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChat;
 import dev.deftu.textile.minecraft.MCSimpleMutableTextHolder;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
@@ -51,13 +51,13 @@ public class HousingVisitCommand {
 
     @Command
     private void main() {
-        OmniChat.displayClientMessage(new MCSimpleTextHolder("Usage: /housingvisit <username>").withFormatting(MCTextFormat.RED));
+        OmniClientChat.displayChatMessage(new MCSimpleTextHolder("Usage: /housingvisit <username>").withFormatting(MCTextFormat.RED));
     }
 
     @Command(description = "Visits a player's house in Housing.")
     private void main(GameProfile player) {
         if (!HypixelUtils.isHypixel()) {
-            OmniChat.displayClientMessage(new MCSimpleMutableTextHolder("You must be on Hypixel to use this command!").withFormatting(MCTextFormat.RED));
+            OmniClientChat.displayChatMessage(new MCSimpleMutableTextHolder("You must be on Hypixel to use this command!").withFormatting(MCTextFormat.RED));
             return;
         }
         if (usernameRegex.matcher(player.getName()).matches()) {
@@ -73,7 +73,7 @@ public class HousingVisitCommand {
                 EventManager.INSTANCE.register(new HousingVisitHook());
             }
         } else {
-            OmniChat.displayClientMessage(new MCSimpleTextHolder("Invalid username!").withFormatting(MCTextFormat.RED));
+            OmniClientChat.displayChatMessage(new MCSimpleTextHolder("Invalid username!").withFormatting(MCTextFormat.RED));
         }
     }
 

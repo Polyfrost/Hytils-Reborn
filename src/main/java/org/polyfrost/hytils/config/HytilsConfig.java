@@ -28,7 +28,6 @@ import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
 import org.polyfrost.hytils.util.DarkColorUtils;
 import com.google.common.collect.Lists;
-import net.minecraft.client.Minecraft;
 import org.apache.commons.io.FileUtils;
 import org.polyfrost.polyui.unit.Units;
 import club.sk1er.lobbysounds.config.Sounds;
@@ -41,7 +40,6 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
@@ -1223,19 +1221,21 @@ public class HytilsConfig extends Config {
 
     public HytilsConfig() {
         super("hytilsreborn.json", "/assets/hytils/hypixel.png", "Hytils Reborn", Category.HYPIXEL); // new VigilanceMigrator(new File(HytilsReborn.INSTANCE.oldModDir, "hytilsreborn.toml").getAbsolutePath()))
-        try {
-            File modDir = HytilsReborn.INSTANCE.oldModDir;
-            File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");
-            File oldConfig = new File(oldModDir, "hytilitiesreborn.toml");
-            if (oldConfig.exists()) {
-                FileUtils.writeStringToFile(new File(modDir, "hytilsreborn.toml"), FileUtils.readFileToString(oldConfig, StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-                if (!oldConfig.renameTo(new File(modDir, "hytilsreborn_backup.toml"))) {
-                    Files.move(oldConfig.toPath(), modDir.toPath().resolve("hytilsreborn_backup.toml"), StandardCopyOption.REPLACE_EXISTING);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //#if FORGE && MC == 1.8.9
+        //$$ try {
+        //$$     File modDir = HytilsReborn.INSTANCE.oldModDir;
+        //$$     File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");
+        //$$     File oldConfig = new File(oldModDir, "hytilitiesreborn.toml");
+        //$$     if (oldConfig.exists()) {
+        //$$        FileUtils.writeStringToFile(new File(modDir, "hytilsreborn.toml"), FileUtils.readFileToString(oldConfig, StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+        //$$         if (!oldConfig.renameTo(new File(modDir, "hytilsreborn_backup.toml"))) {
+        //$$             Files.move(oldConfig.toPath(), modDir.toPath().resolve("hytilsreborn_backup.toml"), StandardCopyOption.REPLACE_EXISTING);
+        //$$         }
+        //$$     }
+        //$$ } catch (Exception e) {
+        //$$     e.printStackTrace();
+        //$$ }
+        //#endif
 
         Class<?> autoGGClass = null;
         try {

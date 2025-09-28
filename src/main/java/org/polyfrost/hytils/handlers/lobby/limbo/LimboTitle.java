@@ -20,7 +20,6 @@ package org.polyfrost.hytils.handlers.lobby.limbo;
 
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
-import net.minecraft.client.Minecraft;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 public class LimboTitle {

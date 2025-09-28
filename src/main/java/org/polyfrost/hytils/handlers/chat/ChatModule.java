@@ -18,12 +18,12 @@
 
 package org.polyfrost.hytils.handlers.chat;
 
+import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
+import dev.deftu.textile.minecraft.MCTextHolder;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.language.LanguageData;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -75,8 +75,9 @@ interface ChatModule {
      * without a long line of code.
      */
     @NotNull
-    default IChatComponent colorMessage(@NotNull String message) {
-        return new ChatComponentText(MCTextFormat.translateAlternateColorCodes('&', message));
+    default String colorMessage(@NotNull String message) {
+        //TODO: Replace with better methods from textile
+        return MCTextFormat.translateAlternateColorCodes('&', message);
     }
 
     /**

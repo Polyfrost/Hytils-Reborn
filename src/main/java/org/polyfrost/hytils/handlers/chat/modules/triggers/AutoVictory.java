@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import dev.deftu.omnicore.api.client.chat.OmniClientChat;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
@@ -30,8 +31,6 @@ import org.polyfrost.hytils.handlers.cache.PatternHandler;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveResetModule;
 import org.polyfrost.hytils.mixin.GuiIngameAccessor;
 import org.polyfrost.hytils.util.HypixelAPIUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -128,8 +127,8 @@ public class AutoVictory implements ChatReceiveResetModule {
     @Override
     public void reset() {
         victoryDetected = false;
-        ((GuiIngameAccessor) Minecraft.getMinecraft().ingameGUI).setDisplayedTitle("");
-        ((GuiIngameAccessor) Minecraft.getMinecraft().ingameGUI).setDisplayedSubTitle("");
+        //TODO: CHeck that this properly overrides the title and subtitle
+        OmniClientChat.displayTitle("", "");
     }
 
     private boolean isSupportedMode(HypixelUtils.Location location) {

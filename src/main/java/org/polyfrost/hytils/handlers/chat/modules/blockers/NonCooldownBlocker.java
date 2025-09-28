@@ -18,11 +18,13 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
+import dev.deftu.omnicore.api.client.chat.OmniClientChat;
+import dev.deftu.textile.minecraft.MCSimpleTextHolder;
+import dev.deftu.textile.minecraft.MCTextHolder;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatSendModule;
 import org.polyfrost.hytils.util.ranks.RankType;
-import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,7 +43,8 @@ public class NonCooldownBlocker implements ChatSendModule {
                 return message;
             } else {
                 long secondsLeft = (nonCooldown - System.currentTimeMillis()) / 1000L;
-                Minecraft.getMinecraft().thePlayer.addChatMessage(colorMessage("§eYour freedom of speech is on cooldown. Please wait " + decimalFormat.format(secondsLeft) + " more second" + (secondsLeft == 1 ? "." : "s.")));
+                MCTextHolder<MCSimpleTextHolder> resp = new MCSimpleTextHolder(colorMessage("§eYour freedom of speech is on cooldown. Please wait " + decimalFormat.format(secondsLeft) + " more second" + (secondsLeft == 1 ? "." : "s.")));
+                OmniClientChat.displayChatMessage(resp);
                 return null;
             }
         }

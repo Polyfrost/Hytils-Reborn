@@ -21,8 +21,6 @@ package org.polyfrost.hytils.handlers.chat.modules.modifiers;
 import dev.deftu.textile.minecraft.MCTextHolder;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 

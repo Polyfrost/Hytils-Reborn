@@ -18,13 +18,13 @@
 
 package org.polyfrost.hytils.util.friends;
 
+import dev.deftu.omnicore.api.client.player.OmniClientPlayer;
 import org.polyfrost.oneconfig.utils.v1.JsonUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
 import org.polyfrost.hytils.HytilsReborn;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.client.Minecraft;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -55,7 +55,7 @@ public class FriendCache {
      * @return A list of UUIDs that the player is friends on Hypixel with, or null if the request failed
      */
     private Set<UUID> downloadFriendDataFromApi() {
-        String url = "https://api.sk1er.club/friends/" + Minecraft.getMinecraft().getSession().getPlayerID();
+        String url = "https://api.sk1er.club/friends/" + OmniClientPlayer.getPlayerUuid();
         try {
             // Convert output format into a list of names
             // TODO: Error handling if JSON data is in bad format

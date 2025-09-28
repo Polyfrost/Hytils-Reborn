@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.hytils.config.HytilsConfig;
@@ -35,7 +35,7 @@ public class AutoAfkReply implements ChatReceiveModule {
         String message = event.getFullyUnformattedMessage();
         Matcher matcher = getLanguage().autoAfkReplyPatternRegex.matcher(message);
         if (matcher.matches()) {
-            OmniChat.sendChatMessage("/msg " + matcher.group(2) + " Hey "  + matcher.group(2) + ", I am currently AFK!");
+            OmniClientChatSender.queue("/msg " + matcher.group(2) + " Hey "  + matcher.group(2) + ", I am currently AFK!");
         }
     }
 
