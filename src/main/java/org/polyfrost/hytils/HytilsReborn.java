@@ -19,18 +19,18 @@
 package org.polyfrost.hytils;
 
 //#if FORGE
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+//$$ import net.minecraftforge.fml.common.Mod;
+//$$ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+//$$ import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
+//$$ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+//$$ import net.minecraft.client.Minecraft;
 //#else
-//$$ import net.fabricmc.api.ClientModInitializer;
-//$$ import net.fabricmc.loader.api.FabricLoader;
-//$$ import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
+import net.fabricmc.api.ClientModInitializer;
 //#endif
 
-import dev.deftu.omnicore.client.OmniChat;
-import dev.deftu.omnicore.common.OmniLoader;
+import dev.deftu.omnicore.api.loader.OmniLoader;
+import dev.deftu.omnicore.api.client.chat.OmniClientChat;
+import dev.deftu.omnicore.api.client.player.OmniClientPlayer;
 import dev.deftu.textile.minecraft.MCSimpleMutableTextHolder;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
@@ -59,7 +59,6 @@ import org.polyfrost.hytils.handlers.game.titles.GameEndingTitles;
 import org.polyfrost.hytils.handlers.game.titles.GameStartingTitles;
 import org.polyfrost.hytils.handlers.game.uhc.MiddleWaypointUHC;
 import org.polyfrost.hytils.handlers.general.AutoStart;
-import org.polyfrost.hytils.handlers.general.CommandQueue;
 import org.polyfrost.hytils.handlers.general.SoundHandler;
 import org.polyfrost.hytils.handlers.language.LanguageHandler;
 import org.polyfrost.hytils.handlers.lobby.armorstands.ArmorStandHider;
@@ -73,18 +72,15 @@ import org.polyfrost.hytils.hooks.BlockModelRendererHook;
 import org.polyfrost.hytils.util.HypixelAPIUtils;
 import org.polyfrost.hytils.util.friends.FriendCache;
 import org.polyfrost.hytils.util.ranks.RankType;
-import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-
 //#if FORGE
-@Mod(modid = HytilsReborn.ID, version = HytilsReborn.VERSION, name = HytilsReborn.NAME)
+//$$ @Mod(modid = HytilsReborn.ID, version = HytilsReborn.VERSION, name = HytilsReborn.NAME)
 //#endif
 public class HytilsReborn
     //#if FABRIC
-    //$$ implements ClientModInitializer
+    implements ClientModInitializer
     //#endif
 {
     public static final String ID = "@MOD_ID@";
@@ -92,13 +88,15 @@ public class HytilsReborn
     public static final String VERSION = "@MOD_VERSION@";
 
     //#if FORGE
-    @Mod.Instance(ID)
+    //$$ @Mod.Instance(ID)
     //#endif
     public static HytilsReborn INSTANCE;
 
     private static MCTextHolder<?> prefix;
 
-    public File oldModDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), NAME);
+    //#if FORGE && MC == 1.8.9
+    //$$ public File oldModDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), NAME);
+    //#endif
 
     private HytilsConfig config;
     private final Logger logger = LogManager.getLogger("Hytils Reborn");
@@ -107,7 +105,6 @@ public class HytilsReborn
     private final FriendCache friendCache = new FriendCache();
     private final HardcoreStatus hardcoreStatus = new HardcoreStatus();
     private final SilentRemoval silentRemoval = new SilentRemoval();
-    private final CommandQueue commandQueue = new CommandQueue();
     private final ChatHandler chatHandler = new ChatHandler();
     private final AutoQueue autoQueue = new AutoQueue();
 
@@ -158,12 +155,12 @@ public class HytilsReborn
     }
 
     private void postInitialize() {
-        if (OmniLoader.isModLoaded("tabulous")) {
+        if (OmniLoader.isLoaded("tabulous")) {
             config.hideTabulous();
         }
 
-        isPatcher = OmniLoader.isModLoaded("patcher");
-        isChatting = OmniLoader.isModLoaded("chatting");
+        isPatcher = OmniLoader.isLoaded("patcher");
+        isChatting = OmniLoader.isLoaded("chatting");
         if (isChatting) {
             try {
                 Class.forName("org.polyfrost.chatting.chat.ChatTabs");
@@ -177,30 +174,30 @@ public class HytilsReborn
             }
         }
 
-        Multithreading.submit(() -> rank = HypixelAPIUtils.getRank(Minecraft.getMinecraft().getSession().getUsername()));
+        Multithreading.submit(() -> rank = HypixelAPIUtils.getRank(OmniClientPlayer.getPlayerName()));
     }
 
     //#if FORGE
-    @Mod.EventHandler
-    public void fmlInit(FMLInitializationEvent event) {
-        initialize();
-    }
-
-    @Mod.EventHandler
-    public void fmlPostInit(FMLPostInitializationEvent event) {
-        postInitialize();
-    }
-
-    @Mod.EventHandler
-    public void finishedStarting(FMLLoadCompleteEvent event) {
-        this.loadedCall = true;
-    }
-    //#else
-    //$$ @Override
-    //$$ public void onInitializeClient() {
-    //$$      initialize();
-    //$$      postInitialize();
+    //$$ @Mod.EventHandler
+    //$$ public void fmlInit(FMLInitializationEvent event) {
+    //$$     initialize();
     //$$ }
+
+    //$$ @Mod.EventHandler
+    //$$ public void fmlPostInit(FMLPostInitializationEvent event) {
+    //$$     postInitialize();
+    //$$ }
+
+    //$$ @Mod.EventHandler
+    //$$ public void finishedStarting(FMLLoadCompleteEvent event) {
+    //$$     this.loadedCall = true;
+    //$$ }
+    //#else
+    @Override
+    public void onInitializeClient() {
+          initialize();
+          postInitialize();
+    }
     //#endif
 
     private void registerHandlers() {
@@ -208,7 +205,6 @@ public class HytilsReborn
 
         // general stuff
         eventBus.register(autoQueue);
-        eventBus.register(commandQueue);
         eventBus.register(languageHandler);
         eventBus.register(new AutoStart());
         eventBus.register(new SoundHandler());
@@ -252,7 +248,7 @@ public class HytilsReborn
         newText.append(text);
         text = newText;
 
-        OmniChat.displayClientMessage(text);
+        OmniClientChat.displayChatMessage(text);
     }
 
     public HytilsConfig getConfig() {
@@ -273,10 +269,6 @@ public class HytilsReborn
 
     public void setLoadedCall(boolean loadedCall) {
         this.loadedCall = loadedCall;
-    }
-
-    public CommandQueue getCommandQueue() {
-        return commandQueue;
     }
 
     public LanguageHandler getLanguageHandler() {

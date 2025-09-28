@@ -18,10 +18,10 @@
 
 package org.polyfrost.hytils.handlers.general;
 
+import dev.deftu.omnicore.api.client.sound.OmniClientSound;
+import dev.deftu.omnicore.api.sound.OmniSound;
+import dev.deftu.omnicore.api.sound.OmniSounds;
 import org.polyfrost.hytils.config.HytilsConfig;
-import net.minecraft.block.BlockTNT;
-import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemBlock;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
@@ -60,9 +60,10 @@ public class SoundHandler {
         if (!Minecraft.getMinecraft().playerController.gameIsSurvivalOrAdventure()) return;
         switch (HytilsConfig.blockNotifySound) {
             case 0:
-                Minecraft.getMinecraft().thePlayer.playSound("random.orb", 1f, 1f);
+                OmniClientSound.play(OmniSounds.EXPERIENCE_ORB_PICKUP, 1f, 1f);
                 break;
             case 1:
+                //TODO: More OmniSounds
                 Minecraft.getMinecraft().thePlayer.playSound("mob.irongolem.hit", 1f, 1f);
                 break;
             case 2:

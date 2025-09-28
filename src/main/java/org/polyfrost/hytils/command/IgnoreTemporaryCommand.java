@@ -18,7 +18,9 @@
 
 package org.polyfrost.hytils.command;
 
-import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.api.client.OmniClient;
+import dev.deftu.omnicore.api.client.chat.OmniClientChat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import org.polyfrost.oneconfig.api.config.v1.ConfigManager;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.*;
@@ -26,7 +28,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.client.Minecraft;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -53,14 +54,14 @@ public class IgnoreTemporaryCommand {
         initialize();
         Multithreading.submit(() -> {
             Timer timer = new Timer(1, ignored -> {
-                if (Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer != null) {
+                if (OmniClient.getWorld() != null && OmniClient.getPlayer() != null) {
                     if (json != null) {
                         Date date = new Date();
                         boolean dirty = false;
                         for (Map.Entry<String, JsonElement> next : json.entrySet()) {
                             if (date.getTime() > next.getValue().getAsLong()) {
                                 json.remove(next.getKey());
-                                OmniChat.sendChatMessage("/ignore remove " + next.getKey());
+                                OmniClientChatSender.queue("/ignore remove " + next.getKey());
                                 dirty = true;
                             }
                         }
@@ -78,7 +79,7 @@ public class IgnoreTemporaryCommand {
         });
     }
 
-    @Command
+    @Handler
     private void main(GameProfile playerName, String time) {
         Multithreading.submit(() -> {
             try {
@@ -89,21 +90,21 @@ public class IgnoreTemporaryCommand {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                OmniChat.sendChatMessage("/ignore add " + playerName.getName());
-                OmniChat.showChatMessage("&r&aSuccessfully ignored &r&6&l" + playerName.getName() + "&r&a for &r&e&l" + time + "&r&a. The ignore will be removed after the specified period.");
+                OmniClientChatSender.queue("/ignore add " + playerName.getName());
+                OmniClientChat.displayChatMessage("&r&aSuccessfully ignored &r&6&l" + playerName.getName() + "&r&a for &r&e&l" + time + "&r&a. The ignore will be removed after the specified period.");
             } catch (Exception e) {
                 e.printStackTrace();
-                OmniChat.showChatMessage("&cAn error has occured and the user has not been ignored.");
+                OmniClientChat.displayChatMessage("&cAn error has occured and the user has not been ignored.");
             }
         });
     }
 
-    @Command
+    @Handler
     private void add(GameProfile playerName, String time) {
         main(playerName, time);
     }
 
-    @Command
+    @Handler
     private void remove(GameProfile playerName) {
         json.remove(playerName.getName());
         Multithreading.submit(() -> {
@@ -113,7 +114,7 @@ public class IgnoreTemporaryCommand {
                 e.printStackTrace();
             }
         });
-        OmniChat.sendChatMessage("/ignore remove " + playerName.getName());
+        OmniClientChatSender.queue("/ignore remove " + playerName.getName());
     }
 
     private static void initialize() {

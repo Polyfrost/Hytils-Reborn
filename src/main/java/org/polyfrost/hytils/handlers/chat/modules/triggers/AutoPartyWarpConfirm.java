@@ -18,11 +18,10 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +33,8 @@ public class AutoPartyWarpConfirm implements ChatReceiveModule {
         final String message = event.getFullyUnformattedMessage();
         if (message.equals(getLanguage().autoPartyWarpConfirm)) {
             event.cancelled = true;
-            Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage("/p warp"), 1500, TimeUnit.MILLISECONDS);
+            //TODO: OmniClientChatSender.queue should add a delay parameter
+            Multithreading.schedule(() -> OmniClientChatSender.queue("/p warp"), 1500, TimeUnit.MILLISECONDS);
         }
     }
 

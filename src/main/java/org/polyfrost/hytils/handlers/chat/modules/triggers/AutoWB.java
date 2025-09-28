@@ -19,13 +19,10 @@
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
 import dev.deftu.textile.minecraft.MCTextHolder;
-import net.minecraft.util.IChatComponent;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;

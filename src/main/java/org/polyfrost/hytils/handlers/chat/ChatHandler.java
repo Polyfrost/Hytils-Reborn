@@ -27,7 +27,6 @@ import org.polyfrost.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.WhiteChat;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.WhitePrivateMessages;
 import org.polyfrost.hytils.handlers.chat.modules.triggers.*;
-import net.minecraft.util.IChatComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
@@ -190,30 +189,5 @@ public class ChatHandler {
         }
 
         return message;
-    }
-
-    /**
-     * Fixes styling when overwriting a message.
-     * Store the component siblings before applying any changes to the original component.
-     *
-     * @param component The message being modified & restored
-     * @param siblings  The message's chat component siblings
-     */
-    public void fixStyling(IChatComponent component, List<IChatComponent> siblings) {
-        // todo: this grabs the last sibling and applies it to the whole text, instead of reapplying to the specific
-        //  sibling, need to rethink this through, for now do nothing
-        /*if (!siblings.isEmpty()) {
-            for (IChatComponent sibling : siblings) {
-                final ChatStyle chatStyle = sibling.getChatStyle();
-
-                if (chatStyle.getChatHoverEvent() != null) {
-                    component.getChatStyle().setChatHoverEvent(chatStyle.getChatHoverEvent());
-                }
-
-                if (chatStyle.getChatClickEvent() != null) {
-                    component.getChatStyle().setChatClickEvent(chatStyle.getChatClickEvent());
-                }
-            }
-        }*/
     }
 }

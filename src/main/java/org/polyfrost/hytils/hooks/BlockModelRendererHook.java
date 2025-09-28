@@ -22,11 +22,6 @@ import cc.polyfrost.oneconfig.events.EventManager;
 import cc.polyfrost.oneconfig.events.event.WorldLoadEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import org.polyfrost.hytils.util.DarkColorUtils;
-import net.minecraft.block.BlockColored;
-import net.minecraft.block.material.MapColor;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockPos;
 import org.polyfrost.hytils.config.BlockHighlightConfig;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.HeightHandler;
@@ -68,14 +63,9 @@ public class BlockModelRendererHook {
     }
 
     private static boolean check(int color) {
-        switch (color) {
-            case 18:
-            case 25:
-            case 27:
-            case 28:
-                return true;
-            default:
-                return false;
-        }
+        return switch (color) {
+            case 18, 25, 27, 28 -> true;
+            default -> false;
+        };
     }
 }

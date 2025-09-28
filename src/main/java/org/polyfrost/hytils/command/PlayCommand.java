@@ -18,9 +18,11 @@
 
 package org.polyfrost.hytils.command;
 
-import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
@@ -34,7 +36,6 @@ import org.polyfrost.hytils.handlers.lobby.limbo.LimboLimiter;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import net.minecraft.client.Minecraft;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -63,11 +64,11 @@ public class PlayCommand {
             });
         });
     }
-    @Command
+    @Handler
     private void main(GameName game) {
         boolean autocompletePlayCommands = HytilsConfig.autocompletePlayCommands;
         if (!HypixelUtils.isHypixel()) {
-            HytilsReborn.INSTANCE.getCommandQueue().queue("/play " + game.name);
+            OmniClientChatSender.queue("/play " + game.name);
             return;
         }
 
@@ -79,14 +80,14 @@ public class PlayCommand {
             } else if (games.containsValue(game.name.toLowerCase(Locale.ENGLISH))) {
                 command = game.name;
             } else {
-                OmniChat.displayClientMessage(new MCSimpleTextHolder("Invalid game: \"" + game.name + "\"").withFormatting(MCTextFormat.RED));
+                OmniClientChat.displayChatMessage(new MCSimpleTextHolder("Invalid game: \"" + game.name + "\"").withFormatting(MCTextFormat.RED));
                 return;
             }
         }
 
         if (HytilsConfig.limboPlayCommandHelper && LimboLimiter.inLimbo()) {
-            HytilsReborn.INSTANCE.getCommandQueue().queue("/l");
+            OmniClientChatSender.queue("/l");
         }
-        HytilsReborn.INSTANCE.getCommandQueue().queue("/play " + command);
+        OmniClientChatSender.queue("/play " + command);
     }
 }

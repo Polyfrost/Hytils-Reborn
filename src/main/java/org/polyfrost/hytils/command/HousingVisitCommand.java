@@ -18,18 +18,19 @@
 
 package org.polyfrost.hytils.command;
 
-import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import dev.deftu.textile.minecraft.MCSimpleMutableTextHolder;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
 import net.hypixel.data.type.GameType;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
-import org.polyfrost.hytils.HytilsReborn;
 import com.mojang.authlib.GameProfile;
 
 import java.util.Optional;
@@ -49,15 +50,15 @@ public class HousingVisitCommand {
 
     protected static String playerName = "";
 
-    @Command
+    @Handler
     private void main() {
-        OmniChat.displayClientMessage(new MCSimpleTextHolder("Usage: /housingvisit <username>").withFormatting(MCTextFormat.RED));
+        OmniClientChat.displayChatMessage(new MCSimpleTextHolder("Usage: /housingvisit <username>").withFormatting(MCTextFormat.RED));
     }
 
-    @Command(description = "Visits a player's house in Housing.")
+    @Handler(description = "Visits a player's house in Housing.")
     private void main(GameProfile player) {
         if (!HypixelUtils.isHypixel()) {
-            OmniChat.displayClientMessage(new MCSimpleMutableTextHolder("You must be on Hypixel to use this command!").withFormatting(MCTextFormat.RED));
+            OmniClientChat.displayChatMessage(new MCSimpleMutableTextHolder("You must be on Hypixel to use this command!").withFormatting(MCTextFormat.RED));
             return;
         }
         if (usernameRegex.matcher(player.getName()).matches()) {
@@ -69,17 +70,18 @@ public class HousingVisitCommand {
             if (gameType.isPresent() && gameType.get() == GameType.HOUSING && !location.inGame()) {
                 visit(0);
             } else {
-                HytilsReborn.INSTANCE.getCommandQueue().queue("/l housing");
+                OmniClientChatSender.queue("/l housing");
                 EventManager.INSTANCE.register(new HousingVisitHook());
             }
         } else {
-            OmniChat.displayClientMessage(new MCSimpleTextHolder("Invalid username!").withFormatting(MCTextFormat.RED));
+            OmniClientChat.displayChatMessage(new MCSimpleTextHolder("Invalid username!").withFormatting(MCTextFormat.RED));
         }
     }
 
     private void visit(final long time) {
         if (playerName != null) {
-            Multithreading.schedule(() -> HytilsReborn.INSTANCE.getCommandQueue().queue("/visit " + playerName), time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
+            //TODO: OmniClientChatSender should have a delayed send method
+            Multithreading.schedule(() -> OmniClientChatSender.queue("/visit " + playerName), time, TimeUnit.MILLISECONDS); // at 300ms you can be nearly certain that nothing important will be null
         }
     }
 

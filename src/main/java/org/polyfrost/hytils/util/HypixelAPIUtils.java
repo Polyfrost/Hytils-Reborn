@@ -18,6 +18,8 @@
 
 package org.polyfrost.hytils.util;
 
+import dev.deftu.omnicore.api.client.OmniClient;
+import dev.deftu.omnicore.api.client.player.OmniClientPlayer;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
@@ -32,8 +34,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.exceptions.AuthenticationException;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.EnumChatFormatting;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -64,7 +64,7 @@ public class HypixelAPIUtils {
     public void initialize() {
         EventHandler.of(TickEvent.Start.class, () -> {
             if (ticks % 20 == 0) {
-                if (Minecraft.getMinecraft().thePlayer != null) {
+                if (OmniClient.getPlayer() != null) {
                     HeightHandler.INSTANCE.getHeight();
                 }
                 ticks = 0;
@@ -160,7 +160,7 @@ public class HypixelAPIUtils {
      */
     public static boolean getGEXP() {
         String gexp = null;
-        String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
+        String uuid = OmniClientPlayer.getPlayerUuid().toString().replace("-", "");
         JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/guild/" + uuid);
         if (jsonObject == null) {
             return false;
@@ -209,7 +209,7 @@ public class HypixelAPIUtils {
      */
     public static boolean getWeeklyGEXP() {
         String gexp = null;
-        String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
+        String uuid = OmniClientPlayer.getPlayerUuid().toString().replace("-", "");
         JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/guild/" + uuid);
         if (jsonObject == null) {
             return false;
@@ -265,7 +265,7 @@ public class HypixelAPIUtils {
      * @return Whether the "getting" was successful.
      */
     public static boolean getWinstreak() {
-        String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
+        String uuid = OmniClientPlayer.getPlayerUuid().toString().replace("-", "");
         JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/player/" + uuid);
         if (jsonObject == null) {
             return false;

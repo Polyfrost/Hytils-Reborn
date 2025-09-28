@@ -23,9 +23,6 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.hytils.handlers.language.LanguageData;
 import org.polyfrost.hytils.handlers.lobby.limbo.LimboLimiter;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -61,7 +58,7 @@ public class DefaultChatRestyler implements ChatReceiveModule {
     }
 
     @Override
-    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) { //TODO: ChatEvent.Receive should have a MCTextHolder not a TextHolder
         IChatComponent component = event.getMessage();
         String message = component.getFormattedText().trim();
         final String unformattedMessage = event.getFullyUnformattedMessage().trim();

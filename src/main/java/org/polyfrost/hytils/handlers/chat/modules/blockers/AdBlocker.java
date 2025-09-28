@@ -18,9 +18,9 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
+import dev.deftu.omnicore.api.client.player.OmniClientPlayer;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
-import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
@@ -47,7 +47,7 @@ public class AdBlocker implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         String message = event.getFullyUnformattedMessage();
-        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(Minecraft.getMinecraft().getSession().getUsername().toLowerCase()))) return;
+        if ((message.startsWith("-") && message.endsWith("-")) || (message.startsWith("▬") && message.endsWith("▬")) || (message.startsWith("≡") && message.endsWith("≡")) || (!message.contains(": ")) || (message.contains(OmniClientPlayer.getPlayerName().toLowerCase()))) return;
         if (getLanguage().chatCommonAdvertisementsRegex.matcher(message).find(0)) {
             event.cancelled = true;
         }

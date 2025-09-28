@@ -17,8 +17,8 @@ plugins {
 
 toolkitLoomHelper {
     useOneConfig {
-        version = "1.0.0-alpha.118"
-        loaderVersion = "1.1.0-alpha.48"
+        version = "1.0.0-alpha.153"
+        loaderVersion = "1.1.0-alpha.49"
 
         usePolyMixin = true
         polyMixinVersion = "0.8.4+build.6"
@@ -30,6 +30,7 @@ toolkitLoomHelper {
         }
     }
 
+    useDevAuth("1.2.1")
     useMixinExtras("0.5.0") //todo hopefully remove when oneconfig updates?
 
     // Turns off the server-side run configs, as we're building a client-sided mod.

@@ -23,12 +23,6 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.hytils.mixin.GuiNewChatAccessor;
 import com.google.common.collect.Lists;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ChatLine;
-import net.minecraft.client.gui.GuiNewChat;
-import net.minecraft.client.gui.GuiUtilRenderComponents;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 

@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
@@ -45,7 +46,7 @@ public class AutoFriend implements ChatReceiveModule {
                 name = name.substring(name.indexOf("] ") + 2);
             }
             event.cancelled = true;
-            HytilsReborn.INSTANCE.getCommandQueue().queue("/friend " + name);
+            OmniClientChatSender.queue("/friend " + name);
             Notifications.INSTANCE.enqueue(Notifications.Type.Info, HytilsReborn.NAME, "Automatically added " + name + " to your friend list.");
         }
     }

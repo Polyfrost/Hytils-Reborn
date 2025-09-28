@@ -19,10 +19,6 @@
 package org.polyfrost.hytils.handlers.game.pit;
 
 import net.hypixel.data.type.GameType;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.item.EntityArmorStand;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.oneconfig.api.event.v1.events.RenderLivingEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;

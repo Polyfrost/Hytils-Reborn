@@ -18,12 +18,6 @@
 
 package org.polyfrost.hytils.util;
 
-import net.minecraft.block.BlockBed;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-
 public enum BedColor {
     WHITE,
     LIGHT_GRAY, // hypixel gray, "silver"

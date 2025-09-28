@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
@@ -28,7 +28,7 @@ public class AutoWarn implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatEvent.Receive event) {
         if (event.getFullyUnformattedMessage().startsWith("A kick")) {
-            OmniChat.sendChatMessage(HytilsConfig.putInCaps ? "/pc ---------REQUEUE, I'VE BEEN KICKED!---------" : "/pc ---------I've been kicked, please requeue!---------");
+            OmniClientChatSender.queue(HytilsConfig.putInCaps ? "/pc ---------REQUEUE, I'VE BEEN KICKED!---------" : "/pc ---------I've been kicked, please requeue!---------");
         }
     }
 

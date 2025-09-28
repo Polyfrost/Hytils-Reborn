@@ -18,7 +18,8 @@
 
 package org.polyfrost.hytils.handlers.render;
 
-import dev.deftu.omnicore.client.OmniClient;
+import dev.deftu.omnicore.api.client.OmniClient;
+import dev.deftu.omnicore.api.data.pos.OmniBlockPos;
 import net.hypixel.data.type.GameType;
 import net.minecraft.world.World;
 import org.polyfrost.oneconfig.api.event.v1.events.PlayerInteractEvent;
@@ -28,18 +29,13 @@ import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
-import net.minecraft.client.Minecraft;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.hytils.util.WaypointUtil;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ChestHighlighter {
-    private final List<BlockPos> highlightedChestPositions = new CopyOnWriteArrayList<>();
+    private final List<OmniBlockPos> highlightedChestPositions = new CopyOnWriteArrayList<>();
 
     @Subscribe
     public void onInteract(PlayerInteractEvent event) {
@@ -61,7 +57,7 @@ public class ChestHighlighter {
         switch (event.getAction()) {
             case RIGHT:
                 if (!highlightedChestPositions.contains(pos)) {
-                    highlightedChestPositions.add(pos);
+                    highlightedChestPositions.add(new OmniBlockPos(pos));
                 }
 
                 break;

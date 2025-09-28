@@ -20,8 +20,6 @@ package org.polyfrost.hytils.handlers.lobby.limbo;
 
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.DefaultChatRestyler;
-import net.minecraft.client.Minecraft;
-import org.lwjgl.opengl.Display;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;

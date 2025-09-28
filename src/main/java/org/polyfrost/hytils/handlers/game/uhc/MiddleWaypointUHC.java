@@ -18,17 +18,17 @@
 
 package org.polyfrost.hytils.handlers.game.uhc;
 
+import dev.deftu.omnicore.api.data.pos.OmniBlockPos;
 import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.util.WaypointUtil;
-import net.minecraft.util.BlockPos;
 import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class MiddleWaypointUHC {
     // y 70 is a completely arbitrary height, being slightly above sea level. feel free to change as one may see fit
-    private final BlockPos block = new BlockPos(0,70,0);
+    private final OmniBlockPos block = new OmniBlockPos(0,70,0);
 
     @Subscribe
     public void onRenderWorldLast(PostWorldRenderEvent event) { // TODO

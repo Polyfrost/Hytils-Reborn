@@ -18,9 +18,7 @@
 
 package org.polyfrost.hytils.config;
 
-import org.polyfrost.oneconfig.api.config.v1.annotations.Color;
 import org.polyfrost.polyui.color.PolyColor;
-import net.minecraft.block.material.MapColor;
 
 import java.util.HashMap;
 import java.util.Map;

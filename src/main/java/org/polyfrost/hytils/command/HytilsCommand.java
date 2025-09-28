@@ -18,7 +18,8 @@
 
 package org.polyfrost.hytils.command;
 
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Param;
 import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
@@ -41,14 +42,14 @@ public class HytilsCommand {
         CommandManager.INSTANCE.registerParser(new WinstreakTypeParser());
     }
 
-    @Command
+    @Handler
     private void main() {
         //HytilsReborn.INSTANCE.getConfig().openGui();
     }
 
-    @Command(value = {"guildexp", "guildexperience"}, description = "Shows your guild experience")
+    @Handler(value = {"guildexp", "guildexperience"}, description = "Shows your guild experience")
     @SuppressWarnings("SameParameterValue")
-    private void gexp(@Parameter("Username") @Nullable GameProfile player, @Parameter("GEXP Type") @Nullable GEXPType type) {
+    private void gexp(@Param("Username") @Nullable GameProfile player, @Param("GEXP Type") @Nullable GEXPType type) {
         Multithreading.submit(() -> {
             if (player != null) {
                 if (type == null) {
@@ -97,9 +98,9 @@ public class HytilsCommand {
         });
     }
 
-    @Command(value = {"winstreak", "ws"}, description = "Shows your winstreak")
+    @Handler(value = {"winstreak", "ws"}, description = "Shows your winstreak")
     @SuppressWarnings("SameParameterValue")
-    private void winstreak(@Parameter("Username") @Nullable GameProfile player, @Parameter("Winstreak Type") @Nullable WinstreakType gamemode) {
+    private void winstreak(@Param("Username") @Nullable GameProfile player, @Param("Winstreak Type") @Nullable WinstreakType gamemode) {
         Multithreading.submit(() -> {
             if (player != null) {
                 if (gamemode != null) {
