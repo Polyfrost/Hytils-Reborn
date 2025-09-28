@@ -69,6 +69,7 @@ import org.polyfrost.hytils.handlers.lobby.limbo.LimboTitle;
 import org.polyfrost.hytils.handlers.lobby.npc.NPCHandler;
 import org.polyfrost.hytils.handlers.lobby.sound.SilentLobby;
 import org.polyfrost.hytils.handlers.render.ChestHighlighter;
+import org.polyfrost.hytils.hooks.BlockModelRendererHook;
 import org.polyfrost.hytils.util.HypixelAPIUtils;
 import org.polyfrost.hytils.util.friends.FriendCache;
 import org.polyfrost.hytils.util.ranks.RankType;
@@ -141,6 +142,9 @@ public class HytilsReborn
         // We initialize it a different way because it requires the
         // GameNameParser to be initialized, and that depends on networking.
         PlayCommand.init();
+
+        // i hate you
+        BlockModelRendererHook.initialize();
 
         ArmorStandHandler.INSTANCE.initialize();
         CosmeticsHandler.INSTANCE.initialize();
