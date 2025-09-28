@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
@@ -39,7 +40,7 @@ public class SilentRemoval implements ChatReceiveModule {
             // not a friend anymore :(
             for (String friend : silentUsers) {
                 if (matcher.group("player").equalsIgnoreCase(friend)) {
-                    HytilsReborn.INSTANCE.getCommandQueue().queue("/f remove " + friend);
+                    OmniClientChatSender.queue("/f remove " + friend);
                     silentUsers.remove(friend);
                     Notifications.INSTANCE.enqueue(Notifications.Type.Warning, "Hytils Reborn", "Silently removed " + friend + " from your friends list.");
                 }

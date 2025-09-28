@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
@@ -49,7 +50,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
                 switch (HytilsConfig.chatSwapperReturnChannel) {
                     case 0:
                     default:
-                        HytilsReborn.INSTANCE.getCommandQueue().queue("/chat a");
+                        OmniClientChatSender.queue("/chat a");
                         if (HytilsReborn.INSTANCE.isChatting && ChattingConfig.INSTANCE.getChatTabs() && HytilsConfig.chattingIntegration) {
                             ChatTab currentTab = ChatTabs.INSTANCE.getCurrentTab();
                             Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> (StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/ac") || ((ChatTab) tab).getPrefix().isEmpty())).findFirst();
@@ -63,7 +64,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
                         }
                         break;
                     case 1:
-                        HytilsReborn.INSTANCE.getCommandQueue().queue("/chat g");
+                        OmniClientChatSender.queue("/chat g");
                         if (HytilsReborn.INSTANCE.isChatting && ChattingConfig.INSTANCE.getChatTabs() && HytilsConfig.chattingIntegration) {
                             ChatTab currentTab = ChatTabs.INSTANCE.getCurrentTab();
                             Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/gc")).findFirst();
@@ -77,7 +78,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
                         }
                         break;
                     case 2:
-                        HytilsReborn.INSTANCE.getCommandQueue().queue("/chat o");
+                        OmniClientChatSender.queue("/chat o");
                         if (HytilsReborn.INSTANCE.isChatting && ChattingConfig.INSTANCE.getChatTabs() && HytilsConfig.chattingIntegration) {
                             ChatTab currentTab = ChatTabs.INSTANCE.getCurrentTab();
                             Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/oc")).findFirst();
@@ -93,7 +94,7 @@ public class AutoChatSwapper implements ChatReceiveModule {
                 }
             } else if (statusMatcherJoin.matches() && HytilsConfig.chatSwapper) {
                 EventManager.INSTANCE.register(new ChatChannelMessagePreventer());
-                HytilsReborn.INSTANCE.getCommandQueue().queue("/chat p");
+                OmniClientChatSender.queue("/chat p");
                 if (HytilsReborn.INSTANCE.isChatting && ChattingConfig.INSTANCE.getChatTabs() && HytilsConfig.chattingIntegration) {
                     ChatTab currentTab = ChatTabs.INSTANCE.getCurrentTab();
                     Optional optional = ChatTabs.INSTANCE.getTabs().stream().filter((tab) -> StringUtils.startsWithIgnoreCase(((ChatTab) tab).getPrefix(), "/pc")).findFirst();

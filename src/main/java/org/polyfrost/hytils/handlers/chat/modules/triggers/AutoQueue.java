@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import net.minecraft.world.World;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.KeyInputEvent;
@@ -88,7 +89,7 @@ public class AutoQueue implements ChatReceiveModule {
     private void switchGame() {
         Multithreading.schedule(() -> {
             if (!this.sentCommand) {
-                HytilsReborn.INSTANCE.getCommandQueue().queue(this.command);
+                OmniClientChatSender.queue(this.command);
                 this.sentCommand = true;
                 this.command = null;
             }

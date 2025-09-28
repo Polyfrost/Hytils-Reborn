@@ -23,6 +23,7 @@ import org.polyfrost.oneconfig.api.event.v1.events.SoundPlayedEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
+//TODO: Different sound ids for different mc versions
 public class DropperHurtSound {
 
     @Subscribe

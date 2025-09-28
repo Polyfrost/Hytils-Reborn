@@ -19,6 +19,7 @@
 package org.polyfrost.hytils.util;
 
 import dev.deftu.omnicore.api.client.OmniClient;
+import dev.deftu.omnicore.api.client.player.OmniClientPlayer;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
@@ -159,7 +160,7 @@ public class HypixelAPIUtils {
      */
     public static boolean getGEXP() {
         String gexp = null;
-        String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
+        String uuid = OmniClientPlayer.getPlayerUuid().toString().replace("-", "");
         JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/guild/" + uuid);
         if (jsonObject == null) {
             return false;
@@ -208,7 +209,7 @@ public class HypixelAPIUtils {
      */
     public static boolean getWeeklyGEXP() {
         String gexp = null;
-        String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
+        String uuid = OmniClientPlayer.getPlayerUuid().toString().replace("-", "");
         JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/guild/" + uuid);
         if (jsonObject == null) {
             return false;
@@ -264,7 +265,7 @@ public class HypixelAPIUtils {
      * @return Whether the "getting" was successful.
      */
     public static boolean getWinstreak() {
-        String uuid = Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString().replace("-", "");
+        String uuid = OmniClientPlayer.getPlayerUuid().toString().replace("-", "");
         JsonObject jsonObject = getJsonObjectAuth("https://api.polyfrost.cc/ursa/v1/hypixel/player/" + uuid);
         if (jsonObject == null) {
             return false;

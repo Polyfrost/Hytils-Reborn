@@ -45,14 +45,9 @@ public class BlockModelRendererHook {
     }
 
     private static boolean check(int color) {
-        switch (color) {
-            case 18:
-            case 25:
-            case 27:
-            case 28:
-                return true;
-            default:
-                return false;
-        }
+        return switch (color) {
+            case 18, 25, 27, 28 -> true;
+            default -> false;
+        };
     }
 }

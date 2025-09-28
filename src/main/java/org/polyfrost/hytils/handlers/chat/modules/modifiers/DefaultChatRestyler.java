@@ -58,7 +58,7 @@ public class DefaultChatRestyler implements ChatReceiveModule {
     }
 
     @Override
-    public void onMessageReceived(@NotNull ChatEvent.Receive event) {
+    public void onMessageReceived(@NotNull ChatEvent.Receive event) { //TODO: ChatEvent.Receive should have a MCTextHolder not a TextHolder
         IChatComponent component = event.getMessage();
         String message = component.getFormattedText().trim();
         final String unformattedMessage = event.getFullyUnformattedMessage().trim();
