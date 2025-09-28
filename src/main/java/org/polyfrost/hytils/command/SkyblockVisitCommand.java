@@ -25,7 +25,8 @@ import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
 import net.hypixel.data.type.GameType;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Param;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
@@ -45,13 +46,13 @@ public class SkyblockVisitCommand {
 
     protected static String playerName = "";
 
-    @Command
+    @Handler
     private void main() {
         OmniClientChat.displayChatMessage(new MCSimpleTextHolder("Usage: /skyblockvisit <username>").withFormatting(MCTextFormat.RED));
     }
 
-    @Command(description = "Visit a player's SkyBlock island.")
-    private void main(@Parameter("Player Name") GameProfile player) {
+    @Handler(description = "Visit a player's SkyBlock island.")
+    private void main(@Param("Player Name") GameProfile player) {
         if (!HypixelUtils.isHypixel()) {
             OmniClientChat.displayChatMessage(new MCSimpleTextHolder("You must be on Hypixel to use this command!").withFormatting(MCTextFormat.RED));
             return;

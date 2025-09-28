@@ -23,6 +23,7 @@ import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
 import net.hypixel.data.type.GameType;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.hytils.HytilsReborn;
@@ -35,7 +36,7 @@ public class RequeueCommand {
 
     protected static String game = "";
 
-    @Command(description = "Requeues you into the last game you played.")
+    @Handler(description = "Requeues you into the last game you played.")
     private void main() {
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (!HypixelUtils.isHypixel()) {

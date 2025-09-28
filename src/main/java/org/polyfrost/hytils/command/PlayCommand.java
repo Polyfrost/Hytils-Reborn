@@ -22,6 +22,7 @@ import dev.deftu.omnicore.api.client.chat.OmniClientChat;
 import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
@@ -63,7 +64,7 @@ public class PlayCommand {
             });
         });
     }
-    @Command
+    @Handler
     private void main(GameName game) {
         boolean autocompletePlayCommands = HytilsConfig.autocompletePlayCommands;
         if (!HypixelUtils.isHypixel()) {

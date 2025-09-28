@@ -24,13 +24,13 @@ import dev.deftu.textile.minecraft.MCSimpleMutableTextHolder;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
 import net.hypixel.data.type.GameType;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
-import org.polyfrost.hytils.HytilsReborn;
 import com.mojang.authlib.GameProfile;
 
 import java.util.Optional;
@@ -50,12 +50,12 @@ public class HousingVisitCommand {
 
     protected static String playerName = "";
 
-    @Command
+    @Handler
     private void main() {
         OmniClientChat.displayChatMessage(new MCSimpleTextHolder("Usage: /housingvisit <username>").withFormatting(MCTextFormat.RED));
     }
 
-    @Command(description = "Visits a player's house in Housing.")
+    @Handler(description = "Visits a player's house in Housing.")
     private void main(GameProfile player) {
         if (!HypixelUtils.isHypixel()) {
             OmniClientChat.displayChatMessage(new MCSimpleMutableTextHolder("You must be on Hypixel to use this command!").withFormatting(MCTextFormat.RED));

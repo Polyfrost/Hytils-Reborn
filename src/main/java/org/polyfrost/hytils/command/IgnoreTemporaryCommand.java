@@ -79,7 +79,7 @@ public class IgnoreTemporaryCommand {
         });
     }
 
-    @Command
+    @Handler
     private void main(GameProfile playerName, String time) {
         Multithreading.submit(() -> {
             try {
@@ -99,12 +99,12 @@ public class IgnoreTemporaryCommand {
         });
     }
 
-    @Command
+    @Handler
     private void add(GameProfile playerName, String time) {
         main(playerName, time);
     }
 
-    @Command
+    @Handler
     private void remove(GameProfile playerName) {
         json.remove(playerName.getName());
         Multithreading.submit(() -> {
