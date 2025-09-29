@@ -23,8 +23,8 @@ package org.polyfrost.hytils;
 //$$ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 //$$ import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 //$$ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-//$$ import net.minecraft.client.Minecraft;
 //#else
+import dev.deftu.omnicore.api.client.OmniClient;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
@@ -76,6 +76,8 @@ import org.polyfrost.hytils.util.ranks.RankType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+
 //#if FORGE
 //$$ @Mod(modid = HytilsReborn.ID, version = HytilsReborn.VERSION, name = HytilsReborn.NAME)
 //#endif
@@ -95,9 +97,7 @@ public class HytilsReborn
 
     private static MCTextHolder<?> prefix;
 
-    //#if FORGE && MC == 1.8.9
-    //$$ public File oldModDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), NAME);
-    //#endif
+    public File oldModDir = new File(new File(OmniClient.get().runDirectory, "W-OVERFLOW"), NAME);
 
     private HytilsConfig config;
     private final Logger logger = LogManager.getLogger("Hytils Reborn");

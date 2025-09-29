@@ -19,6 +19,7 @@
 package org.polyfrost.hytils.config;
 
 import dev.deftu.omnicore.api.client.OmniClient;
+import org.apache.commons.io.FileUtils;
 import org.polyfrost.oneconfig.api.config.v1.Config;
 import org.polyfrost.oneconfig.api.config.v1.Property;
 import org.polyfrost.oneconfig.api.config.v1.annotations.*;
@@ -1221,21 +1222,20 @@ public class HytilsConfig extends Config {
 
     public HytilsConfig() {
         super("hytilsreborn.json", "/assets/hytils/hypixel.png", "Hytils Reborn", Category.HYPIXEL); // new VigilanceMigrator(new File(HytilsReborn.INSTANCE.oldModDir, "hytilsreborn.toml").getAbsolutePath()))
-        //#if FORGE && MC == 1.8.9
-        //$$ try {
-        //$$     File modDir = HytilsReborn.INSTANCE.oldModDir;
-        //$$     File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");
-        //$$     File oldConfig = new File(oldModDir, "hytilitiesreborn.toml");
-        //$$     if (oldConfig.exists()) {
-        //$$        FileUtils.writeStringToFile(new File(modDir, "hytilsreborn.toml"), FileUtils.readFileToString(oldConfig, StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-        //$$         if (!oldConfig.renameTo(new File(modDir, "hytilsreborn_backup.toml"))) {
-        //$$             Files.move(oldConfig.toPath(), modDir.toPath().resolve("hytilsreborn_backup.toml"), StandardCopyOption.REPLACE_EXISTING);
-        //$$         }
-        //$$     }
-        //$$ } catch (Exception e) {
-        //$$     e.printStackTrace();
-        //$$ }
-        //#endif
+
+        try {
+            File modDir = HytilsReborn.INSTANCE.oldModDir;
+            File oldModDir = new File(modDir.getParentFile(), "Hytilities Reborn");
+            File oldConfig = new File(oldModDir, "hytilitiesreborn.toml");
+            if (oldConfig.exists()) {
+               FileUtils.writeStringToFile(new File(modDir, "hytilsreborn.toml"), FileUtils.readFileToString(oldConfig, StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+                if (!oldConfig.renameTo(new File(modDir, "hytilsreborn_backup.toml"))) {
+                    Files.move(oldConfig.toPath(), modDir.toPath().resolve("hytilsreborn_backup.toml"), StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Class<?> autoGGClass = null;
         try {
