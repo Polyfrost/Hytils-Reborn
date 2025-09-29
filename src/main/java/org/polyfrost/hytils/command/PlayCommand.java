@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.command;
 
+import dev.deftu.omnicore.api.client.OmniClient;
 import dev.deftu.omnicore.api.client.chat.OmniClientChat;
 import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
@@ -30,7 +31,6 @@ import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.command.parser.GameName;
-import org.polyfrost.hytils.command.parser.GameNameParser;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.lobby.limbo.LimboLimiter;
 import com.google.gson.Gson;
@@ -58,7 +58,7 @@ public class PlayCommand {
                 HytilsReborn.INSTANCE.getLogger().error("Failed to fetch /play game list.", e);
             }
 
-            Minecraft.getMinecraft().addScheduledTask(() -> {
+            OmniClient.get().addScheduledTask(() -> {
                 // TODO nextday?!: CommandManager.INSTANCE.registerParser(new GameNameParser(games));
                 CommandManager.register(new PlayCommand());
             });

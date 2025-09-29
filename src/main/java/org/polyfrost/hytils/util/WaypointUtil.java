@@ -18,11 +18,19 @@
 
 package org.polyfrost.hytils.util;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent;
 import org.polyfrost.polyui.color.PolyColor;
+
+import javax.vecmath.Vector3f;
 
 /**
  * Taken and adapted from NotEnoughUpdates under GPL-3.0

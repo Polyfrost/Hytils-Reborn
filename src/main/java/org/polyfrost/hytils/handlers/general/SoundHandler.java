@@ -19,8 +19,10 @@
 package org.polyfrost.hytils.handlers.general;
 
 import dev.deftu.omnicore.api.client.sound.OmniClientSound;
-import dev.deftu.omnicore.api.sound.OmniSound;
 import dev.deftu.omnicore.api.sound.OmniSounds;
+import net.minecraft.block.BlockTNT;
+import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemBlock;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;

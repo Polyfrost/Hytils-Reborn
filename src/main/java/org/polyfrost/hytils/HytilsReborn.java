@@ -19,17 +19,17 @@
 package org.polyfrost.hytils;
 
 //#if FORGE
-//$$ import net.minecraftforge.fml.common.Mod;
-//$$ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-//$$ import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
-//$$ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 //#else
-import dev.deftu.omnicore.api.client.OmniClient;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
+//$$ import net.fabricmc.api.ClientModInitializer;
+//$$ import net.fabricmc.loader.api.FabricLoader;
+//$$ import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 //#endif
 
+import dev.deftu.omnicore.api.client.OmniClient;
 import dev.deftu.omnicore.api.loader.OmniLoader;
 import dev.deftu.omnicore.api.client.chat.OmniClientChat;
 import dev.deftu.omnicore.api.client.player.OmniClientPlayer;
@@ -79,11 +79,11 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 
 //#if FORGE
-//$$ @Mod(modid = HytilsReborn.ID, version = HytilsReborn.VERSION, name = HytilsReborn.NAME)
+@Mod(modid = HytilsReborn.ID, version = HytilsReborn.VERSION, name = HytilsReborn.NAME)
 //#endif
 public class HytilsReborn
     //#if FABRIC
-    implements ClientModInitializer
+    //$$ implements ClientModInitializer
     //#endif
 {
     public static final String ID = "@MOD_ID@";
@@ -91,13 +91,13 @@ public class HytilsReborn
     public static final String VERSION = "@MOD_VERSION@";
 
     //#if FORGE
-    //$$ @Mod.Instance(ID)
+    @Mod.Instance(ID)
     //#endif
     public static HytilsReborn INSTANCE;
 
     private static MCTextHolder<?> prefix;
 
-    public File oldModDir = new File(new File(OmniClient.get().runDirectory, "W-OVERFLOW"), NAME);
+    public File oldModDir = new File(new File(OmniClient.get().mcDataDir, "W-OVERFLOW"), NAME);
 
     private HytilsConfig config;
     private final Logger logger = LogManager.getLogger("Hytils Reborn");
@@ -118,14 +118,14 @@ public class HytilsReborn
 
     private void initialize() {
         //#if FABRIC
-         INSTANCE = FabricLoader.getInstance()
-             .getEntrypointContainers("client", ClientModInitializer.class)
-             .stream()
-             .map(EntrypointContainer::getEntrypoint)
-             .filter(HytilsReborn.class::isInstance)
-             .map(HytilsReborn.class::cast)
-             .findFirst()
-             .orElseThrow(() -> new IllegalStateException("Could not find HytilsReborn entrypoint"));
+        //$$ INSTANCE = FabricLoader.getInstance()
+        //$$     .getEntrypointContainers("client", ClientModInitializer.class)
+        //$$     .stream()
+        //$$     .map(EntrypointContainer::getEntrypoint)
+        //$$     .filter(HytilsReborn.class::isInstance)
+        //$$     .map(HytilsReborn.class::cast)
+        //$$     .findFirst()
+        //$$     .orElseThrow(() -> new IllegalStateException("Could not find HytilsReborn entrypoint"));
         //#endif
 
         config = new HytilsConfig();
@@ -144,7 +144,14 @@ public class HytilsReborn
         ArmorStandHandler.INSTANCE.initialize();
         CosmeticsHandler.INSTANCE.initialize();
         PatternHandler.INSTANCE.initialize();
+        //#if MC == 1.8.9
         BedLocationHandler.INSTANCE.initialize();
+        //#else
+        //1.12+ has coloured beds except if ViaFabricPlus is being used in which case we need to initialize it
+        //$$ if (OmniLoader.isLoaded("viafabricplus")) {
+        //$$    BedLocationHandler.INSTANCE.initialize();
+        //$$ }
+        //#endif
         LocrawGamesHandler.INSTANCE.initialize();
         HeightHandler.INSTANCE.initialize();
         new HypixelAPIUtils().initialize();
@@ -176,26 +183,26 @@ public class HytilsReborn
     }
 
     //#if FORGE
-    //$$ @Mod.EventHandler
-    //$$ public void fmlInit(FMLInitializationEvent event) {
-    //$$     initialize();
-    //$$ }
-
-    //$$ @Mod.EventHandler
-    //$$ public void fmlPostInit(FMLPostInitializationEvent event) {
-    //$$     postInitialize();
-    //$$ }
-
-    //$$ @Mod.EventHandler
-    //$$ public void finishedStarting(FMLLoadCompleteEvent event) {
-    //$$     this.loadedCall = true;
-    //$$ }
-    //#else
-    @Override
-    public void onInitializeClient() {
-          initialize();
-          postInitialize();
+    @Mod.EventHandler
+    public void fmlInit(FMLInitializationEvent event) {
+        initialize();
     }
+
+    @Mod.EventHandler
+    public void fmlPostInit(FMLPostInitializationEvent event) {
+       postInitialize();
+    }
+
+    @Mod.EventHandler
+    public void finishedStarting(FMLLoadCompleteEvent event) {
+        this.loadedCall = true;
+    }
+    //#else
+    //$$ @Override
+    //$$ public void onInitializeClient() {
+    //$$      initialize();
+    //$$      postInitialize();
+    //$$ }
     //#endif
 
     private void registerHandlers() {

@@ -30,7 +30,7 @@ public class LimboTitle {
         // The player has the AFK title text shown.
         if (event.getTitle().equals("§cYou are AFK§r") && event.getSubtitle().equals("§eMove around to return to the lobby.§r")) {
             // The player moved. Also check if the user has the Remove Limbo AFK Title feature on.
-            if (Minecraft.getMinecraft().thePlayer.moveStrafing > 0 || HytilsConfig.hideLimboTitle) {
+            if (OmniClient.getPlayer().moveStrafing > 0 || HytilsConfig.hideLimboTitle) {
                 // Forcefully remove the title text.
                 event.cancelled = true;
             }

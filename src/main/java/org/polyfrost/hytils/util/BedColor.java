@@ -19,11 +19,11 @@
 package org.polyfrost.hytils.util;
 
 //#if MC == 1.8.9
-//$$ import net.minecraft.block.BlockBed;
-//$$ import net.minecraft.block.state.IBlockState;
-//$$ import net.minecraft.client.resources.model.ModelResourceLocation;
-//$$ import net.minecraft.util.EnumFacing;
-//$$ import net.minecraft.util.ResourceLocation;
+import net.minecraft.block.BlockBed;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 //#endif
 
 public enum BedColor {
@@ -47,15 +47,15 @@ public enum BedColor {
     public static final BedColor[] COLORS = values();
 
     //#if MC == 1.8.9
-    //$$ public ResourceLocation getIdentifier() {
-    //$$     return new ResourceLocation("hytils", this.name().toLowerCase() + "_bed");
-    //$$ }
+    public ResourceLocation getIdentifier() {
+        return new ResourceLocation("hytils", this.name().toLowerCase() + "_bed");
+    }
 
-    //$$ public ModelResourceLocation getBlockStateIdentifier(IBlockState state) {
-    //$$     BlockBed.EnumPartType type = state.getValue(BlockBed.PART);
-    //$$     EnumFacing direction = state.getValue(BlockBed.FACING);
-    //$$     return new ModelResourceLocation(this.getIdentifier(), "facing=" + direction.name() + ",part=" + type.name());
-    //$$ }
+    public ModelResourceLocation getBlockStateIdentifier(IBlockState state) {
+        BlockBed.EnumPartType type = state.getValue(BlockBed.PART);
+        EnumFacing direction = state.getValue(BlockBed.FACING);
+        return new ModelResourceLocation(this.getIdentifier(), "facing=" + direction.name() + ",part=" + type.name());
+    }
     //#endif
 
     public static BedColor getBedColor(String id) {

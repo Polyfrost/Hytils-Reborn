@@ -1461,12 +1461,12 @@ public class HytilsConfig extends Config {
 
         addDependency("putInCaps", "notifyWhenKick");
 
-        addCallback("coloredBeds", () -> OmniClient.get().worldRenderer.reload());
+        addCallback("coloredBeds", () -> OmniClient.get().renderGlobal.loadRenderers());
 
-        addCallback("heightOverlay", () -> OmniClient.get().worldRenderer.reload());
+        addCallback("heightOverlay", () -> OmniClient.get().renderGlobal.loadRenderers());
         addCallback("overlayAmount", () -> {
             DarkColorUtils.invalidateCache();
-            OmniClient.get().worldRenderer.reload();
+            OmniClient.get().renderGlobal.loadRenderers();
         });
 
         //addDependency("editHeightOverlay", "heightOverlay");

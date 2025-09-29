@@ -76,7 +76,7 @@ public class BedLocationHandler {
 
             bedLocations = null;
             if (getBedLocations() != null) {
-                OmniClient.get().worldRenderer.reload();
+                OmniClient.get().renderGlobal.loadRenderers();
             }
         }).register();
     }

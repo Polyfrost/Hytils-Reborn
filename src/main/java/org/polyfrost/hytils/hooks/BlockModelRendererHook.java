@@ -18,9 +18,11 @@
 
 package org.polyfrost.hytils.hooks;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.MapColor;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.block.BlockColored;
+import net.minecraft.block.material.MapColor;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
 import org.polyfrost.hytils.util.DarkColorUtils;
 import org.polyfrost.hytils.config.BlockHighlightConfig;
 import org.polyfrost.hytils.config.HytilsConfig;
@@ -31,7 +33,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 public class BlockModelRendererHook {
 
-    public static void handleHeightOverlay(Args args, BlockState stateIn, BlockPos blockPosIn) {
+    public static void handleHeightOverlay(Args args, IBlockState stateIn, BlockPos blockPosIn) {
         if (HypixelUtils.isHypixel() && HytilsConfig.heightOverlay && stateIn.getBlock() instanceof BlockColored) {
             int height = HeightHandler.INSTANCE.getHeight();
             if (height == -1) {
@@ -48,9 +50,14 @@ public class BlockModelRendererHook {
     }
 
     private static boolean check(int color) {
-        return switch (color) {
-            case 18, 25, 27, 28 -> true;
-            default -> false;
-        };
+        switch (color){
+            case 18:
+            case 25:
+            case 27:
+            case 28:
+                return true;
+            default:
+                return false;
+        }
     }
 }

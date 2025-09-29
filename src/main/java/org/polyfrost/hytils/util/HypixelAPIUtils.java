@@ -83,9 +83,9 @@ public class HypixelAPIUtils {
         String serverId = UUID.randomUUID().toString();
         try {
             GameProfile profile = OmniClient.getPlayer().getGameProfile();
-            String token = OmniClient.get().getSession().getAccessToken();
+            String token = OmniClient.get().getSession().getToken();
             //TODO: Older versions might need different params
-            OmniClient.get().getSessionService().joinServer(profile.getId(), token, serverId);
+            OmniClient.get().getSessionService().joinServer(profile, token, serverId);
             username = profile.getName();
             HypixelAPIUtils.serverId = serverId;
         } catch (AuthenticationException e) {

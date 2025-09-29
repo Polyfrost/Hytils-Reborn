@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.game.hardcore;
 
+import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;

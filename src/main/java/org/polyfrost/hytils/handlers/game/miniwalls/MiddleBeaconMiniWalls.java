@@ -18,7 +18,8 @@
 
 package org.polyfrost.hytils.handlers.game.miniwalls;
 
-import dev.deftu.omnicore.api.data.pos.OmniBlockPos;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
 import org.polyfrost.hytils.util.WaypointUtil;
@@ -29,7 +30,7 @@ import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class MiddleBeaconMiniWalls {
     private boolean miniWitherDead;
-    private final OmniBlockPos block = new OmniBlockPos(0, 0, 0);
+    private final BlockPos block = new BlockPos(0, 0, 0);
 
     @Subscribe
     public void onWorldLoad(WorldEvent.Load event) {

@@ -19,11 +19,13 @@
 package org.polyfrost.hytils.handlers.lobby.npc;
 
 import net.hypixel.data.type.GameType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.decoration.ArmorStandEntity;
-import net.minecraft.entity.passive.VillagerEntity;
 import org.polyfrost.hytils.config.HytilsConfig;
 import com.google.common.collect.Collections2;
+import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.client.entity.EntityOtherPlayerMP;
 import org.polyfrost.oneconfig.api.event.v1.events.RenderLivingEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
@@ -35,21 +37,22 @@ public class NPCHandler {
     @Subscribe
     public void onEntityRender(RenderLivingEvent.Pre event) {
         Object entityRaw = event.getEntity();
-        if (!(entityRaw instanceof LivingEntity entity)) {
+        if (!(entityRaw instanceof EntityLivingBase)) {
             return;
         }
 
+        EntityLivingBase entity = (EntityLivingBase) entityRaw;
         if (!HypixelUtils.isHypixel()) {
             return;
         }
         final HypixelUtils.Location location = HypixelUtils.getLocation();
 
         // hypixel marks npc uuids as version 2
-        if (entity.getUuid().version() == 2 || (entity instanceof VillagerEntity)) {
+        if (entity.getUniqueID().version() == 2 || (entity instanceof EntityVillager)) {
             if (HytilsConfig.npcHider && !location.inGame()) {
                 event.cancelled = true;
             }
-        } else if (HytilsConfig.hideNonNPCs && location.getGameType().orElse(null) == GameType.SKYBLOCK && !(entity instanceof ArmorStandEntity && !entity.getCustomName().getString().toLowerCase().trim().isEmpty()) && entity instanceof EntityOtherPlayerMP) {
+        } else if (HytilsConfig.hideNonNPCs && location.getGameType().orElse(null) == GameType.SKYBLOCK && !(entity instanceof EntityArmorStand && !entity.getCustomNameTag().toLowerCase().trim().isEmpty()) && entity instanceof EntityOtherPlayerMP) {
             event.cancelled = true;
         }
     }

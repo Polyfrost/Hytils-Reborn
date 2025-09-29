@@ -18,11 +18,13 @@
 
 package org.polyfrost.hytils.handlers.lobby.tab;
 
-import dev.deftu.omnicore.api.client.player.OmniClientPlayer;
+import dev.deftu.omnicore.api.client.OmniClient;
 import net.hypixel.data.type.GameType;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.language.LanguageData;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import org.polyfrost.hytils.forge.HytilsMixinPlugin;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
@@ -112,7 +114,7 @@ public class TabChanger {
             }
 
             if (HytilsConfig.highlightSelfInTab != 0) {
-                if (uuid.equals(OmniClientPlayer.getPlayerUuid())) {
+                if (uuid.equals(OmniClient.getPlayer().getUniqueID())) {
                     name = addStarToNameSelf(name);
                 }
             }

@@ -18,16 +18,16 @@
 
 package org.polyfrost.hytils.handlers.game.duels;
 
-import dev.deftu.omnicore.api.client.OmniClient;
-import net.minecraft.client.option.GameOptions;
 import org.polyfrost.hytils.config.HytilsConfig;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings;
 import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 public class SumoRenderDistance {
-    final GameOptions gs = OmniClient.get().options;
-    int resetRd = gs.getViewDistance().getValue();
+    final GameSettings gs = Minecraft.getMinecraft().gameSettings;
+    int resetRd = gs.renderDistanceChunks;
     boolean wasSumo = false;
     boolean isFirstRender = true;
 
@@ -36,9 +36,9 @@ public class SumoRenderDistance {
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (HytilsConfig.sumoRenderDistance && HypixelUtils.isHypixel() && location.getMode().orElse("null").contains("SUMO")) {
             if (isFirstRender) {
-                final int oldRd = gs.getViewDistance().getValue();
+                final int oldRd = gs.renderDistanceChunks;
                 wasSumo = true;
-                gs.getViewDistance().setValue(HytilsConfig.sumoRenderDistanceAmount);
+                gs.renderDistanceChunks = HytilsConfig.sumoRenderDistanceAmount;
                 resetRd = oldRd;
             }
             isFirstRender = false;
@@ -47,7 +47,7 @@ public class SumoRenderDistance {
             if (wasSumo) {
                 wasSumo = false;
                 isFirstRender = true;
-                gs.getViewDistance().setValue(resetRd);
+                gs.renderDistanceChunks = resetRd;
             }
         }
     }

@@ -21,6 +21,7 @@ package org.polyfrost.hytils.handlers.lobby.limbo;
 import dev.deftu.omnicore.api.client.sound.OmniClientSound;
 import dev.deftu.omnicore.api.sound.OmniSounds;
 import dev.deftu.textile.minecraft.MCTextHolder;
+import net.minecraft.util.IChatComponent;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;

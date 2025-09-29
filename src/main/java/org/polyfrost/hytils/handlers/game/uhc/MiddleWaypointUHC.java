@@ -19,7 +19,7 @@
 package org.polyfrost.hytils.handlers.game.uhc;
 
 import net.hypixel.data.type.GameType;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.BlockPos;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.util.WaypointUtil;
 import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent;
