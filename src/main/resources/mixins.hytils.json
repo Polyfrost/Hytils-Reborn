@@ -29,7 +29,7 @@
     "MinecraftMixin_LimboLimiter",
     "RenderEntityItemMixin_UHCOverlay",
     "beds.BlockModelRendererMixin_RenderNewModels",
-    "ModelBakeryMixin_RegisterModels",
+    "beds.ModelBakeryMixin_RegisterModels",
     "cosmetics.RenderEntityItemMixin",
     "cosmetics.WorldMixin",
     "lineseparator.GuiNewChatMixin",
