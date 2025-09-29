@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.cache;
 
+import dev.deftu.omnicore.api.client.OmniClient;
 import net.hypixel.data.type.GameType;
 import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.EventHandler;
@@ -75,7 +76,7 @@ public class BedLocationHandler {
 
             bedLocations = null;
             if (getBedLocations() != null) {
-                Minecraft.getMinecraft().renderGlobal.loadRenderers();
+                OmniClient.get().worldRenderer.reload();
             }
         }).register();
     }

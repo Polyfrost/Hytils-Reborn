@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.lobby.limbo;
 
+import dev.deftu.omnicore.api.client.OmniClient;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.DefaultChatRestyler;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
@@ -48,8 +49,8 @@ public class LimboLimiter {
     public static boolean shouldLimitFramerate() {
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (HypixelUtils.isHypixel() && "limbo".equals(location.getServerName().orElse(null))) limboStatus = true;
-        return (!Display.isActive() || limboStatus) && HytilsConfig.limboLimiter && time * 20 >= 5
-            && Minecraft.getMinecraft().gameSettings.limitFramerate > 15;
+        return (!Window.isActive() || limboStatus) && HytilsConfig.limboLimiter && time * 20 >= 5
+            && OmniClient.get().options.getInactivityFpsLimit().getValue().getId() > 15; //TODO: Check this setting
         // if the FPS limit is > 15, don't activate, as you would be increasing the fps limit
     }
 

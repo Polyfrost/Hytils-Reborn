@@ -18,9 +18,8 @@
 
 package org.polyfrost.hytils.util;
 
-import dev.deftu.omnicore.api.data.pos.OmniBlockPos;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
 import org.lwjgl.opengl.GL11;
 import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent;
 import org.polyfrost.polyui.color.PolyColor;
@@ -202,7 +201,7 @@ public class WaypointUtil {
         tessellator.draw();
     }
 
-    public static void drawBoundingBox(PostWorldRenderEvent event, OmniBlockPos pos, PolyColor color) {
+    public static void drawBoundingBox(PostWorldRenderEvent event, BlockPos pos, PolyColor color) {
         Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
         double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * event.getPartialTicks();
         double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * event.getPartialTicks();
@@ -277,7 +276,7 @@ public class WaypointUtil {
         GlStateManager.disableBlend();
     }
 
-    public static void renderBeaconBeam(OmniBlockPos block, PolyColor color, float partialTicks) {
+    public static void renderBeaconBeam(BlockPos block, PolyColor color, float partialTicks) {
         double viewerX;
         double viewerY;
         double viewerZ;
@@ -296,7 +295,7 @@ public class WaypointUtil {
         WaypointUtil.renderBeaconBeam(x, y, z, color, partialTicks, distSq > 10 * 10);
     }
 
-    public static void renderBeaconBeamOrBoundingBox(OmniBlockPos block, PolyColor color, float alphaMult, float partialTicks) {
+    public static void renderBeaconBeamOrBoundingBox(BlockPos block, PolyColor color, float alphaMult, float partialTicks) {
         double viewerX;
         double viewerY;
         double viewerZ;
@@ -319,7 +318,7 @@ public class WaypointUtil {
         }
     }
 
-    public static void renderWayPoint(String str, OmniBlockPos loc, float partialTicks) {
+    public static void renderWayPoint(String str, BlockPos loc, float partialTicks) {
         renderWayPoint(str, new Vector3f(loc.getX(), loc.getY(), loc.getZ()), partialTicks);
     }
 

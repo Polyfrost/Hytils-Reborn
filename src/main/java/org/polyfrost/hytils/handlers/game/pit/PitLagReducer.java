@@ -18,7 +18,11 @@
 
 package org.polyfrost.hytils.handlers.game.pit;
 
+import dev.deftu.omnicore.api.client.OmniClient;
 import net.hypixel.data.type.GameType;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.decoration.ArmorStandEntity;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.oneconfig.api.event.v1.events.RenderLivingEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
@@ -48,18 +52,18 @@ public class PitLagReducer {
         }
 
         Entity entity = (Entity) event.getEntity();
-        if (!(entity instanceof EntityLiving)) {
+        if (!(entity instanceof LivingEntity)) {
             return;
         }
 
         if (pitSpawnPos == -1) {
             // Update the spawn position by finding an armor stand in spawn.
-            if (entity instanceof EntityArmorStand && entity.getName().equals("§a§lJUMP! §c§lFIGHT!")) {
-                pitSpawnPos = entity.posY - 5;
+            if (entity instanceof ArmorStandEntity && entity.getName().getString().equals("§a§lJUMP! §c§lFIGHT!")) {
+                pitSpawnPos = entity.getY() - 5;
             }
         } else if (HytilsConfig.pitLagReducer) {
             // If the entity being rendered is at spawn, and you are below spawn, cancel the rendering.
-            if (entity.posY > pitSpawnPos && Minecraft.getMinecraft().thePlayer.posY < pitSpawnPos) {
+            if (entity.getY() > pitSpawnPos && OmniClient.getPlayer().getY() < pitSpawnPos) {
                 event.cancelled = true;
             }
         }

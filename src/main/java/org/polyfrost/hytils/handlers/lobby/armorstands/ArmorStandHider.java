@@ -19,6 +19,8 @@
 package org.polyfrost.hytils.handlers.lobby.armorstands;
 
 import net.hypixel.data.type.GameType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.decoration.ArmorStandEntity;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.ArmorStandHandler;
 import org.polyfrost.oneconfig.api.event.v1.events.RenderLivingEvent;
@@ -30,15 +32,14 @@ public class ArmorStandHider {
     @Subscribe
     public void onEntityRenderer(RenderLivingEvent.Pre event) {
         Object entityRaw = event.getEntity();
-        if (!(entityRaw instanceof EntityLivingBase)) {
+        if (!(entityRaw instanceof LivingEntity entity)) {
             return;
         }
 
-        EntityLivingBase entity = (EntityLivingBase) entityRaw;
         final HypixelUtils.Location location = HypixelUtils.getLocation();
         if (HypixelUtils.isHypixel() && ((!location.inGame() && HytilsConfig.hideUselessArmorStands) || (HytilsConfig.hideUselessArmorStandsGame && location.inGame() && location.getGameType().isPresent() && (location.getGameType().get() == GameType.SKYBLOCK || location.getGameType().get() == GameType.BEDWARS || location.getGameType().get() == GameType.SKYWARS || location.getMode().orElse("").contains("BRIDGE"))))) {
-            if (entity instanceof EntityArmorStand) {
-                String unformattedArmorStandName = EnumChatFormatting.getTextWithoutFormattingCodes(entity.getCustomNameTag().toLowerCase());
+            if (entity instanceof ArmorStandEntity) {
+                String unformattedArmorStandName = EnumChatFormatting.getTextWithoutFormattingCodes(entity.getCustomName().getString().toLowerCase());
                 for (String armorStands : ArmorStandHandler.INSTANCE.armorStandNames) {
                     if (unformattedArmorStandName.contains(armorStands)) {
                         event.cancelled = true;

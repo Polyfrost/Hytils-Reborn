@@ -26,6 +26,8 @@ package org.polyfrost.hytils;
 //$$ import net.minecraft.client.Minecraft;
 //#else
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 //#endif
 
 import dev.deftu.omnicore.api.loader.OmniLoader;
@@ -116,14 +118,14 @@ public class HytilsReborn
 
     private void initialize() {
         //#if FABRIC
-        //$$ INSTANCE = FabricLoader.getInstance()
-        //$$     .getEntrypointContainers("client", ClientModInitializer.class)
-        //$$     .stream()
-        //$$     .map(EntrypointContainer::getEntrypoint)
-        //$$     .filter(HytilsReborn.class::isInstance)
-        //$$     .map(HytilsReborn.class::cast)
-        //$$     .findFirst()
-        //$$     .orElseThrow(() -> new IllegalStateException("Could not find HytilsReborn entrypoint"));
+         INSTANCE = FabricLoader.getInstance()
+             .getEntrypointContainers("client", ClientModInitializer.class)
+             .stream()
+             .map(EntrypointContainer::getEntrypoint)
+             .filter(HytilsReborn.class::isInstance)
+             .map(HytilsReborn.class::cast)
+             .findFirst()
+             .orElseThrow(() -> new IllegalStateException("Could not find HytilsReborn entrypoint"));
         //#endif
 
         config = new HytilsConfig();

@@ -82,9 +82,10 @@ public class HypixelAPIUtils {
     private static boolean authorize() {
         String serverId = UUID.randomUUID().toString();
         try {
-            GameProfile profile = Minecraft.getMinecraft().getSession().getProfile();
-            String token = Minecraft.getMinecraft().getSession().getToken();
-            Minecraft.getMinecraft().getSessionService().joinServer(profile, token, serverId);
+            GameProfile profile = OmniClient.getPlayer().getGameProfile();
+            String token = OmniClient.get().getSession().getAccessToken();
+            //TODO: Older versions might need different params
+            OmniClient.get().getSessionService().joinServer(profile.getId(), token, serverId);
             username = profile.getName();
             HypixelAPIUtils.serverId = serverId;
         } catch (AuthenticationException e) {

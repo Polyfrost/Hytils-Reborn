@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.lobby.limbo;
 
+import dev.deftu.omnicore.api.client.OmniClient;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.TitleEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;

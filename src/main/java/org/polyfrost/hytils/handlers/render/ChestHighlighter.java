@@ -21,6 +21,9 @@ package org.polyfrost.hytils.handlers.render;
 import dev.deftu.omnicore.api.client.OmniClient;
 import dev.deftu.omnicore.api.data.pos.OmniBlockPos;
 import net.hypixel.data.type.GameType;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.ChestBlockEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.polyfrost.oneconfig.api.event.v1.events.PlayerInteractEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent;
@@ -48,9 +51,9 @@ public class ChestHighlighter {
             return; // Should never happen
         }
 
-        BlockPos pos = Minecraft.getMinecraft().objectMouseOver.getBlockPos();
-        TileEntity tile = world.getTileEntity(pos);
-        if (!(tile instanceof TileEntityChest)) {
+        BlockPos pos = BlockPos.ofFloored(OmniClient.get().crosshairTarget.getPos());
+        BlockEntity tile = world.getBlockEntity(pos);
+        if (!(tile instanceof ChestBlockEntity)) {
             return;
         }
 
@@ -85,8 +88,8 @@ public class ChestHighlighter {
         if (isNotSupported()) return;
         if (highlightedChestPositions.isEmpty())
             return;
-        for (TileEntity entity : Minecraft.getMinecraft().theWorld.loadedTileEntityList) {
-            if (entity instanceof TileEntityChest) {
+        for (BlockEntity entity : OmniClient.getWorld().getBlockEntities()) {
+            if (entity instanceof ChestBlockEntity) {
                 BlockPos pos = entity.getPos();
                 if (!highlightedChestPositions.contains(pos)) continue;
                 WaypointUtil.drawBoundingBox(event, pos, HytilsConfig.highlightChestsColor);

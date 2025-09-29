@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.config;
 
+import dev.deftu.omnicore.api.client.OmniClient;
 import org.polyfrost.oneconfig.api.config.v1.Config;
 import org.polyfrost.oneconfig.api.config.v1.Property;
 import org.polyfrost.oneconfig.api.config.v1.annotations.*;
@@ -28,7 +29,6 @@ import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.handlers.chat.modules.modifiers.GameStartCompactor;
 import org.polyfrost.hytils.util.DarkColorUtils;
 import com.google.common.collect.Lists;
-import org.apache.commons.io.FileUtils;
 import org.polyfrost.polyui.unit.Units;
 import club.sk1er.lobbysounds.config.Sounds;
 import club.sk1er.mods.autogg.AutoGG;
@@ -1461,12 +1461,12 @@ public class HytilsConfig extends Config {
 
         addDependency("putInCaps", "notifyWhenKick");
 
-        addCallback("coloredBeds", () -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
+        addCallback("coloredBeds", () -> OmniClient.get().worldRenderer.reload());
 
-        addCallback("heightOverlay", () -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
+        addCallback("heightOverlay", () -> OmniClient.get().worldRenderer.reload());
         addCallback("overlayAmount", () -> {
             DarkColorUtils.invalidateCache();
-            Minecraft.getMinecraft().renderGlobal.loadRenderers();
+            OmniClient.get().worldRenderer.reload();
         });
 
         //addDependency("editHeightOverlay", "heightOverlay");
