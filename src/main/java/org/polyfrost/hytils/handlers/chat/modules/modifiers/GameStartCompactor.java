@@ -18,7 +18,13 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.modifiers;
 
+import dev.deftu.omnicore.api.client.OmniClient;
 import dev.deftu.textile.minecraft.MCTextHolder;
+import net.minecraft.client.gui.ChatLine;
+import net.minecraft.client.gui.GuiNewChat;
+import net.minecraft.client.gui.GuiUtilRenderComponents;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.MathHelper;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.hytils.mixin.GuiNewChatAccessor;
@@ -46,9 +52,9 @@ public class GameStartCompactor implements ChatReceiveModule {
         final Matcher chatRestylerMatcher = getLanguage().chatRestylerGameStartCounterOutputStyleRegex.matcher(message.getFormattedText());
         if (gameStartMatcher.matches() || (HytilsConfig.gameStatusRestyle && chatRestylerMatcher.matches())) {
             if (lastMessage != null) {
-                final GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
+                final GuiNewChat chat = OmniClient.get().ingameGUI.getChatGUI();
                 final GuiNewChatAccessor accessor = ((GuiNewChatAccessor) chat);
-                final List<IChatComponent> oldTimerLines = GuiUtilRenderComponents.splitText(lastMessage, MathHelper.floor_float((float) chat.getChatWidth() / chat.getChatScale()), Minecraft.getMinecraft().fontRendererObj, false, false);
+                final List<IChatComponent> oldTimerLines = GuiUtilRenderComponents.splitText(lastMessage, MathHelper.floor_float((float) chat.getChatWidth() / chat.getChatScale()), OmniClient.get().fontRendererObj, false, false);
                 removeChatLines(accessor.getChatLines(), Lists.newArrayList(lastMessage));
                 removeChatLines(accessor.getDrawnChatLines(), oldTimerLines);
             }

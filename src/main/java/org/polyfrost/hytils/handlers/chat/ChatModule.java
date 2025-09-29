@@ -18,9 +18,9 @@
 
 package org.polyfrost.hytils.handlers.chat;
 
-import dev.deftu.textile.minecraft.MCSimpleTextHolder;
+import dev.deftu.textile.SimpleTextHolder;
+import dev.deftu.textile.TextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
-import dev.deftu.textile.minecraft.MCTextHolder;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.language.LanguageData;
@@ -74,10 +74,9 @@ interface ChatModule {
      * Default pedantically static utility method to allow {@link ChatModule}s to color messages
      * without a long line of code.
      */
-    @NotNull
-    default String colorMessage(@NotNull String message) {
+    default TextHolder colorMessage(@NotNull String message) {
         //TODO: Replace with better methods from textile
-        return MCTextFormat.translateAlternateColorCodes('&', message);
+        return new SimpleTextHolder(MCTextFormat.translateAlternateColorCodes('&', message));
     }
 
     /**

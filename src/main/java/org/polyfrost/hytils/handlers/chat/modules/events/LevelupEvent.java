@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.events;
 
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.HypixelLevelupEvent;
@@ -57,6 +58,6 @@ public class LevelupEvent implements ChatReceiveModule {
 
     @Subscribe
     public void levelUpEvent(HypixelLevelupEvent event) {
-        HytilsReborn.INSTANCE.getCommandQueue().queue("/gchat Levelup! I am now Hypixel Level: " + event.getLevel() + "!");
+        OmniClientChatSender.queue("/gchat Levelup! I am now Hypixel Level: " + event.getLevel() + "!");
     }
 }

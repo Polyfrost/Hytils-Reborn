@@ -210,14 +210,14 @@ public class HytilsReborn
 
         // general stuff
         eventBus.register(autoQueue);
-        eventBus.register(languageHandler);
+        //eventBus.register(languageHandler);
         eventBus.register(new AutoStart());
         eventBus.register(new SoundHandler());
         eventBus.register(new ChestHighlighter());
 
         // chat
         eventBus.register(chatHandler);
-        eventBus.register(silentRemoval);
+        //eventBus.register(silentRemoval);
         eventBus.register(hardcoreStatus);
         eventBus.register(new AchievementEvent());
         eventBus.register(new LevelupEvent());

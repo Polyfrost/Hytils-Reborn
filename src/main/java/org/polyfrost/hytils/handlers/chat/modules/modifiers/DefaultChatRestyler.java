@@ -18,6 +18,12 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.modifiers;
 
+import dev.deftu.textile.SimpleTextHolder;
+import dev.deftu.textile.TextHolder;
+import dev.deftu.textile.minecraft.MCTextHolder;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
@@ -59,7 +65,7 @@ public class DefaultChatRestyler implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ChatEvent.Receive event) { //TODO: ChatEvent.Receive should have a MCTextHolder not a TextHolder
-        IChatComponent component = event.getMessage();
+        IChatComponent component = MCTextHolder.convertToVanilla(event.getMessage());
         String message = component.getFormattedText().trim();
         final String unformattedMessage = event.getFullyUnformattedMessage().trim();
         final List<IChatComponent> siblings = component.getSiblings();
@@ -80,16 +86,16 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             Matcher friendMatcher = language.chatRestylerFriendPatternRegex.matcher(message);
             Matcher officerMatcher = language.chatRestylerOfficerPatternRegex.matcher(message);
             if (partyMatcher.find()) {
-                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerPartyPatternRegex.pattern(),
+                event.setMessage(shortenChannelName(component, language.chatRestylerPartyPatternRegex.pattern(),
                     partyMatcher.group(1) + "P " + partyMatcher.group(3), false));
             } else if (guildMatcher.find()) {
-                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerGuildPatternRegex.pattern(),
+                event.setMessage(shortenChannelName(component, language.chatRestylerGuildPatternRegex.pattern(),
                     guildMatcher.group(1) + "G >", true));
             } else if (friendMatcher.find()) {
-                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerFriendPatternRegex.pattern(),
+                event.setMessage(shortenChannelName(component, language.chatRestylerFriendPatternRegex.pattern(),
                     friendMatcher.group(1) + "F >", true));
             } else if (officerMatcher.find()) {
-                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerOfficerPatternRegex.pattern(),
+                event.setMessage(shortenChannelName(component, language.chatRestylerOfficerPatternRegex.pattern(),
                     officerMatcher.group(1) + "O >", false));
             }
         }
@@ -98,10 +104,10 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             Matcher privateMessageToMatcher = language.chatRestylerPrivateMessageToPatternRegex.matcher(message);
             Matcher privateMessageFromMatcher = language.chatRestylerPrivateMessageFromPatternRegex.matcher(message);
             if (privateMessageToMatcher.find()) {
-                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerPrivateMessageToPatternRegex.pattern(),
+                event.setMessage(shortenChannelName(component, language.chatRestylerPrivateMessageToPatternRegex.pattern(),
                     "§d" + "PM >" + privateMessageToMatcher.group(3) + ":" + privateMessageToMatcher.group(4), true));
             } else if (privateMessageFromMatcher.find()) {
-                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerPrivateMessageFromPatternRegex.pattern(),
+                event.setMessage(shortenChannelName(component, language.chatRestylerPrivateMessageFromPatternRegex.pattern(),
                     "§5" + "PM <" + privateMessageFromMatcher.group(3) + ":" + privateMessageFromMatcher.group(4), true));
             }
         }
@@ -129,7 +135,7 @@ public class DefaultChatRestyler implements ChatReceiveModule {
                 // message = message.replaceAll(unformattedPaddingPattern.toString(), "(" + pad(mu.group(1)) + "/" + mu.group(2) + ")");
 
                 joinMatcher = language.chatRestylerGameJoinStyleRegex.matcher(message); // recalculate since we padded
-                event.setMessage(new ChatComponentText(message));
+                event.setMessage(new SimpleTextHolder(message));
             }
         }
 
@@ -190,7 +196,7 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             }
         }
 
-        HytilsReborn.INSTANCE.getChatHandler().fixStyling(event.getMessage(), siblings);
+        //HytilsReborn.INSTANCE.getChatHandler().fixStyling(event.getMessage(), siblings);
     }
 
     /**
@@ -202,7 +208,7 @@ public class DefaultChatRestyler implements ChatReceiveModule {
      * @param replacement          The text that replaces what is matched by the regular expression
      * @param checkParentComponent Whether or not to check the parent chat component
      */
-    private ChatComponentText shortenChannelName(IChatComponent message, String pattern, String replacement, boolean checkParentComponent) {
+    private TextHolder shortenChannelName(IChatComponent message, String pattern, String replacement, boolean checkParentComponent) {
         String originalText = message.getUnformattedTextForChat();
         if (checkParentComponent && !originalText.contains("\u00a7")) {
             originalText = (message.getChatStyle().getFormattingCode() + originalText + EnumChatFormatting.RESET).replaceAll(pattern, replacement);
@@ -211,6 +217,6 @@ public class DefaultChatRestyler implements ChatReceiveModule {
         for (IChatComponent sibling : message.getSiblings()) {
             copy.appendSibling(new ChatComponentText(sibling.getUnformattedTextForChat().replaceAll(pattern, replacement)).setChatStyle(sibling.getChatStyle()));
         }
-        return copy;
+        return MCTextHolder.convertFromVanilla(copy);
     }
 }

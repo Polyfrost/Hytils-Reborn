@@ -22,6 +22,7 @@ import dev.deftu.omnicore.api.client.chat.OmniClientChat;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextHolder;
 import net.hypixel.data.type.GameType;
+import net.minecraft.util.IChatComponent;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.hytils.handlers.chat.ChatSendModule;
@@ -52,7 +53,7 @@ public class ShoutBlocker implements ChatSendModule, ChatReceiveModule {
                 return message;
             } else {
                 long secondsLeft = (shoutCooldown - System.currentTimeMillis()) / 1000L;
-                MCTextHolder<MCSimpleTextHolder> resp = new MCSimpleTextHolder(colorMessage("&eShout command is on cooldown. Please wait " + decimalFormat.format(secondsLeft) + " more second" + (secondsLeft == 1 ? "." : "s.")));
+                MCTextHolder resp = (MCTextHolder) colorMessage("&eShout command is on cooldown. Please wait " + decimalFormat.format(secondsLeft) + " more second" + (secondsLeft == 1 ? "." : "s."));
                 OmniClientChat.displayChatMessage(resp);
                 return null;
             }

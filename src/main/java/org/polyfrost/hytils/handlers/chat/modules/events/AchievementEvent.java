@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.events;
 
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.events.HypixelAchievementEvent;
@@ -62,7 +63,7 @@ public class AchievementEvent implements ChatReceiveModule {
 
     @Subscribe
     public void onAchievementGet(HypixelAchievementEvent event) {
-        HytilsReborn.INSTANCE.getCommandQueue().queue("/gchat Achievement unlocked! I unlocked the " + event.getAchievement() + " achievement!");
+        OmniClientChatSender.queue("/gchat Achievement unlocked! I unlocked the " + event.getAchievement() + " achievement!");
     }
 
 }

@@ -21,10 +21,15 @@ package org.polyfrost.hytils.mixin.beds;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.deftu.omnicore.api.client.OmniClient;
-import net.minecraft.block.BedBlock;
-
-import net.minecraft.client.render.block.BlockModelRenderer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.block.BlockBed;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockModelRenderer;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.resources.model.IBakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.BedLocationHandler;
@@ -65,7 +70,7 @@ public abstract class BlockModelRendererMixin_RenderNewModels {
     private static boolean hytils$isBed(BlockPos pos) {
         World world = OmniClient.getWorld();
         if (world != null) {
-            return world.getBlockState(pos).getBlock() instanceof BedBlock;
+            return world.getBlockState(pos).getBlock() instanceof BlockBed;
         } else {
             return false;
         }

@@ -18,7 +18,10 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import dev.deftu.textile.minecraft.MCTextHolder;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
@@ -65,12 +68,12 @@ public class AutoWB implements ChatReceiveModule {
             String sentMessage = HytilsConfig.autoWBMessage1.replace("%player%", name);
             if (HytilsConfig.randomAutoWB) {
                 try {
-                    Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage(chatType + getNextMessage(name)), HytilsConfig.autoWBCooldown, TimeUnit.SECONDS);
+                    Multithreading.schedule(() -> OmniClientChatSender.queue(chatType + getNextMessage(name)), HytilsConfig.autoWBCooldown, TimeUnit.SECONDS);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
-                Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage(chatType + sentMessage), HytilsConfig.autoWBCooldown, TimeUnit.SECONDS);
+                Multithreading.schedule(() -> OmniClientChatSender.queue(chatType + sentMessage), HytilsConfig.autoWBCooldown, TimeUnit.SECONDS);
             }
         }
     }

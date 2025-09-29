@@ -1402,9 +1402,9 @@ public class HytilsConfig extends Config {
 
         addDependency("autoGGSecondMessage", "autoGG");
         addDependency("casualAutoGG", "autoGG");
-        addDependency("autoGGMessage", "autoGG");
+        addDependency("ggMessage", "autoGG");
         addDependency("autoGGFirstPhraseDelay", "autoGG");
-        addDependency("autoGGMessage2", "autoGG");
+        addDependency("ggMessage2", "autoGG");
         addDependency("autoGGSecondPhraseDelay", "autoGG");
 
         Supplier<Property.Display> autoGGEnabled = () -> (!HytilsReborn.INSTANCE.isSk1erAutoGG || !AutoGG.INSTANCE.getAutoGGConfig().isModEnabled()) ? Property.Display.HIDDEN : Property.Display.SHOWN;
@@ -1412,9 +1412,9 @@ public class HytilsConfig extends Config {
         addDependency("autoGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
         addDependency("autoGGSecondMessage", "Sk1er's AutoGG Enabled", autoGGEnabled);
         addDependency("casualAutoGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
-        addDependency("autoGGMessage", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("ggMessage", "Sk1er's AutoGG Enabled", autoGGEnabled);
         addDependency("autoGGFirstPhraseDelay", "Sk1er's AutoGG Enabled", autoGGEnabled);
-        addDependency("autoGGMessage2", "Sk1er's AutoGG Enabled", autoGGEnabled);
+        addDependency("ggMessage2", "Sk1er's AutoGG Enabled", autoGGEnabled);
         addDependency("autoGGSecondPhraseDelay", "Sk1er's AutoGG Enabled", autoGGEnabled);
         addDependency("antiGG", "Sk1er's AutoGG Enabled", autoGGEnabled);
 

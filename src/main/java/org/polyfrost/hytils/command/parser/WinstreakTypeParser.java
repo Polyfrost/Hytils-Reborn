@@ -18,41 +18,30 @@
 
 package org.polyfrost.hytils.command.parser;
 
-import org.jetbrains.annotations.Nullable;
-import org.polyfrost.oneconfig.api.commands.v1.arguments.ArgumentParser;
-import org.jetbrains.annotations.NotNull;
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.arguments.ArgumentType;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.suggestion.Suggestions;
+import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
+import java.util.concurrent.CompletableFuture;
 
-public class WinstreakTypeParser extends ArgumentParser<WinstreakType> {
-    private static final List<String> DEFAULT_COMPLETIONS =
-        Arrays.stream(WinstreakType.values()).map(Enum::name).collect(Collectors.toList());
+public class WinstreakTypeParser implements ArgumentType<WinstreakType> {
 
     @Override
-    public WinstreakType parse(@NotNull String arg) {
-        return WinstreakType.valueOf(arg.toUpperCase(Locale.ROOT));
+    public WinstreakType parse(StringReader arg) {
+        return WinstreakType.valueOf(arg.getRead().toUpperCase(Locale.ROOT));
     }
 
     @Override
-    public Class<WinstreakType> getType() {
-        return WinstreakType.class;
-    }
-
-    @Override
-    public @Nullable List<String> getAutoCompletions(String arg) {
-        if (arg.isEmpty()) {
-            return DEFAULT_COMPLETIONS;
-        }
-        List<String> completions = new ArrayList<>();
+    public <S> CompletableFuture<Suggestions> listSuggestions(final CommandContext<S> context, final SuggestionsBuilder builder) {
+        String remaining = builder.getRemaining().toLowerCase(Locale.ENGLISH);
         for (WinstreakType type : WinstreakType.values()) {
-            if (type.name().toLowerCase(Locale.ENGLISH).startsWith(arg.toLowerCase(Locale.ENGLISH))) {
-                completions.add(type.name().toLowerCase(Locale.ENGLISH));
+            if (type.name().toLowerCase(Locale.ENGLISH).startsWith(remaining)) {
+                builder.suggest(type.name().toLowerCase(Locale.ENGLISH));
             }
         }
-        return completions;
+        return builder.buildFuture();
     }
 }

@@ -18,7 +18,12 @@
 
 package org.polyfrost.hytils.command.parser;
 
-import org.polyfrost.oneconfig.api.commands.v1.arguments.ArgumentParser;
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.arguments.ArgumentType;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.suggestion.Suggestions;
+import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.jetbrains.annotations.NotNull;
@@ -26,10 +31,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class GameNameParser extends ArgumentParser<GameName> {
+public class GameNameParser implements ArgumentType<GameName> {
     private String[] gameCache = null;
     private final Map<String, String> games;
 
@@ -38,21 +44,22 @@ public class GameNameParser extends ArgumentParser<GameName> {
     }
 
     @Override
-    public GameName parse(@NotNull String arg) {
-        return new GameName(arg);
+    public GameName parse(StringReader arg) {
+        return new GameName(arg.getRead());
     }
 
     @Override
-    public Class<GameName> getType() {
-        return GameName.class;
-    }
-
-    @Override
-    public @Nullable List<String> getAutoCompletions(String game) {
+    public <S> CompletableFuture<Suggestions> listSuggestions(final CommandContext<S> context, final SuggestionsBuilder builder) {
         if (!HypixelUtils.isHypixel() || !HytilsConfig.autocompletePlayCommands) {
-            return null;
+            return ArgumentType.super.listSuggestions(context, builder);
         }
-        return Stream.of(getListOfGames()).filter(s -> s.startsWith(game)).collect(Collectors.toList());
+        String remaining = builder.getRemaining().toLowerCase();
+        for (String game : getListOfGames()) {
+            if (game.toLowerCase().startsWith(remaining)) {
+                builder.suggest(game);
+            }
+        }
+        return builder.buildFuture();
     }
 
     private String[] getListOfGames() {

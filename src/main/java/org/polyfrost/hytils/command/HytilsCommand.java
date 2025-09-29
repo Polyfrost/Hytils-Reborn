@@ -38,8 +38,8 @@ import java.util.Locale;
 @Command({"hytils", "hytilities", "hytilsreborn", "hytilitiesreborn", "hytil"})
 public class HytilsCommand {
     static {
-        CommandManager.INSTANCE.registerParser(new GEXPTypeParser());
-        CommandManager.INSTANCE.registerParser(new WinstreakTypeParser());
+        CommandManager.INSTANCE.registerArgumentType(GEXPType.class, new GEXPTypeParser());
+        CommandManager.INSTANCE.registerArgumentType(WinstreakType.class, new WinstreakTypeParser());
     }
 
     @Handler

@@ -19,7 +19,7 @@
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
 import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
-import dev.deftu.textile.minecraft.MCTextHolder;
+import net.minecraft.util.EnumChatFormatting;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;

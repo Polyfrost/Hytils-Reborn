@@ -18,38 +18,30 @@
 
 package org.polyfrost.hytils.command.parser;
 
-import org.polyfrost.oneconfig.api.commands.v1.arguments.ArgumentParser;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.arguments.ArgumentType;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.suggestion.Suggestions;
+import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
 
-public class GEXPTypeParser extends ArgumentParser<GEXPType> {
+public class GEXPTypeParser implements ArgumentType<GEXPType> {
+
     @Override
-    public GEXPType parse(@NotNull String arg) {
-        return GEXPType.valueOf(arg.toUpperCase(Locale.ROOT));
+    public GEXPType parse(StringReader arg) {
+        return GEXPType.valueOf(arg.getRead().toUpperCase(Locale.ROOT));
     }
 
     @Override
-    public Class<GEXPType> getType() {
-        return GEXPType.class;
-    }
-
-    @Override
-    public @Nullable List<String> getAutoCompletions(String arg) {
-        if (arg.isEmpty()) {
-            return null;
-        }
-        List<String> completions = new ArrayList<>();
+    public <S> CompletableFuture<Suggestions> listSuggestions(final CommandContext<S> context, final SuggestionsBuilder builder) {
+        String remaining = builder.getRemaining().toLowerCase(Locale.ENGLISH);
         for (GEXPType type : GEXPType.values()) {
-            if (type.name().toLowerCase(Locale.ENGLISH).startsWith(arg.toLowerCase(Locale.ENGLISH))) {
-                completions.add(type.name().toLowerCase(Locale.ENGLISH));
+            if (type.name().toLowerCase(Locale.ENGLISH).startsWith(remaining)) {
+                builder.suggest(type.name().toLowerCase(Locale.ENGLISH));
             }
         }
-        return completions;
+        return builder.buildFuture();
     }
 }
