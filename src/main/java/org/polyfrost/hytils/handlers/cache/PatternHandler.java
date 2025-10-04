@@ -41,7 +41,7 @@ public class PatternHandler {
                     processJson(cached);
                     return;
                 }
-                final String gotten = NetworkUtils.getString("https://data.woverflow.cc/regex.json");
+                final String gotten = NetworkUtils.getString("https://data.polyfrost.org/regex.json");
                 if (gotten != null) {
                     processJson(JsonUtils.parse(gotten).getAsJsonObject());
                 }

@@ -48,7 +48,7 @@ public class PlayCommand {
     public static void init() {
         Multithreading.submit(() -> {
             try {
-                String url = "https://data.woverflow.cc/games.json";
+                String url = "https://data.polyfrost.org/games.json";
                 String content = NetworkUtils.getString(url);
                 Type stringStringMap = new TypeToken<HashMap<String, String>>() {
                 }.getType();

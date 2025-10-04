@@ -83,7 +83,7 @@ public class BedLocationHandler {
 
     public void initialize() {
         Multithreading.submit(() -> {
-            JsonElement maybeBedLocations = JsonUtils.parseFromUrl("https://data.woverflow.cc/bed_locations.json");
+            JsonElement maybeBedLocations = JsonUtils.parseFromUrl("https://data.polyfrost.org/bed_locations.json");
             if (maybeBedLocations == null) {
                 return;
             }

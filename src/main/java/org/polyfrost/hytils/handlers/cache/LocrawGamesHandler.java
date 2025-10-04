@@ -36,7 +36,7 @@ public class LocrawGamesHandler {
     public void initialize() {
         Multithreading.submit(() -> {
             try {
-                String url = "https://data.woverflow.cc/locraw_games.json";
+                String url = "https://data.polyfrost.org/locraw_games.json";
                 String content = NetworkUtils.getString(url);
                 Type stringStringMap = new TypeToken<HashMap<String, String>>() {
                 }.getType();

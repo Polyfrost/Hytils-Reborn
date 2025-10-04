@@ -48,7 +48,7 @@ public class LanguageHandler {
 
     private void initialize() {
         fallback.initialize();
-        JsonElement maybeRegex = JsonUtils.parseFromUrl("https://data.woverflow.cc/regex.json");
+        JsonElement maybeRegex = JsonUtils.parseFromUrl("https://data.polyfrost.org/regex.json");
         if (maybeRegex != null) {
             regex = maybeRegex.getAsJsonObject();
         }

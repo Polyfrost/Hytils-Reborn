@@ -33,7 +33,7 @@ public class CosmeticsHandler {
 
     public void initialize() {
         Multithreading.submit(() -> {
-            final JsonElement gotten = JsonUtils.parseFromUrl("https://data.woverflow.cc/cosmetics.json");
+            final JsonElement gotten = JsonUtils.parseFromUrl("https://data.polyfrost.org/cosmetics.json");
             if (gotten != null) {
                 JsonObject jsonObject = gotten.getAsJsonObject();
                 for (JsonElement cosmetic : jsonObject.getAsJsonArray("particles")) {

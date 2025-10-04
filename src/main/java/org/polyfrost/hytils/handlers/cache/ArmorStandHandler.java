@@ -32,7 +32,7 @@ public class ArmorStandHandler {
 
     public void initialize() {
         Multithreading.submit(() -> {
-            final JsonElement gotten = JsonUtils.parseFromUrl("https://data.woverflow.cc/armorstands.json");
+            final JsonElement gotten = JsonUtils.parseFromUrl("https://data.polyfrost.org/armorstands.json");
             if (gotten != null) {
                 JsonObject jsonObject = gotten.getAsJsonObject();
                 for (JsonElement tag : jsonObject.getAsJsonArray("tags")) {
