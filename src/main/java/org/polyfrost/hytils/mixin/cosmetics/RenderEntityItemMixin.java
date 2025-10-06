@@ -19,6 +19,7 @@
 package org.polyfrost.hytils.mixin.cosmetics;
 
 import net.hypixel.data.type.GameType;
+import net.minecraft.block.Block;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.CosmeticsHandler;
 import net.minecraft.block.BlockPumpkin;
@@ -39,11 +40,35 @@ public class RenderEntityItemMixin {
     @Inject(method = "doRender(Lnet/minecraft/entity/item/EntityItem;DDDFF)V", at = @At("HEAD"), cancellable = true)
     private void hytils$removeItemCosmetics(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         ItemStack stack = entity.getEntityItem();
-        if (stack == null) return;
-        if ((HytilsConfig.hideDuelsCosmetics &&
-            HypixelUtils.getLocation().getGameType().orElse(null) == GameType.DUELS) || (HytilsConfig.hideArcadeCosmetics &&
-            HypixelUtils.getLocation().getGameType().orElse(null) == GameType.ARCADE) && HypixelUtils.getLocation().inGame() &&
-            (stack.getItem() instanceof ItemDoublePlant || stack.getItem() instanceof ItemDye || stack.getItem() instanceof ItemRecord || hytils$shouldRemove(stack.getItem().getUnlocalizedName()) || (stack.getItem() instanceof ItemBlock && (hytils$shouldRemove(((ItemBlock) stack.getItem()).getBlock().getUnlocalizedName()) || ((ItemBlock) stack.getItem()).getBlock() instanceof BlockPumpkin)))) ci.cancel();
+        if (stack == null) {
+            return;
+        }
+
+        final HypixelUtils.Location loc = HypixelUtils.getLocation();
+        final GameType gt = loc.getGameType().orElse(null);
+        if (gt == null) {
+            return;
+        }
+
+        final boolean modeEnabled =
+            (HytilsConfig.hideDuelsCosmetics && gt == GameType.DUELS) ||
+            (HytilsConfig.hideArcadeCosmetics && gt == GameType.ARCADE);
+        if (!modeEnabled || !loc.inGame()) {
+            return;
+        }
+
+        final Item item = stack.getItem();
+        boolean hiding = item instanceof ItemDye ||
+            item instanceof ItemRecord ||
+            hytils$shouldRemove(item.getUnlocalizedName());
+        if (!hiding && item instanceof ItemBlock) {
+            final Block block = ((ItemBlock) item).getBlock();
+            hiding = hytils$shouldRemove(block.getUnlocalizedName()) || block instanceof BlockPumpkin;
+        }
+
+        if (hiding) {
+            ci.cancel();
+        }
     }
 
     @Unique

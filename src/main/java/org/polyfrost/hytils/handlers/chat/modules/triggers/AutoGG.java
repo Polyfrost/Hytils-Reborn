@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
-import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.jetbrains.annotations.NotNull;
 import org.polyfrost.hytils.HytilsReborn;
@@ -45,9 +45,9 @@ public class AutoGG implements ChatReceiveModule {
 
         if (!matchFound) {
             matchFound = true;
-            Multithreading.schedule(() -> OmniChat.sendPlayerMessage("/ac " + HytilsConfig.ggMessage), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
+            Multithreading.schedule(() -> OmniClientChatSender.send("/ac " + HytilsConfig.ggMessage), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
             if (HytilsConfig.autoGGSecondMessage) {
-                Multithreading.schedule(() -> OmniChat.sendPlayerMessage("/ac " + HytilsConfig.ggMessage2), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
+                Multithreading.schedule(() -> OmniClientChatSender.send("/ac " + HytilsConfig.ggMessage2), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
             }
             // Schedule the reset of matchFound after the second message has been sent
             Multithreading.schedule(() -> matchFound = false, (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000) + 5000, TimeUnit.MILLISECONDS);

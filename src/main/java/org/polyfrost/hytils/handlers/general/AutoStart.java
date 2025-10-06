@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.general;
 
-import dev.deftu.omnicore.client.OmniClientMultiplayer;
+import dev.deftu.omnicore.api.client.network.OmniClientServers;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.client.Minecraft;
@@ -33,7 +33,7 @@ public class AutoStart {
     public void tick(TickEvent event) {
         if (Minecraft.getMinecraft().currentScreen instanceof GuiMainMenu && HytilsReborn.INSTANCE.isLoadedCall()) {
             if (HytilsConfig.autoStart) {
-                OmniClientMultiplayer.connectTo("mc.hypixel.net");
+                OmniClientServers.connectTo("mc.hypixel.net");
             }
 
             HytilsReborn.INSTANCE.setLoadedCall(false);

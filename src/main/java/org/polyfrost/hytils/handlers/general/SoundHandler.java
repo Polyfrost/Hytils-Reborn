@@ -18,6 +18,15 @@
 
 package org.polyfrost.hytils.handlers.general;
 
+import dev.deftu.omnicore.api.OmniIdentifier;
+import dev.deftu.omnicore.api.client.OmniClient;
+import dev.deftu.omnicore.api.client.sound.OmniClientSound;
+import dev.deftu.omnicore.api.sound.OmniSound;
+import dev.deftu.omnicore.api.sound.OmniSounds;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import org.polyfrost.hytils.config.HytilsConfig;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.client.Minecraft;
@@ -26,65 +35,174 @@ import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
+//#if MC >= 1.12.2
+//$$ import net.minecraft.sound.Sounds;
+//#endif
+
 public class SoundHandler {
 
     private int ticks = -1;
 
     @Subscribe
     public void onTick(TickEvent.Start e) {
-        if (HypixelUtils.isHypixel() && Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null) {
-            HypixelUtils.Location location = HypixelUtils.getLocation();
-            if (HytilsConfig.blockNotify && location.inGame() && location.getGameType().isPresent()) {
-                switch (location.getGameType().get()) {
-                    case BUILD_BATTLE: case HOUSING: case SKYBLOCK:
-                        return;
-                }
-                if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && !(((ItemBlock) Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem()).getBlock() instanceof BlockTNT) && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize <= HytilsConfig.blockNumber && Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize > 4) {
-                    ticks++;
-                    if (ticks == 0) {
-                        playSound();
-                        return;
-                    } else if (ticks == 20) {
-                        playSound();
-                        return;
-                    }
-                    if (ticks > 40) ticks = -1;
-                } else if (ticks != -1) {
-                    ticks = -1;
-                }
+        WorldClient world = OmniClient.getWorld();
+        EntityPlayerSP player = OmniClient.getPlayer();
+        if (
+            !HypixelUtils.isHypixel() ||
+            player == null ||
+            world == null
+        ) {
+            return;
+        }
+
+        ItemStack equippedStack = player.getCurrentEquippedItem();
+        if (equippedStack == null) {
+            return;
+        }
+
+        int equippedStackSize = stackSize(equippedStack);
+        if (equippedStackSize > HytilsConfig.blockNumber || equippedStackSize <= 4) {
+            if (ticks != -1) {
+                ticks = -1;
+            }
+
+            return;
+        }
+
+        Item equippedItem = equippedStack.getItem();
+        if (
+            !(equippedItem instanceof ItemBlock) ||
+            (((ItemBlock) equippedItem).getBlock() instanceof BlockTNT)
+        ) {
+            if (ticks != -1) {
+                ticks = -1;
+            }
+
+            return;
+        }
+
+        HypixelUtils.Location location = HypixelUtils.getLocation();
+        if (HytilsConfig.blockNotify && location.inGame() && location.getGameType().isPresent()) {
+            switch (location.getGameType().get()) {
+                case BUILD_BATTLE: case HOUSING: case SKYBLOCK:
+                    return;
+            }
+
+            ticks++;
+            if (ticks == 0) {
+                playSound();
+                return;
+            } else if (ticks == 20) {
+                playSound();
+                return;
+            }
+
+            if (ticks > 40) {
+                ticks = -1;
             }
         }
     }
 
+    private int stackSize(ItemStack stack) {
+        //#if MC >= 1.12.2
+        //$$ return stack.getCount();
+        //#else
+        return stack.stackSize;
+        //#endif
+    }
+
     public void playSound() {
-        if (!Minecraft.getMinecraft().playerController.gameIsSurvivalOrAdventure()) return;
+        if (!Minecraft.getMinecraft().playerController.gameIsSurvivalOrAdventure()) {
+            return;
+        }
+
+        OmniSound sound = null;
         switch (HytilsConfig.blockNotifySound) {
             case 0:
-                Minecraft.getMinecraft().thePlayer.playSound("random.orb", 1f, 1f);
+                sound = OmniSounds.EXPERIENCE_ORB_PICKUP;
                 break;
             case 1:
-                Minecraft.getMinecraft().thePlayer.playSound("mob.irongolem.hit", 1f, 1f);
+                sound = new OmniSound(
+                    //#if MC >= 1.12.2
+                    //$$ Sounds.ENTITY_IRONGOLEM_HURT
+                    //#else
+                    OmniIdentifier.createOrThrow("mob.irongolem.hit")
+                    //#endif
+                );
+
                 break;
             case 2:
-                Minecraft.getMinecraft().thePlayer.playSound("mob.blaze.hit", 1f, 1f);
+                sound = new OmniSound(
+                    //#if MC >= 1.12.2
+                    //$$ Sounds.ENTITY_BLAZE_HURT
+                    //#else
+                    OmniIdentifier.createOrThrow("mob.blaze.hit")
+                    //#endif
+                );
+
                 break;
             case 3:
-                Minecraft.getMinecraft().thePlayer.playSound("random.anvil_land", 1f, 1f);
+                sound = new OmniSound(
+                    //#if MC >= 1.12.2
+                    //$$ Sounds.BLOCK_ANVIL_LAND
+                    //#else
+                    OmniIdentifier.createOrThrow("random.anvil_land")
+                    //#endif
+                );
+
                 break;
             case 4:
-                Minecraft.getMinecraft().thePlayer.playSound("mob.horse.death", 1f, 1f);
+                sound = new OmniSound(
+                    //#if MC >= 1.12.2
+                    //$$ Sounds.ENTITY_HORSE_DEATH
+                    //#else
+                    OmniIdentifier.createOrThrow("mob.horse.death")
+                    //#endif
+                );
+
                 break;
             case 5:
-                Minecraft.getMinecraft().thePlayer.playSound("mob.ghast.scream", 1f, 1f);
+                sound = new OmniSound(
+                    //#if MC >= 1.12.2
+                    //$$ Sounds.ENTITY_GHAST_SCREAM
+                    //#else
+                    OmniIdentifier.createOrThrow("mob.ghast.scream")
+                    //#endif
+                );
+
                 break;
             case 6:
-                Minecraft.getMinecraft().thePlayer.playSound("mob.guardian.land.hit", 1f, 1f);
+                sound = new OmniSound(
+                    //#if MC >= 1.12.2
+                    //$$ Sounds.ENTITY_GUARDIAN_HURT_LAND
+                    //#else
+                    OmniIdentifier.createOrThrow("mob.guardian.land.hit")
+                    //#endif
+                );
+
                 break;
             case 7:
-                Minecraft.getMinecraft().thePlayer.playSound("mob.cat.meow", 1f, 1f);
+                sound = new OmniSound(
+                    //#if MC >= 1.12.2
+                    //$$ Sounds.ENTITY_CAT_AMBIENT
+                    //#else
+                    OmniIdentifier.createOrThrow("mob.cat.meow")
+                    //#endif
+                );
+
                 break;
             case 8:
-                Minecraft.getMinecraft().thePlayer.playSound("mob.wolf.bark", 1f, 1f);
+                sound = new OmniSound(
+                    //#if MC >= 1.12.2
+                    //$$ Sounds.ENTITY_WOLF_AMBIENT
+                    //#else
+                    OmniIdentifier.createOrThrow("mob.wolf.bark")
+                    //#endif
+                );
+        }
+
+        if (sound != null) {
+            OmniClientSound.play(sound, 1f, 1f);
         }
     }
 }

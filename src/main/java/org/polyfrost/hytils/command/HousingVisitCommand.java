@@ -18,11 +18,12 @@
 
 package org.polyfrost.hytils.command;
 
-import dev.deftu.omnicore.client.OmniChat;
-import dev.deftu.textile.minecraft.MCSimpleMutableTextHolder;
-import dev.deftu.textile.minecraft.MCSimpleTextHolder;
-import dev.deftu.textile.minecraft.MCTextFormat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChat;
+import dev.deftu.textile.Text;
+import dev.deftu.textile.minecraft.MCTextStyle;
+import dev.deftu.textile.minecraft.TextColors;
 import net.hypixel.data.type.GameType;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
@@ -41,7 +42,6 @@ import java.util.regex.Pattern;
  */
 @Command({"housingvisit", "hvisit"})
 public class HousingVisitCommand {
-
     /**
      * Used for performing a rudimentary check to prevent visiting invalid houses.
      */
@@ -49,15 +49,15 @@ public class HousingVisitCommand {
 
     protected static String playerName = "";
 
-    @Command
+    @Handler
     private void main() {
-        OmniChat.displayClientMessage(new MCSimpleTextHolder("Usage: /housingvisit <username>").withFormatting(MCTextFormat.RED));
+        OmniClientChat.displayChatMessage(Text.literal("Usage: /housingvisit <username>").setStyle(MCTextStyle.color(TextColors.RED)));
     }
 
-    @Command(description = "Visits a player's house in Housing.")
+    @Handler(description = "Visits a player's house in Housing.")
     private void main(GameProfile player) {
         if (!HypixelUtils.isHypixel()) {
-            OmniChat.displayClientMessage(new MCSimpleMutableTextHolder("You must be on Hypixel to use this command!").withFormatting(MCTextFormat.RED));
+            OmniClientChat.displayChatMessage(Text.literal("You must be on Hypixel to use this command!").setStyle(MCTextStyle.color(TextColors.RED)));
             return;
         }
         if (usernameRegex.matcher(player.getName()).matches()) {
@@ -73,7 +73,7 @@ public class HousingVisitCommand {
                 EventManager.INSTANCE.register(new HousingVisitHook());
             }
         } else {
-            OmniChat.displayClientMessage(new MCSimpleTextHolder("Invalid username!").withFormatting(MCTextFormat.RED));
+            OmniClientChat.displayChatMessage(Text.literal("Invalid username!").setStyle(MCTextStyle.color(TextColors.RED)));
         }
     }
 
@@ -84,12 +84,10 @@ public class HousingVisitCommand {
     }
 
     private class HousingVisitHook {
-
         @Subscribe
         public void onHousingLobbyJoin(final WorldEvent.Load event) {
             EventManager.INSTANCE.unregister(this);
             visit(300);
         }
-
     }
 }

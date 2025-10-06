@@ -50,7 +50,14 @@ public enum BedColor {
 
     public ModelResourceLocation getBlockStateIdentifier(IBlockState state) {
         BlockBed.EnumPartType type = state.getValue(BlockBed.PART);
-        EnumFacing direction = state.getValue(BlockBed.FACING);
+        EnumFacing direction = state.getValue(
+            //#if MC >= 1.12.2
+            //$$ BedBlock.DIRECTION
+            //#else
+            BlockBed.FACING
+            //#endif
+        );
+
         return new ModelResourceLocation(this.getIdentifier(), "facing=" + direction.name() + ",part=" + type.name());
     }
 

@@ -29,12 +29,13 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 //$$ import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 //#endif
 
-import dev.deftu.omnicore.client.OmniChat;
-import dev.deftu.omnicore.common.OmniLoader;
-import dev.deftu.textile.minecraft.MCSimpleMutableTextHolder;
-import dev.deftu.textile.minecraft.MCSimpleTextHolder;
-import dev.deftu.textile.minecraft.MCTextFormat;
-import dev.deftu.textile.minecraft.MCTextHolder;
+import dev.deftu.omnicore.api.client.chat.OmniClientChat;
+import dev.deftu.omnicore.api.loader.OmniLoader;
+import dev.deftu.textile.MutableText;
+import dev.deftu.textile.Text;
+import dev.deftu.textile.minecraft.MCTextStyle;
+import dev.deftu.textile.minecraft.TextColors;
+import org.polyfrost.hytils.command.tempignore.IgnoreTemporaryCommand;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
@@ -96,7 +97,7 @@ public class HytilsReborn
     //#endif
     public static HytilsReborn INSTANCE;
 
-    private static MCTextHolder<?> prefix;
+    private static Text prefix;
 
     public File oldModDir = new File(new File(Minecraft.getMinecraft().mcDataDir, "W-OVERFLOW"), NAME);
 
@@ -158,12 +159,12 @@ public class HytilsReborn
     }
 
     private void postInitialize() {
-        if (OmniLoader.isModLoaded("tabulous")) {
+        if (OmniLoader.isLoaded("tabulous")) {
             config.hideTabulous();
         }
 
-        isPatcher = OmniLoader.isModLoaded("patcher");
-        isChatting = OmniLoader.isModLoaded("chatting");
+        isPatcher = OmniLoader.isLoaded("patcher");
+        isChatting = OmniLoader.isLoaded("chatting");
         if (isChatting) {
             try {
                 Class.forName("org.polyfrost.chatting.chat.ChatTabs");
@@ -242,17 +243,17 @@ public class HytilsReborn
         eventBus.register(new DropperHurtSound());
     }
 
-    public void sendMessage(MCTextHolder<?> text) {
+    public void sendMessage(Text text) {
         if (prefix == null) {
-            prefix = new MCSimpleTextHolder("[" + NAME + "] ").withFormatting(MCTextFormat.GOLD);
+            prefix = Text.literal("[" + NAME + "] ").setStyle(MCTextStyle.color(TextColors.GOLD));
         }
 
-        MCSimpleMutableTextHolder newText = new MCSimpleMutableTextHolder("");
+        MutableText newText = Text.empty();
         newText.append(prefix);
         newText.append(text);
         text = newText;
 
-        OmniChat.displayClientMessage(text);
+        OmniClientChat.displayChatMessage(text);
     }
 
     public HytilsConfig getConfig() {

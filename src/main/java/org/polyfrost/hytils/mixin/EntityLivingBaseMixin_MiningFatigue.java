@@ -32,14 +32,23 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+//#if MC >= 1.12.2
+//$$ import net.minecraft.entity.effect.StatusEffects;
+//#endif
+
 @Mixin(EntityLivingBase.class)
 public class EntityLivingBaseMixin_MiningFatigue {
-    @Unique
-    private final EntityLivingBase hytils$this = (EntityLivingBase) (Object) this;
+    @Unique private final EntityLivingBase hytils$this = (EntityLivingBase) (Object) this;
 
     @Inject(method = "addPotionEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;onNewPotionEffect(Lnet/minecraft/potion/PotionEffect;)V"))
     private void hytils$onPotionEffect(PotionEffect potioneffectIn, CallbackInfo ci) {
-        if (HytilsConfig.notifyMiningFatigue && potioneffectIn.getPotionID() == Potion.digSlowdown.getId() && (hytils$this instanceof EntityPlayerSP) && (!HytilsConfig.disableNotifyMiningFatigueSkyblock || !(HypixelUtils.getLocation().getGameType().orElse(null) == GameType.SKYBLOCK))) {
+        boolean isMiningFatigue =
+            //#if MC >= 1.12.2
+            //$$ potioneffectIn.getStatusEffect() == StatusEffects.MINING_FATIGUE;
+            //#else
+            potioneffectIn.getPotionID() == Potion.digSlowdown.getId();
+            //#endif
+        if (HytilsConfig.notifyMiningFatigue && isMiningFatigue && (hytils$this instanceof EntityPlayerSP) && (!HytilsConfig.disableNotifyMiningFatigueSkyblock || !(HypixelUtils.getLocation().getGameType().orElse(null) == GameType.SKYBLOCK))) {
             Notifications.INSTANCE.enqueue(Notifications.Type.Warning, "Hytils Reborn", "You have mining fatigue!");
         }
     }

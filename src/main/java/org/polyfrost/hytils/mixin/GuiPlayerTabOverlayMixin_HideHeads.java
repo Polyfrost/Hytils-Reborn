@@ -33,6 +33,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(GuiPlayerTabOverlay.class)
 public class GuiPlayerTabOverlayMixin_HideHeads {
 
+    //#if !FABRIC
     @Definition(id = "bl", local = @Local(type = boolean.class))
     @Expression("@(bl) != false")
     @ModifyExpressionValue(method = "renderPlayerlist", at = @At("MIXINEXTRAS:EXPRESSION"))
@@ -46,4 +47,6 @@ public class GuiPlayerTabOverlayMixin_HideHeads {
             args.set(1, (int) args.get(1) + 9);
         }
     }
+    //#endif
+
 }

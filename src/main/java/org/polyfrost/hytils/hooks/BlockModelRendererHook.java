@@ -18,9 +18,6 @@
 
 package org.polyfrost.hytils.hooks;
 
-import cc.polyfrost.oneconfig.events.EventManager;
-import cc.polyfrost.oneconfig.events.event.WorldLoadEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import org.polyfrost.hytils.util.DarkColorUtils;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.MapColor;
@@ -30,6 +27,9 @@ import net.minecraft.util.BlockPos;
 import org.polyfrost.hytils.config.BlockHighlightConfig;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.HeightHandler;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.polyui.color.ColorUtils;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
@@ -43,8 +43,8 @@ public class BlockModelRendererHook {
     }
 
     @Subscribe
-    private void onWorldLoad(WorldLoadEvent event) {
-        isHypixel = HypixelUtils.INSTANCE.isHypixel();
+    private void onWorldLoad(WorldEvent.Load event) {
+        isHypixel = HypixelUtils.isHypixel();
     }
 
     public static void initialize() {
@@ -57,8 +57,19 @@ public class BlockModelRendererHook {
             if (height == -1) {
                 return;
             }
-            MapColor mapColor = stateIn.getBlock().getMapColor(stateIn);
-            if (blockPosIn.getY() == (height - 1) && mapColor != null && (!(stateIn.getBlock().getMaterial() == Material.rock) || check(mapColor.colorIndex))) {
+
+            MapColor mapColor = stateIn.getBlock().getMapColor(
+                stateIn
+                //#if MC >= 1.12.2
+                //$$ , null, blockPosIn
+                //#endif
+            );
+
+            if (blockPosIn.getY() == (height - 1) && mapColor != null && (!(stateIn.getBlock().getMaterial(
+                //#if MC >= 1.12.2
+                //$$ stateIn
+                //#endif
+            ) == Material.rock) || check(mapColor.colorIndex))) {
                 int color = HytilsConfig.manuallyEditHeightOverlay ? BlockHighlightConfig.colorMap.get(mapColor).get().getArgb() : DarkColorUtils.getCachedDarkColor(mapColor.colorValue);
                 args.set(0, (float) ColorUtils.getRed(color) / 255);
                 args.set(1, (float) ColorUtils.getGreen(color) / 255);

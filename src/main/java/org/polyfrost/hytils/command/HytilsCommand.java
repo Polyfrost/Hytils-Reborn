@@ -18,16 +18,17 @@
 
 package org.polyfrost.hytils.command;
 
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Parameter;
+import org.polyfrost.hytils.command.parser.GEXPTypeArgumentType;
+import org.polyfrost.hytils.command.parser.WinstreakTypeArgumentType;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Param;
 import org.polyfrost.oneconfig.api.ui.v1.Notifications;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.command.parser.GEXPType;
-import org.polyfrost.hytils.command.parser.GEXPTypeParser;
 import org.polyfrost.hytils.command.parser.WinstreakType;
-import org.polyfrost.hytils.command.parser.WinstreakTypeParser;
 import org.polyfrost.hytils.util.HypixelAPIUtils;
 import com.mojang.authlib.GameProfile;
 import org.jetbrains.annotations.Nullable;
@@ -37,49 +38,49 @@ import java.util.Locale;
 @Command({"hytils", "hytilities", "hytilsreborn", "hytilitiesreborn", "hytil"})
 public class HytilsCommand {
     static {
-        CommandManager.INSTANCE.registerParser(new GEXPTypeParser());
-        CommandManager.INSTANCE.registerParser(new WinstreakTypeParser());
+        CommandManager.INSTANCE.registerArgumentType(GEXPType.class, GEXPTypeArgumentType.gexpType());
+        CommandManager.INSTANCE.registerArgumentType(WinstreakType.class, WinstreakTypeArgumentType.winstreakType());
     }
 
-    @Command
+    @Handler
     private void main() {
         //HytilsReborn.INSTANCE.getConfig().openGui();
     }
 
-    @Command(value = {"guildexp", "guildexperience"}, description = "Shows your guild experience")
+    @Handler(value = {"guildexp", "guildexperience"}, description = "Shows your guild experience")
     @SuppressWarnings("SameParameterValue")
-    private void gexp(@Parameter("Username") @Nullable GameProfile player, @Parameter("GEXP Type") @Nullable GEXPType type) {
+    private void gexp(@Param("Username") @Nullable GameProfile player, @Param("GEXP Type") @Nullable GEXPType type) {
         Multithreading.submit(() -> {
             if (player != null) {
                 if (type == null) {
                     if (HypixelAPIUtils.getGEXP(player.getName())) {
-                        Notifications.INSTANCE.enqueue(Notifications.Type.Info,
+                        Notifications.enqueue(Notifications.Type.Info,
                             HytilsReborn.NAME, player.getName() + " currently has " + HypixelAPIUtils.gexp + " guild EXP.");
                     } else {
-                        Notifications.INSTANCE.enqueue(Notifications.Type.Error,
+                        Notifications.enqueue(Notifications.Type.Error,
                             HytilsReborn.NAME, "There was a problem trying to get " + player.getName() + "'s GEXP.");
                     }
                 } else {
                     switch (type) {
                         case DAILY:
                             if (HypixelAPIUtils.getGEXP(player.getName())) {
-                                Notifications.INSTANCE.enqueue(Notifications.Type.Info,
+                                Notifications.enqueue(Notifications.Type.Info,
                                     HytilsReborn.NAME,
                                         player.getName() + " currently has " + HypixelAPIUtils.gexp + " daily guild EXP."
                                     );
                             } else {
-                                Notifications.INSTANCE.enqueue(Notifications.Type.Error,
+                                Notifications.enqueue(Notifications.Type.Error,
                                     HytilsReborn.NAME, "There was a problem trying to get " + player.getName() + "'s daily GEXP.");
                             }
                             break;
                         case WEEKLY:
                             if (HypixelAPIUtils.getWeeklyGEXP(player.getName())) {
-                                Notifications.INSTANCE.enqueue(Notifications.Type.Info,
+                                Notifications.enqueue(Notifications.Type.Info,
                                     HytilsReborn.NAME,
                                         player.getName() + " currently has " + HypixelAPIUtils.gexp + " weekly guild EXP."
                                     );
                             } else {
-                                Notifications.INSTANCE.enqueue(Notifications.Type.Error,
+                                Notifications.enqueue(Notifications.Type.Error,
                                     HytilsReborn.NAME, "There was a problem trying to get " + player.getName() + "'s weekly GEXP.");
                             }
                             break;
@@ -87,50 +88,50 @@ public class HytilsCommand {
                 }
             } else {
                 if (HypixelAPIUtils.getGEXP()) {
-                    Notifications.INSTANCE.enqueue(Notifications.Type.Info,
+                    Notifications.enqueue(Notifications.Type.Info,
                         HytilsReborn.NAME, "You currently have " + HypixelAPIUtils.gexp + " guild EXP.");
                 } else {
-                    Notifications.INSTANCE.enqueue(Notifications.Type.Error,
+                    Notifications.enqueue(Notifications.Type.Error,
                         HytilsReborn.NAME, "There was a problem trying to get your GEXP.");
                 }
             }
         });
     }
 
-    @Command(value = {"winstreak", "ws"}, description = "Shows your winstreak")
+    @Handler(value = {"winstreak", "ws"}, description = "Shows your winstreak")
     @SuppressWarnings("SameParameterValue")
-    private void winstreak(@Parameter("Username") @Nullable GameProfile player, @Parameter("Winstreak Type") @Nullable WinstreakType gamemode) {
+    private void winstreak(@Param("Username") @Nullable GameProfile player, @Param("Winstreak Type") @Nullable WinstreakType gamemode) {
         Multithreading.submit(() -> {
             if (player != null) {
                 if (gamemode != null) {
                     if (HypixelAPIUtils.getWinstreak(player.getName(), gamemode.name())) {
-                        Notifications.INSTANCE.enqueue(Notifications.Type.Info,
+                        Notifications.enqueue(Notifications.Type.Info,
                             HytilsReborn.NAME,
                                 player.getName() + " currently has a " + HypixelAPIUtils.winstreak + " winstreak in " + gamemode.name().toLowerCase(Locale.ENGLISH) + "."
                             );
                     } else {
-                        Notifications.INSTANCE.enqueue(Notifications.Type.Error,
+                        Notifications.enqueue(Notifications.Type.Error,
                             HytilsReborn.NAME,
                                 "There was a problem trying to get " + player.getName() + "'s winstreak in " + gamemode + "."
                             );
                     }
                 } else {
                     if (HypixelAPIUtils.getWinstreak(player.getName())) {
-                        Notifications.INSTANCE.enqueue(Notifications.Type.Info,
+                        Notifications.enqueue(Notifications.Type.Info,
                             HytilsReborn.NAME,
                                 player.getName() + " currently has a " + HypixelAPIUtils.winstreak + " winstreak."
                             );
                     } else {
-                        Notifications.INSTANCE.enqueue(Notifications.Type.Error,
+                        Notifications.enqueue(Notifications.Type.Error,
                             HytilsReborn.NAME, "There was a problem trying to get " + player.getName() + "'s winstreak.");
                     }
                 }
             } else {
                 if (HypixelAPIUtils.getWinstreak()) {
-                    Notifications.INSTANCE.enqueue(Notifications.Type.Info,
+                    Notifications.enqueue(Notifications.Type.Info,
                         HytilsReborn.NAME, "You currently have a " + HypixelAPIUtils.winstreak + " winstreak.");
                 } else {
-                    Notifications.INSTANCE.enqueue(Notifications.Type.Error,
+                    Notifications.enqueue(Notifications.Type.Error,
                         HytilsReborn.NAME, "There was a problem trying to get your winstreak.");
                 }
             }

@@ -18,9 +18,12 @@
 
 package org.polyfrost.hytils.command;
 
-import dev.deftu.omnicore.client.OmniChat;
-import dev.deftu.textile.minecraft.MCSimpleTextHolder;
-import dev.deftu.textile.minecraft.MCTextFormat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChat;
+import dev.deftu.textile.Text;
+import dev.deftu.textile.minecraft.MCTextStyle;
+import dev.deftu.textile.minecraft.TextColors;
+import org.polyfrost.hytils.command.parser.GameNameArgumentType;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import org.polyfrost.oneconfig.utils.v1.NetworkUtils;
@@ -28,7 +31,6 @@ import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.command.parser.GameName;
-import org.polyfrost.hytils.command.parser.GameNameParser;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.lobby.limbo.LimboLimiter;
 import com.google.gson.Gson;
@@ -58,12 +60,12 @@ public class PlayCommand {
             }
 
             Minecraft.getMinecraft().addScheduledTask(() -> {
-                // TODO nextday?!: CommandManager.INSTANCE.registerParser(new GameNameParser(games));
+                CommandManager.INSTANCE.registerArgumentType(GameName.class, GameNameArgumentType.gameName(games));
                 CommandManager.register(new PlayCommand());
             });
         });
     }
-    @Command
+    @Handler
     private void main(GameName game) {
         boolean autocompletePlayCommands = HytilsConfig.autocompletePlayCommands;
         if (!HypixelUtils.isHypixel()) {
@@ -79,7 +81,7 @@ public class PlayCommand {
             } else if (games.containsValue(game.name.toLowerCase(Locale.ENGLISH))) {
                 command = game.name;
             } else {
-                OmniChat.displayClientMessage(new MCSimpleTextHolder("Invalid game: \"" + game.name + "\"").withFormatting(MCTextFormat.RED));
+                OmniClientChat.displayChatMessage(Text.literal("Invalid game: \"" + game.name + "\"").setStyle(MCTextStyle.color(TextColors.RED)));
                 return;
             }
         }
@@ -87,6 +89,7 @@ public class PlayCommand {
         if (HytilsConfig.limboPlayCommandHelper && LimboLimiter.inLimbo()) {
             HytilsReborn.INSTANCE.getCommandQueue().queue("/l");
         }
+
         HytilsReborn.INSTANCE.getCommandQueue().queue("/play " + command);
     }
 }

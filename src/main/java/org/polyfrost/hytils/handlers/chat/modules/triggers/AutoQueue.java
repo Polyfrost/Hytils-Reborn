@@ -18,6 +18,8 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
+import dev.deftu.omnicore.api.world.OmniDimension;
+import dev.deftu.omnicore.api.world.OmniDimensions;
 import net.minecraft.world.World;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.KeyInputEvent;
@@ -45,7 +47,7 @@ public class AutoQueue implements ChatReceiveModule {
             return;
         }
 
-        final String message = event.getMessage().asUnformattedString();
+        final String message = event.getMessage().getString();
         Matcher matcher = getLanguage().autoQueuePrefixGlobalRegex.matcher(message);
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (matcher.matches()) {
@@ -80,7 +82,7 @@ public class AutoQueue implements ChatReceiveModule {
         World world = event.getWorld();
 
         // stop the command from being spammed, to prevent chat from filling with "please do not spam commands"
-        if (world.provider.getDimensionId() == 0 && this.sentCommand) {
+        if (OmniDimensions.getDimensionType(world) == OmniDimension.Overworld.INSTANCE && this.sentCommand) {
             this.sentCommand = false;
         }
     }

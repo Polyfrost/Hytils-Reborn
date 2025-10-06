@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.modifiers;
 
-import dev.deftu.textile.minecraft.MCTextHolder;
+import dev.deftu.textile.minecraft.MCText;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import net.minecraft.util.EnumChatFormatting;
@@ -32,7 +32,7 @@ public class WhiteChat implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ChatEvent.Receive event) {
-        IChatComponent message = MCTextHolder.convertToVanilla(event.getMessage());
+        IChatComponent message = MCText.convert(event.getMessage());
         final Matcher matcher = getLanguage().whiteChatNonMessageRegex.matcher(message.getFormattedText());
         if (matcher.find(0) && !getLanguage().privateMessageWhiteChatRegex.matcher(message.getFormattedText()).find()) {
             boolean foundStart = false;

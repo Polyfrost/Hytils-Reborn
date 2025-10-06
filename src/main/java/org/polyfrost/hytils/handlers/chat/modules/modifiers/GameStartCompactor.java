@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.modifiers;
 
-import dev.deftu.textile.minecraft.MCTextHolder;
+import dev.deftu.textile.minecraft.MCText;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.hytils.mixin.GuiNewChatAccessor;
@@ -47,7 +47,7 @@ public class GameStartCompactor implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ChatEvent.Receive event) {
-        IChatComponent message = MCTextHolder.convertToVanilla(event.getMessage());
+        IChatComponent message = MCText.convert(event.getMessage());
         final Matcher gameStartMatcher = getLanguage().chatRestylerGameStartCounterStyleRegex.matcher(event.getFullyUnformattedMessage());
         final Matcher chatRestylerMatcher = getLanguage().chatRestylerGameStartCounterOutputStyleRegex.matcher(message.getFormattedText());
         if (gameStartMatcher.matches() || (HytilsConfig.gameStatusRestyle && chatRestylerMatcher.matches())) {

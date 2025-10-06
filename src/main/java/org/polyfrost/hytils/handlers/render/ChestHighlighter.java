@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.render;
 
-import dev.deftu.omnicore.client.OmniClient;
+import dev.deftu.omnicore.api.client.OmniClient;
 import net.hypixel.data.type.GameType;
 import net.minecraft.world.World;
 import org.polyfrost.oneconfig.api.event.v1.events.PlayerInteractEvent;

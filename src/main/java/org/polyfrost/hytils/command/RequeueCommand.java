@@ -18,10 +18,12 @@
 
 package org.polyfrost.hytils.command;
 
-import dev.deftu.omnicore.client.OmniChat;
-import dev.deftu.textile.minecraft.MCSimpleTextHolder;
-import dev.deftu.textile.minecraft.MCTextFormat;
+import dev.deftu.omnicore.api.client.chat.OmniClientChat;
+import dev.deftu.textile.Text;
+import dev.deftu.textile.minecraft.MCTextStyle;
+import dev.deftu.textile.minecraft.TextColors;
 import net.hypixel.data.type.GameType;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.hytils.HytilsReborn;
@@ -34,7 +36,7 @@ public class RequeueCommand {
 
     protected static String game = "";
 
-    @Command(description = "Requeues you into the last game you played.")
+    @Handler(description = "Requeues you into the last game you played.")
     private void main() {
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (!HypixelUtils.isHypixel()) {
@@ -44,7 +46,7 @@ public class RequeueCommand {
         if (location.inGame()) {
             game = location.getMode().orElse(null);
             if (game == null) {
-                OmniChat.displayClientMessage(new MCSimpleTextHolder("You must be in a valid game to use this command.").withFormatting(MCTextFormat.RED));
+                OmniClientChat.displayChatMessage(Text.literal("You must be in a valid game to use this command.").setStyle(MCTextStyle.color(TextColors.RED)));
                 return;
             }
             if (location.getGameType().isPresent()) {
@@ -52,14 +54,14 @@ public class RequeueCommand {
                     case SKYBLOCK:
                     case HOUSING:
                     case REPLAY:
-                        OmniChat.displayClientMessage(new MCSimpleTextHolder("You must be in a valid game to use this command.").withFormatting(MCTextFormat.RED));
+                        OmniClientChat.displayChatMessage(Text.literal("You must be in a valid game to use this command.").setStyle(MCTextStyle.color(TextColors.RED)));
                         return;
                 }
             }
         } else if (!location.inGame() && location.wasInGame()) {
             game = location.getLastMode().orElse(null);
             if (game == null) {
-                OmniChat.displayClientMessage(new MCSimpleTextHolder("You must be in a valid game to use this command.").withFormatting(MCTextFormat.RED));
+                OmniClientChat.displayChatMessage(Text.literal("You must be in a valid game to use this command.").setStyle(MCTextStyle.color(TextColors.RED)));
                 return;
             }
             if (location.getLastGameType().isPresent()) {
@@ -69,12 +71,12 @@ public class RequeueCommand {
                         break;
                     case HOUSING:
                     case REPLAY:
-                        OmniChat.displayClientMessage(new MCSimpleTextHolder("The last round has to be a valid game to use this command.").withFormatting(MCTextFormat.RED));
+                        OmniClientChat.displayChatMessage(Text.literal("The last round has to be a valid game to use this command.").setStyle(MCTextStyle.color(TextColors.RED)));
                         return;
                 }
             }
         } else {
-            OmniChat.displayClientMessage(new MCSimpleTextHolder("The last round has to be a game to use this command.").withFormatting(MCTextFormat.RED));
+            OmniClientChat.displayChatMessage(Text.literal("The last round has to be a game to use this command.").setStyle(MCTextStyle.color(TextColors.RED)));
             return;
         }
 

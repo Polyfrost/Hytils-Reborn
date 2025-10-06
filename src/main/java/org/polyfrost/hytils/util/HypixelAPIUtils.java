@@ -18,8 +18,9 @@
 
 package org.polyfrost.hytils.util;
 
-import dev.deftu.textile.minecraft.MCSimpleTextHolder;
-import dev.deftu.textile.minecraft.MCTextFormat;
+import dev.deftu.textile.Text;
+import dev.deftu.textile.minecraft.MCTextStyle;
+import dev.deftu.textile.minecraft.TextColors;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.EventHandler;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
@@ -33,7 +34,6 @@ import com.google.gson.JsonObject;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.EnumChatFormatting;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -428,13 +428,13 @@ public class HypixelAPIUtils {
             if (maybeUuidResponse != null) {
                 JsonObject uuidResponse = maybeUuidResponse.getAsJsonObject();
                 if (uuidResponse.has("error")) {
-                    HytilsReborn.INSTANCE.sendMessage(new MCSimpleTextHolder("Failed with error: " + uuidResponse.get("reason").getAsString()).withFormatting(MCTextFormat.RED));
+                    HytilsReborn.INSTANCE.sendMessage(Text.literal("Failed with error: " + uuidResponse.get("reason").getAsString()).setStyle(MCTextStyle.color(TextColors.RED)));
                     return null;
                 }
                 return uuidResponse.get("id").getAsString();
             }
         } catch (Exception e) {
-            HytilsReborn.INSTANCE.sendMessage(new MCSimpleTextHolder("Failed to fetch " + username + "'s data. Please make sure this user exists.").withFormatting(MCTextFormat.RED));
+            HytilsReborn.INSTANCE.sendMessage(Text.literal("Failed to fetch " + username + "'s data. Please make sure this user exists.").setStyle(MCTextStyle.color(TextColors.RED)));
         }
         return null;
     }

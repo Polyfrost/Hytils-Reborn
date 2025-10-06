@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.blockers;
 
-import dev.deftu.textile.SimpleMutableTextHolder;
+import dev.deftu.textile.Text;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 import org.polyfrost.hytils.handlers.language.LanguageData;
@@ -30,13 +30,16 @@ import java.util.regex.Matcher;
 public class MvpEmotesRemover implements ChatReceiveModule {
     @Override
     public void onMessageReceived(@NotNull ChatEvent.Receive event) {
-        final LanguageData language = getLanguage();
-        Matcher matcher = language.chatCleanerMvpEmotesRegex.matcher(event.getFullyUnformattedMessage());
-        if (matcher.find(0)) {
-            event.setMessage(new SimpleMutableTextHolder(event.getMessage().asString().replaceAll(
-                language.chatCleanerMvpEmotesRegex.pattern(), "")
-            ));
+        final LanguageData lang = getLanguage();
+        final Matcher m = lang.chatCleanerMvpEmotesRegex.matcher(event.getFullyUnformattedMessage());
+        if (!m.find()) {
+            return;
         }
+
+        final String replaced = event.getMessage()
+            .getString()
+            .replaceAll(lang.chatCleanerMvpEmotesRegex.pattern(), "");
+        event.setMessage(Text.literal(replaced));
     }
 
     @Override

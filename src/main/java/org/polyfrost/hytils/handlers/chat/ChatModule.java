@@ -18,7 +18,6 @@
 
 package org.polyfrost.hytils.handlers.chat;
 
-import dev.deftu.textile.minecraft.MCTextFormat;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.language.LanguageData;
@@ -37,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
  * @see ChatHandler
  */
 interface ChatModule {
+    char COLOR_CHAR = '§';
 
     // TODO: A lot of the priority numbers were chosen mostly at random, with only some thought put into them. Someone should go through them and really make sure that each one has a good priority.
 
@@ -69,14 +69,22 @@ interface ChatModule {
         return true;
     }
 
-
     /**
      * Default pedantically static utility method to allow {@link ChatModule}s to color messages
      * without a long line of code.
      */
     @NotNull
     default IChatComponent colorMessage(@NotNull String message) {
-        return new ChatComponentText(MCTextFormat.translateAlternateColorCodes('&', message));
+        char[] b = message.toCharArray();
+        for (int i = 0; i < b.length - 1; i++) {
+            if (b[i] == '&' && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i + 1]) > -1) {
+                b[i] = COLOR_CHAR;
+                b[i + 1] = Character.toLowerCase(b[i + 1]);
+            }
+        }
+
+        String newString = new String(b);
+        return new ChatComponentText(newString);
     }
 
     /**

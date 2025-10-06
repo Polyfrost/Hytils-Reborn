@@ -18,6 +18,7 @@
 
 package org.polyfrost.hytils.handlers.chat.modules.modifiers;
 
+import dev.deftu.textile.minecraft.MCText;
 import org.polyfrost.hytils.HytilsReborn;
 import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
@@ -62,7 +63,7 @@ public class DefaultChatRestyler implements ChatReceiveModule {
 
     @Override
     public void onMessageReceived(@NotNull ChatEvent.Receive event) {
-        IChatComponent component = event.getMessage();
+        IChatComponent component = MCText.convert(event.getMessage());
         String message = component.getFormattedText().trim();
         final String unformattedMessage = event.getFullyUnformattedMessage().trim();
         final List<IChatComponent> siblings = component.getSiblings();
@@ -83,17 +84,21 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             Matcher friendMatcher = language.chatRestylerFriendPatternRegex.matcher(message);
             Matcher officerMatcher = language.chatRestylerOfficerPatternRegex.matcher(message);
             if (partyMatcher.find()) {
-                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerPartyPatternRegex.pattern(),
+                IChatComponent newMessage = (shortenChannelName(component, language.chatRestylerPartyPatternRegex.pattern(),
                     partyMatcher.group(1) + "P " + partyMatcher.group(3), false));
+                event.setMessage(MCText.wrap(newMessage));
             } else if (guildMatcher.find()) {
-                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerGuildPatternRegex.pattern(),
+                IChatComponent newMessage = (shortenChannelName(component, language.chatRestylerGuildPatternRegex.pattern(),
                     guildMatcher.group(1) + "G >", true));
+                event.setMessage(MCText.wrap(newMessage));
             } else if (friendMatcher.find()) {
-                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerFriendPatternRegex.pattern(),
+                IChatComponent newMessage = (shortenChannelName(component, language.chatRestylerFriendPatternRegex.pattern(),
                     friendMatcher.group(1) + "F >", true));
+                event.setMessage(MCText.wrap(newMessage));
             } else if (officerMatcher.find()) {
-                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerOfficerPatternRegex.pattern(),
+                IChatComponent newMessage = (shortenChannelName(component, language.chatRestylerOfficerPatternRegex.pattern(),
                     officerMatcher.group(1) + "O >", false));
+                event.setMessage(MCText.wrap(newMessage));
             }
         }
 
@@ -101,11 +106,13 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             Matcher privateMessageToMatcher = language.chatRestylerPrivateMessageToPatternRegex.matcher(message);
             Matcher privateMessageFromMatcher = language.chatRestylerPrivateMessageFromPatternRegex.matcher(message);
             if (privateMessageToMatcher.find()) {
-                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerPrivateMessageToPatternRegex.pattern(),
+                IChatComponent newMessage = (shortenChannelName(component, language.chatRestylerPrivateMessageToPatternRegex.pattern(),
                     "§d" + "PM >" + privateMessageToMatcher.group(3) + ":" + privateMessageToMatcher.group(4), true));
+                event.setMessage(MCText.wrap(newMessage));
             } else if (privateMessageFromMatcher.find()) {
-                event.setMessage(shortenChannelName(event.getMessage(), language.chatRestylerPrivateMessageFromPatternRegex.pattern(),
+                IChatComponent newMessage = (shortenChannelName(component, language.chatRestylerPrivateMessageFromPatternRegex.pattern(),
                     "§5" + "PM <" + privateMessageFromMatcher.group(3) + ":" + privateMessageFromMatcher.group(4), true));
+                event.setMessage(MCText.wrap(newMessage));
             }
         }
 
@@ -114,9 +121,11 @@ public class DefaultChatRestyler implements ChatReceiveModule {
             if (statusMatcher.matches()) {
                 final String status = statusMatcher.group("status");
                 if (status.equalsIgnoreCase("joined")) {
-                    event.setMessage(colorMessage(statusMatcher.group("type") + " > &r" + statusMatcher.group("player") + " &r&ajoined&e."));
+                    IChatComponent newMessage = (colorMessage(statusMatcher.group("type") + " > &r" + statusMatcher.group("player") + " &r&ajoined&e."));
+                    event.setMessage(MCText.wrap(newMessage));
                 } else if (status.equalsIgnoreCase("left")) {
-                    event.setMessage(colorMessage(statusMatcher.group("type") + " > &r" + statusMatcher.group("player") + " &r&cleft&e."));
+                    IChatComponent newMessage = (colorMessage(statusMatcher.group("type") + " > &r" + statusMatcher.group("player") + " &r&cleft&e."));
+                    event.setMessage(MCText.wrap(newMessage));
                 }
             }
         }
@@ -132,44 +141,52 @@ public class DefaultChatRestyler implements ChatReceiveModule {
                 // message = message.replaceAll(unformattedPaddingPattern.toString(), "(" + pad(mu.group(1)) + "/" + mu.group(2) + ")");
 
                 joinMatcher = language.chatRestylerGameJoinStyleRegex.matcher(message); // recalculate since we padded
-                event.setMessage(new ChatComponentText(message));
+                event.setMessage(MCText.wrap(new ChatComponentText(message)));
             }
         }
 
         if (HytilsConfig.gameStatusRestyle) { // TODO: all the code following this might have room for optimization, should be looked into
             if (joinMatcher.matches()) {
                 if (HytilsConfig.playerCountBeforePlayerName) {
-                    event.setMessage(colorMessage("&a&l+ &e" + joinMatcher.group("amount")
+                    IChatComponent newMessage = (colorMessage("&a&l+ &e" + joinMatcher.group("amount")
                         + " &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : "") + joinMatcher.group("player")));
+                    event.setMessage(MCText.wrap(newMessage));
                 } else {
-                    event.setMessage(colorMessage("&a&l+ &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : "") + joinMatcher.group("player") + " &r&e" +
+                    IChatComponent newMessage = (colorMessage("&a&l+ &" + joinMatcher.group("color") + (message.contains("§k") ? "§k" : "") + joinMatcher.group("player") + " &r&e" +
                         joinMatcher.group("amount")));
+                    event.setMessage(MCText.wrap(newMessage));
                 }
             } else {
                 Matcher leaveMatcher = language.chatRestylerGameLeaveStyleRegex.matcher(message);
                 if (leaveMatcher.matches()) {
                     if (HytilsConfig.playerCountOnPlayerLeave) {
                         if (HytilsConfig.playerCountBeforePlayerName) {
-                            event.setMessage(colorMessage("&c&l- &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount +
+                            IChatComponent newMessage = (colorMessage("&c&l- &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount +
                                 "&e) &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") + leaveMatcher.group("player")));
+                            event.setMessage(MCText.wrap(newMessage));
                         } else {
-                            event.setMessage(colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") +
+                            IChatComponent newMessage = (colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") +
                                 leaveMatcher.group("player") + " &r&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)"));
+                            event.setMessage(MCText.wrap(newMessage));
                         }
                     } else {
-                        event.setMessage(colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") + leaveMatcher.group("player")));
+                        IChatComponent newMessage = (colorMessage("&c&l- &" + leaveMatcher.group("color") + (message.contains("§k") ? "§k" : "") + leaveMatcher.group("player")));
+                        event.setMessage(MCText.wrap(newMessage));
                     }
                 } else {
                     Matcher startCounterMatcher = language.chatRestylerGameStartCounterStyleRegex.matcher(unformattedMessage);
 
                     if (startCounterMatcher.matches()) {
                         // if the format (below) is changed, remember to update the regex for it (chatRestylerGameStartCounterOutputStyle)
-                        event.setMessage(colorMessage("&e&l* &a" + (startCounterMatcher.group("title")) + " &b&l" + startCounterMatcher.group("time") + " &a" + startCounterMatcher.group("unit")));
+                        IChatComponent newMessage = (colorMessage("&e&l* &a" + (startCounterMatcher.group("title")) + " &b&l" + startCounterMatcher.group("time") + " &a" + startCounterMatcher.group("unit")));
+                        event.setMessage(MCText.wrap(newMessage));
                     } else {
                         if ("We don't have enough players! Start cancelled.".equals(unformattedMessage)) {
-                            event.setMessage(colorMessage("&e&l* &cStart cancelled."));
+                            IChatComponent newMessage = (colorMessage("&e&l* &cStart cancelled."));
+                            event.setMessage(MCText.wrap(newMessage));
                         } else if ("We don't have enough players! Start delayed.".equals(unformattedMessage)) {
-                            event.setMessage(colorMessage("&e&l* &cStart delayed."));
+                            IChatComponent newMessage = (colorMessage("&e&l* &cStart delayed."));
+                            event.setMessage(MCText.wrap(newMessage));
                         }
                     }
                 }
@@ -179,21 +196,24 @@ public class DefaultChatRestyler implements ChatReceiveModule {
                 Matcher leaveMater = language.chatRestylerGameLeaveStyleRegex.matcher(message);
                 if (leaveMater.matches()) {
                     if (HytilsConfig.playerCountBeforePlayerName) {
-                        event.setMessage(colorMessage("&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e) " + message));
+                        IChatComponent newMessage = (colorMessage("&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e) " + message));
+                        event.setMessage(MCText.wrap(newMessage));
                     } else {
-                        event.setMessage(colorMessage(message.substring(0, message.length() - 3) + " &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)!"));
+                        IChatComponent newMessage = (colorMessage(message.substring(0, message.length() - 3) + " &e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e)!"));
+                        event.setMessage(MCText.wrap(newMessage));
                     }
                     return;
                 }
             }
             if (HytilsConfig.playerCountBeforePlayerName) {
                 if (joinMatcher.matches()) {
-                    event.setMessage(colorMessage("&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e) " + message.split(" \\(")[0] + "!"));
+                    IChatComponent newMessage = (colorMessage("&e(&b" + pad(String.valueOf(--playerCount)) + "&e/&b" + maxPlayerCount + "&e) " + message.split(" \\(")[0] + "!"));
+                    event.setMessage(MCText.wrap(newMessage));
                 }
             }
         }
 
-        HytilsReborn.INSTANCE.getChatHandler().fixStyling(event.getMessage(), siblings);
+//        HytilsReborn.INSTANCE.getChatHandler().fixStyling(event.getMessage(), siblings);
     }
 
     /**
@@ -207,7 +227,7 @@ public class DefaultChatRestyler implements ChatReceiveModule {
      */
     private ChatComponentText shortenChannelName(IChatComponent message, String pattern, String replacement, boolean checkParentComponent) {
         String originalText = message.getUnformattedTextForChat();
-        if (checkParentComponent && !originalText.contains("\u00a7")) {
+        if (checkParentComponent && !originalText.contains("§")) {
             originalText = (message.getChatStyle().getFormattingCode() + originalText + EnumChatFormatting.RESET).replaceAll(pattern, replacement);
         }
         ChatComponentText copy = (ChatComponentText) new ChatComponentText(originalText).setChatStyle(message.getChatStyle());
