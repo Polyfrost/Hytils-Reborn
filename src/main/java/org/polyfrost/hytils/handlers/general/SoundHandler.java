@@ -21,6 +21,7 @@ package org.polyfrost.hytils.handlers.general;
 import dev.deftu.omnicore.api.OmniIdentifier;
 import dev.deftu.omnicore.api.client.OmniClient;
 import dev.deftu.omnicore.api.client.sound.OmniClientSound;
+import dev.deftu.omnicore.api.items.OmniItemStacks;
 import dev.deftu.omnicore.api.sound.OmniSound;
 import dev.deftu.omnicore.api.sound.OmniSounds;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -40,6 +41,12 @@ import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 //#endif
 
 public class SoundHandler {
+    private OmniSound IRON_GOLEM_HIT;
+    private OmniSound BLAZE_HIT;
+    private OmniSound HORSE_DEATH;
+    private OmniSound GHAST_SCREAM;
+    private OmniSound GUARDIAN_HIT;
+    private OmniSound CAT_MEOW;
 
     private int ticks = -1;
 
@@ -60,7 +67,7 @@ public class SoundHandler {
             return;
         }
 
-        int equippedStackSize = stackSize(equippedStack);
+        int equippedStackSize = OmniItemStacks.count(equippedStack);
         if (equippedStackSize > HytilsConfig.blockNumber || equippedStackSize <= 4) {
             if (ticks != -1) {
                 ticks = -1;
@@ -103,14 +110,6 @@ public class SoundHandler {
         }
     }
 
-    private int stackSize(ItemStack stack) {
-        //#if MC >= 1.12.2
-        //$$ return stack.getCount();
-        //#else
-        return stack.stackSize;
-        //#endif
-    }
-
     public void playSound() {
         if (!Minecraft.getMinecraft().playerController.gameIsSurvivalOrAdventure()) {
             return;
@@ -119,90 +118,120 @@ public class SoundHandler {
         OmniSound sound = null;
         switch (HytilsConfig.blockNotifySound) {
             case 0:
-                sound = OmniSounds.EXPERIENCE_ORB_PICKUP;
+                sound = OmniSounds.ENTITY.getExperienceOrb();
                 break;
             case 1:
-                sound = new OmniSound(
-                    //#if MC >= 1.12.2
-                    //$$ Sounds.ENTITY_IRONGOLEM_HURT
-                    //#else
-                    OmniIdentifier.createOrThrow("mob.irongolem.hit")
-                    //#endif
-                );
-
+                sound = getIronGolemHit();
                 break;
             case 2:
-                sound = new OmniSound(
-                    //#if MC >= 1.12.2
-                    //$$ Sounds.ENTITY_BLAZE_HURT
-                    //#else
-                    OmniIdentifier.createOrThrow("mob.blaze.hit")
-                    //#endif
-                );
-
+                sound = getBlazeHit();
                 break;
             case 3:
-                sound = new OmniSound(
-                    //#if MC >= 1.12.2
-                    //$$ Sounds.BLOCK_ANVIL_LAND
-                    //#else
-                    OmniIdentifier.createOrThrow("random.anvil_land")
-                    //#endif
-                );
-
+                sound = OmniSounds.BLOCK.getAnvilLand();
                 break;
             case 4:
-                sound = new OmniSound(
-                    //#if MC >= 1.12.2
-                    //$$ Sounds.ENTITY_HORSE_DEATH
-                    //#else
-                    OmniIdentifier.createOrThrow("mob.horse.death")
-                    //#endif
-                );
-
+                sound = getHorseDeath();
                 break;
             case 5:
-                sound = new OmniSound(
-                    //#if MC >= 1.12.2
-                    //$$ Sounds.ENTITY_GHAST_SCREAM
-                    //#else
-                    OmniIdentifier.createOrThrow("mob.ghast.scream")
-                    //#endif
-                );
-
+                sound = getGhastScream();
                 break;
             case 6:
-                sound = new OmniSound(
-                    //#if MC >= 1.12.2
-                    //$$ Sounds.ENTITY_GUARDIAN_HURT_LAND
-                    //#else
-                    OmniIdentifier.createOrThrow("mob.guardian.land.hit")
-                    //#endif
-                );
-
+                sound = getGuardianHit();
                 break;
             case 7:
-                sound = new OmniSound(
-                    //#if MC >= 1.12.2
-                    //$$ Sounds.ENTITY_CAT_AMBIENT
-                    //#else
-                    OmniIdentifier.createOrThrow("mob.cat.meow")
-                    //#endif
-                );
-
+                sound = getCatMeow();
                 break;
             case 8:
-                sound = new OmniSound(
-                    //#if MC >= 1.12.2
-                    //$$ Sounds.ENTITY_WOLF_AMBIENT
-                    //#else
-                    OmniIdentifier.createOrThrow("mob.wolf.bark")
-                    //#endif
-                );
+                sound = OmniSounds.WOLF.getBark();
+                break;
         }
 
         if (sound != null) {
             OmniClientSound.play(sound, 1f, 1f);
         }
+    }
+
+    private OmniSound getIronGolemHit() {
+        if (IRON_GOLEM_HIT == null) {
+            IRON_GOLEM_HIT = OmniSound.of(
+                //#if MC >= 1.12.2
+                //$$ Sounds.ENTITY_IRONGOLEM_HURT
+                //#else
+                OmniIdentifier.createOrThrow("mob.irongolem.hit")
+                //#endif
+            );
+        }
+
+        return IRON_GOLEM_HIT;
+    }
+
+    private OmniSound getBlazeHit() {
+        if (BLAZE_HIT == null) {
+            BLAZE_HIT = OmniSound.of(
+                //#if MC >= 1.12.2
+                //$$ Sounds.ENTITY_BLAZE_HURT
+                //#else
+                OmniIdentifier.createOrThrow("mob.blaze.hit")
+                //#endif
+            );
+        }
+
+        return BLAZE_HIT;
+    }
+
+    private OmniSound getHorseDeath() {
+        if (HORSE_DEATH == null) {
+            HORSE_DEATH = OmniSound.of(
+                //#if MC >= 1.12.2
+                //$$ Sounds.ENTITY_HORSE_DEATH
+                //#else
+                OmniIdentifier.createOrThrow("mob.horse.death")
+                //#endif
+            );
+        }
+
+        return HORSE_DEATH;
+    }
+
+    private OmniSound getGhastScream() {
+        if (GHAST_SCREAM == null) {
+            GHAST_SCREAM = OmniSound.of(
+                //#if MC >= 1.12.2
+                //$$ Sounds.ENTITY_GHAST_SCREAM
+                //#else
+                OmniIdentifier.createOrThrow("mob.ghast.scream")
+                //#endif
+            );
+        }
+
+        return GHAST_SCREAM;
+    }
+
+    private OmniSound getGuardianHit() {
+        if (GUARDIAN_HIT == null) {
+            GUARDIAN_HIT = OmniSound.of(
+                //#if MC >= 1.12.2
+                //$$ Sounds.ENTITY_GUARDIAN_HURT_LAND
+                //#else
+                OmniIdentifier.createOrThrow("mob.guardian.land.hit")
+                //#endif
+            );
+        }
+
+        return GUARDIAN_HIT;
+    }
+
+    private OmniSound getCatMeow() {
+        if (CAT_MEOW == null) {
+            CAT_MEOW = OmniSound.of(
+                //#if MC >= 1.12.2
+                //$$ Sounds.ENTITY_CAT_AMBIENT
+                //#else
+                OmniIdentifier.createOrThrow("mob.cat.meow")
+                //#endif
+            );
+        }
+
+        return CAT_MEOW;
     }
 }
