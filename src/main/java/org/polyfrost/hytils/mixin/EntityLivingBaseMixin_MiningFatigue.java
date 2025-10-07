@@ -49,7 +49,7 @@ public class EntityLivingBaseMixin_MiningFatigue {
             potioneffectIn.getPotionID() == Potion.digSlowdown.getId();
             //#endif
         if (HytilsConfig.notifyMiningFatigue && isMiningFatigue && (hytils$this instanceof EntityPlayerSP) && (!HytilsConfig.disableNotifyMiningFatigueSkyblock || !(HypixelUtils.getLocation().getGameType().orElse(null) == GameType.SKYBLOCK))) {
-            Notifications.INSTANCE.enqueue(Notifications.Type.Warning, "Hytils Reborn", "You have mining fatigue!");
+            Notifications.enqueue(Notifications.Type.Warning, "Hytils Reborn", "You have mining fatigue!");
         }
     }
 }

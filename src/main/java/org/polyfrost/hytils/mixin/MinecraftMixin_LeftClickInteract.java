@@ -18,7 +18,7 @@
 
 package org.polyfrost.hytils.mixin;
 
-//#if FORGE
+//#if FORGE && MC == 1.8.9
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.PlayerControllerMP;

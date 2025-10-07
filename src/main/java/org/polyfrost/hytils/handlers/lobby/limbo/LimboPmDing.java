@@ -33,7 +33,7 @@ public class LimboPmDing {
         HypixelUtils.Location location = HypixelUtils.getLocation();
         IChatComponent message = MCText.convert(event.getMessage());
         if (HypixelUtils.isHypixel() && "limbo".equals(location.getServerName().orElse(null)) && message.getFormattedText().startsWith("§dFrom §r") && HytilsConfig.limboDing) {
-            OmniClientSound.play(OmniSounds.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+            OmniClientSound.play(OmniSounds.ENTITY.getExperienceOrb(), 1f, 1f);
         }
     }
 }

@@ -21,9 +21,13 @@ package org.polyfrost.hytils.util;
 //#if FABRIC
 //$$ import net.minecraft.util.math.BlockPos;
 //$$ import net.minecraft.util.math.Box;
+//#endif
+
+//#if FABRIC || MC >= 1.12.2
 //$$ import net.minecraft.util.math.MathHelper;
 //#endif
 
+import dev.deftu.omnicore.api.OmniIdentifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -43,7 +47,7 @@ import org.polyfrost.polyui.color.PolyColor;
  * @author Moulberry
  */
 public class WaypointUtil {
-    private static final ResourceLocation beaconBeam = new ResourceLocation("textures/entity/beacon_beam.png");
+    private static final ResourceLocation beaconBeam = OmniIdentifier.createOrNull("textures/entity/beacon_beam.png");
     private static final PolyColor nameColor = PolyColor.WHITE;
 
     private static void renderBeaconBeam(double x, double y, double z, PolyColor color, float partialTicks, boolean disableDepth) {
