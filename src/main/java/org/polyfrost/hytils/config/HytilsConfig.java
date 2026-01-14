@@ -81,11 +81,18 @@ public class HytilsConfig extends Config {
     private static boolean autoQueueInfo;
 
     @Switch(
-        name = "Auto Queue",
-        description = "Automatically queues for another game once you win or die.",
+        name = "Auto Queue Game End",
+        description = "Automatically queues for another game once your game ends.",
         category = "General", subcategory = "Automatic"
     )
-    public static boolean autoQueue;
+    public static boolean autoQueueGameEnd;
+
+    @Switch(
+        name = "Auto Queue Die",
+        description = "Automatically queues for another game once you die.",
+        category = "General", subcategory = "Automatic"
+    )
+    public static boolean autoQueueDie;
 
     @Slider(
         name = "Auto Queue Delay",

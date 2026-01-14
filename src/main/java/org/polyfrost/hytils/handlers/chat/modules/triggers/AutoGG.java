@@ -1,21 +1,3 @@
-/*
- * Hytils Reborn - Hypixel focused Quality of Life mod.
- * Copyright (C) 2020, 2021, 2022, 2023  Polyfrost, Sk1er LLC and contributors
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 package org.polyfrost.hytils.handlers.chat.modules.triggers;
 
 import cc.polyfrost.oneconfig.events.event.WorldLoadEvent;
@@ -30,6 +12,7 @@ import org.polyfrost.hytils.config.HytilsConfig;
 import org.polyfrost.hytils.handlers.cache.PatternHandler;
 import org.polyfrost.hytils.handlers.chat.ChatReceiveModule;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
@@ -46,9 +29,12 @@ public class AutoGG implements ChatReceiveModule {
 
         if (!matchFound) {
             matchFound = true;
-            Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.ggMessage), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
+            String ggMessage1 = "random".equals(HytilsConfig.ggMessage) ? getRandomGG() : HytilsConfig.ggMessage;
+            String ggMessage2 = "random".equals(HytilsConfig.ggMessage2) ? getRandomGG() : HytilsConfig.ggMessage2;
+
+            Multithreading.schedule(() -> UChat.say("/ac " + ggMessage1), (long) (HytilsConfig.autoGGFirstPhraseDelay * 1000), TimeUnit.MILLISECONDS);
             if (HytilsConfig.autoGGSecondMessage) {
-                Multithreading.schedule(() -> UChat.say("/ac " + HytilsConfig.ggMessage2), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
+                Multithreading.schedule(() -> UChat.say("/ac " + ggMessage2), (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000), TimeUnit.MILLISECONDS);
             }
             // Schedule the reset of matchFound after the second message has been sent
             Multithreading.schedule(() -> matchFound = false, (long) ((HytilsConfig.autoGGSecondPhraseDelay + HytilsConfig.autoGGFirstPhraseDelay) * 1000) + 5000, TimeUnit.MILLISECONDS);
@@ -73,14 +59,57 @@ public class AutoGG implements ChatReceiveModule {
         matchFound = false;
     }
 
-    @Override
     public boolean isEnabled() {
         return HytilsConfig.autoGG && (!HytilsReborn.INSTANCE.isSk1erAutoGG || !club.sk1er.mods.autogg.AutoGG.INSTANCE.getAutoGGConfig().isModEnabled()); // If Sk1er's AutoGG is enabled, we don't want to interfere with it.
     }
 
-    @Override
     public int getPriority() {
         return 3;
     }
-}
 
+    private static final Random random = new Random();
+
+    public static String getRandomGG() {
+        String base;
+
+        int roll = random.nextInt(258);
+
+        if (roll < 2) {
+            base = "gg";
+        } else if (roll < 130) {
+            base = "goodgame";
+        } else {
+            base = "good game";
+        }
+
+        char[] chars = base.toCharArray();
+        int capsCount = 0;
+
+        for (int i = 0; i < chars.length; i++) {
+            if (!Character.isLetter(chars[i])) continue; // Skip spaces
+
+            if (random.nextBoolean()) {
+                chars[i] = Character.toUpperCase(chars[i]);
+                capsCount++;
+            } else {
+                chars[i] = Character.toLowerCase(chars[i]);
+            }
+        }
+
+        if (capsCount % 2 != 0) {
+            for (int i = chars.length - 1; i >= 0; i--) {
+                if (Character.isLetter(chars[i])) {
+                    // Flip case of the last letter
+                    if (Character.isUpperCase(chars[i])) {
+                        chars[i] = Character.toLowerCase(chars[i]);
+                    } else {
+                        chars[i] = Character.toUpperCase(chars[i]);
+                    }
+                    break;
+                }
+            }
+        }
+
+        return new String(chars);
+    }
+}
