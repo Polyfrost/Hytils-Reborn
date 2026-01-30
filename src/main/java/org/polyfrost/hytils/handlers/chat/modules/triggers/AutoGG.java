@@ -70,7 +70,10 @@ public class AutoGG implements ChatReceiveModule {
         }
 
         // TODO: UNTESTED!
-        return getLanguage().casualGameEndRegex.matcher(message).matches();
+        if (HytilsConfig.casualAutoGG) {
+            return getLanguage().casualGameEndRegex.matcher(message).matches();
+        }
+        return false;
     }
 
     @Subscribe
