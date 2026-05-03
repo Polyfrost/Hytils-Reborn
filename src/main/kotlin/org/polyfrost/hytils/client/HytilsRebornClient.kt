@@ -1,0 +1,88 @@
+package org.polyfrost.hytils.client
+
+import com.mojang.brigadier.builder.LiteralArgumentBuilder
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
+import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents
+import org.polyfrost.hytils.HytilsRebornConstants
+import org.polyfrost.hytils.client.commands.impl.*
+import org.polyfrost.hytils.client.data.providers.*
+import org.polyfrost.hytils.client.events.PostLevelRenderEvent
+import org.polyfrost.hytils.client.handlers.chat.ChatHandler
+import org.polyfrost.hytils.client.handlers.game.*
+import org.polyfrost.hytils.client.handlers.game.titles.CountdownTitles
+import org.polyfrost.hytils.client.handlers.game.titles.GameEndingTitles
+import org.polyfrost.hytils.client.handlers.game.titles.GameStartingTitles
+import org.polyfrost.hytils.client.handlers.general.ArmorStandHider
+import org.polyfrost.hytils.client.handlers.general.SoundHandler
+import org.polyfrost.hytils.client.handlers.limbo.LimboLimiter
+import org.polyfrost.hytils.client.handlers.limbo.LimboPrivateMessageSounds
+import org.polyfrost.hytils.client.handlers.lobby.SilentLobby
+import org.polyfrost.oneconfig.api.event.v1.EventManager
+import org.polyfrost.oneconfig.utils.v1.Multithreading
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+object HytilsRebornClient {
+    val LOGGER: Logger = LoggerFactory.getLogger(HytilsRebornConstants.NAME)
+
+    fun initialize() {
+        HytilsRebornConfig.preload()
+
+        Multithreading.submit {
+            listOf(
+                LanguageData, ArmorStandData, CosmeticsData,
+                GameAliasesData, GameIdentifiersData, HeightLimitData
+            ).forEach { it.load() }
+        }
+
+        listOf(
+            // misc handlers
+            ChatHandler, SilentLobby,
+
+            // game handlers
+            CountdownTitles, GameEndingTitles,
+            GameStartingTitles, ChestHighlighter,
+            HardcoreStatus, HeightOverlay,
+            MiniWallsMiddleBeacon, PitLagReducer,
+            SumoRenderDistance, UHCMiddleWaypoint,
+
+            // general handlers
+            ArmorStandHider, SoundHandler,
+
+            // limbo handlers
+            LimboLimiter, LimboPrivateMessageSounds,
+        ).forEach { EventManager.INSTANCE.register(it) }
+
+        ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
+            listOf(
+                HytilsCommand, HousingVisitCommand,
+                PlayCommand, RequeueCommand,
+                SilentRemoveCommand, SkyblockVisitCommand,
+            ).forEach {
+                val command = dispatcher.register(it.getCommand())
+                it.getAliases().forEach { alias ->
+                    // https://github.com/Mojang/brigadier/issues/46
+                    val builder = LiteralArgumentBuilder.literal<FabricClientCommandSource>(alias)
+                        .requires(command.requirement)
+                        .forward(command.redirect, command.redirectModifier, command.isFork)
+                        .executes(command.command)
+                        .apply { command.children?.forEach { child -> then(child) } }
+                    dispatcher.register(builder)
+                }
+            }
+        }
+
+        // FIXME: [PostWorldRenderEvent] is broken on 1.21
+        WorldRenderEvents.END_MAIN.register { context ->
+            EventManager.INSTANCE.post(
+                PostLevelRenderEvent(
+                    context.matrices(),
+                    context.commandQueue(),
+                    context.consumers(),
+                    context.worldState()
+                )
+            )
+        }
+    }
+}

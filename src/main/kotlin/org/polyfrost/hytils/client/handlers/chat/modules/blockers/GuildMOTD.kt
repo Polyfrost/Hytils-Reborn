@@ -1,0 +1,38 @@
+package org.polyfrost.hytils.client.handlers.chat.modules.blockers
+
+import org.polyfrost.hytils.client.HytilsRebornConfig
+import org.polyfrost.hytils.client.events.ChatReceiveEvent
+import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule
+import org.polyfrost.oneconfig.api.event.v1.events.ServerJoinEvent
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
+
+object GuildMOTD : ChatReceiveModule {
+    var isMotd = false
+    var sentMotd = false
+
+    override fun onChatReceived(event: ChatReceiveEvent) {
+        if (sentMotd || event.isOverlay) return
+
+        if (isMotd) {
+            if (event.unformattedMessage.startsWith("------")) {
+                isMotd = false
+                sentMotd = true
+            }
+            event.cancelled = true
+        } else if (event.unformattedMessage.startsWith("------")
+            && event.unformattedMessage.contains("Guild: Message Of The Day")
+        ) {
+            isMotd = true
+            event.cancelled = true
+        }
+    }
+
+    @Subscribe
+    fun onServerJoin(event: ServerJoinEvent) {
+        isMotd = false
+        sentMotd = false
+    }
+
+    override fun isEnabled() = HytilsRebornConfig.removeGuildMotd
+    override fun getPriority() = -1
+}

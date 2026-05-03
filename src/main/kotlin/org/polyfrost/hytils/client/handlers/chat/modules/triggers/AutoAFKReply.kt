@@ -1,0 +1,31 @@
+package org.polyfrost.hytils.client.handlers.chat.modules.triggers
+
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
+import net.minecraft.util.Util
+import org.polyfrost.hytils.client.HytilsRebornConfig
+import org.polyfrost.hytils.client.events.ChatReceiveEvent
+import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule
+import org.polyfrost.hytils.client.data.providers.LanguageData
+import org.polyfrost.hytils.mixin.client.accessor.FramerateLimitTrackerAccessor
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
+import org.polyfrost.oneconfig.utils.v1.dsl.mc
+
+object AutoAFKReply : ChatReceiveModule {
+    override fun onChatReceived(event: ChatReceiveEvent) {
+        if (event.isOverlay || !HypixelUtils.isHypixel()) return
+
+        val latestInputTime = (mc.framerateLimitTracker as FramerateLimitTrackerAccessor).latestInputTime
+        if (Util.getMillis() - latestInputTime < HytilsRebornConfig.afkTimeout * 60L * 1000L) return
+
+        LanguageData.PRIVATE_MESSAGE.find(event.unformattedMessage)?.let { match ->
+            val type = match.groups["type"]?.value ?: return
+            if (type != "From") return
+
+            val player = match.groups["player"]?.value ?: return
+            val message = HytilsRebornConfig.afkReplyMessage.replace("%player%", player)
+            OmniClientChatSender.send("/msg $player $message")
+        }
+    }
+
+    override fun isEnabled() = HytilsRebornConfig.autoReplyAfk
+}

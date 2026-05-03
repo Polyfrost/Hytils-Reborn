@@ -2,8 +2,8 @@
 ![Compact Powered by OneConfig](https://polyfrost.org/img/compact_vector.svg)
 ![Dev Workflow Status](https://img.shields.io/github/v/release/Polyfrost/Hytils-Reborn.svg?style=for-the-badge&color=1452cc&label=release)
 
-Hytils Reborn is a [Hypixel](https://hypixel.net) focused Forge 1.8.9 mod based on [Sk1er LLC's Hytilities](https://github.com/Sk1erLLC/Hytilities), adding tons of Quality of Life features that
-you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Message Blockers, Auto Queue, Autocomplete for /play and plenty others to discover on your own!
+Hytils Reborn is a [Hypixel](https://hypixel.net) focused mod based on [Sk1er LLC's Hytilities](https://github.com/Sk1erLLC/Hytilities), adding tons of Quality of Life features that
+you would want while on Hypixel, including Chat Restylers, Height Overlay, Message Blockers, Auto Queue, Autocomplete for /play and plenty others to discover on your own!
 ## Features
 <details>
  <summary>General</summary>
@@ -12,7 +12,6 @@ you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Me
 - **Auto Start** - Join Hypixel immediately once the client has loaded to the main menu.
 - **Auto-Complete Play Commands** - Allows tab completion of /play commands.
 - **Auto Queue** - Automatically queues for another game once you win or die. (This will require you to interact with the game in a way to prevent abuse)
-- **Limbo Play Helper** - When a /play command is run in Limbo, this runs /l first and then the command.
 - **Automatically Check GEXP** - Automatically check your GEXP after you win a Hypixel game.
 - **Automatically Check Winstreak** - Automatically check your winstreak after you win a Hypixel game.
 - **Notify Mining Fatigue** - Send a notification when you get mining fatigue.
@@ -44,7 +43,7 @@ you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Me
 - **Cleaner Start Counter** - Compacts counting announcements.
 - **Short Channel Names** - Abbreviate chat channel names.
 - **Party Chat Swapper** - Automatically change to and out of a party channel when joining/leaving a party.
-- **Swap Chatting Tab With Chat Swapper** - Automatically switch your [Chatting](https://github.com/Polyfrost/Chatting) chat tab when chat swapper swaps your chat channel.
+<!-- - **Swap Chatting Tab With Chat Swapper** - Automatically switch your [Chatting](https://github.com/Polyfrost/Chatting) chat tab when chat swapper swaps your chat channel. -->
 - **Remove All Chat Message** - Hide the "You are now in the ALL channel" message when auto-switching.
 - **Notify When Kicked From Game** - Notify in party chat when you are kicked from the game due to a connection issue.
 - **Guild Welcome Message** - Send a friendly welcome message when a player joins your guild.
@@ -54,7 +53,6 @@ you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Me
 - **Shout Cooldown** - Show the amount of time remaining until /shout can be reused.
 - **Non Speech Cooldown** - Show the amount of time remaining until you can speak if you are a non.
 - **Remove Karma Messages** - Remove Karma messages from the chat.
-- **Hide Locraw Messages** - Hide locraw messages in chat.
 - **Remove Lobby Statuses** - Remove lobby join messages from chat.
 - **Remove Ticket Machine Rewards** - Remove ticket machine messages from chat and only show your own.
 - **Remove Soul Well Announcements** - Remove soul well announcements from chat.
@@ -89,10 +87,7 @@ you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Me
   <summary>Tab</summary>
 
 ### Tab
-- **Highlight Friends In Tab** - Add a star to the names of your Hypixel friends in tab.
 - **Highlight Self In Tab** - Add a star to your name in tab.
-- **Hide NPCs In Tab** - Prevent NPCs from showing up in tab.
-- **Don't Hide Important NPCs** - Keeps NPCs in tab in gamemodes like SkyBlock and Replay.
 - **Hide Guild Tags in Tab** - Prevent Guild tags from showing up in tab.
 - **Hide Player Ranks in Tab** - Prevent player ranks from showing up in tab.
 - **Hide Ping in Tab** - Prevent ping from showing up in tab while playing games, since the value is misleading. Ping will remain visible in lobbies.
@@ -114,13 +109,12 @@ you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Me
 - **Notify When Blocks Run Out** - Pings you via a sound when your blocks are running out.
 - **Middle Waypoint Beacon in MiniWalls** - Adds a beacon at (0,0) when your MiniWither is dead in MiniWalls.
 - **Hide Arcade Cosmetics** - Hide Arcade Cosmetics in Hypixel.
-- **Colored Beds** - Make beds a different color depending on the team they are on.
-- **Height Overlay** - Make blocks that are in the Hypixel height limit a different color.
+- **Height Overlay** - Make blocks that are at the height limit a different color in BedWars and The Bridge.
+- **Height Overlay Minimum Build Limit** - Enable the height overlay for blocks that are at the minimum build limit.
 - **Hide Actionbar in Dropper** - Hide the Actionbar in Dropper.
 - **Mute Hurt Sounds in Dropper** - Mute the sounds of other players failing in Dropper.
 - **Lower Render Distance in Sumo** - Lowers render distance to your desired value in Sumo Duels.
 - **Hide Duels Cosmetics** - Hide Duels Cosmetics in Hypixel.
-- **Mute Housing Music** - Prevent the Housing songs from being heard.
 - **Hide Actionbar in Housing** - Hide the Actionbar in Housing.
 - **Pit Lag Reducer** - Hide entities at spawn while you are in the PVP area.
 - **Remove Non-NPCs in SkyBlock** - Remove entities that are not NPCs in SkyBlock.
@@ -154,12 +148,11 @@ you would want while on Hypixel, including Colored Beds, Height Overlay, Chat Me
 - **Disable Enderman Sounds** - Remove sounds created by endermen.
 - **Disable Door Sounds** - Disable sounds caused by doors, trapdoors, and fence gates.
 - **Disable Portal Sounds** - Disable sounds caused by nether portals.
-- **Remove Limbo AFK Title** - Remove the AFK title when you get sent to limbo for being AFK.
 - **Limbo Limiter** - While in Limbo, limit your framerate to reduce the load of the game on your computer.
 - **Limbo PM Ding** - While in Limbo, play the ding sound if you get a PM. Currently, Hypixel's option does not work in Limbo.
 </details>
 
 ## Links and support
-* Did you run into a bug? [Open a bug report](https://polyfrost.cc/discord)
-* Service interruptions? [Checkout Polyfrost Status](https://status.polyfrost.cc/)
-* Feeling social? [Join our discord community](https://polyfrost.cc/discord)
+* Did you run into a bug? [Open a bug report](https://polyfrost.org/discord)
+* Service interruptions? [Checkout Polyfrost Status](https://status.polyfrost.org/)
+* Feeling social? [Join our discord community](https://polyfrost.org/discord)

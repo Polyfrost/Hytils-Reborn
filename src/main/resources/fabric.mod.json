@@ -16,7 +16,7 @@
         "client": [
             {
                 "adapter": "kotlin",
-                "value": "org.polyfrost.hytils.HytilsReborn"
+                "value": "org.polyfrost.hytils.HytilsRebornEntrypoint"
             }
         ]
     },
