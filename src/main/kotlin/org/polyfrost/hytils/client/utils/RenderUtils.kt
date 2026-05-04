@@ -1,5 +1,23 @@
 package org.polyfrost.hytils.client.utils
 
+//? if >=1.21.11 {
+import net.minecraft.client.renderer.SubmitNodeCollector
+import net.minecraft.client.renderer.rendertype.RenderSetup
+import net.minecraft.client.renderer.rendertype.RenderType
+import net.minecraft.client.renderer.state.CameraRenderState
+import net.minecraft.util.Util
+import org.polyfrost.hytils.mixin.client.accessor.RenderTypeAccessor
+//?} else {
+/*import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.renderer.RenderStateShard
+import net.minecraft.client.renderer.ShapeRenderer
+import net.minecraft.client.Camera
+import net.minecraft.Util
+
+import java.util.function.BiFunction
+*///?}
+
 import com.mojang.blaze3d.buffers.GpuBuffer
 import com.mojang.blaze3d.pipeline.BlendFunction
 import com.mojang.blaze3d.pipeline.RenderPipeline
@@ -12,14 +30,9 @@ import net.minecraft.client.gui.Font
 import net.minecraft.client.renderer.LightTexture
 import net.minecraft.client.renderer.MappableRingBuffer
 import net.minecraft.client.renderer.RenderPipelines
-import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
-import net.minecraft.client.renderer.rendertype.RenderSetup
-import net.minecraft.client.renderer.rendertype.RenderType
-import net.minecraft.client.renderer.state.CameraRenderState
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
-import net.minecraft.util.Util
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.Shapes
 import org.joml.Matrix4f
@@ -28,7 +41,6 @@ import org.joml.Vector3f
 import org.joml.Vector4f
 import org.lwjgl.system.MemoryUtil
 import org.polyfrost.hytils.HytilsRebornConstants
-import org.polyfrost.hytils.mixin.client.accessor.RenderTypeAccessor
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import org.polyfrost.polyui.color.PolyColor
 import org.polyfrost.polyui.color.asMutable
@@ -41,8 +53,10 @@ object RenderUtils {
     private var buffer: BufferBuilder? = null
 
     private val COLOR_MODULATOR = Vector4f(1f, 1f, 1f, 1f)
+    //? if >=1.21.11 {
     private val MODEL_OFFSET = Vector3f()
     private val TEXTURE_MATRIX = Matrix4f()
+    //?}
     private var vertexBuffer: MappableRingBuffer? = null
 
     private const val Z_FIGHTING_OFFSET = 0.001f
@@ -59,6 +73,7 @@ object RenderUtils {
         .build()
 
     @JvmField
+    //? if >=1.21.11 {
     val BEACON_BEAM_NO_DEPTH = Util.memoize { identifier: Identifier, isTranslucent: Boolean ->
         val pipeline = if (isTranslucent) {
             BEACON_BEAM_TRANSLUCENT_NO_DEPTH
@@ -73,6 +88,27 @@ object RenderUtils {
 
         RenderTypeAccessor.invokeCreate("beacon_beam", renderSetup)
     }
+    //?} else {
+    /*val BEACON_BEAM_NO_DEPTH: BiFunction<Identifier, Boolean, RenderType> = Util.memoize { resourceLocation, isTranslucent ->
+        val compositeState = RenderType.CompositeState.builder()
+            .setTextureState(RenderStateShard.TextureStateShard(resourceLocation, false))
+            .createCompositeState(false)
+        val pipeline = if (isTranslucent) {
+            BEACON_BEAM_TRANSLUCENT_NO_DEPTH
+        } else {
+            BEACON_BEAM_OPAQUE_NO_DEPTH
+        }
+        
+        RenderType.create(
+            "beacon_beam",
+            1536,
+            false,
+            true,
+            pipeline,
+            compositeState
+        )
+    }
+    *///?}
     @JvmField
     var beaconDisableDepth = false
 
@@ -84,7 +120,7 @@ object RenderUtils {
     fun renderText(
         text: Component,
         pos: Vec3,
-        camera: CameraRenderState,
+        camera: /*? if >=1.21.11 {*/ CameraRenderState /*?} else {*/ /*Camera *//*?}*/,
         color: PolyColor,
         backgroundColor: PolyColor,
         disableDepth: Boolean = false,
@@ -104,12 +140,13 @@ object RenderUtils {
     fun renderText(
         vararg texts: Component,
         pos: Vec3,
-        camera: CameraRenderState,
+        camera: /*? if >=1.21.11 {*/ CameraRenderState /*?} else {*/ /*Camera *//*?}*/,
         color: PolyColor,
         backgroundColor: PolyColor,
         disableDepth: Boolean = false,
         dynamic: Boolean = false,
     ) {
+        //~ if <1.21.11 'camera.pos' -> 'camera.position' {
         var pos = pos
         var scale = 1f
 
@@ -139,6 +176,7 @@ object RenderUtils {
                 (pos.y - camera.pos.y).toFloat(),
                 (pos.z - camera.pos.z).toFloat()
             )
+            //~ if <1.21.11 '.orientation' -> '.rotation()'
             .rotate(camera.orientation)
             .scale(scale, -scale, scale)
 
@@ -158,11 +196,12 @@ object RenderUtils {
 
             matrix.translate(0f, mc.font.lineHeight + 2f, 0f)
         }
+        //~}
     }
 
     fun renderBeaconBeam(
         poseStack: PoseStack,
-        submitNodeCollector: SubmitNodeCollector,
+        /*? if >=1.21.11 {*/ submitNodeCollector: SubmitNodeCollector /*?} else {*/ /*multiBufferSource: MultiBufferSource *//*?}*/,
         pos: Vec3,
         cameraPos: Vec3,
         color: PolyColor,
@@ -176,6 +215,7 @@ object RenderUtils {
         )
 
         if (disableDepth) beaconDisableDepth = true
+        //? if >=1.21.11 {
         BeaconRenderer.submitBeaconBeam(
             poseStack,
             submitNodeCollector,
@@ -188,6 +228,21 @@ object RenderUtils {
             BeaconRenderer.SOLID_BEAM_RADIUS,
             BeaconRenderer.BEAM_GLOW_RADIUS
         )
+        //?} else {
+        /*BeaconRenderer.renderBeaconBeam(
+            poseStack,
+            multiBufferSource,
+            BeaconRenderer.BEAM_LOCATION,
+            mc.deltaTracker.getGameTimeDeltaPartialTick(false),
+            1f,
+            mc.level!!.gameTime,
+            0,
+            BeaconRenderer.MAX_RENDER_Y,
+            color.argb,
+            BeaconRenderer.SOLID_BEAM_RADIUS,
+            BeaconRenderer.BEAM_GLOW_RADIUS
+        )
+        *///?}
         if (disableDepth) beaconDisableDepth = false
 
         poseStack.popPose()
@@ -217,6 +272,7 @@ object RenderUtils {
 
         val color = color.asMutable().apply { this.alpha = alpha }
 
+        //? if >=1.21.11 {
         Shapes.block().forAllBoxes { minX, minY, minZ, maxX, maxY, maxZ ->
             addBox(
                 poseStack.last().pose(),
@@ -230,10 +286,27 @@ object RenderUtils {
                 color.argb
             )
         }
+        //?} else {
+        /*ShapeRenderer.addChainedFilledBoxVertices(
+            poseStack,
+            buffer!!,
+            0f - Z_FIGHTING_OFFSET,
+            0f - Z_FIGHTING_OFFSET,
+            0f - Z_FIGHTING_OFFSET,
+            1f + Z_FIGHTING_OFFSET,
+            1f + Z_FIGHTING_OFFSET,
+            1f + Z_FIGHTING_OFFSET,
+            color.r / 255f,
+            color.g / 255f,
+            color.b / 255f,
+            color.alpha
+        )
+        *///?}
 
         poseStack.popPose()
     }
 
+    //? if >=1.21.11 {
     private fun addBox(
         positionMatrix: Matrix4fc,
         buffer: BufferBuilder,
@@ -269,6 +342,7 @@ object RenderUtils {
         buffer.addVertex(positionMatrix, x3, y3, z3).setColor(color)
         buffer.addVertex(positionMatrix, x4, y4, z4).setColor(color)
     }
+    //?}
 
     private fun drawFilledBox(pipeline: RenderPipeline) {
         val builtBuffer = buffer!!.buildOrThrow()
@@ -299,7 +373,7 @@ object RenderUtils {
         val commandEncoder = RenderSystem.getDevice().createCommandEncoder()
 
         commandEncoder.mapBuffer(
-            vertexBuffer!!.currentBuffer().slice(0, builtBuffer.vertexBuffer().remaining().toLong()),
+            vertexBuffer!!.currentBuffer().slice(0, builtBuffer.vertexBuffer().remaining()/*? if >=1.21.11 {*/ .toLong() /*?}*/),
             false,
             true
         ).use { mappedView ->
@@ -328,8 +402,13 @@ object RenderUtils {
             indexType = shapeIndexBuffer.type()
         }
 
-        val dynamicTransforms = RenderSystem.getDynamicUniforms()
-            .writeTransform(RenderSystem.getModelViewMatrix(), COLOR_MODULATOR, MODEL_OFFSET, TEXTURE_MATRIX)
+        val dynamicTransforms = RenderSystem.getDynamicUniforms().writeTransform(
+            RenderSystem.getModelViewMatrix(),
+            COLOR_MODULATOR,
+            /*? if >=1.21.11 {*/ MODEL_OFFSET /*?} else {*/ /*RenderSystem.getModelOffset() *//*?}*/,
+            /*? if >=1.21.11 {*/ TEXTURE_MATRIX /*?} else {*/ /*RenderSystem.getTextureMatrix() *//*?}*/,
+            /*? if <1.21.11 {*/ /*1f *//*?}*/
+        )
         RenderSystem.getDevice()
             .createCommandEncoder()
             .createRenderPass(

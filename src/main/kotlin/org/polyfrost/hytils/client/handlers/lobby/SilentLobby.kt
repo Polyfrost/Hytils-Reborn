@@ -10,6 +10,7 @@ object SilentLobby {
     fun onSoundPlay(event: SoundPlayEvent) {
         if (!HytilsRebornConfig.isEnabled || HypixelUtils.getLocation().inGame()) return
 
+        //~ if <1.21.11 '.identifier' -> '.location'
         val path = event.sound.identifier.path
         if (HytilsRebornConfig.silentLobby && !path.startsWith("ui.")) {
             event.cancelled = true

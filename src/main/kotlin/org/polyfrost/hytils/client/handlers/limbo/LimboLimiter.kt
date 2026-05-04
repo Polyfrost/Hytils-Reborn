@@ -1,7 +1,10 @@
 package org.polyfrost.hytils.client.handlers.limbo
 
 import com.mojang.blaze3d.platform.FramerateLimitTracker
+//? if >=1.21.11 {
 import net.minecraft.util.Util
+//?} else
+//import net.minecraft.Util
 import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
 

@@ -2,11 +2,16 @@ package org.polyfrost.hytils.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.hypixel.data.type.GameType;
+//? if >=1.21.11 {
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.CameraRenderState;
+//?} else {
+/*import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+*///?}
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.ItemEntityRenderState;
-import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import org.polyfrost.hytils.client.HytilsRebornConfig;
@@ -33,8 +38,11 @@ public class EntityRenderDispatcherMixin_UHCOverlay {
         Items.GOLD_NUGGET
     );
 
+    //? if >=1.21.11 {
     @Inject(method = "submit", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRenderer;submit(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V"))
-    public <S extends EntityRenderState> void scaleUhcItems(S entityRenderState, CameraRenderState cameraRenderState, double d, double e, double f, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CallbackInfo ci) {
+    //?} else
+    //@Inject(method = "render(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;DDDLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/renderer/entity/EntityRenderer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRenderer;render(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V"))
+    public <S extends EntityRenderState> void scaleUhcItems(/*? if >=1.21.11 {*/ S /*?} else {*/ /*EntityRenderState *//*?}*/ entityRenderState, /*? if >=1.21.11 {*/ CameraRenderState cameraRenderState, /*?}*/ double d, double e, double f, PoseStack poseStack, /*? if >=1.21.11 {*/ SubmitNodeCollector submitNodeCollector /*?} else {*/ /*MultiBufferSource multiBufferSource, int i, EntityRenderer<?, S> entityRenderer *//*?}*/, CallbackInfo ci) {
         if (!HytilsRebornConfig.isEnabled() || !HytilsRebornConfig.INSTANCE.getUhcOverlay()) return;
 
         HypixelUtils.Location location = HypixelUtils.getLocation();

@@ -82,6 +82,7 @@ object TabChanger {
     private fun isSkyblockTabInformationEntry(playerInfo: PlayerInfo): Boolean {
         if (!HytilsRebornConfig.cleanerSkyblockTabInfo) return false
         return HypixelUtils.getLocation().gameType.orElse(null) == GameType.SKYBLOCK
+                //~ if <1.21.11 '.name()' -> '.name'
                 && LanguageData.SKYBLOCK_TAB_INFO_ENTRY_NAME.matches(playerInfo.profile.name())
                 && !LanguageData.SKYBLOCK_TAB_PLAYER_ENTRY_NAME.matches(playerInfo.tabListDisplayName?.string ?: "")
     }

@@ -21,6 +21,7 @@ object SoundHandler {
         if (!HytilsRebornConfig.isEnabled || !HypixelUtils.isHypixel()) return
         val player: LocalPlayer = mc.player ?: return
 
+        //~ if <1.21.11 '.activeItem' -> '.mainHandItem'
         val equippedStack = player.activeItem
         if (equippedStack.count > HytilsRebornConfig.blockNumber || equippedStack.count <= 4) {
             if (ticks != -1) {

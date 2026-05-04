@@ -23,7 +23,7 @@ repositories {
     maven("https://repo.polyfrost.org/snapshots")
     maven("https://maven.gegy.dev/releases")
     maven("https://repo.hypixel.net/repository/Hypixel")
-    maven("https://maven.caffeinemc.net/releases")
+    maven("https://api.modrinth.com/maven")
 }
 
 loom {
@@ -58,7 +58,12 @@ dependencies {
     arrayOf("fabric-command-api-v2", "fabric-networking-api-v1").forEach {
         modImplementation(fabricApi.module(it, property("deps.fabric_api").toString()))
     }
-    modCompileOnly("net.caffeinemc:sodium-fabric:${property("deps.sodium")}+mc$mcversion")
+    modCompileOnly("maven.modrinth:sodium:mc$mcversion-${property("deps.sodium")}-fabric")
+
+    if (stonecutter.current.parsed < "1.21.11") {
+        modImplementation(fabricApi.module("fabric-rendering-v1", property("deps.fabric_api").toString()))
+        modCompileOnly(fabricApi.module("fabric-renderer-api-v1", property("deps.fabric_api").toString()))
+    }
 }
 
 bloom {

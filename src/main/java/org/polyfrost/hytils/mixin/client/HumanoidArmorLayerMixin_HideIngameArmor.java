@@ -29,6 +29,7 @@ public class HumanoidArmorLayerMixin_HideIngameArmor {
 
         HypixelUtils.Location location = HypixelUtils.getLocation();
         if (location.getGameType().isPresent() && location.getMode().isPresent()) {
+            //~ if <1.21.11 '.identifier()' -> '.location()'
             if (equippable.assetId().get().identifier().getPath().startsWith("leather")) {
                 switch (location.getGameType().get()) {
                     case BEDWARS:

@@ -1,5 +1,6 @@
 package org.polyfrost.hytils.mixin.client.accessor;
 
+//? if >=1.21.11 {
 import net.minecraft.client.renderer.rendertype.RenderSetup;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,3 +13,4 @@ public interface RenderTypeAccessor {
         throw new AssertionError();
     }
 }
+//?}

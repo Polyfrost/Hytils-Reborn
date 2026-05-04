@@ -21,9 +21,10 @@ object MiniWallsMiddleBeacon {
 
         RenderUtils.renderBeaconBeam(
             event.poseStack,
-            event.submitNodeCollector,
+            /*? if >=1.21.11 {*/ event.submitNodeCollector /*?} else {*/ /*event.multiBufferSource *//*?}*/,
             Vec3.ZERO,
-            event.levelRenderState.cameraRenderState.pos,
+            //~ if <1.21.11 '.pos' -> '.position'
+            event.camera.pos,
             HytilsRebornConfig.miniWallsMiddleBeaconColor,
             true
         )

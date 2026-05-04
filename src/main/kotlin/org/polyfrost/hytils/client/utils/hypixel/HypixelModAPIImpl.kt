@@ -40,6 +40,7 @@ object HypixelModAPIImpl : HypixelModAPIImplementation {
     }
 
     override fun onInit() {
+        //~ if <1.21.11 'Identifier' -> 'Identifier' {
         for (identifier in HypixelModAPI.getInstance().registry.clientboundIdentifiers) {
             try {
                 registerClientbound(identifier)
@@ -57,6 +58,7 @@ object HypixelModAPIImpl : HypixelModAPIImplementation {
                 LOGGER.error("Failed to register serverbound packet with identifier '{}'", identifier, e)
             }
         }
+        //~}
 
         HypixelModAPI.getInstance().createHandler(ClientboundHelloPacket::class.java) { onHypixel = true }
         ClientPlayConnectionEvents.DISCONNECT.register { _, _ -> onHypixel = false }

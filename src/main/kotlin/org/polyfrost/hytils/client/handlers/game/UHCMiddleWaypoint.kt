@@ -30,7 +30,7 @@ object UHCMiddleWaypoint {
             Component.literal(HytilsRebornConfig.uhcMiddleWaypointText),
             Component.literal("${distance.roundToInt()}m").withStyle(ChatFormatting.YELLOW),
             pos = pos,
-            camera = event.levelRenderState.cameraRenderState,
+            camera = event.camera,
             color = PolyColor.WHITE,
             backgroundColor = rgba(0, 0, 0, 0.25f),
             disableDepth = true,

@@ -2,6 +2,7 @@
 	"compatibilityLevel": "JAVA_21",
 	"minVersion": "0.7",
 	"package": "org.polyfrost.hytils.mixin",
+	"plugin": "org.polyfrost.hytils.plugin.HytilsRebornMixinPlugin",
 	"refmap": "mixins.hytils.refmap.json",
 	"verbose": true,
 	"mixinextras": {
@@ -21,7 +22,6 @@
 		"client.NodeResolverMixin_OverrideServerCommand",
 		"client.accessor.ChatComponentAccessor",
 		"client.accessor.FramerateLimitTrackerAccessor",
-		"client.accessor.RenderTypeAccessor",
 		"client.cosmetics.EntityRenderDispatcherMixin_HideCosmetics",
 		"client.cosmetics.ParticleEngineMixin_HideCosmetics",
 		"client.events.ClientPacketListenerMixin_ChatEvents",

@@ -25,6 +25,7 @@ public class ModelBlockRendererMixin_HeightOverlay {
         }
     }
 
+    //~ if <1.21.11 '[FFFFF[II)V' -> '[FFFFF[IIZ)V' {
     @ModifyArg(method = "putQuadData", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/VertexConsumer;putBulkData(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lnet/minecraft/client/renderer/block/model/BakedQuad;[FFFFF[II)V"), index = 3)
     private float modifyBlockColor$Red(float red, @Local(argsOnly = true) BlockState blockState, @Share("shouldModify") LocalBooleanRef shouldModifyRef) {
         if (shouldModifyRef.get()) {
@@ -54,4 +55,5 @@ public class ModelBlockRendererMixin_HeightOverlay {
             return blue;
         }
     }
+    //~}
 }

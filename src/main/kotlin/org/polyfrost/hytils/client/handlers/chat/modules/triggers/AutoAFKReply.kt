@@ -1,7 +1,10 @@
 package org.polyfrost.hytils.client.handlers.chat.modules.triggers
 
 import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
+//? if >=1.21.11 {
 import net.minecraft.util.Util
+//?} else
+//import net.minecraft.Util
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule

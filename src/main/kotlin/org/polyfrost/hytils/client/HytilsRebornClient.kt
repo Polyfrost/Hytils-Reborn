@@ -3,7 +3,10 @@ package org.polyfrost.hytils.client
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
+//? if >=1.21.11 {
 import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents
+//?} else
+//import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.commands.impl.*
 import org.polyfrost.hytils.client.data.providers.*
@@ -74,15 +77,27 @@ object HytilsRebornClient {
         }
 
         // FIXME: [PostWorldRenderEvent] is broken on 1.21
+        //? if >=1.21.11 {
         WorldRenderEvents.END_MAIN.register { context ->
             EventManager.INSTANCE.post(
                 PostLevelRenderEvent(
                     context.matrices(),
                     context.commandQueue(),
                     context.consumers(),
-                    context.worldState()
+                    context.worldState().cameraRenderState
                 )
             )
         }
+        //?} else {
+        /*WorldRenderEvents.LAST.register { context ->
+            EventManager.INSTANCE.post(
+                PostLevelRenderEvent(
+                    context.matrixStack()!!,
+                    context.consumers()!!,
+                    context.camera()!!
+                )
+            )
+        }
+        *///?}
     }
 }
