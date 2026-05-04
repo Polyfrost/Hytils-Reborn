@@ -73,7 +73,7 @@ object HeightOverlay {
             when (location.gameType.get()) {
                 GameType.BEDWARS ->
                     HeightLimitData.maps[location.gameType.get()]?.get(location.mapName.orElse(""))?.maxBuild
-                GameType.DUELS -> if (location.mode.orElse(null).contains("BRIDGE")) 100 else null
+                GameType.DUELS -> if (location.mode.orElse("").contains("BRIDGE")) 100 else null
                 else -> null
             }
         } else {
@@ -89,7 +89,7 @@ object HeightOverlay {
             when (location.gameType.get()) {
                 GameType.BEDWARS ->
                     HeightLimitData.maps[location.gameType.get()]?.get(location.mapName.orElse(""))?.minBuild
-                GameType.DUELS -> if (location.mode.orElse(null).contains("BRIDGE")) 83 else null
+                GameType.DUELS -> if (location.mode.orElse("").contains("BRIDGE")) 83 else null
                 else -> null
             }
         } else {

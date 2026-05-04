@@ -108,7 +108,6 @@ object LanguageData : DataProvider {
         "my ah|my smp", // "my" advertisements
         "lowballing|lowbaling|lowvaling|lowvaluing|lowballer" // skyblock lowballers
     )
-    // TODO: double check if adding "++" causes any false positives
     val CHAT_RANK_BEGGING by regex(
         "[^\\[](vip|mvp|mpv|vpi|\\+\\+)",
         "(please|pls|plz|rank ?up|rank ?upgrade)",
@@ -169,10 +168,6 @@ object LanguageData : DataProvider {
     )
     val REPLAY_RECORDED by regex("This game has been recorded\\. Click here to watch the Replay!")
 
-    // TODO:
-    //  "✘ T8A's Network Booster expired!" <- no match
-    //  https://sk1er.club/boosters btw
-    //  also remove having to remove newlines for this
     val TIP_MESSAGES by regex(
         // tipping messages
         "You (?:tipped|\\(anonymously\\) tipped) (?:\\d+ players? in \\d+ (?:game|different games)!|\\w{1,16} in [^!]+!|\\d+ players?!)",
@@ -244,7 +239,7 @@ object LanguageData : DataProvider {
 
     // game end regexes from AutoGG by Sk1er LLC
     val GAME_END by regex(
-    " +1st Killer - ?\\[?\\w*\\+*]? \\w+ - \\d+(?: Kills?)?",
+        " +1st Killer - ?\\[?\\w*\\+*]? \\w+ - \\d+(?: Kills?)?",
         " *1st (?:Place ?)?[-:]? ?\\[?\\w*\\+*]? \\w+(?: : \\d+| - \\d+(?: Points?)?| - \\d+(?: x .)?| \\(\\w+ .{1,6}\\) - \\d+ Kills?|: \\d+:\\d+| - \\d+ (?:Zombie )?(?:Kills?|Blocks? Destroyed)| - \\[LINK])?",
         " +Winn(?:er: None! Too many players alive!|er #1 \\(\\d+ Kills\\): \\w+ \\(\\w+\\)(?:, \\w+ \\(\\w+\\))*|er(?::| - )(?:Hiders|Seekers|Defenders|Attackers|PLAYERS?|MURDERERS?|Red|Blue|RED|BLU|\\w+)(?: Team)?|ers?: ?\\[?\\w*\\+*]? \\w+(?:, ?\\[?\\w*\\+*]? \\w+)?|ing Team ?[:-] (?:Animals|Hunters|Red|Green|Blue|Yellow|RED|BLU|Survivors|Vampires))",
         " +Alpha Infected: \\w+ \\(\\d+ infections?\\)",
@@ -279,7 +274,6 @@ object LanguageData : DataProvider {
     val PARTY_CHANNEL by regex("§9Party (?:§8|§9)> (.*)")
     val GUILD_CHANNEL by regex("§2Guild > (.*)")
     val FRIEND_CHANNEL by regex("Friend > (.*)")
-    // TODO: is officer chat the correct color
     val OFFICER_CHANNEL by regex("§3Officer > (.*)")
 
     val NON_MESSAGE by regex("(?<player>.+)§7: (?<message>.*)")
@@ -312,7 +306,6 @@ object LanguageData : DataProvider {
     )
     val GL_MESSAGES by regex("(?i)(?!.+: )(gl|glhf|good luck|have a good game|autogl by sk1er)")
 
-    // TODO: make sure you don't have to add (?:§r)? to the end
     val GAME_BOSSBAR_ADVERTISEMENT by regex("§e§lPlaying §f§l.+ §e§lon §\\S§lMC\\.HYPIXEL\\.NET")
     //endregion
 

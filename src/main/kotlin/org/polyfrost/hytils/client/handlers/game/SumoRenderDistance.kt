@@ -16,7 +16,7 @@ object SumoRenderDistance {
         if (!HytilsRebornConfig.isEnabled || !HytilsRebornConfig.sumoRenderDistance) return
 
         val location = HypixelUtils.getLocation()
-        if (location.mode.orElse(null).contains("SUMO")) {
+        if (location.mode.orElse("").contains("SUMO")) {
             if (!changedRenderDistance) {
                 renderDistance = mc.options.renderDistance().get()
                 mc.options.renderDistance().set(HytilsRebornConfig.sumoRenderDistanceAmount.toInt())
