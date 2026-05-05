@@ -27,7 +27,7 @@ object ChatHandler {
         listOf(
             // blockers
             AdBlocker, AntiGG, AntiGL, BedwarsAdvertisementsRemover,
-            BridgeOwnGoalDeathRemover, ChatEmoteRemover, ConnectionStatusRemover,
+            BridgeOwnGoalDeathRemover, ChatEmoteReplacer, ConnectionStatusRemover,
             CurseOfSpamRemover, DiscordSafetyWarningRemover, DuelsBlockTrail,
             DuelsNoStatsChange, EarnedCoinsAndExpRemover, GameAnnouncementsRemover,
             GameTipsRemover, GiftBlocker, GuildMOTD, HotPotatoRemover,

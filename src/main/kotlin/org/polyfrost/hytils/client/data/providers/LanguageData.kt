@@ -124,17 +124,6 @@ object LanguageData : DataProvider {
     val SOUL_WELL_FIND by regex(".+ has found .+ in the Soul Well!")
     val GAME_ANNOUNCEMENT by regex("➤ A (?:.+ game is available to join|game of .+ is (?:available to join|starting in .+ seconds))! CLICK HERE to join!")
 
-    // FIXME: this doesn't work anymore as emotes use chat components now
-    //  will have to search for siblings with the same hex color/formatting (to avoid false positives)
-    val MVP_EMOTES by regex(
-        "§c❤", "§6✮", "§a✔", "§c✖", "§b☕", "§e➜", """§e¯\\_\(ツ\)_/¯""", """§c\(╯°□°）╯§r§f︵§r§7 ┻━┻""", """§d\( ﾟ◡ﾟ\)/""",
-        "§a1§r§e2§r§c3", "§b☉§r§e_§r§b☉", """§e✎§r§6\.\.\.""", """§a√§r§e§l\(§r§aπ§r§a§l\+x§r§e§l\)§r§a§l=§r§c§lL""",
-        "§e@§r§a'§r§e-§r§a'", """§6\(§r§a0§r§6\.§r§ao§r§c\?§r§6\)""", "§b༼つ◕_◕༽つ", """§e\(§r§b'§r§e-§r§b'§r§e\)⊃§r§c━§r§d☆ﾟ\.\*･｡ﾟ""",
-        "§e⚔", "§a✌", "§c§lOOF", """§e§l<\('O'\)>""", """§aヽ \(◕◡◕\) ﾉ""", "§e= §r§b＾● ⋏ ●＾§r§e =",
-        """§eヽ\(\^◇\^\*\)/""", """§e\(§r§a✿§r§e◠‿◠\)""", "§b☃", """§9ヽ§r§5\(§r§d⌐§r§c■§r§6_§r§e■§r§b\)§r§3ノ§r§9♬""",
-        "§d<§r§eo§r§d/", """§6\(§r§8・§r§6⊝§r§8・§r§6\)""", """§a\^_\^""", """§6\(ᵔᴥᵔ\)""", """§a\^-\^""",
-        prefix = "§r(?:", suffix = ")§r"
-    )
     val RANK_GIFTING by regex("They have gifted \\d+ (?:rank|ranks) so far!")
     val SIMULATOR_MESSAGES by regex(
         "You found (?:an egg|a gift|a candy)! .\\d{1,3} total.",

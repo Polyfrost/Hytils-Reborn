@@ -374,6 +374,23 @@ object HytilsRebornConfig : Config(
     var shortPMChannelNames = false
 
     @Switch(
+        title = "Replace Chat Emotes",
+        description = "Replace chat emotes.\nExample: ( ﾟ◡ﾟ)/",
+        category = "Chat",
+        subcategory = "Visual"
+    )
+    var replaceChatEmotes = false
+
+    @RadioButton(
+        title = "Chat Emotes Replacement Mode",
+        description = "Choose how chat emotes are replaced.\nRemove Emote will completely remove emotes from messages.\nRemove Formatting will remove colors/formatting from emotes.\nReplace With Shortcuts will replace emotes with their shortcuts. Example: ( ﾟ◡ﾟ)/ -> o/",
+        category = "Chat",
+        subcategory = "Visual",
+        options = ["Remove Emote", "Remove Formatting", "Replace With Shortcuts"],
+    )
+    var chatEmotesReplacementMode = 0
+
+    @Switch(
         title = "Party Chat Swapper",
         description = "Automatically change to and out of a party channel when joining/leaving a party.",
         category = "Chat",
@@ -550,14 +567,6 @@ object HytilsRebornConfig : Config(
         subcategory = "Toggles"
     )
     var removeGuildMotd = false
-
-    @Switch(
-        title = "Remove Chat Emotes",
-        description = "Remove MVP++ chat emotes.\nExample: ( ﾟ◡ﾟ)/",
-        category = "Chat",
-        subcategory = "Toggles"
-    )
-    var removeChatEmotes = false
 
     @Switch(
         title = "Remove Server Connected Messages",
@@ -1379,6 +1388,7 @@ object HytilsRebornConfig : Config(
         addDependency("autoGLMessage", "autoGL")
         addDependency("afkTimeout", "autoReplyAfk")
         addDependency("afkReplyMessage", "autoReplyAfk")
+        addDependency("chatEmotesReplacementMode", "replaceChatEmotes")
         addDependency("chatSwapperReturnChannel", "chatSwapper")
         addDependency("chatSwapperHideAllChannelMsg", "chatSwapper")
         addDependency("notifyWhenKickInCaps", "notifyWhenKick")

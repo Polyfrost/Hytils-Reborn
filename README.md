@@ -42,6 +42,8 @@ you would want while on Hypixel, including Chat Restylers, Height Overlay, Messa
 - **Colored Friend/Guild Statuses** - Colors the join/leave status of friends and guild members.
 - **Cleaner Start Counter** - Compacts counting announcements.
 - **Short Channel Names** - Abbreviate chat channel names.
+- **Short Private Message Channel Names** - Abbreviate private message channel names.
+- **Replace Chat Emotes** - Replace chat emotes with empty text, the emote without formatting, or their shortcuts.
 - **Party Chat Swapper** - Automatically change to and out of a party channel when joining/leaving a party.
 <!-- - **Swap Chatting Tab With Chat Swapper** - Automatically switch your [Chatting](https://github.com/Polyfrost/Chatting) chat tab when chat swapper swaps your chat channel. -->
 - **Remove All Chat Message** - Hide the "You are now in the ALL channel" message when auto-switching.
@@ -62,7 +64,6 @@ you would want while on Hypixel, including Chat Restylers, Height Overlay, Messa
 - **Remove BedWars Advertisements** - Remove player messages asking to join BedWars parties.
 - **Remove Friend/Guild Statuses** - Remove join/quit messages from friend/guild members.
 - **Remove Guild MOTD** - Remove the guild Message Of The Day.
-- **Remove Chat Emojis** - Remove MVP++ chat emojis.
 - **Remove Server Connected Messages** - Remove messages informing you of the lobby name you've just joined, or what lobby you're being sent to.
 - **Remove Game Tips Messages** - Remove messages informing you of how to play the game you're currently in.
 - **Remove Auto Activated Quest Messages** - Remove automatically activated quest messages.

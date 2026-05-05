@@ -34,7 +34,7 @@ object HytilsRebornClient {
 
         Multithreading.submit {
             listOf(
-                LanguageData, ArmorStandData, CosmeticsData,
+                LanguageData, ArmorStandData, ChatEmotesData, CosmeticsData,
                 GameAliasesData, GameIdentifiersData, HeightLimitData
             ).forEach { it.load() }
         }
