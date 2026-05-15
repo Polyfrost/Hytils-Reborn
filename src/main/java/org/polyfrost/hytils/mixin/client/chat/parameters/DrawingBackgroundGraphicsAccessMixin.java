@@ -9,9 +9,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import java.util.function.UnaryOperator;
 
 @Mixin(targets = "net.minecraft.client.gui.components.ChatComponent$DrawingBackgroundGraphicsAccess")
-public class DrawingBackgroundGraphicsAccessMixin implements GuiGraphicsDuck {
-    @Shadow
-    private ActiveTextCollector.Parameters parameters;
+abstract class DrawingBackgroundGraphicsAccessMixin implements GuiGraphicsDuck {
+    @Shadow private ActiveTextCollector.Parameters parameters;
 
     @Override
     public void hytils$applyParameters(UnaryOperator<ActiveTextCollector.Parameters> modifier) {

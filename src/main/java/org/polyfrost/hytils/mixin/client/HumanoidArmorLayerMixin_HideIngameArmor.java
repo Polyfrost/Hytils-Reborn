@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(HumanoidArmorLayer.class)
-public class HumanoidArmorLayerMixin_HideIngameArmor {
+abstract class HumanoidArmorLayerMixin_HideIngameArmor {
     @WrapOperation(method = "renderArmorPiece", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;shouldRender(Lnet/minecraft/world/item/equipment/Equippable;Lnet/minecraft/world/entity/EquipmentSlot;)Z"))
     private boolean shouldRenderArmorPiece(Equippable equippable, EquipmentSlot equipmentSlot, Operation<Boolean> original) {
         return original.call(equippable, equipmentSlot) && !shouldHideArmor(equippable);

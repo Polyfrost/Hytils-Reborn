@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Collection;
 
 @Mixin(BossHealthOverlay.class)
-public class BossHealthOverlayMixin_HideBossbar {
+abstract class BossHealthOverlayMixin_HideBossbar {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void hideLobbyBossbar(CallbackInfo ci) {
         if (HytilsRebornConfig.isEnabled() && HytilsRebornConfig.INSTANCE.getLobbyBossbar() && HypixelUtils.isHypixel() && !HypixelUtils.getLocation().inGame()) {

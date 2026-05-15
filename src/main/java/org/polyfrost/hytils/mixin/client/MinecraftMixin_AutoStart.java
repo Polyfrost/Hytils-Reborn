@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
-public class MinecraftMixin_AutoStart {
+abstract class MinecraftMixin_AutoStart {
     @Inject(method = "onGameLoadFinished", at = @At("TAIL"))
     private void onGameLoadFinished(CallbackInfo ci) {
         if (HytilsRebornConfig.isEnabled() && HytilsRebornConfig.INSTANCE.getAutoStart()) {

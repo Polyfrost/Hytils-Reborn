@@ -8,13 +8,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(FramerateLimitTracker.class)
-public class FramerateLimitTrackerMixin_LimboLimiter {
+abstract class FramerateLimitTrackerMixin_LimboLimiter {
     @ModifyReturnValue(method = "getThrottleReason", at = @At("RETURN"))
     private FramerateLimitTracker.FramerateThrottleReason limitLimboFramerate(FramerateLimitTracker.FramerateThrottleReason original) {
         if (HytilsRebornConfig.isEnabled() && HytilsRebornConfig.INSTANCE.getLimboLimiter()) {
             return LimboLimiter.getThrottleReason(original);
-        } else {
-            return original;
         }
+
+        return original;
     }
 }

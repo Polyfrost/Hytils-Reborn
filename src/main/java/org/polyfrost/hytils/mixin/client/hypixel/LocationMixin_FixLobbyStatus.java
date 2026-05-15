@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import java.util.Optional;
 
 @Mixin(HypixelUtils.Location.class)
-public abstract class LocationMixin_FixLobbyStatus {
+abstract class LocationMixin_FixLobbyStatus {
     @Shadow public abstract Optional<String> getLobbyName();
     @Shadow public abstract Optional<String> getLastLobbyName();
 

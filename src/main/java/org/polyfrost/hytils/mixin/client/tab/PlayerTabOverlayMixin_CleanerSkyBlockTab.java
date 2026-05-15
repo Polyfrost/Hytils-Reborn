@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(PlayerTabOverlay.class)
-public class PlayerTabOverlayMixin_CleanerSkyBlockTab {
+abstract class PlayerTabOverlayMixin_CleanerSkyBlockTab {
     @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;fill(IIIII)V", ordinal = 2), index = 1)
     private int removeTabGaps(int original, @Local(ordinal = 15) int row) {
         if (HytilsRebornConfig.INSTANCE.getCleanerSkyblockTabInfo() && HypixelUtils.getLocation().getGameType().orElse(null) == GameType.SKYBLOCK) {

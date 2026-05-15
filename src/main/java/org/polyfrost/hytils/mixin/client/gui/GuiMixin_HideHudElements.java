@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Gui.class)
-public class GuiMixin_HideHudElements {
+abstract class GuiMixin_HideHudElements {
     @Inject(method = "renderHearts", at = @At("HEAD"), cancellable = true)
     public void hideHearts(GuiGraphics guiGraphics, Player player, int i, int j, int k, int l, float f, int m, int n, int o, boolean bl, CallbackInfo ci) {
         if (!HytilsRebornConfig.isEnabled() || !HytilsRebornConfig.INSTANCE.getHideHudElements() || !HypixelUtils.isHypixel())

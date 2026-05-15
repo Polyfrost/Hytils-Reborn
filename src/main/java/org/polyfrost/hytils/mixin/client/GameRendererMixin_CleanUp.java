@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GameRenderer.class)
-public class GameRendererMixin_CleanUp {
+abstract class GameRendererMixin_CleanUp {
     @Inject(method = "close", at = @At("RETURN"))
     private void onClose(CallbackInfo ci) {
         RenderUtils.close();

@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(PlayerTabOverlay.class)
-public class PlayerTabOverlayMixin_HidePing {
+abstract class PlayerTabOverlayMixin_HidePing {
     @Inject(method = "renderPingIcon", at = @At("HEAD"), cancellable = true)
     private void hidePingIcon(GuiGraphics guiGraphics, int i, int j, int k, PlayerInfo playerInfo, CallbackInfo ci) {
         if (HytilsRebornConfig.isEnabled() && TabChanger.hidePing(playerInfo)) {

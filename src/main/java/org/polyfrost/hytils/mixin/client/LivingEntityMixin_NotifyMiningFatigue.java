@@ -4,7 +4,6 @@ import net.hypixel.data.type.GameType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -23,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public class LivingEntityMixin_NotifyMiningFatigue {
+abstract class LivingEntityMixin_NotifyMiningFatigue {
     @Inject(method = "onEffectAdded", at = @At("HEAD"))
     private void onAddEffect(MobEffectInstance mobEffectInstance, Entity entity, CallbackInfo ci) {
         HypixelUtils.Location location = HypixelUtils.getLocation();

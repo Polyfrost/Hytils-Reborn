@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(ChatComponent.class)
-public abstract class ChatComponentMixin_ParseCustomLines {
+abstract class ChatComponentMixin_ParseCustomLines {
     //~ if <1.21.11 'protected' -> 'public' {
     @Shadow protected abstract int getWidth();
     @Shadow protected abstract double getScale();
@@ -110,7 +110,7 @@ public abstract class ChatComponentMixin_ParseCustomLines {
     ) {
         if (sequence instanceof ParsedChatSequence parsed) {
             float alpha = net.minecraft.util.ARGB.alphaFloat(color);
-            EnhancedChat.renderSequence(parsed, graphics, textTop, alpha, lineBottom, lineTop);
+            ChatEnhancements.renderSequence(parsed, graphics, textTop, alpha, lineBottom, lineTop);
             return;
         }
 
@@ -131,7 +131,7 @@ public abstract class ChatComponentMixin_ParseCustomLines {
         Operation<net.minecraft.network.chat.Style> original
     ) {
         if (sequence instanceof ParsedChatSequence parsed) {
-            return EnhancedChat.getStyleAt(parsed, mouseX, this.minecraft.font);
+            return ChatEnhancements.getStyleAt(parsed, mouseX, this.minecraft.font);
         }
 
         return original.call(instance, sequence, mouseX);

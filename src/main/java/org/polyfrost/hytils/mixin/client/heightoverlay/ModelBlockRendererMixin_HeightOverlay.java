@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ModelBlockRenderer.class)
-public class ModelBlockRendererMixin_HeightOverlay {
+abstract class ModelBlockRendererMixin_HeightOverlay {
     @Inject(method = "putQuadData", at = @At("HEAD"))
     private void checkShouldModify(CallbackInfo ci, @Local(argsOnly = true) BlockState blockState, @Local(argsOnly = true) BlockPos blockPos, @Share("shouldModify") LocalBooleanRef shouldModifyRef) {
         if (HytilsRebornConfig.isEnabled() && HytilsRebornConfig.INSTANCE.getHeightOverlay()) {
@@ -31,9 +31,9 @@ public class ModelBlockRendererMixin_HeightOverlay {
         if (shouldModifyRef.get()) {
             int modified = HeightOverlay.modifyColors((int) (red * 255F), blockState);
             return (modified & 0xFF) / 255.0F;
-        } else {
-            return red;
         }
+
+        return red;
     }
 
     @ModifyArg(method = "putQuadData", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/VertexConsumer;putBulkData(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lnet/minecraft/client/renderer/block/model/BakedQuad;[FFFFF[II)V"), index = 4)
@@ -41,9 +41,9 @@ public class ModelBlockRendererMixin_HeightOverlay {
         if (shouldModifyRef.get()) {
             int modified = HeightOverlay.modifyColors(((int) (green * 255F)) << 8, blockState);
             return ((modified >> 8) & 0xFF) / 255F;
-        } else {
-            return green;
         }
+
+        return green;
     }
 
     @ModifyArg(method = "putQuadData", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/VertexConsumer;putBulkData(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lnet/minecraft/client/renderer/block/model/BakedQuad;[FFFFF[II)V"), index = 5)
@@ -51,9 +51,9 @@ public class ModelBlockRendererMixin_HeightOverlay {
         if (shouldModifyRef.get()) {
             int modified = HeightOverlay.modifyColors(((int) (blue * 255F)) << 16, blockState);
             return ((modified >> 16) & 0xFF) / 255F;
-        } else {
-            return blue;
         }
+
+        return blue;
     }
     //~}
 }

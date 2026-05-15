@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(PlayerTabOverlay.class)
-public class PlayerTabOverlayMixin_RemoveAds {
+abstract class PlayerTabOverlayMixin_RemoveAds {
     @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Font;split(Lnet/minecraft/network/chat/FormattedText;I)Ljava/util/List;", ordinal = 0), index = 0)
     private FormattedText hideAdvertisementsInHeader(FormattedText formattedText) {
         if (HytilsRebornConfig.isEnabled()) {

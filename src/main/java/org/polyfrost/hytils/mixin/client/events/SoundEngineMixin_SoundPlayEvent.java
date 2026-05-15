@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SoundEngine.class)
-public class SoundEngineMixin_SoundPlayEvent {
+abstract class SoundEngineMixin_SoundPlayEvent {
     @Inject(method = "play", at = @At("HEAD"), cancellable = true)
     private void preventLobbyMusic(SoundInstance soundInstance, CallbackInfoReturnable<SoundEngine.PlayResult> cir) {
         SoundPlayEvent event = new SoundPlayEvent(soundInstance);

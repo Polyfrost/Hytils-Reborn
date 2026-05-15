@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemClusterRenderState.class)
-public class ItemClusterRenderStateMixin_SmuggleItemStack implements ItemClusterRenderStateDuck {
+abstract class ItemClusterRenderStateMixin_SmuggleItemStack implements ItemClusterRenderStateDuck {
     @Unique
     private ItemStack itemStack;
 

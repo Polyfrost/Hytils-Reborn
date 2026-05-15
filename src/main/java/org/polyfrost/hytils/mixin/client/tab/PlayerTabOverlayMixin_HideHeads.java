@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(PlayerTabOverlay.class)
-public class PlayerTabOverlayMixin_HideHeads {
+abstract class PlayerTabOverlayMixin_HideHeads {
     @Definition(id = "showHead", local = @Local(type = boolean.class))
     @Expression("@(showHead) != false")
     @ModifyExpressionValue(method = "render", at = @At("MIXINEXTRAS:EXPRESSION"))

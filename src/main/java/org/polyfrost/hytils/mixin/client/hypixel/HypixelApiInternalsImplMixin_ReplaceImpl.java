@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @SuppressWarnings("UnstableApiUsage")
 @Mixin(HypixelApiInternalsImpl.class)
-public class HypixelApiInternalsImplMixin_ReplaceImpl {
+abstract class HypixelApiInternalsImplMixin_ReplaceImpl {
     @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/polyfrost/oneconfig/api/hypixel/v1/internal/HypixelApiInternalsImpl;registerHypixelApi()V"))
     private static void registerHypixelModApiImpl(HypixelApiInternalsImpl instance, Operation<Void> original) {
         HypixelModAPIImpl.init();

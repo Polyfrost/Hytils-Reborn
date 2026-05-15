@@ -10,10 +10,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import java.util.function.UnaryOperator;
 
 @Mixin(targets = "net.minecraft.client.gui.components.ChatComponent$ClickableTextOnlyGraphicsAccess")
-public class ClickableTextOnlyGraphicsAccessMixin implements GuiGraphicsDuck {
-    @Shadow
-    @Final
-    private ActiveTextCollector output;
+abstract class ClickableTextOnlyGraphicsAccessMixin implements GuiGraphicsDuck {
+    @Shadow @Final private ActiveTextCollector output;
 
     @Override
     public void hytils$applyParameters(UnaryOperator<ActiveTextCollector.Parameters> modifier) {

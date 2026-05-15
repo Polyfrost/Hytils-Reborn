@@ -22,7 +22,7 @@
 		"client.NodeResolverMixin_OverrideServerCommand",
 		"client.accessor.ChatComponentAccessor",
 		"client.accessor.FramerateLimitTrackerAccessor",
-		"client.chatformatting.ChatComponentMixin_ParseCustomLines",
+		"client.chat.ChatComponentMixin_ParseCustomLines",
 		"client.cosmetics.EntityRenderDispatcherMixin_HideCosmetics",
 		"client.cosmetics.ParticleEngineMixin_HideCosmetics",
 		"client.events.ClientPacketListenerMixin_ChatEvents",

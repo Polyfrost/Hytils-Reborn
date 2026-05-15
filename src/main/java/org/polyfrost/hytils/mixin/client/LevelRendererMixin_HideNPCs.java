@@ -9,18 +9,20 @@ import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.ArmorStand;
-//? if >=1.21.11 {
+//~ if <1.21.11 'villager.Villager' -> 'Villager'
 import net.minecraft.world.entity.npc.villager.Villager;
-//?} else
-//import net.minecraft.world.entity.npc.Villager;
 import org.polyfrost.hytils.client.HytilsRebornConfig;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(LevelRenderer.class)
-public class LevelRendererMixin_HideNPCs {
-    @WrapOperation(method = /*? if >=1.21.11 {*/ "extractVisibleEntities" /*?} else {*/ /*"collectVisibleEntities" *//*?}*/, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;shouldRender(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/renderer/culling/Frustum;DDD)Z"))
+abstract class LevelRendererMixin_HideNPCs {
+    @WrapOperation(
+        //~ if <1.21.11 'extractVisibleEntities' -> 'collectVisibleEntities'
+        method = "extractVisibleEntities",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;shouldRender(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/renderer/culling/Frustum;DDD)Z")
+    )
     private <E extends Entity> boolean shouldRenderEntity(EntityRenderDispatcher instance, E entity, Frustum frustum, double d, double e, double f, Operation<Boolean> original) {
         boolean shouldRender = original.call(instance, entity, frustum, d, e, f);
         if (!HytilsRebornConfig.isEnabled() || !HypixelUtils.isHypixel()) return shouldRender;

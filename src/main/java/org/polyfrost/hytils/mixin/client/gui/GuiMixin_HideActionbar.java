@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Gui.class)
-public class GuiMixin_HideActionbar {
+abstract class GuiMixin_HideActionbar {
     @Inject(method = "renderOverlayMessage", at = @At("HEAD"), cancellable = true)
     private void hideActionbar(CallbackInfo ci) {
         if (HytilsRebornConfig.isEnabled() && HypixelUtils.isHypixel() && HypixelUtils.getLocation().inGame()

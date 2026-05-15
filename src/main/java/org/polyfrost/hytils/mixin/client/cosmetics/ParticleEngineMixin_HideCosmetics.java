@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ParticleEngine.class)
-public class ParticleEngineMixin_HideCosmetics {
+abstract class ParticleEngineMixin_HideCosmetics {
     @Inject(method = "createParticle", at = @At("HEAD"), cancellable = true)
     private void hideCosmetics(ParticleOptions particleOptions, double d, double e, double f, double g, double h, double i, CallbackInfoReturnable<Particle> cir) {
         if (!HytilsRebornConfig.isEnabled()) return;

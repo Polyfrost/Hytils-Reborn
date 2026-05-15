@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = ClientPacketListener.class, priority = Integer.MAX_VALUE)
-public class ClientPacketListenerMixin_ChatEvents {
+abstract class ClientPacketListenerMixin_ChatEvents {
     @Inject(method = "handleSystemChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/chat/ChatListener;handleSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"), cancellable = true)
     private void cancelSystemMessage(ClientboundSystemChatPacket packet, CallbackInfo ci, @Share("chatReceiveEvent") LocalRef<ChatReceiveEvent> chatReceiveEvent) {
         if (chatReceiveEvent.get().getCancelled()) {

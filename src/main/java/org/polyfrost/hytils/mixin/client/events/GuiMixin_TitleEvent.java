@@ -13,13 +13,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Gui.class)
-public class GuiMixin_TitleEvent {
-    @Shadow
-    private Component title;
-    @Shadow
-    private Component subtitle;
-    @Shadow
-    private int titleTime;
+abstract class GuiMixin_TitleEvent {
+    @Shadow private Component title;
+    @Shadow private Component subtitle;
+    @Shadow private int titleTime;
 
     @Inject(method = "renderTitle", at = @At("HEAD"), cancellable = true)
     private void onRenderTitle(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
