@@ -6,11 +6,11 @@ import dev.deftu.textile.minecraft.MCTextStyle
 import dev.deftu.textile.minecraft.TextColors
 import net.hypixel.data.type.GameType
 import org.polyfrost.hytils.client.HytilsRebornConfig
+import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.events.ChatSendEvent
 import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule
 import org.polyfrost.hytils.client.handlers.chat.ChatSendModule
-import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 import java.text.DecimalFormat
 import kotlin.jvm.optionals.getOrNull
@@ -37,8 +37,6 @@ object ShoutBlocker : ChatSendModule, ChatReceiveModule {
     }
 
     override fun onChatReceived(event: ChatReceiveEvent) {
-        if (event.isOverlay) return
-
         val location = HypixelUtils.getLocation()
 
         val message = event.plainMessage
@@ -65,6 +63,7 @@ object ShoutBlocker : ChatSendModule, ChatReceiveModule {
         return 0L
     }
 
-    override fun isEnabled() = HytilsRebornConfig.preventShoutingOnCooldown
-    override fun getPriority() = -1
+    override val isEnabled
+        get() = HytilsRebornConfig.preventShoutingOnCooldown
+    override val priority = -1
 }

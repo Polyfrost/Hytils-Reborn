@@ -2,11 +2,11 @@ package org.polyfrost.hytils.client.handlers.chat.modules.triggers
 
 import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
 import org.polyfrost.hytils.HytilsRebornConstants
+import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule
-import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.oneconfig.api.ui.v1.Notifications
-import java.util.Locale
+import java.util.*
 
 object SilentRemoval : ChatReceiveModule {
     val removalQueue = mutableSetOf<String>()

@@ -1,22 +1,20 @@
 package org.polyfrost.hytils.client.handlers.chat.modules.triggers
 
-import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
 //? if >=1.21.11 {
 import net.minecraft.util.Util
 //?} else
 //import net.minecraft.Util
+
+import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
 import org.polyfrost.hytils.client.HytilsRebornConfig
+import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule
-import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.mixin.client.accessor.FramerateLimitTrackerAccessor
-import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
 
 object AutoAFKReply : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
-        if (event.isOverlay || !HypixelUtils.isHypixel()) return
-
         val latestInputTime = (mc.framerateLimitTracker as FramerateLimitTrackerAccessor).latestInputTime
         if (Util.getMillis() - latestInputTime < HytilsRebornConfig.afkTimeout * 60L * 1000L) return
 
@@ -30,5 +28,6 @@ object AutoAFKReply : ChatReceiveModule {
         }
     }
 
-    override fun isEnabled() = HytilsRebornConfig.autoReplyAfk
+    override val isEnabled
+        get() = HytilsRebornConfig.autoReplyAfk
 }

@@ -2,16 +2,14 @@ package org.polyfrost.hytils.client.handlers.chat.modules.triggers
 
 import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
 import org.polyfrost.hytils.client.HytilsRebornConfig
+import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule
-import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.oneconfig.utils.v1.Multithreading
 import java.util.concurrent.TimeUnit
 
 object AutoWB : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
-        if (event.isOverlay) return
-
         val match = LanguageData.PLAYER_CONNECTION_STATUS.find(event.unformattedMessage) ?: return
 
         val status = match.groups["status"]?.value ?: return
@@ -50,5 +48,6 @@ object AutoWB : ChatReceiveModule {
         return message.replace("%player%", name)
     }
 
-    override fun isEnabled() = HytilsRebornConfig.autoWB
+    override val isEnabled
+        get() = HytilsRebornConfig.autoWB
 }

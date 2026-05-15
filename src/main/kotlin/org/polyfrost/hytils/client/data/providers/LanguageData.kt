@@ -319,6 +319,9 @@ object LanguageData : DataProvider {
     val ALREADY_IN_CHANNEL by string("You're already in this channel!")
     val PARTY_CONFIRM_WARP by string("Some players are still in-game, run the command again to confirm warp!")
 
+    val WATCHDOG_ANNOUNCEMENT by string("[WATCHDOG ANNOUNCEMENT]")
+    val WATCHDOG_BAN by string("A player has been removed from your")
+
     val CANNOT_SHOUT_BEFORE_SKYWARS by string("You can't shout until the game has started!")
     val CANNOT_SHOUT_BEFORE_GAME by string("You can't use /shout before the game has started.")
     val CANNOT_SHOUT_AFTER_GAME by string("You can't use /shout after the game has finished.")

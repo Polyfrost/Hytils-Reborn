@@ -5,18 +5,12 @@ import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.events.ChatSendEvent
 import org.polyfrost.hytils.client.handlers.chat.modules.blockers.*
-import org.polyfrost.hytils.client.handlers.chat.modules.modifiers.ColoredPlayerConnectionStatus
-import org.polyfrost.hytils.client.handlers.chat.modules.modifiers.ShortChannelNames
-import org.polyfrost.hytils.client.handlers.chat.modules.modifiers.GameStartCompactor
-import org.polyfrost.hytils.client.handlers.chat.modules.modifiers.GameStatusRestyler
-import org.polyfrost.hytils.client.handlers.chat.modules.modifiers.ShortPMChannelNames
-import org.polyfrost.hytils.client.handlers.chat.modules.modifiers.WhiteNonChat
-import org.polyfrost.hytils.client.handlers.chat.modules.modifiers.WhitePrivateMessages
+import org.polyfrost.hytils.client.handlers.chat.modules.modifiers.*
 import org.polyfrost.hytils.client.handlers.chat.modules.triggers.*
+import org.polyfrost.hytils.client.utils.hypixel.HypixelModAPIImpl
 import org.polyfrost.oneconfig.api.event.v1.EventManager
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
-import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 
 object ChatHandler {
     private val receiveModules = mutableListOf<ChatReceiveModule>()
@@ -27,7 +21,7 @@ object ChatHandler {
         listOf(
             // blockers
             AdBlocker, AntiGG, AntiGL, BedwarsAdvertisementsRemover,
-            BridgeOwnGoalDeathRemover, ChatEmoteReplacer, ConnectionStatusRemover,
+            BridgeOwnGoalDeathRemover, ConnectionStatusRemover,
             CurseOfSpamRemover, DiscordSafetyWarningRemover, DuelsBlockTrail,
             DuelsNoStatsChange, EarnedCoinsAndExpRemover, GameAnnouncementsRemover,
             GameTipsRemover, GiftBlocker, GuildMOTD, HotPotatoRemover,
@@ -38,8 +32,9 @@ object ChatHandler {
             StatsMessageRemover, TicketMachineRemover, TipMessageRemover,
 
             // modifiers
-            ColoredPlayerConnectionStatus, GameStartCompactor, GameStatusRestyler,
-            ShortChannelNames, ShortPMChannelNames, WhiteNonChat, WhitePrivateMessages,
+            ChatEmoteReplacer, ColoredPlayerConnectionStatus,
+            GameStartCompactor, GameStatusRestyler, ShortChannelNames,
+            ShortPMChannelNames, WhiteNonChat, WhitePrivateMessages,
 
             // triggers
             AutoAFKReply, AutoChatSwapper, AutoCheckStats, AutoFriend,
@@ -53,18 +48,18 @@ object ChatHandler {
             GuildMOTD, AutoCheckStats, AutoGG, AutoQueue
         ).forEach { EventManager.INSTANCE.register(it) }
 
-        receiveModules.sortBy { it.getPriority() }
-        sendModules.sortBy { it.getPriority() }
-        resetModules.sortBy { it.getPriority() }
+        receiveModules.sortBy { it.priority }
+        sendModules.sortBy { it.priority }
+        resetModules.sortBy { it.priority }
     }
 
     @Subscribe
     fun onChatReceive(event: ChatReceiveEvent) {
-        if (!HytilsRebornConfig.isEnabled || !HypixelUtils.isHypixel()) return
+        if (!HytilsRebornConfig.isEnabled || !HypixelModAPIImpl.onHypixel || event.isOverlay) return
 
         for (module in this.receiveModules) {
             try {
-                if (module.isEnabled()) {
+                if (module.isEnabled) {
                     module.onChatReceived(event)
                     if (event.cancelled) return
                 }
@@ -79,11 +74,11 @@ object ChatHandler {
 
     @Subscribe
     fun onChatSend(event: ChatSendEvent) {
-        if (!HytilsRebornConfig.isEnabled || !HypixelUtils.isHypixel()) return
+        if (!HytilsRebornConfig.isEnabled || !HypixelModAPIImpl.onHypixel) return
 
         for (module in this.sendModules) {
             try {
-                if (module.isEnabled()) {
+                if (module.isEnabled) {
                     module.onChatSend(event)
                     if (event.cancelled) return
                 }

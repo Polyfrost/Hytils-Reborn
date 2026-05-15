@@ -9,16 +9,15 @@ import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule
 
 object ShortChannelNames : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
-        if (event.isOverlay) return
-
         restyle(event, LanguageData.PARTY_CHANNEL, "§9P")
         restyle(event, LanguageData.GUILD_CHANNEL, "§2G")
         restyle(event, LanguageData.FRIEND_CHANNEL, "§aF")
         restyle(event, LanguageData.OFFICER_CHANNEL, "§3O")
     }
 
-    override fun isEnabled() = HytilsRebornConfig.shortChannelNames
-    override fun getPriority() = 3
+    override val isEnabled
+        get() = HytilsRebornConfig.shortChannelNames
+    override val priority = 3
 
     private fun restyle(event: ChatReceiveEvent, regex: Regex, prefix: String) {
         if (!regex.containsMatchIn(event.plainMessage)) return

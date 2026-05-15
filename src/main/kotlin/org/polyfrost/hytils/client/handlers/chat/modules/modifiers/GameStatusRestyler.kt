@@ -12,8 +12,6 @@ object GameStatusRestyler : ChatReceiveModule {
     private var maxPlayerCount = -1
 
     override fun onChatReceived(event: ChatReceiveEvent) {
-        if (event.isOverlay) return
-
         val joinMatch = LanguageData.GAME_JOIN.find(event.plainMessage)
         joinMatch?.let { match ->
             val amount = match.groups["amount"]?.value?.removeSurrounding("(", ")") ?: return@let
@@ -104,7 +102,7 @@ object GameStatusRestyler : ChatReceiveModule {
     }
 
     // this should run before game start compactor
-    override fun getPriority() = 1
+    override val priority = 1
 
     private fun amountComponent(count: Int) = Component.literal("(").withStyle(ChatFormatting.YELLOW)
         .append(Component.literal(pad(count)).withStyle(ChatFormatting.AQUA))

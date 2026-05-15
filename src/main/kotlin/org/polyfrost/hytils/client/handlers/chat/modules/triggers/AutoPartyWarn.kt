@@ -7,7 +7,7 @@ import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule
 
 object AutoPartyWarn : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
-        if (!event.isOverlay && event.unformattedMessage.startsWith("A kick")) {
+        if (event.unformattedMessage.startsWith("A kick")) {
             val message = if (HytilsRebornConfig.notifyWhenKickInCaps) {
                 "REQUEUE, I'VE BEEN KICKED!"
             } else {
@@ -19,5 +19,6 @@ object AutoPartyWarn : ChatReceiveModule {
         }
     }
 
-    override fun isEnabled() = HytilsRebornConfig.notifyWhenKick
+    override val isEnabled
+        get() = HytilsRebornConfig.notifyWhenKick
 }

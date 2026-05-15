@@ -10,7 +10,7 @@ import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule
 
 object ShortPMChannelNames : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
-        if (event.isOverlay || !event.plainMessage.matches(LanguageData.PRIVATE_MESSAGE)) return
+        if (!event.plainMessage.matches(LanguageData.PRIVATE_MESSAGE)) return
 
         val type = (event.message.contents as? PlainTextContents)?.text() ?: return
         val isOutgoing = type.trim() == "To"
@@ -24,6 +24,7 @@ object ShortPMChannelNames : ChatReceiveModule {
             .append(player).append(colon).append(message)
     }
 
-    override fun isEnabled() = HytilsRebornConfig.shortPMChannelNames
-    override fun getPriority() = 3
+    override val isEnabled
+        get() = HytilsRebornConfig.shortPMChannelNames
+    override val priority = 3
 }

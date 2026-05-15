@@ -9,8 +9,6 @@ import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule
 
 object ColoredPlayerConnectionStatus : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
-        if (event.isOverlay) return
-
         val match = LanguageData.PLAYER_CONNECTION_STATUS.find(event.plainMessage) ?: return
         val status = match.groups["status"]?.value ?: return
         val isJoin = status == "joined"
@@ -21,5 +19,6 @@ object ColoredPlayerConnectionStatus : ChatReceiveModule {
             .append(Component.literal(".").withStyle(ChatFormatting.YELLOW))
     }
 
-    override fun isEnabled() = HytilsRebornConfig.coloredStatuses
+    override val isEnabled
+        get() = HytilsRebornConfig.coloredStatuses
 }

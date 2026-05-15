@@ -11,7 +11,7 @@ object GuildMOTD : ChatReceiveModule {
     var sentMotd = false
 
     override fun onChatReceived(event: ChatReceiveEvent) {
-        if (sentMotd || event.isOverlay) return
+        if (sentMotd) return
 
         if (isMotd) {
             if (event.unformattedMessage.startsWith("------")) {
@@ -33,6 +33,7 @@ object GuildMOTD : ChatReceiveModule {
         sentMotd = false
     }
 
-    override fun isEnabled() = HytilsRebornConfig.removeGuildMotd
-    override fun getPriority() = -1
+    override val isEnabled
+        get() = HytilsRebornConfig.removeGuildMotd
+    override val priority = -1
 }

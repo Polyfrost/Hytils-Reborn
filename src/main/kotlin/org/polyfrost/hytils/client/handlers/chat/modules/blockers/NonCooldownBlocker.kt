@@ -19,7 +19,7 @@ object NonCooldownBlocker : ChatSendModule {
     private const val COOLDOWN_SECONDS = 3L
 
     override fun onChatSend(event: ChatSendEvent) {
-        if (event.message.startsWith("/")) return
+        if (event.message.startsWith("/")) return // FIXME: can be bypassed by `/ac` etc
 
         val rank = HypixelUtils.getPlayerInfo().packageRank
         if (rank.isPresent && rank.get() != PackageRank.NONE) return
@@ -33,9 +33,16 @@ object NonCooldownBlocker : ChatSendModule {
                     "Your freedom of speech is on cooldown. Please wait ${decimalFormat.format(secondsLeft)} more second${if (secondsLeft == 1L) "" else "s"} before sending another message.",
                     MCTextStyle
                         .color(TextColors.YELLOW)
-                        .setHoverEvent(HoverEvent.ShowText(
-                            Text.literal("Hytils Reborn\n", MCTextStyle.color(TextColors.GOLD).setBold(true))
-                                .append(Text.literal("Your message was blocked by the \"Non Speech Cooldown\" setting. \nPlease wait before sending another message.", MCTextStyle.color(TextColors.GRAY).setBold(false))))
+                        .setHoverEvent(
+                            HoverEvent.ShowText(
+                                Text.literal("Hytils Reborn\n", MCTextStyle.color(TextColors.GOLD).setBold(true))
+                                    .append(
+                                        Text.literal(
+                                            "Your message was blocked by the \"Non Speech Cooldown\" setting. \nPlease wait before sending another message.",
+                                            MCTextStyle.color(TextColors.GRAY).setBold(false)
+                                        )
+                                    )
+                            )
                         )
                 )
             )
@@ -43,6 +50,7 @@ object NonCooldownBlocker : ChatSendModule {
         }
     }
 
-    override fun isEnabled() = HytilsRebornConfig.preventNonCooldown
-    override fun getPriority() = -1
+    override val isEnabled
+        get() = HytilsRebornConfig.preventNonCooldown
+    override val priority = -1
 }

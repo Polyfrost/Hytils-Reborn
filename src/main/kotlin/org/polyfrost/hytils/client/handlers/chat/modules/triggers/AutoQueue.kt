@@ -5,9 +5,9 @@ import dev.deftu.omnicore.api.world.OmniDimension
 import dev.deftu.omnicore.api.world.dimensionType
 import net.minecraft.client.multiplayer.ClientLevel
 import org.polyfrost.hytils.client.HytilsRebornConfig
+import org.polyfrost.hytils.client.data.providers.GameIdentifiersData
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
-import org.polyfrost.hytils.client.data.providers.GameIdentifiersData
 import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule
 import org.polyfrost.oneconfig.api.event.v1.events.KeyInputEvent
 import org.polyfrost.oneconfig.api.event.v1.events.MouseInputEvent
@@ -23,7 +23,7 @@ object AutoQueue : ChatReceiveModule {
     private var gameEnded = false
 
     override fun onChatReceived(event: ChatReceiveEvent) {
-        if (event.isOverlay || !hasGameEnded(event.unformattedMessage)) return
+        if (!hasGameEnded(event.unformattedMessage)) return
 
         val location = HypixelUtils.getLocation()
         if (location.gameType.isPresent && location.mode.isPresent) {
@@ -80,7 +80,9 @@ object AutoQueue : ChatReceiveModule {
         return matched
     }
 
-    override fun isEnabled() = HytilsRebornConfig.autoQueue
+    override val isEnabled
+        get() = HytilsRebornConfig.autoQueue
+
     // this should run earlier than other modules but after autogg
-    override fun getPriority() = -2
+    override val priority = -2
 }

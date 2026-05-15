@@ -11,16 +11,14 @@ import org.polyfrost.hytils.client.utils.HypixelAPIUtils
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 import org.polyfrost.oneconfig.api.ui.v1.Notifications
-import java.util.Locale
+import java.util.*
 
 object AutoCheckStats : ChatReceiveModule {
     var gameEnded = false
 
     override fun onChatReceived(event: ChatReceiveEvent) {
-        if (!event.isOverlay && !gameEnded) {
-            if (event.unformattedMessage.matches(LanguageData.GAME_END)) {
-                showNotification()
-            }
+        if (!gameEnded && event.unformattedMessage.matches(LanguageData.GAME_END)) {
+            showNotification()
         }
     }
 
@@ -85,5 +83,6 @@ object AutoCheckStats : ChatReceiveModule {
         return false
     }
 
-    override fun isEnabled() = HytilsRebornConfig.autoGetGEXP || HytilsRebornConfig.autoGetWinstreak
+    override val isEnabled
+        get() = HytilsRebornConfig.autoGetGEXP || HytilsRebornConfig.autoGetWinstreak
 }
