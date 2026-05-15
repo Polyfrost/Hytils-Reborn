@@ -308,22 +308,21 @@ object HytilsRebornConfig : Config(
     )
     var padPlayerCount = false
 
-    // TODO: implement https://modrinth.com/mod/better-hypixel-chat (gplv3)
-//    @Switch(
-//        title = "Trim Line Separators",
-//        description = "Prevent separators from overflowing onto the next chat line.",
-//        category = "Chat",
-//        subcategory = "Visual"
-//    )
-//    var lineBreakerTrim = true
-//
-//    @Switch(
-//        title = "Clean Line Separators",
-//        description = "Change all line separator to become smoother.",
-//        category = "Chat",
-//        subcategory = "Visual"
-//    )
-//    var cleanLineSeparator = true
+    @Switch(
+        title = "Clean Separator Lines",
+        description = "Make line separators smoother and properly trimmed to the width of chat.",
+        category = "Chat",
+        subcategory = "Visual"
+    )
+    var cleanSeparatorLines = true
+
+    @Switch(
+        title = "Fix Centered Messages",
+        description = "Properly center Hypixel server messages based on the width of chat.",
+        category = "Chat",
+        subcategory = "Visual"
+    )
+    var fixCenteredMessages = true
 
     @Switch(
         title = "White Chat",
@@ -1388,6 +1387,10 @@ object HytilsRebornConfig : Config(
         addDependency("autoGLMessage", "autoGL")
         addDependency("afkTimeout", "autoReplyAfk")
         addDependency("afkReplyMessage", "autoReplyAfk")
+
+        addCallback("cleanSeparatorLines") { mc.execute(mc.gui.chat::rescaleChat) }
+        addCallback("fixCenteredMessages") { mc.execute(mc.gui.chat::rescaleChat) }
+
         addDependency("chatEmotesReplacementMode", "replaceChatEmotes")
         addDependency("chatSwapperReturnChannel", "chatSwapper")
         addDependency("chatSwapperHideAllChannelMsg", "chatSwapper")

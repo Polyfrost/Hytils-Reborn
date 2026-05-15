@@ -15,6 +15,11 @@ class HytilsRebornMixinPlugin : IMixinConfigPlugin {
 
         //? if >=1.21.11 {
         mixins.add("client.accessor.RenderTypeAccessor")
+
+        mixins.add("client.chat.LineConsumerRendererMixin_RenderParsedSequences")
+        mixins.add("client.chat.parameters.ClickableTextOnlyGraphicsAccessMixin")
+        mixins.add("client.chat.parameters.DrawingBackgroundGraphicsAccessMixin")
+        mixins.add("client.chat.parameters.DrawingFocusedGraphicsAccessMixin")
         //?}
 
         return mixins
