@@ -23,17 +23,17 @@ abstract class LineConsumerRendererMixin_RenderParsedSequences {
     private boolean renderParsedSequence(
         ChatComponent.ChatGraphicsAccess instance,
         int textTop,
-        float alpha,
+        float textAlpha,
         FormattedCharSequence sequence,
         Operation<Boolean> original,
         @Local(ordinal = 1) int lineBottom,
         @Local(ordinal = 2) int lineTop
     ) {
         if (sequence instanceof ParsedChatSequence parsed) {
-            return ChatEnhancements.renderSequence(parsed, instance, textTop, alpha, lineBottom, lineTop);
+            return ChatEnhancements.renderSequence(parsed, instance, lineBottom, lineTop, textTop, textAlpha);
         }
 
-        return original.call(instance, textTop, alpha, sequence);
+        return original.call(instance, textTop, textAlpha, sequence);
     }
 }
 //?}

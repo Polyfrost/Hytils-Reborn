@@ -23,13 +23,14 @@ data class CenteredLine(
     val sequence: FormattedCharSequence,
     val sideDecorations: SideDecorations? = null
 ) : ChatLineRenderer {
-    override fun render(graphics: ChatGraphics, sequence: FormattedCharSequence, lineX: Int, lineWidth: Int, textY: Int, textAlpha: Float) {
+    override fun render(graphics: ChatGraphics, sequence: FormattedCharSequence, lineX: Int, lineWidth: Int, lineHeight: Int, textY: Int, textAlpha: Float) {
         val center = lineX + (lineWidth / 2)
         graphics.drawCenteredString(this.sequence, center, textY, textAlpha)
 
         sideDecorations?.let { decorations ->
             val leftX = lineX + (lineWidth - decorations.centerWidth) / 2 - graphics.width(decorations.left) - SPACING
-            val decorationY = textY + decorations.alignment.getVerticalOffset(graphics.lineHeight())
+            val decorationY = textY + decorations.alignment.getVerticalOffset(lineHeight)
+
             graphics.drawString(decorations.left, leftX, decorationY, textAlpha)
             graphics.drawString(decorations.right, lineX + (lineWidth + decorations.centerWidth) / 2 + SPACING, decorationY, textAlpha)
         }
@@ -125,7 +126,7 @@ data class CenteredLine(
             val even = wrappedList.size % 2 == 0
             val middleIndex = wrappedList.size / 2
 
-            return wrappedList.mapIndexed { i, orderedText ->
+            return wrappedList.mapIndexed { i, sequence ->
                 val decorations = chevrons?.takeIf {
                     i in (middleIndex - if (even) 1 else 0)..middleIndex
                 }?.let { (l, r) ->
@@ -134,8 +135,8 @@ data class CenteredLine(
                 }
 
                 ChatLineParser.ParsedLine(
-                    orderedText,
-                    CenteredLine(orderedText, decorations)
+                    sequence,
+                    CenteredLine(sequence, decorations)
                 )
             }
         }

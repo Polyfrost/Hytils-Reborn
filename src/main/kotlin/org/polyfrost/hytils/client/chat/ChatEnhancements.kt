@@ -44,10 +44,10 @@ object ChatEnhancements {
         parsed: ParsedChatSequence,
         //~ if <1.21.11 'ChatComponent.ChatGraphicsAccess' -> 'net.minecraft.client.gui.GuiGraphics'
         graphics: ChatComponent.ChatGraphicsAccess,
-        textTop: Int,
-        alpha: Float,
         lineBottom: Int,
-        lineTop: Int
+        lineTop: Int,
+        textTop: Int,
+        textAlpha: Float
     ): Boolean {
         val chatGraphics = ChatGraphics(graphics)
         val chatWidth = ChatComponent.getWidth(mc.options.chatWidth().get())
@@ -68,8 +68,9 @@ object ChatEnhancements {
             parsed.sequence,
             0,
             chatWidth,
+            lineBottom - lineTop,
             textTop,
-            alpha
+            textAlpha
         )
 
         //? if >=1.21.11 {

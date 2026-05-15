@@ -24,7 +24,7 @@ data class LabeledSeparatorLine(
     val middleWidth: Int,
     val alignment: LineAlignment
 ) : ChatLineRenderer {
-    override fun render(graphics: ChatGraphics, sequence: FormattedCharSequence, lineX: Int, lineWidth: Int, textY: Int, textAlpha: Float) {
+    override fun render(graphics: ChatGraphics, sequence: FormattedCharSequence, lineX: Int, lineWidth: Int, lineHeight: Int, textY: Int, textAlpha: Float) {
         val center = lineX + (lineWidth / 2)
         graphics.drawCenteredString(this.sequence, center, textY, textAlpha)
 
@@ -32,7 +32,7 @@ data class LabeledSeparatorLine(
         val end = start + middleWidth
 
         val baseY = textY + (graphics.lineHeight() - SeparatorLine.THICKNESS) / 2
-        val separatorY = baseY + alignment.getVerticalOffset(graphics.lineHeight())
+        val separatorY = baseY + alignment.getVerticalOffset(lineHeight)
 
         val textColor = ARGB.color(textAlpha, lineColor)
         val shadowColor = ARGB.scaleRGB(textColor, 0.25f)
@@ -77,14 +77,14 @@ data class LabeledSeparatorLine(
             val even = wrappedList.size % 2 == 0
             val middleIndex = wrappedList.size / 2
 
-            return wrappedList.mapIndexed { i, orderedText ->
+            return wrappedList.mapIndexed { i, sequence ->
                 if (i < middleIndex - (if (even) 1 else 0) || i > middleIndex) {
-                    ChatLineParser.ParsedLine(orderedText, CenteredLine(orderedText))
+                    ChatLineParser.ParsedLine(sequence, CenteredLine(sequence))
                 } else {
                     val alignment = if (i == middleIndex) (if (even) LineAlignment.TOP else LineAlignment.CENTER) else LineAlignment.BOTTOM
                     ChatLineParser.ParsedLine(
-                        orderedText,
-                        LabeledSeparatorLine(orderedText, color, maxMiddleWidth, alignment)
+                        sequence,
+                        LabeledSeparatorLine(sequence, color, maxMiddleWidth, alignment)
                     )
                 }
             }

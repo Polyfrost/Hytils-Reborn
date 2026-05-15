@@ -11,7 +11,7 @@ import org.polyfrost.hytils.client.chat.core.ChatLineRenderer
 import org.polyfrost.hytils.client.utils.ComponentUtils.getFirstColor
 
 data class SeparatorLine(val lineColor: Int, val thickness: Int) : ChatLineRenderer {
-    override fun render(graphics: ChatGraphics, sequence: FormattedCharSequence, lineX: Int, lineWidth: Int, textY: Int, textAlpha: Float) {
+    override fun render(graphics: ChatGraphics, sequence: FormattedCharSequence, lineX: Int, lineWidth: Int, lineHeight: Int, textY: Int, textAlpha: Float) {
         val separatorY = textY + (graphics.lineHeight() - thickness) / 2
 
         val textColor = ARGB.color(textAlpha, lineColor)
