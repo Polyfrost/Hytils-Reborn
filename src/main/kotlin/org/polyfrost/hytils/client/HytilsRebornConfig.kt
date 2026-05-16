@@ -93,31 +93,6 @@ object HytilsRebornConfig : Config(
         subcategory = "Automatic"
     )
     var autoGetWinstreak = false
-
-    @Switch(
-        title = "Notify Mining Fatigue",
-        description = "Send a notification when you get mining fatigue.",
-        category = "General",
-        subcategory = "Potion Effects"
-    )
-    var notifyMiningFatigue = true
-
-    @RadioButton(
-        title = "Mining Fatigue Notification Type",
-        description = "Choose how notifications should be displayed.",
-        category = "General",
-        subcategory = "Potion Effects",
-        options = ["Notification", "Title", "Elder Guardian Curse"]
-    )
-    var miningFatigueNotificationType = 0
-
-    @Checkbox(
-        title = "Disable Mining Fatigue Notification in SkyBlock",
-        description = "Disable the mining fatigue notification in SkyBlock.",
-        category = "General",
-        subcategory = "Potion Effects"
-    )
-    var disableNotifyMiningFatigueSkyblock = true
     //endregion
 
     //region Maintenance
@@ -1175,6 +1150,31 @@ object HytilsRebornConfig : Config(
         subcategory = "UHC"
     )
     var uhcMiddleWaypointText = "0,0"
+
+    @Switch(
+        title = "Notify Mining Fatigue",
+        description = "Send a notification when you get mining fatigue.",
+        category = "Game",
+        subcategory = "Potion Effects"
+    )
+    var notifyMiningFatigue = true
+
+    @RadioButton(
+        title = "Mining Fatigue Notification Type",
+        description = "Choose how notifications should be displayed.",
+        category = "Game",
+        subcategory = "Potion Effects",
+        options = ["Notification", "Title", "Elder Guardian Curse"]
+    )
+    var miningFatigueNotificationType = 0
+
+    @Checkbox(
+        title = "Disable Mining Fatigue Notification in SkyBlock",
+        description = "Disable the mining fatigue notification in SkyBlock.",
+        category = "Game",
+        subcategory = "Potion Effects"
+    )
+    var disableNotifyMiningFatigueSkyblock = true
     //endregion
 
     //region Lobby

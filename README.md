@@ -14,8 +14,6 @@ you would want while on Hypixel, including Chat Restylers, Height Overlay, Messa
 - **Auto Queue** - Automatically queues for another game once you win or die. (This will require you to interact with the game in a way to prevent abuse)
 - **Automatically Check GEXP** - Automatically check your GEXP after you win a Hypixel game.
 - **Automatically Check Winstreak** - Automatically check your winstreak after you win a Hypixel game.
-- **Notify Mining Fatigue** - Send a notification when you get mining fatigue.
-- **Disable Mining Fatigue Notification in SkyBlock** - Disable the mining fatigue notification in SkyBlock.
 </details>
 <details>
   <summary>Chat</summary>
@@ -122,6 +120,9 @@ you would want while on Hypixel, including Chat Restylers, Height Overlay, Messa
 - **Highlight Opened Chests** - Highlight chests that have been opened.
 - **UHC Overlay** - Increase the size of dropped apples, golden apples, golden ingots, and player heads in UHC Champions and Speed UHC.
 - **UHC Middle Waypoint** - Adds a waypoint to signify (0,0).
+- **Notify Mining Fatigue** - Send a notification when you get mining fatigue.
+- **Mining Fatigue Notification Type** - Choose if the mining fatigue notification should be a toast, title, or elder guardian curse.
+- **Disable Mining Fatigue Notification in SkyBlock** - Disable the mining fatigue notification in SkyBlock.
 </details>
 <details>
   <summary>Lobby</summary>
