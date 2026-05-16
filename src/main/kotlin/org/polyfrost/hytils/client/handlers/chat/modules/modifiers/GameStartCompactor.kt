@@ -1,10 +1,8 @@
 package org.polyfrost.hytils.client.handlers.chat.modules.modifiers
 
 import net.minecraft.network.chat.Component
-import net.minecraft.util.FormattedCharSequence
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.data.providers.LanguageData
-import org.polyfrost.hytils.client.data.providers.LanguageData.removeFormattingCodes
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.handlers.chat.ChatReceiveModule
 import org.polyfrost.hytils.mixin.client.accessor.ChatComponentAccessor
@@ -18,20 +16,22 @@ object GameStartCompactor : ChatReceiveModule {
 
         if (lastMessage != null) {
             val chat = (mc.gui.chat as ChatComponentAccessor)
-            chat.allMessages.removeIf { it.content == lastMessage }
-            chat.trimmedMessages.removeIf { it.content.getString() == lastMessage!!.string.removeFormattingCodes() }
+            val removed = chat.allMessages.removeIf { it.content == lastMessage }
+
+            if (removed) {
+                val scrollbarPos = chat.chatScrollbarPos
+                val newMessageSinceScroll = chat.newMessageSinceScroll
+
+                chat.chatScrollbarPos = 0
+                chat.invokeRefreshTrimmedMessages()
+
+                chat.chatScrollbarPos = scrollbarPos
+                mc.gui.chat.scrollChat(-1)
+                chat.newMessageSinceScroll = newMessageSinceScroll
+            }
         }
 
         lastMessage = event.message
-    }
-
-    fun FormattedCharSequence.getString(): String {
-        val builder = StringBuilder()
-        accept { _, _, codePoint ->
-            builder.appendCodePoint(codePoint)
-            true
-        }
-        return builder.toString()
     }
 
     override val isEnabled
