@@ -33,6 +33,7 @@
 		"client.gui.GuiMixin_HideHudElements",
 		"client.heightoverlay.ModelBlockRendererMixin_HeightOverlay",
 		"client.hypixel.HypixelApiInternalsImplMixin_ReplaceImpl",
+		"client.hypixel.HypixelUtils_ReplaceHypixelCheck",
 		"client.hypixel.LocationMixin_FixLobbyStatus",
 		"client.tab.PlayerTabOverlayMixin_CleanerSkyBlockTab",
 		"client.tab.PlayerTabOverlayMixin_HideHeads",

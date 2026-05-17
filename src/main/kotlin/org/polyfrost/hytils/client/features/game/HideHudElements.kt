@@ -3,12 +3,11 @@ package org.polyfrost.hytils.client.features.game
 import net.hypixel.data.type.GameType
 import net.minecraft.world.entity.player.Player
 import org.polyfrost.hytils.client.HytilsRebornConfig
-import org.polyfrost.hytils.client.utils.hypixel.HypixelModAPIImpl
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 
 object HideHudElements {
     private val shouldHideHudElements
-        get() = HytilsRebornConfig.isEnabled && HytilsRebornConfig.hideHudElements && HypixelModAPIImpl.onHypixel
+        get() = HytilsRebornConfig.isEnabled && HytilsRebornConfig.hideHudElements && HypixelUtils.isHypixel()
 
     @JvmStatic
     fun shouldHideHearts(player: Player): Boolean {

@@ -1,10 +1,11 @@
 package org.polyfrost.hytils.mixin.client.hypixel;
 
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
@@ -13,13 +14,13 @@ abstract class LocationMixin_FixLobbyStatus {
     @Shadow public abstract Optional<String> getLobbyName();
     @Shadow public abstract Optional<String> getLastLobbyName();
 
-    @WrapMethod(method = "inLobby")
-    private boolean inLobby(Operation<Boolean> original) {
-        return getLobbyName().isPresent();
+    @Inject(method = "inLobby", at = @At("HEAD"), cancellable = true)
+    private void fixInLobby(CallbackInfoReturnable<Boolean> cir) {
+        cir.setReturnValue(getLobbyName().isPresent());
     }
 
-    @WrapMethod(method = "wasInLobby")
-    private boolean wasInLobby(Operation<Boolean> original) {
-        return getLastLobbyName().isPresent();
+    @Inject(method = "wasInLobby", at = @At("HEAD"), cancellable = true)
+    private void fixWasInLobby(CallbackInfoReturnable<Boolean> cir) {
+        cir.setReturnValue(getLastLobbyName().isPresent());
     }
 }

@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.MapColor
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.data.providers.HeightLimitData
-import org.polyfrost.hytils.client.utils.hypixel.HypixelModAPIImpl
 import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
@@ -23,7 +22,7 @@ object HeightOverlay {
 
     @JvmStatic
     fun shouldModify(blockState: BlockState, blockPos: BlockPos): Boolean {
-        if (!HypixelModAPIImpl.onHypixel || !canColor(blockState)) return false
+        if (!HypixelUtils.isHypixel() || !canColor(blockState)) return false
 
         return blockPos.y == maxBuild?.minus(1)
                 || (HytilsRebornConfig.heightOverlayMinBuild && blockPos.y == minBuild?.plus(1))

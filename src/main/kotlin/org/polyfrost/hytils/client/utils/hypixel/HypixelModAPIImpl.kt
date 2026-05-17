@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory
 object HypixelModAPIImpl : HypixelModAPIImplementation {
     private val LOGGER: Logger = LoggerFactory.getLogger("${HytilsRebornConstants.NAME}/${this::class.simpleName}")
 
-    var onHypixel = false
+    @JvmStatic var onHypixel = false
 
     @JvmStatic
     fun init() {

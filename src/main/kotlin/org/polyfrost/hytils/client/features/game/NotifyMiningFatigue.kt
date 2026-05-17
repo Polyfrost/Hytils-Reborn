@@ -13,7 +13,6 @@ import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.LivingEntity
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.HytilsRebornConfig
-import org.polyfrost.hytils.client.utils.hypixel.HypixelModAPIImpl
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 import org.polyfrost.oneconfig.api.ui.v1.Notifications
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
@@ -21,7 +20,7 @@ import org.polyfrost.oneconfig.utils.v1.dsl.mc
 object NotifyMiningFatigue {
     @JvmStatic
     fun sendNotification(livingEntity: LivingEntity, mobEffect: Holder<MobEffect>) {
-        if (!HytilsRebornConfig.isEnabled || !HytilsRebornConfig.notifyMiningFatigue || !HypixelModAPIImpl.onHypixel) return
+        if (!HytilsRebornConfig.isEnabled || !HytilsRebornConfig.notifyMiningFatigue || !HypixelUtils.isHypixel()) return
 
         if (livingEntity !is LocalPlayer || mobEffect != MobEffects.MINING_FATIGUE) return
 

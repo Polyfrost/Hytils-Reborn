@@ -3,13 +3,12 @@ package org.polyfrost.hytils.client.features.game
 import net.hypixel.data.type.GameType
 import net.minecraft.world.item.equipment.Equippable
 import org.polyfrost.hytils.client.HytilsRebornConfig
-import org.polyfrost.hytils.client.utils.hypixel.HypixelModAPIImpl
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 
 object HideArmor {
     @JvmStatic
     fun shouldHideArmor(equippable: Equippable): Boolean {
-        if (!HytilsRebornConfig.isEnabled || !HytilsRebornConfig.hideArmor || equippable.assetId().isEmpty || !HypixelModAPIImpl.onHypixel) return false
+        if (!HytilsRebornConfig.isEnabled || !HytilsRebornConfig.hideArmor || equippable.assetId().isEmpty || !HypixelUtils.isHypixel()) return false
 
         val location = HypixelUtils.getLocation()
         val gameType = location.gameType.orElse(null) ?: return false

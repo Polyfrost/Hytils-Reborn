@@ -7,10 +7,10 @@ import org.polyfrost.hytils.client.events.ChatSendEvent
 import org.polyfrost.hytils.client.features.chat.handlers.modules.blockers.*
 import org.polyfrost.hytils.client.features.chat.handlers.modules.modifiers.*
 import org.polyfrost.hytils.client.features.chat.handlers.modules.triggers.*
-import org.polyfrost.hytils.client.utils.hypixel.HypixelModAPIImpl
 import org.polyfrost.oneconfig.api.event.v1.EventManager
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 
 object ChatHandler {
     private val receiveModules = mutableListOf<ChatReceiveModule>()
@@ -55,7 +55,7 @@ object ChatHandler {
 
     @Subscribe
     fun onChatReceive(event: ChatReceiveEvent) {
-        if (!HytilsRebornConfig.isEnabled || !HypixelModAPIImpl.onHypixel || event.isOverlay) return
+        if (!HytilsRebornConfig.isEnabled || !HypixelUtils.isHypixel() || event.isOverlay) return
 
         for (module in this.receiveModules) {
             try {
@@ -74,7 +74,7 @@ object ChatHandler {
 
     @Subscribe
     fun onChatSend(event: ChatSendEvent) {
-        if (!HytilsRebornConfig.isEnabled || !HypixelModAPIImpl.onHypixel) return
+        if (!HytilsRebornConfig.isEnabled || !HypixelUtils.isHypixel()) return
 
         for (module in this.sendModules) {
             try {
