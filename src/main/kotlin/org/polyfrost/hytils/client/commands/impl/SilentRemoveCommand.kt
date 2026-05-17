@@ -10,7 +10,7 @@ import dev.deftu.textile.minecraft.TextColors
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import org.polyfrost.hytils.client.commands.ClientCommand
-import org.polyfrost.hytils.client.handlers.chat.modules.triggers.SilentRemoval
+import org.polyfrost.hytils.client.features.chat.handlers.modules.triggers.SilentRemoval
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import java.util.Locale
 

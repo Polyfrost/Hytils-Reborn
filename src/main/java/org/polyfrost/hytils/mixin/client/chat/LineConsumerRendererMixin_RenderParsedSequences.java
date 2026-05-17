@@ -6,8 +6,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.util.FormattedCharSequence;
-import org.polyfrost.hytils.client.chat.ChatEnhancements;
-import org.polyfrost.hytils.client.chat.core.ParsedChatSequence;
+import org.polyfrost.hytils.client.features.chat.enhancements.ChatEnhancements;
+import org.polyfrost.hytils.client.features.chat.enhancements.core.ParsedChatSequence;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 

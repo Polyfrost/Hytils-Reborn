@@ -11,16 +11,16 @@ import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.commands.impl.*
 import org.polyfrost.hytils.client.data.providers.*
 import org.polyfrost.hytils.client.events.PostLevelRenderEvent
-import org.polyfrost.hytils.client.handlers.chat.ChatHandler
-import org.polyfrost.hytils.client.handlers.game.*
-import org.polyfrost.hytils.client.handlers.game.titles.CountdownTitles
-import org.polyfrost.hytils.client.handlers.game.titles.GameEndingTitles
-import org.polyfrost.hytils.client.handlers.game.titles.GameStartingTitles
-import org.polyfrost.hytils.client.handlers.general.ArmorStandHider
-import org.polyfrost.hytils.client.handlers.general.SoundHandler
-import org.polyfrost.hytils.client.handlers.limbo.LimboLimiter
-import org.polyfrost.hytils.client.handlers.limbo.LimboPrivateMessageSounds
-import org.polyfrost.hytils.client.handlers.lobby.SilentLobby
+import org.polyfrost.hytils.client.features.chat.handlers.ChatHandler
+import org.polyfrost.hytils.client.features.game.*
+import org.polyfrost.hytils.client.features.game.titles.CountdownTitles
+import org.polyfrost.hytils.client.features.game.titles.GameEndingTitles
+import org.polyfrost.hytils.client.features.game.titles.GameStartingTitles
+import org.polyfrost.hytils.client.features.general.ArmorStandHider
+import org.polyfrost.hytils.client.features.general.SoundHandler
+import org.polyfrost.hytils.client.features.limbo.LimboLimiter
+import org.polyfrost.hytils.client.features.limbo.LimboPrivateMessageSounds
+import org.polyfrost.hytils.client.features.lobby.SilentLobby
 import org.polyfrost.oneconfig.api.event.v1.EventManager
 import org.polyfrost.oneconfig.utils.v1.Multithreading
 import org.slf4j.Logger
@@ -40,20 +40,20 @@ object HytilsRebornClient {
         }
 
         listOf(
-            // misc handlers
+            // misc features
             ChatHandler, SilentLobby,
 
-            // game handlers
+            // game features
             CountdownTitles, GameEndingTitles,
             GameStartingTitles, ChestHighlighter,
             HardcoreStatus, HeightOverlay,
             MiniWallsMiddleBeacon, PitLagReducer,
             SumoRenderDistance, UHCMiddleWaypoint,
 
-            // general handlers
+            // general features
             ArmorStandHider, SoundHandler,
 
-            // limbo handlers
+            // limbo features
             LimboLimiter, LimboPrivateMessageSounds,
         ).forEach { EventManager.INSTANCE.register(it) }
 

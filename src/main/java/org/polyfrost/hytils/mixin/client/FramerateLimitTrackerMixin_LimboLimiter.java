@@ -3,7 +3,7 @@ package org.polyfrost.hytils.mixin.client;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.mojang.blaze3d.platform.FramerateLimitTracker;
 import org.polyfrost.hytils.client.HytilsRebornConfig;
-import org.polyfrost.hytils.client.handlers.limbo.LimboLimiter;
+import org.polyfrost.hytils.client.features.limbo.LimboLimiter;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 

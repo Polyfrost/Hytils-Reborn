@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import org.polyfrost.hytils.client.HytilsRebornConfig;
-import org.polyfrost.hytils.client.handlers.game.HeightOverlay;
+import org.polyfrost.hytils.client.features.game.HeightOverlay;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

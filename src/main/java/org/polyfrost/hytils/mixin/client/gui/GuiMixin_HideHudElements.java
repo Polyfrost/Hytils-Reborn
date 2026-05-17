@@ -3,7 +3,7 @@ package org.polyfrost.hytils.mixin.client.gui;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.entity.player.Player;
-import org.polyfrost.hytils.client.handlers.game.HideHudElements;
+import org.polyfrost.hytils.client.features.game.HideHudElements;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
