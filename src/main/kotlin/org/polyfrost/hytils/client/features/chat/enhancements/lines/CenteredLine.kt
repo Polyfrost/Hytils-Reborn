@@ -10,22 +10,19 @@ import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.features.chat.enhancements.ChatEnhancements
 import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatGraphics
 import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatLineParser
-import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatLineRenderer
+import org.polyfrost.hytils.client.features.chat.enhancements.core.CustomChatLine
 import org.polyfrost.hytils.client.features.chat.enhancements.core.LineAlignment
-import org.polyfrost.hytils.client.utils.ComponentUtils.subText
-import org.polyfrost.hytils.client.utils.ComponentUtils.trim
-import org.polyfrost.hytils.client.utils.StringUtils.findFirstDifferentChar
-import org.polyfrost.hytils.client.utils.StringUtils.findLastDifferentChar
+import org.polyfrost.hytils.client.utils.subText
+import org.polyfrost.hytils.client.utils.trim
+import org.polyfrost.hytils.client.utils.findFirstDifferentChar
+import org.polyfrost.hytils.client.utils.findLastDifferentChar
 import kotlin.math.abs
 import kotlin.math.max
 
-data class CenteredLine(
-    val sequence: FormattedCharSequence,
-    val sideDecorations: SideDecorations? = null
-) : ChatLineRenderer {
-    override fun render(graphics: ChatGraphics, sequence: FormattedCharSequence, lineX: Int, lineWidth: Int, lineHeight: Int, textY: Int, textAlpha: Float) {
+data class CenteredLine(val sequence: FormattedCharSequence, val sideDecorations: SideDecorations? = null) : CustomChatLine {
+    override fun render(graphics: ChatGraphics, lineX: Int, lineWidth: Int, lineHeight: Int, textY: Int, textAlpha: Float) {
         val center = lineX + (lineWidth / 2)
-        graphics.drawCenteredString(this.sequence, center, textY, textAlpha)
+        graphics.drawCenteredString(sequence, center, textY, textAlpha)
 
         sideDecorations?.let { decorations ->
             val leftX = lineX + (lineWidth - decorations.centerWidth) / 2 - graphics.width(decorations.left) - SPACING
@@ -37,7 +34,7 @@ data class CenteredLine(
     }
 
     //? if <1.21.11 {
-    /*override fun getStyleAt(sequence: FormattedCharSequence, mouseX: Int, chatWidth: Int, font: Font): net.minecraft.network.chat.Style? {
+    /*override fun getStyleAt(mouseX: Int, chatWidth: Int, font: Font): net.minecraft.network.chat.Style? {
         sideDecorations?.let { decorations ->
             val leftX = (chatWidth - decorations.centerWidth) / 2 - font.width(decorations.left) - SPACING
             val rightX = (chatWidth + decorations.centerWidth) / 2 + SPACING
@@ -63,7 +60,7 @@ data class CenteredLine(
         private val CHEVRONS = charArrayOf('<', '>')
         private val IS_CHEVRON = { c: Char -> c in CHEVRONS }
 
-        override fun parse(text: Component, raw: String, trimmed: String, chatWidth: Int, font: Font): List<ChatLineParser.ParsedLine>? {
+        override fun parse(text: Component, raw: String, trimmed: String, chatWidth: Int, font: Font): List<CenteredLine>? {
             if (!raw.startsWith(" ") || trimmed.isEmpty()) return null
             val firstChar = raw.findFirstDifferentChar(0, ' ')
             val lastChar = raw.findLastDifferentChar(raw.length - 1, ' ')
@@ -134,10 +131,7 @@ data class CenteredLine(
                     SideDecorations(l, r, maxMiddleWidth, alignment)
                 }
 
-                ChatLineParser.ParsedLine(
-                    sequence,
-                    CenteredLine(sequence, decorations)
-                )
+                CenteredLine(sequence, decorations)
             }
         }
 

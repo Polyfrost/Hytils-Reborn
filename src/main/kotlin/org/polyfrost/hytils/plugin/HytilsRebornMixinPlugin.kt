@@ -6,23 +6,19 @@ import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo
 
 class HytilsRebornMixinPlugin : IMixinConfigPlugin {
-    override fun getMixins(): List<String?> {
-        val mixins = mutableListOf<String>()
-
+    override fun getMixins(): List<String> = buildList {
         if (FabricLoader.getInstance().isModLoaded("sodium")) {
-            mixins.add("client.heightoverlay.BlockRendererMixin_HeightOverlay_Sodium")
+            add("client.heightoverlay.BlockRendererMixin_HeightOverlay_Sodium")
         }
 
         //? if >=1.21.11 {
-        mixins.add("client.accessor.RenderTypeAccessor")
+        add("client.accessor.RenderTypeAccessor")
 
-        mixins.add("client.chat.LineConsumerRendererMixin_RenderParsedSequences")
-        mixins.add("client.chat.parameters.ClickableTextOnlyGraphicsAccessMixin")
-        mixins.add("client.chat.parameters.DrawingBackgroundGraphicsAccessMixin")
-        mixins.add("client.chat.parameters.DrawingFocusedGraphicsAccessMixin")
+        add("client.chat.LineConsumerRendererMixin_RenderCustomLines")
+        add("client.chat.parameters.ClickableTextOnlyGraphicsAccessMixin")
+        add("client.chat.parameters.DrawingBackgroundGraphicsAccessMixin")
+        add("client.chat.parameters.DrawingFocusedGraphicsAccessMixin")
         //?}
-
-        return mixins
     }
 
     override fun shouldApplyMixin(targetClassName: String?, mixinClassName: String?): Boolean = true

@@ -6,26 +6,23 @@ import net.minecraft.client.GuiMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.ChatComponent;
-import net.minecraft.client.gui.components.ComponentRenderUtils;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import org.polyfrost.hytils.client.HytilsRebornConfig;
 import org.polyfrost.hytils.client.features.chat.enhancements.ChatEnhancements;
-import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatTextBuilder;
-import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatLineParser;
-import org.polyfrost.hytils.client.features.chat.enhancements.core.ParsedChatSequence;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.ArrayList;
+//? if <1.21.11
+//import org.polyfrost.hytils.client.features.chat.enhancements.core.CustomChatLine;
+
 import java.util.List;
 
 @Mixin(ChatComponent.class)
-abstract class ChatComponentMixin_ParseCustomLines {
+abstract class ChatComponentMixin_ParseChatLines {
     @Shadow @Final /*? if <1.21.11 {*//* private *//*?}*/ Minecraft minecraft;
 
     @WrapOperation(
@@ -38,7 +35,7 @@ abstract class ChatComponentMixin_ParseCustomLines {
             //target = "Lnet/minecraft/client/gui/components/ComponentRenderUtils;wrapComponents(Lnet/minecraft/network/chat/FormattedText;ILnet/minecraft/client/gui/Font;)Ljava/util/List;"
         )
     )
-    private List<FormattedCharSequence> parseCustomLines(
+    private List<FormattedCharSequence> parseChatLines(
         //? if >=1.21.11 {
         GuiMessage message,
         Font font,
@@ -52,38 +49,14 @@ abstract class ChatComponentMixin_ParseCustomLines {
         @com.llamalad7.mixinextras.sugar.Local(argsOnly = true) GuiMessage message
         *///?}
     ) {
-        if (!HytilsRebornConfig.isEnabled() || !HypixelUtils.isHypixel()) {
-            //~ if <1.21.11 'message, font, maxWidth' -> 'formattedText, maxWidth, font'
-            return original.call(message, font, maxWidth);
+        if (HytilsRebornConfig.isEnabled() && HypixelUtils.isHypixel()) {
+            double chatScale = this.minecraft.options.chatScale().get();
+            int chatWidth = Mth.floor(ChatComponent.getWidth(this.minecraft.options.chatWidth().get()) / chatScale);
+            return ChatEnhancements.parseChatLines(message.content(), chatWidth, font);
         }
 
-        ChatTextBuilder builder = new ChatTextBuilder();
-        message.content().getVisualOrderText().accept(builder);
-        List<MutableComponent> texts = builder.getTexts();
-
-        List<FormattedCharSequence> result = new ArrayList<>();
-
-        double chatScale = this.minecraft.options.chatScale().get();
-        int chatWidth = Mth.floor(ChatComponent.getWidth(this.minecraft.options.chatWidth().get()) / chatScale);
-
-        for (MutableComponent text : texts) {
-            String rawString = text.getString();
-            String trimmedString = rawString.trim();
-
-            List<ChatLineParser.ParsedLine> parsedLines = ChatEnhancements.parseLine(
-                text, rawString, trimmedString, chatWidth, font
-            );
-
-            if (parsedLines != null) {
-                for (ChatLineParser.ParsedLine parsedLine : parsedLines) {
-                    result.add(new ParsedChatSequence(parsedLine.getSequence(), parsedLine.getRenderer()));
-                }
-            } else {
-                result.addAll(ComponentRenderUtils.wrapComponents(text, chatWidth, font));
-            }
-        }
-
-        return result;
+        //~ if <1.21.11 'message, font, maxWidth' -> 'formattedText, maxWidth, font'
+        return original.call(message, font, maxWidth);
     }
 
     //? if <1.21.11 {
@@ -94,7 +67,7 @@ abstract class ChatComponentMixin_ParseCustomLines {
             target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/util/FormattedCharSequence;III)V"
         )
     )
-    private void renderParsedSequence(
+    private void renderCustomLine(
         net.minecraft.client.gui.GuiGraphics graphics,
         Font font,
         FormattedCharSequence sequence,
@@ -105,9 +78,9 @@ abstract class ChatComponentMixin_ParseCustomLines {
         @com.llamalad7.mixinextras.sugar.Local(argsOnly = true, ordinal = 2) int lineTop,
         @com.llamalad7.mixinextras.sugar.Local(argsOnly = true, ordinal = 3) int lineBottom
     ) {
-        if (sequence instanceof ParsedChatSequence parsed) {
+        if (sequence instanceof CustomChatLine customLine) {
             float textAlpha = net.minecraft.util.ARGB.alphaFloat(color);
-            ChatEnhancements.renderSequence(parsed, graphics, lineBottom, lineTop, textTop, textAlpha);
+            ChatEnhancements.renderCustomLine(customLine, graphics, lineBottom, lineTop, textTop, textAlpha);
             return;
         }
 
@@ -127,8 +100,8 @@ abstract class ChatComponentMixin_ParseCustomLines {
         int mouseX,
         Operation<net.minecraft.network.chat.Style> original
     ) {
-        if (sequence instanceof ParsedChatSequence parsed) {
-            return ChatEnhancements.getStyleAt(parsed, mouseX, this.minecraft.font);
+        if (sequence instanceof CustomChatLine customLine) {
+            return ChatEnhancements.getStyleAt(customLine, mouseX, this.minecraft.font);
         }
 
         return original.call(instance, sequence, mouseX);

@@ -7,12 +7,12 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.util.FormattedCharSequence;
 import org.polyfrost.hytils.client.features.chat.enhancements.ChatEnhancements;
-import org.polyfrost.hytils.client.features.chat.enhancements.core.ParsedChatSequence;
+import org.polyfrost.hytils.client.features.chat.enhancements.core.CustomChatLine;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(targets = "net.minecraft.client.gui.components.ChatComponent$1")
-abstract class LineConsumerRendererMixin_RenderParsedSequences {
+abstract class LineConsumerRendererMixin_RenderCustomLines {
     @WrapOperation(
         method = "accept",
         at = @At(
@@ -20,8 +20,8 @@ abstract class LineConsumerRendererMixin_RenderParsedSequences {
             target = "Lnet/minecraft/client/gui/components/ChatComponent$ChatGraphicsAccess;handleMessage(IFLnet/minecraft/util/FormattedCharSequence;)Z"
         )
     )
-    private boolean renderParsedSequence(
-        ChatComponent.ChatGraphicsAccess instance,
+    private boolean renderCustomLine(
+        ChatComponent.ChatGraphicsAccess graphics,
         int textTop,
         float textAlpha,
         FormattedCharSequence sequence,
@@ -29,11 +29,11 @@ abstract class LineConsumerRendererMixin_RenderParsedSequences {
         @Local(ordinal = 1) int lineBottom,
         @Local(ordinal = 2) int lineTop
     ) {
-        if (sequence instanceof ParsedChatSequence parsed) {
-            return ChatEnhancements.renderSequence(parsed, instance, lineBottom, lineTop, textTop, textAlpha);
+        if (sequence instanceof CustomChatLine customLine) {
+            return ChatEnhancements.renderCustomLine(customLine, graphics, lineBottom, lineTop, textTop, textAlpha);
         }
 
-        return original.call(instance, textTop, textAlpha, sequence);
+        return original.call(graphics, textTop, textAlpha, sequence);
     }
 }
 //?}

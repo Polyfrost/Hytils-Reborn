@@ -3,15 +3,14 @@ package org.polyfrost.hytils.client.features.chat.enhancements.lines
 import net.minecraft.client.gui.Font
 import net.minecraft.network.chat.Component
 import net.minecraft.util.ARGB
-import net.minecraft.util.FormattedCharSequence
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatGraphics
 import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatLineParser
-import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatLineRenderer
-import org.polyfrost.hytils.client.utils.ComponentUtils.getFirstColor
+import org.polyfrost.hytils.client.features.chat.enhancements.core.CustomChatLine
+import org.polyfrost.hytils.client.utils.getFirstColor
 
-data class SeparatorLine(val lineColor: Int, val thickness: Int) : ChatLineRenderer {
-    override fun render(graphics: ChatGraphics, sequence: FormattedCharSequence, lineX: Int, lineWidth: Int, lineHeight: Int, textY: Int, textAlpha: Float) {
+data class SeparatorLine(val lineColor: Int, val thickness: Int) : CustomChatLine {
+    override fun render(graphics: ChatGraphics, lineX: Int, lineWidth: Int, lineHeight: Int, textY: Int, textAlpha: Float) {
         val separatorY = textY + (graphics.lineHeight() - thickness) / 2
 
         val textColor = ARGB.color(textAlpha, lineColor)
@@ -25,7 +24,7 @@ data class SeparatorLine(val lineColor: Int, val thickness: Int) : ChatLineRende
         const val THICKNESS = 1
         const val WIDE_THICKNESS = 2
 
-        override fun parse(text: Component, raw: String, trimmed: String, chatWidth: Int, font: Font): List<ChatLineParser.ParsedLine>? {
+        override fun parse(text: Component, raw: String, trimmed: String, chatWidth: Int, font: Font): List<SeparatorLine>? {
             if (trimmed.length < 5) return null
 
             val isNormal = trimmed.all { it == '-' || it == '—' }
@@ -34,12 +33,7 @@ data class SeparatorLine(val lineColor: Int, val thickness: Int) : ChatLineRende
 
             val color = text.getFirstColor()?.value?.let { ARGB.opaque(it) } ?: -1
 
-            return listOf(
-                ChatLineParser.ParsedLine(
-                    text.visualOrderText,
-                    SeparatorLine(color, if (isWide) WIDE_THICKNESS else THICKNESS)
-                )
-            )
+            return listOf(SeparatorLine(color, if (isWide) WIDE_THICKNESS else THICKNESS))
         }
 
         override val isEnabled: Boolean

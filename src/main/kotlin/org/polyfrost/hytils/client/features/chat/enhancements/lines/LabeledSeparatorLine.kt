@@ -9,13 +9,13 @@ import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.features.chat.enhancements.ChatEnhancements
 import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatGraphics
 import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatLineParser
-import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatLineRenderer
+import org.polyfrost.hytils.client.features.chat.enhancements.core.CustomChatLine
 import org.polyfrost.hytils.client.features.chat.enhancements.core.LineAlignment
-import org.polyfrost.hytils.client.utils.ComponentUtils.getFirstColor
-import org.polyfrost.hytils.client.utils.ComponentUtils.subText
-import org.polyfrost.hytils.client.utils.ComponentUtils.trim
-import org.polyfrost.hytils.client.utils.StringUtils.findFirstDifferentChar
-import org.polyfrost.hytils.client.utils.StringUtils.findLastDifferentChar
+import org.polyfrost.hytils.client.utils.findFirstDifferentChar
+import org.polyfrost.hytils.client.utils.findLastDifferentChar
+import org.polyfrost.hytils.client.utils.getFirstColor
+import org.polyfrost.hytils.client.utils.subText
+import org.polyfrost.hytils.client.utils.trim
 import kotlin.math.abs
 
 data class LabeledSeparatorLine(
@@ -23,10 +23,10 @@ data class LabeledSeparatorLine(
     val lineColor: Int,
     val middleWidth: Int,
     val alignment: LineAlignment
-) : ChatLineRenderer {
-    override fun render(graphics: ChatGraphics, sequence: FormattedCharSequence, lineX: Int, lineWidth: Int, lineHeight: Int, textY: Int, textAlpha: Float) {
+) : CustomChatLine {
+    override fun render(graphics: ChatGraphics, lineX: Int, lineWidth: Int, lineHeight: Int, textY: Int, textAlpha: Float) {
         val center = lineX + (lineWidth / 2)
-        graphics.drawCenteredString(this.sequence, center, textY, textAlpha)
+        graphics.drawCenteredString(sequence, center, textY, textAlpha)
 
         val start = lineX + (lineWidth - middleWidth) / 2
         val end = start + middleWidth
@@ -47,7 +47,7 @@ data class LabeledSeparatorLine(
     }
 
     //? if <1.21.11 {
-    /*override fun getStyleAt(sequence: FormattedCharSequence, mouseX: Int, chatWidth: Int, font: Font): net.minecraft.network.chat.Style? {
+    /*override fun getStyleAt(mouseX: Int, chatWidth: Int, font: Font): net.minecraft.network.chat.Style? {
         val textX = (chatWidth - font.width(sequence)) / 2
 
         if (mouseX < textX) return null
@@ -56,7 +56,7 @@ data class LabeledSeparatorLine(
     *///?}
 
     companion object : ChatLineParser {
-        override fun parse(text: Component, raw: String, trimmed: String, chatWidth: Int, font: Font): List<ChatLineParser.ParsedLine>? {
+        override fun parse(text: Component, raw: String, trimmed: String, chatWidth: Int, font: Font): List<CustomChatLine>? {
             if (!trimmed.startsWith("-") || !trimmed.endsWith("-")) return null
             if (font.width(text) <= ChatEnhancements.DEFAULT_CHAT_WIDTH - 10) return null
 
@@ -68,6 +68,7 @@ data class LabeledSeparatorLine(
             val middleWidth = font.width(middleText)
             val leadingWidth = font.width(text.visualOrderText.subText(0, leftSeparatorEnd - 1))
 
+            // off-center by more than 6 pixels - probably not a centered line
             if (abs(ChatEnhancements.DEFAULT_CHAT_WIDTH / 2 - (leadingWidth + middleWidth / 2)) > 6) return null
 
             val wrappedList = ComponentRenderUtils.wrapComponents(middleText, chatWidth, font).map { it.trim() }
@@ -79,13 +80,10 @@ data class LabeledSeparatorLine(
 
             return wrappedList.mapIndexed { i, sequence ->
                 if (i < middleIndex - (if (even) 1 else 0) || i > middleIndex) {
-                    ChatLineParser.ParsedLine(sequence, CenteredLine(sequence))
+                    CenteredLine(sequence)
                 } else {
                     val alignment = if (i == middleIndex) (if (even) LineAlignment.TOP else LineAlignment.CENTER) else LineAlignment.BOTTOM
-                    ChatLineParser.ParsedLine(
-                        sequence,
-                        LabeledSeparatorLine(sequence, color, maxMiddleWidth, alignment)
-                    )
+                    LabeledSeparatorLine(sequence, color, maxMiddleWidth, alignment)
                 }
             }
         }
