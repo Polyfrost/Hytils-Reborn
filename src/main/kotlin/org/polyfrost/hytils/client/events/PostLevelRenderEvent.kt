@@ -13,5 +13,6 @@ data class PostLevelRenderEvent(
     val poseStack: PoseStack,
     /*? if >=1.21.11 {*/ val submitNodeCollector: SubmitNodeCollector, /*?}*/
     val multiBufferSource: MultiBufferSource,
-    val camera: /*? if >=1.21.11 {*/ CameraRenderState /*?} else {*/ /*Camera *//*?}*/
+    //~ if <1.21.11 'CameraRenderState' -> 'Camera'
+    val camera: CameraRenderState
 ) : Event

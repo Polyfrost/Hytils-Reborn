@@ -14,10 +14,10 @@ object WhitePrivateMessages : ChatReceiveModule {
 
             event.message.siblings.dropLast(2).forEach { message.append(it) }
             event.message.siblings.takeLast(2).forEach {
-                var sibling = it
-                if (HytilsRebornConfig.whitePrivateMessages && it.style.color == TextColor.fromLegacyFormat(ChatFormatting.GRAY)) {
-                    sibling = it.copy().withStyle(ChatFormatting.WHITE)
-                }
+                val sibling = if (it.style.color == TextColor.fromLegacyFormat(ChatFormatting.GRAY)) {
+                    it.copy().withStyle(ChatFormatting.WHITE)
+                } else it
+
                 message.append(sibling)
             }
 

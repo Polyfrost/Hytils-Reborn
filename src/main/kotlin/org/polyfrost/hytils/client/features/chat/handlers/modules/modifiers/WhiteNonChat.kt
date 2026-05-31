@@ -12,14 +12,15 @@ object WhiteNonChat : ChatReceiveModule {
         if (event.plainMessage.matches(LanguageData.NON_MESSAGE)
             && !event.plainMessage.matches(LanguageData.PRIVATE_MESSAGE)
         ) {
-            var foundStart = false
             val message = event.message.plainCopy().withStyle(event.message.style)
+            var foundStart = false
+
             for (sibling in event.message.siblings) {
                 var modifiedSibling = sibling
 
                 if (sibling.string.endsWith("§7")) {
                     foundStart = true
-                } else if (foundStart && sibling.style.color == TextColor.parseColor("#AAAAAA").getOrThrow()) {
+                } else if (foundStart && sibling.style.color == TextColor.fromLegacyFormat(ChatFormatting.GRAY)) {
                     modifiedSibling = sibling.copy().withStyle(ChatFormatting.WHITE)
                 }
 

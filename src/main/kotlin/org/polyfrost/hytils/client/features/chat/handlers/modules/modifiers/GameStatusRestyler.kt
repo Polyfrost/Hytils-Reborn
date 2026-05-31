@@ -27,82 +27,88 @@ object GameStatusRestyler : ChatReceiveModule {
         val playerName = cleaned.siblings.firstOrNull() ?: return
 
         when {
-            joinMatch != null -> {
-                val amount = amountComponent(playerCount)
+            joinMatch != null
+                -> handleJoinMessage(event, playerName)
 
-                event.message = if (HytilsRebornConfig.gameStatusRestyle) {
-                    val prefix = Component.empty().append(Component.literal("+ ").withStyle(ChatFormatting.GREEN, ChatFormatting.BOLD))
-                    if (HytilsRebornConfig.playerCountBeforePlayerName) {
-                        prefix.append(amount).append(" ").append(playerName)
-                    } else {
-                        prefix.append(playerName).append(" ").append(amount)
-                    }
-                } else {
-                    val base = Component.empty().withStyle(ChatFormatting.YELLOW)
-                    if (HytilsRebornConfig.playerCountBeforePlayerName) {
-                        base.append(amount).append(" ").append(playerName).append(" has joined!")
-                    } else if (HytilsRebornConfig.padPlayerCount) {
-                        base.append(playerName.copy()).append(" has joined ").append(amount).append("!")
-                    } else {
-                        event.message
-                    }
-                }
+            event.plainMessage.contains(LanguageData.GAME_LEAVE)
+                -> handleLeaveMessage(event, playerName)
+
+            HytilsRebornConfig.gameStatusRestyle
+                -> handleGameStatusMessage(event, cleaned)
+        }
+    }
+
+    private fun handleJoinMessage(event: ChatReceiveEvent, playerName: Component) {
+        val amount = amountComponent(playerCount)
+
+        event.message = if (HytilsRebornConfig.gameStatusRestyle) {
+            val prefix = Component.empty().append(Component.literal("+ ").withStyle(ChatFormatting.GREEN, ChatFormatting.BOLD))
+            if (HytilsRebornConfig.playerCountBeforePlayerName) {
+                prefix.append(amount).append(" ").append(playerName)
+            } else {
+                prefix.append(playerName).append(" ").append(amount)
             }
-
-            event.plainMessage.contains(LanguageData.GAME_LEAVE) -> {
-                val amount = amountComponent(--playerCount)
-
-                event.message = if (HytilsRebornConfig.gameStatusRestyle) {
-                    val prefix = Component.empty().append(Component.literal("- ").withStyle(ChatFormatting.RED, ChatFormatting.BOLD))
-                    if (!HytilsRebornConfig.playerCountOnPlayerLeave) {
-                        prefix.append(playerName)
-                    } else if (HytilsRebornConfig.playerCountBeforePlayerName) {
-                        prefix.append(amount).append(" ").append(playerName)
-                    } else {
-                        prefix.append(playerName).append(" ").append(amount)
-                    }
-                } else {
-                    if (HytilsRebornConfig.playerCountOnPlayerLeave) {
-                        if (HytilsRebornConfig.playerCountBeforePlayerName) {
-                            Component.empty().append(amount).append(" ").append(event.message)
-                        } else {
-                            Component.empty().withStyle(ChatFormatting.YELLOW)
-                                .append(playerName.copy()).append(" has quit ").append(amount).append("!")
-                        }
-                    } else {
-                        event.message
-                    }
-                }
-            }
-
-            HytilsRebornConfig.gameStatusRestyle -> {
-                event.message = when {
-                    event.plainMessage.matches(LanguageData.GAME_STARTING) -> {
-                        Component.empty()
-                            .append(Component.literal("⁎ ").withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD))
-                            .append(cleaned.siblings[0].copy().withStyle(ChatFormatting.GREEN))
-                            .append(cleaned.siblings[1].copy().withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD))
-                            .append(cleaned.siblings[2].copy().withStyle(ChatFormatting.GREEN))
-                    }
-
-                    event.plainMessage == LanguageData.GAME_START_CANCELLED -> {
-                        Component.literal("⁎ ").withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD)
-                            .append(Component.literal("Start cancelled.").withStyle(ChatFormatting.RED))
-                    }
-
-                    event.plainMessage == LanguageData.GAME_START_DELAYED -> {
-                        Component.literal("⁎ ").withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD)
-                            .append(Component.literal("Start delayed.").withStyle(ChatFormatting.RED))
-                    }
-
-                    else -> event.message
-                }
+        } else {
+            val base = Component.empty().withStyle(ChatFormatting.YELLOW)
+            if (HytilsRebornConfig.playerCountBeforePlayerName) {
+                base.append(amount).append(" ").append(playerName).append(" has joined!")
+            } else if (HytilsRebornConfig.padPlayerCount) {
+                base.append(playerName.copy()).append(" has joined ").append(amount).append("!")
+            } else {
+                event.message
             }
         }
     }
 
-    // this should run before game start compactor
-    override val priority = 1
+    private fun handleLeaveMessage(event: ChatReceiveEvent, playerName: Component) {
+        val amount = amountComponent(--playerCount)
+
+        event.message = if (HytilsRebornConfig.gameStatusRestyle) {
+            val prefix = Component.empty().append(Component.literal("- ").withStyle(ChatFormatting.RED, ChatFormatting.BOLD))
+            if (!HytilsRebornConfig.playerCountOnPlayerLeave) {
+                prefix.append(playerName)
+            } else if (HytilsRebornConfig.playerCountBeforePlayerName) {
+                prefix.append(amount).append(" ").append(playerName)
+            } else {
+                prefix.append(playerName).append(" ").append(amount)
+            }
+        } else {
+            if (HytilsRebornConfig.playerCountOnPlayerLeave) {
+                if (HytilsRebornConfig.playerCountBeforePlayerName) {
+                    Component.empty().append(amount).append(" ").append(event.message)
+                } else {
+                    Component.empty().withStyle(ChatFormatting.YELLOW)
+                        .append(playerName.copy()).append(" has quit ").append(amount).append("!")
+                }
+            } else {
+                event.message
+            }
+        }
+    }
+
+    private fun handleGameStatusMessage(event: ChatReceiveEvent, cleaned: Component) {
+        event.message = when {
+            event.plainMessage.matches(LanguageData.GAME_STARTING) -> {
+                Component.empty()
+                    .append(Component.literal("⁎ ").withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD))
+                    .append(cleaned.siblings[0].copy().withStyle(ChatFormatting.GREEN))
+                    .append(cleaned.siblings[1].copy().withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD))
+                    .append(cleaned.siblings[2].copy().withStyle(ChatFormatting.GREEN))
+            }
+
+            event.plainMessage == LanguageData.GAME_START_CANCELLED -> {
+                Component.literal("⁎ ").withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD)
+                    .append(Component.literal("Start cancelled.").withStyle(ChatFormatting.RED))
+            }
+
+            event.plainMessage == LanguageData.GAME_START_DELAYED -> {
+                Component.literal("⁎ ").withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD)
+                    .append(Component.literal("Start delayed.").withStyle(ChatFormatting.RED))
+            }
+
+            else -> event.message
+        }
+    }
 
     private fun amountComponent(count: Int) = Component.literal("(").withStyle(ChatFormatting.YELLOW)
         .append(Component.literal(pad(count)).withStyle(ChatFormatting.AQUA))
@@ -113,10 +119,12 @@ object GameStatusRestyler : ChatReceiveModule {
     private fun pad(n: Int): String {
         val nString = n.toString()
         return if (HytilsRebornConfig.padPlayerCount) {
-            val paddingSize = maxPlayerCount.toString().length - nString.length
-            "0".repeat(paddingSize.coerceAtLeast(0)) + nString
+            nString.padStart(maxPlayerCount.toString().length, '0')
         } else {
             nString
         }
     }
+
+    // this should run before game start compactor
+    override val priority = 1
 }

@@ -1,6 +1,6 @@
-package org.polyfrost.hytils.client.features.general
+package org.polyfrost.hytils.client.features.game
 
-import dev.deftu.omnicore.api.client.sound.OmniClientSound.play
+import dev.deftu.omnicore.api.client.sound.OmniClientSound
 import dev.deftu.omnicore.api.sound.OmniSound
 import dev.deftu.omnicore.api.sound.OmniSounds
 import net.hypixel.data.type.GameType
@@ -13,7 +13,7 @@ import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
 
-object SoundHandler {
+object BlockCountNotifier {
     private var ticks = -1
 
     @Subscribe
@@ -21,8 +21,7 @@ object SoundHandler {
         if (!HytilsRebornConfig.isEnabled || !HypixelUtils.isHypixel()) return
         val player: LocalPlayer = mc.player ?: return
 
-        //~ if <1.21.11 '.activeItem' -> '.mainHandItem'
-        val equippedStack = player.activeItem
+        val equippedStack = player.mainHandItem
         if (equippedStack.count > HytilsRebornConfig.blockNumber || equippedStack.count <= 4) {
             if (ticks != -1) {
                 ticks = -1
@@ -43,7 +42,7 @@ object SoundHandler {
         val location = HypixelUtils.getLocation()
         if (HytilsRebornConfig.blockNotify && location.inGame() && location.gameType.isPresent) {
             when (location.gameType.get()) {
-                GameType.BUILD_BATTLE, GameType.HOUSING, GameType.SKYBLOCK -> return
+                GameType.BUILD_BATTLE, GameType.HOUSING, GameType.SKYBLOCK, GameType.SMP -> return
                 else -> {}
             }
 
@@ -81,7 +80,7 @@ object SoundHandler {
         }
 
         if (sound != null) {
-            play(sound, 1f, 1f)
+            OmniClientSound.play(sound, 1f, 1f)
         }
     }
 }

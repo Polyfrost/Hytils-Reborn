@@ -65,7 +65,7 @@ object ChatHandler {
                 }
             } catch (e: Exception) {
                 HytilsRebornClient.LOGGER.error(
-                    "An error occurred while handling a received chat message with module ${module.javaClass.getSimpleName()}",
+                    "An error occurred while handling a received chat message with module ${module.javaClass.simpleName}",
                     e
                 )
             }
@@ -84,7 +84,7 @@ object ChatHandler {
                 }
             } catch (e: Exception) {
                 HytilsRebornClient.LOGGER.error(
-                    "An error occurred while handling a sent chat message with module ${module.javaClass.getSimpleName()}",
+                    "An error occurred while handling a sent chat message with module ${module.javaClass.simpleName}",
                     e
                 )
             }

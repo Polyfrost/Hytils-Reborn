@@ -120,7 +120,8 @@ object RenderUtils {
     fun renderText(
         text: Component,
         pos: Vec3,
-        camera: /*? if >=1.21.11 {*/ CameraRenderState /*?} else {*/ /*Camera *//*?}*/,
+        //~ if <1.21.11 'CameraRenderState' -> 'Camera'
+        camera: CameraRenderState,
         color: PolyColor,
         backgroundColor: PolyColor,
         disableDepth: Boolean = false,
@@ -140,7 +141,8 @@ object RenderUtils {
     fun renderText(
         vararg texts: Component,
         pos: Vec3,
-        camera: /*? if >=1.21.11 {*/ CameraRenderState /*?} else {*/ /*Camera *//*?}*/,
+        //~ if <1.21.11 'CameraRenderState' -> 'Camera'
+        camera: CameraRenderState,
         color: PolyColor,
         backgroundColor: PolyColor,
         disableDepth: Boolean = false,

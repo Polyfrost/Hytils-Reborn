@@ -56,14 +56,8 @@ object HypixelAPIUtils {
 
         val currentDate = LocalDate.now(ZoneId.of("America/New_York")).toString()
 
-        for (e in guildMembers) {
-            val member = e.asJsonObject
-            if (member.get("uuid").asString == uuid) {
-                return member.getAsJsonObject("expHistory")?.get(currentDate)?.asInt?.toString()
-            }
-        }
-
-        return null
+        val member = guildMembers.map { it.asJsonObject }.firstOrNull { it.get("uuid").asString == uuid } ?: return null
+        return member.getAsJsonObject("expHistory")?.get(currentDate)?.asInt?.toString()
     }
 
     /**
@@ -83,14 +77,9 @@ object HypixelAPIUtils {
         val jsonObject = getJsonObjectAuth("$API_BASE/guild/$uuid") ?: return null
         val guildMembers = jsonObject.getAsJsonObject("guild")?.getAsJsonArray("members") ?: return null
 
-        for (e in guildMembers) {
-            val member = e.asJsonObject
-            if (member.get("uuid").asString == uuid) {
-                val expHistory = member.getAsJsonObject("expHistory") ?: return null
-                return expHistory.entrySet().sumOf { it.value.asInt }.toString()
-            }
-        }
-        return null
+        val member = guildMembers.map { it.asJsonObject }.firstOrNull { it.get("uuid").asString == uuid } ?: return null
+        val expHistory = member.getAsJsonObject("expHistory") ?: return null
+        return expHistory.entrySet().sumOf { it.value.asInt }.toString()
     }
 
     /**
@@ -146,14 +135,11 @@ object HypixelAPIUtils {
             val jsonObject = getJsonObjectAuth("$API_BASE/player/$uuid") ?: return RankType.UNKNOWN
             val playerNode = jsonObject.getAsJsonObject("player") ?: return RankType.UNKNOWN
 
-            for (value in arrayOf("rank", "monthlyPackageRank", "newPackageRank", "packageRank")) {
-                if (playerNode.has(value)) {
-                    val rankStr = playerNode.get(value).asString
-                    if (!rankStr.matches("NONE|NORMAL".toRegex())) {
-                        return RankType.getRank(rankStr)
-                    }
-                }
-            }
+            arrayOf("rank", "monthlyPackageRank", "newPackageRank", "packageRank")
+                .firstOrNull { playerNode.has(it) }
+                ?.let { playerNode.get(it).asString }
+                ?.takeIf { !it.matches("NONE|NORMAL".toRegex()) }
+                ?.let { return RankType.getRank(it) }
 
             return RankType.NON
         } catch (e: Exception) {
@@ -210,8 +196,11 @@ object HypixelAPIUtils {
             .timeout(Duration.ofSeconds(5))
             .header("User-Agent", "Hytils-Reborn/${HytilsRebornConstants.VERSION}")
 
-        if (token != null && expiry != null && expiry!!.isAfter(Instant.now())) {
-            requestBuilder.header("x-ursa-token", token)
+        val currentToken = token
+        val currentExpiry = expiry
+
+        if (currentToken != null && currentExpiry != null && currentExpiry.isAfter(Instant.now())) {
+            requestBuilder.header("x-ursa-token", currentToken)
         } else {
             token = null
             expiry = null

@@ -3,10 +3,8 @@ package org.polyfrost.hytils.client
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
-//? if >=1.21.11 {
+//~ if <1.21.11 'world.WorldRenderEvents' -> 'WorldRenderEvents'
 import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents
-//?} else
-//import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.commands.impl.*
 import org.polyfrost.hytils.client.data.providers.*
@@ -17,7 +15,6 @@ import org.polyfrost.hytils.client.features.game.titles.CountdownTitles
 import org.polyfrost.hytils.client.features.game.titles.GameEndingTitles
 import org.polyfrost.hytils.client.features.game.titles.GameStartingTitles
 import org.polyfrost.hytils.client.features.general.ArmorStandHider
-import org.polyfrost.hytils.client.features.general.SoundHandler
 import org.polyfrost.hytils.client.features.limbo.LimboLimiter
 import org.polyfrost.hytils.client.features.limbo.LimboPrivateMessageSounds
 import org.polyfrost.hytils.client.features.lobby.SilentLobby
@@ -44,14 +41,14 @@ object HytilsRebornClient {
             ChatHandler, SilentLobby,
 
             // game features
-            CountdownTitles, GameEndingTitles,
-            GameStartingTitles, ChestHighlighter,
-            HardcoreStatus, HeightOverlay,
+            BlockCountNotifier, CountdownTitles,
+            GameEndingTitles, GameStartingTitles,
+            ChestHighlighter, HardcoreStatus, HeightOverlay,
             MiniWallsMiddleBeacon, PitLagReducer,
             SumoRenderDistance, UHCMiddleWaypoint,
 
             // general features
-            ArmorStandHider, SoundHandler,
+            ArmorStandHider,
 
             // limbo features
             LimboLimiter, LimboPrivateMessageSounds,
@@ -77,27 +74,22 @@ object HytilsRebornClient {
         }
 
         // FIXME: [PostWorldRenderEvent] is broken on 1.21
-        //? if >=1.21.11 {
+        //~ if <1.21.11 'END_MAIN' -> 'LAST'
         WorldRenderEvents.END_MAIN.register { context ->
             EventManager.INSTANCE.post(
                 PostLevelRenderEvent(
+                    //? if >=1.21.11 {
                     context.matrices(),
                     context.commandQueue(),
                     context.consumers(),
                     context.worldState().cameraRenderState
-                )
-            )
-        }
-        //?} else {
-        /*WorldRenderEvents.LAST.register { context ->
-            EventManager.INSTANCE.post(
-                PostLevelRenderEvent(
-                    context.matrixStack()!!,
+                    //?} else {
+                    /*context.matrixStack()!!,
                     context.consumers()!!,
                     context.camera()!!
+                    *///?}
                 )
             )
         }
-        *///?}
     }
 }

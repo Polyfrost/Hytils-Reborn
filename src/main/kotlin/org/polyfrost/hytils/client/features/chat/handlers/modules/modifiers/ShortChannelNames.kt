@@ -26,12 +26,9 @@ object ShortChannelNames : ChatReceiveModule {
         if ((event.message.contents as? PlainTextContents)?.text().isNullOrEmpty()) {
             message = Component.empty()
             for (sibling in event.message.siblings) {
-                var modifiedSibling = sibling
-
-                val siblingMatch = regex.find(sibling.string)
-                if (siblingMatch != null) {
-                    modifiedSibling = Component.literal("$prefix > ${siblingMatch.groupValues[1]}")
-                }
+                val modifiedSibling = regex.find(sibling.string)?.let {
+                    Component.literal("$prefix > ${it.groupValues[1]}")
+                } ?: sibling
 
                 message.append(modifiedSibling)
             }
