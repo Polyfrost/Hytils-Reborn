@@ -2,7 +2,8 @@ package org.polyfrost.hytils.mixin.client;
 
 //? if >=1.21.11 {
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.state.CameraRenderState;
+//~ if <26.1 'level.CameraRenderState' -> 'CameraRenderState'
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 //?} else {
 /*import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -41,19 +42,20 @@ abstract class EntityRenderDispatcherMixin_UHCOverlay {
         at = @At(
             value = "INVOKE",
             //? if >=1.21.11 {
-            target = "Lnet/minecraft/client/renderer/entity/EntityRenderer;submit(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V"
+            //~ if <26.1 'level/CameraRenderState' -> 'CameraRenderState'
+            target = "Lnet/minecraft/client/renderer/entity/EntityRenderer;submit(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V"
             //?} else
             //target = "Lnet/minecraft/client/renderer/entity/EntityRenderer;render(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V"
         )
     )
     public <S extends EntityRenderState> void scaleUhcItems(
         //~ if <1.21.11 'S entityRenderState' -> 'EntityRenderState entityRenderState'
-        S entityRenderState,
+        S renderState,
         //? if >=1.21.11
-        CameraRenderState cameraRenderState,
-        double d,
-        double e,
-        double f,
+        CameraRenderState camera,
+        double x,
+        double y,
+        double z,
         PoseStack poseStack,
         //? if >=1.21.11 {
         SubmitNodeCollector submitNodeCollector,
@@ -72,7 +74,7 @@ abstract class EntityRenderDispatcherMixin_UHCOverlay {
             || location.getGameType().orElse(null) != GameType.SPEED_UHC
         ) return;
 
-        if (!(entityRenderState instanceof ItemEntityRenderState itemEntityRenderState)
+        if (!(renderState instanceof ItemEntityRenderState itemEntityRenderState)
             || !uhcItems.contains(((ItemClusterRenderStateDuck) itemEntityRenderState).hytils$getItemStack().getItem())
         ) return;
 

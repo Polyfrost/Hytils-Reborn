@@ -90,8 +90,10 @@ object HypixelModAPIImpl : HypixelModAPIImplementation {
     private fun registerClientbound(identifier: String) {
         val clientboundId = CustomPacketPayload.Type<ClientboundHypixelPayload>(Identifier.parse(identifier))
         val codec: StreamCodec<ByteBuf, ClientboundHypixelPayload> = ClientboundHypixelPayload.buildCodec(clientboundId)
-        PayloadTypeRegistry.playS2C().register(clientboundId, codec)
-        PayloadTypeRegistry.configurationS2C().register(clientboundId, codec)
+        //~ if <26.1 'clientboundPlay()' -> 'playS2C()'
+        PayloadTypeRegistry.clientboundPlay().register(clientboundId, codec)
+        //~ if <26.1 'clientboundConfiguration()' -> 'configurationS2C()'
+        PayloadTypeRegistry.clientboundConfiguration().register(clientboundId, codec)
 
         ClientPlayNetworking.registerGlobalReceiver(clientboundId) { payload, _ ->
             LOGGER.debug("Received packet with identifier '{}', during PLAY", identifier)
@@ -126,7 +128,9 @@ object HypixelModAPIImpl : HypixelModAPIImplementation {
     private fun registerServerbound(identifier: String) {
         val serverboundId = CustomPacketPayload.Type<ServerboundHypixelPayload>(Identifier.parse(identifier))
         val codec: StreamCodec<ByteBuf, ServerboundHypixelPayload> = ServerboundHypixelPayload.buildCodec()
-        PayloadTypeRegistry.playC2S().register(serverboundId, codec)
-        PayloadTypeRegistry.configurationC2S().register(serverboundId, codec)
+        //~ if <26.1 'serverboundPlay()' -> 'playC2S()'
+        PayloadTypeRegistry.serverboundPlay().register(serverboundId, codec)
+        //~ if <26.1 'serverboundConfiguration()' -> 'configurationC2S()'
+        PayloadTypeRegistry.serverboundConfiguration().register(serverboundId, codec)
     }
 }

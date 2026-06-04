@@ -17,8 +17,8 @@ abstract class ItemClusterRenderStateMixin_SmuggleItemStack implements ItemClust
     private ItemStack itemStack;
 
     @Inject(method = "extractItemGroupRenderState", at = @At("HEAD"))
-    public void extractItemGroupRenderState(Entity entity, ItemStack itemStack, ItemModelResolver itemModelResolver, CallbackInfo ci) {
-        this.itemStack = itemStack;
+    public void extractItemGroupRenderState(Entity entity, ItemStack stack, ItemModelResolver itemModelResolver, CallbackInfo ci) {
+        this.itemStack = stack;
     }
 
     @Override

@@ -16,14 +16,16 @@ import java.util.Collection;
 
 @Mixin(BossHealthOverlay.class)
 abstract class BossHealthOverlayMixin_HideBossbar {
-    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
+    //~ if <26.1 'extractRenderState' -> 'render'
+    @Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
     private void hideLobbyBossbar(CallbackInfo ci) {
         if (HytilsRebornConfig.isEnabled() && HytilsRebornConfig.INSTANCE.getLobbyBossbar() && HypixelUtils.isHypixel() && !HypixelUtils.getLocation().inGame()) {
             ci.cancel();
         }
     }
 
-    @ModifyExpressionValue(method = "render", at = @At(value = "INVOKE", target = "Ljava/util/Map;values()Ljava/util/Collection;"))
+    //~ if <26.1 'extractRenderState' -> 'render'
+    @ModifyExpressionValue(method = "extractRenderState", at = @At(value = "INVOKE", target = "Ljava/util/Map;values()Ljava/util/Collection;"))
     private Collection<LerpingBossEvent> hideGameAdBossbar(Collection<LerpingBossEvent> original) {
         if (HytilsRebornConfig.isEnabled() && HytilsRebornConfig.INSTANCE.getHideGameAdsBossbar() && HypixelUtils.isHypixel() && HypixelUtils.getLocation().inGame()) {
             return Collections2.filter(original, event -> {

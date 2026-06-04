@@ -4,14 +4,14 @@ import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
-import org.polyfrost.oneconfig.utils.v1.dsl.mc
+import org.polyfrost.hytils.client.utils.ChatUtils
 
 object BroadcastLevelUp : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
         if (event.unformattedMessage.contains(": ")) return
         LanguageData.LEVEL_UP.find(event.unformattedMessage)?.let { match ->
             val level = match.groups["level"]?.value ?: return
-            mc.player?.connection?.sendChat("/gc Level up! I am now Hypixel Level $level!")
+            ChatUtils.sendMessage("/gc Level up! I am now Hypixel Level $level!")
         }
     }
 

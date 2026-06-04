@@ -3,7 +3,7 @@ package org.polyfrost.hytils.client.commands.impl
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
+import net.fabricmc.fabric.api.client.command.v2.ClientCommands
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.HytilsRebornConfig
@@ -18,23 +18,23 @@ import java.util.Locale
 
 // TODO: notifications (or just use chat messages)
 object HytilsCommand : ClientCommand {
-    override fun getCommand(): LiteralArgumentBuilder<FabricClientCommandSource> = ClientCommandManager.literal("hytils")
+    override fun getCommand(): LiteralArgumentBuilder<FabricClientCommandSource> = ClientCommands.literal("hytils")
         .executes { _ ->
             HytilsRebornConfig.openUI()
             Command.SINGLE_SUCCESS
         }
-        .then(ClientCommandManager.literal("gexp")
+        .then(ClientCommands.literal("gexp")
             .executes { _ ->
                 Multithreading.submit { executeGEXP(null, null) }
                 Command.SINGLE_SUCCESS
             }
-            .then(ClientCommandManager.argument("username", StringArgumentType.string())
+            .then(ClientCommands.argument("username", StringArgumentType.string())
                 .executes { context ->
                     val username = context.getArgument("username", String::class.java)
                     Multithreading.submit { executeGEXP(username, null) }
                     Command.SINGLE_SUCCESS
                 }
-                .then(ClientCommandManager.argument("type", GEXPTypeArgumentType.gexpType())
+                .then(ClientCommands.argument("type", GEXPTypeArgumentType.gexpType())
                     .executes { context ->
                         val username = context.getArgument("username", String::class.java)
                         val type = context.getArgument("type", GEXPTypeArgumentType.GEXPType::class.java)
@@ -44,9 +44,9 @@ object HytilsCommand : ClientCommand {
                 )
             )
         )
-        .then(ClientCommandManager.literal("winstreak")
-            .then(ClientCommandManager.argument("username", StringArgumentType.string())
-                .then(ClientCommandManager.argument("gamemode", GameArgumentType.gameType())
+        .then(ClientCommands.literal("winstreak")
+            .then(ClientCommands.argument("username", StringArgumentType.string())
+                .then(ClientCommands.argument("gamemode", GameArgumentType.gameType())
                     .executes { context ->
                         val username = context.getArgument("username", String::class.java)
                         val game = context.getArgument("gamemode", GameArgumentType.Game::class.java)

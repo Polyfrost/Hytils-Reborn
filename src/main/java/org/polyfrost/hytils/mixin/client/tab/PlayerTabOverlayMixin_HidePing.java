@@ -1,7 +1,7 @@
 package org.polyfrost.hytils.mixin.client.tab;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.PlayerTabOverlay;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import org.polyfrost.hytils.client.HytilsRebornConfig;
@@ -15,14 +15,23 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(PlayerTabOverlay.class)
 abstract class PlayerTabOverlayMixin_HidePing {
-    @Inject(method = "renderPingIcon", at = @At("HEAD"), cancellable = true)
-    private void hidePingIcon(GuiGraphics guiGraphics, int i, int j, int k, PlayerInfo playerInfo, CallbackInfo ci) {
-        if (HytilsRebornConfig.isEnabled() && TabChanger.hidePing(playerInfo)) {
+    //~ if <26.1 'extractPingIcon' -> 'renderPingIcon'
+    @Inject(method = "extractPingIcon", at = @At("HEAD"), cancellable = true)
+    private void hidePingIcon(GuiGraphicsExtractor graphics, int slotWidth, int xo, int yo, PlayerInfo info, CallbackInfo ci) {
+        if (HytilsRebornConfig.isEnabled() && TabChanger.hidePing(info)) {
             ci.cancel();
         }
     }
 
-    @ModifyArgs(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/PlayerTabOverlay;renderTablistScore(Lnet/minecraft/world/scores/Objective;ILnet/minecraft/client/gui/components/PlayerTabOverlay$ScoreDisplayEntry;IILjava/util/UUID;Lnet/minecraft/client/gui/GuiGraphics;)V"))
+    //~ if <26.1 'extractRenderState' -> 'render'
+    @ModifyArgs(
+        method = "extractRenderState",
+        at = @At(
+            value = "INVOKE",
+            //~ if <26.1 'extractTablistScore' -> 'renderTablistScore'
+            target = "Lnet/minecraft/client/gui/components/PlayerTabOverlay;extractTablistScore(Lnet/minecraft/world/scores/Objective;ILnet/minecraft/client/gui/components/PlayerTabOverlay$ScoreDisplayEntry;IILjava/util/UUID;Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V"
+        )
+    )
     private void offsetScore(Args args, @Local PlayerInfo playerInfo) {
         if (HytilsRebornConfig.isEnabled() && TabChanger.hidePing(playerInfo)) {
             args.set(3, (int) args.get(3) + 11);

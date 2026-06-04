@@ -1,11 +1,9 @@
 [versions]
 kotlin = "2.3.0"
-fabric-loom = "1.16-SNAPSHOT"
 bloom = "0.2.0"
 mod-publish = "1.1.0"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-fabric-loom-remap = { id = "net.fabricmc.fabric-loom-remap", version.ref = "fabric-loom" }
 bloom = { id = "dev.deftu.gradle.bloom", version.ref = "bloom" }
 mod-publish = { id = "me.modmuss50.mod-publish-plugin", version.ref = "mod-publish" }

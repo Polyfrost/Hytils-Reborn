@@ -2,7 +2,8 @@ package org.polyfrost.hytils.mixin.client.chat;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.client.GuiMessage;
+//~ if <26.1 'multiplayer.chat.GuiMessage' -> 'GuiMessage'
+import net.minecraft.client.multiplayer.chat.GuiMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.ChatComponent;
@@ -23,14 +24,15 @@ import java.util.List;
 
 @Mixin(ChatComponent.class)
 abstract class ChatComponentMixin_ParseChatLines {
-    @Shadow @Final /*? if <1.21.11 {*/ /*private *//*?}*/ Minecraft minecraft;
+    @Shadow @Final /*? if >=26.1 || <1.21.11 {*/ private /*?}*/ Minecraft minecraft;
 
     @WrapOperation(
         method = "addMessageToDisplayQueue",
         at = @At(
             value = "INVOKE",
             //? if >=1.21.11 {
-            target = "Lnet/minecraft/client/GuiMessage;splitLines(Lnet/minecraft/client/gui/Font;I)Ljava/util/List;"
+            //~ if <26.1 'multiplayer/chat/GuiMessage' -> 'GuiMessage'
+            target = "Lnet/minecraft/client/multiplayer/chat/GuiMessage;splitLines(Lnet/minecraft/client/gui/Font;I)Ljava/util/List;"
             //?} else
             //target = "Lnet/minecraft/client/gui/components/ComponentRenderUtils;wrapComponents(Lnet/minecraft/network/chat/FormattedText;ILnet/minecraft/client/gui/Font;)Ljava/util/List;"
         )
@@ -64,11 +66,11 @@ abstract class ChatComponentMixin_ParseChatLines {
         method = "method_71991",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/util/FormattedCharSequence;III)V"
+            target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;drawString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/util/FormattedCharSequence;III)V"
         )
     )
     private void renderCustomLine(
-        net.minecraft.client.gui.GuiGraphics graphics,
+        net.minecraft.client.gui.GuiGraphicsExtractor graphics,
         Font font,
         FormattedCharSequence sequence,
         int x,

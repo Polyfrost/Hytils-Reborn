@@ -1,5 +1,5 @@
 {
-	"compatibilityLevel": "JAVA_21",
+	"compatibilityLevel": "${java}",
 	"minVersion": "0.7",
 	"package": "org.polyfrost.hytils.mixin",
 	"plugin": "org.polyfrost.hytils.plugin.HytilsRebornMixinPlugin",

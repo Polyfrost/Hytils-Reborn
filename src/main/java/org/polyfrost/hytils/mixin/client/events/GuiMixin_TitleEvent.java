@@ -2,7 +2,7 @@ package org.polyfrost.hytils.mixin.client.events;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import org.polyfrost.hytils.client.events.TitleEvent;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
@@ -18,8 +18,9 @@ abstract class GuiMixin_TitleEvent {
     @Shadow private Component subtitle;
     @Shadow private int titleTime;
 
-    @Inject(method = "renderTitle", at = @At("HEAD"), cancellable = true)
-    private void onRenderTitle(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
+    //~ if <26.1 'extractTitle' -> 'renderTitle'
+    @Inject(method = "extractTitle", at = @At("HEAD"), cancellable = true)
+    private void onRenderTitle(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         if (this.title == null || titleTime <= 0) return;
 
         TitleEvent event = new TitleEvent(this.title, this.subtitle);

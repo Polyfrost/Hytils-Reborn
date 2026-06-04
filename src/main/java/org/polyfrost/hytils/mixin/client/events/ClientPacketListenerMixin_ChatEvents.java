@@ -35,7 +35,7 @@ abstract class ClientPacketListenerMixin_ChatEvents {
     }
 
     @Inject(method = "handlePlayerChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/chat/ChatListener;handlePlayerChatMessage(Lnet/minecraft/network/chat/PlayerChatMessage;Lcom/mojang/authlib/GameProfile;Lnet/minecraft/network/chat/ChatType$Bound;)V"), cancellable = true)
-    private void cancelPlayerMessage(ClientboundPlayerChatPacket clientboundPlayerChatPacket, CallbackInfo ci, @Share("chatReceiveEvent") LocalRef<ChatReceiveEvent> chatReceiveEvent) {
+    private void cancelPlayerMessage(ClientboundPlayerChatPacket packet, CallbackInfo ci, @Share("chatReceiveEvent") LocalRef<ChatReceiveEvent> chatReceiveEvent) {
         if (chatReceiveEvent.get() != null && chatReceiveEvent.get().getCancelled()) {
             ci.cancel();
         }
@@ -51,8 +51,8 @@ abstract class ClientPacketListenerMixin_ChatEvents {
     }
 
     @Inject(method = "sendChat", at = @At("HEAD"), cancellable = true)
-    private void cancelSentMessage(String message, CallbackInfo ci, @Share("chatSendEvent") LocalRef<ChatSendEvent> chatSendEvent) {
-        ChatSendEvent event = new ChatSendEvent(message);
+    private void cancelSentMessage(String content, CallbackInfo ci, @Share("chatSendEvent") LocalRef<ChatSendEvent> chatSendEvent) {
+        ChatSendEvent event = new ChatSendEvent(content);
         EventManager.INSTANCE.post(event);
         chatSendEvent.set(event);
         if (event.cancelled) {
@@ -61,7 +61,7 @@ abstract class ClientPacketListenerMixin_ChatEvents {
     }
 
     @ModifyVariable(method = "sendChat", at = @At("HEAD"), ordinal = 0, argsOnly = true)
-    private String modifySentMessage(String message, @Share("chatSendEvent") LocalRef<ChatSendEvent> chatSendEvent) {
+    private String modifySentMessage(String content, @Share("chatSendEvent") LocalRef<ChatSendEvent> chatSendEvent) {
         return chatSendEvent.get().getMessage();
     }
 }

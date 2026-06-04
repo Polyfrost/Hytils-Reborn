@@ -11,7 +11,8 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Gui.class)
 abstract class GuiMixin_HardcoreHearts {
-    @WrapOperation(method = "renderHearts", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/LevelData;isHardcore()Z"))
+    //~ if <26.1 'extractHearts' -> 'renderHearts'
+    @WrapOperation(method = "extractHearts", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/LevelData;isHardcore()Z"))
     private boolean modifyIsHardcore(LevelData levelData, Operation<Boolean> original) {
         return original.call(levelData) || (HytilsRebornConfig.isEnabled() && HardcoreStatus.shouldChangeStyle());
     }

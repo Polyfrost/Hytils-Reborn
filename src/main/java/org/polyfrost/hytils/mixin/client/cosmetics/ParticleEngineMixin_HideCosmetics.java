@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ParticleEngine.class)
 abstract class ParticleEngineMixin_HideCosmetics {
     @Inject(method = "createParticle", at = @At("HEAD"), cancellable = true)
-    private void hideCosmetics(ParticleOptions particleOptions, double d, double e, double f, double g, double h, double i, CallbackInfoReturnable<Particle> cir) {
+    private void hideCosmetics(ParticleOptions options, double x, double y, double z, double xa, double ya, double za, CallbackInfoReturnable<Particle> cir) {
         if (!HytilsRebornConfig.isEnabled()) return;
 
         HypixelUtils.Location location = HypixelUtils.getLocation();
@@ -28,7 +28,7 @@ abstract class ParticleEngineMixin_HideCosmetics {
             && (!HytilsRebornConfig.INSTANCE.getHideDuelsCosmetics() || gameType != GameType.DUELS)
         ) return;
 
-        Identifier particle = BuiltInRegistries.PARTICLE_TYPE.getKey(particleOptions.getType());
+        Identifier particle = BuiltInRegistries.PARTICLE_TYPE.getKey(options.getType());
         if (particle != null && CosmeticsData.INSTANCE.getParticleCosmetics().contains(particle.getPath())) {
             cir.setReturnValue(null);
         }

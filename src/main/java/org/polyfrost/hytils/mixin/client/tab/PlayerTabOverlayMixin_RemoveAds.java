@@ -11,7 +11,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(PlayerTabOverlay.class)
 abstract class PlayerTabOverlayMixin_RemoveAds {
-    @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Font;split(Lnet/minecraft/network/chat/FormattedText;I)Ljava/util/List;", ordinal = 0), index = 0)
+    //~ if <26.1 'extractRenderState' -> 'render' {
+    @ModifyArg(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Font;split(Lnet/minecraft/network/chat/FormattedText;I)Ljava/util/List;", ordinal = 0), index = 0)
     private FormattedText hideAdvertisementsInHeader(FormattedText formattedText) {
         if (HytilsRebornConfig.isEnabled()) {
             return TabChanger.modifyHeader((Component) formattedText);
@@ -20,7 +21,7 @@ abstract class PlayerTabOverlayMixin_RemoveAds {
         return formattedText;
     }
 
-    @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Font;split(Lnet/minecraft/network/chat/FormattedText;I)Ljava/util/List;", ordinal = 1), index = 0)
+    @ModifyArg(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Font;split(Lnet/minecraft/network/chat/FormattedText;I)Ljava/util/List;", ordinal = 1), index = 0)
     private FormattedText hideAdvertisementsInFooter(FormattedText formattedText) {
         if (HytilsRebornConfig.isEnabled()) {
             return TabChanger.modifyFooter((Component) formattedText);
@@ -28,4 +29,5 @@ abstract class PlayerTabOverlayMixin_RemoveAds {
 
         return formattedText;
     }
+    //~}
 }

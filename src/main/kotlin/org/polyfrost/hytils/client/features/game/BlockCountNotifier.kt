@@ -4,6 +4,8 @@ import net.hypixel.data.type.GameType
 import net.minecraft.client.player.LocalPlayer
 import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.sounds.SoundEvents
+//? if >=26.1
+import net.minecraft.world.entity.animal.feline.CatSoundVariants
 import net.minecraft.world.entity.animal.wolf.WolfSoundVariants
 import net.minecraft.world.item.Items
 import org.polyfrost.hytils.client.HytilsRebornConfig
@@ -73,8 +75,11 @@ object BlockCountNotifier {
             4 -> SoundEvents.HORSE_DEATH
             5 -> SoundEvents.GHAST_SCREAM
             6 -> SoundEvents.GUARDIAN_HURT_LAND
-            7 -> SoundEvents.CAT_AMBIENT
-            8 -> SoundEvents.WOLF_SOUNDS[WolfSoundVariants.SoundSet.CLASSIC]?.ambientSound?.value()
+            //? if >=26.1 {
+            7 -> SoundEvents.CAT_SOUNDS[CatSoundVariants.SoundSet.CLASSIC]?.adultSounds?.ambientSound?.value()
+            //?} else
+            //7 -> SoundEvents.CAT_AMBIENT
+            8 -> SoundEvents.WOLF_SOUNDS[WolfSoundVariants.SoundSet.CLASSIC]?./*? if >=26.1 {*/ adultSounds?. /*?}*/ambientSound?.value()
             else -> null
         }
 

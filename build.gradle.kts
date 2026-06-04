@@ -1,11 +1,8 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.fabric.loom.remap)
     alias(libs.plugins.bloom)
     alias(libs.plugins.mod.publish)
+    id("dev.kikugie.loom-back-compat")
 }
 
 val modId: String = sc.properties["mod.id"]
@@ -15,6 +12,11 @@ val mcVersion = sc.current.version
 
 version = "$modVersion+$mcVersion"
 base.archivesName = modName
+
+val requiredJava: JavaVersion = when {
+    sc.current.parsed >= "26.1" -> JavaVersion.VERSION_25
+    else -> JavaVersion.VERSION_21
+}
 
 repositories {
     maven("https://maven.parchmentmc.org")
@@ -32,16 +34,18 @@ dependencies {
         findProperty(property)?.toString()?.takeUnless { it.isBlank() }?.let(block)
 
     minecraft("com.mojang:minecraft:$mcVersion")
-    @Suppress("UnstableApiUsage")
-    mappings(loom.layered {
-        officialMojangMappings()
-        optionalProp("${property("deps.parchment")}") {
-            parchment("org.parchmentmc.data:parchment-$mcVersion:$it@zip")
-        }
-        optionalProp("${property("deps.yalmm")}") {
-            mappings("dev.lambdaurora:yalmm-mojbackward:$mcVersion+build.$it")
-        }
-    })
+    if (sc.current.parsed < "26.1") {
+        @Suppress("UnstableApiUsage")
+        mappings(loom.layered {
+            officialMojangMappings()
+            optionalProp("${property("deps.parchment")}") {
+                parchment("org.parchmentmc.data:parchment-$mcVersion:$it@zip")
+            }
+            optionalProp("${property("deps.yalmm")}") {
+                mappings("dev.lambdaurora:yalmm-mojbackward:$mcVersion+build.$it")
+            }
+        })
+    }
     modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
 
     modImplementation("org.polyfrost.oneconfig:$mcVersion-fabric:${property("deps.oneconfig")}")
@@ -82,9 +86,8 @@ tasks {
 
         inputs.properties(props)
 
-        filesMatching("fabric.mod.json") {
-            expand(props)
-        }
+        filesMatching("fabric.mod.json") { expand(props) }
+        filesMatching("mixins.*.json") { expand("java" to "JAVA_${requiredJava.majorVersion}") }
     }
 
     jar {
@@ -93,14 +96,6 @@ tasks {
         from("LICENSE") {
             rename { "${it}_${inputs.properties["archivesName"]}" }
         }
-    }
-
-    withType<JavaCompile>().configureEach {
-        options.release.set(21)
-    }
-
-    withType<KotlinCompile>().configureEach {
-        compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
     }
 }
 
@@ -112,15 +107,19 @@ bloom {
 
 java {
     withSourcesJar()
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = requiredJava
+    targetCompatibility = requiredJava
+}
+
+kotlin {
+    jvmToolchain(requiredJava.majorVersion.toInt())
 }
 
 val modrinthId = findProperty("publish.modrinth")?.toString()?.takeIf { it.isNotBlank() }
 
 // make sure modrinth.token is set in your user gradle properties
 publishMods {
-    file = project.tasks.remapJar.get().archiveFile
+    file = loomx.modJar.get().archiveFile
 
     displayName = modVersion
     version = "v$modVersion"

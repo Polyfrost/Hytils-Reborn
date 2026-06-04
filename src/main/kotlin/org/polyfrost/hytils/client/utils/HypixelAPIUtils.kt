@@ -155,20 +155,18 @@ object HypixelAPIUtils {
             if (maybeUuidResponse != null && maybeUuidResponse.isJsonObject) {
                 val uuidResponse = maybeUuidResponse.asJsonObject
                 if (uuidResponse.has("error")) {
-                    mc.player?.displayClientMessage(
+                    ChatUtils.displayMessage(
                         Component.literal("Failed to fetch $username's data. Please make sure this user exists.")
-                            .withStyle(ChatFormatting.RED),
-                        false
+                            .withStyle(ChatFormatting.RED)
                     )
                     return null
                 }
                 return uuidResponse.get("id").asString
             }
         } catch (_: Exception) {
-            mc.player?.displayClientMessage(
+            ChatUtils.displayMessage(
                 Component.literal("Failed to fetch $username's data. Please make sure this user exists.")
-                    .withStyle(ChatFormatting.RED),
-                false
+                    .withStyle(ChatFormatting.RED)
             )
         }
         return null

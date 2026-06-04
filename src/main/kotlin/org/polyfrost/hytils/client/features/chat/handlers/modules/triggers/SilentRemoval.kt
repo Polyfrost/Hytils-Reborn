@@ -4,7 +4,7 @@ import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
-import org.polyfrost.oneconfig.utils.v1.dsl.mc
+import org.polyfrost.hytils.client.utils.ChatUtils
 import java.util.*
 
 // TODO: notifications
@@ -19,7 +19,7 @@ object SilentRemoval : ChatReceiveModule {
 
         val player = match.groups["player"]?.value ?: return
         if (removalQueue.contains(player.lowercase(Locale.ROOT))) {
-            mc.player?.connection?.sendChat("/f remove $player")
+            ChatUtils.sendMessage("/f remove $player")
 //            Notifications.enqueue(
 //                Notifications.Type.Warning,
 //                HytilsRebornConstants.NAME,

@@ -9,6 +9,7 @@ import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
+import org.polyfrost.hytils.client.utils.ChatUtils
 import org.polyfrost.hytils.mixin.client.accessor.FramerateLimitTrackerAccessor
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
 
@@ -23,7 +24,7 @@ object AutoAFKReply : ChatReceiveModule {
 
             val player = match.groups["player"]?.value ?: return
             val message = HytilsRebornConfig.afkReplyMessage.replace("%player%", player)
-            mc.player?.connection?.sendChat("/msg $player $message")
+            ChatUtils.sendMessage("/msg $player $message")
         }
     }
 

@@ -13,7 +13,7 @@ package org.polyfrost.hytils.client.features.chat.enhancements
 //? if >=1.21.11 {
 import net.minecraft.client.gui.ActiveTextCollector
 import net.minecraft.client.gui.navigation.ScreenRectangle
-import org.polyfrost.hytils.ducks.GuiGraphicsDuck
+import org.polyfrost.hytils.ducks.ChatGraphicsAccessDuck
 //?}
 
 import net.minecraft.client.gui.Font
@@ -65,7 +65,7 @@ object ChatEnhancements {
         val chatWidth = ChatComponent.getWidth(mc.options.chatWidth().get())
 
         //? if >=1.21.11 {
-        val parameterModifier = graphics as GuiGraphicsDuck
+        val parameterModifier = graphics as ChatGraphicsAccessDuck
         var previousScissor: ScreenRectangle? = null
 
         parameterModifier.`hytils$applyParameters` { parameter ->

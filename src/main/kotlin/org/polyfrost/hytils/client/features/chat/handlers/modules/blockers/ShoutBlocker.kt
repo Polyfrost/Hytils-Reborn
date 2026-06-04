@@ -11,8 +11,8 @@ import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.events.ChatSendEvent
 import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
 import org.polyfrost.hytils.client.features.chat.handlers.ChatSendModule
+import org.polyfrost.hytils.client.utils.ChatUtils
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
-import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import java.text.DecimalFormat
 import kotlin.jvm.optionals.getOrNull
 
@@ -27,7 +27,7 @@ object ShoutBlocker : ChatSendModule, ChatReceiveModule {
             shoutCooldown = System.currentTimeMillis() + getCooldownLengthInSeconds() * 1000
         } else {
             val secondsLeft = (shoutCooldown - System.currentTimeMillis()) / 1000L
-            mc.player?.displayClientMessage(
+            ChatUtils.displayMessage(
                 Component.literal("Shout command is on cooldown. Please wait ${decimalFormat.format(secondsLeft)} more second${if (secondsLeft == 1L) "" else "s"} before shouting another message.")
                     .setStyle(Style.EMPTY.withHoverEvent(
                         HoverEvent.ShowText(
@@ -37,8 +37,7 @@ object ShoutBlocker : ChatSendModule, ChatReceiveModule {
                                 .append(Component.literal("Your message was blocked by the \"Shout Cooldown\" setting. \nPlease wait before shouting another message.")
                                     .withStyle(ChatFormatting.GRAY))
                         )
-                    )),
-                false
+                    ))
             )
             event.cancelled = true
         }

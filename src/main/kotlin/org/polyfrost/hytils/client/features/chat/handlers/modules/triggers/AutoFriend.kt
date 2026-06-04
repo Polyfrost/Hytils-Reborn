@@ -5,7 +5,7 @@ import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
-import org.polyfrost.oneconfig.utils.v1.dsl.mc
+import org.polyfrost.hytils.client.utils.ChatUtils
 
 // TODO: notifications
 object AutoFriend : ChatReceiveModule {
@@ -16,7 +16,7 @@ object AutoFriend : ChatReceiveModule {
         var player = match.groups["player"]?.value ?: return
         if (player.startsWith("[")) player = player.substringAfter("] ")
 
-        mc.player?.connection?.sendChat("/friend $player")
+        ChatUtils.sendMessage("/friend $player")
 //        Notifications.enqueue(
 //            Notifications.Type.Info,
 //            HytilsRebornConstants.NAME,

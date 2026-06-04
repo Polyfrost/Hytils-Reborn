@@ -4,7 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.renderer.MultiBufferSource
 //? if >=1.21.11 {
 import net.minecraft.client.renderer.SubmitNodeCollector
-import net.minecraft.client.renderer.state.CameraRenderState
+//~ if <26.1 'level.CameraRenderState' -> 'CameraRenderState'
+import net.minecraft.client.renderer.state.level.CameraRenderState
 //?} else
 //import net.minecraft.client.Camera
 import org.polyfrost.oneconfig.api.event.v1.events.Event

@@ -7,13 +7,13 @@ import org.polyfrost.hytils.client.data.providers.GameIdentifiersData
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
+import org.polyfrost.hytils.client.utils.ChatUtils
 import org.polyfrost.oneconfig.api.event.v1.events.KeyInputEvent
 import org.polyfrost.oneconfig.api.event.v1.events.MouseInputEvent
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 import org.polyfrost.oneconfig.utils.v1.Multithreading
-import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import java.util.concurrent.TimeUnit
 
 object AutoQueue : ChatReceiveModule {
@@ -61,7 +61,7 @@ object AutoQueue : ChatReceiveModule {
     private fun queue() {
         Multithreading.schedule({
             if (!sentCommand) {
-                mc.player?.connection?.sendChat(command!!)
+                ChatUtils.sendMessage(command!!)
                 sentCommand = true
                 command = null
             }

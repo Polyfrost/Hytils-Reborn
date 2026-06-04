@@ -4,7 +4,8 @@ package org.polyfrost.hytils.client.utils
 import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.rendertype.RenderSetup
 import net.minecraft.client.renderer.rendertype.RenderType
-import net.minecraft.client.renderer.state.CameraRenderState
+//~ if <26.1 'level.CameraRenderState' -> 'CameraRenderState'
+import net.minecraft.client.renderer.state.level.CameraRenderState
 import net.minecraft.util.Util
 import org.polyfrost.hytils.mixin.client.accessor.RenderTypeAccessor
 //?} else {
@@ -18,21 +19,28 @@ import net.minecraft.Util
 import java.util.function.BiFunction
 *///?}
 
+//? if >=26.1 {
+import com.mojang.blaze3d.pipeline.ColorTargetState
+import com.mojang.blaze3d.pipeline.DepthStencilState
+import com.mojang.blaze3d.platform.CompareOp
+//?} else
+//import com.mojang.blaze3d.platform.DepthTestFunction
+
 import com.mojang.blaze3d.buffers.GpuBuffer
 import com.mojang.blaze3d.pipeline.BlendFunction
 import com.mojang.blaze3d.pipeline.RenderPipeline
-import com.mojang.blaze3d.platform.DepthTestFunction
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.*
 import com.mojang.blaze3d.vertex.MeshData.DrawState
 import com.mojang.blaze3d.vertex.VertexFormat.IndexType
 import net.minecraft.client.gui.Font
-import net.minecraft.client.renderer.LightTexture
 import net.minecraft.client.renderer.MappableRingBuffer
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
+//~ if <26.1 'util.LightCoordsUtil' -> 'client.renderer.LightTexture as LightCoordsUtil'
+import net.minecraft.util.LightCoordsUtil
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.Shapes
 import org.joml.Matrix4f
@@ -62,13 +70,22 @@ object RenderUtils {
 
     private val BEACON_BEAM_OPAQUE_NO_DEPTH = RenderPipeline.builder(RenderPipelines.BEACON_BEAM_SNIPPET)
         .withLocation("pipeline/beacon_beam_opaque")
-        .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
+        //? if >=26.1 {
+        .withDepthStencilState(Optional.empty())
+        //?} else
+        //.withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
         .build()
     private val BEACON_BEAM_TRANSLUCENT_NO_DEPTH = RenderPipeline.builder(RenderPipelines.BEACON_BEAM_SNIPPET)
         .withLocation("pipeline/beacon_beam_translucent")
-        .withDepthWrite(false)
+        //? if >=26.1 {
+        .withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
+        .withDepthStencilState(DepthStencilState(CompareOp.LESS_THAN_OR_EQUAL, false))
+        .withDepthStencilState(Optional.empty())
+        //?} else {
+        /*.withDepthWrite(false)
         .withBlend(BlendFunction.TRANSLUCENT)
         .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
+        *///?}
         .build()
 
     @JvmField
@@ -80,12 +97,12 @@ object RenderUtils {
             BEACON_BEAM_OPAQUE_NO_DEPTH
         }
 
-        val renderSetup = RenderSetup.builder(pipeline)
+        val state = RenderSetup.builder(pipeline)
             .withTexture("Sampler0", identifier)
             .sortOnUpload()
             .createRenderSetup()
 
-        RenderTypeAccessor.invokeCreate("beacon_beam", renderSetup)
+        RenderTypeAccessor.invokeCreate("beacon_beam", state)
     }
     //?} else {
     /*val BEACON_BEAM_NO_DEPTH: BiFunction<Identifier, Boolean, RenderType> = Util.memoize { resourceLocation, isTranslucent ->
@@ -192,7 +209,7 @@ object RenderUtils {
                 mc.renderBuffers().bufferSource(),
                 if (disableDepth) Font.DisplayMode.SEE_THROUGH else Font.DisplayMode.NORMAL,
                 backgroundColor.argb,
-                LightTexture.FULL_BRIGHT
+                LightCoordsUtil.FULL_BRIGHT
             )
 
             matrix.translate(0f, mc.font.lineHeight + 2f, 0f)
@@ -200,6 +217,7 @@ object RenderUtils {
         //~}
     }
 
+    // FIXME: this is broken
     fun renderBeaconBeam(
         poseStack: PoseStack,
         /*? if >=1.21.11 {*/ submitNodeCollector: SubmitNodeCollector /*?} else {*/ /*multiBufferSource: MultiBufferSource *//*?}*/,

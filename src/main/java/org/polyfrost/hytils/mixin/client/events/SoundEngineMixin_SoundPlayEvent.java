@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(SoundEngine.class)
 abstract class SoundEngineMixin_SoundPlayEvent {
     @Inject(method = "play", at = @At("HEAD"), cancellable = true)
-    private void preventLobbyMusic(SoundInstance soundInstance, CallbackInfoReturnable<SoundEngine.PlayResult> cir) {
-        SoundPlayEvent event = new SoundPlayEvent(soundInstance);
+    private void preventLobbyMusic(SoundInstance instance, CallbackInfoReturnable<SoundEngine.PlayResult> cir) {
+        SoundPlayEvent event = new SoundPlayEvent(instance);
         EventManager.INSTANCE.post(event);
         if (event.cancelled) {
             cir.setReturnValue(SoundEngine.PlayResult.NOT_STARTED);

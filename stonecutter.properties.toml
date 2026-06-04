@@ -5,7 +5,9 @@ mod.version = "2.0.0-alpha.1"
 
 publish.modrinth.id = "nF6YaBfO"
 
-deps.fabric_loader = "0.19.2"
+deps.fabric_loader = "0.19.3"
+loomx.loom_version = "1.16-SNAPSHOT"
+
 deps.oneconfig = "1.0.0-alpha.190"
 deps.hypixel_mod_api = "1.0.2"
 
@@ -21,4 +23,8 @@ deps.parchment = "2025.12.20"
 deps.yalmm = "3"
 
 deps.fabric_api = "0.141.3+1.21.11"
+deps.sodium = "0.8.7"
+
+["26.1"]
+deps.fabric_api = "0.145.1+26.1"
 deps.sodium = "0.8.7"

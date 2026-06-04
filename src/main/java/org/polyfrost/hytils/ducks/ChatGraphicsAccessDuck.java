@@ -5,7 +5,7 @@ import net.minecraft.client.gui.ActiveTextCollector;
 
 import java.util.function.UnaryOperator;
 
-public interface GuiGraphicsDuck {
+public interface ChatGraphicsAccessDuck {
     void hytils$applyParameters(UnaryOperator<ActiveTextCollector.Parameters> modifier);
 }
 //?}

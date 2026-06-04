@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntity.class)
 abstract class LivingEntityMixin_NotifyMiningFatigue {
     @Inject(method = "onEffectAdded", at = @At("HEAD"))
-    private void onAddEffect(MobEffectInstance mobEffectInstance, Entity entity, CallbackInfo ci) {
-        NotifyMiningFatigue.sendNotification((LivingEntity) (Object) this, mobEffectInstance.getEffect());
+    private void onAddEffect(MobEffectInstance effect, Entity source, CallbackInfo ci) {
+        NotifyMiningFatigue.sendNotification((LivingEntity) (Object) this, effect.getEffect());
     }
 }

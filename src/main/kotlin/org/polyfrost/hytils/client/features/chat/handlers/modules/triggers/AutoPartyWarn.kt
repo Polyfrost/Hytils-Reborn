@@ -3,7 +3,7 @@ package org.polyfrost.hytils.client.features.chat.handlers.modules.triggers
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
-import org.polyfrost.oneconfig.utils.v1.dsl.mc
+import org.polyfrost.hytils.client.utils.ChatUtils
 
 object AutoPartyWarn : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
@@ -15,7 +15,7 @@ object AutoPartyWarn : ChatReceiveModule {
             }
             val separator = "-".repeat(9)
 
-            mc.player?.connection?.sendChat("/pc $separator$message$separator")
+            ChatUtils.sendMessage("/pc $separator$message$separator")
         }
     }
 
