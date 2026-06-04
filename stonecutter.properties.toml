@@ -1,0 +1,24 @@
+mod.name = "Hytils Reborn"
+mod.id = "hytils-reborn"
+mod.group = "org.polyfrost"
+mod.version = "2.0.0-alpha.1"
+
+publish.modrinth.id = "nF6YaBfO"
+
+deps.fabric_loader = "0.19.2"
+deps.oneconfig = "1.0.0-alpha.183"
+deps.hypixel_mod_api = "1.0.2"
+
+["1.21.8"]
+deps.parchment = "2025.09.14"
+deps.yalmm = "3"
+
+deps.fabric_api = "0.136.1+1.21.8"
+deps.sodium = "0.7.3"
+
+["1.21.11"]
+deps.parchment = "2025.12.20"
+deps.yalmm = "3"
+
+deps.fabric_api = "0.141.3+1.21.11"
+deps.sodium = "0.8.7"

@@ -15,7 +15,7 @@ pluginManagement {
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.9.3"
+    id("dev.kikugie.stonecutter") version "0.9.4"
 }
 
 stonecutter {
@@ -32,5 +32,5 @@ dependencyResolutionManagement {
     }
 }
 
-// Configures the root project Gradle name based on the value in `gradle.properties`
-rootProject.name = providers.gradleProperty("mod.name").get()
+// Configures the root project Gradle name based on the value in `stonecutter.properties.toml`
+rootProject.name = sc.properties["mod.name"]

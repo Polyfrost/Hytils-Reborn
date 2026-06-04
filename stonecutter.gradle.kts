@@ -9,7 +9,7 @@ stonecutter {
         replacements {
             string(current.parsed < "1.21.11") {
                 replace("Identifier", "ResourceLocation")
-                replace("GameIdentifiersData", "GameIdentifiersData")
+                replace("GameIdentifiersData", "GameIdentifiersData") // needed to prevent "GameResourceLocationsData"
             }
         }
     }
