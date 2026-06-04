@@ -1,9 +1,9 @@
 package org.polyfrost.hytils.client.features.chat.handlers.modules.triggers
 
-import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
+import org.polyfrost.oneconfig.utils.v1.dsl.mc
 
 object AutoPartyWarn : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
@@ -15,7 +15,7 @@ object AutoPartyWarn : ChatReceiveModule {
             }
             val separator = "-".repeat(9)
 
-            OmniClientChatSender.send("/pc $separator$message$separator")
+            mc.player?.connection?.sendChat("/pc $separator$message$separator")
         }
     }
 

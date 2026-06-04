@@ -1,11 +1,11 @@
 package org.polyfrost.hytils.client.features.chat.handlers.modules.triggers
 
-import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
 import org.polyfrost.oneconfig.utils.v1.Multithreading
+import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import java.util.concurrent.TimeUnit
 
 object AutoWB : ChatReceiveModule {
@@ -30,7 +30,7 @@ object AutoWB : ChatReceiveModule {
         }
 
         Multithreading.schedule(
-            { OmniClientChatSender.send("$command $message") },
+            { mc.player?.connection?.sendChat("$command $message") },
             HytilsRebornConfig.autoWBCooldown.toLong(),
             TimeUnit.SECONDS
         )

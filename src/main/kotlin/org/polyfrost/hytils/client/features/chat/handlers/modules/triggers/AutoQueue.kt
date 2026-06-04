@@ -1,9 +1,7 @@
 package org.polyfrost.hytils.client.features.chat.handlers.modules.triggers
 
-import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
-import dev.deftu.omnicore.api.world.OmniDimension
-import dev.deftu.omnicore.api.world.dimensionType
 import net.minecraft.client.multiplayer.ClientLevel
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.data.providers.GameIdentifiersData
 import org.polyfrost.hytils.client.data.providers.LanguageData
@@ -15,6 +13,7 @@ import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 import org.polyfrost.oneconfig.utils.v1.Multithreading
+import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import java.util.concurrent.TimeUnit
 
 object AutoQueue : ChatReceiveModule {
@@ -54,7 +53,7 @@ object AutoQueue : ChatReceiveModule {
         gameEnded = false
 
         // stop the command from being spammed
-        if (event.getWorld<ClientLevel>().dimensionType == OmniDimension.Overworld && sentCommand) {
+        if (event.getWorld<ClientLevel>().dimensionTypeRegistration().`is`(BuiltinDimensionTypes.OVERWORLD) && sentCommand) {
             sentCommand = false
         }
     }
@@ -62,7 +61,7 @@ object AutoQueue : ChatReceiveModule {
     private fun queue() {
         Multithreading.schedule({
             if (!sentCommand) {
-                OmniClientChatSender.send(command!!) // FIXME: .queue
+                mc.player?.connection?.sendChat(command!!)
                 sentCommand = true
                 command = null
             }

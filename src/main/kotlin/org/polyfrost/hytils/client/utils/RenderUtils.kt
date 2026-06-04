@@ -40,10 +40,9 @@ import org.joml.Matrix4fc
 import org.joml.Vector3f
 import org.joml.Vector4f
 import org.lwjgl.system.MemoryUtil
+import org.polyfrost.compose.render.PolyColor
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
-import org.polyfrost.polyui.color.PolyColor
-import org.polyfrost.polyui.color.asMutable
 import java.util.*
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -272,7 +271,7 @@ object RenderUtils {
             )
         }
 
-        val color = color.asMutable().apply { this.alpha = alpha }
+        val color = color.withAlpha(alpha)
 
         //? if >=1.21.11 {
         Shapes.block().forAllBoxes { minX, minY, minZ, maxX, maxY, maxZ ->
@@ -292,16 +291,16 @@ object RenderUtils {
         /*ShapeRenderer.addChainedFilledBoxVertices(
             poseStack,
             buffer!!,
-            0f - Z_FIGHTING_OFFSET,
-            0f - Z_FIGHTING_OFFSET,
-            0f - Z_FIGHTING_OFFSET,
-            1f + Z_FIGHTING_OFFSET,
-            1f + Z_FIGHTING_OFFSET,
-            1f + Z_FIGHTING_OFFSET,
-            color.r / 255f,
-            color.g / 255f,
-            color.b / 255f,
-            color.alpha
+            0.0 - Z_FIGHTING_OFFSET,
+            0.0 - Z_FIGHTING_OFFSET,
+            0.0 - Z_FIGHTING_OFFSET,
+            1.0 + Z_FIGHTING_OFFSET,
+            1.0 + Z_FIGHTING_OFFSET,
+            1.0 + Z_FIGHTING_OFFSET,
+            color.redF,
+            color.greenF,
+            color.blueF,
+            color.alphaF
         )
         *///?}
 

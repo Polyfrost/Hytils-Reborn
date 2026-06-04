@@ -23,7 +23,7 @@ import java.util.List;
 
 @Mixin(ChatComponent.class)
 abstract class ChatComponentMixin_ParseChatLines {
-    @Shadow @Final /*? if <1.21.11 {*//* private *//*?}*/ Minecraft minecraft;
+    @Shadow @Final /*? if <1.21.11 {*/ /*private *//*?}*/ Minecraft minecraft;
 
     @WrapOperation(
         method = "addMessageToDisplayQueue",

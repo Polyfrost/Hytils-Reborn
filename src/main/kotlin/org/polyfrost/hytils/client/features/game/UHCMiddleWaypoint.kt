@@ -4,14 +4,13 @@ import net.hypixel.data.type.GameType
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.world.phys.Vec3
+import org.polyfrost.compose.render.PolyColor
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.events.PostLevelRenderEvent
 import org.polyfrost.hytils.client.utils.RenderUtils
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
-import org.polyfrost.polyui.color.PolyColor
-import org.polyfrost.polyui.color.rgba
 import kotlin.math.hypot
 import kotlin.math.roundToInt
 
@@ -32,7 +31,7 @@ object UHCMiddleWaypoint {
             pos = pos,
             camera = event.camera,
             color = PolyColor.WHITE,
-            backgroundColor = rgba(0, 0, 0, 0.25f),
+            backgroundColor = PolyColor.BLACK.withAlpha(0.25f),
             disableDepth = true,
             dynamic = true
         )

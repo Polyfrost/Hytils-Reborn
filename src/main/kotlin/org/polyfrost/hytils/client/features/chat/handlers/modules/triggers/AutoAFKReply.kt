@@ -5,7 +5,6 @@ import net.minecraft.util.Util
 //?} else
 //import net.minecraft.Util
 
-import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
@@ -24,7 +23,7 @@ object AutoAFKReply : ChatReceiveModule {
 
             val player = match.groups["player"]?.value ?: return
             val message = HytilsRebornConfig.afkReplyMessage.replace("%player%", player)
-            OmniClientChatSender.send("/msg $player $message")
+            mc.player?.connection?.sendChat("/msg $player $message")
         }
     }
 

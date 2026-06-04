@@ -3,15 +3,14 @@ package org.polyfrost.hytils.client.commands.impl
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
-import dev.deftu.omnicore.api.client.chat.OmniClientChat
-import dev.deftu.textile.Text
-import dev.deftu.textile.minecraft.MCTextStyle
-import dev.deftu.textile.minecraft.TextColors
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
 import org.polyfrost.hytils.client.commands.ClientCommand
 import org.polyfrost.hytils.client.features.chat.handlers.modules.triggers.SilentRemoval
 import org.polyfrost.hytils.client.data.providers.LanguageData
+import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import java.util.Locale
 
 object SilentRemoveCommand : ClientCommand {
@@ -51,77 +50,87 @@ object SilentRemoveCommand : ClientCommand {
 
     private fun executeAdd(username: String) {
         if (!username.matches(LanguageData.VALID_USERNAME)) {
-            OmniClientChat.displayChatMessage(
-                Text.literal("Invalid username!").setStyle(MCTextStyle.color(TextColors.RED))
+            mc.player?.displayClientMessage(
+                Component.literal("Invalid username!").withStyle(ChatFormatting.RED),
+                false
             )
             return
         }
 
         if (!SilentRemoval.removalQueue.contains(username)) {
             SilentRemoval.removalQueue.add(username)
-            OmniClientChat.displayChatMessage(
-                Text.literal("Added ").setStyle(MCTextStyle.color(TextColors.GREEN))
-                    .append(Text.literal(username).setStyle(MCTextStyle.color(TextColors.YELLOW)))
-                    .append(Text.literal(" to the silent removal queue.").setStyle(MCTextStyle.color(TextColors.GREEN)))
+            mc.player?.displayClientMessage(
+                Component.literal("Added ").withStyle(ChatFormatting.GREEN)
+                    .append(Component.literal(username).withStyle(ChatFormatting.YELLOW))
+                    .append(Component.literal(" to the silent removal queue.").withStyle(ChatFormatting.GREEN)),
+                false
             )
         } else {
-            OmniClientChat.displayChatMessage(
-                Text.literal("$username is already in the silent removal queue!").setStyle(MCTextStyle.color(TextColors.RED))
+            mc.player?.displayClientMessage(
+                Component.literal("$username is already in the silent removal queue!").withStyle(ChatFormatting.RED),
+                false
             )
         }
     }
 
     private fun executeRemove(username: String) {
         if (!username.matches(LanguageData.VALID_USERNAME)) {
-            OmniClientChat.displayChatMessage(
-                Text.literal("Invalid username!").setStyle(MCTextStyle.color(TextColors.RED))
+            mc.player?.displayClientMessage(
+                Component.literal("Invalid username!").withStyle(ChatFormatting.RED),
+                false
             )
             return
         }
 
         if (SilentRemoval.removalQueue.contains(username)) {
             SilentRemoval.removalQueue.remove(username)
-            OmniClientChat.displayChatMessage(
-                Text.literal("Removed ").setStyle(MCTextStyle.color(TextColors.GREEN))
-                    .append(Text.literal(username).setStyle(MCTextStyle.color(TextColors.YELLOW)))
-                    .append(Text.literal(" from the silent removal queue.").setStyle(MCTextStyle.color(TextColors.GREEN)))
+            mc.player?.displayClientMessage(
+                Component.literal("Removed ").withStyle(ChatFormatting.GREEN)
+                    .append(Component.literal(username).withStyle(ChatFormatting.YELLOW))
+                    .append(Component.literal(" from the silent removal queue.").withStyle(ChatFormatting.GREEN)),
+                false
             )
         } else {
-            OmniClientChat.displayChatMessage(
-                Text.literal("$username is not in the silent removal queue!").setStyle(MCTextStyle.color(TextColors.RED))
+            mc.player?.displayClientMessage(
+                Component.literal("$username is not in the silent removal queue!").withStyle(ChatFormatting.RED),
+                false
             )
         }
     }
 
     private fun executeList() {
         if (SilentRemoval.removalQueue.isEmpty()) {
-            OmniClientChat.displayChatMessage(
-                Text.literal("The silent removal queue is empty.").setStyle(MCTextStyle.color(TextColors.YELLOW))
+            mc.player?.displayClientMessage(
+                Component.literal("The silent removal queue is empty.").withStyle(ChatFormatting.YELLOW),
+                false
             )
         } else {
-            OmniClientChat.displayChatMessage(
-                Text.literal("Silent removal queue: ").setStyle(MCTextStyle.color(TextColors.GREEN))
+            mc.player?.displayClientMessage(
+                Component.literal("Silent removal queue: ").withStyle(ChatFormatting.GREEN)
                     .apply {
                         SilentRemoval.removalQueue.forEachIndexed { index, username ->
-                            append(Text.literal(username).setStyle(MCTextStyle.color(TextColors.YELLOW)))
+                            append(Component.literal(username).withStyle(ChatFormatting.YELLOW))
                             if (index < SilentRemoval.removalQueue.size - 1) {
-                                append(Text.literal(", ").setStyle(MCTextStyle.color(TextColors.GREEN)))
+                                append(Component.literal(", ").withStyle(ChatFormatting.GREEN))
                             }
                         }
-                    }
+                    },
+                false
             )
         }
     }
 
     private fun executeClear() {
         if (SilentRemoval.removalQueue.isEmpty()) {
-            OmniClientChat.displayChatMessage(
-                Text.literal("The silent removal queue is already empty.").setStyle(MCTextStyle.color(TextColors.YELLOW))
+            mc.player?.displayClientMessage(
+                Component.literal("The silent removal queue is already empty.").withStyle(ChatFormatting.YELLOW),
+                false
             )
         } else {
             SilentRemoval.removalQueue.clear()
-            OmniClientChat.displayChatMessage(
-                Text.literal("Cleared the silent removal queue.").setStyle(MCTextStyle.color(TextColors.GREEN))
+            mc.player?.displayClientMessage(
+                Component.literal("Cleared the silent removal queue.").withStyle(ChatFormatting.GREEN),
+                false
             )
         }
     }

@@ -2,10 +2,8 @@ package org.polyfrost.hytils.client.utils
 
 import com.google.gson.JsonObject
 import com.mojang.authlib.exceptions.AuthenticationException
-import dev.deftu.omnicore.api.client.chat.OmniClientChat
-import dev.deftu.textile.Text
-import dev.deftu.textile.minecraft.MCTextStyle
-import dev.deftu.textile.minecraft.TextColors
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 import org.polyfrost.oneconfig.utils.v1.JsonUtils
@@ -157,18 +155,20 @@ object HypixelAPIUtils {
             if (maybeUuidResponse != null && maybeUuidResponse.isJsonObject) {
                 val uuidResponse = maybeUuidResponse.asJsonObject
                 if (uuidResponse.has("error")) {
-                    OmniClientChat.displayChatMessage(
-                        Text.literal("Failed with error: ${uuidResponse.get("reason").asString}")
-                            .setStyle(MCTextStyle.color(TextColors.RED))
+                    mc.player?.displayClientMessage(
+                        Component.literal("Failed to fetch $username's data. Please make sure this user exists.")
+                            .withStyle(ChatFormatting.RED),
+                        false
                     )
                     return null
                 }
                 return uuidResponse.get("id").asString
             }
         } catch (_: Exception) {
-            OmniClientChat.displayChatMessage(
-                Text.literal("Failed to fetch $username's data. Please make sure this user exists.")
-                    .setStyle(MCTextStyle.color(TextColors.RED))
+            mc.player?.displayClientMessage(
+                Component.literal("Failed to fetch $username's data. Please make sure this user exists.")
+                    .withStyle(ChatFormatting.RED),
+                false
             )
         }
         return null

@@ -23,6 +23,8 @@ repositories {
     maven("https://maven.gegy.dev/releases")
     maven("https://repo.hypixel.net/repository/Hypixel")
     maven("https://api.modrinth.com/maven")
+    maven("https://nexus.prsm.wtf/repository/maven-public/maven-repo/releases/")
+    google()
 }
 
 dependencies {
@@ -48,7 +50,7 @@ dependencies {
     }
 
     implementation("net.hypixel:mod-api:${property("deps.hypixel_mod_api")}")
-    for (module in listOf("fabric-command-api-v2", "fabric-networking-api-v1")) {
+    for (module in listOf("fabric-api-base", "fabric-command-api-v2", "fabric-networking-api-v1", "fabric-rendering-v1")) {
         modImplementation(fabricApi.module(module, sc.properties["deps.fabric_api"]))
     }
 
@@ -56,8 +58,6 @@ dependencies {
     modCompileOnly("maven.modrinth:sodium:mc$mcVersion-${property("deps.sodium")}-fabric")
 
     if (sc.current.parsed < "1.21.11") {
-        // needed for fabric 1.21.8
-        modImplementation(fabricApi.module("fabric-rendering-v1", sc.properties["deps.fabric_api"]))
         // needed for sodium height overlay compatibility
         modCompileOnly(fabricApi.module("fabric-renderer-api-v1", sc.properties["deps.fabric_api"]))
     }

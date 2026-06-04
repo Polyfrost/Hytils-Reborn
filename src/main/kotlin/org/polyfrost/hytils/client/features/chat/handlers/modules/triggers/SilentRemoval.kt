@@ -1,13 +1,13 @@
 package org.polyfrost.hytils.client.features.chat.handlers.modules.triggers
 
-import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
-import org.polyfrost.oneconfig.api.ui.v1.Notifications
+import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import java.util.*
 
+// TODO: notifications
 object SilentRemoval : ChatReceiveModule {
     val removalQueue = mutableSetOf<String>()
 
@@ -19,12 +19,12 @@ object SilentRemoval : ChatReceiveModule {
 
         val player = match.groups["player"]?.value ?: return
         if (removalQueue.contains(player.lowercase(Locale.ROOT))) {
-            OmniClientChatSender.send("/f remove $player") // FIXME: .queue
-            Notifications.enqueue(
-                Notifications.Type.Warning,
-                HytilsRebornConstants.NAME,
-                "Silently removed $player from your friends list."
-            )
+            mc.player?.connection?.sendChat("/f remove $player")
+//            Notifications.enqueue(
+//                Notifications.Type.Warning,
+//                HytilsRebornConstants.NAME,
+//                "Silently removed $player from your friends list."
+//            )
             removalQueue.remove(player)
         }
     }

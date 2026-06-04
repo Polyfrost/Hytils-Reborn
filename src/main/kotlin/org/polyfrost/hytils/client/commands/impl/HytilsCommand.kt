@@ -11,12 +11,12 @@ import org.polyfrost.hytils.client.commands.ClientCommand
 import org.polyfrost.hytils.client.commands.parser.GEXPTypeArgumentType
 import org.polyfrost.hytils.client.commands.parser.GameArgumentType
 import org.polyfrost.hytils.client.utils.HypixelAPIUtils
-import org.polyfrost.oneconfig.api.ui.v1.Notifications
 import org.polyfrost.oneconfig.utils.v1.Multithreading
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import org.polyfrost.oneconfig.utils.v1.dsl.openUI
 import java.util.Locale
 
+// TODO: notifications (or just use chat messages)
 object HytilsCommand : ClientCommand {
     override fun getCommand(): LiteralArgumentBuilder<FabricClientCommandSource> = ClientCommandManager.literal("hytils")
         .executes { _ ->
@@ -74,22 +74,22 @@ object HytilsCommand : ClientCommand {
 
         if (gexp != null) {
             val subject = if (username != null) "$username currently has" else "You currently have"
-            mc.execute {
-                Notifications.enqueue(
-                    Notifications.Type.Info,
-                    HytilsRebornConstants.NAME,
-                    "$subject $gexp$label guild EXP."
-                )
-            }
+//            mc.execute {
+//                Notifications.enqueue(
+//                    Notifications.Type.Info,
+//                    HytilsRebornConstants.NAME,
+//                    "$subject $gexp$label guild EXP."
+//                )
+//            }
         } else {
             val target = if (username != null) "$username's" else "your"
-            mc.execute {
-                Notifications.enqueue(
-                    Notifications.Type.Error,
-                    HytilsRebornConstants.NAME,
-                    "There was a problem trying to get $target$label guild EXP."
-                )
-            }
+//            mc.execute {
+//                Notifications.enqueue(
+//                    Notifications.Type.Error,
+//                    HytilsRebornConstants.NAME,
+//                    "There was a problem trying to get $target$label guild EXP."
+//                )
+//            }
         }
     }
 
@@ -104,22 +104,22 @@ object HytilsCommand : ClientCommand {
 
         if (winstreak != null) {
             val subject = if (!isSelf) "$username currently has" else "You currently have"
-            mc.execute {
-                Notifications.enqueue(
-                    Notifications.Type.Info,
-                    HytilsRebornConstants.NAME,
-                    "$subject a $winstreak winstreak$label."
-                )
-            }
+//            mc.execute {
+//                Notifications.enqueue(
+//                    Notifications.Type.Info,
+//                    HytilsRebornConstants.NAME,
+//                    "$subject a $winstreak winstreak$label."
+//                )
+//            }
         } else {
             val target = if (!isSelf) "$username's" else "your"
-            mc.execute {
-                Notifications.enqueue(
-                    Notifications.Type.Error,
-                    HytilsRebornConstants.NAME,
-                    "There was a problem trying to get $target winstreak."
-                )
-            }
+//            mc.execute {
+//                Notifications.enqueue(
+//                    Notifications.Type.Error,
+//                    HytilsRebornConstants.NAME,
+//                    "There was a problem trying to get $target winstreak."
+//                )
+//            }
         }
     }
 }

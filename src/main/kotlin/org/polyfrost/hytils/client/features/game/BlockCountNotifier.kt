@@ -1,11 +1,10 @@
 package org.polyfrost.hytils.client.features.game
 
-import dev.deftu.omnicore.api.client.sound.OmniClientSound
-import dev.deftu.omnicore.api.sound.OmniSound
-import dev.deftu.omnicore.api.sound.OmniSounds
 import net.hypixel.data.type.GameType
 import net.minecraft.client.player.LocalPlayer
+import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.entity.animal.wolf.WolfSoundVariants
 import net.minecraft.world.item.Items
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent
@@ -67,20 +66,20 @@ object BlockCountNotifier {
         }
 
         val sound = when (HytilsRebornConfig.blockNotifySound) {
-            0 -> OmniSounds.ENTITY.experienceOrb
-            1 -> OmniSound.of(SoundEvents.IRON_GOLEM_HURT)
-            2 -> OmniSound.of(SoundEvents.BLAZE_HURT)
-            3 -> OmniSounds.BLOCK.anvilLand
-            4 -> OmniSound.of(SoundEvents.HORSE_DEATH)
-            5 -> OmniSound.of(SoundEvents.GHAST_SCREAM)
-            6 -> OmniSound.of(SoundEvents.GUARDIAN_HURT_LAND)
-            7 -> OmniSound.of(SoundEvents.CAT_AMBIENT)
-            8 -> OmniSounds.WOLF.bark
+            0 -> SoundEvents.EXPERIENCE_ORB_PICKUP
+            1 -> SoundEvents.IRON_GOLEM_HURT
+            2 -> SoundEvents.BLAZE_HURT
+            3 -> SoundEvents.ANVIL_LAND
+            4 -> SoundEvents.HORSE_DEATH
+            5 -> SoundEvents.GHAST_SCREAM
+            6 -> SoundEvents.GUARDIAN_HURT_LAND
+            7 -> SoundEvents.CAT_AMBIENT
+            8 -> SoundEvents.WOLF_SOUNDS[WolfSoundVariants.SoundSet.CLASSIC]?.ambientSound?.value()
             else -> null
         }
 
         if (sound != null) {
-            OmniClientSound.play(sound, 1f, 1f)
+            mc.soundManager.play(SimpleSoundInstance.forUI(sound, 1f, 1f))
         }
     }
 }

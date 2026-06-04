@@ -18,6 +18,7 @@ import org.polyfrost.hytils.client.features.general.ArmorStandHider
 import org.polyfrost.hytils.client.features.limbo.LimboLimiter
 import org.polyfrost.hytils.client.features.limbo.LimboPrivateMessageSounds
 import org.polyfrost.hytils.client.features.lobby.SilentLobby
+import org.polyfrost.hytils.client.utils.hypixel.HypixelModAPIImpl
 import org.polyfrost.oneconfig.api.event.v1.EventManager
 import org.polyfrost.oneconfig.utils.v1.Multithreading
 import org.slf4j.Logger
@@ -91,5 +92,7 @@ object HytilsRebornClient {
                 )
             )
         }
+
+        HypixelModAPIImpl.init()
     }
 }

@@ -41,9 +41,9 @@ object HeightOverlay {
             b = (((color shr 16) and 0xFF) * multiplier).coerceIn(0f, 255f)
         } else {
             val customColor = HytilsRebornConfig.HeightOverlayCustomColors.getColor(blockState.block.defaultMapColor())
-            r = (customColor.r * multiplier).coerceIn(0f, 255f)
-            g = (customColor.g * multiplier).coerceIn(0f, 255f)
-            b = (customColor.b * multiplier).coerceIn(0f, 255f)
+            r = (customColor.red * multiplier).coerceIn(0f, 255f)
+            g = (customColor.green * multiplier).coerceIn(0f, 255f)
+            b = (customColor.blue * multiplier).coerceIn(0f, 255f)
         }
 
         return (0xFF shl 24) or

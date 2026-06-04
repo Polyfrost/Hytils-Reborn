@@ -3,18 +3,16 @@ package org.polyfrost.hytils.client.commands.impl
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.tree.LiteralCommandNode
-import dev.deftu.omnicore.api.client.chat.OmniClientChat
-import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
-import dev.deftu.textile.Text
-import dev.deftu.textile.minecraft.MCTextStyle
-import dev.deftu.textile.minecraft.TextColors
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.commands.ClientCommand
 import org.polyfrost.hytils.client.commands.parser.GameNameArgumentType
 import org.polyfrost.hytils.client.data.providers.GameAliasesData
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
+import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import java.util.Locale
 
 object PlayCommand : ClientCommand {
@@ -37,8 +35,9 @@ object PlayCommand : ClientCommand {
                 GameAliasesData.aliases.containsKey(game.name.lowercase(Locale.ROOT)) -> GameAliasesData.aliases[game.name.lowercase(Locale.ROOT)]
                 GameAliasesData.aliases.containsValue(game.name.lowercase(Locale.ROOT)) -> game.name
                 else -> {
-                    OmniClientChat.displayChatMessage(
-                        Text.literal("Invalid game: \"${game.name}\"").setStyle(MCTextStyle.color(TextColors.RED))
+                    mc.player?.displayClientMessage(
+                        Component.literal("Invalid game: \"${game.name}\"").withStyle(ChatFormatting.RED),
+                        false
                     )
                     return
                 }
@@ -47,6 +46,6 @@ object PlayCommand : ClientCommand {
             game.name
         }
 
-        OmniClientChatSender.send("/play $command") // FIXME: .queue
+        mc.player?.connection?.sendChat("/play $command")
     }
 }

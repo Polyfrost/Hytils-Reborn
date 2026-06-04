@@ -1,6 +1,5 @@
 package org.polyfrost.hytils.client.features.chat.handlers.modules.triggers
 
-import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
@@ -8,6 +7,7 @@ import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
 import org.polyfrost.oneconfig.utils.v1.Multithreading
+import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import java.util.concurrent.TimeUnit
 
 object AutoGG : ChatReceiveModule {
@@ -20,12 +20,12 @@ object AutoGG : ChatReceiveModule {
         shouldSend = true
 
         Multithreading.schedule(
-            { if (shouldSend) OmniClientChatSender.send("/ac ${HytilsRebornConfig.autoGGMessage}") },
+            { if (shouldSend) mc.player?.connection?.sendChat("/ac ${HytilsRebornConfig.autoGGMessage}") },
             HytilsRebornConfig.autoGGFirstMsgDelay.toLong(), TimeUnit.SECONDS
         )
         if (HytilsRebornConfig.autoGGSendSecondMessage) {
             Multithreading.schedule(
-                { if (shouldSend) OmniClientChatSender.send("/ac ${HytilsRebornConfig.autoGGSecondMessage}") },
+                { if (shouldSend) mc.player?.connection?.sendChat("/ac ${HytilsRebornConfig.autoGGSecondMessage}") },
                 (HytilsRebornConfig.autoGGFirstMsgDelay + HytilsRebornConfig.autoGGSecondMsgDelay).toLong(),
                 TimeUnit.SECONDS
             )

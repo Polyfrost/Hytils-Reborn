@@ -1,7 +1,7 @@
 package org.polyfrost.hytils.client.features.game
 
 import org.polyfrost.hytils.client.HytilsRebornConfig
-import org.polyfrost.oneconfig.api.event.v1.events.PostWorldRenderEvent
+import org.polyfrost.hytils.client.events.PostLevelRenderEvent
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
@@ -12,7 +12,7 @@ object SumoRenderDistance {
     var changedRenderDistance = false
 
     @Subscribe
-    fun onWorldRender(event: PostWorldRenderEvent) {
+    fun onWorldRender(event: PostLevelRenderEvent) {
         if (!HytilsRebornConfig.isEnabled || !HytilsRebornConfig.sumoRenderDistance) return
 
         val location = HypixelUtils.getLocation()

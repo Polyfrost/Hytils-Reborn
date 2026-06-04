@@ -1,14 +1,13 @@
 package org.polyfrost.hytils.client
 
 import net.minecraft.world.level.material.MapColor
+import org.polyfrost.compose.render.PolyColor
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.oneconfig.api.config.v1.Config
 import org.polyfrost.oneconfig.api.config.v1.annotations.*
 import org.polyfrost.oneconfig.utils.v1.Multithreading
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
-import org.polyfrost.polyui.color.argb
-import org.polyfrost.polyui.color.rgba
 
 object HytilsRebornConfig : Config(
     "${HytilsRebornConstants.ID}.json",
@@ -910,7 +909,7 @@ object HytilsRebornConfig : Config(
     var miniWallsMiddleBeacon = false
 
     @Color(title = "MiniWalls Beacon Color", category = "Game", subcategory = "Arcade")
-    var miniWallsMiddleBeaconColor = rgba(255, 0, 0)
+    var miniWallsMiddleBeaconColor = PolyColor.rgb(255, 0, 0)
 
     @Switch(
         title = "Hide Arcade Cosmetics",
@@ -967,52 +966,52 @@ object HytilsRebornConfig : Config(
         var enabled = false
 
         @Color(title = "Red")
-        var red = argb(MapColor.COLOR_RED.col)
+        var red = PolyColor(MapColor.COLOR_RED.col).withAlpha(1f)
 
         @Color(title = "Orange")
-        var orange = argb(MapColor.COLOR_ORANGE.col)
+        var orange = PolyColor(MapColor.COLOR_ORANGE.col).withAlpha(1f)
 
         @Color(title = "Yellow")
-        var yellow = argb(MapColor.COLOR_YELLOW.col)
+        var yellow = PolyColor(MapColor.COLOR_YELLOW.col).withAlpha(1f)
 
         @Color(title = "Lime")
-        var lime = argb(MapColor.COLOR_LIGHT_GREEN.col)
+        var lime = PolyColor(MapColor.COLOR_LIGHT_GREEN.col).withAlpha(1f)
 
         @Color(title = "Green")
-        var green = argb(MapColor.COLOR_GREEN.col)
+        var green = PolyColor(MapColor.COLOR_GREEN.col).withAlpha(1f)
 
         @Color(title = "Cyan")
-        var cyan = argb(MapColor.COLOR_CYAN.col)
+        var cyan = PolyColor(MapColor.COLOR_CYAN.col).withAlpha(1f)
 
         @Color(title = "Light Blue")
-        var lightBlue = argb(MapColor.COLOR_LIGHT_BLUE.col)
+        var lightBlue = PolyColor(MapColor.COLOR_LIGHT_BLUE.col).withAlpha(1f)
 
         @Color(title = "Blue")
-        var blue = argb(MapColor.COLOR_BLUE.col)
+        var blue = PolyColor(MapColor.COLOR_BLUE.col).withAlpha(1f)
 
         @Color(title = "Purple")
-        var purple = argb(MapColor.COLOR_PURPLE.col)
+        var purple = PolyColor(MapColor.COLOR_PURPLE.col).withAlpha(1f)
 
         @Color(title = "Magenta")
-        var magenta = argb(MapColor.COLOR_MAGENTA.col)
+        var magenta = PolyColor(MapColor.COLOR_MAGENTA.col).withAlpha(1f)
 
         @Color(title = "Pink")
-        var pink = argb(MapColor.COLOR_PINK.col)
+        var pink = PolyColor(MapColor.COLOR_PINK.col).withAlpha(1f)
 
         @Color(title = "Brown")
-        var brown = argb(MapColor.COLOR_BROWN.col)
+        var brown = PolyColor(MapColor.COLOR_BROWN.col).withAlpha(1f)
 
         @Color(title = "Gray")
-        var gray = argb(MapColor.COLOR_GRAY.col)
+        var gray = PolyColor(MapColor.COLOR_GRAY.col).withAlpha(1f)
 
         @Color(title = "Light Gray")
-        var lightGray = argb(MapColor.COLOR_LIGHT_GRAY.col)
+        var lightGray = PolyColor(MapColor.COLOR_LIGHT_GRAY.col).withAlpha(1f)
 
         @Color(title = "White")
-        var white = argb(MapColor.SNOW.col)
+        var white = PolyColor(MapColor.SNOW.col).withAlpha(1f)
 
         @Color(title = "Black")
-        var black = argb(MapColor.COLOR_BLACK.col)
+        var black = PolyColor(MapColor.COLOR_BLACK.col).withAlpha(1f)
 
         fun getColor(mapColor: MapColor) = when (mapColor) {
             MapColor.COLOR_RED, MapColor.TERRACOTTA_RED -> red
@@ -1115,7 +1114,7 @@ object HytilsRebornConfig : Config(
         category = "Game",
         subcategory = "SkyWars"
     )
-    var highlightChestsColor = rgba(255, 0, 0)
+    var highlightChestsColor = PolyColor.rgb(255, 0, 0)
 
     @Switch(
         title = "UHC Overlay",

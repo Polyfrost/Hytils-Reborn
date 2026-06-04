@@ -6,7 +6,7 @@ mod.version = "2.0.0-alpha.1"
 publish.modrinth.id = "nF6YaBfO"
 
 deps.fabric_loader = "0.19.2"
-deps.oneconfig = "1.0.0-alpha.183"
+deps.oneconfig = "1.0.0-alpha.190"
 deps.hypixel_mod_api = "1.0.2"
 
 ["1.21.8"]

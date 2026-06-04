@@ -9,12 +9,12 @@ import org.intellij.lang.annotations.Language
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.HytilsRebornClient
 import org.polyfrost.hytils.client.data.DataProvider
-import org.polyfrost.oneconfig.api.ui.v1.Notifications
 import org.polyfrost.oneconfig.utils.v1.JsonUtils
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
+// TODO: notifications
 object LanguageData : DataProvider {
     @Volatile private var fetchedPatterns: Map<String, String> = emptyMap()
     @Volatile private var fetchedComponents: Map<String, Component> = emptyMap()
@@ -30,13 +30,13 @@ object LanguageData : DataProvider {
 
         if (response == null || response.isJsonNull) {
             HytilsRebornClient.LOGGER.error("Failed to fetch language data, using defaults.")
-            mc.execute {
-                Notifications.enqueue(
-                    Notifications.Type.Error,
-                    HytilsRebornConstants.NAME,
-                    "Failed to fetch language data, using defaults. Some features may not work as intended."
-                )
-            }
+//            mc.execute {
+//                Notifications.enqueue(
+//                    Notifications.Type.Error,
+//                    HytilsRebornConstants.NAME,
+//                    "Failed to fetch language data, using defaults. Some features may not work as intended."
+//                )
+//            }
             return
         }
 
@@ -72,24 +72,24 @@ object LanguageData : DataProvider {
             fetchedStrings = strings
 
             HytilsRebornClient.LOGGER.info("Successfully fetched ${fetchedPatterns.size} regexes, ${fetchedComponents.size} components and ${fetchedStrings.size} strings.")
-            if (showNotification) {
-                mc.execute {
-                    Notifications.enqueue(
-                        Notifications.Type.Info,
-                        HytilsRebornConstants.NAME,
-                        "Successfully fetched ${fetchedPatterns.size} regexes, ${fetchedComponents.size} components and ${fetchedStrings.size} strings."
-                    )
-                }
-            }
+//            if (showNotification) {
+//                mc.execute {
+//                    Notifications.enqueue(
+//                        Notifications.Type.Info,
+//                        HytilsRebornConstants.NAME,
+//                        "Successfully fetched ${fetchedPatterns.size} regexes, ${fetchedComponents.size} components and ${fetchedStrings.size} strings."
+//                    )
+//                }
+//            }
         } catch (e: Exception) {
             HytilsRebornClient.LOGGER.error("Failed to parse language data, using defaults.", e)
-            mc.execute {
-                Notifications.enqueue(
-                    Notifications.Type.Error,
-                    HytilsRebornConstants.NAME,
-                    "Failed to parse language data, using defaults. Some features may not work as intended. Check logs for more details."
-                )
-            }
+//            mc.execute {
+//                Notifications.enqueue(
+//                    Notifications.Type.Error,
+//                    HytilsRebornConstants.NAME,
+//                    "Failed to parse language data, using defaults. Some features may not work as intended. Check logs for more details."
+//                )
+//            }
         }
     }
 

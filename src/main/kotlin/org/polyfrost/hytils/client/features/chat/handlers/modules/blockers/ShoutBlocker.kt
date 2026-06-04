@@ -1,10 +1,10 @@
 package org.polyfrost.hytils.client.features.chat.handlers.modules.blockers
 
-import dev.deftu.omnicore.api.client.chat.OmniClientChat
-import dev.deftu.textile.Text
-import dev.deftu.textile.minecraft.MCTextStyle
-import dev.deftu.textile.minecraft.TextColors
 import net.hypixel.data.type.GameType
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.HoverEvent
+import net.minecraft.network.chat.Style
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
@@ -12,6 +12,7 @@ import org.polyfrost.hytils.client.events.ChatSendEvent
 import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
 import org.polyfrost.hytils.client.features.chat.handlers.ChatSendModule
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
+import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import java.text.DecimalFormat
 import kotlin.jvm.optionals.getOrNull
 
@@ -26,11 +27,18 @@ object ShoutBlocker : ChatSendModule, ChatReceiveModule {
             shoutCooldown = System.currentTimeMillis() + getCooldownLengthInSeconds() * 1000
         } else {
             val secondsLeft = (shoutCooldown - System.currentTimeMillis()) / 1000L
-            OmniClientChat.displayChatMessage(
-                Text.literal(
-                    "Shout command is on cooldown. Please wait ${decimalFormat.format(secondsLeft)} more second${if (secondsLeft == 1L) "." else "s."}",
-                    MCTextStyle.color(TextColors.YELLOW)
-                )
+            mc.player?.displayClientMessage(
+                Component.literal("Shout command is on cooldown. Please wait ${decimalFormat.format(secondsLeft)} more second${if (secondsLeft == 1L) "" else "s"} before shouting another message.")
+                    .setStyle(Style.EMPTY.withHoverEvent(
+                        HoverEvent.ShowText(
+                            Component.empty()
+                                .append(Component.literal("Hytils Reborn\n")
+                                    .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD))
+                                .append(Component.literal("Your message was blocked by the \"Shout Cooldown\" setting. \nPlease wait before shouting another message.")
+                                    .withStyle(ChatFormatting.GRAY))
+                        )
+                    )),
+                false
             )
             event.cancelled = true
         }

@@ -3,14 +3,11 @@ package org.polyfrost.hytils.client.commands.impl
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
-import dev.deftu.omnicore.api.client.chat.OmniClientChat
-import dev.deftu.omnicore.api.client.chat.OmniClientChatSender
-import dev.deftu.textile.Text
-import dev.deftu.textile.minecraft.MCTextStyle
-import dev.deftu.textile.minecraft.TextColors
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.hypixel.data.type.GameType
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
 import org.polyfrost.hytils.client.commands.ClientCommand
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.oneconfig.api.event.v1.EventManager
@@ -18,6 +15,7 @@ import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 import org.polyfrost.oneconfig.utils.v1.Multithreading
+import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import java.util.concurrent.TimeUnit
 
 object HousingVisitCommand : ClientCommand {
@@ -42,14 +40,15 @@ object HousingVisitCommand : ClientCommand {
             val location = HypixelUtils.getLocation()
 
             if (!location.inGame() && location.gameType.orElse(null) == GameType.HOUSING) {
-                OmniClientChatSender.send("/visit $playerUsername") // FIXME: .queue
+                mc.player?.connection?.sendChat("/visit $playerUsername")
             } else {
-                OmniClientChatSender.send("/l housing")
+                mc.player?.connection?.sendChat("/l housing")
                 EventManager.INSTANCE.register(HousingVisitHook, true)
             }
         } else {
-            OmniClientChat.displayChatMessage(
-                Text.literal("Invalid username!").setStyle(MCTextStyle.color(TextColors.RED))
+            mc.player?.displayClientMessage(
+                Component.literal("Invalid username!").withStyle(ChatFormatting.RED),
+                false
             )
         }
     }
@@ -58,7 +57,7 @@ object HousingVisitCommand : ClientCommand {
         @Subscribe
         fun onWorldLoad(event: WorldEvent.Load) {
             Multithreading.schedule(
-                { OmniClientChatSender.send("/visit $playerUsername") },
+                { mc.player?.connection?.sendChat("/visit $playerUsername") },
                 300L,
                 TimeUnit.MILLISECONDS
             )
