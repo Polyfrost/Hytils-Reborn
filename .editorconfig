@@ -7,6 +7,12 @@ indent_size = 4
 indent_style = space
 ij_java_use_single_class_imports = true
 
+[*.{kt,kts}]
+charset = utf-8
+insert_final_newline = true
+indent_size = 4
+indent_style = space
+
 [*.json]
 indent_size = 2
 charset = utf-8
