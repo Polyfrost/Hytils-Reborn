@@ -9,9 +9,8 @@ import org.polyfrost.hytils.client.features.general.TabChanger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(PlayerTabOverlay.class)
 abstract class PlayerTabOverlayMixin_HidePing {
@@ -23,19 +22,39 @@ abstract class PlayerTabOverlayMixin_HidePing {
         }
     }
 
-    //~ if <26.1 'extractRenderState' -> 'render'
-    @ModifyArgs(
+    //~ if <26.1 'extractRenderState' -> 'render' {
+    @ModifyArg(
         method = "extractRenderState",
         at = @At(
             value = "INVOKE",
             //~ if <26.1 'extractTablistScore' -> 'renderTablistScore'
             target = "Lnet/minecraft/client/gui/components/PlayerTabOverlay;extractTablistScore(Lnet/minecraft/world/scores/Objective;ILnet/minecraft/client/gui/components/PlayerTabOverlay$ScoreDisplayEntry;IILjava/util/UUID;Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V"
-        )
+        ),
+        index = 3
     )
-    private void offsetScore(Args args, @Local PlayerInfo playerInfo) {
-        if (HytilsRebornConfig.isEnabled() && TabChanger.hidePing(playerInfo)) {
-            args.set(3, (int) args.get(3) + 11);
-            args.set(4, (int) args.get(4) + 11);
+    private int offsetScoreLeft(int left, @Local PlayerInfo info) {
+        if (HytilsRebornConfig.isEnabled() && TabChanger.hidePing(info)) {
+            return left + 11;
         }
+
+        return left;
     }
+
+    @ModifyArg(
+        method = "extractRenderState",
+        at = @At(
+            value = "INVOKE",
+            //~ if <26.1 'extractTablistScore' -> 'renderTablistScore'
+            target = "Lnet/minecraft/client/gui/components/PlayerTabOverlay;extractTablistScore(Lnet/minecraft/world/scores/Objective;ILnet/minecraft/client/gui/components/PlayerTabOverlay$ScoreDisplayEntry;IILjava/util/UUID;Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V"
+        ),
+        index = 4
+    )
+    private int offsetScoreRight(int right, @Local PlayerInfo info) {
+        if (HytilsRebornConfig.isEnabled() && TabChanger.hidePing(info)) {
+            return right + 11;
+        }
+
+        return right;
+    }
+    //~}
 }

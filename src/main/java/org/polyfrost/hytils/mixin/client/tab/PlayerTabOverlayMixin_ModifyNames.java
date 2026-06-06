@@ -14,12 +14,18 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(PlayerTabOverlay.class)
 abstract class PlayerTabOverlayMixin_ModifyNames {
-    @WrapOperation(method = "getNameForDisplay", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/scores/PlayerTeam;formatNameForTeam(Lnet/minecraft/world/scores/Team;Lnet/minecraft/network/chat/Component;)Lnet/minecraft/network/chat/MutableComponent;"))
-    private static MutableComponent modifyPlayerNameForDisplay(Team team, Component component, Operation<MutableComponent> original, PlayerInfo playerInfo) {
+    @WrapOperation(
+        method = "getNameForDisplay",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/world/scores/PlayerTeam;formatNameForTeam(Lnet/minecraft/world/scores/Team;Lnet/minecraft/network/chat/Component;)Lnet/minecraft/network/chat/MutableComponent;"
+        )
+    )
+    private static MutableComponent modifyPlayerNameForDisplay(Team team, Component component, Operation<MutableComponent> original, PlayerInfo info) {
         MutableComponent formattedName = original.call(team, component);
 
         if (HytilsRebornConfig.isEnabled()) {
-            return TabChanger.modifyName(formattedName, playerInfo);
+            return TabChanger.modifyName(formattedName, info);
         }
 
         return formattedName;
