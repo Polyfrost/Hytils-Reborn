@@ -20,7 +20,7 @@ abstract class PlayerTabOverlayMixin_HideHeads {
     //~ if <26.1 'extractRenderState' -> 'render'
     @ModifyExpressionValue(method = "extractRenderState", at = @At("MIXINEXTRAS:EXPRESSION"))
     private boolean hidePlayerHead(boolean showHead, @Local PlayerInfo playerInfo) {
-        return showHead && (HytilsRebornConfig.isEnabled() && TabChanger.shouldRenderHead(playerInfo));
+        return showHead && (!HytilsRebornConfig.isEnabled() || TabChanger.shouldRenderHead(playerInfo));
     }
 
     @ModifyArgs(

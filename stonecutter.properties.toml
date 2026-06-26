@@ -28,3 +28,7 @@ deps.sodium = "0.8.7"
 ["26.1"]
 deps.fabric_api = "0.145.1+26.1"
 deps.sodium = "0.8.7"
+
+["26.2"]
+deps.fabric_api = "0.153.0+26.2"
+deps.sodium = "0.9.0"

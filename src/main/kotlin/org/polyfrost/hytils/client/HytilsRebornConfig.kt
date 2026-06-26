@@ -1271,8 +1271,10 @@ object HytilsRebornConfig : Config(
         addDependency("afkTimeout", "autoReplyAfk")
         addDependency("afkReplyMessage", "autoReplyAfk")
 
-        addCallback("cleanSeparatorLines") { mc.execute(mc.gui.chat::rescaleChat) }
-        addCallback("fixCenteredMessages") { mc.execute(mc.gui.chat::rescaleChat) }
+        //~ if <26.2 'gui.hud' -> 'gui' {
+        addCallback("cleanSeparatorLines") { mc.execute(mc.gui.hud.chat::rescaleChat) }
+        addCallback("fixCenteredMessages") { mc.execute(mc.gui.hud.chat::rescaleChat) }
+        //~}
 
         addDependency("chatEmotesReplacementMode", "replaceChatEmotes")
         addDependency("chatSwapperReturnChannel", "chatSwapper")
@@ -1289,21 +1291,23 @@ object HytilsRebornConfig : Config(
         addDependency("blockNumber", "blockNotify")
         addDependency("blockNotifySound", "blockNotify")
 
-        addCallback("heightOverlay") { mc.execute(mc.levelRenderer::allChanged) }
+        //~ if <26.2 'levelExtractor' -> 'levelRenderer' {
+        addCallback("heightOverlay") { mc.execute(mc.levelExtractor::allChanged) }
         listOf("heightOverlayMinBuild", "overlayAmount").forEach {
-            addDependency(it, "heightOverlay", true)
-            addCallback(it) { mc.execute(mc.levelRenderer::allChanged) }
+            addDependency(it, "heightOverlay")
+            addCallback(it) { mc.execute(mc.levelExtractor::allChanged) }
         }
 
-        addCallback("HeightOverlayCustomColors.enabled") { mc.execute(mc.levelRenderer::allChanged) }
+        addCallback("HeightOverlayCustomColors.enabled") { mc.execute(mc.levelExtractor::allChanged) }
         listOf(
             "red", "orange", "yellow", "lime", "green", "cyan", "lightBlue", "blue",
             "purple", "magenta", "pink", "brown", "gray", "lightGray", "white", "black"
         ).forEach {
             addDependency("HeightOverlayCustomColors.$it", "heightOverlay")
             addDependency("HeightOverlayCustomColors.$it", "HeightOverlayCustomColors.enabled")
-            addCallback("HeightOverlayCustomColors.$it") { mc.execute(mc.levelRenderer::allChanged) }
+            addCallback("HeightOverlayCustomColors.$it") { mc.execute(mc.levelExtractor::allChanged) }
         }
+        //~}
 
         addDependency("sumoRenderDistanceAmount", "sumoRenderDistance")
         addDependency("highlightChestsColor", "highlightChests")

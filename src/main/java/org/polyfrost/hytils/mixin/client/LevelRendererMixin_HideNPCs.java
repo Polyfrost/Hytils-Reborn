@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.hypixel.data.type.GameType;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
@@ -16,11 +15,13 @@ import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(LevelRenderer.class)
+//~ if <26.2 'extract.LevelExtractor' -> 'LevelRenderer'
+@Mixin(net.minecraft.client.renderer.extract.LevelExtractor.class)
 abstract class LevelRendererMixin_HideNPCs {
     @WrapOperation(
+        //~ if <26.2 'isEntityVisible' -> 'extractVisibleEntities'
         //~ if <1.21.11 'extractVisibleEntities' -> 'collectVisibleEntities'
-        method = "extractVisibleEntities",
+        method = "isEntityVisible",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;shouldRender(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/renderer/culling/Frustum;DDD)Z")
     )
     private <E extends Entity> boolean shouldRenderEntity(EntityRenderDispatcher instance, E entity, Frustum frustum, double d, double e, double f, Operation<Boolean> original) {

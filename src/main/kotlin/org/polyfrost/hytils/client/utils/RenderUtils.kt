@@ -1,53 +1,52 @@
 package org.polyfrost.hytils.client.utils
 
-//? if >=1.21.11 {
-import net.minecraft.client.renderer.SubmitNodeCollector
-import net.minecraft.client.renderer.rendertype.RenderSetup
-import net.minecraft.client.renderer.rendertype.RenderType
-//~ if <26.1 'level.CameraRenderState' -> 'CameraRenderState'
-import net.minecraft.client.renderer.state.level.CameraRenderState
-import net.minecraft.util.Util
-import org.polyfrost.hytils.mixin.client.accessor.RenderTypeAccessor
+//? if >=26.2 {
+import com.mojang.blaze3d.PrimitiveTopology
+import net.minecraft.client.renderer.StagedVertexBuffer
 //?} else {
-/*import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.client.renderer.RenderType
-import net.minecraft.client.renderer.RenderStateShard
-import net.minecraft.client.renderer.ShapeRenderer
-import net.minecraft.client.Camera
-import net.minecraft.Util
+/*import com.mojang.blaze3d.buffers.GpuBuffer
+import com.mojang.blaze3d.vertex.MeshData.DrawState
+import com.mojang.blaze3d.vertex.VertexFormat.IndexType
+import net.minecraft.client.renderer.MappableRingBuffer
 
-import java.util.function.BiFunction
+import org.lwjgl.system.MemoryUtil
 *///?}
 
 //? if >=26.1 {
 import com.mojang.blaze3d.pipeline.ColorTargetState
 import com.mojang.blaze3d.pipeline.DepthStencilState
 import com.mojang.blaze3d.platform.CompareOp
-//?} else
-//import com.mojang.blaze3d.platform.DepthTestFunction
+//?}
 
-import com.mojang.blaze3d.buffers.GpuBuffer
+//? if >=1.21.11 {
+import net.minecraft.client.renderer.SubmitNodeCollector
+import net.minecraft.client.renderer.rendertype.RenderSetup
+//~ if <26.1 'level.CameraRenderState' -> 'CameraRenderState'
+import net.minecraft.client.renderer.state.level.CameraRenderState
+import org.polyfrost.hytils.mixin.client.accessor.RenderTypeAccessor
+//?}
+
 import com.mojang.blaze3d.pipeline.BlendFunction
 import com.mojang.blaze3d.pipeline.RenderPipeline
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.*
-import com.mojang.blaze3d.vertex.MeshData.DrawState
-import com.mojang.blaze3d.vertex.VertexFormat.IndexType
 import net.minecraft.client.gui.Font
-import net.minecraft.client.renderer.MappableRingBuffer
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
+//~ if <1.21.11 'rendertype.RenderType' -> 'RenderType'
+import net.minecraft.client.renderer.rendertype.RenderType
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 //~ if <26.1 'util.LightCoordsUtil' -> 'client.renderer.LightTexture as LightCoordsUtil'
 import net.minecraft.util.LightCoordsUtil
+//~ if <1.21.11 'util.Util' -> 'Util'
+import net.minecraft.util.Util
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.Shapes
 import org.joml.Matrix4f
 import org.joml.Matrix4fc
 import org.joml.Vector3f
 import org.joml.Vector4f
-import org.lwjgl.system.MemoryUtil
 import org.polyfrost.compose.render.PolyColor
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
@@ -55,16 +54,26 @@ import java.util.*
 import kotlin.math.pow
 import kotlin.math.sqrt
 
+/**
+ * Some code was heavily adapted from Fabric Documentation's [Rendering in the World](https://docs.fabricmc.net/develop/rendering/world)
+ * article ([`CustomRenderPipeline.java`](https://github.com/FabricMC/fabric-docs/blob/main/reference/latest/src/client/java/com/example/docs/rendering/CustomRenderPipeline.java)).
+ */
 object RenderUtils {
-    private val allocator: ByteBufferBuilder = ByteBufferBuilder(RenderType.SMALL_BUFFER_SIZE)
+    //? if <26.2 {
+    /*private val allocator: ByteBufferBuilder = ByteBufferBuilder(RenderType.SMALL_BUFFER_SIZE)
     private var buffer: BufferBuilder? = null
+    *///?}
 
     private val COLOR_MODULATOR = Vector4f(1f, 1f, 1f, 1f)
     //? if >=1.21.11 {
     private val MODEL_OFFSET = Vector3f()
     private val TEXTURE_MATRIX = Matrix4f()
     //?}
-    private var vertexBuffer: MappableRingBuffer? = null
+
+    //? if <26.2 {
+    /*private var vertexBuffer: MappableRingBuffer? = null
+    *///?} else
+    private val stagedBuffer = StagedVertexBuffer({ "${HytilsRebornConstants.NAME} Buffer" }, RenderType.SMALL_BUFFER_SIZE);
 
     private const val Z_FIGHTING_OFFSET = 0.001f
 
@@ -73,7 +82,7 @@ object RenderUtils {
         //? if >=26.1 {
         .withDepthStencilState(Optional.empty())
         //?} else
-        //.withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
+        //.withDepthTestFunction(com.mojang.blaze3d.platform.DepthTestFunction.NO_DEPTH_TEST)
         .build()
     private val BEACON_BEAM_TRANSLUCENT_NO_DEPTH = RenderPipeline.builder(RenderPipelines.BEACON_BEAM_SNIPPET)
         .withLocation("pipeline/beacon_beam_translucent")
@@ -84,7 +93,7 @@ object RenderUtils {
         //?} else {
         /*.withDepthWrite(false)
         .withBlend(BlendFunction.TRANSLUCENT)
-        .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
+        .withDepthTestFunction(com.mojang.blaze3d.platform.DepthTestFunction.NO_DEPTH_TEST)
         *///?}
         .build()
 
@@ -105,9 +114,9 @@ object RenderUtils {
         RenderTypeAccessor.invokeCreate("beacon_beam", state)
     }
     //?} else {
-    /*val BEACON_BEAM_NO_DEPTH: BiFunction<Identifier, Boolean, RenderType> = Util.memoize { resourceLocation, isTranslucent ->
+    /*val BEACON_BEAM_NO_DEPTH: java.util.function.BiFunction<Identifier, Boolean, RenderType> = Util.memoize { resourceLocation, isTranslucent ->
         val compositeState = RenderType.CompositeState.builder()
-            .setTextureState(RenderStateShard.TextureStateShard(resourceLocation, false))
+            .setTextureState(net.minecraft.client.renderer.RenderStateShard.TextureStateShard(resourceLocation, false))
             .createCompositeState(false)
         val pipeline = if (isTranslucent) {
             BEACON_BEAM_TRANSLUCENT_NO_DEPTH
@@ -129,14 +138,34 @@ object RenderUtils {
     var beaconDisableDepth = false
 
     fun renderFilledBox(poseStack: PoseStack, pos: Vec3, cameraPos: Vec3, color: PolyColor, alpha: Float = 0.8f) {
-        prepareFilledBox(poseStack, pos, cameraPos, color, alpha)
+        //? if >=26.2 {
+        val formatBinding = RenderPipelines.DEBUG_FILLED_BOX.getVertexFormatBinding(0) ?: return
+        val primitive = RenderPipelines.DEBUG_FILLED_BOX.primitiveTopology
+        val draw = stagedBuffer.appendDraw(
+            formatBinding,
+            primitive,
+            if (primitive == PrimitiveTopology.QUADS) RenderSystem.getProjectionType().vertexSorting() else null
+        )
+
+        prepareFilledBox(poseStack, draw, pos, cameraPos, color, alpha)
+        stagedBuffer.upload()
+
+        val info = stagedBuffer.getExecuteInfo(draw)
+        if (info != null) {
+            drawFilledBox(info, RenderPipelines.DEBUG_FILLED_BOX)
+        }
+
+        stagedBuffer.endFrame()
+        //?} else {
+        /*prepareFilledBox(poseStack, pos, cameraPos, color, alpha)
         drawFilledBox(RenderPipelines.DEBUG_FILLED_BOX)
+        *///?}
     }
 
     fun renderText(
         text: Component,
         pos: Vec3,
-        //~ if <1.21.11 'CameraRenderState' -> 'Camera'
+        //~ if <1.21.11 'CameraRenderState' -> 'net.minecraft.client.Camera'
         camera: CameraRenderState,
         color: PolyColor,
         backgroundColor: PolyColor,
@@ -157,7 +186,11 @@ object RenderUtils {
     fun renderText(
         vararg texts: Component,
         pos: Vec3,
-        //~ if <1.21.11 'CameraRenderState' -> 'Camera'
+        //? if >=26.2 {
+        submitNodeCollector: SubmitNodeCollector,
+        poseStack: PoseStack,
+        //?}
+        //~ if <1.21.11 'CameraRenderState' -> 'net.minecraft.client.Camera'
         camera: CameraRenderState,
         color: PolyColor,
         backgroundColor: PolyColor,
@@ -188,18 +221,40 @@ object RenderUtils {
 
         scale *= 0.05f
 
-        val matrix = Matrix4f()
-            .translate(
+        //? if >=26.2 {
+        poseStack.pushPose()
+
+        poseStack.run {
+        //?} else
+        //val matrix = Matrix4f().run {
+            translate(
                 (pos.x - camera.pos.x).toFloat(),
                 (pos.y - camera.pos.y).toFloat(),
                 (pos.z - camera.pos.z).toFloat()
             )
+            //~ if <26.2 'mulPose' -> 'rotate'
             //~ if <1.21.11 '.orientation' -> '.rotation()'
-            .rotate(camera.orientation)
-            .scale(scale, -scale, scale)
+            mulPose(camera.orientation)
+            scale(scale, -scale, scale)
+        }
+        //~}
 
         for (text in texts) {
-            mc.font.drawInBatch(
+            //? if >=26.2 {
+            submitNodeCollector.submitText(
+                poseStack,
+                -mc.font.width(text) / 2f,
+                0f,
+                text.visualOrderText,
+                false,
+                if (disableDepth) Font.DisplayMode.SEE_THROUGH else Font.DisplayMode.NORMAL,
+                LightCoordsUtil.FULL_BRIGHT,
+                color.argb,
+                backgroundColor.argb,
+                0
+            )
+            //?} else {
+            /*mc.font.drawInBatch(
                 text,
                 -mc.font.width(text) / 2f,
                 0f,
@@ -211,16 +266,23 @@ object RenderUtils {
                 backgroundColor.argb,
                 LightCoordsUtil.FULL_BRIGHT
             )
+            *///?}
 
-            matrix.translate(0f, mc.font.lineHeight + 2f, 0f)
+            //~ if <26.2 'poseStack' -> 'matrix'
+            poseStack.translate(0f, mc.font.lineHeight + 2f, 0f)
         }
-        //~}
+
+        //? if >=26.2
+        poseStack.popPose()
     }
 
-    // FIXME: this is broken
+    // FIXME: broken on 26.1 only ("works" if rendered in `LevelRenderEvents.AFTER_TRANSLUCENT_TERRAIN`)
     fun renderBeaconBeam(
         poseStack: PoseStack,
-        /*? if >=1.21.11 {*/ submitNodeCollector: SubmitNodeCollector /*?} else {*/ /*multiBufferSource: MultiBufferSource *//*?}*/,
+        //? if >=1.21.11 {
+        submitNodeCollector: SubmitNodeCollector,
+        //?} else
+        //multiBufferSource: net.minecraft.client.renderer.MultiBufferSource,
         pos: Vec3,
         cameraPos: Vec3,
         color: PolyColor,
@@ -269,6 +331,8 @@ object RenderUtils {
 
     private fun prepareFilledBox(
         poseStack: PoseStack,
+        //? if >=26.2
+        draw: StagedVertexBuffer.Draw,
         pos: Vec3,
         cameraPos: Vec3,
         color: PolyColor,
@@ -281,13 +345,17 @@ object RenderUtils {
             pos.z - cameraPos.z
         )
 
-        if (buffer == null) {
+        //? if >=26.2 {
+        val builder = stagedBuffer.getVertexBuilder(draw)
+        //?} else {
+        /*if (buffer == null) {
             buffer = BufferBuilder(
                 allocator,
                 RenderPipelines.DEBUG_FILLED_BOX.vertexFormatMode,
                 RenderPipelines.DEBUG_FILLED_BOX.vertexFormat
             )
         }
+        *///?}
 
         val color = color.withAlpha(alpha)
 
@@ -295,7 +363,10 @@ object RenderUtils {
         Shapes.block().forAllBoxes { minX, minY, minZ, maxX, maxY, maxZ ->
             addBox(
                 poseStack.last().pose(),
-                buffer!!,
+                //? if >=26.2 {
+                builder,
+                //?} else
+                //buffer!!,
                 minX.toFloat() - Z_FIGHTING_OFFSET,
                 minY.toFloat() - Z_FIGHTING_OFFSET,
                 minZ.toFloat() - Z_FIGHTING_OFFSET,
@@ -306,7 +377,7 @@ object RenderUtils {
             )
         }
         //?} else {
-        /*ShapeRenderer.addChainedFilledBoxVertices(
+        /*net.minecraft.client.renderer.ShapeRenderer.addChainedFilledBoxVertices(
             poseStack,
             buffer!!,
             0.0 - Z_FIGHTING_OFFSET,
@@ -328,7 +399,8 @@ object RenderUtils {
     //? if >=1.21.11 {
     private fun addBox(
         positionMatrix: Matrix4fc,
-        buffer: BufferBuilder,
+        //~ if <26.2 'VertexConsumer' -> 'BufferBuilder'
+        buffer: VertexConsumer,
         minX: Float, minY: Float, minZ: Float,
         maxX: Float, maxY: Float, maxZ: Float,
         color: Int
@@ -348,7 +420,8 @@ object RenderUtils {
     }
 
     private fun addQuad(
-        buffer: BufferBuilder,
+        //~ if <26.2 'VertexConsumer' -> 'BufferBuilder'
+        buffer: VertexConsumer,
         positionMatrix: Matrix4fc,
         x1: Float, y1: Float, z1: Float,
         x2: Float, y2: Float, z2: Float,
@@ -363,7 +436,43 @@ object RenderUtils {
     }
     //?}
 
-    private fun drawFilledBox(pipeline: RenderPipeline) {
+    //? if >=26.2 {
+    private fun drawFilledBox(info: StagedVertexBuffer.ExecuteInfo, pipeline: RenderPipeline) {
+        val dynamicTransforms = RenderSystem.getDynamicUniforms().writeTransform(
+            RenderSystem.getModelViewMatrixCopy(),
+            COLOR_MODULATOR,
+            MODEL_OFFSET,
+            TEXTURE_MATRIX
+        )
+
+        val mainTarget = mc.gameRenderer.mainRenderTarget()
+        val colorTexture = mainTarget.colorTextureView ?: return
+
+        RenderSystem.getDevice()
+            .createCommandEncoder()
+            .createRenderPass(
+                { "${HytilsRebornConstants.NAME} render pipeline rendering" },
+                colorTexture,
+                Optional.empty(),
+                mainTarget.depthTextureView,
+                OptionalDouble.empty()
+            ).use { renderPass ->
+                renderPass.setPipeline(pipeline)
+
+                RenderSystem.bindDefaultUniforms(renderPass)
+                renderPass.setUniform("DynamicTransforms", dynamicTransforms)
+
+                renderPass.setVertexBuffer(0, info.vertexBuffer.slice())
+                renderPass.setIndexBuffer(info.indexBuffer, info.indexType)
+
+                renderPass.drawIndexed(info.indexCount, 1, info.firstIndex, info.baseVertex, 0)
+            }
+    }
+
+    @JvmStatic
+    fun close() = stagedBuffer.close()
+    //?} else {
+    /*private fun drawFilledBox(pipeline: RenderPipeline) {
         val builtBuffer = buffer!!.buildOrThrow()
         val drawParameters = builtBuffer.drawState()
         val format = drawParameters.format()
@@ -455,4 +564,5 @@ object RenderUtils {
         vertexBuffer?.close()
         vertexBuffer = null
     }
+    *///?}
 }

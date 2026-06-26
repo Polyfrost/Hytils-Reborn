@@ -34,7 +34,8 @@ object NotifyMiningFatigue {
                 0 -> Notifications.info(HytilsRebornConstants.NAME, "You have mining fatigue!")
 
                 1 -> {
-                    mc.gui.setTitle(Component.literal("Mining Fatigue!").withStyle(ChatFormatting.RED))
+                    //~ if <26.2 'gui.hud' -> 'gui'
+                    mc.gui.hud.setTitle(Component.literal("Mining Fatigue!").withStyle(ChatFormatting.RED))
                     mc.soundManager.play(SimpleSoundInstance.forUI(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f))
                 }
 

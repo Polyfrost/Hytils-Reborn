@@ -8,12 +8,12 @@ import net.minecraft.client.resources.model.geometry.BakedQuad;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Shadow;
 //?} else {
-/*import com.llamalad7.mixinextras.sugar.Share;
+/*import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 *///?}
 
-import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
@@ -84,7 +84,7 @@ abstract class ModelBlockRendererMixin_HeightOverlay {
     ) {
         if (shouldModifyRef.get()) {
             int modified = HeightOverlay.modifyColors((int) (red * 255F), blockState);
-            return (modified & 0xFF) / 255.0F;
+            return ((modified >> 16) & 0xFF) / 255F;
         }
 
         return red;
@@ -126,7 +126,7 @@ abstract class ModelBlockRendererMixin_HeightOverlay {
     ) {
         if (shouldModifyRef.get()) {
             int modified = HeightOverlay.modifyColors(((int) (blue * 255F)) << 16, blockState);
-            return ((modified >> 16) & 0xFF) / 255F;
+            return (modified & 0xFF) / 255F;
         }
 
         return blue;

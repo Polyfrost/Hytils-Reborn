@@ -86,7 +86,8 @@ object HytilsRebornClient {
                     //? if >=26.1 {
                     context.poseStack(),
                     context.submitNodeCollector(),
-                    context.bufferSource(),
+                    //? if <26.2
+                    //context.bufferSource(),
                     context.levelState().cameraRenderState
                     //?} else if >=1.21.11 {
                     /*context.matrices(),
@@ -100,8 +101,8 @@ object HytilsRebornClient {
                     *///?}
                 )
             )
-            //? if >=26.1
-            context.bufferSource().endBatch()
+            //? if >=26.1 <26.2
+            //context.bufferSource().endBatch()
         }
 
         HypixelModAPIImpl.init()
