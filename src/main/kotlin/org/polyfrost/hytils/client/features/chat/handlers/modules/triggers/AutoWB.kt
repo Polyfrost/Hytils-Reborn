@@ -30,7 +30,7 @@ object AutoWB : ChatReceiveModule {
         }
 
         Multithreading.schedule(
-            { ChatUtils.sendMessage("$command $message") },
+            { ChatUtils.queueMessage("$command $message") },
             HytilsRebornConfig.autoWBCooldown.toLong(),
             TimeUnit.SECONDS
         )

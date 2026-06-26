@@ -13,7 +13,7 @@ object AutoChatSwapper : ChatReceiveModule {
 
     override fun onChatReceived(event: ChatReceiveEvent) {
         if (event.plainMessage.matches(LanguageData.PARTY_JOIN)) {
-            ChatUtils.sendMessage("/chat party")
+            ChatUtils.queueMessage("/chat party")
             shouldCancelChannelMessage = true
             Multithreading.schedule({ shouldCancelChannelMessage = false }, 5L, TimeUnit.SECONDS)
         } else if (event.plainMessage.matches(LanguageData.PARTY_LEAVE)) {
@@ -22,7 +22,7 @@ object AutoChatSwapper : ChatReceiveModule {
                 2 -> "officer"
                 else -> "all"
             }
-            ChatUtils.sendMessage("/chat $channel")
+            ChatUtils.queueMessage("/chat $channel")
             shouldCancelChannelMessage = true
             Multithreading.schedule({ shouldCancelChannelMessage = false }, 5L, TimeUnit.SECONDS)
         } else if (shouldCancelChannelMessage

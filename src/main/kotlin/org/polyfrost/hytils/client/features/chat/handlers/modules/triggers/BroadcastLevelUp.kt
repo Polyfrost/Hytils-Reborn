@@ -11,7 +11,7 @@ object BroadcastLevelUp : ChatReceiveModule {
         if (event.unformattedMessage.contains(": ")) return
         LanguageData.LEVEL_UP.find(event.unformattedMessage)?.let { match ->
             val level = match.groups["level"]?.value ?: return
-            ChatUtils.sendMessage("/gc Level up! I am now Hypixel Level $level!")
+            ChatUtils.queueMessage("/gc Level up! I am now Hypixel Level $level!")
         }
     }
 

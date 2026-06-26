@@ -15,7 +15,7 @@ object AutoPartyWarn : ChatReceiveModule {
             }
             val separator = "-".repeat(9)
 
-            ChatUtils.sendMessage("/pc $separator$message$separator")
+            ChatUtils.queueMessage("/pc $separator$message$separator")
         }
     }
 

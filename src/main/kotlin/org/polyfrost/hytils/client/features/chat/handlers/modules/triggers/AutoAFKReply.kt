@@ -24,7 +24,7 @@ object AutoAFKReply : ChatReceiveModule {
 
             val player = match.groups["player"]?.value ?: return
             val message = HytilsRebornConfig.afkReplyMessage.replace("%player%", player)
-            ChatUtils.sendMessage("/msg $player $message")
+            ChatUtils.queueMessage("/msg $player $message")
         }
     }
 

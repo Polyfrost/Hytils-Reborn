@@ -12,7 +12,7 @@ object AutoPartyWarpConfirm : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
         if (event.unformattedMessage == LanguageData.PARTY_CONFIRM_WARP) {
             event.cancelled = true
-            Multithreading.schedule({ ChatUtils.sendMessage("/p warp") }, 1500L, TimeUnit.MILLISECONDS)
+            Multithreading.schedule({ ChatUtils.queueMessage("/p warp") }, 1500L, TimeUnit.MILLISECONDS)
         }
     }
 

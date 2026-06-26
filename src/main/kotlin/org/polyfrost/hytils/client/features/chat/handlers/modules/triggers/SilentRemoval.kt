@@ -19,7 +19,7 @@ object SilentRemoval : ChatReceiveModule {
 
         val player = match.groups["player"]?.value ?: return
         if (removalQueue.contains(player.lowercase(Locale.ROOT))) {
-            ChatUtils.sendMessage("/f remove $player")
+            ChatUtils.queueMessage("/f remove $player")
             Notifications.success(
                 HytilsRebornConstants.NAME,
                 "Silently removed $player from your friends list."

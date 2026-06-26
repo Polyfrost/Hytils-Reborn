@@ -10,7 +10,7 @@ object GuildWelcomer : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
         LanguageData.GUILD_JOIN.find(event.unformattedMessage)?.let { match ->
             val player = match.groups["player"]?.value ?: return
-            ChatUtils.sendMessage("/gc Welcome to the guild $player!")
+            ChatUtils.queueMessage("/gc Welcome to the guild $player!")
         }
     }
 

@@ -60,7 +60,7 @@ object AutoQueue : ChatReceiveModule {
     private fun queue() {
         Multithreading.schedule({
             if (!sentCommand) {
-                ChatUtils.sendMessage(command!!)
+                ChatUtils.queueMessage(command!!)
                 sentCommand = true
                 command = null
             }

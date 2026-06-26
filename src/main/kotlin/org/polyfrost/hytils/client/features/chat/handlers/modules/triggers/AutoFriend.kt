@@ -16,7 +16,7 @@ object AutoFriend : ChatReceiveModule {
         var player = match.groups["player"]?.value ?: return
         if (player.startsWith("[")) player = player.substringAfter("] ")
 
-        ChatUtils.sendMessage("/friend $player")
+        ChatUtils.queueMessage("/friend $player")
         Notifications.info(
             HytilsRebornConstants.NAME,
             "Automatically added $player to your friends list."
