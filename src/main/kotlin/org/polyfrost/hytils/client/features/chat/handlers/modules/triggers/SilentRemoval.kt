@@ -5,9 +5,9 @@ import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
 import org.polyfrost.hytils.client.utils.ChatUtils
+import org.polyfrost.oneconfig.api.notifications.v1.Notifications
 import java.util.*
 
-// TODO: notifications
 object SilentRemoval : ChatReceiveModule {
     val removalQueue = mutableSetOf<String>()
 
@@ -20,11 +20,10 @@ object SilentRemoval : ChatReceiveModule {
         val player = match.groups["player"]?.value ?: return
         if (removalQueue.contains(player.lowercase(Locale.ROOT))) {
             ChatUtils.sendMessage("/f remove $player")
-//            Notifications.enqueue(
-//                Notifications.Type.Warning,
-//                HytilsRebornConstants.NAME,
-//                "Silently removed $player from your friends list."
-//            )
+            Notifications.success(
+                HytilsRebornConstants.NAME,
+                "Silently removed $player from your friends list."
+            )
             removalQueue.remove(player)
         }
     }

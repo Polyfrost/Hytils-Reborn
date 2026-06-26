@@ -40,7 +40,6 @@ object AutoQueue : ChatReceiveModule {
         }
     }
 
-    // TODO: mouse input doesn't seem to work
     @Subscribe
     fun onMouseInput(event: MouseInputEvent) {
         if (HytilsRebornConfig.isEnabled && command != null) {

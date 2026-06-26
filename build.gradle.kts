@@ -19,13 +19,13 @@ val requiredJava: JavaVersion = when {
 }
 
 repositories {
-    maven("https://maven.parchmentmc.org")
     maven("https://repo.polyfrost.org/releases")
     maven("https://repo.polyfrost.org/snapshots")
+    maven("https://central.sonatype.com/repository/maven-snapshots")
+    maven("https://maven.parchmentmc.org")
     maven("https://maven.gegy.dev/releases")
     maven("https://repo.hypixel.net/repository/Hypixel")
     maven("https://api.modrinth.com/maven")
-    maven("https://nexus.prsm.wtf/repository/maven-public/maven-repo/releases/")
     google()
 }
 
@@ -49,12 +49,12 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
 
     modImplementation("org.polyfrost.oneconfig:$mcVersion-fabric:${property("deps.oneconfig")}")
-    for (module in listOf("config", "config-impl", "events", "internal", "ui")) {
+    for (module in listOf("config", "config-impl", "events", "utils")) {
         implementation("org.polyfrost.oneconfig:$module:${property("deps.oneconfig")}")
     }
 
     implementation("net.hypixel:mod-api:${property("deps.hypixel_mod_api")}")
-    for (module in listOf("fabric-api-base", "fabric-command-api-v2", "fabric-networking-api-v1", "fabric-rendering-v1")) {
+    for (module in listOf("fabric-command-api-v2", "fabric-networking-api-v1", "fabric-rendering-v1")) {
         modImplementation(fabricApi.module(module, sc.properties["deps.fabric_api"]))
     }
 
