@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.At;
 abstract class LevelRendererMixin_HideNPCs {
     @WrapOperation(
         //~ if <26.2 'isEntityVisible' -> 'extractVisibleEntities'
-        //~ if <1.21.11 'extractVisibleEntities' -> 'collectVisibleEntities'
+        //~ if <1.21.10 'extractVisibleEntities' -> 'collectVisibleEntities'
         method = "isEntityVisible",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;shouldRender(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/renderer/culling/Frustum;DDD)Z")
     )

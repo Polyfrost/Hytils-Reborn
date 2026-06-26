@@ -5,9 +5,9 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 //? if >=26.1 {
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents
-//?} else if >=1.21.11 {
-//import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents
-//?} else
+//?} else if >=1.21.10 {
+/*import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents
+*///?} else
 //import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.commands.impl.*
@@ -79,7 +79,7 @@ object HytilsRebornClient {
         }
 
         //~ if <26.1 'LevelRenderEvents' -> 'WorldRenderEvents'
-        //~ if <1.21.11 'END_MAIN' -> 'LAST'
+        //~ if <1.21.10 'END_MAIN' -> 'LAST'
         LevelRenderEvents.END_MAIN.register { context ->
             EventManager.INSTANCE.post(
                 PostLevelRenderEvent(
@@ -89,7 +89,7 @@ object HytilsRebornClient {
                     //? if <26.2
                     //context.bufferSource(),
                     context.levelState().cameraRenderState
-                    //?} else if >=1.21.11 {
+                    //?} else if >=1.21.10 {
                     /*context.matrices(),
                     context.commandQueue(),
                     context.consumers(),

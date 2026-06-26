@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.StagedVertexBuffer
 import com.mojang.blaze3d.vertex.MeshData.DrawState
 import com.mojang.blaze3d.vertex.VertexFormat.IndexType
 import net.minecraft.client.renderer.MappableRingBuffer
-
 import org.lwjgl.system.MemoryUtil
 *///?}
 
@@ -19,11 +18,16 @@ import com.mojang.blaze3d.platform.CompareOp
 //?}
 
 //? if >=1.21.11 {
-import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.rendertype.RenderSetup
+import net.minecraft.world.phys.shapes.Shapes
+import org.joml.Matrix4fc
+import org.polyfrost.hytils.mixin.client.accessor.RenderTypeAccessor
+//?}
+
+//? if >=1.21.10 {
+import net.minecraft.client.renderer.SubmitNodeCollector
 //~ if <26.1 'level.CameraRenderState' -> 'CameraRenderState'
 import net.minecraft.client.renderer.state.level.CameraRenderState
-import org.polyfrost.hytils.mixin.client.accessor.RenderTypeAccessor
 //?}
 
 import com.mojang.blaze3d.pipeline.BlendFunction
@@ -42,9 +46,7 @@ import net.minecraft.util.LightCoordsUtil
 //~ if <1.21.11 'util.Util' -> 'Util'
 import net.minecraft.util.Util
 import net.minecraft.world.phys.Vec3
-import net.minecraft.world.phys.shapes.Shapes
 import org.joml.Matrix4f
-import org.joml.Matrix4fc
 import org.joml.Vector3f
 import org.joml.Vector4f
 import org.polyfrost.compose.render.PolyColor
@@ -65,7 +67,7 @@ object RenderUtils {
     *///?}
 
     private val COLOR_MODULATOR = Vector4f(1f, 1f, 1f, 1f)
-    //? if >=1.21.11 {
+    //? if >=1.21.10 {
     private val MODEL_OFFSET = Vector3f()
     private val TEXTURE_MATRIX = Matrix4f()
     //?}
@@ -123,7 +125,7 @@ object RenderUtils {
         } else {
             BEACON_BEAM_OPAQUE_NO_DEPTH
         }
-        
+
         RenderType.create(
             "beacon_beam",
             1536,
@@ -165,7 +167,7 @@ object RenderUtils {
     fun renderText(
         text: Component,
         pos: Vec3,
-        //~ if <1.21.11 'CameraRenderState' -> 'net.minecraft.client.Camera'
+        //~ if <1.21.10 'CameraRenderState' -> 'net.minecraft.client.Camera'
         camera: CameraRenderState,
         color: PolyColor,
         backgroundColor: PolyColor,
@@ -190,14 +192,14 @@ object RenderUtils {
         submitNodeCollector: SubmitNodeCollector,
         poseStack: PoseStack,
         //?}
-        //~ if <1.21.11 'CameraRenderState' -> 'net.minecraft.client.Camera'
+        //~ if <1.21.10 'CameraRenderState' -> 'net.minecraft.client.Camera'
         camera: CameraRenderState,
         color: PolyColor,
         backgroundColor: PolyColor,
         disableDepth: Boolean = false,
         dynamic: Boolean = false,
     ) {
-        //~ if <1.21.11 'camera.pos' -> 'camera.position' {
+        //~ if <1.21.10 'camera.pos' -> 'camera.position' {
         var pos = pos
         var scale = 1f
 
@@ -233,7 +235,7 @@ object RenderUtils {
                 (pos.z - camera.pos.z).toFloat()
             )
             //~ if <26.2 'mulPose' -> 'rotate'
-            //~ if <1.21.11 '.orientation' -> '.rotation()'
+            //~ if <1.21.10 '.orientation' -> '.rotation()'
             mulPose(camera.orientation)
             scale(scale, -scale, scale)
         }
@@ -279,7 +281,7 @@ object RenderUtils {
     // FIXME: broken on 26.1 only ("works" if rendered in `LevelRenderEvents.AFTER_TRANSLUCENT_TERRAIN`)
     fun renderBeaconBeam(
         poseStack: PoseStack,
-        //? if >=1.21.11 {
+        //? if >=1.21.10 {
         submitNodeCollector: SubmitNodeCollector,
         //?} else
         //multiBufferSource: net.minecraft.client.renderer.MultiBufferSource,
@@ -296,7 +298,7 @@ object RenderUtils {
         )
 
         if (disableDepth) beaconDisableDepth = true
-        //? if >=1.21.11 {
+        //? if >=1.21.10 {
         BeaconRenderer.submitBeaconBeam(
             poseStack,
             submitNodeCollector,
@@ -533,8 +535,8 @@ object RenderUtils {
         val dynamicTransforms = RenderSystem.getDynamicUniforms().writeTransform(
             RenderSystem.getModelViewMatrix(),
             COLOR_MODULATOR,
-            /*? if >=1.21.11 {*/ MODEL_OFFSET /*?} else {*/ /*RenderSystem.getModelOffset() *//*?}*/,
-            /*? if >=1.21.11 {*/ TEXTURE_MATRIX /*?} else {*/ /*RenderSystem.getTextureMatrix() *//*?}*/,
+            /*? if >=1.21.10 {*/ MODEL_OFFSET /*?} else {*/ /*RenderSystem.getModelOffset() *//*?}*/,
+            /*? if >=1.21.10 {*/ TEXTURE_MATRIX /*?} else {*/ /*RenderSystem.getTextureMatrix() *//*?}*/,
             /*? if <1.21.11 {*/ /*1f *//*?}*/
         )
         RenderSystem.getDevice()

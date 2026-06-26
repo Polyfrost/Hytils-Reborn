@@ -175,7 +175,7 @@ object HypixelAPIUtils {
     private fun authorize(): Boolean {
         try {
             val serverId = UUID.randomUUID().toString()
-            //~ if <1.21.11 '.services().sessionService' -> '.minecraftSessionService'
+            //~ if <1.21.10 '.services().sessionService' -> '.minecraftSessionService'
             mc.services().sessionService.joinServer(mc.user.profileId, mc.user.accessToken, serverId)
             this.username = mc.user.name
             this.serverId = serverId

@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(BeaconRenderer.class)
 abstract class BeaconRendererMixin_DisableDepth {
     @WrapOperation(
-        //? if >=1.21.11 {
+        //? if >=1.21.10 {
         method = "submitBeaconBeam(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/resources/Identifier;FFIIIFF)V",
         //?} else
         //method = "renderBeaconBeam(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/resources/Identifier;FFJIIIFF)V",

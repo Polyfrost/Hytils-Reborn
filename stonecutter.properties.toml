@@ -18,6 +18,13 @@ deps.yalmm = "3"
 deps.fabric_api = "0.136.1+1.21.8"
 deps.sodium = "0.7.3"
 
+["1.21.10"]
+deps.parchment = "2025.10.12"
+deps.yalmm = "3"
+
+deps.fabric_api = "0.138.4+1.21.10"
+deps.sodium = "0.7.3"
+
 ["1.21.11"]
 deps.parchment = "2025.12.20"
 deps.yalmm = "3"

@@ -27,7 +27,7 @@ object ChestHighlighter {
             RenderUtils.renderFilledBox(
                 event.poseStack,
                 Vec3(pos),
-                //~ if <1.21.11 '.pos' -> '.position'
+                //~ if <1.21.10 '.pos' -> '.position'
                 event.camera.pos,
                 HytilsRebornConfig.highlightChestsColor
             )

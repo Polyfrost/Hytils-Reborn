@@ -1,6 +1,6 @@
 package org.polyfrost.hytils.mixin.client.cosmetics;
 
-//? if >=1.21.11 {
+//? if >=1.21.10 {
 import net.minecraft.client.renderer.SubmitNodeCollector;
 //~ if <26.1 'level.CameraRenderState' -> 'CameraRenderState'
 import net.minecraft.client.renderer.state.level.CameraRenderState;
@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EntityRenderDispatcher.class)
 abstract class EntityRenderDispatcherMixin_HideCosmetics {
     @Inject(
-        //? if >=1.21.11 {
+        //? if >=1.21.10 {
         method = "submit",
         //?} else
         //method = "render(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;DDDLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/renderer/entity/EntityRenderer;)V",
@@ -35,15 +35,15 @@ abstract class EntityRenderDispatcherMixin_HideCosmetics {
         cancellable = true
     )
     public <S extends EntityRenderState> void hideCosmetics(
-        //~ if <1.21.11 'S entityRenderState' -> 'EntityRenderState entityRenderState'
+        //~ if <1.21.10 'S entityRenderState' -> 'EntityRenderState entityRenderState'
         S renderState,
-        //? if >=1.21.11
+        //? if >=1.21.10
         CameraRenderState camera,
         double x,
         double y,
         double z,
         PoseStack poseStack,
-        //? if >=1.21.11 {
+        //? if >=1.21.10 {
         SubmitNodeCollector submitNodeCollector,
         //?} else {
         /*MultiBufferSource multiBufferSource,
