@@ -69,8 +69,8 @@ dependencies {
 
 loom {
     runConfigs.named("client").configure {
-        ideConfigGenerated(true)
-        runDir = "../../run"
+        generateRunConfig = true
+        runDirectory = rootProject.file("run")
     }
 }
 
@@ -97,6 +97,18 @@ tasks {
             rename { "${it}_${inputs.properties["archivesName"]}" }
         }
     }
+
+    register("validateChangelog") {
+        description = "Validates that the changelog is written for the current version."
+        group = "publishing"
+
+        if (!changelogText.contains(modVersion)) {
+            throw GradleException("Changelog for version $modVersion not found.")
+        }
+    }
+
+    publishMods.configure { dependsOn("validateChangelog") }
+    matching { it.name == "publishModrinth" }.configureEach { dependsOn("validateChangelog") }
 }
 
 bloom {
@@ -115,7 +127,8 @@ kotlin {
     jvmToolchain(requiredJava.majorVersion.toInt())
 }
 
-val modrinthId = findProperty("publish.modrinth")?.toString()?.takeIf { it.isNotBlank() }
+val modrinthId = findProperty("publish.modrinth.id")?.toString()?.takeIf { it.isNotBlank() }
+val changelogText = rootProject.file("CHANGELOG.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
 
 // make sure modrinth.token is set in your user gradle properties
 publishMods {
@@ -123,7 +136,7 @@ publishMods {
 
     displayName = modVersion
     version = "v$modVersion"
-    changelog = project.rootProject.file("CHANGELOG.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
+    changelog = changelogText
     type = ALPHA
 
     modLoaders.add("fabric")

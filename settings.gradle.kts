@@ -9,7 +9,7 @@ pluginManagement {
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.9.4"
+    id("dev.kikugie.stonecutter") version "0.9.6"
     id("dev.kikugie.loom-back-compat") version "0.3"
 }
 
