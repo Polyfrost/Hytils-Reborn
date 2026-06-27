@@ -111,6 +111,14 @@ bloom {
     replacement("@MOD_VERSION@", modVersion)
 }
 
+sourceSets {
+    val ducks = register("ducks")
+    main {
+        compileClasspath += ducks.get().output
+        output.setResourcesDir(java.classesDirectory)
+    }
+}
+
 java {
     withSourcesJar()
     sourceCompatibility = requiredJava

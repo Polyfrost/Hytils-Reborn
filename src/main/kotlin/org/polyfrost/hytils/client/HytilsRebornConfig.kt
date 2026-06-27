@@ -1,10 +1,12 @@
 package org.polyfrost.hytils.client
 
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.world.level.material.MapColor
 import org.polyfrost.compose.render.PolyColor
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.oneconfig.api.config.v1.Config
+import org.polyfrost.oneconfig.api.config.v1.Property
 import org.polyfrost.oneconfig.api.config.v1.annotations.*
 import org.polyfrost.oneconfig.utils.v1.Multithreading
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
@@ -333,14 +335,12 @@ object HytilsRebornConfig : Config(
     )
     var chatSwapperReturnChannel = 0
 
-    // TODO: waiting for chatting port
-//    @Switch(
-//        title = "Swap Chatting Tab With Chat Swapper",
-//        description = "Automatically switch your Chatting chat tab when Chat Swapper swaps your chat channel.",
-//        category = "Chat",
-//        subcategory = "Parties"
-//    )
-//    var chattingIntegration = false
+    @Switch(
+        title = "Swap Chatting Tab",
+        description = "Automatically switch your Chatting chat tab when Chat Swapper swaps your chat channel.",
+        category = "Chat", subcategory = "Parties"
+    )
+    var chatSwapperChattingIntegration = false
 
     @Checkbox(
         title = "Remove All Chat Message",
@@ -1278,6 +1278,13 @@ object HytilsRebornConfig : Config(
 
         addDependency("chatEmotesReplacementMode", "replaceChatEmotes")
         addDependency("chatSwapperReturnChannel", "chatSwapper")
+
+        addDependency("chatSwapperChattingIntegration", "chatSwapper")
+        addDependency(
+            "chatSwapperChattingIntegration",
+            "Chatting is not installed. Please install Chatting to use this feature."
+        ) { if (FabricLoader.getInstance().isModLoaded("chatting")) Property.Display.SHOWN else Property.Display.DISABLED }
+
         addDependency("chatSwapperHideAllChannelMsg", "chatSwapper")
         addDependency("notifyWhenKickInCaps", "notifyWhenKick")
 
