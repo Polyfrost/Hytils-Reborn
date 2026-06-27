@@ -26,6 +26,9 @@
 	"depends": {
 		"minecraft": "${mc_version}",
 		"fabricloader": ">=0.17",
-		"oneconfigv1": "${oneconfig_version}"
+		"oneconfigv1": ">=${oneconfig_version}",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*",
+		"hypixel-mod-api": "*"
 	}
 }

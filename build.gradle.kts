@@ -47,6 +47,7 @@ dependencies {
         })
     }
     modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
 
     modImplementation("org.polyfrost.oneconfig:$mcVersion-fabric:${property("deps.oneconfig")}")
     for (module in listOf("config", "config-impl", "events", "utils")) {
@@ -54,17 +55,10 @@ dependencies {
     }
 
     implementation("net.hypixel:mod-api:${property("deps.hypixel_mod_api")}")
-    for (module in listOf("fabric-command-api-v2", "fabric-networking-api-v1", "fabric-rendering-v1")) {
-        modImplementation(fabricApi.module(module, sc.properties["deps.fabric_api"]))
-    }
+    modImplementation("maven.modrinth:hypixel-mod-api:${property("deps.hypixel_mod_api_fabric")}")
 
     // needed for height overlay compatibility
     modCompileOnly("maven.modrinth:sodium:mc$mcVersion-${property("deps.sodium")}-fabric")
-
-    if (sc.current.parsed < "1.21.11") {
-        // needed for sodium height overlay compatibility
-        modCompileOnly(fabricApi.module("fabric-renderer-api-v1", sc.properties["deps.fabric_api"]))
-    }
 }
 
 loom {
@@ -150,7 +144,7 @@ publishMods {
 
             minecraftVersions.add(mcVersion)
 
-            requires("oneconfig")
+            requires("oneconfig", "fabric-api", "fabric-language-kotlin", "hypixel-mod-api")
         }
     }
 }

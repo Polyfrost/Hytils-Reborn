@@ -69,9 +69,8 @@ object TabChanger {
 
     @JvmStatic
     fun hidePing(playerInfo: PlayerInfo): Boolean {
-        return HypixelUtils.isHypixel()
-                && ((HytilsRebornConfig.hidePingInTab && HypixelUtils.getLocation().inGame())
-                || isSkyblockTabInformationEntry(playerInfo))
+        return (HytilsRebornConfig.hidePingInTab && HypixelUtils.getLocation().inGame())
+                || isSkyblockTabInformationEntry(playerInfo)
     }
 
     @JvmStatic

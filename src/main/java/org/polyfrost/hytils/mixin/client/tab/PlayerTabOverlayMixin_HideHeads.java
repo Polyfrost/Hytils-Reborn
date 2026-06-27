@@ -8,6 +8,7 @@ import net.minecraft.client.gui.components.PlayerTabOverlay;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import org.polyfrost.hytils.client.HytilsRebornConfig;
 import org.polyfrost.hytils.client.features.general.TabChanger;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
@@ -20,7 +21,7 @@ abstract class PlayerTabOverlayMixin_HideHeads {
     //~ if <26.1 'extractRenderState' -> 'render'
     @ModifyExpressionValue(method = "extractRenderState", at = @At("MIXINEXTRAS:EXPRESSION"))
     private boolean hidePlayerHead(boolean showHead, @Local PlayerInfo playerInfo) {
-        return showHead && (!HytilsRebornConfig.isEnabled() || TabChanger.shouldRenderHead(playerInfo));
+        return showHead && (!HytilsRebornConfig.isEnabled() || !HypixelUtils.isHypixel() || TabChanger.shouldRenderHead(playerInfo));
     }
 
     @ModifyArgs(
@@ -33,7 +34,7 @@ abstract class PlayerTabOverlayMixin_HideHeads {
         )
     )
     private void offsetPing(Args args, @Local(ordinal = 0) boolean showHead) {
-        if (showHead && (HytilsRebornConfig.isEnabled() && !TabChanger.shouldRenderHead(args.get(4)))) {
+        if (showHead && (HytilsRebornConfig.isEnabled() && HypixelUtils.isHypixel() && !TabChanger.shouldRenderHead(args.get(4)))) {
             args.set(2, (int) args.get(2) + 9);
         }
     }
