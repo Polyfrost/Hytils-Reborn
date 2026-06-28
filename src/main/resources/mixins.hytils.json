@@ -13,7 +13,6 @@
 		"client.BossHealthOverlayMixin_HideBossbar",
 		"client.EntityRenderDispatcherMixin_UHCOverlay",
 		"client.FramerateLimitTrackerMixin_LimboLimiter",
-		"client.GameRendererMixin_CleanUp",
 		"client.HumanoidArmorLayerMixin_HideIngameArmor",
 		"client.ItemClusterRenderStateMixin_SmuggleItemStack",
 		"client.LevelRendererMixin_HideNPCs",
