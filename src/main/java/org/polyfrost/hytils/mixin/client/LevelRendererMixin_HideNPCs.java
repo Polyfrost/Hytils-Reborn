@@ -19,9 +19,14 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(net.minecraft.client.renderer.extract.LevelExtractor.class)
 abstract class LevelRendererMixin_HideNPCs {
     @WrapOperation(
-        //~ if <26.2 'isEntityVisible' -> 'extractVisibleEntities'
-        //~ if <1.21.10 'extractVisibleEntities' -> 'collectVisibleEntities'
-        method = "isEntityVisible",
+        method = {
+            //? if >=26.2 {
+            "isEntityVisible"
+            //?} else if >=1.21.10 {
+            /*"extractVisibleEntities"
+            *///?} else
+            //"collectVisibleEntities"
+        },
         at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;shouldRender(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/renderer/culling/Frustum;DDD)Z")
     )
     private <E extends Entity> boolean shouldRenderEntity(EntityRenderDispatcher instance, E entity, Frustum frustum, double d, double e, double f, Operation<Boolean> original) {

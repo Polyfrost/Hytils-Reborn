@@ -22,6 +22,7 @@ object NotifyMiningFatigue {
     fun sendNotification(livingEntity: LivingEntity, mobEffect: Holder<MobEffect>) {
         if (!HytilsRebornConfig.isEnabled || !HytilsRebornConfig.notifyMiningFatigue || !HypixelUtils.isHypixel()) return
 
+        //~ if <1.21.5 'MINING_FATIGUE' -> 'DIG_SLOWDOWN'
         if (livingEntity !is LocalPlayer || mobEffect != MobEffects.MINING_FATIGUE) return
 
         val gameType = HypixelUtils.getLocation().gameType.orElse(null) ?: return

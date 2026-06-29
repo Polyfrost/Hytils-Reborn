@@ -42,6 +42,7 @@ object TabChanger {
         return component
     }
 
+    // FIXME: header and footer contains a hover event in the url on 1.21.4 for some reason
     @JvmStatic
     fun modifyHeader(header: Component): Component {
         if (!HytilsRebornConfig.hideAdsInTab) return header

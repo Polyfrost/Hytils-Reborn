@@ -6,6 +6,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.sounds.SoundEvents
 //? if >=26.1
 import net.minecraft.world.entity.animal.feline.CatSoundVariants
+//? if >=1.21.5
 import net.minecraft.world.entity.animal.wolf.WolfSoundVariants
 import net.minecraft.world.item.Items
 import org.polyfrost.hytils.client.HytilsRebornConfig
@@ -63,9 +64,8 @@ object BlockCountNotifier {
     }
 
     fun playSound() {
-        if (!mc.player!!.gameMode()!!.isSurvival) {
-            return
-        }
+        //~ if <1.21.5 'gameMode()!!' -> 'connection.getPlayerInfo(mc.player!!.uuid)!!.gameMode'
+        if (!mc.player!!.gameMode()!!.isSurvival) return
 
         val sound = when (HytilsRebornConfig.blockNotifySound) {
             0 -> SoundEvents.EXPERIENCE_ORB_PICKUP
@@ -79,7 +79,10 @@ object BlockCountNotifier {
             7 -> SoundEvents.CAT_SOUNDS[CatSoundVariants.SoundSet.CLASSIC]?.adultSounds?.ambientSound?.value()
             //?} else
             //7 -> SoundEvents.CAT_AMBIENT
+            //? if >=1.21.5 {
             8 -> SoundEvents.WOLF_SOUNDS[WolfSoundVariants.SoundSet.CLASSIC]?./*? if >=26.1 {*/ adultSounds?. /*?}*/ambientSound?.value()
+            //?} else
+            //8 -> SoundEvents.WOLF_AMBIENT
             else -> null
         }
 

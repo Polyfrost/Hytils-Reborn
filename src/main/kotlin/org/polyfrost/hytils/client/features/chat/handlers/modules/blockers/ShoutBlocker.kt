@@ -30,6 +30,7 @@ object ShoutBlocker : ChatSendModule, ChatReceiveModule {
             ChatUtils.displayMessage(
                 Component.literal("Shout command is on cooldown. Please wait ${decimalFormat.format(secondsLeft)} more second${if (secondsLeft == 1L) "" else "s"} before shouting another message.")
                     .setStyle(Style.EMPTY.withHoverEvent(
+                        //~ if <1.21.5 '.ShowText(' -> '(HoverEvent.Action.SHOW_TEXT,'
                         HoverEvent.ShowText(
                             Component.empty()
                                 .append(Component.literal("Hytils Reborn\n")

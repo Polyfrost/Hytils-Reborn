@@ -10,6 +10,24 @@ loomx.loom_version = "1.17-SNAPSHOT"
 
 deps.oneconfig = "1.0.0-beta.5"
 
+["1.21.4"]
+deps.parchment = "2025.03.23"
+deps.yalmm = "3"
+
+deps.fabric_api = "0.119.4+1.21.4"
+deps.hypixel_mod_api = "1.0.1"
+deps.hypixel_mod_api_fabric = "1.0.1+build.1+mc1.21"
+deps.sodium = "0.6.13"
+
+["1.21.5"]
+deps.parchment = "2025.06.15"
+deps.yalmm = "3"
+
+deps.fabric_api = "0.128.2+1.21.5"
+deps.hypixel_mod_api = "1.0.1"
+deps.hypixel_mod_api_fabric = "1.0.1+build.1+mc1.21"
+deps.sodium = "0.6.13"
+
 ["1.21.8"]
 deps.parchment = "2025.09.14"
 deps.yalmm = "3"

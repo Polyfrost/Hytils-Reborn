@@ -13,6 +13,7 @@ data class SeparatorLine(val lineColor: Int, val thickness: Int) : CustomChatLin
     override fun render(graphics: ChatGraphics, lineX: Int, lineWidth: Int, lineHeight: Int, textY: Int, textAlpha: Float) {
         val separatorY = textY + (graphics.lineHeight() - thickness) / 2
 
+        //~ if <1.21.8 'textAlpha' -> '(textAlpha * 255).toInt()'
         val textColor = ARGB.color(textAlpha, lineColor)
         val shadowColor = ARGB.scaleRGB(textColor, 0.25f)
 

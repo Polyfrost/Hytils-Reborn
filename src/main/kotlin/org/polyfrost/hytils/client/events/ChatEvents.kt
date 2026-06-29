@@ -21,6 +21,7 @@ data class ChatReceiveEvent(var message: Component, var isOverlay: Boolean) : Ev
                 }
 
                 val originalMessage = message
+                //~ if <1.21.5 '.ShowText(' -> '(HoverEvent.Action.SHOW_TEXT,'
                 val hoverMessage = HoverEvent.ShowText(
                     Component.empty()
                         .append(Component.literal("Hytils Reborn\n")

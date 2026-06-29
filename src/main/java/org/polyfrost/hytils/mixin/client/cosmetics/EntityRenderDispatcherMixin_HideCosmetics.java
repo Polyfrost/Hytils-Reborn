@@ -27,21 +27,39 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EntityRenderDispatcher.class)
 abstract class EntityRenderDispatcherMixin_HideCosmetics {
     @Inject(
-        //? if >=1.21.10 {
-        method = "submit",
-        //?} else
-        //method = "render(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;DDDLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/renderer/entity/EntityRenderer;)V",
-        at = @At("HEAD"),
+        method = {
+            //? if >=1.21.10 {
+            "submit",
+            //?} else if >=1.21.5 {
+            /*"render(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;DDDLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/renderer/entity/EntityRenderer;)V"
+            *///?} else
+            //"render(Lnet/minecraft/world/entity/Entity;DDDFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/renderer/entity/EntityRenderer;)V"
+        },
+        at = @At(
+            //? if >=1.21.5 {
+            "HEAD"
+            //?} else {
+            /*value = "INVOKE",
+            // we inject here so we can capture the entityRenderState local variable
+            target = "Lnet/minecraft/client/renderer/entity/EntityRenderer;getRenderOffset(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;)Lnet/minecraft/world/phys/Vec3;"
+            *///?}
+        ),
         cancellable = true
     )
     public <S extends EntityRenderState> void hideCosmetics(
-        //~ if <1.21.10 'S entityRenderState' -> 'EntityRenderState entityRenderState'
-        S renderState,
+        //? if >=1.21.10 {
+        S entityRenderState,
+        //?} else if >=1.21.5 {
+        /*EntityRenderState entityRenderState,
+        *///?} else
+        //net.minecraft.world.entity.Entity entity,
         //? if >=1.21.10
         CameraRenderState camera,
         double x,
         double y,
         double z,
+        //? if <1.21.5
+        //float g,
         PoseStack poseStack,
         //? if >=1.21.10 {
         SubmitNodeCollector submitNodeCollector,
@@ -50,7 +68,12 @@ abstract class EntityRenderDispatcherMixin_HideCosmetics {
         int i,
         EntityRenderer<?, S> entityRenderer,
         *///?}
+        //? if >=1.21.5 {
         CallbackInfo ci
+        //?} else {
+        /*CallbackInfo ci,
+        @com.llamalad7.mixinextras.sugar.Local S entityRenderState
+        *///?}
     ) {
         if (!HytilsRebornConfig.isEnabled()) return;
 
@@ -62,7 +85,7 @@ abstract class EntityRenderDispatcherMixin_HideCosmetics {
             && (!HytilsRebornConfig.INSTANCE.getHideDuelsCosmetics() || gameType != GameType.DUELS)
         ) return;
 
-        if (!(renderState instanceof ItemEntityRenderState itemEntityRenderState)) return;
+        if (!(entityRenderState instanceof ItemEntityRenderState itemEntityRenderState)) return;
 
         ItemStack itemStack = ((ItemClusterRenderStateDuck) itemEntityRenderState).hytils$getItemStack();
         if (itemStack != null && CosmeticsData.isItemCosmetic(itemStack.getItem().getDescriptionId())) {

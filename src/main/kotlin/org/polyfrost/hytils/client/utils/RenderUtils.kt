@@ -10,9 +10,8 @@ import com.mojang.blaze3d.platform.CompareOp
 import net.minecraft.client.renderer.rendertype.RenderSetup
 import net.minecraft.client.renderer.rendertype.RenderTypes
 import org.polyfrost.hytils.mixin.client.accessor.RenderTypeAccessor
-//?} else {
-/*import net.minecraft.client.renderer.RenderType
-*///?}
+//?} else
+//import net.minecraft.client.renderer.RenderType
 
 //? if >=1.21.10 {
 import net.minecraft.client.renderer.SubmitNodeCollector
@@ -20,11 +19,14 @@ import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.state.level.CameraRenderState
 //?}
 
+//? if >=1.21.5 {
 import com.mojang.blaze3d.pipeline.BlendFunction
 import com.mojang.blaze3d.pipeline.RenderPipeline
+import net.minecraft.client.renderer.RenderPipelines
+//?}
+
 import com.mojang.blaze3d.vertex.*
 import net.minecraft.client.gui.Font
-import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
@@ -42,6 +44,7 @@ import kotlin.math.sqrt
 object RenderUtils {
     private const val Z_FIGHTING_OFFSET = 0.001f
 
+    //? if >=1.21.5 {
     private val BEACON_BEAM_OPAQUE_NO_DEPTH = RenderPipeline.builder(RenderPipelines.BEACON_BEAM_SNIPPET)
         .withLocation("pipeline/beacon_beam_opaque")
         //? if >=26.1 {
@@ -61,6 +64,7 @@ object RenderUtils {
         .withDepthTestFunction(com.mojang.blaze3d.platform.DepthTestFunction.NO_DEPTH_TEST)
         *///?}
         .build()
+    //?}
 
     @JvmField
     //? if >=1.21.11 {
@@ -81,19 +85,33 @@ object RenderUtils {
     //?} else {
     /*val BEACON_BEAM_NO_DEPTH: java.util.function.BiFunction<Identifier, Boolean, RenderType> = Util.memoize { resourceLocation, isTranslucent ->
         val compositeState = RenderType.CompositeState.builder()
+            //? if <1.21.5 {
+            /*.setShaderState(net.minecraft.client.renderer.RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER)
+            .setTransparencyState(if (isTranslucent) net.minecraft.client.renderer.RenderStateShard.TRANSLUCENT_TRANSPARENCY else net.minecraft.client.renderer.RenderStateShard.NO_TRANSPARENCY)
+            .setWriteMaskState(if (isTranslucent) net.minecraft.client.renderer.RenderStateShard.COLOR_WRITE else net.minecraft.client.renderer.RenderStateShard.COLOR_DEPTH_WRITE)
+            .setDepthTestState(net.minecraft.client.renderer.RenderStateShard.NO_DEPTH_TEST)
+            *///?}
+            //~ if <1.21.8 'resourceLocation, false' -> 'resourceLocation, net.minecraft.util.TriState.FALSE, false'
             .setTextureState(net.minecraft.client.renderer.RenderStateShard.TextureStateShard(resourceLocation, false))
             .createCompositeState(false)
+        //? if >=1.21.5 {
         val pipeline = if (isTranslucent) {
             BEACON_BEAM_TRANSLUCENT_NO_DEPTH
         } else {
             BEACON_BEAM_OPAQUE_NO_DEPTH
         }
+        //?}
 
         RenderType.create(
             "beacon_beam",
+            //? if <1.21.5 {
+            /*DefaultVertexFormat.BLOCK,
+            VertexFormat.Mode.QUADS,
+            *///?}
             1536,
             false,
             true,
+            //? if >=1.21.5
             pipeline,
             compositeState
         )
@@ -115,10 +133,10 @@ object RenderUtils {
         alpha: Float = 0.8f
     ) {
         //? if >=26.2 {
-        submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.debugFilledBox()) { _, vertexConsumer ->
+        submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.debugQuads()) { _, vertexConsumer ->
         //?} else {
         /*//~ if <1.21.11 'RenderTypes' -> 'RenderType'
-        multiBufferSource.getBuffer(RenderTypes.debugFilledBox()).also { vertexConsumer ->
+        multiBufferSource.getBuffer(RenderTypes.debugQuads()).also { vertexConsumer ->
         *///?}
             poseStack.pushPose()
             poseStack.translate(
@@ -295,7 +313,9 @@ object RenderUtils {
             0,
             BeaconRenderer.MAX_RENDER_Y,
             color.argb,
+            //~ if <1.21.5 'BeaconRenderer.SOLID_BEAM_RADIUS' -> '0.2f'
             BeaconRenderer.SOLID_BEAM_RADIUS,
+            //~ if <1.21.5 'BeaconRenderer.BEAM_GLOW_RADIUS' -> '0.25f'
             BeaconRenderer.BEAM_GLOW_RADIUS
         )
         *///?}

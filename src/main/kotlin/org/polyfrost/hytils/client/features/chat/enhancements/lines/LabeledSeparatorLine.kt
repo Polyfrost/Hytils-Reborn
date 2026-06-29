@@ -34,6 +34,7 @@ data class LabeledSeparatorLine(
         val baseY = textY + (graphics.lineHeight() - SeparatorLine.THICKNESS) / 2
         val separatorY = baseY + alignment.getVerticalOffset(lineHeight)
 
+        //~ if <1.21.8 'textAlpha' -> '(textAlpha * 255).toInt()'
         val textColor = ARGB.color(textAlpha, lineColor)
         val shadowColor = ARGB.scaleRGB(textColor, 0.25f)
 
