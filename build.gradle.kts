@@ -72,9 +72,10 @@ tasks {
     processResources {
         val props = mapOf(
             "mod_id" to modId,
-            "mod_name" to modName,
             "mod_version" to modVersion,
-            "mc_version" to mcVersion,
+            "mod_name" to modName,
+            "mod_description" to sc.properties["mod.description"],
+            "mc_compat" to (sc.properties.getOrNull<String>("mod.mc_compat") ?: mcVersion),
             "oneconfig_version" to sc.properties["deps.oneconfig"]
         )
 
@@ -139,7 +140,7 @@ publishMods {
     displayName = modVersion
     version = "v$modVersion"
     changelog = changelogText
-    type = ALPHA
+    type = BETA
 
     modLoaders.add("fabric")
 
@@ -150,7 +151,8 @@ publishMods {
             projectId = modrinthId
             accessToken = findProperty("modrinth.token").toString()
 
-            minecraftVersions.add(mcVersion)
+            val mcReleases = sc.properties.rawOrNull("mod:mc_releases")?.asList()?.map { it.toString() }
+            minecraftVersions.addAll(mcReleases ?: listOf(mcVersion))
 
             requires("oneconfig", "fabric-api", "fabric-language-kotlin", "hypixel-mod-api")
         }

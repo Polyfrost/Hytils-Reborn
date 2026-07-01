@@ -1,7 +1,8 @@
 mod.name = "Hytils Reborn"
+mod.description = "Hypixel-focused Quality of Life mod."
 mod.id = "hytils-reborn"
 mod.group = "org.polyfrost"
-mod.version = "2.0.0-alpha.1"
+mod.version = "2.0.0-beta.1"
 
 publish.modrinth.id = "nF6YaBfO"
 
@@ -56,12 +57,17 @@ deps.hypixel_mod_api_fabric = "1.0.1+build.1+mc1.21"
 deps.sodium = "0.8.7"
 
 ["26.1"]
+mod.mc_compat = "~26.1"
+mod.mc_releases = ["26.1", "26.1.1", "26.1.2"]
+
 deps.fabric_api = "0.145.1+26.1"
 deps.hypixel_mod_api = "1.0.2"
 deps.hypixel_mod_api_fabric = "1.0.2+build.1+mc26.1"
 deps.sodium = "0.8.7"
 
 ["26.2"]
+mod.mc_compat = "~26.2"
+
 deps.fabric_api = "0.153.0+26.2"
 deps.hypixel_mod_api = "1.0.2"
 deps.hypixel_mod_api_fabric = "1.0.2+build.1+mc26.1"
