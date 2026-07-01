@@ -46,10 +46,7 @@ object HeightOverlay {
             b = (customColor.blue * multiplier).coerceIn(0f, 255f)
         }
 
-        return (0xFF shl 24) or
-                (b.toInt() shl 16) or
-                (g.toInt() shl 8) or
-                r.toInt()
+        return (0xFF shl 24) or (r.toInt() shl 16) or (g.toInt() shl 8) or b.toInt()
     }
 
     @Subscribe

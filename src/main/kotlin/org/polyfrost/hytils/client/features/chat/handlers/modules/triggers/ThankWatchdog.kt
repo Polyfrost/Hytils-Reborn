@@ -11,7 +11,7 @@ object ThankWatchdog : ChatReceiveModule {
         if (event.unformattedMessage == LanguageData.WATCHDOG_ANNOUNCEMENT
             || event.unformattedMessage.startsWith(LanguageData.WATCHDOG_BAN)
         ) {
-            ChatUtils.sendMessage("/ac Thanks Watchdog!")
+            ChatUtils.queueMessage("/ac Thanks Watchdog!")
         }
     }
 

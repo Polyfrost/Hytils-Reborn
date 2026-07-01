@@ -1,7 +1,6 @@
 package org.polyfrost.hytils.mixin.client.events;
 
 import net.minecraft.client.DeltaTracker;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import org.polyfrost.hytils.client.events.TitleEvent;
@@ -12,8 +11,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Gui.class)
-abstract class GuiMixin_TitleEvent {
+//~ if <26.2 'gui.Hud' -> 'gui.Gui'
+@Mixin(net.minecraft.client.gui.Hud.class)
+abstract class HudMixin_TitleEvent {
     @Shadow private Component title;
     @Shadow private Component subtitle;
     @Shadow private int titleTime;

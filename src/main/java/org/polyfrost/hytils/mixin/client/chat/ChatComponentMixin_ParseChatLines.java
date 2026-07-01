@@ -63,12 +63,15 @@ abstract class ChatComponentMixin_ParseChatLines {
 
     //? if <1.21.11 {
     /*@WrapOperation(
+        //~ if <1.21.8 'method_71991' -> 'render'
         method = "method_71991",
         at = @At(
             value = "INVOKE",
+            //~ if <1.21.8 'III)V' -> 'III)I'
             target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;drawString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/util/FormattedCharSequence;III)V"
         )
     )
+    //~ if <1.21.8 'private void' -> 'private int'
     private void renderCustomLine(
         net.minecraft.client.gui.GuiGraphicsExtractor graphics,
         Font font,
@@ -77,16 +80,28 @@ abstract class ChatComponentMixin_ParseChatLines {
         int textTop,
         int color,
         Operation<Void> original,
+        //? if >=1.21.8 {
         @com.llamalad7.mixinextras.sugar.Local(argsOnly = true, ordinal = 2) int lineTop,
         @com.llamalad7.mixinextras.sugar.Local(argsOnly = true, ordinal = 3) int lineBottom
+        //?} else {
+        /^@com.llamalad7.mixinextras.sugar.Local(ordinal = 9) int lineHeight,
+        @com.llamalad7.mixinextras.sugar.Local(ordinal = 18) int lineBottom
+        ^///?}
     ) {
         if (sequence instanceof CustomChatLine customLine) {
             float textAlpha = net.minecraft.util.ARGB.alphaFloat(color);
+            //? if <1.21.8
+            //int lineTop = lineBottom - lineHeight;
+
             ChatEnhancements.renderCustomLine(customLine, graphics, lineBottom, lineTop, textTop, textAlpha);
+            //~ if <1.21.8 'return;' -> 'return 0;'
             return;
         }
 
         original.call(graphics, font, sequence, x, textTop, color);
+
+        //? if <1.21.8
+        //return 0;
     }
 
     @WrapOperation(

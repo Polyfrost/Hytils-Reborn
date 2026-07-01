@@ -3,12 +3,13 @@
 	"id": "${mod_id}",
 	"version": "${mod_version}",
 	"name": "${mod_name}",
+	"description": "${mod_description}",
 	"authors": [
 		"Polyfrost"
 	],
 	"contact": {
-		"issues": "https://github.com/Polyfrost/${mod_name}/issues",
-		"sources": "https://github.com/Polyfrost/${mod_name}"
+		"issues": "https://github.com/Polyfrost/${mod_id}/issues",
+		"sources": "https://github.com/Polyfrost/${mod_id}"
 	},
 	"license": "GPL-3.0-or-later",
 	"environment": "client",
@@ -24,8 +25,11 @@
 		"mixins.hytils.json"
 	],
 	"depends": {
-		"minecraft": "${mc_version}",
+		"minecraft": "${mc_compat}",
 		"fabricloader": ">=0.17",
-		"oneconfigv1": "${oneconfig_version}"
+		"oneconfigv1": ">=${oneconfig_version}",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*",
+		"hypixel-mod-api": "*"
 	}
 }

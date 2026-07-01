@@ -15,7 +15,8 @@ object GameStartCompactor : ChatReceiveModule {
         if (!event.unformattedMessage.matches(LanguageData.GAME_STARTING)) return
 
         if (lastMessage != null) {
-            val chat = (mc.gui.chat as ChatComponentAccessor)
+            //~ if <26.2 'gui.hud' -> 'gui' {
+            val chat = (mc.gui.hud.chat as ChatComponentAccessor)
             val removed = chat.allMessages.removeIf { it.content == lastMessage }
 
             if (removed) {
@@ -26,9 +27,10 @@ object GameStartCompactor : ChatReceiveModule {
                 chat.invokeRefreshTrimmedMessages()
 
                 chat.chatScrollbarPos = scrollbarPos
-                mc.gui.chat.scrollChat(-1)
+                mc.gui.hud.chat.scrollChat(-1)
                 chat.newMessageSinceScroll = newMessageSinceScroll
             }
+            //~}
         }
 
         lastMessage = event.message

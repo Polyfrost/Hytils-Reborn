@@ -3,12 +3,15 @@ package org.polyfrost.hytils.client
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
 //? if >=26.1 {
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents
-//?} else if >=1.21.11 {
-//import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents
-//?} else
+//?} else if >=1.21.10 {
+/*import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents
+*///?} else
 //import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
+import net.hypixel.modapi.HypixelModAPI
+import net.hypixel.modapi.packet.impl.clientbound.ClientboundHelloPacket
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.commands.impl.*
 import org.polyfrost.hytils.client.data.providers.*
@@ -22,7 +25,6 @@ import org.polyfrost.hytils.client.features.general.ArmorStandHider
 import org.polyfrost.hytils.client.features.limbo.LimboLimiter
 import org.polyfrost.hytils.client.features.limbo.LimboPrivateMessageSounds
 import org.polyfrost.hytils.client.features.lobby.SilentLobby
-import org.polyfrost.hytils.client.utils.hypixel.HypixelModAPIImpl
 import org.polyfrost.oneconfig.api.event.v1.EventManager
 import org.polyfrost.oneconfig.utils.v1.Multithreading
 import org.slf4j.Logger
@@ -30,6 +32,10 @@ import org.slf4j.LoggerFactory
 
 object HytilsRebornClient {
     val LOGGER: Logger = LoggerFactory.getLogger(HytilsRebornConstants.NAME)
+
+    @JvmStatic
+    var onHypixel = false
+        private set
 
     fun initialize() {
         HytilsRebornConfig.preload()
@@ -79,16 +85,17 @@ object HytilsRebornClient {
         }
 
         //~ if <26.1 'LevelRenderEvents' -> 'WorldRenderEvents'
-        //~ if <1.21.11 'END_MAIN' -> 'LAST'
+        //~ if <1.21.10 'END_MAIN' -> 'LAST'
         LevelRenderEvents.END_MAIN.register { context ->
             EventManager.INSTANCE.post(
                 PostLevelRenderEvent(
                     //? if >=26.1 {
                     context.poseStack(),
                     context.submitNodeCollector(),
-                    context.bufferSource(),
+                    //? if <26.2
+                    //context.bufferSource(),
                     context.levelState().cameraRenderState
-                    //?} else if >=1.21.11 {
+                    //?} else if >=1.21.10 {
                     /*context.matrices(),
                     context.commandQueue(),
                     context.consumers(),
@@ -100,10 +107,11 @@ object HytilsRebornClient {
                     *///?}
                 )
             )
-            //? if >=26.1
-            context.bufferSource().endBatch()
+            //? if >=26.1 <26.2
+            //context.bufferSource().endBatch()
         }
 
-        HypixelModAPIImpl.init()
+        HypixelModAPI.getInstance().createHandler(ClientboundHelloPacket::class.java) { onHypixel = true }
+        ClientPlayConnectionEvents.DISCONNECT.register { _, _ -> onHypixel = false }
     }
 }

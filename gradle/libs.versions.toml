@@ -1,7 +1,7 @@
 [versions]
-kotlin = "2.3.0"
+kotlin = "2.4.0"
 bloom = "0.2.0"
-mod-publish = "1.1.0"
+mod-publish = "2.1.1"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

@@ -20,12 +20,12 @@ object AutoGG : ChatReceiveModule {
         shouldSend = true
 
         Multithreading.schedule(
-            { if (shouldSend) ChatUtils.sendMessage("/ac ${HytilsRebornConfig.autoGGMessage}") },
+            { if (shouldSend) ChatUtils.queueMessage("/ac ${HytilsRebornConfig.autoGGMessage}") },
             HytilsRebornConfig.autoGGFirstMsgDelay.toLong(), TimeUnit.SECONDS
         )
         if (HytilsRebornConfig.autoGGSendSecondMessage) {
             Multithreading.schedule(
-                { if (shouldSend) ChatUtils.sendMessage("/ac ${HytilsRebornConfig.autoGGSecondMessage}") },
+                { if (shouldSend) ChatUtils.queueMessage("/ac ${HytilsRebornConfig.autoGGSecondMessage}") },
                 (HytilsRebornConfig.autoGGFirstMsgDelay + HytilsRebornConfig.autoGGSecondMsgDelay).toLong(),
                 TimeUnit.SECONDS
             )

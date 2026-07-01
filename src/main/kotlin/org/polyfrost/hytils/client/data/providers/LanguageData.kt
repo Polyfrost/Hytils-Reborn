@@ -9,12 +9,11 @@ import org.intellij.lang.annotations.Language
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.HytilsRebornClient
 import org.polyfrost.hytils.client.data.DataProvider
+import org.polyfrost.oneconfig.api.notifications.v1.Notifications
 import org.polyfrost.oneconfig.utils.v1.JsonUtils
-import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-// TODO: notifications
 object LanguageData : DataProvider {
     @Volatile private var fetchedPatterns: Map<String, String> = emptyMap()
     @Volatile private var fetchedComponents: Map<String, Component> = emptyMap()
@@ -26,21 +25,18 @@ object LanguageData : DataProvider {
     override fun load() = load(showNotification = false)
 
     fun load(showNotification: Boolean) {
-        val response: JsonElement? = JsonUtils.parseFromUrl("$apiBase/language.json")
-
-        if (response == null || response.isJsonNull) {
-            HytilsRebornClient.LOGGER.error("Failed to fetch language data, using defaults.")
-//            mc.execute {
-//                Notifications.enqueue(
-//                    Notifications.Type.Error,
-//                    HytilsRebornConstants.NAME,
-//                    "Failed to fetch language data, using defaults. Some features may not work as intended."
-//                )
-//            }
-            return
-        }
-
         try {
+            val response: JsonElement? = JsonUtils.parseFromUrl("$apiBase/language.json")
+
+            if (response == null || response.isJsonNull) {
+                HytilsRebornClient.LOGGER.error("Failed to fetch language data, using defaults.")
+                Notifications.error(
+                    HytilsRebornConstants.NAME,
+                    "Failed to fetch language data, using defaults. Some features may not work as intended."
+                )
+                return
+            }
+
             val patterns = mutableMapOf<String, String>()
             response.asJsonObject?.getAsJsonObject("regexes")?.entrySet()?.forEach {
                 if (it.value.isJsonObject) {
@@ -72,24 +68,18 @@ object LanguageData : DataProvider {
             fetchedStrings = strings
 
             HytilsRebornClient.LOGGER.info("Successfully fetched ${fetchedPatterns.size} regexes, ${fetchedComponents.size} components and ${fetchedStrings.size} strings.")
-//            if (showNotification) {
-//                mc.execute {
-//                    Notifications.enqueue(
-//                        Notifications.Type.Info,
-//                        HytilsRebornConstants.NAME,
-//                        "Successfully fetched ${fetchedPatterns.size} regexes, ${fetchedComponents.size} components and ${fetchedStrings.size} strings."
-//                    )
-//                }
-//            }
+            if (showNotification) {
+                Notifications.success(
+                    HytilsRebornConstants.NAME,
+                    "Successfully fetched ${fetchedPatterns.size} regexes, ${fetchedComponents.size} components and ${fetchedStrings.size} strings."
+                )
+            }
         } catch (e: Exception) {
             HytilsRebornClient.LOGGER.error("Failed to parse language data, using defaults.", e)
-//            mc.execute {
-//                Notifications.enqueue(
-//                    Notifications.Type.Error,
-//                    HytilsRebornConstants.NAME,
-//                    "Failed to parse language data, using defaults. Some features may not work as intended. Check logs for more details."
-//                )
-//            }
+            Notifications.error(
+                HytilsRebornConstants.NAME,
+                "Failed to parse language data, using defaults. Some features may not work as intended. Check logs for more details."
+            )
         }
     }
 
@@ -330,10 +320,6 @@ object LanguageData : DataProvider {
     val GAME_START_CANCELLED by string("We don't have enough players! Start cancelled.")
     val GAME_START_DELAYED by string("We don't have enough players! Start delayed.")
     //endregion
-
-    fun String.removeFormattingCodes(): String {
-        return this.replace(FORMATTING_CODES, "")
-    }
 
     private fun regex(
         @Language("RegExp") vararg defaultPatterns: String,

@@ -19,13 +19,13 @@ val requiredJava: JavaVersion = when {
 }
 
 repositories {
-    maven("https://maven.parchmentmc.org")
     maven("https://repo.polyfrost.org/releases")
     maven("https://repo.polyfrost.org/snapshots")
+    maven("https://central.sonatype.com/repository/maven-snapshots")
+    maven("https://maven.parchmentmc.org")
     maven("https://maven.gegy.dev/releases")
     maven("https://repo.hypixel.net/repository/Hypixel")
     maven("https://api.modrinth.com/maven")
-    maven("https://nexus.prsm.wtf/repository/maven-public/maven-repo/releases/")
     google()
 }
 
@@ -47,30 +47,24 @@ dependencies {
         })
     }
     modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
 
     modImplementation("org.polyfrost.oneconfig:$mcVersion-fabric:${property("deps.oneconfig")}")
-    for (module in listOf("config", "config-impl", "events", "internal", "ui")) {
+    for (module in listOf("config", "config-impl", "events", "utils")) {
         implementation("org.polyfrost.oneconfig:$module:${property("deps.oneconfig")}")
     }
 
     implementation("net.hypixel:mod-api:${property("deps.hypixel_mod_api")}")
-    for (module in listOf("fabric-api-base", "fabric-command-api-v2", "fabric-networking-api-v1", "fabric-rendering-v1")) {
-        modImplementation(fabricApi.module(module, sc.properties["deps.fabric_api"]))
-    }
+    modImplementation("maven.modrinth:hypixel-mod-api:${property("deps.hypixel_mod_api_fabric")}")
 
     // needed for height overlay compatibility
     modCompileOnly("maven.modrinth:sodium:mc$mcVersion-${property("deps.sodium")}-fabric")
-
-    if (sc.current.parsed < "1.21.11") {
-        // needed for sodium height overlay compatibility
-        modCompileOnly(fabricApi.module("fabric-renderer-api-v1", sc.properties["deps.fabric_api"]))
-    }
 }
 
 loom {
     runConfigs.named("client").configure {
-        ideConfigGenerated(true)
-        runDir = "../../run"
+        generateRunConfig = true
+        runDirectory = rootProject.file("run")
     }
 }
 
@@ -78,9 +72,10 @@ tasks {
     processResources {
         val props = mapOf(
             "mod_id" to modId,
-            "mod_name" to modName,
             "mod_version" to modVersion,
-            "mc_version" to mcVersion,
+            "mod_name" to modName,
+            "mod_description" to sc.properties["mod.description"],
+            "mc_compat" to (sc.properties.getOrNull<String>("mod.mc_compat") ?: mcVersion),
             "oneconfig_version" to sc.properties["deps.oneconfig"]
         )
 
@@ -97,12 +92,32 @@ tasks {
             rename { "${it}_${inputs.properties["archivesName"]}" }
         }
     }
+
+    register("validateChangelog") {
+        description = "Validates that the changelog is written for the current version."
+        group = "publishing"
+
+        if (!changelogText.contains(modVersion)) {
+            throw GradleException("Changelog for version $modVersion not found.")
+        }
+    }
+
+    publishMods.configure { dependsOn("validateChangelog") }
+    matching { it.name == "publishModrinth" }.configureEach { dependsOn("validateChangelog") }
 }
 
 bloom {
     replacement("@MOD_ID@", modId)
     replacement("@MOD_NAME@", modName)
     replacement("@MOD_VERSION@", modVersion)
+}
+
+sourceSets {
+    val ducks = register("ducks")
+    main {
+        compileClasspath += ducks.get().output
+        output.setResourcesDir(java.classesDirectory)
+    }
 }
 
 java {
@@ -115,7 +130,8 @@ kotlin {
     jvmToolchain(requiredJava.majorVersion.toInt())
 }
 
-val modrinthId = findProperty("publish.modrinth")?.toString()?.takeIf { it.isNotBlank() }
+val modrinthId = findProperty("publish.modrinth.id")?.toString()?.takeIf { it.isNotBlank() }
+val changelogText = rootProject.file("CHANGELOG.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
 
 // make sure modrinth.token is set in your user gradle properties
 publishMods {
@@ -123,8 +139,8 @@ publishMods {
 
     displayName = modVersion
     version = "v$modVersion"
-    changelog = project.rootProject.file("CHANGELOG.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
-    type = ALPHA
+    changelog = changelogText
+    type = BETA
 
     modLoaders.add("fabric")
 
@@ -135,9 +151,10 @@ publishMods {
             projectId = modrinthId
             accessToken = findProperty("modrinth.token").toString()
 
-            minecraftVersions.add(mcVersion)
+            val mcReleases = sc.properties.rawOrNull("mod:mc_releases")?.asList()?.map { it.toString() }
+            minecraftVersions.addAll(mcReleases ?: listOf(mcVersion))
 
-            requires("oneconfig")
+            requires("oneconfig", "fabric-api", "fabric-language-kotlin", "hypixel-mod-api")
         }
     }
 }

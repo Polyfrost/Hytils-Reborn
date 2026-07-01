@@ -6,7 +6,6 @@ import net.minecraft.network.chat.HoverEvent
 import net.minecraft.network.chat.MutableComponent
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.data.providers.LanguageData
-import org.polyfrost.hytils.client.data.providers.LanguageData.removeFormattingCodes
 import org.polyfrost.oneconfig.api.event.v1.events.Event
 
 data class ChatSendEvent(var message: String) : Event.Cancellable()
@@ -22,6 +21,7 @@ data class ChatReceiveEvent(var message: Component, var isOverlay: Boolean) : Ev
                 }
 
                 val originalMessage = message
+                //~ if <1.21.5 '.ShowText(' -> '(HoverEvent.Action.SHOW_TEXT,'
                 val hoverMessage = HoverEvent.ShowText(
                     Component.empty()
                         .append(Component.literal("Hytils Reborn\n")
@@ -47,5 +47,5 @@ data class ChatReceiveEvent(var message: Component, var isOverlay: Boolean) : Ev
         get() = this.message.string
 
     val unformattedMessage: String
-        get() = this.plainMessage.removeFormattingCodes()
+        get() = ChatFormatting.stripFormatting(this.plainMessage)!!
 }

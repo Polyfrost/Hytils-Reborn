@@ -9,7 +9,7 @@ object AutoGL : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
         val message = event.unformattedMessage.trim()
         if (!message.contains(": ") && message.endsWith("The game starts in 5 seconds!")) {
-            ChatUtils.sendMessage("/ac ${HytilsRebornConfig.autoGLMessage}")
+            ChatUtils.queueMessage("/ac ${HytilsRebornConfig.autoGLMessage}")
         }
     }
 

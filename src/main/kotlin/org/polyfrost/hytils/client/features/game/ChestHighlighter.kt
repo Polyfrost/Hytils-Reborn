@@ -26,8 +26,12 @@ object ChestHighlighter {
             if (mc.level?.getBlockEntity(pos) !is ChestBlockEntity) continue
             RenderUtils.renderFilledBox(
                 event.poseStack,
+                //? if >=26.2 {
+                event.submitNodeCollector,
+                //?} else
+                //event.multiBufferSource,
                 Vec3(pos),
-                //~ if <1.21.11 '.pos' -> '.position'
+                //~ if <1.21.10 '.pos' -> '.position'
                 event.camera.pos,
                 HytilsRebornConfig.highlightChestsColor
             )

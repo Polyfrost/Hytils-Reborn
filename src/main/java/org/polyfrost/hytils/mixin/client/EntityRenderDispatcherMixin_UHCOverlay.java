@@ -1,6 +1,6 @@
 package org.polyfrost.hytils.mixin.client;
 
-//? if >=1.21.11 {
+//? if >=1.21.10 {
 import net.minecraft.client.renderer.SubmitNodeCollector;
 //~ if <26.1 'level.CameraRenderState' -> 'CameraRenderState'
 import net.minecraft.client.renderer.state.level.CameraRenderState;
@@ -35,13 +35,17 @@ abstract class EntityRenderDispatcherMixin_UHCOverlay {
     );
 
     @Inject(
-        //? if >=1.21.11 {
-        method = "submit",
-        //?} else
-        //method = "render(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;DDDLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/renderer/entity/EntityRenderer;)V",
+        method = {
+            //? if >=1.21.10 {
+            "submit",
+            //?} else if >=1.21.5 {
+            /*"render(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;DDDLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/renderer/entity/EntityRenderer;)V"
+            *///?} else
+            //"render(Lnet/minecraft/world/entity/Entity;DDDFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/renderer/entity/EntityRenderer;)V"
+        },
         at = @At(
             value = "INVOKE",
-            //? if >=1.21.11 {
+            //? if >=1.21.10 {
             //~ if <26.1 'level/CameraRenderState' -> 'CameraRenderState'
             target = "Lnet/minecraft/client/renderer/entity/EntityRenderer;submit(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V"
             //?} else
@@ -49,22 +53,33 @@ abstract class EntityRenderDispatcherMixin_UHCOverlay {
         )
     )
     public <S extends EntityRenderState> void scaleUhcItems(
-        //~ if <1.21.11 'S entityRenderState' -> 'EntityRenderState entityRenderState'
-        S renderState,
-        //? if >=1.21.11
+        //? if >=1.21.10 {
+        S entityRenderState,
+        //?} else if >=1.21.5 {
+        /*EntityRenderState entityRenderState,
+        *///?} else
+        //net.minecraft.world.entity.Entity entity,
+        //? if >=1.21.10
         CameraRenderState camera,
         double x,
         double y,
         double z,
+        //? if <1.21.5
+        //float g,
         PoseStack poseStack,
-        //? if >=1.21.11 {
+        //? if >=1.21.10 {
         SubmitNodeCollector submitNodeCollector,
-        //?} else {
+         //?} else {
         /*MultiBufferSource multiBufferSource,
         int i,
         EntityRenderer<?, S> entityRenderer,
         *///?}
+        //? if >=1.21.5 {
         CallbackInfo ci
+         //?} else {
+        /*CallbackInfo ci,
+        @com.llamalad7.mixinextras.sugar.Local S entityRenderState
+        *///?}
     ) {
         if (!HytilsRebornConfig.isEnabled() || !HytilsRebornConfig.INSTANCE.getUhcOverlay()) return;
 
@@ -74,7 +89,7 @@ abstract class EntityRenderDispatcherMixin_UHCOverlay {
             || location.getGameType().orElse(null) != GameType.SPEED_UHC
         ) return;
 
-        if (!(renderState instanceof ItemEntityRenderState itemEntityRenderState)
+        if (!(entityRenderState instanceof ItemEntityRenderState itemEntityRenderState)
             || !uhcItems.contains(((ItemClusterRenderStateDuck) itemEntityRenderState).hytils$getItemStack().getItem())
         ) return;
 

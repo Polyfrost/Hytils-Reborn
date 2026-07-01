@@ -8,21 +8,21 @@ import net.minecraft.core.Holder
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.sounds.SoundSource
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.LivingEntity
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
+import org.polyfrost.oneconfig.api.notifications.v1.Notifications
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
 
-// TODO: notifications
 object NotifyMiningFatigue {
     @JvmStatic
     fun sendNotification(livingEntity: LivingEntity, mobEffect: Holder<MobEffect>) {
         if (!HytilsRebornConfig.isEnabled || !HytilsRebornConfig.notifyMiningFatigue || !HypixelUtils.isHypixel()) return
 
+        //~ if <1.21.5 'MINING_FATIGUE' -> 'DIG_SLOWDOWN'
         if (livingEntity !is LocalPlayer || mobEffect != MobEffects.MINING_FATIGUE) return
 
         val gameType = HypixelUtils.getLocation().gameType.orElse(null) ?: return
@@ -32,14 +32,11 @@ object NotifyMiningFatigue {
 
         mc.execute {
             when (HytilsRebornConfig.miningFatigueNotificationType) {
-//                0 -> Notifications.enqueue(
-//                    Notifications.Type.Warning,
-//                    HytilsRebornConstants.NAME,
-//                    "You have mining fatigue!"
-//                )
+                0 -> Notifications.info(HytilsRebornConstants.NAME, "You have mining fatigue!")
 
                 1 -> {
-                    mc.gui.setTitle(Component.literal("Mining Fatigue!").withStyle(ChatFormatting.RED))
+                    //~ if <26.2 'gui.hud' -> 'gui'
+                    mc.gui.hud.setTitle(Component.literal("Mining Fatigue!").withStyle(ChatFormatting.RED))
                     mc.soundManager.play(SimpleSoundInstance.forUI(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f))
                 }
 

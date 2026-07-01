@@ -42,6 +42,7 @@ object TabChanger {
         return component
     }
 
+    // FIXME: header and footer contains a hover event in the url on 1.21.4 for some reason
     @JvmStatic
     fun modifyHeader(header: Component): Component {
         if (!HytilsRebornConfig.hideAdsInTab) return header
@@ -69,9 +70,8 @@ object TabChanger {
 
     @JvmStatic
     fun hidePing(playerInfo: PlayerInfo): Boolean {
-        return HypixelUtils.isHypixel()
-                && ((HytilsRebornConfig.hidePingInTab && HypixelUtils.getLocation().inGame())
-                || isSkyblockTabInformationEntry(playerInfo))
+        return (HytilsRebornConfig.hidePingInTab && HypixelUtils.getLocation().inGame())
+                || isSkyblockTabInformationEntry(playerInfo)
     }
 
     @JvmStatic

@@ -1,24 +1,22 @@
 package org.polyfrost.hytils.client.features.limbo
 
-import com.mojang.blaze3d.platform.FramerateLimitTracker
-//? if >=1.21.11 {
+//~ if <1.21.11 'util.Util' -> 'Util'
 import net.minecraft.util.Util
-//?} else
-//import net.minecraft.Util
 import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
+import kotlin.math.min
 
 object LimboLimiter {
     var limboJoinTime = -1L
 
     @JvmStatic
-    fun getThrottleReason(original: FramerateLimitTracker.FramerateThrottleReason): FramerateLimitTracker.FramerateThrottleReason {
+    fun getFramerateLimit(original: Int, framerateLimit: Int): Int {
         return if (limboJoinTime == -1L) {
             original
         } else if (Util.getMillis() - limboJoinTime > 600L * 1000L) {
-            FramerateLimitTracker.FramerateThrottleReason.LONG_AFK
+            10 // FramerateLimitTracker.FramerateThrottleReason.LONG_AFK
         } else if (Util.getMillis() - limboJoinTime > 5L * 1000L) {
-            FramerateLimitTracker.FramerateThrottleReason.SHORT_AFK
+            min(framerateLimit, 30) // FramerateLimitTracker.FramerateThrottleReason.SHORT_AFK
         } else {
             original
         }

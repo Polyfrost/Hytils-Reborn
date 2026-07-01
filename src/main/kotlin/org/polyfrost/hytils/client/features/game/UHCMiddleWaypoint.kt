@@ -28,6 +28,10 @@ object UHCMiddleWaypoint {
         RenderUtils.renderText(
             Component.literal(HytilsRebornConfig.uhcMiddleWaypointText),
             Component.literal("${distance.roundToInt()}m").withStyle(ChatFormatting.YELLOW),
+            //? if >=26.2 {
+            submitNodeCollector = event.submitNodeCollector,
+            poseStack = event.poseStack,
+            //?}
             pos = pos,
             camera = event.camera,
             color = PolyColor.WHITE,

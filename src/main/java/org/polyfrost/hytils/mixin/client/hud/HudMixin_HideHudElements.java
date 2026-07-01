@@ -1,6 +1,5 @@
-package org.polyfrost.hytils.mixin.client.gui;
+package org.polyfrost.hytils.mixin.client.hud;
 
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.entity.player.Player;
 import org.polyfrost.hytils.client.features.game.HideHudElements;
@@ -9,8 +8,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Gui.class)
-abstract class GuiMixin_HideHudElements {
+//~ if <26.2 'gui.Hud' -> 'gui.Gui'
+@Mixin(net.minecraft.client.gui.Hud.class)
+abstract class HudMixin_HideHudElements {
     //~ if <26.1 'extractHearts' -> 'renderHearts'
     @Inject(method = "extractHearts", at = @At("HEAD"), cancellable = true)
     public void hideHearts(

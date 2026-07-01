@@ -13,7 +13,6 @@ import org.polyfrost.hytils.client.commands.parser.GameNameArgumentType
 import org.polyfrost.hytils.client.data.providers.GameAliasesData
 import org.polyfrost.hytils.client.utils.ChatUtils
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
-import org.polyfrost.oneconfig.utils.v1.dsl.mc
 import java.util.Locale
 
 object PlayCommand : ClientCommand {
@@ -31,7 +30,7 @@ object PlayCommand : ClientCommand {
     val commandNode: LiteralCommandNode<FabricClientCommandSource> = getCommand().build()
 
     private fun execute(game: GameNameArgumentType.GameName) {
-        val command = if (HytilsRebornConfig.autocompletePlayCommands) {
+        val command = if (HytilsRebornConfig.autocompletePlayCommands && GameAliasesData.aliases.isNotEmpty()) {
             when {
                 GameAliasesData.aliases.containsKey(game.name.lowercase(Locale.ROOT)) -> GameAliasesData.aliases[game.name.lowercase(Locale.ROOT)]
                 GameAliasesData.aliases.containsValue(game.name.lowercase(Locale.ROOT)) -> game.name

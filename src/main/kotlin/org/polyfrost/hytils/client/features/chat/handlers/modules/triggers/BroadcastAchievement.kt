@@ -13,7 +13,7 @@ object BroadcastAchievement : ChatReceiveModule {
         LanguageData.ACHIEVEMENT_UNLOCKED.find(event.unformattedMessage)?.let { match ->
             val achievement = match.groups["achievement"]?.value ?: return
             achievements.add(achievement)
-            ChatUtils.sendMessage("/gc Achievement unlocked! I unlocked the $achievement achievement!")
+            ChatUtils.queueMessage("/gc Achievement unlocked! I unlocked the $achievement achievement!")
         }
     }
 

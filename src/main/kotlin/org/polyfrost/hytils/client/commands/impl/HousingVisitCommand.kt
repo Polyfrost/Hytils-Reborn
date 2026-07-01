@@ -54,7 +54,7 @@ object HousingVisitCommand : ClientCommand {
         @Subscribe
         fun onWorldLoad(event: WorldEvent.Load) {
             Multithreading.schedule(
-                { ChatUtils.sendMessage("/visit $playerUsername") },
+                { ChatUtils.queueMessage("/visit $playerUsername") },
                 300L,
                 TimeUnit.MILLISECONDS
             )

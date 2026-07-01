@@ -9,6 +9,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.scores.Team;
 import org.polyfrost.hytils.client.HytilsRebornConfig;
 import org.polyfrost.hytils.client.features.general.TabChanger;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -24,7 +25,7 @@ abstract class PlayerTabOverlayMixin_ModifyNames {
     private static MutableComponent modifyPlayerNameForDisplay(Team team, Component component, Operation<MutableComponent> original, PlayerInfo info) {
         MutableComponent formattedName = original.call(team, component);
 
-        if (HytilsRebornConfig.isEnabled()) {
+        if (HytilsRebornConfig.isEnabled() && HypixelUtils.isHypixel()) {
             return TabChanger.modifyName(formattedName, info);
         }
 

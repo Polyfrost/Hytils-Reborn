@@ -1,92 +1,70 @@
 package org.polyfrost.hytils.client.utils
 
-//? if >=1.21.11 {
-import net.minecraft.client.renderer.SubmitNodeCollector
-import net.minecraft.client.renderer.rendertype.RenderSetup
-import net.minecraft.client.renderer.rendertype.RenderType
-//~ if <26.1 'level.CameraRenderState' -> 'CameraRenderState'
-import net.minecraft.client.renderer.state.level.CameraRenderState
-import net.minecraft.util.Util
-import org.polyfrost.hytils.mixin.client.accessor.RenderTypeAccessor
-//?} else {
-/*import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.client.renderer.RenderType
-import net.minecraft.client.renderer.RenderStateShard
-import net.minecraft.client.renderer.ShapeRenderer
-import net.minecraft.client.Camera
-import net.minecraft.Util
-
-import java.util.function.BiFunction
-*///?}
-
 //? if >=26.1 {
 import com.mojang.blaze3d.pipeline.ColorTargetState
 import com.mojang.blaze3d.pipeline.DepthStencilState
 import com.mojang.blaze3d.platform.CompareOp
-//?} else
-//import com.mojang.blaze3d.platform.DepthTestFunction
+//?}
 
-import com.mojang.blaze3d.buffers.GpuBuffer
+//? if >=1.21.11 {
+import net.minecraft.client.renderer.rendertype.RenderSetup
+import net.minecraft.client.renderer.rendertype.RenderTypes
+import org.polyfrost.hytils.mixin.client.accessor.RenderTypeAccessor
+//?} else
+//import net.minecraft.client.renderer.RenderType
+
+//? if >=1.21.10 {
+import net.minecraft.client.renderer.SubmitNodeCollector
+//~ if <26.1 'level.CameraRenderState' -> 'CameraRenderState'
+import net.minecraft.client.renderer.state.level.CameraRenderState
+//?}
+
+//? if >=1.21.5 {
 import com.mojang.blaze3d.pipeline.BlendFunction
 import com.mojang.blaze3d.pipeline.RenderPipeline
-import com.mojang.blaze3d.systems.RenderSystem
-import com.mojang.blaze3d.vertex.*
-import com.mojang.blaze3d.vertex.MeshData.DrawState
-import com.mojang.blaze3d.vertex.VertexFormat.IndexType
-import net.minecraft.client.gui.Font
-import net.minecraft.client.renderer.MappableRingBuffer
 import net.minecraft.client.renderer.RenderPipelines
+//?}
+
+import com.mojang.blaze3d.vertex.*
+import net.minecraft.client.gui.Font
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 //~ if <26.1 'util.LightCoordsUtil' -> 'client.renderer.LightTexture as LightCoordsUtil'
 import net.minecraft.util.LightCoordsUtil
+//~ if <1.21.11 'util.Util' -> 'Util'
+import net.minecraft.util.Util
 import net.minecraft.world.phys.Vec3
-import net.minecraft.world.phys.shapes.Shapes
 import org.joml.Matrix4f
-import org.joml.Matrix4fc
-import org.joml.Vector3f
-import org.joml.Vector4f
-import org.lwjgl.system.MemoryUtil
 import org.polyfrost.compose.render.PolyColor
-import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
-import java.util.*
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 object RenderUtils {
-    private val allocator: ByteBufferBuilder = ByteBufferBuilder(RenderType.SMALL_BUFFER_SIZE)
-    private var buffer: BufferBuilder? = null
-
-    private val COLOR_MODULATOR = Vector4f(1f, 1f, 1f, 1f)
-    //? if >=1.21.11 {
-    private val MODEL_OFFSET = Vector3f()
-    private val TEXTURE_MATRIX = Matrix4f()
-    //?}
-    private var vertexBuffer: MappableRingBuffer? = null
-
     private const val Z_FIGHTING_OFFSET = 0.001f
 
+    //? if >=1.21.5 {
     private val BEACON_BEAM_OPAQUE_NO_DEPTH = RenderPipeline.builder(RenderPipelines.BEACON_BEAM_SNIPPET)
         .withLocation("pipeline/beacon_beam_opaque")
         //? if >=26.1 {
-        .withDepthStencilState(Optional.empty())
+        .withDepthStencilState(java.util.Optional.empty())
         //?} else
-        //.withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
+        //.withDepthTestFunction(com.mojang.blaze3d.platform.DepthTestFunction.NO_DEPTH_TEST)
         .build()
     private val BEACON_BEAM_TRANSLUCENT_NO_DEPTH = RenderPipeline.builder(RenderPipelines.BEACON_BEAM_SNIPPET)
         .withLocation("pipeline/beacon_beam_translucent")
         //? if >=26.1 {
         .withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
         .withDepthStencilState(DepthStencilState(CompareOp.LESS_THAN_OR_EQUAL, false))
-        .withDepthStencilState(Optional.empty())
+        .withDepthStencilState(java.util.Optional.empty())
         //?} else {
         /*.withDepthWrite(false)
         .withBlend(BlendFunction.TRANSLUCENT)
-        .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
+        .withDepthTestFunction(com.mojang.blaze3d.platform.DepthTestFunction.NO_DEPTH_TEST)
         *///?}
         .build()
+    //?}
 
     @JvmField
     //? if >=1.21.11 {
@@ -105,21 +83,35 @@ object RenderUtils {
         RenderTypeAccessor.invokeCreate("beacon_beam", state)
     }
     //?} else {
-    /*val BEACON_BEAM_NO_DEPTH: BiFunction<Identifier, Boolean, RenderType> = Util.memoize { resourceLocation, isTranslucent ->
+    /*val BEACON_BEAM_NO_DEPTH: java.util.function.BiFunction<Identifier, Boolean, RenderType> = Util.memoize { resourceLocation, isTranslucent ->
         val compositeState = RenderType.CompositeState.builder()
-            .setTextureState(RenderStateShard.TextureStateShard(resourceLocation, false))
+            //? if <1.21.5 {
+            /*.setShaderState(net.minecraft.client.renderer.RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER)
+            .setTransparencyState(if (isTranslucent) net.minecraft.client.renderer.RenderStateShard.TRANSLUCENT_TRANSPARENCY else net.minecraft.client.renderer.RenderStateShard.NO_TRANSPARENCY)
+            .setWriteMaskState(if (isTranslucent) net.minecraft.client.renderer.RenderStateShard.COLOR_WRITE else net.minecraft.client.renderer.RenderStateShard.COLOR_DEPTH_WRITE)
+            .setDepthTestState(net.minecraft.client.renderer.RenderStateShard.NO_DEPTH_TEST)
+            *///?}
+            //~ if <1.21.8 'resourceLocation, false' -> 'resourceLocation, net.minecraft.util.TriState.FALSE, false'
+            .setTextureState(net.minecraft.client.renderer.RenderStateShard.TextureStateShard(resourceLocation, false))
             .createCompositeState(false)
+        //? if >=1.21.5 {
         val pipeline = if (isTranslucent) {
             BEACON_BEAM_TRANSLUCENT_NO_DEPTH
         } else {
             BEACON_BEAM_OPAQUE_NO_DEPTH
         }
-        
+        //?}
+
         RenderType.create(
             "beacon_beam",
+            //? if <1.21.5 {
+            /*DefaultVertexFormat.BLOCK,
+            VertexFormat.Mode.QUADS,
+            *///?}
             1536,
             false,
             true,
+            //? if >=1.21.5
             pipeline,
             compositeState
         )
@@ -128,15 +120,45 @@ object RenderUtils {
     @JvmField
     var beaconDisableDepth = false
 
-    fun renderFilledBox(poseStack: PoseStack, pos: Vec3, cameraPos: Vec3, color: PolyColor, alpha: Float = 0.8f) {
-        prepareFilledBox(poseStack, pos, cameraPos, color, alpha)
-        drawFilledBox(RenderPipelines.DEBUG_FILLED_BOX)
+    // FIXME: not 'interpolated' correctly on 26.2
+    fun renderFilledBox(
+        poseStack: PoseStack,
+        //? if >=26.2 {
+        submitNodeCollector: SubmitNodeCollector,
+        //?} else
+        //multiBufferSource: net.minecraft.client.renderer.MultiBufferSource,
+        pos: Vec3,
+        cameraPos: Vec3,
+        color: PolyColor,
+        alpha: Float = 0.8f
+    ) {
+        //? if >=26.2 {
+        submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.debugQuads()) { _, vertexConsumer ->
+        //?} else {
+        /*//~ if <1.21.11 'RenderTypes' -> 'RenderType'
+        multiBufferSource.getBuffer(RenderTypes.debugQuads()).also { vertexConsumer ->
+        *///?}
+            poseStack.pushPose()
+            poseStack.translate(
+                pos.x - cameraPos.x,
+                pos.y - cameraPos.y,
+                pos.z - cameraPos.z
+            )
+
+            addBox(
+                poseStack.last().pose(), vertexConsumer, color.withAlpha(alpha).argb,
+                0f - Z_FIGHTING_OFFSET, 0f - Z_FIGHTING_OFFSET, 0f - Z_FIGHTING_OFFSET,
+                1f + Z_FIGHTING_OFFSET, 1f + Z_FIGHTING_OFFSET, 1f + Z_FIGHTING_OFFSET
+            )
+
+            poseStack.popPose()
+        }
     }
 
     fun renderText(
         text: Component,
         pos: Vec3,
-        //~ if <1.21.11 'CameraRenderState' -> 'Camera'
+        //~ if <1.21.10 'CameraRenderState' -> 'net.minecraft.client.Camera'
         camera: CameraRenderState,
         color: PolyColor,
         backgroundColor: PolyColor,
@@ -157,14 +179,18 @@ object RenderUtils {
     fun renderText(
         vararg texts: Component,
         pos: Vec3,
-        //~ if <1.21.11 'CameraRenderState' -> 'Camera'
+        //? if >=26.2 {
+        submitNodeCollector: SubmitNodeCollector,
+        poseStack: PoseStack,
+        //?}
+        //~ if <1.21.10 'CameraRenderState' -> 'net.minecraft.client.Camera'
         camera: CameraRenderState,
         color: PolyColor,
         backgroundColor: PolyColor,
         disableDepth: Boolean = false,
         dynamic: Boolean = false,
     ) {
-        //~ if <1.21.11 'camera.pos' -> 'camera.position' {
+        //~ if <1.21.10 'camera.pos' -> 'camera.position' {
         var pos = pos
         var scale = 1f
 
@@ -188,18 +214,40 @@ object RenderUtils {
 
         scale *= 0.05f
 
-        val matrix = Matrix4f()
-            .translate(
+        //? if >=26.2 {
+        poseStack.pushPose()
+
+        poseStack.run {
+        //?} else
+        //val matrix = org.joml.Matrix4f().apply {
+            translate(
                 (pos.x - camera.pos.x).toFloat(),
                 (pos.y - camera.pos.y).toFloat(),
                 (pos.z - camera.pos.z).toFloat()
             )
-            //~ if <1.21.11 '.orientation' -> '.rotation()'
-            .rotate(camera.orientation)
-            .scale(scale, -scale, scale)
+            //~ if <26.2 'mulPose' -> 'rotate'
+            //~ if <1.21.10 '.orientation' -> '.rotation()'
+            mulPose(camera.orientation)
+            scale(scale, -scale, scale)
+        }
+        //~}
 
         for (text in texts) {
-            mc.font.drawInBatch(
+            //? if >=26.2 {
+            submitNodeCollector.submitText(
+                poseStack,
+                -mc.font.width(text) / 2f,
+                0f,
+                text.visualOrderText,
+                false,
+                if (disableDepth) Font.DisplayMode.SEE_THROUGH else Font.DisplayMode.NORMAL,
+                LightCoordsUtil.FULL_BRIGHT,
+                color.argb,
+                backgroundColor.argb,
+                0
+            )
+            //?} else {
+            /*mc.font.drawInBatch(
                 text,
                 -mc.font.width(text) / 2f,
                 0f,
@@ -211,16 +259,23 @@ object RenderUtils {
                 backgroundColor.argb,
                 LightCoordsUtil.FULL_BRIGHT
             )
+            *///?}
 
-            matrix.translate(0f, mc.font.lineHeight + 2f, 0f)
+            //~ if <26.2 'poseStack' -> 'matrix'
+            poseStack.translate(0f, mc.font.lineHeight + 2f, 0f)
         }
-        //~}
+
+        //? if >=26.2
+        poseStack.popPose()
     }
 
-    // FIXME: this is broken
+    // FIXME: broken on 26.1 only ("works" if rendered in `LevelRenderEvents.AFTER_TRANSLUCENT_TERRAIN`)
     fun renderBeaconBeam(
         poseStack: PoseStack,
-        /*? if >=1.21.11 {*/ submitNodeCollector: SubmitNodeCollector /*?} else {*/ /*multiBufferSource: MultiBufferSource *//*?}*/,
+        //? if >=1.21.10 {
+        submitNodeCollector: SubmitNodeCollector,
+        //?} else
+        //multiBufferSource: net.minecraft.client.renderer.MultiBufferSource,
         pos: Vec3,
         cameraPos: Vec3,
         color: PolyColor,
@@ -234,7 +289,7 @@ object RenderUtils {
         )
 
         if (disableDepth) beaconDisableDepth = true
-        //? if >=1.21.11 {
+        //? if >=1.21.10 {
         BeaconRenderer.submitBeaconBeam(
             poseStack,
             submitNodeCollector,
@@ -258,7 +313,9 @@ object RenderUtils {
             0,
             BeaconRenderer.MAX_RENDER_Y,
             color.argb,
+            //~ if <1.21.5 'BeaconRenderer.SOLID_BEAM_RADIUS' -> '0.2f'
             BeaconRenderer.SOLID_BEAM_RADIUS,
+            //~ if <1.21.5 'BeaconRenderer.BEAM_GLOW_RADIUS' -> '0.25f'
             BeaconRenderer.BEAM_GLOW_RADIUS
         )
         *///?}
@@ -267,192 +324,80 @@ object RenderUtils {
         poseStack.popPose()
     }
 
-    private fun prepareFilledBox(
-        poseStack: PoseStack,
-        pos: Vec3,
-        cameraPos: Vec3,
-        color: PolyColor,
-        alpha: Float = 0.8f
-    ) {
-        poseStack.pushPose()
-        poseStack.translate(
-            pos.x - cameraPos.x,
-            pos.y - cameraPos.y,
-            pos.z - cameraPos.z
-        )
-
-        if (buffer == null) {
-            buffer = BufferBuilder(
-                allocator,
-                RenderPipelines.DEBUG_FILLED_BOX.vertexFormatMode,
-                RenderPipelines.DEBUG_FILLED_BOX.vertexFormat
-            )
-        }
-
-        val color = color.withAlpha(alpha)
-
-        //? if >=1.21.11 {
-        Shapes.block().forAllBoxes { minX, minY, minZ, maxX, maxY, maxZ ->
-            addBox(
-                poseStack.last().pose(),
-                buffer!!,
-                minX.toFloat() - Z_FIGHTING_OFFSET,
-                minY.toFloat() - Z_FIGHTING_OFFSET,
-                minZ.toFloat() - Z_FIGHTING_OFFSET,
-                maxX.toFloat() + Z_FIGHTING_OFFSET,
-                maxY.toFloat() + Z_FIGHTING_OFFSET,
-                maxZ.toFloat() + Z_FIGHTING_OFFSET,
-                color.argb
-            )
-        }
-        //?} else {
-        /*ShapeRenderer.addChainedFilledBoxVertices(
-            poseStack,
-            buffer!!,
-            0.0 - Z_FIGHTING_OFFSET,
-            0.0 - Z_FIGHTING_OFFSET,
-            0.0 - Z_FIGHTING_OFFSET,
-            1.0 + Z_FIGHTING_OFFSET,
-            1.0 + Z_FIGHTING_OFFSET,
-            1.0 + Z_FIGHTING_OFFSET,
-            color.redF,
-            color.greenF,
-            color.blueF,
-            color.alphaF
-        )
-        *///?}
-
-        poseStack.popPose()
-    }
-
-    //? if >=1.21.11 {
     private fun addBox(
-        positionMatrix: Matrix4fc,
-        buffer: BufferBuilder,
+        positionMatrix: Matrix4f,
+        vertexConsumer: VertexConsumer,
+        color: Int,
         minX: Float, minY: Float, minZ: Float,
-        maxX: Float, maxY: Float, maxZ: Float,
-        color: Int
+        maxX: Float, maxY: Float, maxZ: Float
     ) {
         // front face
-        addQuad(buffer, positionMatrix, minX, minY, maxZ, maxX, minY, maxZ, maxX, maxY, maxZ, minX, maxY, maxZ, color)
+        addQuad(
+            vertexConsumer, positionMatrix, color,
+            minX, minY, maxZ,
+            maxX, minY, maxZ,
+            maxX, maxY, maxZ,
+            minX, maxY, maxZ
+        )
+
         // back face
-        addQuad(buffer, positionMatrix, maxX, minY, minZ, minX, minY, minZ, minX, maxY, minZ, maxX, maxY, minZ, color)
+        addQuad(
+            vertexConsumer, positionMatrix, color,
+            maxX, minY, minZ,
+            minX, minY, minZ,
+            minX, maxY, minZ,
+            maxX, maxY, minZ
+        )
+
         // left face
-        addQuad(buffer, positionMatrix, minX, minY, minZ, minX, minY, maxZ, minX, maxY, maxZ, minX, maxY, minZ, color)
+        addQuad(
+            vertexConsumer, positionMatrix, color,
+            minX, minY, minZ,
+            minX, minY, maxZ,
+            minX, maxY, maxZ,
+            minX, maxY, minZ
+        )
+
         // right face
-        addQuad(buffer, positionMatrix, maxX, minY, maxZ, maxX, minY, minZ, maxX, maxY, minZ, maxX, maxY, maxZ, color)
+        addQuad(
+            vertexConsumer, positionMatrix, color,
+            maxX, minY, maxZ,
+            maxX, minY, minZ,
+            maxX, maxY, minZ,
+            maxX, maxY, maxZ
+        )
+
         // top face
-        addQuad(buffer, positionMatrix, minX, maxY, maxZ, maxX, maxY, maxZ, maxX, maxY, minZ, minX, maxY, minZ, color)
+        addQuad(
+            vertexConsumer, positionMatrix, color,
+            minX, maxY, maxZ,
+            maxX, maxY, maxZ,
+            maxX, maxY, minZ,
+            minX, maxY, minZ
+        )
+
         // bottom face
-        addQuad(buffer, positionMatrix, minX, minY, minZ, maxX, minY, minZ, maxX, minY, maxZ, minX, minY, maxZ, color)
+        addQuad(
+            vertexConsumer, positionMatrix, color,
+            minX, minY, minZ,
+            maxX, minY, minZ,
+            maxX, minY, maxZ,
+            minX, minY, maxZ
+        )
     }
 
     private fun addQuad(
-        buffer: BufferBuilder,
-        positionMatrix: Matrix4fc,
+        vertexConsumer: VertexConsumer,
+        positionMatrix: Matrix4f,
+        color: Int,
         x1: Float, y1: Float, z1: Float,
         x2: Float, y2: Float, z2: Float,
         x3: Float, y3: Float, z3: Float,
-        x4: Float, y4: Float, z4: Float,
-        color: Int
+        x4: Float, y4: Float, z4: Float
     ) {
-        buffer.addVertex(positionMatrix, x1, y1, z1).setColor(color)
-        buffer.addVertex(positionMatrix, x2, y2, z2).setColor(color)
-        buffer.addVertex(positionMatrix, x3, y3, z3).setColor(color)
-        buffer.addVertex(positionMatrix, x4, y4, z4).setColor(color)
-    }
-    //?}
-
-    private fun drawFilledBox(pipeline: RenderPipeline) {
-        val builtBuffer = buffer!!.buildOrThrow()
-        val drawParameters = builtBuffer.drawState()
-        val format = drawParameters.format()
-
-        val vertices = upload(drawParameters, format, builtBuffer)
-
-        draw(pipeline, builtBuffer, drawParameters, vertices)
-
-        vertexBuffer!!.rotate()
-        buffer = null
-    }
-
-    private fun upload(drawParameters: DrawState, format: VertexFormat, builtBuffer: MeshData): GpuBuffer {
-        val vertexBufferSize = drawParameters.vertexCount() * format.vertexSize
-
-        if (vertexBuffer == null || vertexBuffer!!.size() < vertexBufferSize) {
-            vertexBuffer?.close()
-
-            vertexBuffer = MappableRingBuffer(
-                { "${HytilsRebornConstants.NAME} render pipeline" },
-                GpuBuffer.USAGE_VERTEX or GpuBuffer.USAGE_MAP_WRITE,
-                vertexBufferSize
-            )
-        }
-
-        val commandEncoder = RenderSystem.getDevice().createCommandEncoder()
-
-        commandEncoder.mapBuffer(
-            vertexBuffer!!.currentBuffer().slice(0, builtBuffer.vertexBuffer().remaining()/*? if >=1.21.11 {*/ .toLong() /*?}*/),
-            false,
-            true
-        ).use { mappedView ->
-            MemoryUtil.memCopy(builtBuffer.vertexBuffer(), mappedView.data())
-        }
-
-        return vertexBuffer!!.currentBuffer()
-    }
-
-    private fun draw(
-        pipeline: RenderPipeline,
-        builtBuffer: MeshData,
-        drawParameters: DrawState,
-        vertices: GpuBuffer
-    ) {
-        val indices: GpuBuffer?
-        val indexType: IndexType?
-
-        if (pipeline.vertexFormatMode == VertexFormat.Mode.QUADS) {
-            builtBuffer.sortQuads(allocator, RenderSystem.getProjectionType().vertexSorting())
-            indices = pipeline.vertexFormat.uploadImmediateIndexBuffer(builtBuffer.indexBuffer()!!)
-            indexType = builtBuffer.drawState().indexType()
-        } else {
-            val shapeIndexBuffer = RenderSystem.getSequentialBuffer(pipeline.vertexFormatMode)
-            indices = shapeIndexBuffer.getBuffer(drawParameters.indexCount())
-            indexType = shapeIndexBuffer.type()
-        }
-
-        val dynamicTransforms = RenderSystem.getDynamicUniforms().writeTransform(
-            RenderSystem.getModelViewMatrix(),
-            COLOR_MODULATOR,
-            /*? if >=1.21.11 {*/ MODEL_OFFSET /*?} else {*/ /*RenderSystem.getModelOffset() *//*?}*/,
-            /*? if >=1.21.11 {*/ TEXTURE_MATRIX /*?} else {*/ /*RenderSystem.getTextureMatrix() *//*?}*/,
-            /*? if <1.21.11 {*/ /*1f *//*?}*/
-        )
-        RenderSystem.getDevice()
-            .createCommandEncoder()
-            .createRenderPass(
-                { "${HytilsRebornConstants.NAME} render pipeline rendering" },
-                mc.mainRenderTarget.getColorTextureView()!!,
-                OptionalInt.empty(),
-                mc.mainRenderTarget.getDepthTextureView(),
-                OptionalDouble.empty()
-            ).use { renderPass ->
-                renderPass.setPipeline(pipeline)
-                RenderSystem.bindDefaultUniforms(renderPass)
-                renderPass.setUniform("DynamicTransforms", dynamicTransforms)
-
-                renderPass.setVertexBuffer(0, vertices)
-                renderPass.setIndexBuffer(indices, indexType)
-
-                renderPass.drawIndexed(0, 0, drawParameters.indexCount(), 1)
-            }
-        builtBuffer.close()
-    }
-
-    @JvmStatic
-    fun close() {
-        allocator.close()
-        vertexBuffer?.close()
-        vertexBuffer = null
+        vertexConsumer.addVertex(positionMatrix, x1, y1, z1).setColor(color)
+        vertexConsumer.addVertex(positionMatrix, x2, y2, z2).setColor(color)
+        vertexConsumer.addVertex(positionMatrix, x3, y3, z3).setColor(color)
+        vertexConsumer.addVertex(positionMatrix, x4, y4, z4).setColor(color)
     }
 }
