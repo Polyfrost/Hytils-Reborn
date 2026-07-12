@@ -2,6 +2,7 @@ package org.polyfrost.hytils.client.features.game
 
 import net.hypixel.data.type.GameType
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Items
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 
@@ -14,8 +15,12 @@ object HideHudElements {
         if (!shouldHideHudElements) return false
 
         val location = HypixelUtils.getLocation()
-
         if (!location.inGame() || location.gameType.isEmpty || location.serverName.orElse(null) == "limbo") {
+            if (location.inLobby() && location.gameType.orElse(null) == GameType.DUELS) {
+                // check if the player is in the battle pit
+                return player.inventory.getItem(8).item != Items.BARRIER
+            }
+
             // rudimentary check for whether the player has engaged in pvp
             return player.health == player.maxHealth
         }
