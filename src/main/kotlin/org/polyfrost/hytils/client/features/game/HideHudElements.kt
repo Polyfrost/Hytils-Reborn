@@ -1,19 +1,40 @@
 package org.polyfrost.hytils.client.features.game
 
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements
 import net.hypixel.data.type.GameType
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Items
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
+import org.polyfrost.oneconfig.utils.v1.dsl.mc
 
 object HideHudElements {
-    private val shouldHideHudElements
+    private val shouldHide
         get() = HytilsRebornConfig.isEnabled && HytilsRebornConfig.hideHudElements && HypixelUtils.isHypixel()
 
-    @JvmStatic
-    fun shouldHideHearts(player: Player): Boolean {
-        if (!shouldHideHudElements) return false
+    private val EMPTY_HUD_ELEMENT: HudElement = { _, _ -> }
 
+    fun init() {
+        HudElementRegistry.replaceElement(VanillaHudElements.HEALTH_BAR) { hudElement ->
+            if (shouldHide && shouldHideHearts()) EMPTY_HUD_ELEMENT else hudElement
+        }
+
+        HudElementRegistry.replaceElement(VanillaHudElements.FOOD_BAR) { hudElement ->
+            if (shouldHide && shouldHideHunger()) EMPTY_HUD_ELEMENT else hudElement
+        }
+
+        HudElementRegistry.replaceElement(VanillaHudElements.ARMOR_BAR) { hudElement ->
+            if (shouldHide && shouldHideArmorBar()) EMPTY_HUD_ELEMENT else hudElement
+        }
+
+        HudElementRegistry.replaceElement(VanillaHudElements.AIR_BAR) { hudElement ->
+            if (shouldHide && shouldHideAirBubbles()) EMPTY_HUD_ELEMENT else hudElement
+        }
+    }
+
+    private fun shouldHideHearts(): Boolean {
+        val player = mc.player ?: return false
         val location = HypixelUtils.getLocation()
         if (!location.inGame() || location.gameType.isEmpty || location.serverName.orElse(null) == "limbo") {
             if (location.inLobby() && location.gameType.orElse(null) == GameType.DUELS) {
@@ -51,15 +72,11 @@ object HideHudElements {
         return false
     }
 
-    @JvmStatic
-    fun shouldHideHunger(): Boolean {
-        if (!shouldHideHudElements) return false
-
+    private fun shouldHideHunger(): Boolean {
         val location = HypixelUtils.getLocation()
 
-        if (!location.inGame() || location.gameType.isEmpty || location.serverName.orElse(null) == "limbo") {
+        if (!location.inGame() || location.gameType.isEmpty || location.serverName.orElse(null) == "limbo")
             return true
-        }
 
         val gameMode = location.mode.orElse("")
 
@@ -83,15 +100,11 @@ object HideHudElements {
         return false
     }
 
-    @JvmStatic
-    fun shouldHideArmorBar(): Boolean {
-        if (!shouldHideHudElements) return false
-
+    private fun shouldHideArmorBar(): Boolean {
         val location = HypixelUtils.getLocation()
 
-        if (!location.inGame() || location.gameType.isEmpty || location.serverName.orElse(null) == "limbo") {
+        if (!location.inGame() || location.gameType.isEmpty || location.serverName.orElse(null) == "limbo")
             return true
-        }
 
         val gameMode = location.mode.orElse("")
 
@@ -112,15 +125,11 @@ object HideHudElements {
         return false
     }
 
-    @JvmStatic
-    fun shouldHideAirBubbles(): Boolean {
-        if (!shouldHideHudElements) return false
-
+    private fun shouldHideAirBubbles(): Boolean {
         val location = HypixelUtils.getLocation()
 
-        if (!location.inGame() || location.gameType.isEmpty || location.serverName.orElse(null) == "limbo") {
+        if (!location.inGame() || location.gameType.isEmpty || location.serverName.orElse(null) == "limbo")
             return true
-        }
 
         when (location.gameType.get()) {
             GameType.BUILD_BATTLE, GameType.REPLAY -> return true

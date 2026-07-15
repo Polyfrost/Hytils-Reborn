@@ -33,8 +33,6 @@
 		"client.events.SoundEngineMixin_SoundPlayEvent",
 		"client.heightoverlay.ModelBlockRendererMixin_HeightOverlay",
 		"client.hud.HudMixin_HardcoreHearts",
-		"client.hud.HudMixin_HideActionbar",
-		"client.hud.HudMixin_HideHudElements",
 		"client.hypixel.LocationMixin_FixLobbyStatus",
 		"client.tab.PlayerTabOverlayMixin_CleanerSkyBlockTab",
 		"client.tab.PlayerTabOverlayMixin_HideHeads",
