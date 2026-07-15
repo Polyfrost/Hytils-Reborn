@@ -26,6 +26,9 @@ class HytilsRebornMixinPlugin : IMixinConfigPlugin {
         add("client.chat.parameters.DrawingBackgroundGraphicsAccessMixin")
         add("client.chat.parameters.DrawingFocusedGraphicsAccessMixin")
         //?}
+
+        //? if <1.21.8
+        //add("client.hud.GuiMixin_HideHudElements")
     }
 
     override fun shouldApplyMixin(targetClassName: String?, mixinClassName: String?): Boolean = true
