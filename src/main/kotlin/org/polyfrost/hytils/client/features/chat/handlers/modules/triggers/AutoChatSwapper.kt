@@ -13,16 +13,15 @@ import org.polyfrost.oneconfig.api.notifications.v1.NotificationAction
 import org.polyfrost.oneconfig.api.notifications.v1.NotificationType
 import org.polyfrost.oneconfig.api.notifications.v1.Notifications
 import org.polyfrost.oneconfig.utils.v1.Multithreading
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 object AutoChatSwapper : ChatReceiveModule {
-    var shouldCancelChannelMessage = false
+    private var shouldCancelChannelMessage = false
 
     override fun onChatReceived(event: ChatReceiveEvent) {
         if (event.plainMessage.matches(LanguageData.PARTY_JOIN)) {
             ChatUtils.queueMessage("/chat party")
-            switchChattingTab("PARTY")
+            switchChattingTab("party")
 
             shouldCancelChannelMessage = true
             Multithreading.schedule({ shouldCancelChannelMessage = false }, 5L, TimeUnit.SECONDS)
@@ -34,7 +33,7 @@ object AutoChatSwapper : ChatReceiveModule {
             }
 
             ChatUtils.queueMessage("/chat $channel")
-            switchChattingTab(channel.uppercase(Locale.ROOT))
+            switchChattingTab(channel)
 
             shouldCancelChannelMessage = true
             Multithreading.schedule({ shouldCancelChannelMessage = false }, 5L, TimeUnit.SECONDS)
@@ -51,7 +50,12 @@ object AutoChatSwapper : ChatReceiveModule {
             && ChattingConfig.chatTabs
         ) {
             val currentTabs = ChatTabs.currentTabs
-            val tab = ChatTabs.tabs.find { it.name == channel }
+            val tab = ChatTabs.tabs.find {
+                val command = it.prefix ?: return@find false
+                command.startsWith("/${channel.first()}c", ignoreCase = true)
+                    || command.startsWith("/${channel.first()}chat", ignoreCase = true)
+            }
+
             if (tab != null) {
                 ChatTabs.currentTabs.clear()
                 ChatTabs.currentTabs.add(tab)
