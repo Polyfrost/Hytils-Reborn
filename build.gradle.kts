@@ -28,7 +28,7 @@ repositories {
         content { includeGroup("net.kyori") }
     }
     maven("https://maven.parchmentmc.org") {
-        content { includeGroup("org.parchmentmc") }
+        content { includeGroupAndSubgroups("org.parchmentmc") }
     }
     maven("https://maven.gegy.dev/releases") {
         content { includeGroup("dev.lambdaurora") }
