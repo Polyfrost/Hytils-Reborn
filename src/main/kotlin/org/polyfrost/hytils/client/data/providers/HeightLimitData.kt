@@ -18,14 +18,10 @@ object HeightLimitData : DataProvider {
         response?.asJsonArray?.forEach { element ->
             val gameType = GameType.valueOf(element.asJsonObject.get("gameType").asString)
             val innerMap = maps.getOrPut(gameType) { mutableMapOf() } as MutableMap
-            val snakeCaseName = element.asJsonObject.get("name").asString.lowercase(Locale.ROOT).replace(" ", "_")
-
-            val entry = MapEntry(
+            innerMap[element.asJsonObject.get("name").asString] = MapEntry(
                 minBuild = element.asJsonObject.get("minBuild").asInt,
                 maxBuild = element.asJsonObject.get("maxBuild").asInt,
             )
-
-            innerMap[snakeCaseName] = entry
         }
         this.maps = maps
     }
