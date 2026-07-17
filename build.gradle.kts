@@ -39,6 +39,10 @@ repositories {
     maven("https://api.modrinth.com/maven") {
         content { includeGroup("maven.modrinth") }
     }
+    //maven("https://maven.terraformersmc.com/releases") {
+    maven("https://maven.gnomecraft.net/releases/") {
+        content { includeGroup("com.terraformersmc") }
+    }
 }
 
 dependencies {
