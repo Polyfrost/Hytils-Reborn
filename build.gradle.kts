@@ -19,14 +19,26 @@ val requiredJava: JavaVersion = when {
 }
 
 repositories {
+    mavenCentral()
+    gradlePluginPortal()
+    google()
     maven("https://repo.polyfrost.org/releases")
     maven("https://repo.polyfrost.org/snapshots")
-    maven("https://central.sonatype.com/repository/maven-snapshots")
-    maven("https://maven.parchmentmc.org")
-    maven("https://maven.gegy.dev/releases")
-    maven("https://repo.hypixel.net/repository/Hypixel")
-    maven("https://api.modrinth.com/maven")
-    google()
+    maven("https://central.sonatype.com/repository/maven-snapshots") {
+        content { includeGroup("net.kyori") }
+    }
+    maven("https://maven.parchmentmc.org") {
+        content { includeGroup("org.parchmentmc") }
+    }
+    maven("https://maven.gegy.dev/releases") {
+        content { includeGroup("dev.lambdaurora") }
+    }
+    maven("https://repo.hypixel.net/repository/Hypixel") {
+        content { includeGroup("net.hypixel") }
+    }
+    maven("https://api.modrinth.com/maven") {
+        content { includeGroup("maven.modrinth") }
+    }
 }
 
 dependencies {
@@ -140,7 +152,7 @@ publishMods {
     displayName = modVersion
     version = "v$modVersion"
     changelog = changelogText
-    type = BETA
+    type = STABLE
 
     modLoaders.add("fabric")
 
