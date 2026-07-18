@@ -8,7 +8,8 @@ import com.mojang.renderpearl.api.pipeline.DepthStencilState
 
 //? if >=1.21.11 {
 import net.minecraft.client.renderer.rendertype.RenderSetup
-import net.minecraft.client.renderer.rendertype.RenderTypes
+import net.minecraft.gizmos.GizmoStyle
+import net.minecraft.gizmos.Gizmos
 import org.polyfrost.hytils.mixin.client.accessor.RenderTypeAccessor
 //?} else
 //import net.minecraft.client.renderer.RenderType
@@ -28,6 +29,7 @@ import net.minecraft.client.renderer.RenderPipelines
 import com.mojang.blaze3d.vertex.*
 import net.minecraft.client.gui.Font
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
+import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 //~ if <26.1 'util.LightCoordsUtil' -> 'client.renderer.LightTexture as LightCoordsUtil'
@@ -120,39 +122,36 @@ object RenderUtils {
     @JvmField
     var beaconDisableDepth = false
 
-    // FIXME broken interpolation on version 26.2
     fun renderFilledBox(
-        poseStack: PoseStack,
-        //? if >=26.2 {
-        submitNodeCollector: SubmitNodeCollector,
-        //?} else
-        //multiBufferSource: net.minecraft.client.renderer.MultiBufferSource,
-        pos: Vec3,
+        //? if <1.21.11 {
+        /*poseStack: PoseStack,
+        multiBufferSource: net.minecraft.client.renderer.MultiBufferSource,
         cameraPos: Vec3,
+        *///?}
+        pos: BlockPos,
         color: PolyColor,
         alpha: Float = 0.8f
     ) {
-        //? if >=26.2 {
-        submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.debugQuads()) { _, vertexConsumer ->
+        //? if >=1.21.11 {
+        Gizmos.cuboid(pos, GizmoStyle.fill(color.withAlpha(alpha).argb))
         //?} else {
-        /*//~ if <1.21.11 'RenderTypes' -> 'RenderType'
-        multiBufferSource.getBuffer(RenderTypes.debugQuads()).also { vertexConsumer ->
+        /*val vertexConsumer = multiBufferSource.getBuffer(RenderType.debugQuads())
+
+        poseStack.pushPose()
+        poseStack.translate(
+            pos.x - cameraPos.x,
+            pos.y - cameraPos.y,
+            pos.z - cameraPos.z
+        )
+
+        addBox(
+            poseStack.last().pose(), vertexConsumer, color.withAlpha(alpha).argb,
+            0f - Z_FIGHTING_OFFSET, 0f - Z_FIGHTING_OFFSET, 0f - Z_FIGHTING_OFFSET,
+            1f + Z_FIGHTING_OFFSET, 1f + Z_FIGHTING_OFFSET, 1f + Z_FIGHTING_OFFSET
+        )
+
+        poseStack.popPose()
         *///?}
-            poseStack.pushPose()
-            poseStack.translate(
-                pos.x - cameraPos.x,
-                pos.y - cameraPos.y,
-                pos.z - cameraPos.z
-            )
-
-            addBox(
-                poseStack.last().pose(), vertexConsumer, color.withAlpha(alpha).argb,
-                0f - Z_FIGHTING_OFFSET, 0f - Z_FIGHTING_OFFSET, 0f - Z_FIGHTING_OFFSET,
-                1f + Z_FIGHTING_OFFSET, 1f + Z_FIGHTING_OFFSET, 1f + Z_FIGHTING_OFFSET
-            )
-
-            poseStack.popPose()
-        }
     }
 
     fun renderText(
