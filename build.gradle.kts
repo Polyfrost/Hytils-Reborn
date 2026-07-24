@@ -75,6 +75,9 @@ dependencies {
 
     // needed for height overlay compatibility
     modCompileOnly("maven.modrinth:sodium:mc$mcVersion-${property("deps.sodium")}-fabric")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:6.1.2")
+    testImplementation("net.fabricmc:fabric-loader-junit:${property("deps.fabric_loader")}")
 }
 
 loom {
@@ -99,6 +102,10 @@ tasks {
 
         filesMatching("fabric.mod.json") { expand(props) }
         filesMatching("mixins.*.json") { expand("java" to "JAVA_${requiredJava.majorVersion}") }
+    }
+
+    test {
+        useJUnitPlatform()
     }
 
     jar {

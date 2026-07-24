@@ -24,6 +24,11 @@ build
 .nb-gradle
 .nb-gradle-properties
 
+# unit tests
+versions/*/.fabric
+versions/*/logs
+versions/*/mods
+
 # other
 run
 .DS_Store
