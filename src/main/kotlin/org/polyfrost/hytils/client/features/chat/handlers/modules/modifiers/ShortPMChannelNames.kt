@@ -10,18 +10,35 @@ import org.polyfrost.hytils.client.features.chat.handlers.ChatReceiveModule
 
 object ShortPMChannelNames : ChatReceiveModule {
     override fun onChatReceived(event: ChatReceiveEvent) {
-        if (!event.plainMessage.matches(LanguageData.PRIVATE_MESSAGE)) return
+        val type = LanguageData.PRIVATE_MESSAGE.matchEntire(event.plainMessage)
+            ?.groups?.get("type")?.value ?: return
+        val isOutgoing = type == "To"
+        val channelName = "$type "
 
-        val type = (event.message.contents as? PlainTextContents)?.text() ?: return
-        val isOutgoing = type.trim() == "To"
+        val rootText = (event.message.contents as? PlainTextContents)?.text() ?: return
+        val parts = buildList {
+            if (rootText.isNotEmpty()) add(Component.literal(rootText).withStyle(event.message.style))
+            addAll(event.message.siblings)
+        }
 
-        val player = event.message.siblings[0]
-        val colon = event.message.siblings[1]
-        val message = event.message.siblings[2]
+        val message = Component.empty().withStyle(event.message.style).append(
+            Component.literal("PM ${if (isOutgoing) ">" else "<"} ")
+                .withStyle(if (isOutgoing) ChatFormatting.LIGHT_PURPLE else ChatFormatting.DARK_PURPLE)
+        )
 
-        event.message = Component.literal("PM ${if (isOutgoing) ">" else "<"} ")
-            .withStyle(if (isOutgoing) ChatFormatting.LIGHT_PURPLE else ChatFormatting.DARK_PURPLE)
-            .append(player).append(colon).append(message)
+        var shortened = false
+        for (part in parts) {
+            if (!shortened && part.siblings.isEmpty() && part.string.startsWith(channelName)) {
+                shortened = true
+
+                val remainder = part.string.removePrefix(channelName)
+                if (remainder.isNotEmpty()) message.append(Component.literal(remainder).withStyle(part.style))
+            } else {
+                message.append(part)
+            }
+        }
+
+        event.message = message
     }
 
     override val isEnabled
