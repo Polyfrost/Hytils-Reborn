@@ -9,7 +9,7 @@ object HeightLimitData : DataProvider {
     @Volatile var maps = EnumMap<GameType, Map<String, MapEntry>>(GameType::class.java)
 
     override val apiBase
-        get() = "https://data.polyfrost.org/hlm"
+        get() = "https://data-v2.polyfrost.org/hlm"
 
     override fun load() {
         val response = JsonUtils.parseFromUrl("$apiBase/trans-rights-are-human-rights.json") // so true
