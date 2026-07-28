@@ -2,7 +2,7 @@ mod.name = "Hytils Reborn"
 mod.description = "Hypixel-focused Quality of Life mod."
 mod.id = "hytils-reborn"
 mod.group = "org.polyfrost"
-mod.version = "2.0.1"
+mod.version = "2.0.2"
 
 publish.modrinth.id = "nF6YaBfO"
 
