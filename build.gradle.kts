@@ -21,6 +21,7 @@ val requiredJava: JavaVersion = when {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     gradlePluginPortal()
     google()

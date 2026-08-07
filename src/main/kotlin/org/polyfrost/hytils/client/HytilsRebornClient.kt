@@ -3,15 +3,12 @@ package org.polyfrost.hytils.client
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
 //? if >=26.1 {
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents
 //?} else if >=1.21.10 {
 /*import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents
 *///?} else
 //import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
-import net.hypixel.modapi.HypixelModAPI
-import net.hypixel.modapi.packet.impl.clientbound.ClientboundHelloPacket
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.commands.impl.*
 import org.polyfrost.hytils.client.data.providers.*
@@ -32,10 +29,6 @@ import org.slf4j.LoggerFactory
 
 object HytilsRebornClient {
     val LOGGER: Logger = LoggerFactory.getLogger(HytilsRebornConstants.NAME)
-
-    @JvmStatic
-    var onHypixel = false
-        private set
 
     fun initialize() {
         HytilsRebornConfig.preload()
@@ -110,8 +103,5 @@ object HytilsRebornClient {
             //? if >=26.1 <26.2
             //context.bufferSource().endBatch()
         }
-
-        HypixelModAPI.getInstance().createHandler(ClientboundHelloPacket::class.java) { onHypixel = true }
-        ClientPlayConnectionEvents.DISCONNECT.register { _, _ -> onHypixel = false }
     }
 }
