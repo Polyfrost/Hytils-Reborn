@@ -13,7 +13,7 @@ val modVersion: String = sc.properties["mod.version"]
 val mcVersion = sc.current.version
 
 version = "$modVersion+$mcVersion"
-base.archivesName = modName
+base.archivesName = modId
 
 val requiredJava: JavaVersion = when {
     sc.current.parsed >= "26.1" -> JavaVersion.VERSION_25
