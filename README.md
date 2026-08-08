@@ -34,7 +34,6 @@ you would want while on Hypixel, including Chat Restylers, Height Overlay, Messa
 - **Player Count on Player Leave** - Include the player count when players leave.
 - **Player Count Padding** - Place zeros at the beginning of the player count to align with the max player count.
 - **Clean Separator Lines** - Make line separators smoother and properly trimmed to the width of chat.
-- **Fix Centered Messages** - Properly center Hypixel server messages based on the width of chat.
 - **White Chat** - Make nons' chat messages appear as the normal chat message color.
 - **White Private Messages** - Make private messages appear as the normal chat message color.
 - **Colored Friend/Guild Statuses** - Colors the join/leave status of friends and guild members.

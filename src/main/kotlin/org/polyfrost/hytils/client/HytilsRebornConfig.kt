@@ -257,13 +257,6 @@ object HytilsRebornConfig : Config(
     var cleanSeparatorLines = true
 
     @Switch(
-        title = "Fix Centered Messages",
-        description = "Properly center Hypixel server messages based on the width of chat.",
-        category = "Chat", subcategory = "Visual"
-    )
-    var fixCenteredMessages = true
-
-    @Switch(
         title = "White Chat",
         description = "Make nons' chat messages appear as the normal chat message color.",
         category = "Chat", subcategory = "Visual"
@@ -1273,7 +1266,6 @@ object HytilsRebornConfig : Config(
 
         //~ if <26.2 'gui.hud' -> 'gui' {
         addCallback("cleanSeparatorLines") { mc.execute(mc.gui.hud.chat::rescaleChat) }
-        addCallback("fixCenteredMessages") { mc.execute(mc.gui.hud.chat::rescaleChat) }
         //~}
 
         addDependency("chatEmotesReplacementMode", "replaceChatEmotes")

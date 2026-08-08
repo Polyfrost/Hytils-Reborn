@@ -24,7 +24,6 @@ import net.minecraft.util.FormattedCharSequence
 import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatGraphics
 import org.polyfrost.hytils.client.features.chat.enhancements.core.ChatTextBuilder
 import org.polyfrost.hytils.client.features.chat.enhancements.core.CustomChatLine
-import org.polyfrost.hytils.client.features.chat.enhancements.lines.CenteredLine
 import org.polyfrost.hytils.client.features.chat.enhancements.lines.LabeledSeparatorLine
 import org.polyfrost.hytils.client.features.chat.enhancements.lines.SeparatorLine
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
@@ -32,7 +31,7 @@ import org.polyfrost.oneconfig.utils.v1.dsl.mc
 object ChatEnhancements {
     const val DEFAULT_CHAT_WIDTH = 320
 
-    private val parsers = listOf(CenteredLine, SeparatorLine, LabeledSeparatorLine)
+    private val parsers = listOf(SeparatorLine, LabeledSeparatorLine)
 
     @JvmStatic
     fun parseChatLines(component: Component, chatWidth: Int, font: Font): List<FormattedCharSequence> = buildList {
