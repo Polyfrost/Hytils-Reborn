@@ -11,7 +11,7 @@ import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 
-// TODO: add skywars support (already supported in the api, but we only recolor wool & terracotta)
+// TODO: add skywars support the api already has it but we only recolor wool and terracotta
 object HeightOverlay {
     private val ALLOWED_TERRACOTTA_COLORS = setOf(
         MapColor.TERRACOTTA_RED, MapColor.TERRACOTTA_BLUE, MapColor.TERRACOTTA_GREEN, MapColor.TERRACOTTA_YELLOW

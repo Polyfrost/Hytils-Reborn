@@ -120,7 +120,7 @@ object RenderUtils {
     @JvmField
     var beaconDisableDepth = false
 
-    // FIXME: not 'interpolated' correctly on 26.2
+    // FIXME broken interpolation on version 26.2
     fun renderFilledBox(
         poseStack: PoseStack,
         //? if >=26.2 {
@@ -269,7 +269,7 @@ object RenderUtils {
         poseStack.popPose()
     }
 
-    // FIXME: broken on 26.1 only ("works" if rendered in `LevelRenderEvents.AFTER_TRANSLUCENT_TERRAIN`)
+    // FIXME broken on version 26.1 only but works if rendered in LevelRenderEvents AFTER_TRANSLUCENT_TERRAIN
     fun renderBeaconBeam(
         poseStack: PoseStack,
         //? if >=1.21.10 {

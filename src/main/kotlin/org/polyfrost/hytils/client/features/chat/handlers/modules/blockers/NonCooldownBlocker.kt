@@ -19,7 +19,7 @@ object NonCooldownBlocker : ChatSendModule {
     private const val COOLDOWN_SECONDS = 3L
 
     override fun onChatSend(event: ChatSendEvent) {
-        if (event.message.startsWith("/")) return // FIXME: can be bypassed by `/ac` etc
+        if (event.message.startsWith("/")) return // FIXME: bypassable via chat commands like `/ac`
 
         val rank = HypixelUtils.getPlayerInfo().packageRank
         if (rank.isPresent && rank.get() != PackageRank.NONE) return

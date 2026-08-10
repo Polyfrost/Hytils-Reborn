@@ -16,7 +16,7 @@ object HideHudElements {
         val location = HypixelUtils.getLocation()
 
         if (!location.inGame() || location.gameType.isEmpty || location.serverName.orElse(null) == "limbo") {
-            // rudimentary check if player has engaged in pvp or something
+            // rudimentary check for whether the player has engaged in pvp
             return player.health == player.maxHealth
         }
 
@@ -39,7 +39,7 @@ object HideHudElements {
             "HOLE_IN_THE_WALL", "SOCCER", "DRAW_THEIR_THING", "DROPPER" ->
                 return player.health == player.maxHealth
 
-            // game uses lowered health for decoration & does not alter gameplay
+            // game uses lowered health for decoration and does not alter gameplay
             "ENDER" -> return true
         }
 

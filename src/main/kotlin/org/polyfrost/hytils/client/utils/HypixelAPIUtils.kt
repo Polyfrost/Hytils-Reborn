@@ -19,7 +19,7 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 
-// FIXME: Polyfrost's Ursa Minor instance seems to be broken
+// FIXME: polyfrost ursa minor instance seems to be broken
 object HypixelAPIUtils {
     private const val API_BASE = "https://api.polyfrost.org/ursa/v1/hypixel"
 
@@ -35,14 +35,8 @@ object HypixelAPIUtils {
     private val playerUUID: String
         get() = mc.user.profileId.toString().replace("-", "")
 
-    /**
-     * Gets the player's guild experience.
-     */
     fun getGEXP(): String? = getGEXPFromUUID(playerUUID)
 
-    /**
-     * Gets the specified player's guild experience.
-     */
     fun getGEXP(username: String): String? {
         val uuid = getUUID(username) ?: return null
         return getGEXPFromUUID(uuid)
@@ -58,14 +52,8 @@ object HypixelAPIUtils {
         return member.getAsJsonObject("expHistory")?.get(currentDate)?.asInt?.toString()
     }
 
-    /**
-     * Gets the player's weekly guild experience.
-     */
     fun getWeeklyGEXP(): String? = getWeeklyGEXPFromUUID(playerUUID)
 
-    /**
-     * Gets the specified player's weekly guild experience.
-     */
     fun getWeeklyGEXP(username: String): String? {
         val uuid = getUUID(username) ?: return null
         return getWeeklyGEXPFromUUID(uuid)
@@ -80,22 +68,13 @@ object HypixelAPIUtils {
         return expHistory.entrySet().sumOf { it.value.asInt }.toString()
     }
 
-    /**
-     * Gets the player's current winstreak.
-     */
     fun getWinstreak(): String? = getWinstreakFromUUID(playerUUID)
 
-    /**
-     * Gets the specified player's current winstreak for the current game.
-     */
     fun getWinstreak(username: String): String? {
         val uuid = getUUID(username) ?: return null
         return getWinstreakFromUUID(uuid)
     }
 
-    /**
-     * Gets the specified player's current winstreak for the specified game.
-     */
     fun getWinstreak(username: String, game: String?): String? {
         val uuid = getUUID(username) ?: return null
         return getWinstreakFromUUID(uuid, game)
@@ -123,9 +102,7 @@ object HypixelAPIUtils {
     }
 
     /**
-     * Gets the Hypixel rank of the specified player.
-     *
-     * @return Player rank, [RankType.UNKNOWN] if the player does not exist or the API key is empty
+     * @return [RankType.UNKNOWN] if the player does not exist or the API key is empty
      */
     fun getRank(username: String): RankType {
         val uuid = getUUID(username) ?: return RankType.UNKNOWN
@@ -146,9 +123,6 @@ object HypixelAPIUtils {
         }
     }
 
-    /**
-     * Gets a UUID based on the username provided.
-     */
     fun getUUID(username: String): String? {
         try {
             val maybeUuidResponse = JsonUtils.parseFromUrl("https://api.mojang.com/users/profiles/minecraft/$username")

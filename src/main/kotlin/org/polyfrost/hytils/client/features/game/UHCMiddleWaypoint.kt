@@ -15,7 +15,7 @@ import kotlin.math.hypot
 import kotlin.math.roundToInt
 
 object UHCMiddleWaypoint {
-    private val pos = Vec3(0.0, 70.0, 0.0) // y = 70 is completely arbitrary, just slightly above sea level
+    private val pos = Vec3(0.0, 70.0, 0.0) // y is arbitrary just slightly above sea level
 
     @Subscribe
     fun onPostLevelRender(event: PostLevelRenderEvent) {

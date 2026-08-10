@@ -10,7 +10,6 @@ object DiscordSafetyWarningRemover : ChatReceiveModule {
         if (event.unformattedMessage.contains(LanguageData.DISCORD_SAFETY_WARNING)) {
             val message = event.message.copy()
             message.siblings.removeIf { it.string == LanguageData.DISCORD_SAFETY_WARNING }
-            // trim any newlines/whitespace-only siblings left behind
             while (message.siblings.isNotEmpty() && message.siblings.last().string.isBlank()) {
                 message.siblings.removeLast()
             }

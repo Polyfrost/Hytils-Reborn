@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@SuppressWarnings("MixinSuperClass") // no idea why it says this
+@SuppressWarnings("MixinSuperClass")
 @Mixin(BlockRenderer.class)
 abstract class BlockRendererMixin_HeightOverlay_Sodium extends AbstractBlockRenderContext {
     @Inject(method = "tintQuad", at = @At("TAIL"))

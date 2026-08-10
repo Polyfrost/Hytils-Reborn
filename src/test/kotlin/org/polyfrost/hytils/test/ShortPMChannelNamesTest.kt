@@ -12,9 +12,6 @@ import org.junit.jupiter.api.Test
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
 import org.polyfrost.hytils.client.features.chat.handlers.modules.modifiers.ShortPMChannelNames
 
-/**
- * Verifies that shortening private message channel names keeps the message body intact.
- */
 class ShortPMChannelNamesTest {
 
     companion object {

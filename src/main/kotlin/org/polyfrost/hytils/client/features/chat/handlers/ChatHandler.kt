@@ -19,7 +19,6 @@ object ChatHandler {
 
     init {
         listOf(
-            // blockers
             AdBlocker, AntiGG, AntiGL, BedwarsAdvertisementsRemover,
             BridgeOwnGoalDeathRemover, ConnectionStatusRemover,
             CurseOfSpamRemover, DiscordSafetyWarningRemover, DuelsBlockTrail,
@@ -31,19 +30,17 @@ object ChatHandler {
             ShoutBlocker, SkyblockWelcomeRemover, SoulWellAnnouncerRemover,
             StatsMessageRemover, TicketMachineRemover, TipMessageRemover,
 
-            // modifiers
             ChatEmoteReplacer, ColoredPlayerConnectionStatus,
             GameStartCompactor, GameStatusRestyler, ShortChannelNames,
             ShortPMChannelNames, WhiteNonChat, WhitePrivateMessages,
 
-            // triggers
             AutoAFKReply, AutoChatSwapper, AutoCheckStats, AutoFriend,
             AutoGG, AutoGL, AutoPartyWarn, AutoPartyWarpConfirm,
             AutoQueue, AutoWB, GuildWelcomer, BroadcastAchievement,
             BroadcastLevelUp, SilentRemoval, ThankWatchdog
         ).forEach { this.registerModule(it) }
 
-        // needs additional event listeners
+        // these also listen for non chat events
         listOf(
             GuildMOTD, AutoCheckStats, AutoGG, AutoQueue
         ).forEach { EventManager.INSTANCE.register(it) }

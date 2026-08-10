@@ -14,7 +14,7 @@ stonecutter {
 
             string(current.parsed < "1.21.11") {
                 replace("Identifier", "ResourceLocation")
-                replace("GameIdentifiersData", "GameIdentifiersData") // needed to prevent "GameResourceLocationsData"
+                replace("GameIdentifiersData", "GameIdentifiersData") // stops the Identifier swap from mangling this name
             }
         }
     }

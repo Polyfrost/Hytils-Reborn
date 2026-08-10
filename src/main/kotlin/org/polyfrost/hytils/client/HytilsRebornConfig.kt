@@ -594,7 +594,6 @@ object HytilsRebornConfig : Config(
     )
     var removeDiscordSafetyWarning = false
 
-    // AutoWB
     @Switch(
         title = "AutoWB",
         description = "Says a configurable message to your friends/guild when they join.",
@@ -1248,13 +1247,11 @@ object HytilsRebornConfig : Config(
     //endregion
 
     init {
-        // automatic dependencies
         addDependency("autoQueueDelay", "autoQueue")
         addDependency("gexpMode", "autoGetGEXP")
         addDependency("disableNotifyMiningFatigueSkyblock", "notifyMiningFatigue")
         addDependency("miningFatigueNotificationType", "notifyMiningFatigue")
 
-        // chat dependencies/callbacks
         listOf(
             "autoGGSendSecondMessage", "casualAutoGG", "autoGGMessage",
             "autoGGFirstMsgDelay", "autoGGSecondMessage", "autoGGSecondMsgDelay"
@@ -1286,7 +1283,6 @@ object HytilsRebornConfig : Config(
             "autoWBMessage7", "autoWBMessage8", "autoWBMessage9", "autoWBMessage10"
         ).forEach { addDependency(it, "autoWB") }
 
-        // game dependencies/callbacks
         addDependency("blockNumber", "blockNotify")
         addDependency("blockNotifySound", "blockNotify")
 

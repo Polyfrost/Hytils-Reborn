@@ -14,9 +14,9 @@ object LimboLimiter {
         return if (limboJoinTime == -1L) {
             original
         } else if (Util.getMillis() - limboJoinTime > 600L * 1000L) {
-            10 // FramerateLimitTracker.FramerateThrottleReason.LONG_AFK
+            10 // matches the vanilla LONG_AFK throttle
         } else if (Util.getMillis() - limboJoinTime > 5L * 1000L) {
-            min(framerateLimit, 30) // FramerateLimitTracker.FramerateThrottleReason.SHORT_AFK
+            min(framerateLimit, 30) // matches the vanilla SHORT_AFK throttle
         } else {
             original
         }

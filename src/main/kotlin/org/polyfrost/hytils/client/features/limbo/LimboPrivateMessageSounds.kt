@@ -9,8 +9,7 @@ import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils
 import org.polyfrost.oneconfig.utils.v1.dsl.mc
 
-// FIXME: this works with short pm channels but it might just be a race condition
-//  if [ChatHandler] is registered after this, it seems to not work
+// FIXME: possible race condition it seems to stop working if ChatHandler is registered after this
 object LimboPrivateMessageSounds {
     @Subscribe
     fun onChatReceived(event: ChatReceiveEvent) {

@@ -42,7 +42,7 @@ object TabChanger {
         return component
     }
 
-    // FIXME: header and footer contains a hover event in the url on 1.21.4 for some reason
+    // FIXME: header and footer contain a hover event in the url on version 1.21.4
     @JvmStatic
     fun modifyHeader(header: Component): Component {
         if (!HytilsRebornConfig.hideAdsInTab) return header
@@ -60,7 +60,7 @@ object TabChanger {
             sibling == LanguageData.FOOTER_ADVERTISEMENT || sibling.siblings.contains(LanguageData.FOOTER_ADVERTISEMENT)
         }
 
-        // trim any newlines/whitespace-only siblings left behind
+        // trim blank siblings left behind by the removal above
         while (footer.siblings.isNotEmpty() && footer.siblings.last().string.isBlank()) {
             footer.siblings.removeLast()
         }

@@ -48,20 +48,16 @@ object HytilsRebornClient {
         }
 
         listOf(
-            // misc features
             ChatHandler, SilentLobby,
 
-            // game features
             BlockCountNotifier, CountdownTitles,
             GameEndingTitles, GameStartingTitles,
             ChestHighlighter, HardcoreStatus, HeightOverlay,
             MiniWallsMiddleBeacon, PitLagReducer,
             SumoRenderDistance, UHCMiddleWaypoint,
 
-            // general features
             ArmorStandHider,
 
-            // limbo features
             LimboLimiter, LimboPrivateMessageSounds,
         ).forEach { EventManager.INSTANCE.register(it) }
 
@@ -73,7 +69,7 @@ object HytilsRebornClient {
             ).forEach {
                 val command = dispatcher.register(it.getCommand())
                 it.getAliases().forEach { alias ->
-                    // https://github.com/Mojang/brigadier/issues/46
+                    // brigadier has no alias support so the node is copied by hand
                     val builder = LiteralArgumentBuilder.literal<FabricClientCommandSource>(alias)
                         .requires(command.requirement)
                         .forward(command.redirect, command.redirectModifier, command.isFork)

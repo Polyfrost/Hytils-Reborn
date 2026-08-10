@@ -38,11 +38,9 @@ data class LabeledSeparatorLine(
         val textColor = ARGB.color(textAlpha, lineColor)
         val shadowColor = ARGB.scaleRGB(textColor, 0.25f)
 
-        // left separator line
         graphics.fill(lineX + 1, separatorY + 1, start - 4, separatorY + SeparatorLine.THICKNESS + 1, shadowColor)
         graphics.fill(lineX, separatorY, start - 5, separatorY + SeparatorLine.THICKNESS, textColor)
 
-        // right separator line
         graphics.fill(end + 5, separatorY + 1, lineX + lineWidth, separatorY + SeparatorLine.THICKNESS + 1, shadowColor)
         graphics.fill(end + 4, separatorY, lineX + lineWidth - 1, separatorY + SeparatorLine.THICKNESS, textColor)
     }
@@ -69,7 +67,7 @@ data class LabeledSeparatorLine(
             val middleWidth = font.width(middleText)
             val leadingWidth = font.width(text.visualOrderText.subText(0, leftSeparatorEnd - 1))
 
-            // off-center by more than 6 pixels - probably not a centered line
+            // off centre by over 6 pixels so probably not a separator line
             if (abs(ChatEnhancements.DEFAULT_CHAT_WIDTH / 2 - (leadingWidth + middleWidth / 2)) > 6) return null
 
             val wrappedList = ComponentRenderUtils.wrapComponents(middleText, chatWidth, font).map { it.trim() }

@@ -51,7 +51,7 @@ object AutoQueue : ChatReceiveModule {
     fun onWorldLoad(event: WorldEvent.Load) {
         gameEnded = false
 
-        // stop the command from being spammed
+        // only rearm in the overworld lobby so the command is not spammed
         if (event.getWorld<ClientLevel>().dimensionTypeRegistration().`is`(BuiltinDimensionTypes.OVERWORLD) && sentCommand) {
             sentCommand = false
         }

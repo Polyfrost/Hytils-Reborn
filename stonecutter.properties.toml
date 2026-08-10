@@ -10,10 +10,11 @@ deps.fabric_loader = "0.19.3"
 loomx.loom_version = "1.17-SNAPSHOT"
 
 deps.oneconfig = "1.0.0-beta.7"
+deps.junit = "6.1.2"
 
 ["1.21.4"]
-deps.parchment = "2025.03.23"
-deps.yalmm = "3"
+mod.mc_compat = "1.21.4"
+mod.mc_releases = ["1.21.4"]
 
 deps.fabric_api = "0.119.4+1.21.4"
 deps.hypixel_mod_api = "1.0.1"
@@ -21,8 +22,8 @@ deps.hypixel_mod_api_fabric = "1.0.1+build.1+mc1.21"
 deps.sodium = "0.6.13"
 
 ["1.21.5"]
-deps.parchment = "2025.06.15"
-deps.yalmm = "3"
+mod.mc_compat = "1.21.5"
+mod.mc_releases = ["1.21.5"]
 
 deps.fabric_api = "0.128.2+1.21.5"
 deps.hypixel_mod_api = "1.0.1"
@@ -30,8 +31,8 @@ deps.hypixel_mod_api_fabric = "1.0.1+build.1+mc1.21"
 deps.sodium = "0.6.13"
 
 ["1.21.8"]
-deps.parchment = "2025.09.14"
-deps.yalmm = "3"
+mod.mc_compat = "1.21.8"
+mod.mc_releases = ["1.21.8"]
 
 deps.fabric_api = "0.136.1+1.21.8"
 deps.hypixel_mod_api = "1.0.1"
@@ -39,8 +40,8 @@ deps.hypixel_mod_api_fabric = "1.0.1+build.1+mc1.21"
 deps.sodium = "0.7.3"
 
 ["1.21.10"]
-deps.parchment = "2025.10.12"
-deps.yalmm = "3"
+mod.mc_compat = "1.21.10"
+mod.mc_releases = ["1.21.10"]
 
 deps.fabric_api = "0.138.4+1.21.10"
 deps.hypixel_mod_api = "1.0.1"
@@ -48,8 +49,8 @@ deps.hypixel_mod_api_fabric = "1.0.1+build.1+mc1.21"
 deps.sodium = "0.7.3"
 
 ["1.21.11"]
-deps.parchment = "2025.12.20"
-deps.yalmm = "3"
+mod.mc_compat = "1.21.11"
+mod.mc_releases = ["1.21.11"]
 
 deps.fabric_api = "0.141.3+1.21.11"
 deps.hypixel_mod_api = "1.0.1"
@@ -67,6 +68,7 @@ deps.sodium = "0.8.7"
 
 ["26.2"]
 mod.mc_compat = "~26.2"
+mod.mc_releases = ["26.2"]
 
 deps.fabric_api = "0.153.0+26.2"
 deps.hypixel_mod_api = "1.0.2"

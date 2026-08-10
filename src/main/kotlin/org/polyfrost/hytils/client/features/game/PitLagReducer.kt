@@ -30,12 +30,10 @@ object PitLagReducer {
         if (entity !is LivingEntityRenderState) return
 
         if (pitSpawnPos == -1.0) {
-            // Update the spawn position by finding an armor stand in spawn.
             if (entity is ArmorStandRenderState && entity.nameTag?.string.equals("JUMP! FIGHT!")) {
                 pitSpawnPos = entity.y - 5
             }
         } else if (HytilsRebornConfig.pitLagReducer) {
-            // If the entity being rendered is at spawn, and you are below spawn, cancel the rendering.
             if (entity.y > pitSpawnPos && mc.player?.y!! < pitSpawnPos) {
                 event.cancelled = true
             }

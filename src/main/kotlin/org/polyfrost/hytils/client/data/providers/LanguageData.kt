@@ -93,9 +93,9 @@ object LanguageData : DataProvider {
     // https://regex101.com/r/QRhTgs
     val CHAT_ADVERTISEMENTS by regex(
         "(?i)/?(?:party join|join party|p join|party me|duel me|guild join|join guild|g join) \\w{1,16}", // commands with optional slash
-        "/(?:visit|ah|duel \\w{1,16})", // commands with mandatory slash (i.e. "commonly" used words)
+        "/(?:visit|ah|duel \\w{1,16})", // commands with mandatory slash
         "youtube\\.com|youtu\\.be|twitch\\.tv|ttv/|discord\\.gg", // socials
-        "my ah|my smp", // "my" advertisements
+        "my ah|my smp", // my advertisements
         "lowballing|lowbaling|lowvaling|lowvaluing|lowballer" // skyblock lowballers
     )
     val CHAT_RANK_BEGGING by regex(
@@ -212,7 +212,7 @@ object LanguageData : DataProvider {
         "The game starts in", "The game is starting in", "Cages open in:", "You will respawn in",
         "The Murderer gets their sword in", "You get your sword in", "The alpha infected will be chosen in",
         "Kill contracts will be issued in", "The Murderers get their swords in", "You can start shooting in", "The door opens in",
-        // "⁎" prefix needed to ensure compat between game start compactor & game status restyler
+        // ⁎ prefix ensures compat between game start compactor and game status restyler
         prefix = "(?:⁎ )?(?<title>", suffix = ") (?<time>\\d{1,3}) (?<unit>(seconds?!))(?: .\\d+.|)"
     )
 
@@ -330,7 +330,6 @@ object LanguageData : DataProvider {
         private var cachedPattern: String? = null
 
         override fun getValue(thisRef: Any?, property: KProperty<*>): Regex {
-            // use patterns fetched from the api, otherwise use the default pattern
             val corePattern = if (defaultPatterns.size == 1) defaultPatterns.first() else defaultPatterns.joinToString("|") { "(?:$it)" }
             val fallback = prefix + corePattern + suffix
             val pattern = fetchedPatterns[property.name] ?: fallback
