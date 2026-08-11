@@ -4,9 +4,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("dev.kikugie.loom-back-compat")
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.bloom)
-    alias(libs.plugins.mod.publish)
+    id("org.jetbrains.kotlin.jvm") version "2.4.10"
+    id("dev.deftu.gradle.bloom") version "0.2.0"
+    id("me.modmuss50.mod-publish-plugin") version "2.2.0"
 }
 
 val modid: String = sc.properties["mod.id"]

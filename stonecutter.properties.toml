@@ -9,8 +9,8 @@ publish.modrinth.id = "nF6YaBfO"
 deps.fabric_loader = "0.19.3"
 loomx.loom_version = "1.17-SNAPSHOT"
 
-deps.oneconfig = "1.0.0-beta.7"
-deps.junit = "6.1.2"
+deps.oneconfig = "1.1.4"
+deps.junit = "6.1.3"
 
 ["1.21.4"]
 mod.mc_compat = "1.21.4"
@@ -52,7 +52,7 @@ deps.sodium = "0.7.3"
 mod.mc_compat = "1.21.11"
 mod.mc_releases = ["1.21.11"]
 
-deps.fabric_api = "0.141.3+1.21.11"
+deps.fabric_api = "0.141.6+1.21.11"
 deps.hypixel_mod_api = "1.0.1"
 deps.hypixel_mod_api_fabric = "1.0.1+build.1+mc1.21"
 deps.sodium = "0.8.7"
@@ -70,7 +70,7 @@ deps.sodium = "0.8.7"
 mod.mc_compat = "~26.2"
 mod.mc_releases = ["26.2"]
 
-deps.fabric_api = "0.153.0+26.2"
+deps.fabric_api = "0.157.0+26.2"
 deps.hypixel_mod_api = "1.0.2"
 deps.hypixel_mod_api_fabric = "1.0.2+build.1+mc26.1"
 deps.sodium = "0.9.0"

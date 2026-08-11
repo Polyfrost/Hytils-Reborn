@@ -1,9 +1,0 @@
-[versions]
-kotlin = "2.4.0"
-bloom = "0.2.0"
-mod-publish = "2.1.1"
-
-[plugins]
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-bloom = { id = "dev.deftu.gradle.bloom", version.ref = "bloom" }
-mod-publish = { id = "me.modmuss50.mod-publish-plugin", version.ref = "mod-publish" }

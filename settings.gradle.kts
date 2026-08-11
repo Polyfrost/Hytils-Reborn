@@ -28,10 +28,4 @@ stonecutter {
     }
 }
 
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("libs")
-    }
-}
-
 rootProject.name = sc.properties["mod.name"]
