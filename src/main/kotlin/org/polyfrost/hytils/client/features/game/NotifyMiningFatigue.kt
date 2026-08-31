@@ -25,8 +25,11 @@ object NotifyMiningFatigue {
         //~ if <1.21.5 'MINING_FATIGUE' -> 'DIG_SLOWDOWN'
         if (livingEntity !is LocalPlayer || mobEffect != MobEffects.MINING_FATIGUE) return
 
-        val gameType = HypixelUtils.getLocation().gameType.orElse(null) ?: return
-        if (gameType == GameType.SKYBLOCK || gameType == GameType.SMP) return
+        val location = HypixelUtils.getLocation()
+        val gameType = location.gameType.orElse(null) ?: return
+        if (gameType == GameType.SKYBLOCK || gameType == GameType.SMP
+            || location.mode.orElse("").contains("RAVENGARD")
+        ) return
 
         mc.execute {
             when (HytilsRebornConfig.miningFatigueNotificationType) {
