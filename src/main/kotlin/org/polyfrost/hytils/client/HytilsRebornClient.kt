@@ -13,7 +13,7 @@ import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.commands.impl.*
 import org.polyfrost.hytils.client.data.providers.*
 import org.polyfrost.hytils.client.events.PostLevelRenderEvent
-import org.polyfrost.hytils.client.features.chat.handlers.ChatHandler
+import org.polyfrost.hytils.client.features.chat.ChatHandler
 import org.polyfrost.hytils.client.features.game.*
 import org.polyfrost.hytils.client.features.game.titles.CountdownTitles
 import org.polyfrost.hytils.client.features.game.titles.GameEndingTitles

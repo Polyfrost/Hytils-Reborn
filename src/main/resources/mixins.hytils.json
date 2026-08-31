@@ -25,7 +25,6 @@
 		"client.NodeResolverMixin_OverrideServerCommand",
 		"client.accessor.ChatComponentAccessor",
 		"client.accessor.FramerateLimitTrackerAccessor",
-		"client.chat.ChatComponentMixin_ParseChatLines",
 		"client.cosmetics.EntityRenderDispatcherMixin_HideCosmetics",
 		"client.cosmetics.ParticleEngineMixin_HideCosmetics",
 		"client.events.ClientPacketListenerMixin_ChatEvents",

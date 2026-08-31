@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import org.polyfrost.hytils.client.commands.ClientCommand
-import org.polyfrost.hytils.client.features.chat.handlers.modules.triggers.SilentRemoval
+import org.polyfrost.hytils.client.features.chat.modules.triggers.SilentRemoval
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.hytils.client.utils.ChatUtils
 import java.util.Locale

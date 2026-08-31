@@ -250,13 +250,6 @@ object HytilsRebornConfig : Config(
     var padPlayerCount = false
 
     @Switch(
-        title = "Clean Separator Lines",
-        description = "Make line separators smoother and properly trimmed to the width of chat.",
-        category = "Chat", subcategory = "Visual"
-    )
-    var cleanSeparatorLines = true
-
-    @Switch(
         title = "White Chat",
         description = "Make nons' chat messages appear as the normal chat message color.",
         category = "Chat", subcategory = "Visual"
@@ -1252,10 +1245,6 @@ object HytilsRebornConfig : Config(
         addDependency("autoGLMessage", "autoGL")
         addDependency("afkTimeout", "autoReplyAfk")
         addDependency("afkReplyMessage", "autoReplyAfk")
-
-        //~ if <26.2 'gui.hud' -> 'gui' {
-        addCallback("cleanSeparatorLines") { mc.execute(mc.gui.hud.chat::rescaleChat) }
-        //~}
 
         addDependency("chatEmotesReplacementMode", "replaceChatEmotes")
         addDependency("chatSwapperReturnChannel", "chatSwapper")

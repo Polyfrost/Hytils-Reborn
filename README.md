@@ -33,7 +33,6 @@ you would want while on Hypixel, including Chat Restylers, Height Overlay, Messa
 - **Player Count Before Player Name** - Put the player count before the player name in game join/leave messages.
 - **Player Count on Player Leave** - Include the player count when players leave.
 - **Player Count Padding** - Place zeros at the beginning of the player count to align with the max player count.
-- **Clean Separator Lines** - Make line separators smoother and properly trimmed to the width of chat.
 - **White Chat** - Make nons' chat messages appear as the normal chat message color.
 - **White Private Messages** - Make private messages appear as the normal chat message color.
 - **Colored Friend/Guild Statuses** - Colors the join/leave status of friends and guild members.
@@ -42,7 +41,7 @@ you would want while on Hypixel, including Chat Restylers, Height Overlay, Messa
 - **Short Private Message Channel Names** - Abbreviate private message channel names.
 - **Replace Chat Emotes** - Replace chat emotes with empty text, the emote without formatting, or their shortcuts.
 - **Party Chat Swapper** - Automatically change to and out of a party channel when joining/leaving a party.
-<!-- - **Swap Chatting Tab With Chat Swapper** - Automatically switch your [Chatting](https://github.com/Polyfrost/Chatting) chat tab when chat swapper swaps your chat channel. -->
+- **Swap Chatting Tab With Chat Swapper** - Automatically switch your [Chatting](https://github.com/Polyfrost/Chatting) Chat Tab when Chat Swapper swaps your chat channel.
 - **Remove All Chat Message** - Hide the "You are now in the ALL channel" message when auto-switching.
 - **Notify When Kicked From Game** - Notify in party chat when you are kicked from the game due to a connection issue.
 - **Guild Welcome Message** - Send a friendly welcome message when a player joins your guild.
