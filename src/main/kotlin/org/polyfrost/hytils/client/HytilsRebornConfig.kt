@@ -1067,13 +1067,6 @@ object HytilsRebornConfig : Config(
         options = ["Notification", "Title", "Elder Guardian Curse"]
     )
     var miningFatigueNotificationType = 0
-
-    @Checkbox(
-        title = "Disable Mining Fatigue Notification in SkyBlock",
-        description = "Disable the mining fatigue notification in SkyBlock.",
-        category = "Game", subcategory = "Potion Effects"
-    )
-    var disableNotifyMiningFatigueSkyblock = true
     //endregion
 
     //region Lobby
@@ -1249,7 +1242,6 @@ object HytilsRebornConfig : Config(
     init {
         addDependency("autoQueueDelay", "autoQueue")
         addDependency("gexpMode", "autoGetGEXP")
-        addDependency("disableNotifyMiningFatigueSkyblock", "notifyMiningFatigue")
         addDependency("miningFatigueNotificationType", "notifyMiningFatigue")
 
         listOf(

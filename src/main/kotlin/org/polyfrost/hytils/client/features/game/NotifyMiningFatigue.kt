@@ -26,9 +26,7 @@ object NotifyMiningFatigue {
         if (livingEntity !is LocalPlayer || mobEffect != MobEffects.MINING_FATIGUE) return
 
         val gameType = HypixelUtils.getLocation().gameType.orElse(null) ?: return
-        if ((HytilsRebornConfig.disableNotifyMiningFatigueSkyblock && gameType == GameType.SKYBLOCK)
-            || gameType == GameType.SMP
-        ) return
+        if (gameType == GameType.SKYBLOCK || gameType == GameType.SMP) return
 
         mc.execute {
             when (HytilsRebornConfig.miningFatigueNotificationType) {
