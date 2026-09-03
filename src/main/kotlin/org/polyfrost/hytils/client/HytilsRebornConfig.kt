@@ -113,20 +113,6 @@ object HytilsRebornConfig : Config(
     )
     var autoGG = true
 
-    @Switch(
-        title = "Auto GG Second Message",
-        description = "Send a secondary message that will be sent after the first GG message.",
-        category = "Chat", subcategory = "Automatic"
-    )
-    var autoGGSendSecondMessage = false
-
-    @Switch(
-        title = "Casual Auto GG",
-        description = "Send a \"gg\" message at the end of minigames/events that don't give out Karma, such as SkyBlock and The Pit events.",
-        category = "Chat", subcategory = "Automatic"
-    )
-    var casualAutoGG = false
-
     @Text(
         title = "Auto GG First Message",
         description = "Choose what message is said on game completion.",
@@ -142,6 +128,13 @@ object HytilsRebornConfig : Config(
     )
     var autoGGFirstMsgDelay = 1f
 
+    @Switch(
+        title = "Auto GG Second Message",
+        description = "Send a secondary message that will be sent after the first GG message.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    var autoGGSendSecondMessage = false
+
     @Text(
         title = "Auto GG Second Message",
         description = "Choose the secondary message that will be sent.",
@@ -156,6 +149,13 @@ object HytilsRebornConfig : Config(
         min = 0f, max = 5f, step = 1f
     )
     var autoGGSecondMsgDelay = 1f
+
+    @Switch(
+        title = "Casual Auto GG",
+        description = "Send a \"gg\" message at the end of minigames/events that don't give out Karma, such as SkyBlock and The Pit events.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    var casualAutoGG = false
 
     @Switch(
         title = "Anti GG",
@@ -251,21 +251,21 @@ object HytilsRebornConfig : Config(
 
     @Switch(
         title = "White Chat",
-        description = "Make nons' chat messages appear as the normal chat message color. \nExample: §7Steve§f: Hey!",
+        description = "Make nons' chat messages appear as the normal chat message color.\nExample: §7Steve§f: Hey!",
         category = "Chat", subcategory = "Visual"
     )
     var whiteChat = false
 
     @Switch(
         title = "White Private Messages",
-        description = "Make private messages appear as the normal chat message color. \nExample: §dFrom §b[MVP§c+§b] Steve§f: Hey!",
+        description = "Make private messages appear as the normal chat message color.\nExample: §dFrom §b[MVP§c+§b] Steve§f: Hey!",
         category = "Chat", subcategory = "Visual"
     )
     var whitePrivateMessages = true
 
     @Switch(
         title = "Colored Friend/Guild Statuses",
-        description = "Colors the join/leave status of friends and guild members. \nExample: §aFriend > §bSteve §ajoined§e.",
+        description = "Colors the join/leave status of friends and guild members.\nExample: §aFriend > §bSteve §ajoined§e.",
         category = "Chat", subcategory = "Visual"
     )
     var coloredStatuses = true
@@ -293,7 +293,7 @@ object HytilsRebornConfig : Config(
 
     @Switch(
         title = "Replace Chat Emotes",
-        description = "Replace chat emotes.\nExample: §e(§b'§e-§b'§e)⊃§c━§d☆ﾟ.*･｡ﾟ",
+        description = "Replace chat emotes with empty text, the emote without formatting, or their shortcuts.\nExample: §e(§b'§e-§b'§e)⊃§c━§d☆ﾟ.*･｡ﾟ",
         category = "Chat", subcategory = "Visual"
     )
     var replaceChatEmotes = false
@@ -393,7 +393,7 @@ object HytilsRebornConfig : Config(
 
     @Switch(
         title = "Remove Karma Messages",
-        description = "Remove Karma messages from the chat. \nExample: §d+25 Karma!",
+        description = "Remove Karma messages from the chat.\nExample: §d+25 Karma!",
         category = "Chat", subcategory = "Toggles"
     )
     var hideKarmaMessages = false
@@ -694,7 +694,7 @@ object HytilsRebornConfig : Config(
     //region Tab
     @Dropdown(
         title = "Highlight Self in Tab",
-        description = "Add a star to your name in tab. \nExample: §5✯ §b[MVP§c+§b] Steve",
+        description = "Add a star to your name in tab.\nExample: §5✯ §b[MVP§c+§b] Steve",
         category = "Tab", subcategory = "Highlighters",
         options = ["Off", "Left of Name", "Right of Name"]
     )
@@ -1222,44 +1222,50 @@ object HytilsRebornConfig : Config(
     //endregion
 
     init {
-        addDependency("autoQueueDelay", "autoQueue")
-        addDependency("gexpMode", "autoGetGEXP")
-        addDependency("miningFatigueNotificationType", "notifyMiningFatigue")
+        hideIf("autoQueueDelay", "autoQueue")
+        hideIf("gexpMode", "autoGetGEXP")
 
         listOf(
             "autoGGSendSecondMessage", "casualAutoGG", "autoGGMessage",
             "autoGGFirstMsgDelay", "autoGGSecondMessage", "autoGGSecondMsgDelay"
-        ).forEach { addDependency(it, "autoGG") }
+        ).forEach { hideIf(it, "autoGG") }
+        hideIf("autoGGSecondMessage", "autoGGSendSecondMessage")
+        hideIf("autoGGSecondMsgDelay", "autoGGSendSecondMessage")
 
-        addDependency("autoGLMessage", "autoGL")
-        addDependency("afkTimeout", "autoReplyAfk")
-        addDependency("afkReplyMessage", "autoReplyAfk")
+        hideIf("autoGLMessage", "autoGL")
+        hideIf("afkTimeout", "autoReplyAfk")
+        hideIf("afkReplyMessage", "autoReplyAfk")
+        hideIf("chatEmotesReplacementMode", "replaceChatEmotes")
 
-        addDependency("chatEmotesReplacementMode", "replaceChatEmotes")
-        addDependency("chatSwapperReturnChannel", "chatSwapper")
-
-        addDependency("chatSwapperChattingIntegration", "chatSwapper")
+        hideIf("chatSwapperReturnChannel", "chatSwapper")
+        hideIf("chatSwapperChattingIntegration", "chatSwapper")
         addDependency(
             "chatSwapperChattingIntegration",
             "Chatting is not installed. Please install Chatting to use this feature."
         ) { if (FabricLoader.getInstance().isModLoaded("chatting")) Property.Display.SHOWN else Property.Display.DISABLED }
+        hideIf("chatSwapperHideAllChannelMsg", "chatSwapper")
 
-        addDependency("chatSwapperHideAllChannelMsg", "chatSwapper")
-        addDependency("notifyWhenKickInCaps", "notifyWhenKick")
+        hideIf("notifyWhenKickInCaps", "notifyWhenKick")
 
         listOf(
             "guildAutoWB", "friendsAutoWB", "autoWBCooldown", "autoWBMessage1", "randomAutoWB",
+        ).forEach { hideIf(it, "autoWB") }
+        listOf(
             "autoWBMessage2", "autoWBMessage3", "autoWBMessage4", "autoWBMessage5", "autoWBMessage6",
             "autoWBMessage7", "autoWBMessage8", "autoWBMessage9", "autoWBMessage10"
-        ).forEach { addDependency(it, "autoWB") }
+        ).forEach {
+            hideIf(it, "autoWB")
+            hideIf(it, "randomAutoWB")
+        }
 
-        addDependency("blockNumber", "blockNotify")
-        addDependency("blockNotifySound", "blockNotify")
+        hideIf("blockNumber", "blockNotify")
+        hideIf("blockNotifySound", "blockNotify")
+        hideIf("miniWallsMiddleBeaconColor", "miniWallsMiddleBeacon")
 
         //~ if <26.2 'levelExtractor' -> 'levelRenderer' {
         addCallback("heightOverlay") { mc.execute(mc.levelExtractor::allChanged) }
         listOf("heightOverlayMinBuild", "overlayAmount").forEach {
-            addDependency(it, "heightOverlay")
+            hideIf(it, "heightOverlay")
             addCallback(it) { mc.execute(mc.levelExtractor::allChanged) }
         }
 
@@ -1268,15 +1274,15 @@ object HytilsRebornConfig : Config(
             "red", "orange", "yellow", "lime", "green", "cyan", "lightBlue", "blue",
             "purple", "magenta", "pink", "brown", "gray", "lightGray", "white", "black"
         ).forEach {
-            addDependency("HeightOverlayCustomColors.$it", "heightOverlay")
             addDependency("HeightOverlayCustomColors.$it", "HeightOverlayCustomColors.enabled")
             addCallback("HeightOverlayCustomColors.$it") { mc.execute(mc.levelExtractor::allChanged) }
         }
         //~}
 
-        addDependency("sumoRenderDistanceAmount", "sumoRenderDistance")
-        addDependency("highlightChestsColor", "highlightChests")
-        addDependency("uhcOverlayScale", "uhcOverlay")
-        addDependency("uhcMiddleWaypointText", "uhcMiddleWaypoint")
+        hideIf("sumoRenderDistanceAmount", "sumoRenderDistance")
+        hideIf("highlightChestsColor", "highlightChests")
+        hideIf("uhcOverlayScale", "uhcOverlay")
+        hideIf("uhcMiddleWaypointText", "uhcMiddleWaypoint")
+        hideIf("miningFatigueNotificationType", "notifyMiningFatigue")
     }
 }
