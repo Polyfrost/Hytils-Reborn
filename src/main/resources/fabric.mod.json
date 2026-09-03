@@ -8,10 +8,12 @@
 		"Polyfrost"
 	],
 	"contact": {
-		"issues": "https://github.com/Polyfrost/${mod_id}/issues",
-		"sources": "https://github.com/Polyfrost/${mod_id}"
+		"homepage": "https://polyfrost.org",
+		"issues": "https://github.com/Polyfrost/Hytils-Reborn/issues",
+		"sources": "https://github.com/Polyfrost/Hytils-Reborn"
 	},
 	"license": "GPL-3.0-or-later",
+	"icon": "assets/hytils/icon.png",
 	"environment": "client",
 	"entrypoints": {
 		"client": [
