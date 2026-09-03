@@ -1091,131 +1091,120 @@ object HytilsRebornConfig : Config(
     )
     var silentLobby = false
 
-    @Switch(
-        title = "Disable Stepping Sounds",
-        description = "Remove sounds created by stepping.",
+    @Accordion(
+        title = "Disable Specific Lobby Sounds",
+        description = "Disable specific sounds in the lobby.",
         category = "Lobby", subcategory = "Sounds"
     )
-    var lobbyDisableSteppingSounds = false
+    object DisableSpecificLobbySounds {
+        @Switch(
+            title = "Disable Stepping Sounds",
+            description = "Remove sounds created by stepping."
+        )
+        var lobbyDisableSteppingSounds = false
 
-    @Switch(
-        title = "Disable Slime Sounds",
-        description = "Remove sounds created by slimes.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableSlimeSounds = false
+        @Switch(
+            title = "Disable Slime Sounds",
+            description = "Remove sounds created by slimes."
+        )
+        var lobbyDisableSlimeSounds = false
 
-    @Switch(
-        title = "Disable Dragon Sounds",
-        description = "Remove sounds created by dragons.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableDragonSounds = false
+        @Switch(
+            title = "Disable Dragon Sounds",
+            description = "Remove sounds created by dragons."
+        )
+        var lobbyDisableDragonSounds = false
 
-    @Switch(
-        title = "Disable Wither Sounds",
-        description = "Remove sounds created by withers & wither skeletons.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableWitherSounds = false
+        @Switch(
+            title = "Disable Wither Sounds",
+            description = "Remove sounds created by withers & wither skeletons."
+        )
+        var lobbyDisableWitherSounds = false
 
-    @Switch(
-        title = "Disable Item Pickup Sounds",
-        description = "Remove sounds created by picking up an item.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableItemPickupSounds = false
+        @Switch(
+            title = "Disable Item Pickup Sounds",
+            description = "Remove sounds created by picking up an item."
+        )
+        var lobbyDisableItemPickupSounds = false
 
-    @Switch(
-        title = "Disable Experience Orb Sounds",
-        description = "Remove sounds created by experience orbs.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableExperienceOrbSounds = false
+        @Switch(
+            title = "Disable Experience Orb Sounds",
+            description = "Remove sounds created by experience orbs."
+        )
+        var lobbyDisableExperienceOrbSounds = false
 
-    @Switch(
-        title = "Disable Primed TNT Sounds",
-        description = "Remove sounds created by primed TNT.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisablePrimedTntSounds = false
+        @Switch(
+            title = "Disable Primed TNT Sounds",
+            description = "Remove sounds created by primed TNT."
+        )
+        var lobbyDisablePrimedTntSounds = false
 
-    @Switch(
-        title = "Disable Explosion Sounds",
-        description = "Remove sounds created by explosions.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableExplosionSounds = false
+        @Switch(
+            title = "Disable Explosion Sounds",
+            description = "Remove sounds created by explosions."
+        )
+        var lobbyDisableExplosionSounds = false
 
-    @Switch(
-        title = "Disable Delivery Man Sounds",
-        description = "Remove sounds created by Delivery Man events.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableDeliveryManSounds = false
+        @Switch(
+            title = "Disable Delivery Man Sounds",
+            description = "Remove sounds created by Delivery Man events."
+        )
+        var lobbyDisableDeliveryManSounds = false
 
-    @Switch(
-        title = "Disable Note Block Sounds",
-        description = "Remove sounds created by note blocks.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableNoteBlockSounds = false
+        @Switch(
+            title = "Disable Note Block Sounds",
+            description = "Remove sounds created by note blocks."
+        )
+        var lobbyDisableNoteBlockSounds = false
 
-    @Switch(
-        title = "Disable Firework Sounds",
-        description = "Remove sounds created by fireworks.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableFireworkSounds = false
+        @Switch(
+            title = "Disable Firework Sounds",
+            description = "Remove sounds created by fireworks."
+        )
+        var lobbyDisableFireworkSounds = false
 
-    @Switch(
-        title = "Disable Levelup Sounds",
-        description = "Remove sounds created by someone leveling up.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableLevelupSounds = false
+        @Switch(
+            title = "Disable Levelup Sounds",
+            description = "Remove sounds created by someone leveling up."
+        )
+        var lobbyDisableLevelupSounds = false
 
-    @Switch(
-        title = "Disable Arrow Sounds",
-        description = "Remove sounds created by arrows.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableArrowSounds = false
+        @Switch(
+            title = "Disable Arrow Sounds",
+            description = "Remove sounds created by arrows."
+        )
+        var lobbyDisableArrowSounds = false
 
-    @Switch(
-        title = "Disable Bat Sounds",
-        description = "Remove sounds created by bats.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableBatSounds = false
+        @Switch(
+            title = "Disable Bat Sounds",
+            description = "Remove sounds created by bats."
+        )
+        var lobbyDisableBatSounds = false
 
-    @Switch(
-        title = "Disable Fire Sounds",
-        description = "Remove sounds created by fire.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableFireSounds = false
+        @Switch(
+            title = "Disable Fire Sounds",
+            description = "Remove sounds created by fire."
+        )
+        var lobbyDisableFireSounds = false
 
-    @Switch(
-        title = "Disable Enderman Sounds",
-        description = "Remove sounds created by endermen.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableEndermanSounds = false
+        @Switch(
+            title = "Disable Enderman Sounds",
+            description = "Remove sounds created by endermen."
+        )
+        var lobbyDisableEndermanSounds = false
 
-    @Switch(
-        title = "Disable Door Sounds",
-        description = "Disable sounds caused by doors, trapdoors, and fence gates.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableDoorSounds = false
+        @Switch(
+            title = "Disable Door Sounds",
+            description = "Disable sounds caused by doors, trapdoors, and fence gates."
+        )
+        var lobbyDisableDoorSounds = false
 
-    @Switch(
-        title = "Disable Portal Sounds",
-        description = "Disable sounds caused by nether portals.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisablePortalSounds = false
+        @Switch(
+            title = "Disable Portal Sounds",
+            description = "Disable sounds caused by nether portals."
+        )
+        var lobbyDisablePortalSounds = false
+    }
 
     @Switch(
         title = "Limbo Limiter",
