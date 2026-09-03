@@ -110,7 +110,6 @@ object LanguageData : DataProvider {
 
     val KARMA_MESSAGES by regex("\\+(?<karma>\\d)+ Karma!")
     val LOBBY_JOIN by regex("(?:sled into|slid into|joined|spooked into) the lobby")
-    val TICKET_ANNOUNCER by regex("(?<player>(?!You )\\w{1,16} )has found an? .+")
     val SOUL_WELL_FIND by regex(".+ has found .+ in the Soul Well!")
     val GAME_ANNOUNCEMENT by regex("➤ A (?:.+ game is available to join|game of .+ is (?:available to join|starting in .+ seconds))! CLICK HERE to join!")
 

@@ -406,13 +406,6 @@ object HytilsRebornConfig : Config(
     var removeLobbyJoin = false
 
     @Switch(
-        title = "Remove Ticket Machine Rewards",
-        description = "Remove ticket machine messages from chat and only show your own.\nExample: Steve has found a COMMON Figurine",
-        category = "Chat", subcategory = "Toggles"
-    )
-    var removeTicketMachineAnnouncements = false
-
-    @Switch(
         title = "Remove Soul Well Announcements",
         description = "Remove soul well announcements from chat.\nExample: §b[MVP§c+§b] Steve §7has found a §6Bulldozer Perk I (Insane) §7in the §bSoul Well§7!",
         category = "Chat", subcategory = "Toggles"

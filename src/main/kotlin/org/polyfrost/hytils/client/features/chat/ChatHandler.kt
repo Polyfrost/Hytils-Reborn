@@ -28,7 +28,7 @@ object ChatHandler {
             LobbyJoinRemover, NonCooldownBlocker, OnlineStatusRemover, QuestBlocker,
             ReplayRecordedRemover, SeasonalCollectedRemover, ServerConnectedMessage,
             ShoutBlocker, SkyblockWelcomeRemover, SoulWellAnnouncerRemover,
-            StatsMessageRemover, TicketMachineRemover, TipMessageRemover,
+            StatsMessageRemover, TipMessageRemover,
 
             ChatEmoteReplacer, ColoredPlayerConnectionStatus,
             GameStartCompactor, GameStatusRestyler, ShortChannelNames,
