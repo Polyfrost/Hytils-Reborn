@@ -36,6 +36,10 @@ object HideHudElements {
         HudElementRegistry.replaceElement(VanillaHudElements.AIR_BAR) { hudElement ->
             if (shouldHideAirBubbles()) EMPTY_HUD_ELEMENT else hudElement
         }
+
+        HudElementRegistry.replaceElement(VanillaHudElements.BOSS_BAR) { hudElement ->
+            if (shouldHideBossbar()) EMPTY_HUD_ELEMENT else hudElement
+        }
         //?}
     }
 
@@ -155,4 +159,7 @@ object HideHudElements {
 
         return false
     }
+
+    @JvmStatic
+    fun shouldHideBossbar() = HytilsRebornConfig.isEnabled && HytilsRebornConfig.lobbyBossbar && HypixelUtils.isHypixel() && HypixelUtils.getLocation().inLobby()
 }
