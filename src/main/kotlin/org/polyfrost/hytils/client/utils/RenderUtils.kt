@@ -44,8 +44,6 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 object RenderUtils {
-    private const val Z_FIGHTING_OFFSET = 0.001f
-
     //? if >=1.21.5 {
     private val BEACON_BEAM_OPAQUE_NO_DEPTH = RenderPipeline.builder(RenderPipelines.BEACON_BEAM_SNIPPET)
         .withLocation("pipeline/beacon_beam_opaque")
@@ -144,10 +142,11 @@ object RenderUtils {
             pos.z - cameraPos.z
         )
 
+        val zFightingOffset = 0.001f
         addBox(
             poseStack.last().pose(), vertexConsumer, color.withAlpha(alpha).argb,
-            0f - Z_FIGHTING_OFFSET, 0f - Z_FIGHTING_OFFSET, 0f - Z_FIGHTING_OFFSET,
-            1f + Z_FIGHTING_OFFSET, 1f + Z_FIGHTING_OFFSET, 1f + Z_FIGHTING_OFFSET
+            0f - zFightingOffset, 0f - zFightingOffset, 0f - zFightingOffset,
+            1f + zFightingOffset, 1f + zFightingOffset, 1f + zFightingOffset
         )
 
         poseStack.popPose()
@@ -323,7 +322,8 @@ object RenderUtils {
         poseStack.popPose()
     }
 
-    private fun addBox(
+    //? if <=1.21.10 {
+    /*private fun addBox(
         positionMatrix: Matrix4f,
         vertexConsumer: VertexConsumer,
         color: Int,
@@ -399,4 +399,5 @@ object RenderUtils {
         vertexConsumer.addVertex(positionMatrix, x3, y3, z3).setColor(color)
         vertexConsumer.addVertex(positionMatrix, x4, y4, z4).setColor(color)
     }
+    *///?}
 }
