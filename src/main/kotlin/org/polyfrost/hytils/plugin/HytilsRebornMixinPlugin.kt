@@ -11,6 +11,11 @@ class HytilsRebornMixinPlugin : IMixinConfigPlugin {
             add("client.heightoverlay.BlockRendererMixin_HeightOverlay_Sodium")
         }
 
+        //? if <26.1 {
+        /*add("client.chat.ChatComponentMixin_TrackLineParents")
+        add("client.chat.GuiMessageLineMixin_TrackParent")
+        *///?}
+
         //? if >=1.21.11 {
         add("client.accessor.RenderTypeAccessor")
 
