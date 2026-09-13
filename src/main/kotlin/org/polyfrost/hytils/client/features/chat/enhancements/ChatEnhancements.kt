@@ -65,34 +65,47 @@ object ChatEnhancements {
 
         //? if >=1.21.11 {
         val parameterModifier = graphics as ChatGraphicsAccessDuck
+        val screen = ScreenRectangle(0, 0, mc.window.guiScaledWidth, mc.window.guiScaledHeight)
         var previousScissor: ScreenRectangle? = null
+        var visible = true
 
         parameterModifier.`hytils$applyParameters` { parameter ->
             previousScissor = parameter.scissor
-            parameter.withScissor(0, chatWidth, lineTop, lineBottom)
+            val clipped = clipToScreen(parameter.withScissor(0, chatWidth, lineTop, lineBottom), screen)
+            visible = clipped != null
+            clipped ?: parameter
         }
-        //?} else
-        //graphics.enableScissor(0, lineTop, chatWidth, lineBottom)
 
-        customLine.render(
-            chatGraphics,
-            0,
-            chatWidth,
-            lineBottom - lineTop,
-            textTop,
-            textAlpha
-        )
+        if (visible) {
+            customLine.render(chatGraphics, 0, chatWidth, lineBottom - lineTop, textTop, textAlpha)
+        }
 
-        //? if >=1.21.11 {
         parameterModifier.`hytils$applyParameters` { parameter ->
             ActiveTextCollector.Parameters(parameter.pose, parameter.opacity, previousScissor)
         }
-        //?} else
-        //graphics.disableScissor()
 
-        //~ if <1.21.11 'chatGraphics.hovered' -> 'true'
         return chatGraphics.hovered
+        //?} else {
+        /*graphics.enableScissor(0, lineTop, chatWidth, lineBottom)
+        customLine.render(chatGraphics, 0, chatWidth, lineBottom - lineTop, textTop, textAlpha)
+        graphics.disableScissor()
+        return true
+        *///?}
     }
+
+    //? if >=1.21.11 {
+    /**
+     * Clips the text scissor to the screen (returns null if it lies entirely outside it).
+     * Vanilla only does this for the bottom or right edges, so a scissor past the top or
+     * left edge would cause a crash (e.g. a chat line scrolled above the window).
+     */
+    @JvmStatic
+    fun clipToScreen(parameters: ActiveTextCollector.Parameters, screen: ScreenRectangle): ActiveTextCollector.Parameters? {
+        val scissor = parameters.scissor ?: return parameters
+        val clipped = screen.intersection(scissor) ?: return null
+        return parameters.withScissor(clipped)
+    }
+    //?}
 
     //? if <1.21.11 {
     /*@JvmStatic
