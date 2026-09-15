@@ -1,6 +1,7 @@
 package org.polyfrost.hytils.mixin.client.heightoverlay;
 
-import net.caffeinemc.mods.sodium.client.render.chunk.compile.pipeline.BlockRenderer;
+//? if <26.3 {
+/*import net.caffeinemc.mods.sodium.client.render.chunk.compile.pipeline.BlockRenderer;
 //~ if <1.21.11 'model' -> 'frapi.render'
 import net.caffeinemc.mods.sodium.client.render.model.AbstractBlockRenderContext;
 //~ if <1.21.11 'model' -> 'frapi.mesh'
@@ -29,3 +30,4 @@ abstract class BlockRendererMixin_HeightOverlay_Sodium extends AbstractBlockRend
         }
     }
 }
+*///?}

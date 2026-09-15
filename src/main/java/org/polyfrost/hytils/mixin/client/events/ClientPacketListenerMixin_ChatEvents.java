@@ -17,6 +17,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+//? if >= 26.3
+import java.util.Optional;
+
 @Mixin(value = ClientPacketListener.class, priority = Integer.MAX_VALUE)
 abstract class ClientPacketListenerMixin_ChatEvents {
     @Inject(method = "handleSystemChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/chat/ChatListener;handleSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"), cancellable = true)
@@ -41,7 +44,18 @@ abstract class ClientPacketListenerMixin_ChatEvents {
         }
     }
 
-    @WrapOperation(method = "handlePlayerChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/protocol/game/ClientboundPlayerChatPacket;unsignedContent()Lnet/minecraft/network/chat/Component;"))
+    //? if >=26.3 {
+    @WrapOperation(method = "handlePlayerChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/protocol/game/ClientboundPlayerChatPacket;unsignedContent()Ljava/util/Optional;"))
+    private Optional<Component> modifyPlayerMessage(ClientboundPlayerChatPacket packet, Operation<Optional<Component>> original, @Share("chatReceiveEvent") LocalRef<ChatReceiveEvent> chatReceiveEvent) {
+        Component content = packet.unsignedContent().orElse(null);
+        if (content == null) return original.call(packet);
+        ChatReceiveEvent event = new ChatReceiveEvent(content, false);
+        EventManager.INSTANCE.post(event);
+        chatReceiveEvent.set(event);
+        return Optional.of(event.getMessage());
+    }
+    //?} else {
+    /*@WrapOperation(method = "handlePlayerChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/protocol/game/ClientboundPlayerChatPacket;unsignedContent()Lnet/minecraft/network/chat/Component;"))
     private Component modifyPlayerMessage(ClientboundPlayerChatPacket packet, Operation<Component> original, @Share("chatReceiveEvent") LocalRef<ChatReceiveEvent> chatReceiveEvent) {
         if (packet.unsignedContent() == null) return original.call(packet);
         ChatReceiveEvent event = new ChatReceiveEvent(packet.unsignedContent(), false);
@@ -49,6 +63,7 @@ abstract class ClientPacketListenerMixin_ChatEvents {
         chatReceiveEvent.set(event);
         return event.getMessage();
     }
+    *///?}
 
     @Inject(method = "sendChat", at = @At("HEAD"), cancellable = true)
     private void cancelSentMessage(String content, CallbackInfo ci, @Share("chatSendEvent") LocalRef<ChatSendEvent> chatSendEvent) {

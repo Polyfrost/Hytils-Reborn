@@ -1,9 +1,9 @@
 package org.polyfrost.hytils.client.utils
 
 //? if >=26.1 {
-import com.mojang.blaze3d.pipeline.ColorTargetState
-import com.mojang.blaze3d.pipeline.DepthStencilState
-import com.mojang.blaze3d.platform.CompareOp
+import com.mojang.renderpearl.api.pipeline.ColorTargetState
+import com.mojang.renderpearl.api.pipeline.CompareOp
+import com.mojang.renderpearl.api.pipeline.DepthStencilState
 //?}
 
 //? if >=1.21.11 {
@@ -20,8 +20,8 @@ import net.minecraft.client.renderer.state.level.CameraRenderState
 //?}
 
 //? if >=1.21.5 {
-import com.mojang.blaze3d.pipeline.BlendFunction
-import com.mojang.blaze3d.pipeline.RenderPipeline
+import com.mojang.renderpearl.api.pipeline.BlendFunction
+import com.mojang.renderpearl.api.pipeline.RenderPipeline
 import net.minecraft.client.renderer.RenderPipelines
 //?}
 
@@ -225,9 +225,9 @@ object RenderUtils {
                 (pos.y - camera.pos.y).toFloat(),
                 (pos.z - camera.pos.z).toFloat()
             )
-            //~ if <26.2 'mulPose' -> 'rotate'
+            //~ if =26.2 'rotate' -> 'mulPose'
             //~ if <1.21.10 '.orientation' -> '.rotation()'
-            mulPose(camera.orientation)
+            rotate(camera.orientation)
             scale(scale, -scale, scale)
         }
         //~}

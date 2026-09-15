@@ -14,6 +14,7 @@ val modname: String = sc.properties["mod.name"]
 val moddescription: String = sc.properties["mod.description"]
 val modversion: String = sc.properties["mod.version"]
 val mcversion: String = sc.current.version
+val mcDependencyVersion: String = sc.properties.getOrNull<String>("deps.minecraft") ?: mcversion
 val versionrange: String = sc.properties.getOrNull<String>("mod.mc_compat") ?: mcversion
 val loaderversion: String = sc.properties["deps.fabric_loader"]
 val oneconfigversion: String = sc.properties["deps.oneconfig"]
@@ -35,6 +36,7 @@ repositories {
         filter { groups.forEach(::includeGroup) }
     }
 
+    mavenLocal()
     mavenCentral()
     google()
     maven("https://repo.polyfrost.org/releases") { name = "Polyfrost Releases" }
@@ -51,17 +53,13 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:$mcversion")
+    minecraft("com.mojang:minecraft:$mcDependencyVersion")
     loomx.applyMojangMappings()
 
     modImplementation("net.fabricmc:fabric-loader:$loaderversion")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${sc.properties.get<String>("deps.fabric_api")}")
-    modImplementation("net.fabricmc:fabric-language-kotlin:${sc.properties.get<String>("deps.fabric_language_kotlin")}")
 
-    modImplementation("org.polyfrost.oneconfig:$mcversion-fabric:$oneconfigversion") {
-        // Loom strips the nested Kotlin jars from a remapped copy, so the plain copy above must stay the only candidate
-        exclude(group = "net.fabricmc", module = "fabric-language-kotlin")
-    }
+    modImplementation("org.polyfrost.oneconfig:$mcversion-fabric:$oneconfigversion")
     for (module in arrayOf("config", "config-impl", "events", "utils")) {
         implementation("org.polyfrost.oneconfig:$module:$oneconfigversion")
     }
@@ -70,7 +68,9 @@ dependencies {
     modImplementation("maven.modrinth:hypixel-mod-api:${sc.properties.get<String>("deps.hypixel_mod_api_fabric")}")
 
     // needed for height overlay compatibility
-    modCompileOnly("maven.modrinth:sodium:mc$mcversion-${sc.properties.get<String>("deps.sodium")}-fabric")
+    sc.properties.getOrNull<String>("deps.sodium")?.let {
+        modCompileOnly("maven.modrinth:sodium:mc$mcversion-$it-fabric")
+    }
 
     testImplementation("org.junit.jupiter:junit-jupiter:${sc.properties.get<String>("deps.junit")}")
     testImplementation("net.fabricmc:fabric-loader-junit:$loaderversion")

@@ -27,10 +27,13 @@ abstract class LevelRendererMixin_HideNPCs {
             *///?} else
             //"collectVisibleEntities"
         },
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;shouldRender(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/renderer/culling/Frustum;DDD)Z")
+        //~ if >=26.3 'DDD)Z' -> 'DDDF)Z'
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;shouldRender(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/renderer/culling/Frustum;DDDF)Z")
     )
-    private <E extends Entity> boolean shouldRenderEntity(EntityRenderDispatcher instance, E entity, Frustum frustum, double d, double e, double f, Operation<Boolean> original) {
-        boolean shouldRender = original.call(instance, entity, frustum, d, e, f);
+    //~ if >=26.3 'double f,' -> 'double f, float partialTick,'
+    private <E extends Entity> boolean shouldRenderEntity(EntityRenderDispatcher instance, E entity, Frustum frustum, double d, double e, double f, float partialTick, Operation<Boolean> original) {
+        //~ if >=26.3 'e, f)' -> 'e, f, partialTick)'
+        boolean shouldRender = original.call(instance, entity, frustum, d, e, f, partialTick);
         if (!HytilsRebornConfig.isEnabled() || !HypixelUtils.isHypixel()) return shouldRender;
 
         HypixelUtils.Location location = HypixelUtils.getLocation();

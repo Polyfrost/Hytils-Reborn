@@ -7,9 +7,11 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo
 
 class HytilsRebornMixinPlugin : IMixinConfigPlugin {
     override fun getMixins(): List<String> = buildList {
-        if (FabricLoader.getInstance().isModLoaded("sodium")) {
+        //? if <26.3 {
+        /*if (FabricLoader.getInstance().isModLoaded("sodium")) {
             add("client.heightoverlay.BlockRendererMixin_HeightOverlay_Sodium")
         }
+        *///?}
 
         //? if <26.1 {
         /*add("client.chat.ChatComponentMixin_TrackLineParents")
