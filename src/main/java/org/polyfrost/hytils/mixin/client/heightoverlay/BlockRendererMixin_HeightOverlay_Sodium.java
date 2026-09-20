@@ -1,7 +1,6 @@
 package org.polyfrost.hytils.mixin.client.heightoverlay;
 
-//? if <26.3 {
-/*import net.caffeinemc.mods.sodium.client.render.chunk.compile.pipeline.BlockRenderer;
+import net.caffeinemc.mods.sodium.client.render.chunk.compile.pipeline.BlockRenderer;
 //~ if <1.21.11 'model' -> 'frapi.render'
 import net.caffeinemc.mods.sodium.client.render.model.AbstractBlockRenderContext;
 //~ if <1.21.11 'model' -> 'frapi.mesh'
@@ -13,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@SuppressWarnings("MixinSuperClass")
 @Mixin(BlockRenderer.class)
 abstract class BlockRendererMixin_HeightOverlay_Sodium extends AbstractBlockRenderContext {
     @Inject(method = "tintQuad", at = @At("TAIL"))
@@ -30,4 +28,3 @@ abstract class BlockRendererMixin_HeightOverlay_Sodium extends AbstractBlockRend
         }
     }
 }
-*///?}

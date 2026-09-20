@@ -66,3 +66,4 @@ mod.mc_compat = "~26.3"
 mod.mc_releases = ["26.3"]
 
 deps.fabric_api = "0.160.3+26.3"
+deps.sodium = "0.9.2"
