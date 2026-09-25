@@ -6,6 +6,7 @@ import org.polyfrost.compose.render.PolyColor
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.oneconfig.api.config.v1.Config
+import org.polyfrost.oneconfig.api.config.v1.ConfigManager
 import org.polyfrost.oneconfig.api.config.v1.Property
 import org.polyfrost.oneconfig.api.config.v1.annotations.*
 import org.polyfrost.oneconfig.utils.v1.Multithreading
@@ -1277,5 +1278,19 @@ object HytilsRebornConfig : Config(
         hideIf("uhcOverlayScale", "uhcOverlay")
         hideIf("uhcMiddleWaypointText", "uhcMiddleWaypoint")
         hideIf("miningFatigueNotificationType", "notifyMiningFatigue")
+
+        // migrate old disable specific lobby sounds to accordion
+        val oldConfig = runCatching { ConfigManager.active()?.load(id) }.getOrNull()
+        if (oldConfig != null && oldConfig.getChild("DisableSpecificLobbySounds") == null) {
+            for (field in DisableSpecificLobbySounds::class.java.declaredFields) {
+                if (field.type == Boolean::class.javaPrimitiveType) {
+                    field.isAccessible = true
+                    if (oldConfig.getProp(field.name)?.get() == true) {
+                        field.set(DisableSpecificLobbySounds, true)
+                    }
+                }
+            }
+            save()
+        }
     }
 }
