@@ -19,8 +19,10 @@ class HytilsRebornMixinPlugin : IMixinConfigPlugin {
         //? if >=1.21.11
         add("client.accessor.RenderTypeAccessor")
 
-        //? if <1.21.8
-        //add("client.hud.GuiMixin_HideHudElements")
+        //? if <1.21.8 {
+        /*add("client.hud.GuiMixin_HideActionBar")
+        add("client.hud.GuiMixin_HideHudElements")
+        *///?}
     }
 
     override fun shouldApplyMixin(targetClassName: String?, mixinClassName: String?): Boolean = true
