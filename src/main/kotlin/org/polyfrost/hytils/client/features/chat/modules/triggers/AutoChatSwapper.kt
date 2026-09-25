@@ -16,6 +16,7 @@ import org.polyfrost.oneconfig.utils.v1.Multithreading
 import java.util.concurrent.TimeUnit
 
 object AutoChatSwapper : ChatReceiveModule {
+    private val isChattingLoaded = FabricLoader.getInstance().isModLoaded("chatting")
     private var shouldCancelChannelMessage = false
 
     override fun onChatReceived(event: ChatReceiveEvent) {
@@ -46,13 +47,14 @@ object AutoChatSwapper : ChatReceiveModule {
 
     private fun switchChattingTab(channel: String) {
         if (HytilsRebornConfig.chatSwapperChattingIntegration
-            && FabricLoader.getInstance().isModLoaded("chatting")
+            && isChattingLoaded
             && ChattingConfig.chatTabs
         ) {
             val currentTabs = ChatTabs.currentTabs
             val tab = ChatTabs.tabs.find {
-                val command = it.prefix ?: return@find false
-                command.startsWith("/${channel.first()}c", ignoreCase = true)
+                val command = it.prefix
+                if (command.isNullOrEmpty()) return@find channel == "all"
+                else command.startsWith("/${channel.first()}c", ignoreCase = true)
                     || command.startsWith("/${channel.first()}chat", ignoreCase = true)
             }
 
