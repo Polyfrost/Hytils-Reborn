@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.polyfrost.hytils.client.events.ChatReceiveEvent
-import org.polyfrost.hytils.client.features.chat.handlers.modules.modifiers.ShortPMChannelNames
+import org.polyfrost.hytils.client.features.chat.modules.modifiers.ShortPMChannelNames
 
 class ShortPMChannelNamesTest {
 

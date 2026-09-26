@@ -64,9 +64,6 @@ dependencies {
         implementation("org.polyfrost.oneconfig:$module:$oneconfigversion")
     }
 
-    implementation("net.hypixel:mod-api:${sc.properties.get<String>("deps.hypixel_mod_api")}")
-    modImplementation("maven.modrinth:hypixel-mod-api:${sc.properties.get<String>("deps.hypixel_mod_api_fabric")}")
-
     // needed for height overlay compatibility
     sc.properties.getOrNull<String>("deps.sodium")?.let {
         modCompileOnly("maven.modrinth:sodium:mc$mcversion-$it-fabric")
@@ -215,7 +212,7 @@ publishMods {
 
             minecraftVersions.addAll(compatibleVersions.ifEmpty { listOf(mcversion) })
 
-            requires("oneconfig", "fabric-api", "fabric-language-kotlin", "hypixel-mod-api")
+            requires("oneconfig", "fabric-api", "fabric-language-kotlin")
         }
     }
 }

@@ -8,10 +8,12 @@
 		"Polyfrost"
 	],
 	"contact": {
-		"issues": "https://github.com/Polyfrost/${mod_id}/issues",
-		"sources": "https://github.com/Polyfrost/${mod_id}"
+		"homepage": "https://polyfrost.org",
+		"issues": "https://github.com/Polyfrost/Hytils-Reborn/issues",
+		"sources": "https://github.com/Polyfrost/Hytils-Reborn"
 	},
 	"license": "GPL-3.0-or-later",
+	"icon": "assets/hytils/icon.png",
 	"environment": "client",
 	"entrypoints": {
 		"client": [
@@ -29,7 +31,6 @@
 		"fabricloader": ">=0.17",
 		"oneconfigv1": ">=${oneconfig_version}",
 		"fabric-api": "*",
-		"fabric-language-kotlin": "*",
-		"hypixel-mod-api": "*"
+		"fabric-language-kotlin": "*"
 	}
 }

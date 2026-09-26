@@ -6,6 +6,7 @@ import org.polyfrost.compose.render.PolyColor
 import org.polyfrost.hytils.HytilsRebornConstants
 import org.polyfrost.hytils.client.data.providers.LanguageData
 import org.polyfrost.oneconfig.api.config.v1.Config
+import org.polyfrost.oneconfig.api.config.v1.ConfigManager
 import org.polyfrost.oneconfig.api.config.v1.Property
 import org.polyfrost.oneconfig.api.config.v1.annotations.*
 import org.polyfrost.oneconfig.utils.v1.Multithreading
@@ -19,7 +20,7 @@ object HytilsRebornConfig : Config(
 ) {
     @Switch(
         title = "Enable Hytils Reborn",
-        description = "Master switch to enable/disable the mod",
+        description = "Master switch to enable/disable the mod.",
         category = "General"
     )
     @JvmStatic var isEnabled = true
@@ -113,20 +114,6 @@ object HytilsRebornConfig : Config(
     )
     var autoGG = true
 
-    @Switch(
-        title = "Auto GG Second Message",
-        description = "Send a secondary message that will be sent after the first GG message.",
-        category = "Chat", subcategory = "Automatic"
-    )
-    var autoGGSendSecondMessage = false
-
-    @Switch(
-        title = "Casual Auto GG",
-        description = "Send a \"gg\" message at the end of minigames/events that don't give out Karma, such as SkyBlock and The Pit events.",
-        category = "Chat", subcategory = "Automatic"
-    )
-    var casualAutoGG = false
-
     @Text(
         title = "Auto GG First Message",
         description = "Choose what message is said on game completion.",
@@ -142,6 +129,13 @@ object HytilsRebornConfig : Config(
     )
     var autoGGFirstMsgDelay = 1f
 
+    @Switch(
+        title = "Auto GG Second Message",
+        description = "Send a secondary message that will be sent after the first GG message.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    var autoGGSendSecondMessage = false
+
     @Text(
         title = "Auto GG Second Message",
         description = "Choose the secondary message that will be sent.",
@@ -156,6 +150,13 @@ object HytilsRebornConfig : Config(
         min = 0f, max = 5f, step = 1f
     )
     var autoGGSecondMsgDelay = 1f
+
+    @Switch(
+        title = "Casual Auto GG",
+        description = "Send a \"gg\" message at the end of minigames/events that don't give out Karma, such as SkyBlock and The Pit events.",
+        category = "Chat", subcategory = "Automatic"
+    )
+    var casualAutoGG = false
 
     @Switch(
         title = "Anti GG",
@@ -223,91 +224,84 @@ object HytilsRebornConfig : Config(
 
     @Switch(
         title = "Game Status Restyle",
-        description = "Replace common game status messages with a new style.\nExamples:\n+ Steve (1/12)\n- Steve\n⁎ Game starts in 5 seconds.",
+        description = "Replace common game status messages with a new style.\nExamples:\n§a§l+ §bSteve §e(§b1§e/§b12§e)\n§c§l- §bSteve§r\n§e§l⁎ §aGame starts in §b§l5 §aseconds.",
         category = "Chat", subcategory = "Restyler"
     )
     var gameStatusRestyle = true
 
     @Switch(
         title = "Player Count Before Player Name",
-        description = "Put the player count before the player name in game join/leave messages.\nExample: + (1/12) Steve",
+        description = "Put the player count before the player name in game join/leave messages.\nExample: §a§l+ §e(§b1§e/§b12§e) §bSteve",
         category = "Chat", subcategory = "Restyler"
     )
     var playerCountBeforePlayerName = true
 
     @Switch(
         title = "Player Count on Player Leave",
-        description = "Include the player count when players leave.\nExample: - Steve (1/12)",
+        description = "Include the player count when players leave.\nExample: §c§l- §bSteve §r§e(§b1§e/§b12§e)§r",
         category = "Chat", subcategory = "Restyler"
     )
     var playerCountOnPlayerLeave = true
 
     @Switch(
         title = "Player Count Padding",
-        description = "Place zeros at the beginning of the player count to align with the max player count.\nExample: + Steve (001/100)",
+        description = "Place zeros at the beginning of the player count to align with the max player count.\nExample: §a§l+ §bSteve §e(§b001§e/§b100§e)",
         category = "Chat", subcategory = "Restyler"
     )
     var padPlayerCount = false
 
     @Switch(
-        title = "Clean Separator Lines",
-        description = "Make line separators smoother and properly trimmed to the width of chat.",
-        category = "Chat", subcategory = "Visual"
-    )
-    var cleanSeparatorLines = true
-
-    @Switch(
         title = "White Chat",
-        description = "Make nons' chat messages appear as the normal chat message color.",
+        description = "Make nons' chat messages appear as the normal chat message color.\nExample: §7Steve§f: Hey!",
         category = "Chat", subcategory = "Visual"
     )
     var whiteChat = false
 
     @Switch(
         title = "White Private Messages",
-        description = "Make private messages appear as the normal chat message color.",
+        description = "Make private messages appear as the normal chat message color.\nExample: §dFrom §b[MVP§c+§b] Steve§f: Hey!",
         category = "Chat", subcategory = "Visual"
     )
     var whitePrivateMessages = true
 
     @Switch(
         title = "Colored Friend/Guild Statuses",
-        description = "Colors the join/leave status of friends and guild members.",
+        description = "Colors the join/leave status of friends and guild members.\nExample: §aFriend > §bSteve §ajoined§e.",
         category = "Chat", subcategory = "Visual"
     )
     var coloredStatuses = true
 
     @Switch(
         title = "Compact Game Start Announcements",
-        description = "Compacts game start/counting announcements.\nExample: The game starts in 20 seconds!",
+        description = "Compacts game start/counting announcements.\nExample: §eThe game starts in §c20 §eseconds!",
         category = "Chat", subcategory = "Visual"
     )
     var compactGameStartAnnouncements = true
 
     @Switch(
         title = "Short Channel Names",
-        description = "Abbreviate chat channel names.\nExample: Guild -> G, Party -> P, Friend -> F",
+        description = "Abbreviate chat channel names.\nExample: §2Guild §e-> §2G§e, §9Party §e-> §9P§e, §aFriend §e-> §aF",
         category = "Chat", subcategory = "Visual"
     )
     var shortChannelNames = false
 
     @Switch(
         title = "Short Private Message Channel Names",
-        description = "Abbreviate private message channel names.\nExample: To and From -> PM",
+        description = "Abbreviate private message channel names.\nExample: §dTo §e-> §dPM >§e, §dFrom §e-> §5PM <",
         category = "Chat", subcategory = "Visual"
     )
     var shortPMChannelNames = false
 
     @Switch(
         title = "Replace Chat Emotes",
-        description = "Replace chat emotes.\nExample: ( ﾟ◡ﾟ)/",
+        description = "Replace chat emotes with empty text, the emote without formatting, or their shortcuts.\nExample: §e(§b'§e-§b'§e)⊃§c━§d☆ﾟ.*･｡ﾟ",
         category = "Chat", subcategory = "Visual"
     )
     var replaceChatEmotes = false
 
     @RadioButton(
         title = "Chat Emotes Replacement Mode",
-        description = "Choose how chat emotes are replaced.\nRemove Emote will completely remove emotes from messages.\nRemove Formatting will remove colors/formatting from emotes.\nReplace With Shortcuts will replace emotes with their shortcuts. Example: ( ﾟ◡ﾟ)/ -> o/",
+        description = "Choose how chat emotes are replaced.\n§lRemove Emote§r will completely remove emotes from messages.\n§lRemove Formatting§r will remove colors/formatting from emotes. Example: §c§lOOF §e-> §fOOF§r\n§lReplace With Shortcuts§r will replace emotes with their shortcuts. Example: §e(§b'§e-§b'§e)⊃§c━§d☆ﾟ.*･｡ﾟ §e-> §f:wizard:",
         category = "Chat", subcategory = "Visual",
         options = ["Remove Emote", "Remove Formatting", "Replace With Shortcuts"],
     )
@@ -337,7 +331,7 @@ object HytilsRebornConfig : Config(
 
     @Checkbox(
         title = "Remove All Chat Message",
-        description = "Hide the \"You are now in the ALL channel\" message when auto-switching.",
+        description = "Hide the \"§aYou are now in the §6ALL §achannel§r\" message when auto-switching.",
         category = "Chat", subcategory = "Parties"
     )
     var chatSwapperHideAllChannelMsg = false
@@ -372,70 +366,63 @@ object HytilsRebornConfig : Config(
 
     @Switch(
         title = "Guild Welcome Message",
-        description = "Send a friendly welcome message when a player joins your guild.\nExample: Welcome to the guild Steve!",
+        description = "Send a friendly welcome message when a player joins your guild.\nExample: §fWelcome to the guild Steve!",
         category = "Chat", subcategory = "Guild"
     )
     var guildWelcomeMessage = false
 
     @Switch(
         title = "Thank Watchdog",
-        description = "Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.\nExample: Thanks Watchdog!",
+        description = "Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.\nExample: §fThanks Watchdog!",
         category = "Chat", subcategory = "Watchdog"
     )
     var thankWatchdog = false
 
     @Switch(
         title = "Non Speech Cooldown",
-        description = "Show the amount of time remaining until you can speak if you are a non.\nExample: Your freedom of speech is on cooldown. Please wait 3 more seconds.",
+        description = "Show the amount of time remaining until you can speak if you are a non.\nExample: §eYour freedom of speech is on cooldown. Please wait 3 more seconds.",
         category = "Chat", subcategory = "Cooldown"
     )
     var preventNonCooldown = false
 
     @Switch(
         title = "Shout Cooldown",
-        description = "Show the amount of time remaining until /shout can be reused.\nExample: Shout command is on cooldown. Please wait 30 more seconds.",
+        description = "Show the amount of time remaining until /shout can be reused.\nExample: §eShout command is on cooldown. Please wait 30 more seconds.",
         category = "Chat", subcategory = "Cooldown"
     )
     var preventShoutingOnCooldown = true
 
     @Switch(
         title = "Remove Karma Messages",
-        description = "Remove Karma messages from the chat.",
+        description = "Remove Karma messages from the chat.\nExample: §d+25 Karma!",
         category = "Chat", subcategory = "Toggles"
     )
     var hideKarmaMessages = false
 
     @Switch(
         title = "Remove Lobby Join Messages",
-        description = "Remove lobby join messages from chat.\nExample: [MVP+] Steve joined the lobby!",
+        description = "Remove lobby join messages from chat.\nExample: §b[MVP§c+§b] Steve §6joined the lobby!",
         category = "Chat", subcategory = "Toggles"
     )
     var removeLobbyJoin = false
 
     @Switch(
-        title = "Remove Ticket Machine Rewards",
-        description = "Remove ticket machine messages from chat and only show your own.\nExample: Steve has found a COMMON Figurine",
-        category = "Chat", subcategory = "Toggles"
-    )
-    var removeTicketMachineAnnouncements = false
-
-    @Switch(
         title = "Remove Soul Well Announcements",
-        description = "Remove soul well announcements from chat.\nExample: [MVP+] Steve has found a Bulldozer Perk I (Insane) in the Soul Well!",
+        description = "Remove soul well announcements from chat.\nExample: §b[MVP§c+§b] Steve §7has found a §6Bulldozer Perk I (Insane) §7in the §bSoul Well§7!",
         category = "Chat", subcategory = "Toggles"
     )
     var removeSoulWellAnnouncements = false
 
     @Switch(
         title = "Remove Game Announcements",
-        description = "Remove game announcements from chat.\nExample: A Mega Skywars game is available to join! CLICK HERE to join!",
+        description = "Remove game announcements from chat.\nExample: §bA §e§lMega Skywars §bgame is available to join! §6§lCLICK HERE §bto join!",
         category = "Chat", subcategory = "Toggles"
     )
     var removeGameAnnouncements = false
 
     @Switch(
         title = "Remove Hype Limit Reminder",
-        description = "Remove Hype limit reminders from chat.\nExample: You have reached your Hype limit...",
+        description = "Remove Hype limit reminders from chat.\nExample: §6You have reached your Hype limit...",
         category = "Chat", subcategory = "Toggles"
     )
     var removeHypeLimitReminder = false
@@ -449,14 +436,14 @@ object HytilsRebornConfig : Config(
 
     @Switch(
         title = "Remove BedWars Advertisements",
-        description = "Remove player messages asking to join BedWars parties.\nExample: [MVP+] Steve: Join BedWars 2/4 party!",
+        description = "Remove player messages asking to join BedWars parties.\nExample: §b[MVP§c+§b] Steve§f: Join BedWars 2/4 party!",
         category = "Chat", subcategory = "Toggles"
     )
     var removePlayerBedwarsAds = false
 
     @Switch(
         title = "Remove Friend/Guild Statuses",
-        description = "Remove join/quit messages from friend/guild members.\nExample: Friend > Steve joined.",
+        description = "Remove join/quit messages from friend/guild members.\nExample: §aFriend > §bSteve §ejoined.",
         category = "Chat", subcategory = "Toggles"
     )
     var removeConnectionStatus = false
@@ -470,126 +457,126 @@ object HytilsRebornConfig : Config(
 
     @Switch(
         title = "Remove Server Connected Messages",
-        description = "Remove messages informing you of the lobby name you've just joined, or what lobby you're being sent to.\nExample: You are currently connected to server mini104H.",
+        description = "Remove messages informing you of the lobby name you've just joined, or what lobby you're being sent to.\nExample: §bYou are currently connected to server §6mini104H§b.",
         category = "Chat", subcategory = "Toggles"
     )
     var removedServerConnectedMsgs = false
 
     @Switch(
         title = "Remove Game Tips Messages",
-        description = "Remove tips about the game you are playing.\nExample: Teaming is not allowed on Solo mode!",
+        description = "Remove tips about the game you are playing.\nExample: §r§c§lTeaming is not allowed on Solo mode!",
         category = "Chat", subcategory = "Toggles"
     )
     var removeGameTips = false
 
     @Switch(
         title = "Remove Auto Activated Quest Messages",
-        description = "Remove automatically activated quest messages.\nExample: Automatically activated: Daily Quest: Duels Winner",
+        description = "Remove automatically activated quest messages.\nExample: §aAutomatically activated: §6Daily Quest: Duels Winner",
         category = "Chat", subcategory = "Toggles"
     )
     var removeAutoQuests = false
 
     @Switch(
         title = "Remove Stats Messages",
-        description = "Remove the \"view your stats\" messages.\nExample: Click to view the stats of your SkyWars game!",
+        description = "Remove the \"view your stats\" messages.\nExample: §aClick to view the stats of your SkyWars game!",
         category = "Chat", subcategory = "Toggles"
     )
     var removeViewStats = false
 
     @Switch(
         title = "Remove Curse of Spam Messages",
-        description = "Hides the constant spam of Kali's curse of spam.\nExample: KALI HAS STRIKEN YOU WITH THE CURSE OF SPAM",
+        description = "Hides the constant spam of Kali's curse of spam.\nExample: §eKALI HAS STRIKEN YOU WITH THE CURSE OF SPAM",
         category = "Chat", subcategory = "Toggles"
     )
     var removeCurseOfSpam = false
 
     @Switch(
         title = "Remove Bridge Self Goal Death Messages",
-        description = "Hides the death message when you jump into your own goal in Bridge.\nExample: You just jumped through your own goal, enjoy the void death! :)",
+        description = "Hides the death message when you jump into your own goal in Bridge.\nExample: §cYou just jumped through your own goal, enjoy the void death! :)",
         category = "Chat", subcategory = "Toggles"
     )
     var removeBridgeOwnGoalDeathMsg = false
 
     @Switch(
         title = "Remove Duels No Stats Change Messages",
-        description = "Hides the message explaining that your stats did not change for dueling through /duel or within in a party.\nExamples:\nYour stats did not change because you /duel'ed your opponent!\nYour stats did not change because you dueled someone in your party!\nNo stats will be affected in this round!",
+        description = "Hides the message explaining that your stats did not change for dueling through /duel or within in a party.\nExamples:\n§cYour stats did not change because you /duel'ed your opponent!\n§cYour stats did not change because you dueled someone in your party!\n§cNo stats will be affected in this round!",
         category = "Chat", subcategory = "Toggles"
     )
     var removeDuelsNoStatsChange = false
 
     @Switch(
         title = "Remove Block Trail Disabled Messages",
-        description = "Hides the message explaining that your duel's block trail cosmetic was disabled in specific gamemodes.\nExample: Your block trail aura is disabled in this mode!",
+        description = "Hides the message explaining that your duel's block trail cosmetic was disabled in specific gamemodes.\nExample: §cYour block trail aura is disabled in this mode!",
         category = "Chat", subcategory = "Toggles"
     )
     var removeDuelsBlockTrailDisabled = false
 
     @Switch(
         title = "Remove SkyBlock Welcome Messages",
-        description = "Removes \"Welcome to Hypixel SkyBlock!\" messages from chat.",
+        description = "Removes \"§eWelcome to Hypixel SkyBlock!§r\" messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     var removeSkyblockWelcome = false
 
     @Switch(
         title = "Remove Gift Messages",
-        description = "Removes \"They have gifted x ranks so far!\" messages from chat.",
+        description = "Removes \"§eThey have gifted §6X §eranks so far!§r\" messages from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     var removeGiftedRanksAmount = false
 
     @Switch(
         title = "Remove Seasonal Simulator Collection Messages",
-        description = "Removes personal and global collected messages from chat for the Easter, Christmas, and Halloween variants.\nExamples:\nYou found a gift! (5 total)\n[MVP+] Steve has reached 20 gifts!",
+        description = "Removes personal and global collected messages from chat for the Easter, Christmas, and Halloween variants.\nExamples:\n§aYou found a gift! §7(5 total)\n§b[MVP§c+§b] Steve§f §ehas reached §c20 §egifts!",
         category = "Chat", subcategory = "Toggles"
     )
     var removeSimulatorCollectedMsgs = false
 
     @Switch(
         title = "Remove Earned Coins and Experience Messages",
-        description = "Removes the earned coins and experience messages from chat.\nExamples:\n+25 Bed Wars Experience\n+10 coins!\nYou earned 500 GEXP from playing SkyBlock!",
+        description = "Removes the earned coins and experience messages from chat.\nExamples:\n§b+25 Bed Wars Experience\n§6+10 coins!\n§aYou earned §2500 GEXP §afrom playing SkyBlock!",
         category = "Chat", subcategory = "Toggles"
     )
     var removeEarnedCoinsAndExp = false
 
     @Switch(
         title = "Remove Replay Messages",
-        description = "Removes replay messages from chat.\nExample: This game has been recorded. Click here to watch the Replay!",
+        description = "Removes replay messages from chat.\nExample: §6§aThis game has been recorded. §6Click here to watch the Replay!",
         category = "Chat", subcategory = "Toggles"
     )
     var removeReplayMessage = false
 
     @Switch(
         title = "Remove Tip Messages",
-        description = "Removes tip messages from chat.\nExample: You tipped 5 players in 10 different games!",
+        description = "Removes tip messages from chat.\nExample: §aYou tipped 5 players in 10 different games!",
         category = "Chat", subcategory = "Toggles"
     )
     var removeTipMessages = false
 
     @Switch(
         title = "Remove Online Status Messages",
-        description = "Removes the online status messages from chat.\nExample: REMINDER: Your Online Status is currently set to Appear Offline",
+        description = "Removes the online status messages from chat.\nExample: §6§lREMINDER: §r§6Your Online Status is currently set to §r§e§lAppear Offline",
         category = "Chat", subcategory = "Toggles"
     )
     var removeOnlineStatus = false
 
     @Switch(
         title = "Remove Main Lobby Fishing Announcements",
-        description = "Removes Main Lobby Fishing announcements from chat when a player catches a special fish.\nExample: [MVP+] Steve caught Nemo! Maybe he's lost again?",
+        description = "Removes Main Lobby Fishing announcements from chat when a player catches a special fish.\nExample: §b[MVP§c+§b] Steve§a caught §e§lNemo§a! Maybe he's lost again?",
         category = "Chat", subcategory = "Toggles"
     )
     var removeLobbyFishingMsgs = false
 
     @Switch(
         title = "Remove Hot Potato Messages",
-        description = "Removes Hot Potato messages from chat.\nExample: Steve burnt to a crisp due to a hot potato!",
+        description = "Removes Hot Potato messages from chat.\nExample: §c§lSteve burnt to a crisp due to a hot potato!",
         category = "Chat", subcategory = "Toggles"
     )
     var removeHotPotato = false
 
     @Switch(
         title = "Remove Discord Safety Warning Messages",
-        description = "Removes \"Please be mindful of Discord links in chat as they may pose a security risk\"",
+        description = "Removes \"§cPlease be mindful of Discord links in chat as they may pose a security risk§r\" from chat.",
         category = "Chat", subcategory = "Toggles"
     )
     var removeDiscordSafetyWarning = false
@@ -701,7 +688,7 @@ object HytilsRebornConfig : Config(
     //region Tab
     @Dropdown(
         title = "Highlight Self in Tab",
-        description = "Add a star to your name in tab.",
+        description = "Add a star to your name in tab.\nExample: §5✯ §b[MVP§c+§b] Steve",
         category = "Tab", subcategory = "Highlighters",
         options = ["Off", "Left of Name", "Right of Name"]
     )
@@ -730,14 +717,14 @@ object HytilsRebornConfig : Config(
 
     @Switch(
         title = "Cleaner Tab in SkyBlock",
-        description = "Doesn't render player heads or ping for tab entries that aren't players in SkyBlock.",
+        description = "Hides player heads & ping for tab entries that aren't players, and removes gaps between entries in SkyBlock.",
         category = "Tab", subcategory = "Toggles"
     )
     var cleanerSkyblockTabInfo = true
 
     @Switch(
         title = "Hide Advertisements in Tab",
-        description = "Prevent Hypixel's advertisements from showing up in tab.\nExample: Ranks, Boosters & MORE! STORE.HYPIXEL.NET",
+        description = "Prevent Hypixel's advertisements from showing up in tab.\nExample: §aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET",
         category = "Tab", subcategory = "Toggles"
     )
     var hideAdsInTab = true
@@ -753,7 +740,7 @@ object HytilsRebornConfig : Config(
 
     @Switch(
         title = "Hide Advertisements in Bossbars",
-        description = "Hide bossbars that advertise Hypixel.\nExample: Playing SKYWARS on MC.HYPIXEL.NET",
+        description = "Hide bossbars that advertise Hypixel.\nExample: §e§lPlaying §f§lSKYWARS §e§lon §a§lMC.HYPIXEL.NET",
         category = "Game", subcategory = "GUI"
     )
     var hideGameAdsBossbar = true
@@ -767,14 +754,14 @@ object HytilsRebornConfig : Config(
 
     @Switch(
         title = "Hide Game Starting Titles",
-        description = "Hide titles such as gamemode names.\nExample: INSANE MODE",
+        description = "Hide titles such as gamemode names.\nExample: §c§lINSANE MODE",
         category = "Game", subcategory = "GUI"
     )
     var hideGameStartingTitles = false
 
     @Switch(
         title = "Hide Game Ending Titles",
-        description = "Hide titles that signify when the game has ended.\nExamples:\nVICTORY!\nGAME OVER!",
+        description = "Hide titles that signify when the game has ended.\nExamples:\n§6§lVICTORY!\n§c§lGAME OVER!",
         category = "Game", subcategory = "GUI"
     )
     var hideGameEndingTitles = false
@@ -795,7 +782,7 @@ object HytilsRebornConfig : Config(
 
     @Switch(
         title = "Hide Useless Game Nametags",
-        description = "Hides unnecessary nametags such as those that say \"RIGHT CLICK\" or \"CLICK\" in SkyBlock, BedWars, SkyWars, and Duels, as well as other useless ones.",
+        description = "Hides unnecessary nametags such as those that say \"§e§lRIGHT CLICK§r\" or \"§e§lCLICK§r\" in SkyBlock, BedWars, SkyWars, and Duels, as well as other useless ones.",
         category = "Game", subcategory = "Entities"
     )
     var hideUselessArmorStandsGame = false
@@ -1067,13 +1054,6 @@ object HytilsRebornConfig : Config(
         options = ["Notification", "Title", "Elder Guardian Curse"]
     )
     var miningFatigueNotificationType = 0
-
-    @Checkbox(
-        title = "Disable Mining Fatigue Notification in SkyBlock",
-        description = "Disable the mining fatigue notification in SkyBlock.",
-        category = "Game", subcategory = "Potion Effects"
-    )
-    var disableNotifyMiningFatigueSkyblock = true
     //endregion
 
     //region Lobby
@@ -1086,7 +1066,7 @@ object HytilsRebornConfig : Config(
 
     @Switch(
         title = "Hide Useless Lobby Nametags",
-        description = "Hides unnecessary nametags such as those that say \"RIGHT CLICK\" or \"CLICK TO PLAY\" in a lobby, as well as other useless ones.",
+        description = "Hides unnecessary nametags such as those that say \"§e§lRIGHT CLICK§r\" or \"§e§lCLICK TO PLAY§r\" in a lobby, as well as other useless ones.",
         category = "Lobby", subcategory = "NPCs"
     )
     var hideUselessArmorStands = false
@@ -1105,131 +1085,120 @@ object HytilsRebornConfig : Config(
     )
     var silentLobby = false
 
-    @Switch(
-        title = "Disable Stepping Sounds",
-        description = "Remove sounds created by stepping.",
+    @Accordion(
+        title = "Disable Specific Lobby Sounds",
+        description = "Disable specific sounds in the lobby.",
         category = "Lobby", subcategory = "Sounds"
     )
-    var lobbyDisableSteppingSounds = false
+    object DisableSpecificLobbySounds {
+        @Switch(
+            title = "Disable Stepping Sounds",
+            description = "Remove sounds created by stepping."
+        )
+        var lobbyDisableSteppingSounds = false
 
-    @Switch(
-        title = "Disable Slime Sounds",
-        description = "Remove sounds created by slimes.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableSlimeSounds = false
+        @Switch(
+            title = "Disable Slime Sounds",
+            description = "Remove sounds created by slimes."
+        )
+        var lobbyDisableSlimeSounds = false
 
-    @Switch(
-        title = "Disable Dragon Sounds",
-        description = "Remove sounds created by dragons.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableDragonSounds = false
+        @Switch(
+            title = "Disable Dragon Sounds",
+            description = "Remove sounds created by dragons."
+        )
+        var lobbyDisableDragonSounds = false
 
-    @Switch(
-        title = "Disable Wither Sounds",
-        description = "Remove sounds created by withers & wither skeletons.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableWitherSounds = false
+        @Switch(
+            title = "Disable Wither Sounds",
+            description = "Remove sounds created by withers & wither skeletons."
+        )
+        var lobbyDisableWitherSounds = false
 
-    @Switch(
-        title = "Disable Item Pickup Sounds",
-        description = "Remove sounds created by picking up an item.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableItemPickupSounds = false
+        @Switch(
+            title = "Disable Item Pickup Sounds",
+            description = "Remove sounds created by picking up an item."
+        )
+        var lobbyDisableItemPickupSounds = false
 
-    @Switch(
-        title = "Disable Experience Orb Sounds",
-        description = "Remove sounds created by experience orbs.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableExperienceOrbSounds = false
+        @Switch(
+            title = "Disable Experience Orb Sounds",
+            description = "Remove sounds created by experience orbs."
+        )
+        var lobbyDisableExperienceOrbSounds = false
 
-    @Switch(
-        title = "Disable Primed TNT Sounds",
-        description = "Remove sounds created by primed TNT.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisablePrimedTntSounds = false
+        @Switch(
+            title = "Disable Primed TNT Sounds",
+            description = "Remove sounds created by primed TNT."
+        )
+        var lobbyDisablePrimedTntSounds = false
 
-    @Switch(
-        title = "Disable Explosion Sounds",
-        description = "Remove sounds created by explosions.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableExplosionSounds = false
+        @Switch(
+            title = "Disable Explosion Sounds",
+            description = "Remove sounds created by explosions."
+        )
+        var lobbyDisableExplosionSounds = false
 
-    @Switch(
-        title = "Disable Delivery Man Sounds",
-        description = "Remove sounds created by Delivery Man events.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableDeliveryManSounds = false
+        @Switch(
+            title = "Disable Delivery Man Sounds",
+            description = "Remove sounds created by Delivery Man events."
+        )
+        var lobbyDisableDeliveryManSounds = false
 
-    @Switch(
-        title = "Disable Note Block Sounds",
-        description = "Remove sounds created by note blocks.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableNoteBlockSounds = false
+        @Switch(
+            title = "Disable Note Block Sounds",
+            description = "Remove sounds created by note blocks."
+        )
+        var lobbyDisableNoteBlockSounds = false
 
-    @Switch(
-        title = "Disable Firework Sounds",
-        description = "Remove sounds created by fireworks.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableFireworkSounds = false
+        @Switch(
+            title = "Disable Firework Sounds",
+            description = "Remove sounds created by fireworks."
+        )
+        var lobbyDisableFireworkSounds = false
 
-    @Switch(
-        title = "Disable Levelup Sounds",
-        description = "Remove sounds created by someone leveling up.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableLevelupSounds = false
+        @Switch(
+            title = "Disable Levelup Sounds",
+            description = "Remove sounds created by someone leveling up."
+        )
+        var lobbyDisableLevelupSounds = false
 
-    @Switch(
-        title = "Disable Arrow Sounds",
-        description = "Remove sounds created by arrows.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableArrowSounds = false
+        @Switch(
+            title = "Disable Arrow Sounds",
+            description = "Remove sounds created by arrows."
+        )
+        var lobbyDisableArrowSounds = false
 
-    @Switch(
-        title = "Disable Bat Sounds",
-        description = "Remove sounds created by bats.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableBatSounds = false
+        @Switch(
+            title = "Disable Bat Sounds",
+            description = "Remove sounds created by bats."
+        )
+        var lobbyDisableBatSounds = false
 
-    @Switch(
-        title = "Disable Fire Sounds",
-        description = "Remove sounds created by fire.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableFireSounds = false
+        @Switch(
+            title = "Disable Fire Sounds",
+            description = "Remove sounds created by fire."
+        )
+        var lobbyDisableFireSounds = false
 
-    @Switch(
-        title = "Disable Enderman Sounds",
-        description = "Remove sounds created by endermen.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableEndermanSounds = false
+        @Switch(
+            title = "Disable Enderman Sounds",
+            description = "Remove sounds created by endermen."
+        )
+        var lobbyDisableEndermanSounds = false
 
-    @Switch(
-        title = "Disable Door Sounds",
-        description = "Disable sounds caused by doors, trapdoors, and fence gates.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisableDoorSounds = false
+        @Switch(
+            title = "Disable Door Sounds",
+            description = "Disable sounds caused by doors, trapdoors, and fence gates."
+        )
+        var lobbyDisableDoorSounds = false
 
-    @Switch(
-        title = "Disable Portal Sounds",
-        description = "Disable sounds caused by nether portals.",
-        category = "Lobby", subcategory = "Sounds"
-    )
-    var lobbyDisablePortalSounds = false
+        @Switch(
+            title = "Disable Portal Sounds",
+            description = "Disable sounds caused by nether portals."
+        )
+        var lobbyDisablePortalSounds = false
+    }
 
     @Switch(
         title = "Limbo Limiter",
@@ -1246,50 +1215,53 @@ object HytilsRebornConfig : Config(
     var limboPmDing = true
     //endregion
 
-    init {
-        addDependency("autoQueueDelay", "autoQueue")
-        addDependency("gexpMode", "autoGetGEXP")
-        addDependency("disableNotifyMiningFatigueSkyblock", "notifyMiningFatigue")
-        addDependency("miningFatigueNotificationType", "notifyMiningFatigue")
+    override fun initialize(byConfigManager: Boolean) {
+        super.initialize(byConfigManager)
+
+        hideIf("autoQueueDelay", "autoQueue")
+        hideIf("gexpMode", "autoGetGEXP")
 
         listOf(
             "autoGGSendSecondMessage", "casualAutoGG", "autoGGMessage",
             "autoGGFirstMsgDelay", "autoGGSecondMessage", "autoGGSecondMsgDelay"
-        ).forEach { addDependency(it, "autoGG") }
+        ).forEach { hideIf(it, "autoGG") }
+        hideIf("autoGGSecondMessage", "autoGGSendSecondMessage")
+        hideIf("autoGGSecondMsgDelay", "autoGGSendSecondMessage")
 
-        addDependency("autoGLMessage", "autoGL")
-        addDependency("afkTimeout", "autoReplyAfk")
-        addDependency("afkReplyMessage", "autoReplyAfk")
+        hideIf("autoGLMessage", "autoGL")
+        hideIf("afkTimeout", "autoReplyAfk")
+        hideIf("afkReplyMessage", "autoReplyAfk")
+        hideIf("chatEmotesReplacementMode", "replaceChatEmotes")
 
-        //~ if <26.2 'gui.hud' -> 'gui' {
-        addCallback("cleanSeparatorLines") { mc.execute(mc.gui.hud.chat::rescaleChat) }
-        //~}
-
-        addDependency("chatEmotesReplacementMode", "replaceChatEmotes")
-        addDependency("chatSwapperReturnChannel", "chatSwapper")
-
-        addDependency("chatSwapperChattingIntegration", "chatSwapper")
+        hideIf("chatSwapperReturnChannel", "chatSwapper")
+        hideIf("chatSwapperChattingIntegration", "chatSwapper")
         addDependency(
             "chatSwapperChattingIntegration",
             "Chatting is not installed. Please install Chatting to use this feature."
         ) { if (FabricLoader.getInstance().isModLoaded("chatting")) Property.Display.SHOWN else Property.Display.DISABLED }
+        hideIf("chatSwapperHideAllChannelMsg", "chatSwapper")
 
-        addDependency("chatSwapperHideAllChannelMsg", "chatSwapper")
-        addDependency("notifyWhenKickInCaps", "notifyWhenKick")
+        hideIf("notifyWhenKickInCaps", "notifyWhenKick")
 
         listOf(
             "guildAutoWB", "friendsAutoWB", "autoWBCooldown", "autoWBMessage1", "randomAutoWB",
+        ).forEach { hideIf(it, "autoWB") }
+        listOf(
             "autoWBMessage2", "autoWBMessage3", "autoWBMessage4", "autoWBMessage5", "autoWBMessage6",
             "autoWBMessage7", "autoWBMessage8", "autoWBMessage9", "autoWBMessage10"
-        ).forEach { addDependency(it, "autoWB") }
+        ).forEach {
+            hideIf(it, "autoWB")
+            hideIf(it, "randomAutoWB")
+        }
 
-        addDependency("blockNumber", "blockNotify")
-        addDependency("blockNotifySound", "blockNotify")
+        hideIf("blockNumber", "blockNotify")
+        hideIf("blockNotifySound", "blockNotify")
+        hideIf("miniWallsMiddleBeaconColor", "miniWallsMiddleBeacon")
 
         //~ if <26.2 'levelExtractor' -> 'levelRenderer' {
         addCallback("heightOverlay") { mc.execute(mc.levelExtractor::allChanged) }
         listOf("heightOverlayMinBuild", "overlayAmount").forEach {
-            addDependency(it, "heightOverlay")
+            hideIf(it, "heightOverlay")
             addCallback(it) { mc.execute(mc.levelExtractor::allChanged) }
         }
 
@@ -1298,15 +1270,27 @@ object HytilsRebornConfig : Config(
             "red", "orange", "yellow", "lime", "green", "cyan", "lightBlue", "blue",
             "purple", "magenta", "pink", "brown", "gray", "lightGray", "white", "black"
         ).forEach {
-            addDependency("HeightOverlayCustomColors.$it", "heightOverlay")
             addDependency("HeightOverlayCustomColors.$it", "HeightOverlayCustomColors.enabled")
             addCallback("HeightOverlayCustomColors.$it") { mc.execute(mc.levelExtractor::allChanged) }
         }
         //~}
 
-        addDependency("sumoRenderDistanceAmount", "sumoRenderDistance")
-        addDependency("highlightChestsColor", "highlightChests")
-        addDependency("uhcOverlayScale", "uhcOverlay")
-        addDependency("uhcMiddleWaypointText", "uhcMiddleWaypoint")
+        hideIf("sumoRenderDistanceAmount", "sumoRenderDistance")
+        hideIf("highlightChestsColor", "highlightChests")
+        hideIf("uhcOverlayScale", "uhcOverlay")
+        hideIf("uhcMiddleWaypointText", "uhcMiddleWaypoint")
+        hideIf("miningFatigueNotificationType", "notifyMiningFatigue")
+
+        // migrate old disable specific lobby sounds to accordion
+        val oldConfig = runCatching { ConfigManager.active()?.load(id) }.getOrNull()
+        if (oldConfig != null && oldConfig.getChild("DisableSpecificLobbySounds") == null) {
+            for (field in DisableSpecificLobbySounds::class.java.declaredFields) {
+                if (field.type == Boolean::class.javaPrimitiveType) {
+                    field.isAccessible = true
+                    field.set(DisableSpecificLobbySounds, oldConfig.getProp(field.name)?.get() == true)
+                }
+            }
+            save()
+        }
     }
 }

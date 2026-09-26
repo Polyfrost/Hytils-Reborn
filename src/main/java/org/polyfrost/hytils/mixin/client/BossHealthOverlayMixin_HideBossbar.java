@@ -9,21 +9,11 @@ import org.polyfrost.hytils.client.data.providers.LanguageData;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Collection;
 
 @Mixin(BossHealthOverlay.class)
 abstract class BossHealthOverlayMixin_HideBossbar {
-    //~ if <26.1 'extractRenderState' -> 'render'
-    @Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
-    private void hideLobbyBossbar(CallbackInfo ci) {
-        if (HytilsRebornConfig.isEnabled() && HytilsRebornConfig.INSTANCE.getLobbyBossbar() && HypixelUtils.isHypixel() && !HypixelUtils.getLocation().inGame()) {
-            ci.cancel();
-        }
-    }
-
     //~ if <26.1 'extractRenderState' -> 'render'
     @ModifyExpressionValue(method = "extractRenderState", at = @At(value = "INVOKE", target = "Ljava/util/Map;values()Ljava/util/Collection;"))
     private Collection<LerpingBossEvent> hideGameAdBossbar(Collection<LerpingBossEvent> original) {
@@ -36,4 +26,13 @@ abstract class BossHealthOverlayMixin_HideBossbar {
 
         return original;
     }
+
+    //? if <1.21.8 {
+    /*@org.spongepowered.asm.mixin.injection.Inject(method = "render", at = @At("HEAD"), cancellable = true)
+    private void hideLobbyBossbar(org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        if (org.polyfrost.hytils.client.features.game.HideHudElements.shouldHideBossbar()) {
+            ci.cancel();
+        }
+    }
+    *///?}
 }

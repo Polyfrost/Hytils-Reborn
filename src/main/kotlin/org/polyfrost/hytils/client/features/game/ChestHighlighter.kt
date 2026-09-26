@@ -4,7 +4,6 @@ import net.hypixel.data.type.GameType
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.entity.ChestBlockEntity
 import net.minecraft.world.phys.BlockHitResult
-import net.minecraft.world.phys.Vec3
 import org.polyfrost.hytils.client.HytilsRebornConfig
 import org.polyfrost.hytils.client.events.PostLevelRenderEvent
 import org.polyfrost.hytils.client.events.TitleEvent
@@ -25,14 +24,13 @@ object ChestHighlighter {
         for (pos in highlightedChestPositions) {
             if (mc.level?.getBlockEntity(pos) !is ChestBlockEntity) continue
             RenderUtils.renderFilledBox(
-                event.poseStack,
-                //? if >=26.2 {
-                event.submitNodeCollector,
-                //?} else
-                //event.multiBufferSource,
-                Vec3(pos),
+                //? if <1.21.11 {
+                /*event.poseStack,
+                event.multiBufferSource,
                 //~ if <1.21.10 '.pos' -> '.position'
                 event.camera.pos,
+                *///?}
+                pos,
                 HytilsRebornConfig.highlightChestsColor
             )
         }

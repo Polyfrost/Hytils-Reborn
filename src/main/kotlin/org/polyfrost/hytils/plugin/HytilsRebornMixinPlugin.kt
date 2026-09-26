@@ -7,25 +7,22 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo
 
 class HytilsRebornMixinPlugin : IMixinConfigPlugin {
     override fun getMixins(): List<String> = buildList {
-        //? if <26.3 {
-        /*if (FabricLoader.getInstance().isModLoaded("sodium")) {
+        if (FabricLoader.getInstance().isModLoaded("sodium")) {
             add("client.heightoverlay.BlockRendererMixin_HeightOverlay_Sodium")
         }
-        *///?}
 
         //? if <26.1 {
         /*add("client.chat.ChatComponentMixin_TrackLineParents")
         add("client.chat.GuiMessageLineMixin_TrackParent")
         *///?}
 
-        //? if >=1.21.11 {
+        //? if >=1.21.11
         add("client.accessor.RenderTypeAccessor")
 
-        add("client.chat.LineConsumerRendererMixin_RenderCustomLines")
-        add("client.chat.parameters.ClickableTextOnlyGraphicsAccessMixin")
-        add("client.chat.parameters.DrawingBackgroundGraphicsAccessMixin")
-        add("client.chat.parameters.DrawingFocusedGraphicsAccessMixin")
-        //?}
+        //? if <1.21.8 {
+        /*add("client.hud.GuiMixin_HideActionBar")
+        add("client.hud.GuiMixin_HideHudElements")
+        *///?}
     }
 
     override fun shouldApplyMixin(targetClassName: String?, mixinClassName: String?): Boolean = true
