@@ -1215,7 +1215,9 @@ object HytilsRebornConfig : Config(
     var limboPmDing = true
     //endregion
 
-    init {
+    override fun initialize(byConfigManager: Boolean) {
+        super.initialize(byConfigManager)
+
         hideIf("autoQueueDelay", "autoQueue")
         hideIf("gexpMode", "autoGetGEXP")
 
@@ -1285,9 +1287,7 @@ object HytilsRebornConfig : Config(
             for (field in DisableSpecificLobbySounds::class.java.declaredFields) {
                 if (field.type == Boolean::class.javaPrimitiveType) {
                     field.isAccessible = true
-                    if (oldConfig.getProp(field.name)?.get() == true) {
-                        field.set(DisableSpecificLobbySounds, true)
-                    }
+                    field.set(DisableSpecificLobbySounds, oldConfig.getProp(field.name)?.get() == true)
                 }
             }
             save()
