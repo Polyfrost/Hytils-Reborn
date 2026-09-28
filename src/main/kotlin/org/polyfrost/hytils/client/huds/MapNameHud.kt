@@ -19,10 +19,13 @@ class MapNameHud : TextHud(
     var noLocationText = "Unknown"
 
     private var currentText = noLocationText
+    private var available = false
 
     override fun getText() = currentText
 
     override fun defaultPosition() = 0f to 0f
+
+    override fun shouldShow() = !shouldHide || available
 
     override fun setup() {
         super.setup()
@@ -30,7 +33,7 @@ class MapNameHud : TextHud(
         eventHandler { event: HypixelLocationEvent ->
             val text = event.location.mapName.orElse(null)
             currentText = text ?: noLocationText
-            hidden = text == null && shouldHide
+            available = text != null
             updateAndRecalculate()
         }
 

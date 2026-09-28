@@ -19,10 +19,13 @@ class GameModeHud : TextHud(
     var noLocationText = "Unknown"
 
     private var currentText = noLocationText
+    private var available = false
 
     override fun getText() = currentText
 
     override fun defaultPosition() = 0f to 0f
+
+    override fun shouldShow() = !shouldHide || available
 
     override fun setup() {
         super.setup()
@@ -35,7 +38,7 @@ class GameModeHud : TextHud(
                 ?.joinToString(" ") { word ->
                     word.replaceFirstChar { it.titlecase() }
                 } ?: noLocationText
-            hidden = text == null && shouldHide
+            available = text != null
             updateAndRecalculate()
         }
 

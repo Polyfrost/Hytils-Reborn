@@ -27,12 +27,15 @@ class HeightLimitHud : TextHud(
     var noLocationText = "Unknown"
 
     private var buildLimit: Int? = 0
+    private var available = false
 
     override fun getText(): String = buildLimit?.let {
         if (showDistanceToLimit) it - (mc.player?.y?.toInt() ?: 0) else it
     }?.toString() ?: noLocationText
 
     override fun defaultPosition() = 0f to 0f
+
+    override fun shouldShow() = !shouldHide || available
 
     override fun setup() {
         super.setup()
@@ -41,7 +44,7 @@ class HeightLimitHud : TextHud(
             val mapEntry = HeightLimitData.maps[event.location.gameType.orElse(null)]
                 ?.get(event.location.mapName.orElse(null))
             buildLimit = if (useMinimumBuildLimit) mapEntry?.minBuild else mapEntry?.maxBuild
-            hidden = buildLimit == null && shouldHide
+            available = mapEntry != null
             updateAndRecalculate()
         }
 
