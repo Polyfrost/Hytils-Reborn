@@ -1,158 +1,132 @@
 # Hytils Reborn
-![Compact Powered by OneConfig](https://polyfrost.org/img/compact_vector.svg)
-![Dev Workflow Status](https://img.shields.io/github/v/release/Polyfrost/Hytils-Reborn.svg?style=for-the-badge&color=1452cc&label=release)
 
-Hytils Reborn is a [Hypixel](https://hypixel.net) focused mod based on [Sk1er LLC's Hytilities](https://github.com/Sk1erLLC/Hytilities), adding tons of Quality of Life features that
-you would want while on Hypixel, including Chat Restylers, Height Overlay, Message Blockers, Auto Queue, Autocomplete for /play and plenty others to discover on your own!
+[![Modrinth downloads](https://img.shields.io/modrinth/dt/nF6YaBfO?style=flat&logo=modrinth&label=Modrinth&color=1bd96a)](https://modrinth.com/mod/hytils)
+[![CurseForge downloads](https://img.shields.io/curseforge/dt/1147244?style=flat&logo=curseforge&label=CurseForge&color=f16436)](https://www.curseforge.com/minecraft/mc-mods/hytils)
+
+Hytils Reborn is a mod for the [Hypixel](https://hypixel.net) server. It removes and restyles Hypixel chat messages, hides parts of the tab list and HUD that carry no information, and sends common chat messages and commands for you. It is of no use on other servers.
+
+Hytils Reborn started as a fork of [Hytilities](https://github.com/Sk1erLLC/Hytilities) by Sk1er LLC.
+
 ## Features
-<details>
- <summary>General</summary>
 
-### General
-- **Auto Start** - Join Hypixel immediately once the client has loaded to the main menu.
-- **Auto-Complete Play Commands** - Allows tab completion of /play commands.
-- **Auto Queue** - Automatically queues for another game once you win or die. (This will require you to interact with the game in a way to prevent abuse)
-- **Automatically Check GEXP** - Automatically check your GEXP after you win a Hypixel game.
-- **Automatically Check Winstreak** - Automatically check your winstreak after you win a Hypixel game.
-</details>
-<details>
-  <summary>Chat</summary>
+Most options are off until you turn them on. These are on by default:
 
-### Chat
-- **Auto GG** - Send a "gg" message at the end of a game.
-- **Auto GG Second Message** - Enable a secondary message to send after your first GG.
-- **Casual Auto GG** - Send a "gg" message at the end of minigames/events that don't give out Karma, such as SkyBlock and The Pit events.
-- **Anti GG** - Remove GG messages from chat.
-- **Auto GL** - Send a message 5 seconds before a Hypixel game starts.
-- **Anti GL** - Remove all GL messages from chat.
-- **Auto Friend** - Automatically accept friend requests.
-- **Auto Chat Report Confirm** - Automatically confirms chat reports.
-- **Auto Party Warp Confirm** - Automatically confirms party warps.
-- **Auto Reply When AFK** - Automatically sends a reply to anyone who PMs you when you are AFK in Limbo.
-- **Game Status Restyle** - Replace common game status messages with a new style.
-- **Player Count Before Player Name** - Put the player count before the player name in game join/leave messages.
-- **Player Count on Player Leave** - Include the player count when players leave.
-- **Player Count Padding** - Place zeros at the beginning of the player count to align with the max player count.
-- **White Chat** - Make nons' chat messages appear as the normal chat message color.
-- **White Private Messages** - Make private messages appear as the normal chat message color.
-- **Colored Friend/Guild Statuses** - Colors the join/leave status of friends and guild members.
-- **Cleaner Start Counter** - Compacts counting announcements.
-- **Short Channel Names** - Abbreviate chat channel names.
-- **Short Private Message Channel Names** - Abbreviate private message channel names.
-- **Replace Chat Emotes** - Replace chat emotes with empty text, the emote without formatting, or their shortcuts.
-- **Party Chat Swapper** - Automatically change to and out of a party channel when joining/leaving a party.
-- **Swap Chatting Tab With Chat Swapper** - Automatically switch your [Chatting](https://github.com/Polyfrost/Chatting) Chat Tab when Chat Swapper swaps your chat channel.
-- **Remove All Chat Message** - Hide the "You are now in the ALL channel" message when auto-switching.
-- **Notify When Kicked From Game** - Notify in party chat when you are kicked from the game due to a connection issue.
-- **Guild Welcome Message** - Send a friendly welcome message when a player joins your guild.
-- **Broadcast Achievements** - Announce in Guild chat when you get an achievement.
-- **Broadcast Levelup** - Announce in Guild chat when you level up.
-- **Thank Watchdog** - Compliment Watchdog when someone is banned, or a Watchdog announcement is sent.
-- **Shout Cooldown** - Show the amount of time remaining until /shout can be reused.
-- **Non Speech Cooldown** - Show the amount of time remaining until you can speak if you are a non.
-- **Remove Karma Messages** - Remove Karma messages from the chat.
-- **Remove Lobby Statuses** - Remove lobby join messages from chat.
-- **Remove Ticket Machine Rewards** - Remove ticket machine messages from chat and only show your own.
-- **Remove Soul Well Announcements** - Remove soul well announcements from chat.
-- **Remove Game Announcements** - Remove game announcements from chat.
-- **Remove Hype Limit Reminder** - Remove Hype limit reminders from chat.
-- **Player AdBlocker** - Remove spam messages from players, usually advertising something or begging for ranks.
-- **Remove BedWars Advertisements** - Remove player messages asking to join BedWars parties.
-- **Remove Friend/Guild Statuses** - Remove join/quit messages from friend/guild members.
-- **Remove Guild MOTD** - Remove the guild Message Of The Day.
-- **Remove Server Connected Messages** - Remove messages informing you of the lobby name you've just joined, or what lobby you're being sent to.
-- **Remove Game Tips Messages** - Remove messages informing you of how to play the game you're currently in.
-- **Remove Auto Activated Quest Messages** - Remove automatically activated quest messages.
-- **Remove Stats Messages** - Remove messages informing you if you want to view your stats after a game.
-- **Remove Curse of Spam Messages** - Hides the constant spam of Kali's curse of spam.
-- **Remove Bridge Self Goal Death Messages** - Hides the death message when you jump into your own goal in Bridge.
-- **Remove Duels No Stats Change Messages** - Hides the message explaining that your stats did not change for dueling through /duel or within in a party.
-- **Remove Block Trail Disabled Messages** - Hides the message explaining that your duel's block trail cosmetic was disabled in specific gamemodes.
-- **Remove SkyBlock Welcome Messages** - Removes "Welcome to Hypixel SkyBlock!" messages from chat.
-- **Remove Gift Message** - Removes "They have gifted x so far!" messages from chat.
-- **Remove Seasonal Simulator Collection Messages** - Removes personal and global collected messages from chat for the Easter, Christmas, and Halloween variants.
-- **Remove Earned Coins and Experience Messages** - Removes the earned coins and experience messages from chat.
-- **Remove Replay Messages** - Removes replay messages from chat.
-- **Remove Tip Messages** - Removes tip messages from chat.
-- **Remove Online Status Messages** - Removes the online status messages from chat.
-- **Remove Main Lobby Fishing Announcements** - Removes Main Lobby Fishing announcements from chat when a player catches a special fish.
-- **Remove Hot Potato Messages** - Removes Hot Potato messages from chat.
-- **Remove Discord Safety Warning Messages** - Removes "Please be mindful of Discord links in chat as they may pose a security risk".
-- **AutoWB** - Says configurable message to your friends/guild when they join.
-</details>
-<details>
-  <summary>Tab</summary>
+- Auto GG and tab completion for `/play`.
+- Restyled join, leave and countdown messages, white private messages and colored friend and guild statuses.
+- The shout cooldown warning.
+- No ping in the tab list during games, a shorter SkyBlock tab list and no store adverts in the tab list or bossbar.
+- No bossbar in lobbies.
+- Hardcore hearts, the Pit lag reducer and the mining fatigue notification.
+- A ding for private messages in Limbo.
 
-### Tab
-- **Highlight Self In Tab** - Add a star to your name in tab.
-- **Hide Guild Tags in Tab** - Prevent Guild tags from showing up in tab.
-- **Hide Player Ranks in Tab** - Prevent player ranks from showing up in tab.
-- **Hide Ping in Tab** - Prevent ping from showing up in tab while playing games, since the value is misleading. Ping will remain visible in lobbies.
-- **Cleaner Tab in SkyBlock** - Doesn't render player heads or ping for tab entries that aren't players in SkyBlock.
-- **Hide Advertisements in Tab** - Prevent Hypixel's advertisements from showing up in tab.
-</details>
-<details>
-  <summary>Game</summary>
+### Automatic messages
 
-### Game
-- **Hide HUD Elements** - Hide HUD elements such as health, hunger, and armor bars where they are the same.
-- **Hide Advertisements in Bossbars** - Hide bossbars that advertise Hypixel.
-- **Hardcore Hearts** - When your bed is broken/wither is killed in Bedwars/MiniWalls, set the heart style to Hardcore.
-- **Hide Game Starting Titles** - Hide titles such as the countdown when a game is about to begin and gamemode names.
-- **Hide Game Ending Titles** - Hide titles that signify when the game has ended.
-- **Hide Game Ending Countdown Titles** - Hide titles that signify the time left in a game.
-- **Hide Armor** - Hide armor in games where armor is always the same.
-- **Hide Useless Game Nametags** - Hides unnecessary nametags such as those that say "RIGHT CLICK" or "CLICK" in SkyBlock, BedWars, SkyWars, and Duels, as well as other useless ones.
-- **Notify When Blocks Run Out** - Pings you via a sound when your blocks are running out.
-- **Middle Waypoint Beacon in MiniWalls** - Adds a beacon at (0,0) when your MiniWither is dead in MiniWalls.
-- **Hide Arcade Cosmetics** - Hide Arcade Cosmetics in Hypixel.
-- **Height Overlay** - Make blocks that are at the height limit a different color in BedWars and The Bridge.
-- **Height Overlay Minimum Build Limit** - Enable the height overlay for blocks that are at the minimum build limit.
-- **Hide Actionbar in Dropper** - Hide the Actionbar in Dropper.
-- **Mute Hurt Sounds in Dropper** - Mute the sounds of other players failing in Dropper.
-- **Lower Render Distance in Sumo** - Lowers render distance to your desired value in Sumo Duels.
-- **Hide Duels Cosmetics** - Hide Duels Cosmetics in Hypixel.
-- **Hide Actionbar in Housing** - Hide the Actionbar in Housing.
-- **Pit Lag Reducer** - Hide entities at spawn while you are in the PVP area.
-- **Remove Non-NPCs in SkyBlock** - Remove entities that are not NPCs in SkyBlock.
-- **Highlight Opened Chests** - Highlight chests that have been opened.
-- **UHC Overlay** - Increase the size of dropped apples, golden apples, golden ingots, and player heads in UHC Champions and Speed UHC.
-- **UHC Middle Waypoint** - Adds a waypoint to signify (0,0).
-- **Notify Mining Fatigue** - Send a notification when you get mining fatigue.
-- **Mining Fatigue Notification Type** - Choose if the mining fatigue notification should be a toast, title, or elder guardian curse.
-- **Disable Mining Fatigue Notification in SkyBlock** - Disable the mining fatigue notification in SkyBlock.
-</details>
-<details>
-  <summary>Lobby</summary>
+- Auto GG sends `gg` to all chat one second after a game ends. You can change the message and the delay, and add a second message. Casual Auto GG also covers events that give no Karma, such as SkyBlock and Pit events.
+- Auto GL sends `glhf` when the game announces that it starts in 5 seconds.
+- Auto Queue sends `/play` for the mode you just played after the game ends. It waits for you to press a key or click first, and you can add a delay of up to 10 seconds.
+- Auto Friend accepts friend requests.
+- Auto Party Warp Confirm confirms a party warp for you.
+- Auto Reply When AFK answers private messages after you have given no input for 5 minutes. You set the time between 1 and 60 minutes and write the reply.
+- AutoWB greets friends and guild members when they join. You can write up to 10 messages and have the mod pick one at random.
+- Guild options welcome new guild members, and announce your achievements and level ups in guild chat.
+- Thank Watchdog sends "Thanks Watchdog!" after a Watchdog announcement or ban.
+- Notify When Kicked From Game tells your party to requeue when a connection issue kicks you from a game.
+- Party Chat Swapper switches to party chat when you join a party and back to all, guild or officer chat when you leave. If you use [Chatting](https://modrinth.com/mod/chatting), it can switch the chat tab too.
+- After a win, Hytils Reborn can show your daily or weekly guild experience and your winstreak in BedWars, SkyWars or Duels.
 
-### Lobby
-- **Hide Lobby NPCs** - Hide NPCs in the lobby.
-- **Hide Useless Lobby Nametags** - Hides unnecessary nametags such as those that say "RIGHT CLICK" or "CLICK TO PLAY" in a lobby, as well as other useless ones.
-- **Hide Lobby Bossbars** - Hide the bossbar in the lobby.
-- **Silent Lobby** - Prevent all sounds from playing when you are in a lobby.
-- **Disable Stepping Sounds** - Remove sounds created by stepping.
-- **Disable Slime Sounds** - Remove sounds created by slimes.
-- **Disable Dragon Sounds** - Remove sounds created by dragons.
-- **Disable Wither Sounds** - Remove sounds created by withers & wither skeletons.
-- **Disable Item Pickup Sounds** - Remove sounds created by picking up an item.
-- **Disable Experience Orb Sounds** - Remove sounds created by experience orbs.
-- **Disable Primed TNT Sounds** - Remove sounds created by primed TNT.
-- **Disable Explosion Sounds** - Remove sounds created by explosions.
-- **Disable Delivery Man Sounds** - Remove sounds created by delivery man events.
-- **Disable Note Block Sounds** - Remove sounds created by note blocks.
-- **Disable Firework Sounds** - Remove sounds created by fireworks.
-- **Disable Levelup Sounds** - Remove sounds created by someone leveling up.
-- **Disable Arrow Sounds** - Remove sounds created by arrows.
-- **Disable Bat Sounds** - Remove sounds created by bats.
-- **Disable Fire Sounds** - Remove sounds created by fire.
-- **Disable Enderman Sounds** - Remove sounds created by endermen.
-- **Disable Door Sounds** - Disable sounds caused by doors, trapdoors, and fence gates.
-- **Disable Portal Sounds** - Disable sounds caused by nether portals.
-- **Limbo Limiter** - While in Limbo, limit your framerate to reduce the load of the game on your computer.
-- **Limbo PM Ding** - While in Limbo, play the ding sound if you get a PM. Currently, Hypixel's option does not work in Limbo.
-</details>
+### Chat appearance
 
-## Links and support
-* Did you run into a bug? [Open a bug report](https://polyfrost.org/discord)
-* Service interruptions? [Checkout Polyfrost Status](https://status.polyfrost.org/)
-* Feeling social? [Join our discord community](https://polyfrost.org/discord)
+- Game Status Restyle shortens join and leave messages to a green `+` or red `-`, the player count and the name. It restyles the start countdown the same way.
+- Compact Game Start Announcements replaces the previous countdown message when a new one arrives.
+- White Chat and White Private Messages show messages from players without a rank, and private messages, in white.
+- Colored Friend/Guild Statuses colors the "joined" and "left" in friend and guild status messages.
+- Short Channel Names turns `Guild`, `Party` and `Friend` into `G`, `P` and `F`. A second option shortens `To` and `From` on private messages.
+- Replace Chat Emotes removes Hypixel chat emotes, strips their colors, or shows their shortcut such as `:wizard:`.
+- Shout Cooldown blocks `/shout` while it is on cooldown and tells you how many seconds are left. Non Speech Cooldown does the same for the 3 second chat cooldown on accounts without a rank.
+
+### Chat filters
+
+Each of these messages has its own switch. All are off by default.
+
+- `gg` and `gl` messages from other players.
+- Player adverts, rank begging and BedWars party requests.
+- Lobby join messages, friend and guild join and leave messages, and the guild message of the day.
+- Karma, tip, earned coins and experience, and gifted rank messages.
+- Game announcements, game tips, stats links and replay links.
+- Soul Well announcements, main lobby fishing announcements and Hot Potato messages.
+- "You are currently connected to server" messages and SkyBlock welcome messages.
+- Automatically activated quests, Hype limit reminders and online status reminders.
+- Curse of Spam, Bridge own goal deaths, Duels "stats did not change" notes and block trail notes.
+- Seasonal Simulator collection messages and the Discord link safety warning.
+
+### Tab list
+
+- Hide ping during games, where the value is misleading.
+- In SkyBlock, hide the head and ping on tab entries that are not players.
+- Remove the store adverts from the tab list header and footer.
+- Hide player ranks and guild tags in lobbies.
+- Put a star to the left or right of your own name.
+
+### HUD and titles
+
+- Hide HUD Elements hides the health, hunger, armor and air bars in lobbies and in games where they never change.
+- Hide the bossbar in lobbies, and bossbars in games that only advertise Hypixel.
+- Hardcore Hearts switches your hearts to the hardcore style once your bed or wither is gone in BedWars and Mini Walls.
+- Hide game start titles, game end titles and countdown titles.
+- Hide the action bar in Dropper and Housing.
+
+### Games
+
+- Height Overlay darkens wool and terracotta at the build limit in BedWars and The Bridge. You can set the strength, include the lowest build layer and pick your own color for each of the 16 block colors. It works with Sodium.
+- Hide Armor hides armor that is the same for every player, such as leather armor in BedWars and The Bridge.
+- Highlight Opened Chests draws a colored box on each chest you have opened in SkyWars, Blitz SG and UHC. A chest refill clears the boxes.
+- Notify When Blocks Run Out plays a sound when the stack in your hand drops to 10 blocks or fewer. You set the number between 4 and 20 and choose one of 9 sounds.
+- Notify Mining Fatigue shows a notification, a title or the elder guardian effect when you get mining fatigue.
+- Middle Waypoint Beacon draws a beacon beam at the center of the map once your wither dies in Mini Walls.
+- Lower Render Distance in Sumo sets your render distance to between 2 and 5 chunks during Sumo Duels and restores it afterwards.
+- Pit Lag Reducer stops drawing the players and mobs at spawn while you are down in the fighting area of The Pit.
+- Hide cosmetics in Arcade games and Duels.
+- Hide nametags such as "RIGHT CLICK" and "CLICK" in SkyBlock, BedWars, SkyWars and The Bridge.
+- Remove entities that are not NPCs in SkyBlock.
+
+### Lobbies and Limbo
+
+- Hide lobby NPCs and "CLICK TO PLAY" nametags.
+- Silent Lobby mutes every sound in a lobby except interface sounds. If you only want some sounds gone, 18 separate switches mute sounds such as footsteps, note blocks, fireworks and doors.
+- Limbo Limiter caps the game at 30 FPS after 5 seconds in Limbo and at 10 FPS after 10 minutes.
+- Limbo PM Ding plays a ding when you get a private message in Limbo.
+- Auto Start joins Hypixel as soon as the game has loaded.
+
+### Commands
+
+- `/hytils` opens the settings.
+- `/play <game>` gains tab completion and accepts short names for game modes.
+- `/requeue` or `/rq` joins a new game of the mode you are in or last played.
+- `/housingvisit <player>` or `/hvisit` goes to the Housing lobby and visits that player's house.
+- `/skyblockvisit <player>` or `/sbvisit` joins SkyBlock and visits that player's island.
+- `/silentremove add <player>` or `/sremove` removes that player from your friends list the next time they log off. `remove`, `list` and `clear` manage the queue.
+- `/hytils gexp [player] [daily|weekly]` shows guild experience.
+- `/hytils winstreak <player> <game>` shows a winstreak.
+
+## Hypixel only
+
+Hytils Reborn is built for Hypixel. The chat, HUD and game features check that you are on Hypixel before they run.
+
+## Supported versions
+
+- Minecraft 1.21.4, 1.21.5, 1.21.8, 1.21.10, 1.21.11, 26.1, 26.2 and 26.3 on Fabric.
+
+Hytils Reborn needs [OneConfig](https://modrinth.com/mod/oneconfig), Fabric API and Fabric Language Kotlin. It has no 1.8.9 build.
+
+## Support
+
+- Report bugs and ask questions on the [Polyfrost Discord](https://polyfrost.org/discord).
+- Check [Polyfrost Status](https://status.polyfrost.org/) if a Polyfrost service is down.
+
+## Building
+
+```sh
+./gradlew ":26.3:build"
+```
+
+Replace `26.3` with any supported Minecraft version. The build needs JDK 21 and JDK 25 installed.
