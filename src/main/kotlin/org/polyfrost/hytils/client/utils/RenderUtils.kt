@@ -4,6 +4,7 @@ package org.polyfrost.hytils.client.utils
 import com.mojang.renderpearl.api.pipeline.ColorTargetState
 import com.mojang.renderpearl.api.pipeline.CompareOp
 import com.mojang.renderpearl.api.pipeline.DepthStencilState
+import java.util.Optional
 //?}
 
 //? if >=1.21.11 {
@@ -11,20 +12,27 @@ import net.minecraft.client.renderer.rendertype.RenderSetup
 import net.minecraft.gizmos.GizmoStyle
 import net.minecraft.gizmos.Gizmos
 import org.polyfrost.hytils.mixin.client.accessor.RenderTypeAccessor
-//?} else
-//import net.minecraft.client.renderer.RenderType
+//?} else {
+/*import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.RenderStateShard
+import net.minecraft.client.renderer.RenderType
+import java.util.function.BiFunction
+*///?}
 
 //? if >=1.21.10 {
 import net.minecraft.client.renderer.SubmitNodeCollector
 //~ if <26.1 'level.CameraRenderState' -> 'CameraRenderState'
 import net.minecraft.client.renderer.state.level.CameraRenderState
-//?}
+//?} else
+//import net.minecraft.client.Camera as CameraRenderState
 
 //? if >=1.21.5 {
 import com.mojang.renderpearl.api.pipeline.BlendFunction
 import com.mojang.renderpearl.api.pipeline.RenderPipeline
 import net.minecraft.client.renderer.RenderPipelines
 //?}
+//? if >=1.21.5 && <26.1
+//import com.mojang.blaze3d.platform.DepthTestFunction
 
 import com.mojang.blaze3d.vertex.*
 import net.minecraft.client.gui.Font
@@ -34,6 +42,8 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 //~ if <26.1 'util.LightCoordsUtil' -> 'client.renderer.LightTexture as LightCoordsUtil'
 import net.minecraft.util.LightCoordsUtil
+//? if <1.21.8
+//import net.minecraft.util.TriState
 //~ if <1.21.11 'util.Util' -> 'Util'
 import net.minecraft.util.Util
 import net.minecraft.world.phys.Vec3
@@ -48,20 +58,20 @@ object RenderUtils {
     private val BEACON_BEAM_OPAQUE_NO_DEPTH = RenderPipeline.builder(RenderPipelines.BEACON_BEAM_SNIPPET)
         .withLocation("pipeline/beacon_beam_opaque")
         //? if >=26.1 {
-        .withDepthStencilState(java.util.Optional.empty())
+        .withDepthStencilState(Optional.empty())
         //?} else
-        //.withDepthTestFunction(com.mojang.blaze3d.platform.DepthTestFunction.NO_DEPTH_TEST)
+        //.withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
         .build()
     private val BEACON_BEAM_TRANSLUCENT_NO_DEPTH = RenderPipeline.builder(RenderPipelines.BEACON_BEAM_SNIPPET)
         .withLocation("pipeline/beacon_beam_translucent")
         //? if >=26.1 {
         .withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
         .withDepthStencilState(DepthStencilState(CompareOp.LESS_THAN_OR_EQUAL, false))
-        .withDepthStencilState(java.util.Optional.empty())
+        .withDepthStencilState(Optional.empty())
         //?} else {
         /*.withDepthWrite(false)
         .withBlend(BlendFunction.TRANSLUCENT)
-        .withDepthTestFunction(com.mojang.blaze3d.platform.DepthTestFunction.NO_DEPTH_TEST)
+        .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
         *///?}
         .build()
     //?}
@@ -83,16 +93,16 @@ object RenderUtils {
         RenderTypeAccessor.invokeCreate("beacon_beam", state)
     }
     //?} else {
-    /*val BEACON_BEAM_NO_DEPTH: java.util.function.BiFunction<Identifier, Boolean, RenderType> = Util.memoize { resourceLocation, isTranslucent ->
+    /*val BEACON_BEAM_NO_DEPTH: BiFunction<Identifier, Boolean, RenderType> = Util.memoize { resourceLocation, isTranslucent ->
         val compositeState = RenderType.CompositeState.builder()
             //? if <1.21.5 {
-            /*.setShaderState(net.minecraft.client.renderer.RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER)
-            .setTransparencyState(if (isTranslucent) net.minecraft.client.renderer.RenderStateShard.TRANSLUCENT_TRANSPARENCY else net.minecraft.client.renderer.RenderStateShard.NO_TRANSPARENCY)
-            .setWriteMaskState(if (isTranslucent) net.minecraft.client.renderer.RenderStateShard.COLOR_WRITE else net.minecraft.client.renderer.RenderStateShard.COLOR_DEPTH_WRITE)
-            .setDepthTestState(net.minecraft.client.renderer.RenderStateShard.NO_DEPTH_TEST)
+            /*.setShaderState(RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER)
+            .setTransparencyState(if (isTranslucent) RenderStateShard.TRANSLUCENT_TRANSPARENCY else RenderStateShard.NO_TRANSPARENCY)
+            .setWriteMaskState(if (isTranslucent) RenderStateShard.COLOR_WRITE else RenderStateShard.COLOR_DEPTH_WRITE)
+            .setDepthTestState(RenderStateShard.NO_DEPTH_TEST)
             *///?}
-            //~ if <1.21.8 'resourceLocation, false' -> 'resourceLocation, net.minecraft.util.TriState.FALSE, false'
-            .setTextureState(net.minecraft.client.renderer.RenderStateShard.TextureStateShard(resourceLocation, false))
+            //~ if <1.21.8 'resourceLocation, false' -> 'resourceLocation, TriState.FALSE, false'
+            .setTextureState(RenderStateShard.TextureStateShard(resourceLocation, false))
             .createCompositeState(false)
         //? if >=1.21.5 {
         val pipeline = if (isTranslucent) {
@@ -123,7 +133,7 @@ object RenderUtils {
     fun renderFilledBox(
         //? if <1.21.11 {
         /*poseStack: PoseStack,
-        multiBufferSource: net.minecraft.client.renderer.MultiBufferSource,
+        multiBufferSource: MultiBufferSource,
         cameraPos: Vec3,
         *///?}
         pos: BlockPos,
@@ -156,7 +166,6 @@ object RenderUtils {
     fun renderText(
         text: Component,
         pos: Vec3,
-        //~ if <1.21.10 'CameraRenderState' -> 'net.minecraft.client.Camera'
         camera: CameraRenderState,
         color: PolyColor,
         backgroundColor: PolyColor,
@@ -181,7 +190,6 @@ object RenderUtils {
         submitNodeCollector: SubmitNodeCollector,
         poseStack: PoseStack,
         //?}
-        //~ if <1.21.10 'CameraRenderState' -> 'net.minecraft.client.Camera'
         camera: CameraRenderState,
         color: PolyColor,
         backgroundColor: PolyColor,
@@ -273,7 +281,7 @@ object RenderUtils {
         //? if >=1.21.10 {
         submitNodeCollector: SubmitNodeCollector,
         //?} else
-        //multiBufferSource: net.minecraft.client.renderer.MultiBufferSource,
+        //multiBufferSource: MultiBufferSource,
         pos: Vec3,
         cameraPos: Vec3,
         color: PolyColor,

@@ -6,6 +6,8 @@ import net.hypixel.data.type.GameType;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+//~ if <26.2 'extract.LevelExtractor' -> 'LevelRenderer'
+import net.minecraft.client.renderer.extract.LevelExtractor;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.ArmorStand;
 //~ if <1.21.11 'villager.Villager' -> 'Villager'
@@ -15,8 +17,8 @@ import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-//~ if <26.2 'extract.LevelExtractor' -> 'LevelRenderer'
-@Mixin(net.minecraft.client.renderer.extract.LevelExtractor.class)
+//~ if <26.2 'LevelExtractor' -> 'LevelRenderer'
+@Mixin(LevelExtractor.class)
 abstract class LevelRendererMixin_HideNPCs {
     @WrapOperation(
         method = {

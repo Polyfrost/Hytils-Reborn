@@ -8,6 +8,10 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 /*import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 *///?}
+//? if <1.21.5 {
+/*import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.world.entity.Entity;
+*///?}
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.hypixel.data.type.GameType;
@@ -58,7 +62,7 @@ abstract class EntityRenderDispatcherMixin_UHCOverlay {
         //?} else if >=1.21.5 {
         /*EntityRenderState entityRenderState,
         *///?} else
-        //net.minecraft.world.entity.Entity entity,
+        //Entity entity,
         //? if >=1.21.10
         CameraRenderState camera,
         double x,
@@ -78,7 +82,7 @@ abstract class EntityRenderDispatcherMixin_UHCOverlay {
         CallbackInfo ci
          //?} else {
         /*CallbackInfo ci,
-        @com.llamalad7.mixinextras.sugar.Local S entityRenderState
+        @Local S entityRenderState
         *///?}
     ) {
         if (!HytilsRebornConfig.isEnabled() || !HytilsRebornConfig.INSTANCE.getUhcOverlay()) return;

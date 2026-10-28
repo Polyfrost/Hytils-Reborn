@@ -5,14 +5,16 @@ import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.renderer.SubmitNodeCollector
 //~ if <26.1 'level.CameraRenderState' -> 'CameraRenderState'
 import net.minecraft.client.renderer.state.level.CameraRenderState
-//?}
+//?} else
+//import net.minecraft.client.Camera as CameraRenderState
+//? if <26.2
+//import net.minecraft.client.renderer.MultiBufferSource
 import org.polyfrost.oneconfig.api.event.v1.events.Event
 
 data class PostLevelRenderEvent(
     val poseStack: PoseStack,
     /*? if >=1.21.10 {*/ val submitNodeCollector: SubmitNodeCollector, /*?}*/
     //? if <26.2
-    //val multiBufferSource: net.minecraft.client.renderer.MultiBufferSource,
-    //~ if <1.21.10 'CameraRenderState' -> 'net.minecraft.client.Camera'
+    //val multiBufferSource: MultiBufferSource,
     val camera: CameraRenderState
 ) : Event

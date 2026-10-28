@@ -6,9 +6,16 @@ import net.minecraft.client.gui.components.BossHealthOverlay;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import org.polyfrost.hytils.client.HytilsRebornConfig;
 import org.polyfrost.hytils.client.data.providers.LanguageData;
+//? if <1.21.8 {
+/*import org.polyfrost.hytils.client.features.game.HideHudElements;
+*///?}
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+//? if <1.21.8 {
+/*import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+*///?}
 
 import java.util.Collection;
 
@@ -28,9 +35,9 @@ abstract class BossHealthOverlayMixin_HideBossbar {
     }
 
     //? if <1.21.8 {
-    /*@org.spongepowered.asm.mixin.injection.Inject(method = "render", at = @At("HEAD"), cancellable = true)
-    private void hideLobbyBossbar(org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
-        if (org.polyfrost.hytils.client.features.game.HideHudElements.shouldHideBossbar()) {
+    /*@Inject(method = "render", at = @At("HEAD"), cancellable = true)
+    private void hideLobbyBossbar(CallbackInfo ci) {
+        if (HideHudElements.shouldHideBossbar()) {
             ci.cancel();
         }
     }
