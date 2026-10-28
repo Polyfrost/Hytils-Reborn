@@ -12,6 +12,7 @@ loomx.loom_version = "1.17-SNAPSHOT"
 
 deps.oneconfig = "1.2.1"
 deps.junit = "6.1.3"
+deps.errorprone = "2.51.0"
 
 ["1.21.4"]
 mod.mc_compat = "1.21.4"

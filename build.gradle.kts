@@ -1,3 +1,5 @@
+import dev.detekt.gradle.Detekt
+import net.ltgt.gradle.errorprone.errorprone
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -7,6 +9,8 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "2.4.10"
     id("dev.deftu.gradle.bloom") version "0.2.0"
     id("me.modmuss50.mod-publish-plugin") version "2.2.0"
+    id("dev.detekt") version "2.0.0-alpha.6"
+    id("net.ltgt.errorprone") version "5.1.1"
 }
 
 val modid: String = sc.properties["mod.id"]
@@ -71,6 +75,26 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter:${sc.properties.get<String>("deps.junit")}")
     testImplementation("net.fabricmc:fabric-loader-junit:$loaderversion")
+
+    errorprone("com.google.errorprone:error_prone_core:${sc.properties.get<String>("deps.errorprone")}")
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.errorprone {
+        disableAllChecks = true
+        error("UnnecessarilyFullyQualified")
+    }
+}
+
+// the enabled Detekt rules need type resolution, which only the per-compilation tasks have
+tasks.named<Detekt>("detekt") {
+    enabled = false
+    dependsOn(tasks.withType<Detekt>().matching { it.name != "detekt" && !it.name.endsWith("SourceSet") })
+}
+
+// main resources share the Java classes directory, which Detekt reads as part of the classpath
+tasks.withType<Detekt>().configureEach {
+    dependsOn(tasks.processResources)
 }
 
 loom {
